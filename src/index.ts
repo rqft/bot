@@ -26,8 +26,8 @@ commandFiles.forEach((file) => {
 client.once("ready", () => {
   client.user?.setPresence({
     activity: {
-      name: config.bot.presence.text,
-      type: config.bot.presence.activityType as activityType,
+      name: config.bot.presence.activity?.name,
+      type: config.bot.presence.activity.type as activityType,
     },
   });
   console.log("Ready");

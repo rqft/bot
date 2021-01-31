@@ -28,8 +28,8 @@ commandFiles.forEach((file) => {
 exports.client.once("ready", () => {
     exports.client.user?.setPresence({
         activity: {
-            name: config_1.config.bot.presence.text,
-            type: config_1.config.bot.presence.activityType,
+            name: config_1.config.bot.presence.activity?.name,
+            type: config_1.config.bot.presence.activity.type,
         },
     });
     console.log("Ready");

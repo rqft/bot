@@ -19,9 +19,13 @@ export const config = {
       "504698587221852172", // me
     ],
     presence: {
+      activity: {
+        name: "$",
+        type: "STREAMING",
+        url:
+          "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
+      },
       browser: "Discord iOS",
-      activityType: "WATCHING",
-      text: "$",
     },
   },
   logs: {
