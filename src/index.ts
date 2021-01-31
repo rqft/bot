@@ -93,7 +93,7 @@ client.on("message", async (message) => {
     message.reply("there was an error trying to execute that command!");
   }
 });
-client.login(config.bot.tokenA + config.bot.tokenB);
+client.login(config.bot.token);
 const cc = new RPC.Client({
   transport: "ipc",
 });
