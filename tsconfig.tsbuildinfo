@@ -246,6 +246,11 @@
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
         "affectsGlobalScope": false
       },
+      "./dist/commands/about.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
       "./dist/commands/eval.d.ts": {
         "version": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
@@ -374,6 +379,11 @@
       "./src/index.ts": {
         "version": "5f71cc457a03d2f9ee466fb921727edbbb889dc1b11662c4de28e2188be0ac5e",
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/about.ts": {
+        "version": "5381b56d88a86006466ca5f9291cbdbc928a4bd00ec4aaf122a4c5f3d32bd179",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
@@ -944,6 +954,11 @@
         "./node_modules/@types/node/http.d.ts",
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./src/commands/about.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
       ],
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
