@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
+const getGuildFeatures_1 = require("../functions/getGuildFeatures");
 const getGuildVoiceRegion_1 = require("../functions/getGuildVoiceRegion");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const globals_1 = require("../globals");
@@ -28,6 +29,7 @@ module.exports = {
 <:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
+        emb.addField("❯ Server Info", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.embedColor);
         await message.channel.send(emb);
     },

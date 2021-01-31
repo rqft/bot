@@ -1,6 +1,7 @@
 import { Guild, MessageEmbed } from "discord.js";
 import { client } from "..";
 import { formatTimestamp } from "../functions/formatTimestamp";
+import { getGuildFeatures } from "../functions/getGuildFeatures";
 import { getGuildVoiceRegion } from "../functions/getGuildVoiceRegion";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { embedColor } from "../globals";
@@ -33,6 +34,7 @@ module.exports = {
         guild.createdTimestamp
       )} ${formatTimestamp(guild.createdAt)}`
     );
+    emb.addField("❯ Server Info", getGuildFeatures(guild));
     emb.setColor(embedColor);
     await message.channel.send(emb);
   },

@@ -281,6 +281,11 @@
         "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
         "affectsGlobalScope": false
       },
+      "./dist/functions/getguildfeatures.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
       "./dist/functions/getguildvoiceregion.d.ts": {
         "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -304,6 +309,11 @@
       "./dist/interfaces/icommand.d.ts": {
         "version": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
         "signature": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
+        "affectsGlobalScope": false
+      },
+      "./dist/maps/guildfeature.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "./dist/maps/guildvoiceregion.d.ts": {
@@ -391,6 +401,16 @@
         "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
         "affectsGlobalScope": false
       },
+      "./src/maps/guildfeature.ts": {
+        "version": "80d31d9f10aa77589f0d9031398d2e44872c57cf80d66a22ce83218fe848b528",
+        "signature": "7cf8bb3643b571fe57e957f8ce6d9b810c478ae16ce9677b75e2ee491b5c5509",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getguildfeatures.ts": {
+        "version": "ec51bfa12d4b3664a1f7cfc8f26f68076506cb0c9d873ffaebfeb6231d6345ef",
+        "signature": "0630a7d971dccc51fab517475850c6d5eed1fcce5524508e5f267e78edc6d972",
+        "affectsGlobalScope": false
+      },
       "./src/maps/guildvoiceregion.ts": {
         "version": "940d1ce2cd889870c3b57adf1d411114fae12de534e6e03cdc44228c98654574",
         "signature": "b576f860270b9358432ab1b9fe567cf2cfc4d4c4ab2b32b35395806503c73dc9",
@@ -407,7 +427,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "4090197080aaac0948941995519937f24cd3d3810fc09555df840afda0d58360",
+        "version": "3e15673d5865e13ebf16a60febfef102ae5744031fe9a56a9e93cc5b53a1f37f",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -945,6 +965,7 @@
       "./src/commands/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
+        "./src/functions/getguildfeatures.ts",
         "./src/functions/getguildvoiceregion.ts",
         "./src/functions/getlongago.ts",
         "./src/globals.ts",
@@ -965,6 +986,10 @@
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts"
+      ],
+      "./src/functions/getguildfeatures.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/maps/guildfeature.ts"
       ],
       "./src/functions/getguildvoiceregion.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -990,6 +1015,9 @@
         "./src/types/activitytype.ts"
       ],
       "./src/interfaces/icommand.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ]
     },
@@ -1213,6 +1241,9 @@
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/functions/getguildfeatures.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/getguildvoiceregion.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1226,6 +1257,9 @@
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/interfaces/icommand.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ]
     },
