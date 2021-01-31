@@ -97,6 +97,7 @@ client.login(config.bot.tokenA + config.bot.tokenB);
 const cc = new RPC.Client({
   transport: "ipc",
 });
+//
 cc.on("ready", () => {
   cc.request("SET_ACTIVITY", {
     pid: pid,
