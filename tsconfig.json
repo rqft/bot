@@ -17,5 +17,6 @@
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["config.ts"]
 }
