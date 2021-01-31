@@ -13,8 +13,6 @@ module.exports = {
   async run(message, args: string[]) {
     var lang: "json" | "ts" | "js" = "ts";
     const code = args.join(" ").replace(/\`{3}\n?(.+)?/g, "");
-    if (!conf.bot.ownerIds.includes(message.author.id))
-      return await message.channel.send("no");
     const input = `\`\`\`ts\n${code}\`\`\``;
     var str = null;
     try {

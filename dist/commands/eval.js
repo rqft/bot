@@ -14,8 +14,6 @@ module.exports = {
     async run(message, args) {
         var lang = "ts";
         const code = args.join(" ").replace(/\`{3}\n?(.+)?/g, "");
-        if (!config_1.config.bot.ownerIds.includes(message.author.id))
-            return await message.channel.send("no");
         const input = `\`\`\`ts\n${code}\`\`\``;
         var str = null;
         try {
