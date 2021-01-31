@@ -336,9 +336,19 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/maps/profilebadge.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
       "./src/types/activitytype.ts": {
         "version": "b8fb65022733f16ea90cc71a177dbd68d70a20ea9d05cdacf746994401142f50",
         "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
+        "affectsGlobalScope": false
+      },
+      "./src/types/element.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/json-schema/index.d.ts": {
@@ -1185,8 +1195,10 @@
       "./src/interfaces/icommand.ts",
       "./src/maps/guildfeature.ts",
       "./src/maps/guildvoiceregion.ts",
+      "./src/maps/profilebadge.ts",
       "./src/maps/userstatus.ts",
       "./src/types/activitytype.ts",
+      "./src/types/element.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.iterable.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.es2015.collection.d.ts",
