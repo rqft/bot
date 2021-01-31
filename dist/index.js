@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.client = void 0;
+exports.commandFiles = exports.commands = exports.client = void 0;
 const discord_rpc_1 = __importDefault(require("discord-rpc"));
 const discord_js_1 = __importDefault(require("discord.js"));
 const fs_1 = __importDefault(require("fs"));
@@ -17,13 +17,13 @@ exports.client = new discord_js_1.default.Client({
         },
     },
 });
-const commands = new discord_js_1.default.Collection();
-const commandFiles = fs_1.default
+exports.commands = new discord_js_1.default.Collection();
+exports.commandFiles = fs_1.default
     .readdirSync(globals_1.path)
     .filter((file) => file.endsWith(".js"));
-commandFiles.forEach((file) => {
+exports.commandFiles.forEach((file) => {
     const command = require(`${globals_1.path}/${file}`);
-    commands.set(command.name, command);
+    exports.commands.set(command.name, command);
 });
 exports.client.once("ready", () => {
     exports.client.user?.setActivity(config_1.config.bot.presence.activity.name, {
@@ -40,8 +40,8 @@ exports.client.on("message", async (message) => {
     const prefix = message.content.match(prefixRegex).join("");
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
-    const command = commands.get(commandName) ||
-        commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+    const command = exports.commands.get(commandName) ||
+        exports.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command)
         return;
     if (command.restrictions &&

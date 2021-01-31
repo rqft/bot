@@ -377,23 +377,28 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "5f71cc457a03d2f9ee466fb921727edbbb889dc1b11662c4de28e2188be0ac5e",
-        "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
+        "version": "80b235e355fdaf4893c81cd650dbfc712fa001d73e793452f0d1e24a27cad84a",
+        "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/formattimestamp.ts": {
+        "version": "c7708931dc76c1b9463ca16d6f2e2f588fecd61ef1f4831a978a8d2d4c9b33cd",
+        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getlongago.ts": {
+        "version": "746e5025fea7e887e6fa78ff80ecf0bea3d0bdb5356574e482f726f55c3434bd",
+        "signature": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "5381b56d88a86006466ca5f9291cbdbc928a4bd00ec4aaf122a4c5f3d32bd179",
+        "version": "d7c57e811709b4c3b47fb48154881d22b3580387599e954653d76159e2f98082",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
         "version": "90ae6003eff6d16db97f36c42d8c40f8867ee8e641f439312326d1c1224bc83d",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/formattimestamp.ts": {
-        "version": "c7708931dc76c1b9463ca16d6f2e2f588fecd61ef1f4831a978a8d2d4c9b33cd",
-        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
         "affectsGlobalScope": false
       },
       "./src/maps/guildfeature.ts": {
@@ -414,11 +419,6 @@
       "./src/functions/getguildvoiceregion.ts": {
         "version": "623cd343a0a420b3e86ade0301f45e61e9ed638356d550d9fa80a0fdd19186ef",
         "signature": "8cad787e4a0c28d2f35b1a8919a7d87852d1b20f6079c28509222d142f9015fa",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/getlongago.ts": {
-        "version": "746e5025fea7e887e6fa78ff80ecf0bea3d0bdb5356574e482f726f55c3434bd",
-        "signature": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
@@ -957,6 +957,8 @@
       ],
       "./src/commands/about.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formattimestamp.ts",
+        "./src/functions/getlongago.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],

@@ -14,8 +14,8 @@ export const client = new Discord.Client({
     },
   },
 });
-const commands = new Discord.Collection();
-const commandFiles = fs
+export const commands = new Discord.Collection();
+export const commandFiles = fs
   .readdirSync(path)
   .filter((file) => file.endsWith(".js"));
 commandFiles.forEach((file) => {
