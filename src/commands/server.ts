@@ -37,3 +37,4 @@ module.exports = {
     await message.channel.send(emb);
   },
 } as ICommand;
+//
