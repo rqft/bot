@@ -392,7 +392,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "5e2f6b2a845ec5bded680604f9192973cea8b7d2995abd4e22ac655585172314",
+        "version": "10bb19bb43697f9b64e677110b05147c83bf5dc7bbb2fe0e5b5c38a9927d683a",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },

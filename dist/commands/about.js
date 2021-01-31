@@ -21,7 +21,7 @@ You can invite the bot to your server [here](https://discord.com/api/oauth2/auth
                 },
                 {
                     name: "Stats",
-                    value: `**Current Ping**: ${__1.client.ws.ping}ms (Responded to your message in ${Date.now() - message.createdTimestamp}ms)
+                    value: `**Current Ping**: ${__1.client.ws.ping}ms
 Currently has **${__1.commands.size} commands**
 On **${__1.client.guilds.cache.size}** Servers
 Last deployed ${getLongAgo_1.simpleGetLongAgo(__1.client.readyTimestamp)} ago ${formatTimestamp_1.formatTimestamp(__1.client.readyAt)}`,
