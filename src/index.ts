@@ -7,7 +7,6 @@ import { pid } from "process";
 import { config } from "./config";
 import { path } from "./globals";
 import { ICommand } from "./interfaces/ICommand";
-import { activityType } from "./types/activityType";
 export const client = new Discord.Client({
   ws: {
     properties: {
@@ -24,11 +23,11 @@ commandFiles.forEach((file) => {
   commands.set(command.name, command);
 });
 client.once("ready", () => {
-  client.user?.setPresence({
-    activity: {
-      name: config.bot.presence.activity?.name,
-      type: config.bot.presence.activity.type as activityType,
-    },
+  client.user?.setActivity(config.bot.presence.activity.name, {
+    name: "H",
+    type: "STREAMING",
+    url:
+      "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
   });
   console.log("Ready");
 });

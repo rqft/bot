@@ -371,13 +371,8 @@
         "signature": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
         "affectsGlobalScope": false
       },
-      "./src/types/activitytype.ts": {
-        "version": "b8fb65022733f16ea90cc71a177dbd68d70a20ea9d05cdacf746994401142f50",
-        "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
-        "affectsGlobalScope": false
-      },
       "./src/index.ts": {
-        "version": "8b4d0d6fdb1d4f7168e0f0958e5418046c69b8253f90e17069ba62360bd878b2",
+        "version": "44bd525b0b9489490c6dcdb4e1c04cf351579c0ff459f230e1238b24b6bebbb7",
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
         "affectsGlobalScope": false
       },
@@ -449,6 +444,11 @@
       "./src/commands/user.ts": {
         "version": "bda79c7f58dfb5ac9802d82b1b83286cd6c943ef33b37ce584a8a1342cde91bd",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/types/activitytype.ts": {
+        "version": "b8fb65022733f16ea90cc71a177dbd68d70a20ea9d05cdacf746994401142f50",
+        "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/json-schema/index.d.ts": {
@@ -1001,8 +1001,7 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
         "./src/globals.ts",
-        "./src/interfaces/icommand.ts",
-        "./src/types/activitytype.ts"
+        "./src/interfaces/icommand.ts"
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"

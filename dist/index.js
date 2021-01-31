@@ -26,11 +26,10 @@ commandFiles.forEach((file) => {
     commands.set(command.name, command);
 });
 exports.client.once("ready", () => {
-    exports.client.user?.setPresence({
-        activity: {
-            name: config_1.config.bot.presence.activity?.name,
-            type: config_1.config.bot.presence.activity.type,
-        },
+    exports.client.user?.setActivity(config_1.config.bot.presence.activity.name, {
+        name: "H",
+        type: "STREAMING",
+        url: "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
     });
     console.log("Ready");
 });
