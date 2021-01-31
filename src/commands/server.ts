@@ -9,6 +9,8 @@ import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
   name: "server",
+  aliases: ["s"],
+  usage: "[server]",
   async run(message, args: string[]) {
     if (!args[0] && !message.guild)
       return await message.channel.send("You need to provide a server!");

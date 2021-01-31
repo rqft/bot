@@ -15,9 +15,12 @@ export declare const config: {
         };
         ownerIds: string[];
         presence: {
+            activity: {
+                name: string;
+                type: string;
+                url: string;
+            };
             browser: string;
-            activityType: string;
-            text: string;
         };
     };
     logs: {
@@ -38,7 +41,7 @@ export declare const config: {
     blacklist: {
         guild: {
             owners: string[];
-            ids: string[];
+            ids: never[];
         };
         users: string[];
     };

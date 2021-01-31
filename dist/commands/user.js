@@ -11,12 +11,13 @@ const globals_1 = require("../globals");
 module.exports = {
     name: "user",
     aliases: ["u"],
+    usage: "[user]",
     async run(message, args) {
         if (args[0]?.toLowerCase() == "discord")
             args[0] = "643945264868098049";
         if (args[0]?.toLowerCase() == "me")
             args[0] = message.author.id;
-        if (args[0]?.toLowerCase() == ("bot" || "system"))
+        if (args[0]?.toLowerCase() == "bot" || args[0]?.toLowerCase() == "system")
             args[0] = __1.client.user?.id;
         if (args[0]?.toLowerCase() == "random") {
             if (!message.guild) {

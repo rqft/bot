@@ -216,146 +216,6 @@
         "signature": "f58c6d0669d1ee04b2fcb0e87fb949b6828602f3f29c7bf6c76a214f16fd50d5",
         "affectsGlobalScope": false
       },
-      "./dist/a.d.ts": {
-        "version": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
-        "signature": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
-        "affectsGlobalScope": false
-      },
-      "./dist/config.d.ts": {
-        "version": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
-        "signature": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
-        "affectsGlobalScope": false
-      },
-      "./dist/globals.d.ts": {
-        "version": "b6f4374ab3633262180393007fe92e2788cb6adb36811c986cd0cbef96a3045d",
-        "signature": "b6f4374ab3633262180393007fe92e2788cb6adb36811c986cd0cbef96a3045d",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@discordjs/collection/dist/index.d.ts": {
-        "version": "7be7f76b784383fa84812ca7eb8ad10315c9d482c0d25f178645365405509d44",
-        "signature": "7be7f76b784383fa84812ca7eb8ad10315c9d482c0d25f178645365405509d44",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/discord.js/typings/index.d.ts": {
-        "version": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
-        "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
-        "affectsGlobalScope": true
-      },
-      "./dist/index.d.ts": {
-        "version": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
-        "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
-        "affectsGlobalScope": false
-      },
-      "./dist/commands/about.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/commands/eval.d.ts": {
-        "version": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./dist/commands/server.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/commands/user.d.ts": {
-        "version": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/capitalizewords.d.ts": {
-        "version": "b5e3002435ef06cff64a65645991c0f4873c66b992f6f534d05fa724e650ca8b",
-        "signature": "b5e3002435ef06cff64a65645991c0f4873c66b992f6f534d05fa724e650ca8b",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/formattimestamp.d.ts": {
-        "version": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
-        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/getbotlevel.d.ts": {
-        "version": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
-        "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/getguildfeatures.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/getguildvoiceregion.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/getlongago.d.ts": {
-        "version": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
-        "signature": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/getpresence.d.ts": {
-        "version": "e431ec1919c452fa62d687b0e95ad22f94c9aac5058c8ad9cc695a8804f8cac8",
-        "signature": "e431ec1919c452fa62d687b0e95ad22f94c9aac5058c8ad9cc695a8804f8cac8",
-        "affectsGlobalScope": false
-      },
-      "./dist/functions/getuserpermissions.d.ts": {
-        "version": "2c751c767068ce065e2213f230487380c08188c95b71e72943553bde04a2f02f",
-        "signature": "2c751c767068ce065e2213f230487380c08188c95b71e72943553bde04a2f02f",
-        "affectsGlobalScope": false
-      },
-      "./dist/interfaces/icommand.d.ts": {
-        "version": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
-        "signature": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
-        "affectsGlobalScope": false
-      },
-      "./dist/maps/guildfeature.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/maps/guildvoiceregion.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/maps/userstatus.d.ts": {
-        "version": "8a7cbdd5579546a26c3acaa18a641b3ef7d4bc23885e4fb1382aeaa0835a03ff",
-        "signature": "8a7cbdd5579546a26c3acaa18a641b3ef7d4bc23885e4fb1382aeaa0835a03ff",
-        "affectsGlobalScope": false
-      },
-      "./dist/src/config.d.ts": {
-        "version": "6618b94bf805b75beb32ea87d553c54735f054f8713aab08ffdbe811d60a981a",
-        "signature": "6618b94bf805b75beb32ea87d553c54735f054f8713aab08ffdbe811d60a981a",
-        "affectsGlobalScope": false
-      },
-      "./dist/src/index.d.ts": {
-        "version": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
-        "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
-        "affectsGlobalScope": false
-      },
-      "./dist/src/token.d.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "affectsGlobalScope": false
-      },
-      "./dist/src/functions/getbotlevel.d.ts": {
-        "version": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
-        "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
-        "affectsGlobalScope": false
-      },
-      "./dist/src/functions/getuserpermissions.d.ts": {
-        "version": "2c751c767068ce065e2213f230487380c08188c95b71e72943553bde04a2f02f",
-        "signature": "2c751c767068ce065e2213f230487380c08188c95b71e72943553bde04a2f02f",
-        "affectsGlobalScope": false
-      },
-      "./dist/types/activitytype.d.ts": {
-        "version": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
-        "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
-        "affectsGlobalScope": false
-      },
       "./src/config.ts": {
         "version": "837a2889e2d349fe9e5e5015d27e6313cab4ac85cb6cc70bc3ddbf1862977ede",
         "signature": "ff73315bf8e610e2ec7ef5c739d48753d9b86c6e5a3ebb460d274f34e0cc018c",
@@ -370,6 +230,16 @@
         "version": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
         "signature": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
         "affectsGlobalScope": false
+      },
+      "./node_modules/@discordjs/collection/dist/index.d.ts": {
+        "version": "7be7f76b784383fa84812ca7eb8ad10315c9d482c0d25f178645365405509d44",
+        "signature": "7be7f76b784383fa84812ca7eb8ad10315c9d482c0d25f178645365405509d44",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/discord.js/typings/index.d.ts": {
+        "version": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
+        "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
+        "affectsGlobalScope": true
       },
       "./src/interfaces/icommand.ts": {
         "version": "3c3260de1ca4b705736bc663af0f3747f6399e4ac78b43adb668d0b27d04a0d6",
@@ -393,6 +263,16 @@
       },
       "./src/commands/about.ts": {
         "version": "b4361315b13022f09f051d03a78f86a2d11f972fed55c975604e9eb7c9956f22",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getfileextension.ts": {
+        "version": "5814c19fd4cb5f008a6602fc9191eb83e138aecb9663201c9301ffc15277c957",
+        "signature": "697b29bdac0cb57bea54a0d29fc7a2567db88fea68ba4c13c82cf208360863b9",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/avatar.ts": {
+        "version": "6d14c6fb2810cff7c6234cb8a54c0c327946fddd62e0c50a322eccedb973ed3b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -422,7 +302,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "3e15673d5865e13ebf16a60febfef102ae5744031fe9a56a9e93cc5b53a1f37f",
+        "version": "2ed918f856a407097bc7bfb8b0be6b9b49d600496cbb853935c5b37e3e79fe3b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -452,7 +332,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "af873d05f951b0ecae8553a9242aaabc8043696444110b52f9eef79532749bf1",
+        "version": "14a09d7a9d17d79971119f8069f1f6610e4f5703c7f1adff6ae021fef11739eb",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -725,7 +605,7 @@
       "module": 1,
       "outDir": "./dist",
       "rootDir": "./src",
-      "composite": true,
+      "composite": false,
       "removeComments": true,
       "strict": true,
       "noUnusedLocals": true,
@@ -739,30 +619,6 @@
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
-      "./dist/functions/getbotlevel.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/functions/getpresence.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/functions/getuserpermissions.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/index.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/interfaces/icommand.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/src/functions/getbotlevel.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/src/functions/getuserpermissions.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/src/index.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
       "./node_modules/@types/discord-rpc/index.d.ts": [
         "./node_modules/@types/node/events.d.ts"
       ],
@@ -964,6 +820,13 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/avatar.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/getfileextension.ts",
+        "./src/functions/getlongago.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
@@ -1030,30 +893,6 @@
       ]
     },
     "exportedModulesMap": {
-      "./dist/functions/getbotlevel.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/functions/getpresence.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/functions/getuserpermissions.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/index.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/interfaces/icommand.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/src/functions/getbotlevel.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/src/functions/getuserpermissions.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
-      "./dist/src/index.d.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
       "./node_modules/@types/discord-rpc/index.d.ts": [
         "./node_modules/@types/node/events.d.ts"
       ],
@@ -1272,6 +1111,82 @@
       ]
     },
     "semanticDiagnosticsPerFile": [
+      "./node_modules/@discordjs/collection/dist/index.d.ts",
+      "./node_modules/@types/discord-rpc/index.d.ts",
+      "./node_modules/@types/json-schema/index.d.ts",
+      "./node_modules/@types/node-fetch/externals.d.ts",
+      "./node_modules/@types/node-fetch/index.d.ts",
+      "./node_modules/@types/node/assert.d.ts",
+      "./node_modules/@types/node/async_hooks.d.ts",
+      "./node_modules/@types/node/base.d.ts",
+      "./node_modules/@types/node/buffer.d.ts",
+      "./node_modules/@types/node/child_process.d.ts",
+      "./node_modules/@types/node/cluster.d.ts",
+      "./node_modules/@types/node/console.d.ts",
+      "./node_modules/@types/node/constants.d.ts",
+      "./node_modules/@types/node/crypto.d.ts",
+      "./node_modules/@types/node/dgram.d.ts",
+      "./node_modules/@types/node/dns.d.ts",
+      "./node_modules/@types/node/domain.d.ts",
+      "./node_modules/@types/node/events.d.ts",
+      "./node_modules/@types/node/fs.d.ts",
+      "./node_modules/@types/node/fs/promises.d.ts",
+      "./node_modules/@types/node/globals.d.ts",
+      "./node_modules/@types/node/globals.global.d.ts",
+      "./node_modules/@types/node/http.d.ts",
+      "./node_modules/@types/node/http2.d.ts",
+      "./node_modules/@types/node/https.d.ts",
+      "./node_modules/@types/node/index.d.ts",
+      "./node_modules/@types/node/inspector.d.ts",
+      "./node_modules/@types/node/module.d.ts",
+      "./node_modules/@types/node/net.d.ts",
+      "./node_modules/@types/node/os.d.ts",
+      "./node_modules/@types/node/path.d.ts",
+      "./node_modules/@types/node/perf_hooks.d.ts",
+      "./node_modules/@types/node/process.d.ts",
+      "./node_modules/@types/node/punycode.d.ts",
+      "./node_modules/@types/node/querystring.d.ts",
+      "./node_modules/@types/node/readline.d.ts",
+      "./node_modules/@types/node/repl.d.ts",
+      "./node_modules/@types/node/stream.d.ts",
+      "./node_modules/@types/node/string_decoder.d.ts",
+      "./node_modules/@types/node/timers.d.ts",
+      "./node_modules/@types/node/tls.d.ts",
+      "./node_modules/@types/node/trace_events.d.ts",
+      "./node_modules/@types/node/ts3.4/base.d.ts",
+      "./node_modules/@types/node/ts3.6/base.d.ts",
+      "./node_modules/@types/node/tty.d.ts",
+      "./node_modules/@types/node/url.d.ts",
+      "./node_modules/@types/node/util.d.ts",
+      "./node_modules/@types/node/v8.d.ts",
+      "./node_modules/@types/node/vm.d.ts",
+      "./node_modules/@types/node/wasi.d.ts",
+      "./node_modules/@types/node/worker_threads.d.ts",
+      "./node_modules/@types/node/zlib.d.ts",
+      "./node_modules/discord.js/typings/index.d.ts",
+      "./node_modules/form-data/index.d.ts",
+      "./src/commands/about.ts",
+      "./src/commands/avatar.ts",
+      "./src/commands/eval.ts",
+      "./src/commands/server.ts",
+      "./src/commands/user.ts",
+      "./src/config.ts",
+      "./src/functions/capitalizewords.ts",
+      "./src/functions/formattimestamp.ts",
+      "./src/functions/getbotlevel.ts",
+      "./src/functions/getfileextension.ts",
+      "./src/functions/getguildfeatures.ts",
+      "./src/functions/getguildvoiceregion.ts",
+      "./src/functions/getlongago.ts",
+      "./src/functions/getpresence.ts",
+      "./src/functions/getuserpermissions.ts",
+      "./src/globals.ts",
+      "./src/index.ts",
+      "./src/interfaces/icommand.ts",
+      "./src/maps/guildfeature.ts",
+      "./src/maps/guildvoiceregion.ts",
+      "./src/maps/userstatus.ts",
+      "./src/types/activitytype.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.iterable.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.es2015.collection.d.ts",
