@@ -31,7 +31,7 @@ module.exports = {
         emb.setThumbnail(user.avatarURL({
             dynamic: true,
         }) ?? user.defaultAvatarURL);
-        emb.addField(`❯ User Info`, `:gear: **󠇰ID**: ${user.id}
+        emb.addField(`❯ User Info`, `:gear: **󠇰ID**: \`${user.id}\`
 :link: **Profile**: ${user}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(user.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(user.createdAt)}`);
         var mem = message.guild?.member(user) ?? false;

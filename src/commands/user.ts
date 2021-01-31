@@ -36,7 +36,7 @@ module.exports = {
     );
     emb.addField(
       `❯ User Info`,
-      `:gear: **󠇰ID**: ${user.id}
+      `:gear: **󠇰ID**: \`${user.id}\`
 :link: **Profile**: ${user}
 :calendar_spiral: **Created**: ${simpleGetLongAgo(
         user.createdTimestamp
