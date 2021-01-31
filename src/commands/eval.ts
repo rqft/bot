@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { client } from "..";
+import { client as c } from "..";
 import { config as conf } from "../config";
 import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
@@ -18,8 +18,10 @@ module.exports = {
     const input = `\`\`\`ts\n${code}\`\`\``;
     var str = null;
     try {
-      const c = client;
+      const client = c;
+      client;
       const config = conf;
+      config;
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(embedColor);

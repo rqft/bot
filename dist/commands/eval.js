@@ -19,8 +19,10 @@ module.exports = {
         const input = `\`\`\`ts\n${code}\`\`\``;
         var str = null;
         try {
-            const c = __1.client;
+            const client = __1.client;
+            client;
             const config = config_1.config;
+            config;
             str = eval(code);
             const embed = new discord_js_1.MessageEmbed();
             embed.setColor(globals_1.embedColor);
