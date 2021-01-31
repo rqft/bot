@@ -1,4 +1,6 @@
+// presence stuff
 import RPC from "discord-rpc";
+// other
 import Discord from "discord.js";
 import fs from "fs";
 import { pid } from "process";
@@ -94,6 +96,11 @@ client.on("message", async (message) => {
   }
 });
 client.login(config.bot.token);
+
+/**
+ * Presence Stuff
+ */
+
 const cc = new RPC.Client({
   transport: "ipc",
 });
