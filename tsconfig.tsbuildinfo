@@ -332,8 +332,8 @@
         "affectsGlobalScope": false
       },
       "./src/token.ts": {
-        "version": "2e387b48c47224019f68aeb12ad728941d90f652ee002d8541163cac78371612",
-        "signature": "71b9102b9baf9ff80b7bbe6d6c229a4604231b9bc467552aba8817362c409ce4",
+        "version": "4c9357448270186d5d1a64c2f464ccd1f542f2ed85844a803762db586f8bcc69",
+        "signature": "efdaa8b892e2a54053f6c782d941e7ca676f487a23b19594e2a605cc10ad8322",
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
