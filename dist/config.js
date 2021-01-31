@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
-const token_1 = require("./token");
 exports.config = {
     __global: {
         guildId: "775743191441735712",
@@ -11,7 +10,7 @@ exports.config = {
     bot: {
         prefixes: ["p\\/", "\\$", "<@!?760143615124439040>"],
         id: "760143615124439040",
-        token: token_1.token,
+        token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.8EijgezUaZdHjZWzxFTG375CqQ4",
         application: {
             ownerId: "504698587221852172",
             clientId: "760143615124439040",

@@ -331,13 +331,8 @@
         "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
         "affectsGlobalScope": false
       },
-      "./src/token.ts": {
-        "version": "d155ea32e06882de5462920e8dfe43377729478a5e933b6deecf31d00e97753c",
-        "signature": "ba05fe5ccecf144e01dfd84375da6ee6d18ab3a150e895596212eb49c186062d",
-        "affectsGlobalScope": false
-      },
       "./src/config.ts": {
-        "version": "8372b7867db1c5bf1bb28fc146be8d99c3f2e6332ffe54c0002787f4b1cf7301",
+        "version": "0e862022e092a47d15b9ae1960cac2a59c9a22330b02f3286b28c94fa2e8dc96",
         "signature": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
         "affectsGlobalScope": false
       },
@@ -364,6 +359,11 @@
       "./src/index.ts": {
         "version": "defc46f149f25eab994d2e3a140dae4f0c6e140e61ac0956fee95c18e76ebda8",
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
+        "affectsGlobalScope": false
+      },
+      "./src/token.ts": {
+        "version": "d155ea32e06882de5462920e8dfe43377729478a5e933b6deecf31d00e97753c",
+        "signature": "ba05fe5ccecf144e01dfd84375da6ee6d18ab3a150e895596212eb49c186062d",
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
@@ -921,9 +921,6 @@
         "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
-      ],
-      "./src/config.ts": [
-        "./src/token.ts"
       ],
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
