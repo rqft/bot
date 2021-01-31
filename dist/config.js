@@ -23,7 +23,7 @@ exports.config = {
         ],
         presence: {
             browser: "Discord iOS",
-            activityType: "COMPETING",
+            activityType: "WATCHING",
             text: "$",
         },
     },

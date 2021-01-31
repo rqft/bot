@@ -1,8 +1,8 @@
 import { MessageEmbed } from "discord.js";
 import { client } from "..";
+import { config as conf } from "../config";
 import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
-
 module.exports = {
   name: "eval",
   description: "Run code",
@@ -13,13 +13,13 @@ module.exports = {
   async run(message, args: string[]) {
     var lang: "json" | "ts" | "js" = "ts";
     const code = args.join(" ").replace(/\`{3}\n?(.+)?/g, "");
-    if (message.author.id !== (await client.fetchApplication()).owner!.id)
+    if (!conf.bot.ownerIds.includes(message.author.id))
       return await message.channel.send("no");
     const input = `\`\`\`ts\n${code}\`\`\``;
     var str = null;
     try {
       const c = client;
-      c;
+      const config = conf;
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(embedColor);

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
+const config_1 = require("../config");
 const globals_1 = require("../globals");
 module.exports = {
     name: "eval",
@@ -13,13 +14,13 @@ module.exports = {
     async run(message, args) {
         var lang = "ts";
         const code = args.join(" ").replace(/\`{3}\n?(.+)?/g, "");
-        if (message.author.id !== (await __1.client.fetchApplication()).owner.id)
+        if (!config_1.config.bot.ownerIds.includes(message.author.id))
             return await message.channel.send("no");
         const input = `\`\`\`ts\n${code}\`\`\``;
         var str = null;
         try {
             const c = __1.client;
-            c;
+            const config = config_1.config;
             str = eval(code);
             const embed = new discord_js_1.MessageEmbed();
             embed.setColor(globals_1.embedColor);
