@@ -7,6 +7,7 @@ module.exports = {
   usesArgs: false,
   description: "Info about the bot",
   async run(message) {
+    //
     message.channel.send(
       new MessageEmbed({
         fields: [
