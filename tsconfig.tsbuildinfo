@@ -216,6 +216,16 @@
         "signature": "f58c6d0669d1ee04b2fcb0e87fb949b6828602f3f29c7bf6c76a214f16fd50d5",
         "affectsGlobalScope": false
       },
+      "./a.ts": {
+        "version": "f444b36393eb85d9187d9dfd52d1f83a2ebc4326a4b55c949174c1d57245dbb8",
+        "signature": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
+        "affectsGlobalScope": false
+      },
+      "./dist/a.d.ts": {
+        "version": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
+        "signature": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
+        "affectsGlobalScope": false
+      },
       "./dist/config.d.ts": {
         "version": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
         "signature": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
@@ -291,6 +301,11 @@
         "signature": "8a7cbdd5579546a26c3acaa18a641b3ef7d4bc23885e4fb1382aeaa0835a03ff",
         "affectsGlobalScope": false
       },
+      "./dist/src/config.d.ts": {
+        "version": "6618b94bf805b75beb32ea87d553c54735f054f8713aab08ffdbe811d60a981a",
+        "signature": "6618b94bf805b75beb32ea87d553c54735f054f8713aab08ffdbe811d60a981a",
+        "affectsGlobalScope": false
+      },
       "./dist/src/index.d.ts": {
         "version": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
@@ -312,8 +327,8 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "7e098bf083dfcdf9263201af479beee5451efa102e035afd1a5cc343cf3ca7f2",
-        "signature": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
+        "version": "25cabcb0c3ff829c60f9691278621ca588e0907632b3e681e33681bf47ef1215",
+        "signature": "6618b94bf805b75beb32ea87d553c54735f054f8713aab08ffdbe811d60a981a",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -896,6 +911,9 @@
         "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
+      ],
+      "./src/config.ts": [
+        "./a.ts"
       ],
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",

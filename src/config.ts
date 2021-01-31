@@ -1,3 +1,5 @@
+import { token } from "../a";
+import "../a.ts";
 export const config = {
   __global: {
     guildId: "775743191441735712",
@@ -7,7 +9,7 @@ export const config = {
   bot: {
     prefixes: ["p\\/", "\\$", "<@!?760143615124439040>"],
     id: "760143615124439040",
-    token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.T-YWz2BF_69TQutl1CWxjW_FnLs",
+    token: token,
     application: {
       ownerId: "504698587221852172",
       clientId: "760143615124439040",
