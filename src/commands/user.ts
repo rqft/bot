@@ -34,6 +34,7 @@ module.exports = {
         dynamic: true,
       }) ?? user.defaultAvatarURL
     );
+    //
     emb.addField(
       `❯ User Info`,
       `:gear: **󠇰ID**: \`${user.id}\`
