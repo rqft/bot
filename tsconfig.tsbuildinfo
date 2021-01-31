@@ -392,7 +392,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "10bb19bb43697f9b64e677110b05147c83bf5dc7bbb2fe0e5b5c38a9927d683a",
+        "version": "b4361315b13022f09f051d03a78f86a2d11f972fed55c975604e9eb7c9956f22",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -957,6 +957,7 @@
       ],
       "./src/commands/about.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
+        "./src/config.ts",
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
         "./src/globals.ts",

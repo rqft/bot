@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { client, commands } from "..";
+import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { embedColor } from "../globals";
@@ -22,7 +23,8 @@ module.exports = {
 
 You can invite the bot to your server [here](https://discord.com/api/oauth2/authorize?client_id=${
               (await client.fetchApplication()).id
-            }&permissions=8&scope=bot)`,
+            }&permissions=8&scope=bot)
+My prefixes are: ${config.bot.prefixes.join(", ").replace(/\?/g, "")}`,
           },
           {
             name: "Stats",
