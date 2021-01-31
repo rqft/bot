@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { client, commands } from "..";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
+import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
   async run(message) {
     message.channel.send(
       new MessageEmbed({
+        color: embedColor,
         fields: [
           {
             name: "About",
