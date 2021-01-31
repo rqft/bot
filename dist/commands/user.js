@@ -16,8 +16,14 @@ module.exports = {
             args[0] = "643945264868098049";
         if (args[0]?.toLowerCase() == "me")
             args[0] = message.author.id;
-        if (args[0]?.toLowerCase() == "bot")
+        if (args[0]?.toLowerCase() == ("bot" || "system"))
             args[0] = __1.client.user?.id;
+        if (args[0]?.toLowerCase() == "random") {
+            if (!message.guild) {
+                return await message.channel.send("You need to be in a server to run this!");
+            }
+            args[0] = message.guild.members.cache.random().id;
+        }
         var unresolvedID = args[0]
             ? args[0]?.replace(/\D/g, "")
             : message.author.id;

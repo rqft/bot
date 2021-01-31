@@ -47,15 +47,15 @@ exports.client.on("message", async (message) => {
     if (command.restrictions &&
         command.restrictions.ownerOnly &&
         !config_1.config.bot.ownerIds.includes(message.author.id))
-        return message.reply("no");
+        return message.channel.send(":warning: Missing Permissions; You need: `Bot Owner` or`Dev`");
     if (command.restrictions &&
         command.restrictions.guildOnly &&
         message.channel.type === "dm")
-        return message.reply("I can't execute that command inside DMs!");
+        return message.channel.send(":warning: I can't execute that command inside DMs!");
     if (command.usesArgs && !args.length) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
+        let reply = `:warning: You didn't provide any arguments;`;
         if (command.usage) {
-            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+            reply += ` The proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
         }
         return message.channel.send(reply);
     }
