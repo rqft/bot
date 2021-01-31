@@ -68,7 +68,7 @@ exports.client.on("message", async (message) => {
         message.reply("there was an error trying to execute that command!");
     }
 });
-exports.client.login(config_1.config.bot.token);
+exports.client.login(config_1.config.bot.tokenA + config_1.config.bot.tokenB);
 const cc = new discord_rpc_1.default.Client({
     transport: "ipc",
 });

@@ -10,7 +10,8 @@ exports.config = {
     bot: {
         prefixes: ["p\\/", "\\$", "<@!?760143615124439040>"],
         id: "760143615124439040",
-        token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.8EijgezUaZdHjZWzxFTG375CqQ4",
+        tokenA: "N",
+        tokenB: "zYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.qMOIPdjMf8sKPIk04g5GvsIlJ08",
         application: {
             ownerId: "504698587221852172",
             clientId: "760143615124439040",
