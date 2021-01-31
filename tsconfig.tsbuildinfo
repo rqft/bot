@@ -216,11 +216,6 @@
         "signature": "f58c6d0669d1ee04b2fcb0e87fb949b6828602f3f29c7bf6c76a214f16fd50d5",
         "affectsGlobalScope": false
       },
-      "./a.ts": {
-        "version": "f444b36393eb85d9187d9dfd52d1f83a2ebc4326a4b55c949174c1d57245dbb8",
-        "signature": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
-        "affectsGlobalScope": false
-      },
       "./dist/a.d.ts": {
         "version": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
         "signature": "c476fd06ff99ea827d2dcd4ffa7879066c4f0afa31aa2cf6de8a8d379c6593f4",
@@ -249,6 +244,11 @@
       "./dist/index.d.ts": {
         "version": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
+        "affectsGlobalScope": false
+      },
+      "./dist/token.d.ts": {
+        "version": "71b9102b9baf9ff80b7bbe6d6c229a4604231b9bc467552aba8817362c409ce4",
+        "signature": "71b9102b9baf9ff80b7bbe6d6c229a4604231b9bc467552aba8817362c409ce4",
         "affectsGlobalScope": false
       },
       "./dist/commands/eval.d.ts": {
@@ -311,6 +311,11 @@
         "signature": "f34f8fbe8b7a31a1589adb6eeb6098c1adaa6910ad8d2af18987df6420547b59",
         "affectsGlobalScope": false
       },
+      "./dist/src/token.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
       "./dist/src/functions/getbotlevel.d.ts": {
         "version": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
         "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
@@ -326,9 +331,14 @@
         "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
         "affectsGlobalScope": false
       },
+      "./src/token.ts": {
+        "version": "2e387b48c47224019f68aeb12ad728941d90f652ee002d8541163cac78371612",
+        "signature": "71b9102b9baf9ff80b7bbe6d6c229a4604231b9bc467552aba8817362c409ce4",
+        "affectsGlobalScope": false
+      },
       "./src/config.ts": {
-        "version": "25cabcb0c3ff829c60f9691278621ca588e0907632b3e681e33681bf47ef1215",
-        "signature": "6618b94bf805b75beb32ea87d553c54735f054f8713aab08ffdbe811d60a981a",
+        "version": "8372b7867db1c5bf1bb28fc146be8d99c3f2e6332ffe54c0002787f4b1cf7301",
+        "signature": "940ca95bbe01220b29d8d0bf0ae09a6e578db041db6e4a76fab0a885d3fad4f1",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -913,7 +923,7 @@
         "./src/interfaces/icommand.ts"
       ],
       "./src/config.ts": [
-        "./a.ts"
+        "./src/token.ts"
       ],
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",

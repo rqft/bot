@@ -1,2 +1,3 @@
 node_modules/
-.ts
+src/token.ts
+dist/token.ts

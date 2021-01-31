@@ -1,5 +1,4 @@
-import { token } from "../a";
-import "../a.ts";
+import { token } from "./token";
 export const config = {
   __global: {
     guildId: "775743191441735712",
