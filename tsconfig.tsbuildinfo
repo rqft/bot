@@ -256,6 +256,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./dist/commands/server.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
       "./dist/commands/user.d.ts": {
         "version": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
@@ -276,6 +281,11 @@
         "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
         "affectsGlobalScope": false
       },
+      "./dist/functions/getguildvoiceregion.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
       "./dist/functions/getlongago.d.ts": {
         "version": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
         "signature": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
@@ -294,6 +304,11 @@
       "./dist/interfaces/icommand.d.ts": {
         "version": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
         "signature": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
+        "affectsGlobalScope": false
+      },
+      "./dist/maps/guildvoiceregion.d.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "./dist/maps/userstatus.d.ts": {
@@ -376,14 +391,29 @@
         "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
         "affectsGlobalScope": false
       },
-      "./src/functions/getbotlevel.ts": {
-        "version": "ef40e86da265829dc0c09eb3d2dc2eaa2ecacdfdce07154028b3f84a18ef722c",
-        "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
+      "./src/maps/guildvoiceregion.ts": {
+        "version": "940d1ce2cd889870c3b57adf1d411114fae12de534e6e03cdc44228c98654574",
+        "signature": "b576f860270b9358432ab1b9fe567cf2cfc4d4c4ab2b32b35395806503c73dc9",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getguildvoiceregion.ts": {
+        "version": "623cd343a0a420b3e86ade0301f45e61e9ed638356d550d9fa80a0fdd19186ef",
+        "signature": "8cad787e4a0c28d2f35b1a8919a7d87852d1b20f6079c28509222d142f9015fa",
         "affectsGlobalScope": false
       },
       "./src/functions/getlongago.ts": {
         "version": "746e5025fea7e887e6fa78ff80ecf0bea3d0bdb5356574e482f726f55c3434bd",
         "signature": "154c57ae334598853ef26e206fd62e44cb7c6254dfa194db0684e1b69805ee74",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/server.ts": {
+        "version": "4090197080aaac0948941995519937f24cd3d3810fc09555df840afda0d58360",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getbotlevel.ts": {
+        "version": "ef40e86da265829dc0c09eb3d2dc2eaa2ecacdfdce07154028b3f84a18ef722c",
+        "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
         "affectsGlobalScope": false
       },
       "./src/maps/userstatus.ts": {
@@ -407,7 +437,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "5b3c424b0b91cdc75c0a2986106af6859269073c3b7a6171d6d663b584ee0491",
+        "version": "610706e2a6082e15f8dfc41ab58446a817f9f4ce5dc15a9ac5694a19a21319d2",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -911,6 +941,15 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/server.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formattimestamp.ts",
+        "./src/functions/getguildvoiceregion.ts",
+        "./src/functions/getlongago.ts",
+        "./src/globals.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
@@ -925,6 +964,10 @@
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts"
+      ],
+      "./src/functions/getguildvoiceregion.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/maps/guildvoiceregion.ts"
       ],
       "./src/functions/getpresence.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1169,6 +1212,9 @@
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/functions/getguildvoiceregion.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/getpresence.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1183,69 +1229,6 @@
       ]
     },
     "semanticDiagnosticsPerFile": [
-      "./node_modules/@discordjs/collection/dist/index.d.ts",
-      "./node_modules/@types/discord-rpc/index.d.ts",
-      "./node_modules/@types/json-schema/index.d.ts",
-      "./node_modules/@types/node-fetch/externals.d.ts",
-      "./node_modules/@types/node-fetch/index.d.ts",
-      "./node_modules/@types/node/assert.d.ts",
-      "./node_modules/@types/node/async_hooks.d.ts",
-      "./node_modules/@types/node/base.d.ts",
-      "./node_modules/@types/node/buffer.d.ts",
-      "./node_modules/@types/node/child_process.d.ts",
-      "./node_modules/@types/node/cluster.d.ts",
-      "./node_modules/@types/node/console.d.ts",
-      "./node_modules/@types/node/constants.d.ts",
-      "./node_modules/@types/node/crypto.d.ts",
-      "./node_modules/@types/node/dgram.d.ts",
-      "./node_modules/@types/node/dns.d.ts",
-      "./node_modules/@types/node/domain.d.ts",
-      "./node_modules/@types/node/events.d.ts",
-      "./node_modules/@types/node/fs.d.ts",
-      "./node_modules/@types/node/fs/promises.d.ts",
-      "./node_modules/@types/node/globals.d.ts",
-      "./node_modules/@types/node/globals.global.d.ts",
-      "./node_modules/@types/node/http.d.ts",
-      "./node_modules/@types/node/http2.d.ts",
-      "./node_modules/@types/node/https.d.ts",
-      "./node_modules/@types/node/index.d.ts",
-      "./node_modules/@types/node/inspector.d.ts",
-      "./node_modules/@types/node/module.d.ts",
-      "./node_modules/@types/node/net.d.ts",
-      "./node_modules/@types/node/os.d.ts",
-      "./node_modules/@types/node/path.d.ts",
-      "./node_modules/@types/node/perf_hooks.d.ts",
-      "./node_modules/@types/node/process.d.ts",
-      "./node_modules/@types/node/punycode.d.ts",
-      "./node_modules/@types/node/querystring.d.ts",
-      "./node_modules/@types/node/readline.d.ts",
-      "./node_modules/@types/node/repl.d.ts",
-      "./node_modules/@types/node/stream.d.ts",
-      "./node_modules/@types/node/string_decoder.d.ts",
-      "./node_modules/@types/node/timers.d.ts",
-      "./node_modules/@types/node/tls.d.ts",
-      "./node_modules/@types/node/trace_events.d.ts",
-      "./node_modules/@types/node/ts3.4/base.d.ts",
-      "./node_modules/@types/node/ts3.6/base.d.ts",
-      "./node_modules/@types/node/tty.d.ts",
-      "./node_modules/@types/node/url.d.ts",
-      "./node_modules/@types/node/util.d.ts",
-      "./node_modules/@types/node/v8.d.ts",
-      "./node_modules/@types/node/vm.d.ts",
-      "./node_modules/@types/node/wasi.d.ts",
-      "./node_modules/@types/node/worker_threads.d.ts",
-      "./node_modules/@types/node/zlib.d.ts",
-      "./node_modules/discord.js/typings/index.d.ts",
-      "./node_modules/form-data/index.d.ts",
-      "./src/commands/eval.ts",
-      "./src/functions/capitalizewords.ts",
-      "./src/functions/formattimestamp.ts",
-      "./src/functions/getlongago.ts",
-      "./src/functions/getpresence.ts",
-      "./src/globals.ts",
-      "./src/interfaces/icommand.ts",
-      "./src/maps/userstatus.ts",
-      "./src/types/activitytype.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.iterable.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.es2015.collection.d.ts",
