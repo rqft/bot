@@ -12,6 +12,9 @@ module.exports = {
   name: "user",
   aliases: ["u"],
   async run(message, args: string[]) {
+    if (args[0]?.toLowerCase() == "discord") args[0] = "643945264868098049";
+    if (args[0]?.toLowerCase() == "me") args[0] = message.author.id;
+    if (args[0]?.toLowerCase() == "bot") args[0] = client.user?.id!;
     var unresolvedID = args[0]
       ? args[0]?.replace(/\D/g, "")
       : message.author.id;
