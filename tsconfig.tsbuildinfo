@@ -291,8 +291,18 @@
         "signature": "d4530bddb37ed8b05a4bf29886983390152cdaa66571d709a1ebef5898ae2b9c",
         "affectsGlobalScope": false
       },
+      "./src/types/terminalcolors.ts": {
+        "version": "b095b5df3de41e3ab1b63266a2833c072ebfdfccaffe460766fdda397c722e97",
+        "signature": "bb7c47309919986529e0ca781a5e7b850a94897e983a8e684c771314e70018b8",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/makeconsoledeploymessage.ts": {
+        "version": "90b7348c2492dd3520fe39df058e889e11253ab5e78515472a31b3c126acec45",
+        "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
+        "affectsGlobalScope": false
+      },
       "./src/handlers/onready.ts": {
-        "version": "c8eb34e8f442a36521f5aa7ea1c3887a5740117f911e5f798b27274b27a1b235",
+        "version": "3854288dff6d3be5ffbb9281d56e06bf5e6b6f96a71d4e519a89dd35dc66e12c",
         "signature": "b1793374fe3749be19a93df3e88ee6bbb0342436e1f712d7c677bdba2ac184e3",
         "affectsGlobalScope": false
       },
@@ -968,8 +978,13 @@
       "./src/handlers/discordjserror.ts": [
         "./src/logs/logerror.ts"
       ],
+      "./src/handlers/makeconsoledeploymessage.ts": [
+        "./src/index.ts",
+        "./src/types/terminalcolors.ts"
+      ],
       "./src/handlers/onready.ts": [
         "./src/config.ts",
+        "./src/handlers/makeconsoledeploymessage.ts",
         "./src/index.ts",
         "./src/logs/leaveblacklistedguilds.ts"
       ],
@@ -1373,6 +1388,7 @@
       "./src/handlers/commandhandler.ts",
       "./src/handlers/discordjserror.ts",
       "./src/handlers/element.ts",
+      "./src/handlers/makeconsoledeploymessage.ts",
       "./src/handlers/onready.ts",
       "./src/handlers/setuserpresence.ts",
       "./src/index.ts",
@@ -1389,6 +1405,7 @@
       "./src/maps/profilebadge.ts",
       "./src/maps/userstatus.ts",
       "./src/types/activitytype.ts",
+      "./src/types/terminalcolors.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.iterable.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.es2015.collection.d.ts",

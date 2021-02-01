@@ -4,6 +4,7 @@ exports.onReady = void 0;
 const config_1 = require("../config");
 const index_1 = require("../index");
 const leaveBlacklistedGuilds_1 = require("../logs/leaveBlacklistedGuilds");
+const makeConsoleDeployMessage_1 = require("./makeConsoleDeployMessage");
 function onReady() {
     return () => {
         leaveBlacklistedGuilds_1.leaveBlacklistedGuilds();
@@ -12,7 +13,7 @@ function onReady() {
             type: "STREAMING",
             url: "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
         });
-        console.log("Ready");
+        makeConsoleDeployMessage_1.makeConsoleDeployMessage();
     };
 }
 exports.onReady = onReady;

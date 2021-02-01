@@ -1,6 +1,7 @@
 import { config } from "../config";
 import { client } from "../index";
 import { leaveBlacklistedGuilds } from "../logs/leaveBlacklistedGuilds";
+import { makeConsoleDeployMessage } from "./makeConsoleDeployMessage";
 
 export function onReady(): () => void {
   return () => {
@@ -11,6 +12,6 @@ export function onReady(): () => void {
       url:
         "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
     });
-    console.log("Ready");
+    makeConsoleDeployMessage();
   };
 }
