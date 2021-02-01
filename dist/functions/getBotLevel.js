@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBotLevel = void 0;
-const config_1 = require("../config");
+const config_1 = require("../logs/config");
 function getBotLevel(user) {
     var $level = 0;
     const perms = user.permissions.toArray();

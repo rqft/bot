@@ -1,5 +1,5 @@
 import { UserFlagsString } from "discord.js";
-import { IconElement } from "../types/element";
+import { IconElement } from "../handlers/element";
 
 const profileBadgeMap = new Map<UserFlagsString, IconElement>();
 profileBadgeMap.set("BUGHUNTER_LEVEL_1", {

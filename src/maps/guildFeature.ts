@@ -1,5 +1,5 @@
 import { GuildFeatures } from "discord.js";
-import { IconElement } from "../types/element";
+import { IconElement } from "../handlers/element";
 
 const guildFeatureMap = new Map<GuildFeatures, IconElement>();
 guildFeatureMap.set("ANIMATED_ICON", {

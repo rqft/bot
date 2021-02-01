@@ -4,8 +4,8 @@ import { formatTimestamp } from "../functions/formatTimestamp";
 import { getGuildFeatures } from "../functions/getGuildFeatures";
 import { getGuildVoiceRegion } from "../functions/getGuildVoiceRegion";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
-import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { embedColor } from "../logs/globals";
 
 module.exports = {
   name: "server",

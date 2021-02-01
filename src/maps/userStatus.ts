@@ -1,4 +1,4 @@
-import { IconElement } from "../types/element";
+import { IconElement } from "../handlers/element";
 
 const UserStatusMap = new Map<
   "online" | "idle" | "dnd" | "offline" | "invisible",

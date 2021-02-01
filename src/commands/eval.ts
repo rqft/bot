@@ -1,8 +1,8 @@
 import { MessageEmbed } from "discord.js";
 import { client as c } from "..";
-import { config as conf } from "../config";
-import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { config as conf } from "../logs/config";
+import { embedColor } from "../logs/globals";
 module.exports = {
   name: "eval",
   description: "Run code",

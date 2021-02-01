@@ -6,7 +6,7 @@ const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getGuildFeatures_1 = require("../functions/getGuildFeatures");
 const getGuildVoiceRegion_1 = require("../functions/getGuildVoiceRegion");
 const getLongAgo_1 = require("../functions/getLongAgo");
-const globals_1 = require("../globals");
+const globals_1 = require("../logs/globals");
 module.exports = {
     name: "server",
     aliases: ["s"],

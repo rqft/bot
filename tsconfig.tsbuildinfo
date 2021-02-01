@@ -216,21 +216,6 @@
         "signature": "f58c6d0669d1ee04b2fcb0e87fb949b6828602f3f29c7bf6c76a214f16fd50d5",
         "affectsGlobalScope": false
       },
-      "./src/config.ts": {
-        "version": "4d87fdc9e43704def41320b5d5dfa514ffb09a004b8531ef4a6385dfa57968e1",
-        "signature": "10a38c536696c6167cbf3c589e2dc98a6189039c8dee0e7a7953281d17c85f46",
-        "affectsGlobalScope": false
-      },
-      "./src/globals.ts": {
-        "version": "f19f3d585d837fb397d29b19163f6ea18f1f74f20a18070587e0fecb9e4e0784",
-        "signature": "b6f4374ab3633262180393007fe92e2788cb6adb36811c986cd0cbef96a3045d",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/discord-rpc/index.d.ts": {
-        "version": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
-        "signature": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
-        "affectsGlobalScope": false
-      },
       "./node_modules/@discordjs/collection/dist/index.d.ts": {
         "version": "7be7f76b784383fa84812ca7eb8ad10315c9d482c0d25f178645365405509d44",
         "signature": "7be7f76b784383fa84812ca7eb8ad10315c9d482c0d25f178645365405509d44",
@@ -241,18 +226,88 @@
         "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
         "affectsGlobalScope": true
       },
-      "./src/functions/formatid.ts": {
-        "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
-        "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
-        "affectsGlobalScope": false
-      },
       "./src/interfaces/icommand.ts": {
         "version": "3c3260de1ca4b705736bc663af0f3747f6399e4ac78b43adb668d0b27d04a0d6",
         "signature": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
         "affectsGlobalScope": false
       },
+      "./src/logs/config.ts": {
+        "version": "4d87fdc9e43704def41320b5d5dfa514ffb09a004b8531ef4a6385dfa57968e1",
+        "signature": "10a38c536696c6167cbf3c589e2dc98a6189039c8dee0e7a7953281d17c85f46",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/formatid.ts": {
+        "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
+        "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logblacklisteduseraction.ts": {
+        "version": "97e056348c9dc9663b52404c1b47e79e3429ea5ef4ee7c12cf23d2611b9f1213",
+        "signature": "b96676b3c49d5eaa72db374e680a7588113f8c47bc9ceb2d9fe0190eef4037bb",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logcommanderror.ts": {
+        "version": "e03f0bcadfa477af2695ebc3734c4ee99ec09609cbd6ce40a5e8ae22cd0bd85e",
+        "signature": "1995e28e06ec513ecad6f84bbffdbcda4d9806df52f5f0b6abe20f9ab02036a2",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logcommanduse.ts": {
+        "version": "cb593f76195a69e5f22ace7521c51c52a16f24dd2c910fc4189e42d4ed68f657",
+        "signature": "40678e757c4c19e2f53d6bb22f6005fadeb0e2c362c6739abe21f1e0069ef950",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/commandhandler.ts": {
+        "version": "52b76c2595fb25728832aad939a93cfcd204c43e06c13708fec8a4536b5166e6",
+        "signature": "c1b88ca7c1b71f65b6f80871e77886a561934258324a2f85f3f50408a67ebf04",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logerror.ts": {
+        "version": "4d226ecc171715189c7d93e0494a26072242c74fdec402eb45b820ab4c19be49",
+        "signature": "1d3b33d5ee486783b3d29f7f10a2920b0e18e8ebb9fab54795fa17fa7221eb1e",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/discordjserror.ts": {
+        "version": "49fe4a76fd8b49fed0e4ca3d7a14cb6cb0d51f91c0babbeb014defead628c486",
+        "signature": "6d2151ca8efebbaedb9de14f4b957ff4a39d6ab7981c5078bd97de4f29ee520f",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logblacklistedguild.ts": {
+        "version": "9cc06f2e28dd43a88ad9d76c487b1805b27cff2afd39c5ec137a94f6d222777f",
+        "signature": "cc8cfbc13e7c11dd9a44409dade33b08755bfa7e80433e125d6a3a0cc9b14a94",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logblacklistedguildowner.ts": {
+        "version": "0b9ce046bd80f7feb8e6b8d8781a191cf02d2f42d85bb53c6489fc1b5e8a3ebc",
+        "signature": "524e31e70f42e6bba9b95f1c7260318a47c6b819e37af253310b4db3411e2bd4",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/leaveblacklistedguilds.ts": {
+        "version": "35cc0e11f363a768178b1d0865ffc9c97c0a8aa1743576088dc1e033df8247ef",
+        "signature": "d4530bddb37ed8b05a4bf29886983390152cdaa66571d709a1ebef5898ae2b9c",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/onready.ts": {
+        "version": "86d2982ed435c50133dc6a9c7e0d744094fec5e7d2bd48e857427144b1640027",
+        "signature": "b1793374fe3749be19a93df3e88ee6bbb0342436e1f712d7c677bdba2ac184e3",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/discord-rpc/index.d.ts": {
+        "version": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
+        "signature": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/setuserpresence.ts": {
+        "version": "b1752154c7c301f0d8911cf654fe63c1f34e235db6396c604d2cc083b58799a2",
+        "signature": "5115fe3f03da4c2714b56ed9b005321ef9c317f4ff66304db568f28247974582",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/globals.ts": {
+        "version": "f19f3d585d837fb397d29b19163f6ea18f1f74f20a18070587e0fecb9e4e0784",
+        "signature": "b6f4374ab3633262180393007fe92e2788cb6adb36811c986cd0cbef96a3045d",
+        "affectsGlobalScope": false
+      },
       "./src/index.ts": {
-        "version": "89ccd8dad12b44af6df878ca1bf3dac8fbe152f5207568b56ba7b909312e7036",
+        "version": "2374cbc676dc0ea555c9de211f0e61d0591f1ac145418d52cdbb0bff709d9d81",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -267,7 +322,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "b4361315b13022f09f051d03a78f86a2d11f972fed55c975604e9eb7c9956f22",
+        "version": "4879c4934509f5561f8c6a7eae76eb82715f012e022b65bf39589a381844ba2d",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -282,18 +337,18 @@
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "90ae6003eff6d16db97f36c42d8c40f8867ee8e641f439312326d1c1224bc83d",
+        "version": "6f3849f2a72beffea8efc6375e4af36f97a8ff5d187c7cb8e3ae1c89f54362a7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
-      "./src/types/element.ts": {
+      "./src/handlers/element.ts": {
         "version": "d2a1e169450f9a3bdbd71395948df317e972e304187dfe46bf9bc0367a6fc833",
         "signature": "035947c8311963edb228b4df38332ccca3d4db8959d89ae41f491ebb315be33e",
         "affectsGlobalScope": false
       },
       "./src/maps/guildfeature.ts": {
-        "version": "115a04f889e53d31aee2d2f0df11eb35185e60c2152c761140e4d5fc962343c0",
-        "signature": "fa5ea1ace8594389c40197eee1bc13f09c5eb31f8d0321d6f5c987233b87a2b9",
+        "version": "f5d77ddd52ce1fd34985e739686b8ddbe0edc7dc9a44462122b700b6ab48fe75",
+        "signature": "f0e52ae7fc536bfbfe59c953ae0a131d617fe2a80dcb896a93e376457d73beb3",
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
@@ -302,8 +357,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/guildvoiceregion.ts": {
-        "version": "445ad2cee5a9e0fc8393329f0e6e44f64343426799df2611c0679d75dc524200",
-        "signature": "dbf610434ea8f2bd1d7fcd5e76ade9717878a6053741fed5d7620fddbd47c2bd",
+        "version": "4d81674fc67326c46a6da7efa0de919d05fdaebe78723c4feafd51ea4ebe1d01",
+        "signature": "3dfe68ebd5528d6f8a858cb2d94976879be35d81fe0fa014098916260222fb60",
         "affectsGlobalScope": false
       },
       "./src/functions/getguildvoiceregion.ts": {
@@ -312,18 +367,18 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "2ed918f856a407097bc7bfb8b0be6b9b49d600496cbb853935c5b37e3e79fe3b",
+        "version": "eb33802a031208b8e25ecf35a3db968cc9043453119d79f71b76604cb3df9754",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/functions/getbotlevel.ts": {
-        "version": "ef40e86da265829dc0c09eb3d2dc2eaa2ecacdfdce07154028b3f84a18ef722c",
+        "version": "6211416b7c00e200d2e2659ff989178e44478409bf494d32d4564a89ad7797bf",
         "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
         "affectsGlobalScope": false
       },
       "./src/maps/userstatus.ts": {
-        "version": "645613d29f5177eb1e8e0a68fdd3c6749906d53ae1743e98b6c4cf531914646b",
-        "signature": "52b67cfad050b1411f5883a9b6d67d2b4ba1b8ffdd33eaba20c74d025f797ec4",
+        "version": "fd573c15f93d78381581d9ae5b6ace28b99f31d566d21faddae2985ec4078e48",
+        "signature": "95f034d717840453cb011651a79f77aea7a8172629878296ff643159dca0f065",
         "affectsGlobalScope": false
       },
       "./src/functions/getpresence.ts": {
@@ -332,8 +387,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/profilebadge.ts": {
-        "version": "f0a70be3f088a599ef048eb1644c0ccbf5272db728f3b86cefb397b30a8d7eb7",
-        "signature": "2ef1340888682a842d390532ea93a9d091d7369a19b9a1f6400444afee4d6c81",
+        "version": "29a3d2acf2e6c5a0dcd402676dd302bf858cca0c138aae841ba3633790724554",
+        "signature": "ee90a0d61057d5813dec759c5a158229adaab1260ca5a2d5e99ba5a487f8ffc9",
         "affectsGlobalScope": false
       },
       "./src/functions/getprofilebadges.ts": {
@@ -347,18 +402,13 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getuserpermissions.ts": {
-        "version": "d4d7bad048c56bec28f1353dcb21a1a4f4ff9043f430f7d400afe5ec70fd21e7",
+        "version": "39bedfab12a1eb0e830563fe0d2695f5e6ebe4a09827cdc757080715bf01a4f0",
         "signature": "2c751c767068ce065e2213f230487380c08188c95b71e72943553bde04a2f02f",
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "3757c33651371f794a31638b77cbfc1ee0940dfed2b632723ba51530a4787c81",
+        "version": "7e1473bbc8e3660b992939ee80cdc995eb840a3229fc3466b9f68899efcdc9a5",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./src/handlers/error.ts": {
-        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "./src/types/activitytype.ts": {
@@ -838,12 +888,12 @@
       ],
       "./src/commands/about.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts",
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
-        "./src/globals.ts",
         "./src/index.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/interfaces/icommand.ts",
+        "./src/logs/config.ts",
+        "./src/logs/globals.ts"
       ],
       "./src/commands/avatar.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -854,10 +904,10 @@
       ],
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts",
-        "./src/globals.ts",
         "./src/index.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/interfaces/icommand.ts",
+        "./src/logs/config.ts",
+        "./src/logs/globals.ts"
       ],
       "./src/commands/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -865,9 +915,9 @@
         "./src/functions/getguildfeatures.ts",
         "./src/functions/getguildvoiceregion.ts",
         "./src/functions/getlongago.ts",
-        "./src/globals.ts",
         "./src/index.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/interfaces/icommand.ts",
+        "./src/logs/globals.ts"
       ],
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -877,13 +927,13 @@
         "./src/functions/getpresence.ts",
         "./src/functions/getprofilebadges.ts",
         "./src/functions/getuserpermissions.ts",
-        "./src/globals.ts",
         "./src/index.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/interfaces/icommand.ts",
+        "./src/logs/globals.ts"
       ],
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts"
+        "./src/logs/config.ts"
       ],
       "./src/functions/getguildfeatures.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -903,35 +953,98 @@
       ],
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts",
-        "./src/functions/capitalizewords.ts"
+        "./src/functions/capitalizewords.ts",
+        "./src/logs/config.ts"
+      ],
+      "./src/handlers/commandhandler.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/logs/config.ts",
+        "./src/logs/logblacklisteduseraction.ts",
+        "./src/logs/logcommanderror.ts",
+        "./src/logs/logcommanduse.ts"
+      ],
+      "./src/handlers/discordjserror.ts": [
+        "./src/logs/logerror.ts"
+      ],
+      "./src/handlers/onready.ts": [
+        "./src/index.ts",
+        "./src/logs/config.ts",
+        "./src/logs/leaveblacklistedguilds.ts"
+      ],
+      "./src/handlers/setuserpresence.ts": [
+        "./node_modules/@types/discord-rpc/index.d.ts",
+        "./node_modules/@types/node/process.d.ts",
+        "./src/logs/config.ts"
       ],
       "./src/index.ts": [
-        "./node_modules/@types/discord-rpc/index.d.ts",
         "./node_modules/@types/node/fs.d.ts",
-        "./node_modules/@types/node/process.d.ts",
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts",
-        "./src/functions/formatid.ts",
-        "./src/globals.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/handlers/commandhandler.ts",
+        "./src/handlers/discordjserror.ts",
+        "./src/handlers/onready.ts",
+        "./src/handlers/setuserpresence.ts",
+        "./src/logs/config.ts",
+        "./src/logs/globals.ts"
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/logs/leaveblacklistedguilds.ts": [
+        "./src/index.ts",
+        "./src/logs/config.ts",
+        "./src/logs/logblacklistedguild.ts",
+        "./src/logs/logblacklistedguildowner.ts"
+      ],
+      "./src/logs/logblacklistedguild.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formatid.ts",
+        "./src/index.ts",
+        "./src/logs/config.ts"
+      ],
+      "./src/logs/logblacklistedguildowner.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formatid.ts",
+        "./src/index.ts",
+        "./src/logs/config.ts"
+      ],
+      "./src/logs/logblacklisteduseraction.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formatid.ts",
+        "./src/index.ts",
+        "./src/logs/config.ts"
+      ],
+      "./src/logs/logcommanderror.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formatid.ts",
+        "./src/index.ts",
+        "./src/logs/config.ts"
+      ],
+      "./src/logs/logcommanduse.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formatid.ts",
+        "./src/index.ts",
+        "./src/logs/config.ts"
+      ],
+      "./src/logs/logerror.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/index.ts",
+        "./src/logs/config.ts"
+      ],
       "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ],
       "./src/maps/guildvoiceregion.ts": [
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ],
       "./src/maps/profilebadge.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ],
       "./src/maps/userstatus.ts": [
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ]
     },
     "exportedModulesMap": {
@@ -1145,25 +1258,43 @@
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/handlers/commandhandler.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/index.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/logs/logblacklistedguild.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/logs/logblacklistedguildowner.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/logs/logblacklisteduseraction.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/logs/logcommanderror.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/logs/logcommanduse.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ],
       "./src/maps/guildvoiceregion.ts": [
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ],
       "./src/maps/profilebadge.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ],
       "./src/maps/userstatus.ts": [
-        "./src/types/element.ts"
+        "./src/handlers/element.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -1226,7 +1357,6 @@
       "./src/commands/eval.ts",
       "./src/commands/server.ts",
       "./src/commands/user.ts",
-      "./src/config.ts",
       "./src/functions/capitalizewords.ts",
       "./src/functions/formatid.ts",
       "./src/functions/formattimestamp.ts",
@@ -1238,16 +1368,27 @@
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
       "./src/functions/getuserpermissions.ts",
-      "./src/globals.ts",
-      "./src/handlers/error.ts",
+      "./src/handlers/commandhandler.ts",
+      "./src/handlers/discordjserror.ts",
+      "./src/handlers/element.ts",
+      "./src/handlers/onready.ts",
+      "./src/handlers/setuserpresence.ts",
       "./src/index.ts",
       "./src/interfaces/icommand.ts",
+      "./src/logs/config.ts",
+      "./src/logs/globals.ts",
+      "./src/logs/leaveblacklistedguilds.ts",
+      "./src/logs/logblacklistedguild.ts",
+      "./src/logs/logblacklistedguildowner.ts",
+      "./src/logs/logblacklisteduseraction.ts",
+      "./src/logs/logcommanderror.ts",
+      "./src/logs/logcommanduse.ts",
+      "./src/logs/logerror.ts",
       "./src/maps/guildfeature.ts",
       "./src/maps/guildvoiceregion.ts",
       "./src/maps/profilebadge.ts",
       "./src/maps/userstatus.ts",
       "./src/types/activitytype.ts",
-      "./src/types/element.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.iterable.d.ts",
       "../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.es2015.collection.d.ts",
