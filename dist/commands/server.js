@@ -8,7 +8,7 @@ const getGuildVoiceRegion_1 = require("../functions/getGuildVoiceRegion");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const globals_1 = require("../globals");
 module.exports = {
-    name: "server",
+    on: "server",
     aliases: ["s"],
     usage: "[server]",
     async run(message, args) {

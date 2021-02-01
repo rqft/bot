@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = {
-    name: "owo",
+    on: "owo",
     description: "OWO",
     aliases: ["uwu", "owoify", "uwuify"],
     usage: "[text]",

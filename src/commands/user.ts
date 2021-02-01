@@ -11,7 +11,7 @@ import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "user",
+  on: "user",
   aliases: ["u"],
   usage: "[user]",
   async run(message, args: string[]) {

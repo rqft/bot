@@ -8,7 +8,7 @@ import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "server",
+  on: "server",
   aliases: ["s"],
   usage: "[server]",
   async run(message, args: string[]) {

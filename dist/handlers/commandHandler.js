@@ -32,7 +32,7 @@ function commandHandler(message) {
     if (command.usesArgs && !args.length) {
         let reply = `:warning: You didn't provide any arguments;`;
         if (command.usage) {
-            reply += ` The proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+            reply += ` The proper usage would be: \`${prefix}${command.on} ${command.usage}\``;
         }
         return message.channel.send(reply);
     }

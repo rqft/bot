@@ -5,7 +5,7 @@ import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "avatar",
+  on: "avatar",
   aliases: ["av"],
   usage: "[user]",
   async run(message, args: string[]) {

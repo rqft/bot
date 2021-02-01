@@ -1,7 +1,7 @@
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "owo",
+  on: "owo",
   // usesArgs: true,
   description: "OWO",
   aliases: ["uwu", "owoify", "uwuify"],

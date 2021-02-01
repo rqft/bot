@@ -4,7 +4,7 @@ const __1 = require("..");
 const getFileExtension_1 = require("../functions/getFileExtension");
 const getLongAgo_1 = require("../functions/getLongAgo");
 module.exports = {
-    name: "avatar",
+    on: "avatar",
     aliases: ["av"],
     usage: "[user]",
     async run(message, args) {

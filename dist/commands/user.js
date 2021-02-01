@@ -11,7 +11,7 @@ const getProfileBadges_1 = require("../functions/getProfileBadges");
 const getUserPermissions_1 = require("../functions/getUserPermissions");
 const globals_1 = require("../globals");
 module.exports = {
-    name: "user",
+    on: "user",
     aliases: ["u"],
     usage: "[user]",
     async run(message, args) {
