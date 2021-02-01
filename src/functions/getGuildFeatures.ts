@@ -4,7 +4,7 @@ import { guildFeatureMap } from "../maps/guildFeature";
 export function getGuildFeatures(guild: Guild, showIcons: boolean = true) {
   const feat = [];
   if (guild.me) {
-    feat.push("<:Hallucinate:800092998590529557> Uses Hallucinate (ty)");
+    feat.push("<:Hallucinate:800092998590529557> Uses Hallucinate <3");
   }
   guild.features.forEach((element) => {
     feat.push(

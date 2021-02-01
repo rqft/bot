@@ -367,7 +367,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
-        "version": "9e526b946165f37a5065d26081dfbdda2ebafbb3f86406e0bacfec5198ce890e",
+        "version": "2003caf510597b90d9227c4ea77a0ad3d296b057bcf7548ce8f3c5d9dbed201d",
         "signature": "fba739a8faa2a212e6e657a05985fd6c56692cb1d56455ab01ac76c15c8cb4ce",
         "affectsGlobalScope": false
       },
