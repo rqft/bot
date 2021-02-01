@@ -39,15 +39,16 @@ exports.client.on("message", async (message) => {
     if (message.content.match(prefixRegex) == null)
         return;
     const prefix = message.content.match(prefixRegex).join("");
-    if (config_1.config.blacklist.users.includes(message.author.id)) {
-        logBlacklistedUserAction(message);
-    }
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
     const command = exports.commands.get(commandName) ||
         exports.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command)
         return;
+    if (config_1.config.blacklist.users.includes(message.author.id)) {
+        logBlacklistedUserAction(message);
+        return await message.react("⚠");
+    }
     if (command.restrictions &&
         command.restrictions.ownerOnly &&
         !config_1.config.bot.ownerIds.includes(message.author.id))

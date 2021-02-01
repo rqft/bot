@@ -42,13 +42,6 @@ client.on("message", async (message) => {
   const prefix = message.content.match(prefixRegex)!.join("");
 
   /**
-   * Blacklist
-   */
-  if (config.blacklist.users.includes(message.author.id)) {
-    logBlacklistedUserAction(message);
-  }
-
-  /**
    * Arguments passed to the command
    */
   const args = message.content.slice(prefix!.length).trim().split(/ +/);
@@ -67,6 +60,14 @@ client.on("message", async (message) => {
    * This is obvious lol
    */
   if (!command) return;
+
+  /**
+   * Blacklist
+   */
+  if (config.blacklist.users.includes(message.author.id)) {
+    logBlacklistedUserAction(message);
+    return await message.react("⚠");
+  }
 
   /**
    * Restriction Stuff
