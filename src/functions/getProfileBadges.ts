@@ -12,9 +12,9 @@ export function getProfileBadges(
       : userResolvable;
   user.flags?.toArray().forEach((e) => {
     const get = profileBadgeMap.get(e);
-    badges.push(`${showIcons ? get?.icon : ""} **${get?.text}**`);
+    badges.push(`${showIcons ? get?.icon : ""} ${get?.text}`);
   });
-  if (user.bot) badges.unshift(`${showIcons ? ":gear:" : ""} **Bot**`);
+  if (user.bot) badges.unshift(`${showIcons ? ":gear:" : ""} Bot`);
   if (badges.length == 0) return ["No Badges"];
   return badges;
 }

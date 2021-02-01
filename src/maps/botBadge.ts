@@ -32,8 +32,8 @@ botBadgeMap.set("697071919639560254", [
 ]);
 botBadgeMap.set("411994935395614761", [
   {
-    icon: ":ok:",
-    text: "",
+    icon: ":+1:",
+    text: "ok",
   },
 ]);
 export { botBadgeMap };
