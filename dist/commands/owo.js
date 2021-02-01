@@ -9,9 +9,7 @@ module.exports = {
     async run(message, args) {
         const text = args.length
             ? args.join(" ")
-            : await message.channel.messages
-                .fetch({ limit: 1 })
-                .then((e) => e.filter((e) => e !== message).first()?.content);
+            : await message.channel.lastMessage?.content;
         message.channel.send(new discord_js_1.MessageEmbed({
             description: text.replace(/[lr]/g, "w").replace(/[LR]/g, "W"),
         }));
