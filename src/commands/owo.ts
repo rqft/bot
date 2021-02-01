@@ -1,7 +1,7 @@
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "fetchMessages",
+  on: "owo",
   usesArgs: true,
   description: "owowowowowowowowowowo",
   aliases: ["uwu", "owoify", "uwuify"],

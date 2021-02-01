@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = {
-    on: "fetchMessages",
+    on: "owo",
     usesArgs: true,
     description: "owowowowowowowowowowo",
     aliases: ["uwu", "owoify", "uwuify"],
