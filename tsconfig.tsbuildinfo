@@ -237,8 +237,8 @@
         "affectsGlobalScope": true
       },
       "./src/interfaces/icommand.ts": {
-        "version": "3c3260de1ca4b705736bc663af0f3747f6399e4ac78b43adb668d0b27d04a0d6",
-        "signature": "9288d76ab62e464c29f7c5804c4c4b31891b58d6ebed84606e04d32a7db01157",
+        "version": "2549362a26c23560d9e666e73a89881008b4be573c696578d81fe300df6ad3bd",
+        "signature": "84fd93ee312c756727be222eb04d17c3f8ce56021780cd912d10a48e7c451ace",
         "affectsGlobalScope": false
       },
       "./src/functions/formatid.ts": {
@@ -358,6 +358,11 @@
       },
       "./src/commands/help.ts": {
         "version": "2f6a066200c0d1fe9276c7686788b6b3b97c886161a6b5d0e2980fa2267274ef",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/owo.ts": {
+        "version": "2b6c863575ec8bac2fdaf98d039672a17cadaa9d89732bb6c8ef6b9aee22e1f8",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -944,6 +949,10 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/owo.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
@@ -1417,6 +1426,7 @@
       "./src/commands/avatar.ts",
       "./src/commands/eval.ts",
       "./src/commands/help.ts",
+      "./src/commands/owo.ts",
       "./src/commands/server.ts",
       "./src/commands/user.ts",
       "./src/config.ts",

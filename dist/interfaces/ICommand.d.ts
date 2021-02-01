@@ -10,5 +10,5 @@ export interface ICommand {
         permissions?: PermissionResolvable[];
     };
     usesArgs?: boolean;
-    run: (message: Message, args?: string[]) => Promise<any>;
+    run: (message: Message, args: string[]) => Promise<any>;
 }
