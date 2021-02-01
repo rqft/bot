@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+    "publish": "git add . && git commit -m"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
