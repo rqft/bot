@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 module.exports = {
     on: "fetchMessages",
-    description: "OWO",
+    usesArgs: true,
+    description: "owowowowowowowowowowo",
     aliases: ["uwu", "owoify", "uwuify"],
     usage: "[count: number]",
     async run(message) {
@@ -13,7 +14,9 @@ module.exports = {
         await message.channel.send(".\n" +
             messages
                 .array()
-                .map((e) => `\`${e.author.tag}\` ${e.content}`)
-                .join("\n"));
+                .map((e) => `${e.content}`)
+                .join("\n")
+                .replace(/[lr]/g, "w")
+                .replace(/[LR]/g, "W"));
     },
 };

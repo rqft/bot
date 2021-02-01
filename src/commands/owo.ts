@@ -2,8 +2,8 @@ import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
   on: "fetchMessages",
-  // usesArgs: true,
-  description: "OWO",
+  usesArgs: true,
+  description: "owowowowowowowowowowo",
   aliases: ["uwu", "owoify", "uwuify"],
   usage: "[count: number]",
   async run(message) {
@@ -15,8 +15,10 @@ module.exports = {
       ".\n" +
         messages
           .array()
-          .map((e) => `\`${e.author.tag}\` ${e.content}`)
+          .map((e) => `${e.content}`)
           .join("\n")
+          .replace(/[lr]/g, "w")
+          .replace(/[LR]/g, "W")
     );
   },
 } as ICommand;
