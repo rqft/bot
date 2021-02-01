@@ -1,3 +1,5 @@
+import { IconElement } from "../types/element";
+
 const enum VoiceRegionString {
   BRAZIL = "brazil",
   EU_CENTRAL = "eu-central",
@@ -16,10 +18,7 @@ const enum VoiceRegionString {
   US_SOUTH = "us-south",
   US_WEST = "us-west",
 }
-const guildVoiceRegionMap = new Map<
-  VoiceRegionString,
-  { icon: string; text: string }
->();
+const guildVoiceRegionMap = new Map<VoiceRegionString, IconElement>();
 guildVoiceRegionMap.set(VoiceRegionString.BRAZIL, {
   icon: ":flag_br:",
   text: "Brazil",

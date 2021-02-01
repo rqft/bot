@@ -1,6 +1,4 @@
 import { GuildFeatures } from "discord.js";
-declare const guildFeatureMap: Map<GuildFeatures, {
-    icon: string;
-    text: string;
-}>;
+import { IconElement } from "../types/element";
+declare const guildFeatureMap: Map<GuildFeatures, IconElement>;
 export { guildFeatureMap };

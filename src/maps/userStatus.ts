@@ -1,6 +1,8 @@
+import { IconElement } from "../types/element";
+
 const UserStatusMap = new Map<
   "online" | "idle" | "dnd" | "offline" | "invisible",
-  { icon: string; text: string }
+  IconElement
 >();
 UserStatusMap.set("dnd", {
   icon: "<:IconStatus_Dnd:798624244669087805>",

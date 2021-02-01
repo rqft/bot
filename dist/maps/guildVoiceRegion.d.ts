@@ -1,3 +1,4 @@
+import { IconElement } from "../types/element";
 declare const enum VoiceRegionString {
     BRAZIL = "brazil",
     EU_CENTRAL = "eu-central",
@@ -16,8 +17,5 @@ declare const enum VoiceRegionString {
     US_SOUTH = "us-south",
     US_WEST = "us-west"
 }
-declare const guildVoiceRegionMap: Map<VoiceRegionString, {
-    icon: string;
-    text: string;
-}>;
+declare const guildVoiceRegionMap: Map<VoiceRegionString, IconElement>;
 export { VoiceRegionString, guildVoiceRegionMap };
