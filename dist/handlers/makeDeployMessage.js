@@ -12,7 +12,7 @@ function makeDeployMessage(pubChannels) {
         `Fetching Guilds...`,
         __1.client.guilds.cache
             .array()
-            .map((e) => `✅ Deployed to \`${e.name.padEnd(60)}\` ${formatID_1.formatID(e.id)} (${__1.client.user}) (${`\`owned by ${e.owner?.user.tag}\``})`)
+            .map((e) => `✅ \`Deployed to ${e.name.padEnd(60)}\` ${formatID_1.formatID(e.id)} (${__1.client.user}) (${`\`owned by ${e.owner?.user.tag}\``})`)
             .join("\n"),
         "Ready!",
     ];

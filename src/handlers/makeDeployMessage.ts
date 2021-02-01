@@ -13,7 +13,7 @@ export function makeDeployMessage(pubChannels: string[]) {
       .array()
       .map(
         (e) =>
-          `✅ Deployed to \`${e.name.padEnd(60)}\` ${formatID(e.id)} (${
+          `✅ \`Deployed to ${e.name.padEnd(60)}\` ${formatID(e.id)} (${
             client.user
           }) (${`\`owned by ${e.owner?.user.tag}\``})`
       )

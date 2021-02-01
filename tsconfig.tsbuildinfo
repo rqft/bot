@@ -307,7 +307,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/makedeploymessage.ts": {
-        "version": "2aa8ad5556e614fb6b8cfb09da6ebace623abc51f8633c8fff4bea7dac8b84e9",
+        "version": "c4f9fcc8dc1d84ba434ea14ea9bdcec618d2d610830ef67ddbc2a21bf377a138",
         "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
         "affectsGlobalScope": false
       },
