@@ -367,7 +367,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
-        "version": "2003caf510597b90d9227c4ea77a0ad3d296b057bcf7548ce8f3c5d9dbed201d",
+        "version": "4a2853d238223dcb0f2201661d31f92dc14e948d4f60237b91e569f4326aaa85",
         "signature": "fba739a8faa2a212e6e657a05985fd6c56692cb1d56455ab01ac76c15c8cb4ce",
         "affectsGlobalScope": false
       },
@@ -967,6 +967,7 @@
       ],
       "./src/functions/getguildfeatures.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
+        "./src/config.ts",
         "./src/maps/guildfeature.ts"
       ],
       "./src/functions/getguildvoiceregion.ts": [
