@@ -1,3 +1,4 @@
+import { owoify } from "../functions/owoify";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -5,20 +6,8 @@ module.exports = {
   usesArgs: true,
   description: "owowowowowowowowowowo",
   aliases: ["uwu", "owoify", "uwuify"],
-  usage: "[count: number]",
-  async run(message) {
-    const messages = await message.channel.messages.fetch({
-      before: message.id,
-      limit: 1,
-    });
-    await message.channel.send(
-      ".\n" +
-        messages
-          .array()
-          .map((e) => `${e.content}`)
-          .join("\n")
-          .replace(/[lr]/g, "w")
-          .replace(/[LR]/g, "W")
-    );
+  usage: "<text: string>",
+  async run(message, args) {
+    await message.channel.send(owoify(args.join(" ")));
   },
 } as ICommand;

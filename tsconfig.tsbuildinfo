@@ -346,8 +346,13 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/functions/owoify.ts": {
+        "version": "fcbb07027de3b6cd56c4d9c40375dc4ae3d5d5ab16b2b61bbfed3a5d706cb087",
+        "signature": "1f59d0ad8d35582d4ac868b1f0283f51310fff9fafc3c9b06367f8005e3706af",
+        "affectsGlobalScope": false
+      },
       "./src/commands/owo.ts": {
-        "version": "fa40842cbbc90a078d94ca521806e2422b47f03aecc9f85c4633367a69121c06",
+        "version": "a06db63c73feed4f6b26706230655fabff4812d1749fbffa541464c77e3c3e08",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -952,6 +957,7 @@
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/owo.ts": [
+        "./src/functions/owoify.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/server.ts": [
@@ -1442,6 +1448,7 @@
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
       "./src/functions/getuserpermissions.ts",
+      "./src/functions/owoify.ts",
       "./src/globals.ts",
       "./src/handlers/commandhandler.ts",
       "./src/handlers/discordjserror.ts",
