@@ -291,8 +291,28 @@
         "signature": "d4530bddb37ed8b05a4bf29886983390152cdaa66571d709a1ebef5898ae2b9c",
         "affectsGlobalScope": false
       },
+      "./src/types/terminalcolors.ts": {
+        "version": "b095b5df3de41e3ab1b63266a2833c072ebfdfccaffe460766fdda397c722e97",
+        "signature": "bb7c47309919986529e0ca781a5e7b850a94897e983a8e684c771314e70018b8",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/makeconsoledeploymessage.ts": {
+        "version": "f5bc71307cf353a31cc5550dfc8ec2fc4a26b207a58a4ba9be0a13967e54694f",
+        "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/formattimestamp.ts": {
+        "version": "c7708931dc76c1b9463ca16d6f2e2f588fecd61ef1f4831a978a8d2d4c9b33cd",
+        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/makedeploymessage.ts": {
+        "version": "2aa8ad5556e614fb6b8cfb09da6ebace623abc51f8633c8fff4bea7dac8b84e9",
+        "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
+        "affectsGlobalScope": false
+      },
       "./src/handlers/onready.ts": {
-        "version": "60da48db9d96b9c1c929ff6b770c7f4ebb35cb1826cf861759afe6521a312290",
+        "version": "7dd7215ddf41609c8c851f70bbc9b223794373a67341f1efcb974672cb29f34a",
         "signature": "68d7f746b0aa8f91a540221b872df5aaacdee0740215aea049386cc653c6f725",
         "affectsGlobalScope": false
       },
@@ -309,11 +329,6 @@
       "./src/index.ts": {
         "version": "6015b0461cd199f272a5330871d663a149590e91399647c9ea92db3c945e203e",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/formattimestamp.ts": {
-        "version": "c7708931dc76c1b9463ca16d6f2e2f588fecd61ef1f4831a978a8d2d4c9b33cd",
-        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
         "affectsGlobalScope": false
       },
       "./src/functions/getlongago.ts": {
@@ -434,21 +449,6 @@
       "./src/commands/user.ts": {
         "version": "ea51f9244d97a01803918fcc4c52fdc2219d5444db93b81834fd6ba4cf3f0c09",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./src/types/terminalcolors.ts": {
-        "version": "b095b5df3de41e3ab1b63266a2833c072ebfdfccaffe460766fdda397c722e97",
-        "signature": "bb7c47309919986529e0ca781a5e7b850a94897e983a8e684c771314e70018b8",
-        "affectsGlobalScope": false
-      },
-      "./src/handlers/makeconsoledeploymessage.ts": {
-        "version": "f5bc71307cf353a31cc5550dfc8ec2fc4a26b207a58a4ba9be0a13967e54694f",
-        "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
-        "affectsGlobalScope": false
-      },
-      "./src/handlers/makedeploymessage.ts": {
-        "version": "2aa8ad5556e614fb6b8cfb09da6ebace623abc51f8633c8fff4bea7dac8b84e9",
-        "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
         "affectsGlobalScope": false
       },
       "./src/types/activitytype.ts": {
@@ -1037,6 +1037,8 @@
       ],
       "./src/handlers/onready.ts": [
         "./src/config.ts",
+        "./src/handlers/makeconsoledeploymessage.ts",
+        "./src/handlers/makedeploymessage.ts",
         "./src/index.ts",
         "./src/logs/leaveblacklistedguilds.ts"
       ],

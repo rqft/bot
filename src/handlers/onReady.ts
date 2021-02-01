@@ -1,10 +1,12 @@
 import { config } from "../config";
 import { client } from "../index";
 import { leaveBlacklistedGuilds } from "../logs/leaveBlacklistedGuilds";
+import { makeConsoleDeployMessage } from "./makeConsoleDeployMessage";
+import { makeDeployMessage } from "./makeDeployMessage";
 
 export function onReady() {
-  // makeConsoleDeployMessage();
-  // makeDeployMessage(config.logs.starts.keys);
+  makeConsoleDeployMessage();
+  makeDeployMessage(config.logs.starts.keys);
   console.log("ok");
   leaveBlacklistedGuilds();
   client.user?.setActivity(config.bot.presence.activity.name, {
