@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "publish": "git add . && git commit -m"
+    "p/publish": "git add . && git commit -m",
+    "p/deploy": "git push -u origin main",
+    "start": "nodemon dist"
   },
   "keywords": [],
   "author": "",
