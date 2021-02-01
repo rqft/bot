@@ -407,7 +407,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getpresence.ts": {
-        "version": "1c4d5be9ca93cc2a80f55ccc37f0b2415972bc9d8d1a15f8ace1cf40b9ee553a",
+        "version": "cd894b4a545ef125d840d42bab71e05a6563804a8bb00913d13fd4594b8ea465",
         "signature": "e431ec1919c452fa62d687b0e95ad22f94c9aac5058c8ad9cc695a8804f8cac8",
         "affectsGlobalScope": false
       },

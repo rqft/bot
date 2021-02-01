@@ -10,7 +10,9 @@ function getPresence(user, maxTextLength = 45) {
     const statuses = [];
     for (const item of pres.activities) {
         if (item.type == "CUSTOM_STATUS") {
-            const e = item.emoji ? item.emoji : "";
+            const e = item.emoji
+                ? item.emoji
+                : "<:IconGui_RichPresence:798624241351655514>";
             const text = item.state
                 ? `${item.state.slice(0, maxTextLength)}${item.state.length > maxTextLength ? "..." : ""}`
                 : "";
