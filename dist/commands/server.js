@@ -27,7 +27,7 @@ module.exports = {
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
         emb.setThumbnail(guild.iconURL({ dynamic: true }));
-        emb.addField("❯ Server Info", `:gear: **ID**: ${guild.id},
+        emb.addField("❯ Server Info", `:gear: **ID**: \`${guild.id}\`
 <:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);

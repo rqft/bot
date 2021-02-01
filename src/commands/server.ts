@@ -27,7 +27,7 @@ module.exports = {
     emb.setThumbnail(guild.iconURL({ dynamic: true })!);
     emb.addField(
       "❯ Server Info",
-      `:gear: **ID**: ${guild.id},
+      `:gear: **ID**: \`${guild.id}\`
 <:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion(
         guild

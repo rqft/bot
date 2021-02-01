@@ -367,8 +367,8 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
-        "version": "ec51bfa12d4b3664a1f7cfc8f26f68076506cb0c9d873ffaebfeb6231d6345ef",
-        "signature": "0630a7d971dccc51fab517475850c6d5eed1fcce5524508e5f267e78edc6d972",
+        "version": "9e526b946165f37a5065d26081dfbdda2ebafbb3f86406e0bacfec5198ce890e",
+        "signature": "fba739a8faa2a212e6e657a05985fd6c56692cb1d56455ab01ac76c15c8cb4ce",
         "affectsGlobalScope": false
       },
       "./src/maps/guildvoiceregion.ts": {
@@ -382,7 +382,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "2ed918f856a407097bc7bfb8b0be6b9b49d600496cbb853935c5b37e3e79fe3b",
+        "version": "6890e3b7a8b8f0f5d04c26491584a1e6056b9a1421759cfbf768086a9d06fc40",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
