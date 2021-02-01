@@ -27,6 +27,14 @@ module.exports = {
       }
       args[0] = message.guild.members.cache.random().id;
     }
+    if (args[0]?.toLowerCase() == "owner") {
+      if (!message.guild) {
+        return await message.channel.send(
+          "You need to be in a server to run this!"
+        );
+      }
+      args[0] = message.guild.ownerID;
+    }
     var unresolvedID = args[0]
       ? args[0]?.replace(/\D/g, "")
       : message.author.id;

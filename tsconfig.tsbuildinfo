@@ -447,7 +447,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "fe893d1a2c673542ad248005128e135ec9c57b76d0b0b8d4251562511c5073de",
+        "version": "a2fe6591e40aef746df523eaf3367769f16a2e643714881be151cb399aaee737",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
