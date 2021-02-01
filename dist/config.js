@@ -39,9 +39,9 @@ exports.config = {
             },
         },
         blacklist: {
-            userBlocked: [""],
-            guildBlocked: [""],
-            guildOwnerBlocked: [""],
+            userBlocked: ["800561781302362124"],
+            guildBlocked: ["800561781302362124"],
+            guildOwnerBlocked: ["800561781302362124"],
         },
     },
     blacklist: {

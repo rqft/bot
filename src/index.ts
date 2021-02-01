@@ -5,6 +5,7 @@ import Discord from "discord.js";
 import fs from "fs";
 import { pid } from "process";
 import { config } from "./config";
+import { formatID } from "./functions/formatID";
 import { path } from "./globals";
 import { ICommand } from "./interfaces/ICommand";
 export const client = new Discord.Client({
@@ -41,6 +42,13 @@ client.on("message", async (message) => {
   const prefix = message.content.match(prefixRegex)!.join("");
 
   /**
+   * Blacklist
+   */
+  if (config.blacklist.users.includes(message.author.id)) {
+    logBlacklistedUserAction(message);
+  }
+
+  /**
    * Arguments passed to the command
    */
   const args = message.content.slice(prefix!.length).trim().split(/ +/);
@@ -69,7 +77,7 @@ client.on("message", async (message) => {
     !config.bot.ownerIds.includes(message.author.id)
   )
     return message.channel.send(
-      ":warning: Missing Permissions; You need: `Bot Owner` or`Dev`"
+      ":warning: Missing Permissions; You need: `Bot Owner`"
     );
 
   if (
@@ -130,3 +138,20 @@ cc.on("ready", () => {
   });
 });
 cc.login({ clientId: config.bot.application.clientId });
+
+function logBlacklistedUserAction(message: Discord.Message) {
+  config.logs.blacklist.userBlocked.forEach((e) => {
+    const ch = client.channels.cache.get(e) as Discord.TextChannel;
+    const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
+    const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
+    ch.send(
+      `:warning: Blacklisted User **${message.author.tag}** ${formatID(
+        message.author.id
+      )} tried to use command ${
+        message.cleanContent
+      } in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
+        message.guild ? formatID(message.guild.id) : ""
+      }`
+    );
+  });
+}

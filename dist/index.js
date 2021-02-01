@@ -9,6 +9,7 @@ const discord_js_1 = __importDefault(require("discord.js"));
 const fs_1 = __importDefault(require("fs"));
 const process_1 = require("process");
 const config_1 = require("./config");
+const formatID_1 = require("./functions/formatID");
 const globals_1 = require("./globals");
 exports.client = new discord_js_1.default.Client({
     ws: {
@@ -38,6 +39,9 @@ exports.client.on("message", async (message) => {
     if (message.content.match(prefixRegex) == null)
         return;
     const prefix = message.content.match(prefixRegex).join("");
+    if (config_1.config.blacklist.users.includes(message.author.id)) {
+        logBlacklistedUserAction(message);
+    }
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
     const command = exports.commands.get(commandName) ||
@@ -47,7 +51,7 @@ exports.client.on("message", async (message) => {
     if (command.restrictions &&
         command.restrictions.ownerOnly &&
         !config_1.config.bot.ownerIds.includes(message.author.id))
-        return message.channel.send(":warning: Missing Permissions; You need: `Bot Owner` or`Dev`");
+        return message.channel.send(":warning: Missing Permissions; You need: `Bot Owner`");
     if (command.restrictions &&
         command.restrictions.guildOnly &&
         message.channel.type === "dm")
@@ -92,3 +96,11 @@ cc.on("ready", () => {
     });
 });
 cc.login({ clientId: config_1.config.bot.application.clientId });
+function logBlacklistedUserAction(message) {
+    config_1.config.logs.blacklist.userBlocked.forEach((e) => {
+        const ch = exports.client.channels.cache.get(e);
+        const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
+        const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
+        ch.send(`:warning: Blacklisted User **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command ${message.cleanContent} in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
+    });
+}
