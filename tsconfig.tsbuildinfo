@@ -432,7 +432,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getuserpermissions.ts": {
-        "version": "d4d7bad048c56bec28f1353dcb21a1a4f4ff9043f430f7d400afe5ec70fd21e7",
+        "version": "36f93d166ad420a02b640c1357fabadef72398a58377b0096066d948c471959b",
         "signature": "2c751c767068ce065e2213f230487380c08188c95b71e72943553bde04a2f02f",
         "affectsGlobalScope": false
       },

@@ -32,9 +32,7 @@ export function getUserPermissions(user: GuildMember) {
   )[] = user.permissions
     .toArray()
     .filter((e) => !ignoredPermissions.includes(e));
-  if (perms.length == 0) {
-    perms = ["NONE"];
-  }
+
   if (perms.includes("ADMINISTRATOR")) perms = ["ADMINISTRATOR"];
   if (user == user.guild.owner) perms = ["SERVER_OWNER"];
   if (config.blacklist.guild.owners.includes(user.id))
@@ -43,6 +41,9 @@ export function getUserPermissions(user: GuildMember) {
     perms.unshift("BLACKLISTED_USER");
   if (config.bot.ownerIds.includes(user.id)) perms.unshift("BOT_OWNER");
   if (config.bot.id == user.id) perms.unshift("SYSTEM");
+  if (perms.length == 0) {
+    perms = ["NONE"];
+  }
   return perms
     .map((e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``)
     .join(", ");

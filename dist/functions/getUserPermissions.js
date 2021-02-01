@@ -24,9 +24,6 @@ function getUserPermissions(user) {
     var perms = user.permissions
         .toArray()
         .filter((e) => !ignoredPermissions.includes(e));
-    if (perms.length == 0) {
-        perms = ["NONE"];
-    }
     if (perms.includes("ADMINISTRATOR"))
         perms = ["ADMINISTRATOR"];
     if (user == user.guild.owner)
@@ -39,6 +36,9 @@ function getUserPermissions(user) {
         perms.unshift("BOT_OWNER");
     if (config_1.config.bot.id == user.id)
         perms.unshift("SYSTEM");
+    if (perms.length == 0) {
+        perms = ["NONE"];
+    }
     return perms
         .map((e) => `\`${capitalizeWords_1.capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``)
         .join(", ");
