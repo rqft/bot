@@ -66,7 +66,7 @@ client.on("message", async (message) => {
    */
   if (config.blacklist.users.includes(message.author.id)) {
     logBlacklistedUserAction(message);
-    return await message.react("⚠");
+    return;
   }
 
   /**
@@ -104,6 +104,7 @@ client.on("message", async (message) => {
     command.run(message, args);
   } catch (error) {
     console.error(error);
+    logCommandError(message, error);
     message.channel.send(`:warning: ${error}`);
   }
 });
@@ -153,6 +154,25 @@ function logBlacklistedUserAction(message: Discord.Message) {
       } in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
         message.guild ? formatID(message.guild.id) : ""
       }`
+    );
+  });
+}
+function logCommandError(message: Discord.Message, error: Error) {
+  config.logs.commands.onError.keys.forEach((e) => {
+    const ch = client.channels.cache.get(e) as Discord.TextChannel;
+    const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
+    const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
+    ch.send(
+      `:x: **${message.author.tag}** ${formatID(
+        message.author.id
+      )} tried to use command ${
+        message.cleanContent
+      } in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
+        message.guild ? formatID(message.guild.id) : ""
+      } and caused an error.
+\`\`\`ts
+${error}
+\`\`\``
     );
   });
 }

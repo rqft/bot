@@ -47,7 +47,7 @@ exports.client.on("message", async (message) => {
         return;
     if (config_1.config.blacklist.users.includes(message.author.id)) {
         logBlacklistedUserAction(message);
-        return await message.react("⚠");
+        return;
     }
     if (command.restrictions &&
         command.restrictions.ownerOnly &&
@@ -69,6 +69,7 @@ exports.client.on("message", async (message) => {
     }
     catch (error) {
         console.error(error);
+        logCommandError(message, error);
         message.channel.send(`:warning: ${error}`);
     }
 });
@@ -103,5 +104,16 @@ function logBlacklistedUserAction(message) {
         const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
         const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
         ch.send(`:warning: Blacklisted User **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command ${message.cleanContent} in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
+    });
+}
+function logCommandError(message, error) {
+    config_1.config.logs.commands.onError.keys.forEach((e) => {
+        const ch = exports.client.channels.cache.get(e);
+        const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
+        const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
+        ch.send(`:x: **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command ${message.cleanContent} in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""} and caused an error.
+\`\`\`ts
+${error}
+\`\`\``);
     });
 }
