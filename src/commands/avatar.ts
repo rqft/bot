@@ -7,7 +7,7 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   on: "avatar",
   aliases: ["av"],
-  usage: "[user]",
+  usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {
     if (args[0]?.toLowerCase() == "discord") args[0] = "643945264868098049";
     if (args[0]?.toLowerCase() == "me") args[0] = message.author.id;

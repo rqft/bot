@@ -6,7 +6,7 @@ const getLongAgo_1 = require("../functions/getLongAgo");
 module.exports = {
     on: "avatar",
     aliases: ["av"],
-    usage: "[user]",
+    usage: "[user: User | Snowflake]",
     async run(message, args) {
         if (args[0]?.toLowerCase() == "discord")
             args[0] = "643945264868098049";

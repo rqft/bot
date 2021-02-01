@@ -6,7 +6,7 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   on: "eval",
   description: "Run code",
-  usage: "<code>",
+  usage: "<code: text>",
   restrictions: {
     ownerOnly: true,
   },

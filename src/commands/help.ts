@@ -6,7 +6,7 @@ module.exports = {
   on: "help",
   description: "List all of my commands or info about a specific command.",
   aliases: ["commands", "c", "?"],
-  usage: "[command name]",
+  usage: "[command: string]",
   run(message, args) {
     const data = [];
     const prefix = config.bot.prefixes[0];

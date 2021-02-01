@@ -332,22 +332,22 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "3872360edd0e7ffbb25f7e3cd251e7b309a7ae71c931e8f400a8255a9cb98d6c",
+        "version": "21683e7b836cbc69dd319902f4544ac5deb92166e7e1cd163362bfb6a1d4dbf7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "d0399788f381f51f6076463fe44e460da17e077ec3e78571049d86e226a5dcd1",
+        "version": "0339970600468ca32ca100de7c404f244cf5b9ed3c0a8958ef2455fa2f182c63",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "2ba4fd098396a52ce8ad96e19a821b66ba7067bab6b60d9219e0508d62344183",
+        "version": "008b097c42e0d10a00e6e7c9a4e15dc753c40ee67ef265462110a692d9063c75",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/owo.ts": {
-        "version": "2e6c74696a48e63700ac05a7659055c1a14d81e284acad007aa195b712383394",
+        "version": "a8ff3c4d87744405903d04e3aa5b7b435b37faacadb690366a32381afeb3bffa",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -377,7 +377,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "2062405df3d4d3d3a4153101e273a8f6944daace4ac9b071c962817f9a8d6ae5",
+        "version": "b2ff8423900ad37614b66d022668bccbb4ed3291c1b715cb073bcb0c06d10ffb",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -427,7 +427,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "9817637601ab3279788d70e416543feb55f392c752b055c1f51ccc68a86e799b",
+        "version": "ea51f9244d97a01803918fcc4c52fdc2219d5444db93b81834fd6ba4cf3f0c09",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },

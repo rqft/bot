@@ -1,11 +1,11 @@
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "owo",
+  on: "fetchMessages",
   // usesArgs: true,
   description: "OWO",
   aliases: ["uwu", "owoify", "uwuify"],
-  usage: "[text]",
+  usage: "[count: number]",
   async run(message) {
     const messages = await message.channel.messages.fetch({
       before: message.id,

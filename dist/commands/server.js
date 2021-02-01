@@ -10,7 +10,7 @@ const globals_1 = require("../globals");
 module.exports = {
     on: "server",
     aliases: ["s"],
-    usage: "[server]",
+    usage: "[server: Guild | Snowflake]",
     async run(message, args) {
         if (!args[0] && !message.guild)
             return await message.channel.send("You need to provide a server!");

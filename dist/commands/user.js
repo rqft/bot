@@ -13,7 +13,7 @@ const globals_1 = require("../globals");
 module.exports = {
     on: "user",
     aliases: ["u"],
-    usage: "[user]",
+    usage: "[user: User | Snowflake]",
     async run(message, args) {
         if (args[0]?.toLowerCase() == "discord")
             args[0] = "643945264868098049";
