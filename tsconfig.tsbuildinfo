@@ -252,7 +252,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "9a2759166f2655a943be1e7fb2e48eec4d0388c202892573cb3a273ee18923b8",
+        "version": "89ccd8dad12b44af6df878ca1bf3dac8fbe152f5207568b56ba7b909312e7036",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -354,6 +354,11 @@
       "./src/commands/user.ts": {
         "version": "3757c33651371f794a31638b77cbfc1ee0940dfed2b632723ba51530a4787c81",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/error.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": false
       },
       "./src/types/activitytype.ts": {
@@ -1234,6 +1239,7 @@
       "./src/functions/getprofilebadges.ts",
       "./src/functions/getuserpermissions.ts",
       "./src/globals.ts",
+      "./src/handlers/error.ts",
       "./src/index.ts",
       "./src/interfaces/icommand.ts",
       "./src/maps/guildfeature.ts",

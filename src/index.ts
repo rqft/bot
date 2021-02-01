@@ -23,6 +23,9 @@ commandFiles.forEach((file) => {
   const command = require(`${path}/${file}`);
   commands.set(command.name, command);
 });
+client.on("error", (err) => {
+  logError(err);
+});
 client.once("ready", () => {
   leaveBlacklistedGuilds();
   client.user?.setActivity(config.bot.presence.activity.name, {
@@ -151,9 +154,9 @@ function logBlacklistedUserAction(message: Discord.Message) {
     ch.send(
       `:warning: Blacklisted User **${message.author.tag}** ${formatID(
         message.author.id
-      )} tried to use command ${
+      )} tried to use command \`${
         message.cleanContent
-      } in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
+      }\` in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
         message.guild ? formatID(message.guild.id) : ""
       }`
     );
@@ -167,12 +170,22 @@ function logCommandError(message: Discord.Message, error: Error) {
     ch.send(
       `:x: **${message.author.tag}** ${formatID(
         message.author.id
-      )} tried to use command ${
+      )} tried to use command \`${
         message.cleanContent
-      } in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
+      }\` in ${channelName} ${formatID(message.channel.id)} ${guildName} ${
         message.guild ? formatID(message.guild.id) : ""
       } and caused an error.
 \`\`\`ts
+${error}
+\`\`\``
+    );
+  });
+}
+function logError(error: Error) {
+  config.logs.commands.onError.keys.forEach((e) => {
+    const ch = client.channels.cache.get(e) as Discord.TextChannel;
+    ch.send(
+      `:x: Error: \`\`\`ts
 ${error}
 \`\`\``
     );
@@ -186,7 +199,7 @@ function logCommandUse(message: Discord.Message) {
     ch.send(
       `:pencil: **${message.author.tag}** ${formatID(
         message.author.id
-      )} used command ${message.cleanContent} in ${channelName} ${formatID(
+      )} used command \`${message.cleanContent}\` in ${channelName} ${formatID(
         message.channel.id
       )} ${guildName} ${message.guild ? formatID(message.guild.id) : ""}`
     );

@@ -26,6 +26,9 @@ exports.commandFiles.forEach((file) => {
     const command = require(`${globals_1.path}/${file}`);
     exports.commands.set(command.name, command);
 });
+exports.client.on("error", (err) => {
+    logError(err);
+});
 exports.client.once("ready", () => {
     leaveBlacklistedGuilds();
     exports.client.user?.setActivity(config_1.config.bot.presence.activity.name, {
@@ -105,7 +108,7 @@ function logBlacklistedUserAction(message) {
         const ch = exports.client.channels.cache.get(e);
         const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
         const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
-        ch.send(`:warning: Blacklisted User **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command ${message.cleanContent} in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
+        ch.send(`:warning: Blacklisted User **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command \`${message.cleanContent}\` in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
     });
 }
 function logCommandError(message, error) {
@@ -113,8 +116,16 @@ function logCommandError(message, error) {
         const ch = exports.client.channels.cache.get(e);
         const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
         const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
-        ch.send(`:x: **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command ${message.cleanContent} in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""} and caused an error.
+        ch.send(`:x: **${message.author.tag}** ${formatID_1.formatID(message.author.id)} tried to use command \`${message.cleanContent}\` in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""} and caused an error.
 \`\`\`ts
+${error}
+\`\`\``);
+    });
+}
+function logError(error) {
+    config_1.config.logs.commands.onError.keys.forEach((e) => {
+        const ch = exports.client.channels.cache.get(e);
+        ch.send(`:x: Error: \`\`\`ts
 ${error}
 \`\`\``);
     });
@@ -124,7 +135,7 @@ function logCommandUse(message) {
         const ch = exports.client.channels.cache.get(e);
         const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
         const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
-        ch.send(`:pencil: **${message.author.tag}** ${formatID_1.formatID(message.author.id)} used command ${message.cleanContent} in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
+        ch.send(`:pencil: **${message.author.tag}** ${formatID_1.formatID(message.author.id)} used command \`${message.cleanContent}\` in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
     });
 }
 function leaveBlacklistedGuilds() {
