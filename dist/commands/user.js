@@ -33,11 +33,10 @@ module.exports = {
         try {
             user = await __1.client.users.fetch(unresolvedID, true);
         }
-        catch (error) {
-            return await message.channel.send(error);
+        catch (error) { }
+        if (!user) {
+            return await message.channel.send("Unknown User");
         }
-        if (!user)
-            return;
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(user.tag, user.avatarURL({
             dynamic: true,

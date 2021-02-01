@@ -46,8 +46,8 @@ export const config = {
   blacklist: {
     guild: {
       owners: ["606162661184372736"],
-      ids: [],
+      ids: [] as string[],
     },
-    users: ["606162661184372736", "504698587221852172"],
+    users: ["606162661184372736"],
   },
 };

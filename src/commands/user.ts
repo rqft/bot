@@ -32,10 +32,10 @@ module.exports = {
     var user: User | null = null;
     try {
       user = await client.users.fetch(unresolvedID, true);
-    } catch (error) {
-      return await message.channel.send(error);
+    } catch (error) {}
+    if (!user) {
+      return await message.channel.send("Unknown User");
     }
-    if (!user) return;
     const emb = new MessageEmbed();
     emb.setAuthor(
       user.tag,

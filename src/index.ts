@@ -24,6 +24,7 @@ commandFiles.forEach((file) => {
   commands.set(command.name, command);
 });
 client.once("ready", () => {
+  leaveBlacklistedGuilds();
   client.user?.setActivity(config.bot.presence.activity.name, {
     name: "H",
     type: "STREAMING",
@@ -101,6 +102,7 @@ client.on("message", async (message) => {
   }
 
   try {
+    logCommandUse;
     command.run(message, args);
   } catch (error) {
     console.error(error);
@@ -173,6 +175,58 @@ function logCommandError(message: Discord.Message, error: Error) {
 \`\`\`ts
 ${error}
 \`\`\``
+    );
+  });
+}
+function logCommandUse(message: Discord.Message) {
+  config.logs.commands.onError.keys.forEach((e) => {
+    const ch = client.channels.cache.get(e) as Discord.TextChannel;
+    const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
+    const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
+    ch.send(
+      `:pencil: **${message.author.tag}** ${formatID(
+        message.author.id
+      )} used command ${message.cleanContent} in ${channelName} ${formatID(
+        message.channel.id
+      )} ${guildName} ${message.guild ? formatID(message.guild.id) : ""}`
+    );
+  });
+}
+function leaveBlacklistedGuilds() {
+  config.blacklist.guild.ids.forEach((e) => {
+    const g = client.guilds.cache.get(e);
+    if (g?.me) {
+      g?.leave();
+      logBlacklistedGuild(g);
+    }
+  });
+  config.blacklist.guild.owners.forEach((e) => {
+    const g = client.guilds.cache.array().filter((guild) => guild.ownerID == e);
+    g.forEach((h) => {
+      if (h?.me) {
+        h?.leave();
+        logBlacklistedGuildOwner(h, h.owner!.user);
+      }
+    });
+  });
+}
+function logBlacklistedGuild(guild: Discord.Guild) {
+  config.logs.blacklist.guildBlocked.forEach((e) => {
+    const ch = client.channels.cache.get(e) as Discord.TextChannel;
+    ch.send(
+      `:warning: Blacklisted Guild \`${guild.name}\` ${formatID(
+        guild.id
+      )} tried to add the bot`
+    );
+  });
+}
+function logBlacklistedGuildOwner(guild: Discord.Guild, user: Discord.User) {
+  config.logs.blacklist.guildBlocked.forEach((e) => {
+    const ch = client.channels.cache.get(e) as Discord.TextChannel;
+    ch.send(
+      `:warning: Blacklisted Guild \`${guild.name}\` ${formatID(
+        guild.id
+      )} owned by **${user.tag}** tried to add the bot`
     );
   });
 }

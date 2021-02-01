@@ -41,7 +41,7 @@ export declare const config: {
     blacklist: {
         guild: {
             owners: string[];
-            ids: never[];
+            ids: string[];
         };
         users: string[];
     };
