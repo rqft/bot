@@ -362,12 +362,12 @@
         "affectsGlobalScope": false
       },
       "./src/maps/guildfeature.ts": {
-        "version": "f5d77ddd52ce1fd34985e739686b8ddbe0edc7dc9a44462122b700b6ab48fe75",
+        "version": "ad437957a9106c2e7c04bf55c97efd6b17dccfe3e1e67070cd15f2d2e14a952a",
         "signature": "f0e52ae7fc536bfbfe59c953ae0a131d617fe2a80dcb896a93e376457d73beb3",
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
-        "version": "4a2853d238223dcb0f2201661d31f92dc14e948d4f60237b91e569f4326aaa85",
+        "version": "8f2d32e13fdf9e3c4eb3421347a0ce6dde66b75634006ec6119d23dceb098e9d",
         "signature": "fba739a8faa2a212e6e657a05985fd6c56692cb1d56455ab01ac76c15c8cb4ce",
         "affectsGlobalScope": false
       },

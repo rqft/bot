@@ -50,7 +50,10 @@ guildFeatureMap.set("VERIFIED", {
   icon: "<:IconBadge_Verified:801248680476016671>",
   text: "Verified",
 });
-
+guildFeatureMap.set("VIP_REGIONS", {
+  icon: "<:IconGui_AddFile:799643046614007838>",
+  text: "VIP Voice Regions",
+});
 guildFeatureMap.set("WELCOME_SCREEN_ENABLED", {
   icon: "<:IconGui_RichPresence:798624241351655514>",
   text: "Welcome Screen Enabled",

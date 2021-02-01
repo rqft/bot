@@ -11,13 +11,13 @@ export function getGuildFeatures(guild: Guild, showIcons: boolean = true) {
       } Bot Server`
     );
 
-  if (guild.me) {
+  if (guild.me)
     feat.push(
       `${
         showIcons ? "<:Hallucinate:800092998590529557>" : ""
       } Uses Hallucinate <3`
     );
-  }
+
   guild.features.forEach((element) => {
     feat.push(
       `${showIcons ? guildFeatureMap.get(element)?.icon : ""} ${
