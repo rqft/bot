@@ -6,6 +6,7 @@ const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getBotLevel_1 = require("../functions/getBotLevel");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const getPresence_1 = require("../functions/getPresence");
+const getProfileBadges_1 = require("../functions/getProfileBadges");
 const getUserPermissions_1 = require("../functions/getUserPermissions");
 const globals_1 = require("../globals");
 module.exports = {
@@ -58,6 +59,7 @@ ${roles.size !== 0
             emb.addField("❯ Permissions", `:gear: **Permission List**: ${getUserPermissions_1.getUserPermissions(mem)}
         :cyclone: **Bot Level**: __\`${getBotLevel_1.getBotLevel(mem)}\`__`);
         }
+        emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user));
         emb.setColor(globals_1.embedColor);
         await message.channel.send(emb);
     },

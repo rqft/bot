@@ -4,6 +4,7 @@ import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotLevel } from "../functions/getBotLevel";
 import { getLongAgo, simpleGetLongAgo } from "../functions/getLongAgo";
 import { getPresence } from "../functions/getPresence";
+import { getProfileBadges } from "../functions/getProfileBadges";
 import { getUserPermissions } from "../functions/getUserPermissions";
 import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
@@ -79,6 +80,7 @@ ${
         :cyclone: **Bot Level**: __\`${getBotLevel(mem)}\`__`
       );
     }
+    emb.addField("❯ Profile Badges", getProfileBadges(user));
     emb.setColor(embedColor);
     await message.channel.send(emb);
   },
