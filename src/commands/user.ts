@@ -6,8 +6,8 @@ import { getLongAgo, simpleGetLongAgo } from "../functions/getLongAgo";
 import { getPresence } from "../functions/getPresence";
 import { getProfileBadges } from "../functions/getProfileBadges";
 import { getUserPermissions } from "../functions/getUserPermissions";
+import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
-import { embedColor } from "../logs/globals";
 
 module.exports = {
   name: "user",

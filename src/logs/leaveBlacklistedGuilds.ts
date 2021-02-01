@@ -1,5 +1,5 @@
+import { config } from "../config";
 import { client } from "../index";
-import { config } from "./config";
 import { logBlacklistedGuild } from "./logBlacklistedGuild";
 import { logBlacklistedGuildOwner } from "./logBlacklistedGuildOwner";
 

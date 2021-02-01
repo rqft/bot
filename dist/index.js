@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.commandFiles = exports.commands = exports.client = void 0;
 const discord_js_1 = __importDefault(require("discord.js"));
 const fs_1 = __importDefault(require("fs"));
+const config_1 = require("./config");
+const globals_1 = require("./globals");
 const commandHandler_1 = require("./handlers/commandHandler");
 const discordjsError_1 = require("./handlers/discordjsError");
 const onReady_1 = require("./handlers/onReady");
 const setUserPresence_1 = require("./handlers/setUserPresence");
-const config_1 = require("./logs/config");
-const globals_1 = require("./logs/globals");
 exports.client = new discord_js_1.default.Client({
     ws: {
         properties: {

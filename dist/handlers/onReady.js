@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onReady = void 0;
+const config_1 = require("../config");
 const index_1 = require("../index");
-const config_1 = require("../logs/config");
 const leaveBlacklistedGuilds_1 = require("../logs/leaveBlacklistedGuilds");
 function onReady() {
     return () => {

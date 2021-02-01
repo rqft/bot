@@ -1,5 +1,5 @@
 import { GuildMember } from "discord.js";
-import { config } from "../logs/config";
+import { config } from "../config";
 
 export function getBotLevel(user: GuildMember) {
   var $level = 0;

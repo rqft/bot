@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserPermissions = void 0;
-const config_1 = require("../logs/config");
+const config_1 = require("../config");
 const capitalizeWords_1 = require("./capitalizeWords");
 const ignoredPermissions = [
     "ADD_REACTIONS",

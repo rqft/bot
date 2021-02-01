@@ -1,6 +1,6 @@
 import Discord from "discord.js";
+import { config } from "../config";
 import { client } from "../index";
-import { config } from "./config";
 
 export function logError(error: Error) {
   config.logs.commands.onError.keys.forEach((e) => {

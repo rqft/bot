@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
+const config_1 = require("../config");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getLongAgo_1 = require("../functions/getLongAgo");
-const config_1 = require("../logs/config");
-const globals_1 = require("../logs/globals");
+const globals_1 = require("../globals");
 module.exports = {
     name: "about",
     usesArgs: false,

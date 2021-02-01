@@ -1,5 +1,5 @@
 import { GuildMember, PermissionString } from "discord.js";
-import { config } from "../logs/config";
+import { config } from "../config";
 import { capitalizeWords } from "./capitalizeWords";
 const ignoredPermissions: PermissionString[] = [
   "ADD_REACTIONS",

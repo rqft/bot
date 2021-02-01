@@ -1,6 +1,6 @@
 import RPC from "discord-rpc";
 import { pid } from "process";
-import { config } from "../logs/config";
+import { config } from "../config";
 
 export function setUserPresence() {
   const cc = new RPC.Client({

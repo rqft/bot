@@ -1,7 +1,7 @@
 import Discord from "discord.js";
+import { config } from "../config";
 import { commands } from "../index";
 import { ICommand } from "../interfaces/ICommand";
-import { config } from "../logs/config";
 import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
 import { logCommandError } from "../logs/logCommandError";
 import { logCommandUse } from "../logs/logCommandUse";

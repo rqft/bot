@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUserPresence = void 0;
 const discord_rpc_1 = __importDefault(require("discord-rpc"));
 const process_1 = require("process");
-const config_1 = require("../logs/config");
+const config_1 = require("../config");
 function setUserPresence() {
     const cc = new discord_rpc_1.default.Client({
         transport: "ipc",

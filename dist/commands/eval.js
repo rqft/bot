@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
-const config_1 = require("../logs/config");
-const globals_1 = require("../logs/globals");
+const config_1 = require("../config");
+const globals_1 = require("../globals");
 module.exports = {
     name: "eval",
     description: "Run code",

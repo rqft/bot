@@ -1,7 +1,7 @@
 import Discord from "discord.js";
+import { config } from "../config";
 import { formatID } from "../functions/formatID";
 import { client } from "../index";
-import { config } from "./config";
 
 export function logCommandError(message: Discord.Message, error: Error) {
   config.logs.commands.onError.keys.forEach((e) => {

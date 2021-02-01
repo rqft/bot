@@ -1,7 +1,7 @@
 import Discord from "discord.js";
+import { config } from "../config";
 import { formatID } from "../functions/formatID";
 import { client } from "../index";
-import { config } from "./config";
 
 export function logBlacklistedUserAction(message: Discord.Message) {
   config.logs.blacklist.userBlocked.forEach((e) => {

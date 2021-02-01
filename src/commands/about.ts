@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import { client, commands } from "..";
+import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
+import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
-import { config } from "../logs/config";
-import { embedColor } from "../logs/globals";
 
 module.exports = {
   name: "about",

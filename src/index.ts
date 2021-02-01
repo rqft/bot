@@ -1,11 +1,11 @@
 import Discord from "discord.js";
 import fs from "fs";
+import { config } from "./config";
+import { path } from "./globals";
 import { commandHandler } from "./handlers/commandHandler";
 import { discordjsError } from "./handlers/discordjsError";
 import { onReady } from "./handlers/onReady";
 import { setUserPresence } from "./handlers/setUserPresence";
-import { config } from "./logs/config";
-import { path } from "./logs/globals";
 export const client = new Discord.Client({
   ws: {
     properties: {

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logBlacklistedUserAction = void 0;
+const config_1 = require("../config");
 const formatID_1 = require("../functions/formatID");
 const index_1 = require("../index");
-const config_1 = require("./config");
 function logBlacklistedUserAction(message) {
     config_1.config.logs.blacklist.userBlocked.forEach((e) => {
         const ch = index_1.client.channels.cache.get(e);

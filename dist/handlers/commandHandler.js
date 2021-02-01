@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.commandHandler = void 0;
+const config_1 = require("../config");
 const index_1 = require("../index");
-const config_1 = require("../logs/config");
 const logBlacklistedUserAction_1 = require("../logs/logBlacklistedUserAction");
 const logCommandError_1 = require("../logs/logCommandError");
 const logCommandUse_1 = require("../logs/logCommandUse");

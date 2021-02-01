@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.leaveBlacklistedGuilds = void 0;
+const config_1 = require("../config");
 const index_1 = require("../index");
-const config_1 = require("./config");
 const logBlacklistedGuild_1 = require("./logBlacklistedGuild");
 const logBlacklistedGuildOwner_1 = require("./logBlacklistedGuildOwner");
 function leaveBlacklistedGuilds() {

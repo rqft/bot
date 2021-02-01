@@ -1,5 +1,5 @@
+import { config } from "../config";
 import { client } from "../index";
-import { config } from "../logs/config";
 import { leaveBlacklistedGuilds } from "../logs/leaveBlacklistedGuilds";
 
 export function onReady(): () => void {

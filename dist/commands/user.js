@@ -8,7 +8,7 @@ const getLongAgo_1 = require("../functions/getLongAgo");
 const getPresence_1 = require("../functions/getPresence");
 const getProfileBadges_1 = require("../functions/getProfileBadges");
 const getUserPermissions_1 = require("../functions/getUserPermissions");
-const globals_1 = require("../logs/globals");
+const globals_1 = require("../globals");
 module.exports = {
     name: "user",
     aliases: ["u"],
