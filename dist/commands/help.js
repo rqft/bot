@@ -5,7 +5,7 @@ const config_1 = require("../config");
 module.exports = {
     name: "help",
     description: "List all of my commands or info about a specific command.",
-    aliases: ["commands"],
+    aliases: ["commands", "c", "?"],
     usage: "[command name]",
     run(message, args) {
         const data = [];
