@@ -1,1 +1,1 @@
-export declare function discordjsError(): (args_0: Error) => void;
+export declare function discordjsError(err: Error): void;

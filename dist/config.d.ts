@@ -24,6 +24,9 @@ export declare const config: {
         };
     };
     logs: {
+        starts: {
+            keys: string[];
+        };
         commands: {
             usage: {
                 keys: string[];

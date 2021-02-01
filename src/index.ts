@@ -22,9 +22,15 @@ commandFiles.forEach((file) => {
   commands.set(command.name, command);
 });
 
-client.once("ready", onReady);
-client.on("error", discordjsError);
-client.on("message", commandHandler);
+client.once("ready", () => {
+  onReady();
+});
+client.on("error", (err) => {
+  discordjsError(err);
+});
+client.on("message", (message) => {
+  commandHandler(message);
+});
 client.login(config.bot.token);
 
 /**

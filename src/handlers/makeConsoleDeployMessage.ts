@@ -1,6 +1,6 @@
 import { client } from "..";
 import { color, TerminalColor } from "../types/TerminalColors";
-
+//
 export function makeConsoleDeployMessage() {
   const message = [
     `Logged in as ${color(
@@ -22,7 +22,10 @@ export function makeConsoleDeployMessage() {
             "owned by " + e.owner?.user.tag,
             TerminalColor.bright.BRIGHT_BLACK
           )})`
-      ),
+      )
+      .join("\n")
+      .replace(/\n{2}/gm, "\n"),
+    color("Ready!", TerminalColor.normal.CYAN),
   ];
   console.log(message.join("\n"));
 }

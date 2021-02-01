@@ -29,6 +29,9 @@ export const config = {
     },
   },
   logs: {
+    starts: {
+      keys: ["800439411036520459"],
+    },
     commands: {
       usage: {
         keys: ["800561781302362124"],
