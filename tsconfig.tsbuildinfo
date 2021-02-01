@@ -217,7 +217,7 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "95393f702061e463b60bcf92c374ca6b7f8588892b8cd9b5f3b8f283625a8f2a",
+        "version": "44c3bc431640a80e0c778f0be360f413f6abc248af3ba745c9fe53d5af301fcc",
         "signature": "249f3240c7fc623a13b5d81ec6a3b1f397521ed0f880fa04a89b401869dc882d",
         "affectsGlobalScope": false
       },
@@ -353,6 +353,11 @@
       },
       "./src/commands/eval.ts": {
         "version": "90ae6003eff6d16db97f36c42d8c40f8867ee8e641f439312326d1c1224bc83d",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/help.ts": {
+        "version": "4c5df6413dd0e9dcb063d602e89d80a77b9d1ff5792bd9eb0a22974ed4c364d0",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -934,6 +939,11 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/help.ts": [
+        "./src/config.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
@@ -1406,6 +1416,7 @@
       "./src/commands/about.ts",
       "./src/commands/avatar.ts",
       "./src/commands/eval.ts",
+      "./src/commands/help.ts",
       "./src/commands/server.ts",
       "./src/commands/user.ts",
       "./src/config.ts",
