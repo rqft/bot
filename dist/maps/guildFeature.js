@@ -59,3 +59,11 @@ guildFeatureMap.set("WELCOME_SCREEN_ENABLED", {
     icon: "<:IconGui_RichPresence:798624241351655514>",
     text: "Welcome Screen Enabled",
 });
+guildFeatureMap.set("MEMBER_VERIFICATION_GATE_ENABLED", {
+    icon: "<:IconGui_RichPresence:798624241351655514>",
+    text: "Member Verification Gate Enabled",
+});
+guildFeatureMap.set("PREVIEW_ENABLED", {
+    icon: "<:IconGui_RichPresence:798624241351655514>",
+    text: "Preview Enabled",
+});

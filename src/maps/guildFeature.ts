@@ -1,7 +1,10 @@
 import { GuildFeatures } from "discord.js";
 import { IconElement } from "../handlers/element";
 
-const guildFeatureMap = new Map<GuildFeatures, IconElement>();
+const guildFeatureMap = new Map<
+  GuildFeatures | "PREVIEW_ENABLED" | "MEMBER_VERIFICATION_GATE_ENABLED",
+  IconElement
+>();
 guildFeatureMap.set("ANIMATED_ICON", {
   icon: "<:IconGui_GIF:799642414431207496>",
   text: "Animated Server Icon",
@@ -57,5 +60,13 @@ guildFeatureMap.set("VIP_REGIONS", {
 guildFeatureMap.set("WELCOME_SCREEN_ENABLED", {
   icon: "<:IconGui_RichPresence:798624241351655514>",
   text: "Welcome Screen Enabled",
+});
+guildFeatureMap.set("MEMBER_VERIFICATION_GATE_ENABLED", {
+  icon: "<:IconGui_RichPresence:798624241351655514>",
+  text: "Member Verification Gate Enabled",
+});
+guildFeatureMap.set("PREVIEW_ENABLED", {
+  icon: "<:IconGui_RichPresence:798624241351655514>",
+  text: "Preview Enabled",
 });
 export { guildFeatureMap };

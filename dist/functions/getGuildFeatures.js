@@ -12,6 +12,6 @@ function getGuildFeatures(guild, showIcons = true) {
     guild.features.forEach((element) => {
         feat.push(`${showIcons ? guildFeature_1.guildFeatureMap.get(element)?.icon : ""} ${guildFeature_1.guildFeatureMap.get(element)?.text}`);
     });
-    return feat.length !== 0 ? feat.join("\n") : "None";
+    return feat.length !== 0 ? feat.sort().join("\n") : "None";
 }
 exports.getGuildFeatures = getGuildFeatures;

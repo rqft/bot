@@ -25,5 +25,5 @@ export function getGuildFeatures(guild: Guild, showIcons: boolean = true) {
       }`
     );
   });
-  return feat.length !== 0 ? feat.join("\n") : "None";
+  return feat.length !== 0 ? feat.sort().join("\n") : "None";
 }
