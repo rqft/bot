@@ -95,7 +95,7 @@ client.on("message", async (message) => {
     command.run(message, args);
   } catch (error) {
     console.error(error);
-    message.reply("there was an error trying to execute that command!");
+    message.channel.send(`:warning: ${error}`);
   }
 });
 client.login(config.bot.token);

@@ -64,7 +64,7 @@ exports.client.on("message", async (message) => {
     }
     catch (error) {
         console.error(error);
-        message.reply("there was an error trying to execute that command!");
+        message.channel.send(`:warning: ${error}`);
     }
 });
 exports.client.login(config_1.config.bot.token);
