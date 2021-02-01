@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const __1 = require("..");
 const config_1 = require("../config");
+const globals_1 = require("../globals");
 module.exports = {
     on: "help",
     description: "List all of my commands or info about a specific command.",
@@ -17,7 +19,10 @@ module.exports = {
             data.push("Here's a list of all my commands:");
             data.push(__1.commands.map((command) => command.name).join(", "));
             data.push(`\nYou can send "${prefix}help [command name]" to get info on a specific command!`);
-            return message.channel.send(data, { split: true });
+            return message.channel.send(new discord_js_1.MessageEmbed({
+                description: data.join("\n"),
+                color: globals_1.hallucinateColor,
+            }), { split: true });
         }
         const name = args[0].toLowerCase();
         const command = __1.commands.get(name) ||

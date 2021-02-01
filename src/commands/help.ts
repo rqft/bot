@@ -1,5 +1,7 @@
+import { MessageEmbed } from "discord.js";
 import { commands } from "..";
 import { config } from "../config";
+import { hallucinateColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -22,7 +24,13 @@ module.exports = {
         `\nYou can send "${prefix}help [command name]" to get info on a specific command!`
       );
 
-      return message.channel.send(data, { split: true });
+      return message.channel.send(
+        new MessageEmbed({
+          description: data.join("\n"),
+          color: hallucinateColor,
+        }),
+        { split: true }
+      );
     }
 
     const name = args![0].toLowerCase();

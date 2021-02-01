@@ -342,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "008b097c42e0d10a00e6e7c9a4e15dc753c40ee67ef265462110a692d9063c75",
+        "version": "2f80992b29ffb77042b86e17a15d9393f7852f97475092b9f0870fe9aa1e8baf",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -945,7 +945,9 @@
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/help.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
