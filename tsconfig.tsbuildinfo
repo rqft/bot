@@ -680,7 +680,7 @@
       "module": 1,
       "outDir": "./dist",
       "rootDir": "./src",
-      "composite": true,
+      "composite": false,
       "removeComments": true,
       "strict": true,
       "noUnusedLocals": true,
