@@ -1,6 +1,7 @@
 import { MessageEmbed, User } from "discord.js";
 import { client } from "..";
 import { formatTimestamp } from "../functions/formatTimestamp";
+import { getBotBadges } from "../functions/getBotBadges";
 import { getBotLevel } from "../functions/getBotLevel";
 import { getLongAgo, simpleGetLongAgo } from "../functions/getLongAgo";
 import { getPresence } from "../functions/getPresence";
@@ -81,6 +82,7 @@ ${
       );
     }
     emb.addField("❯ Profile Badges", getProfileBadges(user));
+    emb.addField("❯ Bot Badges", getBotBadges(user));
     emb.setColor(embedColor);
     await message.channel.send(emb);
   },

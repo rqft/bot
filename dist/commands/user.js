@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
+const getBotBadges_1 = require("../functions/getBotBadges");
 const getBotLevel_1 = require("../functions/getBotLevel");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const getPresence_1 = require("../functions/getPresence");
@@ -59,6 +60,7 @@ ${roles.size !== 0
         :cyclone: **Bot Level**: __\`${getBotLevel_1.getBotLevel(mem)}\`__`);
         }
         emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user));
+        emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));
         emb.setColor(globals_1.embedColor);
         await message.channel.send(emb);
     },

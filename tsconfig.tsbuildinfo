@@ -386,6 +386,16 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/maps/botbadge.ts": {
+        "version": "32e5327e34989e2265d1d6613cdcdd6a093718ed93a901bf7f05adc9470fa122",
+        "signature": "3d69763c780902e8ae1a18e034e1d32c4378fed712316ab27f20d9770aa780a7",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getbotbadges.ts": {
+        "version": "68eb91d8eb1c54a0740e42e57cd1091819ba609bb62965860a9120ce1fca23c1",
+        "signature": "e371cbce7ceb29272c4382e3cdeccc8a36bcb3a8db104e891b4b34de107b2b5d",
+        "affectsGlobalScope": false
+      },
       "./src/functions/getbotlevel.ts": {
         "version": "ef40e86da265829dc0c09eb3d2dc2eaa2ecacdfdce07154028b3f84a18ef722c",
         "signature": "ac766edd8933b2201bdde966e3754687782dce58d29026b3b474ca329ce4af38",
@@ -422,7 +432,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "3757c33651371f794a31638b77cbfc1ee0940dfed2b632723ba51530a4787c81",
+        "version": "f6598e4bddb84419897541b5829e403d978ce7d4c20ee9b98670535bbe232094",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -937,6 +947,7 @@
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
+        "./src/functions/getbotbadges.ts",
         "./src/functions/getbotlevel.ts",
         "./src/functions/getlongago.ts",
         "./src/functions/getpresence.ts",
@@ -945,6 +956,10 @@
         "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
+      ],
+      "./src/functions/getbotbadges.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/maps/botbadge.ts"
       ],
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1057,6 +1072,10 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
         "./src/index.ts"
+      ],
+      "./src/maps/botbadge.ts": [
+        "./src/config.ts",
+        "./src/handlers/element.ts"
       ],
       "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1266,6 +1285,9 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./src/functions/getbotbadges.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1307,6 +1329,9 @@
       ],
       "./src/logs/logcommanduse.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/maps/botbadge.ts": [
+        "./src/handlers/element.ts"
       ],
       "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1387,6 +1412,7 @@
       "./src/functions/capitalizewords.ts",
       "./src/functions/formatid.ts",
       "./src/functions/formattimestamp.ts",
+      "./src/functions/getbotbadges.ts",
       "./src/functions/getbotlevel.ts",
       "./src/functions/getfileextension.ts",
       "./src/functions/getguildfeatures.ts",
@@ -1412,6 +1438,7 @@
       "./src/logs/logcommanderror.ts",
       "./src/logs/logcommanduse.ts",
       "./src/logs/logerror.ts",
+      "./src/maps/botbadge.ts",
       "./src/maps/guildfeature.ts",
       "./src/maps/guildvoiceregion.ts",
       "./src/maps/profilebadge.ts",
