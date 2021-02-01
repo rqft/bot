@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const owoify_1 = require("../functions/owoify");
 module.exports = {
-    on: "owo",
+    name: "owo",
     usesArgs: true,
     description: "owowowowowowowowowowo",
     aliases: ["uwu", "owoify", "uwuify"],

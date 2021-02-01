@@ -8,7 +8,7 @@ import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "server",
+  name: "server",
   aliases: ["s"],
   usage: "[server: Guild | Snowflake]",
   async run(message, args: string[]) {

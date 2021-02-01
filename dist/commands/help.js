@@ -5,7 +5,7 @@ const __1 = require("..");
 const config_1 = require("../config");
 const globals_1 = require("../globals");
 module.exports = {
-    on: "help",
+    name: "help",
     description: "List all of my commands or info about a specific command.",
     aliases: ["commands", "c", "?"],
     usage: "[command: string]",
@@ -30,13 +30,13 @@ module.exports = {
         if (!command) {
             return message.channel.send("that's not a valid command!");
         }
-        data.push(`**Name:** ${command.on}`);
+        data.push(`**Name:** ${command.name}`);
         if (command.aliases)
             data.push(`**Aliases:** ${command.aliases.join(", ")}`);
         if (command.description)
             data.push(`**Description:** ${command.description}`);
         if (command.usage)
-            data.push(`**Usage:** ${prefix}${command.on} ${command.usage}`);
+            data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
         message.channel.send(data, { split: true });
     },
 };

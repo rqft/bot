@@ -4,7 +4,7 @@ import { config as conf } from "../config";
 import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
-  on: "eval",
+  name: "eval",
   description: "Run code",
   usage: "<code: text>",
   restrictions: {

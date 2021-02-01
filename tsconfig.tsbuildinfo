@@ -237,8 +237,8 @@
         "affectsGlobalScope": true
       },
       "./src/interfaces/icommand.ts": {
-        "version": "9501ddc8f0bac7ec5e92e81483e33a6b03fae17f47687103e6b84be5c55395e6",
-        "signature": "812dd6a269c167a0e70cc2cf181e67ffe32d2c50a61a93ea991719ee3c4ed795",
+        "version": "2549362a26c23560d9e666e73a89881008b4be573c696578d81fe300df6ad3bd",
+        "signature": "84fd93ee312c756727be222eb04d17c3f8ce56021780cd912d10a48e7c451ace",
         "affectsGlobalScope": false
       },
       "./src/functions/formatid.ts": {
@@ -262,7 +262,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/commandhandler.ts": {
-        "version": "9d618446e4bc5ee2f9ba7555bdb60637bc869c9a286271fdef9a8ef2bc360e97",
+        "version": "71e5538bdf4a306825ff9398ec2e4f0421abbef0857c4825f2def0d6772b9f0c",
         "signature": "7df144043498de577a5090a825721cd0ab842bb57a672f3f3a05af00c62fb823",
         "affectsGlobalScope": false
       },
@@ -337,7 +337,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "f8eec917c3f5df37ab9a5863781e74d0898c14830b28a1bb8f62dbf2ed5721a0",
+        "version": "b4361315b13022f09f051d03a78f86a2d11f972fed55c975604e9eb7c9956f22",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -347,17 +347,17 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "21683e7b836cbc69dd319902f4544ac5deb92166e7e1cd163362bfb6a1d4dbf7",
+        "version": "35a78ee55eedceaf03deefe4a110e2d85acf17598b61a5ef8e44dca878a33794",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "0339970600468ca32ca100de7c404f244cf5b9ed3c0a8958ef2455fa2f182c63",
+        "version": "ca7eb88951e3f19dc48316414e1789cbf466ff30c784d17fc7b9042d96999f41",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "2f80992b29ffb77042b86e17a15d9393f7852f97475092b9f0870fe9aa1e8baf",
+        "version": "6a19c5dd24b171e29fbcb50c7d336665e9845e029e4f3ec137b792c35c8d99d7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -367,7 +367,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/owo.ts": {
-        "version": "a06db63c73feed4f6b26706230655fabff4812d1749fbffa541464c77e3c3e08",
+        "version": "e578b54d03551bd0b98f2350f6e7a982ff8a943a3cf95bc9929c5d20c95f7f42",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -397,7 +397,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "b2ff8423900ad37614b66d022668bccbb4ed3291c1b715cb073bcb0c06d10ffb",
+        "version": "201b15306fb788f577135d792806ba3d7d234184db3bba2f379ae4fefb1d616f",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -447,7 +447,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "ea51f9244d97a01803918fcc4c52fdc2219d5444db93b81834fd6ba4cf3f0c09",
+        "version": "fe893d1a2c673542ad248005128e135ec9c57b76d0b0b8d4251562511c5073de",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },

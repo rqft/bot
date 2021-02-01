@@ -5,7 +5,7 @@ import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "avatar",
+  name: "avatar",
   aliases: ["av"],
   usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {

@@ -4,7 +4,7 @@ const __1 = require("..");
 const getFileExtension_1 = require("../functions/getFileExtension");
 const getLongAgo_1 = require("../functions/getLongAgo");
 module.exports = {
-    on: "avatar",
+    name: "avatar",
     aliases: ["av"],
     usage: "[user: User | Snowflake]",
     async run(message, args) {

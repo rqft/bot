@@ -7,7 +7,7 @@ import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "about",
+  name: "about",
   usesArgs: false,
   description: "Info about the bot",
   async run(message) {

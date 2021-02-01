@@ -7,7 +7,7 @@ const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const globals_1 = require("../globals");
 module.exports = {
-    on: "about",
+    name: "about",
     usesArgs: false,
     description: "Info about the bot",
     async run(message) {

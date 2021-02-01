@@ -8,7 +8,7 @@ const getGuildVoiceRegion_1 = require("../functions/getGuildVoiceRegion");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const globals_1 = require("../globals");
 module.exports = {
-    on: "server",
+    name: "server",
     aliases: ["s"],
     usage: "[server: Guild | Snowflake]",
     async run(message, args) {

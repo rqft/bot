@@ -68,7 +68,7 @@ export function commandHandler(message: Message) {
     let reply = `:warning: You didn't provide any arguments;`;
 
     if (command.usage) {
-      reply += ` The proper usage would be: \`${prefix}${command.on} ${command.usage}\``;
+      reply += ` The proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
     }
 
     return message.channel.send(reply);

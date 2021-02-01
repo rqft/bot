@@ -2,7 +2,7 @@ import { owoify } from "../functions/owoify";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "owo",
+  name: "owo",
   usesArgs: true,
   description: "owowowowowowowowowowo",
   aliases: ["uwu", "owoify", "uwuify"],

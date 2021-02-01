@@ -11,7 +11,7 @@ import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  on: "user",
+  name: "user",
   aliases: ["u"],
   usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {

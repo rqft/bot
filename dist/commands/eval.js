@@ -5,7 +5,7 @@ const __1 = require("..");
 const config_1 = require("../config");
 const globals_1 = require("../globals");
 module.exports = {
-    on: "eval",
+    name: "eval",
     description: "Run code",
     usage: "<code: text>",
     restrictions: {
