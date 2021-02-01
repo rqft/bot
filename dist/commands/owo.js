@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 module.exports = {
     name: "owo",
+    description: "OWO",
+    aliases: ["uwu", "owoify", "uwuify"],
     usage: "[text]",
     async run(message, args) {
         const text = args.length

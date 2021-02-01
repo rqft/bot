@@ -4,6 +4,8 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "owo",
   // usesArgs: true,
+  description: "OWO",
+  aliases: ["uwu", "owoify", "uwuify"],
   usage: "[text]",
   async run(message, args) {
     const text = args.length

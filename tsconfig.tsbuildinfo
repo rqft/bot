@@ -362,7 +362,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/owo.ts": {
-        "version": "2b6c863575ec8bac2fdaf98d039672a17cadaa9d89732bb6c8ef6b9aee22e1f8",
+        "version": "b94ede5e6ab15a9f2d13c3722ab02328f9b76cd324c9ec6bfdd4b0285eeead5e",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
