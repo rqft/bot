@@ -347,8 +347,8 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getprofilebadges.ts": {
-        "version": "2a156e65777615679bd4699f00bf31672b52d11870eec5e98b083a1bad6cb4e8",
-        "signature": "bc8906de101bf8ed4f0ed71acd84abb85e9788923d61bcc39267ec4fcce5b870",
+        "version": "1a0ddf9d65b77ef09d47ba4015e9128cc1d1afba40337db03fe09c2062765f34",
+        "signature": "93bbca8272d8ec71c2e1a7c6fafde1a5b0de0389f0f645a54e7153a543f1b94f",
         "affectsGlobalScope": false
       },
       "./src/types/activitytype.ts": {

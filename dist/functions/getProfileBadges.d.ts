@@ -1,2 +1,2 @@
-import { User } from "discord.js";
-export declare function getProfileBadges(user: User, showIcons?: boolean): string[];
+import { GuildMember, User } from "discord.js";
+export declare function getProfileBadges(userResolvable: User | GuildMember, showIcons?: boolean): string[];

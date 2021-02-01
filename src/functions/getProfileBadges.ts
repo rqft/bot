@@ -1,8 +1,15 @@
-import { User } from "discord.js";
+import { GuildMember, User } from "discord.js";
 import { profileBadgeMap } from "../maps/profileBadge";
 
-export function getProfileBadges(user: User, showIcons: boolean = true) {
+export function getProfileBadges(
+  userResolvable: User | GuildMember,
+  showIcons: boolean = true
+) {
   const badges = [];
+  const user =
+    userResolvable instanceof GuildMember
+      ? userResolvable.user
+      : userResolvable;
   user.flags?.toArray().forEach((e) => {
     const get = profileBadgeMap.get(e);
     badges.push(`${showIcons ? get?.icon : ""} ${get?.text}`);
