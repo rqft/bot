@@ -102,7 +102,7 @@ client.on("message", async (message) => {
   }
 
   try {
-    logCommandUse;
+    logCommandUse(message);
     command.run(message, args);
   } catch (error) {
     console.error(error);

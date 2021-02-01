@@ -66,7 +66,7 @@ exports.client.on("message", async (message) => {
         return message.channel.send(reply);
     }
     try {
-        logCommandUse;
+        logCommandUse(message);
         command.run(message, args);
     }
     catch (error) {
