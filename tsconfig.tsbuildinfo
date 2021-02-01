@@ -387,7 +387,7 @@
         "affectsGlobalScope": false
       },
       "./src/maps/botbadge.ts": {
-        "version": "32e5327e34989e2265d1d6613cdcdd6a093718ed93a901bf7f05adc9470fa122",
+        "version": "c47594d23af8ad4c8998a44f74e4cc7faf9a8c0a9c724e32093632154c6495bc",
         "signature": "3d69763c780902e8ae1a18e034e1d32c4378fed712316ab27f20d9770aa780a7",
         "affectsGlobalScope": false
       },

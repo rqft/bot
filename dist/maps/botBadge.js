@@ -18,7 +18,7 @@ botBadgeMap.set(config_1.config.bot.id, [
         text: "System",
     },
 ]);
-botBadgeMap.set("504698587221852172", [
+botBadgeMap.set("697071919639560254", [
     {
         icon: "<:mejiIsACutieAndHeCantDenyIt:805630177475559444>",
         text: "Cute",
