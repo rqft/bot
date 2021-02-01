@@ -52,7 +52,7 @@ profileBadgeMap.set("TEAM_USER", {
     text: "Team User",
 });
 profileBadgeMap.set("VERIFIED_BOT", {
-    icon: "IconBadge_BotDeveloper:",
+    icon: "<:IconBadge_VerifiedBot:798624262533283865>",
     text: "Verified Bot",
 });
 profileBadgeMap.set("VERIFIED_DEVELOPER", {

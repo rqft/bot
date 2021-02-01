@@ -412,7 +412,7 @@
         "affectsGlobalScope": false
       },
       "./src/maps/profilebadge.ts": {
-        "version": "29a3d2acf2e6c5a0dcd402676dd302bf858cca0c138aae841ba3633790724554",
+        "version": "69ee4edc74489facf01f1d98cba49a347b6d5848080a381b75e9e7c44c770d7e",
         "signature": "ee90a0d61057d5813dec759c5a158229adaab1260ca5a2d5e99ba5a487f8ffc9",
         "affectsGlobalScope": false
       },
