@@ -297,7 +297,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/makeconsoledeploymessage.ts": {
-        "version": "f5bc71307cf353a31cc5550dfc8ec2fc4a26b207a58a4ba9be0a13967e54694f",
+        "version": "ff00bcf65bee2acdfd90ad16f8638e360a805fa551fbf9d45c63ce8a2b6990c5",
         "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
         "affectsGlobalScope": false
       },
@@ -307,7 +307,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/makedeploymessage.ts": {
-        "version": "c4f9fcc8dc1d84ba434ea14ea9bdcec618d2d610830ef67ddbc2a21bf377a138",
+        "version": "a1956f16df953f631d557c1ec3fea7397f5fd6341dec17b21e1ecac815aaf3ff",
         "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
         "affectsGlobalScope": false
       },

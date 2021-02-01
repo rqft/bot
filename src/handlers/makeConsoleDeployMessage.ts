@@ -11,7 +11,7 @@ export function makeConsoleDeployMessage() {
       client.user?.tag,
       TerminalColor.normal.BLUE
     )} [${color(client.user?.id, TerminalColor.bright.BRIGHT_BLACK)}]`,
-    `\n`,
+    ``,
     `Fetching Guilds...`,
     client.guilds.cache
       .array()

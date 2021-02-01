@@ -7,7 +7,7 @@ function makeConsoleDeployMessage() {
     const message = [
         `[${TerminalColors_1.color(new Date().toLocaleString(), "\u001B[30;1m")}]`,
         `Logged in as ${TerminalColors_1.color(__1.client.user?.tag, "\u001B[34m")} [${TerminalColors_1.color(__1.client.user?.id, "\u001B[30;1m")}]`,
-        `\n`,
+        ``,
         `Fetching Guilds...`,
         __1.client.guilds.cache
             .array()
