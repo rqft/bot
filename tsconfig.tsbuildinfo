@@ -297,12 +297,17 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/makeconsoledeploymessage.ts": {
-        "version": "cc268c52ca3a344ba5afbb024667820a9dff9a8575406f207cadca4d0f063719",
+        "version": "f5bc71307cf353a31cc5550dfc8ec2fc4a26b207a58a4ba9be0a13967e54694f",
         "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
         "affectsGlobalScope": false
       },
+      "./src/functions/formattimestamp.ts": {
+        "version": "c7708931dc76c1b9463ca16d6f2e2f588fecd61ef1f4831a978a8d2d4c9b33cd",
+        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
+        "affectsGlobalScope": false
+      },
       "./src/handlers/makedeploymessage.ts": {
-        "version": "a77f8ecc6d3f0a3d43cb13bda744642ded360ced20969d7ff2fe2f041d00cfbc",
+        "version": "2aa8ad5556e614fb6b8cfb09da6ebace623abc51f8633c8fff4bea7dac8b84e9",
         "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
         "affectsGlobalScope": false
       },
@@ -324,11 +329,6 @@
       "./src/index.ts": {
         "version": "6015b0461cd199f272a5330871d663a149590e91399647c9ea92db3c945e203e",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/formattimestamp.ts": {
-        "version": "c7708931dc76c1b9463ca16d6f2e2f588fecd61ef1f4831a978a8d2d4c9b33cd",
-        "signature": "0baf9df7c42e1814146bb591ed90a3a60ae4eaced563d1dffc6c5d7dcfde4fbb",
         "affectsGlobalScope": false
       },
       "./src/functions/getlongago.ts": {
@@ -362,18 +362,18 @@
         "affectsGlobalScope": false
       },
       "./src/commands/owo.ts": {
-        "version": "1997511761546fde29f98b71af51724eb51f794e34e269ff8ba18fca322fc3bd",
+        "version": "d7863c40d160704ee2fb7cea8e154524d9da59c86b14ea233769cd528355284f",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
-      "./src/handlers/element.ts": {
+      "./src/interfaces/element.ts": {
         "version": "d2a1e169450f9a3bdbd71395948df317e972e304187dfe46bf9bc0367a6fc833",
         "signature": "035947c8311963edb228b4df38332ccca3d4db8959d89ae41f491ebb315be33e",
         "affectsGlobalScope": false
       },
       "./src/maps/guildfeature.ts": {
-        "version": "d630299a31904209afb6e443478c7b2e2b3c695d039adc10073085c4a87f72f4",
-        "signature": "54a7439bd67af5bfa690493cf03799ce312b5c68892bcf1638d0996fea94b453",
+        "version": "ae425973203c51672d59d3c96fc700ce18d476161178011e4e8fc31486b0d417",
+        "signature": "72a501343066aa7931a2feb8f868c2fef0d93dd71a55cebcd098bb37ef71a615",
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
@@ -382,8 +382,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/guildvoiceregion.ts": {
-        "version": "4d81674fc67326c46a6da7efa0de919d05fdaebe78723c4feafd51ea4ebe1d01",
-        "signature": "3dfe68ebd5528d6f8a858cb2d94976879be35d81fe0fa014098916260222fb60",
+        "version": "bfc2950e6bc3bf18296fa6a94520c2b9da3c687f4ad65df4d76265f2b16db50c",
+        "signature": "a5937cbca875b2488d17ab1455fabf9207bbb354f39792bd461b3ef05d46b5c9",
         "affectsGlobalScope": false
       },
       "./src/functions/getguildvoiceregion.ts": {
@@ -397,8 +397,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/botbadge.ts": {
-        "version": "01c3de3e0f0960bddda77db23ec1cf8b27da326b76f1c8c254cdfffcf7366cad",
-        "signature": "3d69763c780902e8ae1a18e034e1d32c4378fed712316ab27f20d9770aa780a7",
+        "version": "f9873eba88f2cbd52f31c837c85d29f3059543dccefc63f08b0d2909ae39c114",
+        "signature": "85597c8ee65ce404c8a6b96b3a0e8b2f3e34c71cb5572f4b3fc6ecd5079d318b",
         "affectsGlobalScope": false
       },
       "./src/functions/getbotbadges.ts": {
@@ -412,8 +412,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/userstatus.ts": {
-        "version": "fd573c15f93d78381581d9ae5b6ace28b99f31d566d21faddae2985ec4078e48",
-        "signature": "95f034d717840453cb011651a79f77aea7a8172629878296ff643159dca0f065",
+        "version": "aa1265fc71f966a3bf67b5eff8e7f591427f0559722b4ef9ed59316dc84cbc2c",
+        "signature": "63b267d6a8bac1e36803dd9eeaf0ecec6b408f6f14e1b98f591b748d134d8272",
         "affectsGlobalScope": false
       },
       "./src/functions/getpresence.ts": {
@@ -422,8 +422,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/profilebadge.ts": {
-        "version": "69ee4edc74489facf01f1d98cba49a347b6d5848080a381b75e9e7c44c770d7e",
-        "signature": "ee90a0d61057d5813dec759c5a158229adaab1260ca5a2d5e99ba5a487f8ffc9",
+        "version": "d7ee645e47a0ac5b231b38939356c1716dc88968f1cd75562db0df7812df42be",
+        "signature": "ecf743a7a2a0b9f586bce49f0e02ce7d0c39b496b4b9d6de8c2a00d76490b8be",
         "affectsGlobalScope": false
       },
       "./src/functions/getprofilebadges.ts": {
@@ -715,7 +715,7 @@
       "module": 1,
       "outDir": "./dist",
       "rootDir": "./src",
-      "composite": true,
+      "composite": false,
       "removeComments": true,
       "strict": true,
       "noUnusedLocals": true,
@@ -950,7 +950,6 @@
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/owo.ts": [
-        "./node_modules/discord.js/typings/index.d.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/server.ts": [
@@ -1025,6 +1024,7 @@
       "./src/handlers/makedeploymessage.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formatid.ts",
+        "./src/functions/formattimestamp.ts",
         "./src/index.ts"
       ],
       "./src/handlers/onready.ts": [
@@ -1095,21 +1095,21 @@
       ],
       "./src/maps/botbadge.ts": [
         "./src/config.ts",
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/guildfeature.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/guildvoiceregion.ts": [
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/profilebadge.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/userstatus.ts": [
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ]
     },
     "exportedModulesMap": {
@@ -1351,20 +1351,20 @@
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/maps/botbadge.ts": [
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/guildfeature.ts": [
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/guildvoiceregion.ts": [
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/profilebadge.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ],
       "./src/maps/userstatus.ts": [
-        "./src/handlers/element.ts"
+        "./src/interfaces/element.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -1445,12 +1445,12 @@
       "./src/globals.ts",
       "./src/handlers/commandhandler.ts",
       "./src/handlers/discordjserror.ts",
-      "./src/handlers/element.ts",
       "./src/handlers/makeconsoledeploymessage.ts",
       "./src/handlers/makedeploymessage.ts",
       "./src/handlers/onready.ts",
       "./src/handlers/setuserpresence.ts",
       "./src/index.ts",
+      "./src/interfaces/element.ts",
       "./src/interfaces/icommand.ts",
       "./src/logs/leaveblacklistedguilds.ts",
       "./src/logs/logblacklistedguild.ts",

@@ -1,5 +1,5 @@
 import { GuildFeatures } from "discord.js";
-import { IconElement } from "../handlers/element";
+import { IconElement } from "../interfaces/element";
 
 const guildFeatureMap = new Map<
   GuildFeatures | "PREVIEW_ENABLED" | "MEMBER_VERIFICATION_GATE_ENABLED",

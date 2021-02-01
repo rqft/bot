@@ -1,10 +1,11 @@
 import { TextChannel } from "discord.js";
 import { client } from "..";
 import { formatID } from "../functions/formatID";
+import { formatTimestamp } from "../functions/formatTimestamp";
 
 export function makeDeployMessage(pubChannels: string[]) {
   const message = [
-    `\u200b`,
+    `${formatTimestamp(new Date())}`,
     `Logged in as ${client.user?.tag} ${formatID(client.user?.id!)}`,
     `\n`,
     `Fetching Guilds...`,

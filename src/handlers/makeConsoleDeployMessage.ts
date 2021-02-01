@@ -3,6 +3,10 @@ import { color, TerminalColor } from "../types/TerminalColors";
 //
 export function makeConsoleDeployMessage() {
   const message = [
+    `[${color(
+      new Date().toLocaleString(),
+      TerminalColor.bright.BRIGHT_BLACK
+    )}]`,
     `Logged in as ${color(
       client.user?.tag,
       TerminalColor.normal.BLUE

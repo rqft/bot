@@ -1,4 +1,4 @@
-import { IconElement } from "../handlers/element";
+import { IconElement } from "../interfaces/element";
 
 const enum VoiceRegionString {
   BRAZIL = "brazil",

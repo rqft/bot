@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeDeployMessage = void 0;
 const __1 = require("..");
 const formatID_1 = require("../functions/formatID");
+const formatTimestamp_1 = require("../functions/formatTimestamp");
 function makeDeployMessage(pubChannels) {
     const message = [
-        `\u200b`,
+        `${formatTimestamp_1.formatTimestamp(new Date())}`,
         `Logged in as ${__1.client.user?.tag} ${formatID_1.formatID(__1.client.user?.id)}`,
         `\n`,
         `Fetching Guilds...`,

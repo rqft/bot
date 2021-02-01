@@ -1,5 +1,5 @@
 import { config } from "../config";
-import { IconElement } from "../handlers/element";
+import { IconElement } from "../interfaces/element";
 
 const botBadgeMap = new Map<string, IconElement[]>();
 config.bot.ownerIds.forEach((e) => {
