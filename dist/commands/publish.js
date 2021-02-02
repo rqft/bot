@@ -11,10 +11,8 @@ module.exports = {
     async run(message, args) {
         child_process_1.exec("git add .");
         await child_process_1.exec(`git commit -m ${args.join(" ")}`, (_, stdout, _stderr) => {
-            message.channel.send([stdout, _stderr].join("\n\n"), { code: "bash" });
+            message.channel.send(`\`\`\`git commit -m "${args.join(" ")}"\`\`\`\`\`\`cmd
+${[stdout, _stderr].join("\n\n")}\`\`\``);
         });
-        setTimeout(() => {
-            message.channel.send(":white_check_mark: Deployed @ https://github.com/arcy-at/Hallucinate");
-        }, 500);
     },
 };
