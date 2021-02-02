@@ -381,6 +381,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/commands/publish.ts": {
+        "version": "14af30405471df5c81780cc2870da0802bd619f7e6ccd3adb6200ed38cbdd442",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/element.ts": {
         "version": "d2a1e169450f9a3bdbd71395948df317e972e304187dfe46bf9bc0367a6fc833",
         "signature": "035947c8311963edb228b4df38332ccca3d4db8959d89ae41f491ebb315be33e",
@@ -977,6 +982,10 @@
         "./src/functions/owoify.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/publish.ts": [
+        "./node_modules/@types/node/child_process.d.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
@@ -1462,6 +1471,7 @@
       "./src/commands/eval.ts",
       "./src/commands/help.ts",
       "./src/commands/owo.ts",
+      "./src/commands/publish.ts",
       "./src/commands/server.ts",
       "./src/commands/test.ts",
       "./src/commands/user.ts",
