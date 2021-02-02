@@ -7,7 +7,9 @@ module.exports = {
     ownerOnly: true,
   },
   async run(message) {
-    exec(`npm run p/deploy`);
+    await exec(`git push -u origin main`, (_, stdout, _stderr) => {
+      message.channel.send(stdout, { code: "bash" });
+    });
     await message.channel.send(
       ":white_check_mark: Deployed @ https://github.com/arcy-at/Hallucinate"
     );
