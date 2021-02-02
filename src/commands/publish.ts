@@ -6,6 +6,8 @@ module.exports = {
   restrictions: {
     ownerOnly: true,
   },
+  usesArgs: true,
+  usage: "<message: text>",
   async run(message, args) {
     exec(`npm run p/publish ${":: " + args.join(" ")}`);
     await message.channel.send(
