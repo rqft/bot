@@ -1,4 +1,4 @@
-import { Message, PermissionResolvable } from "discord.js";
+import { Message, PermissionString } from "discord.js";
 
 export interface ICommand {
   name: string;
@@ -8,7 +8,7 @@ export interface ICommand {
   restrictions?: {
     ownerOnly?: boolean;
     guildOnly?: boolean;
-    permissions?: PermissionResolvable[];
+    permissions?: PermissionString[];
   };
   usesArgs?: boolean;
   run: (message: Message, args: string[]) => Promise<any>;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
 const config_1 = require("../config");
+const checkArrayContainsAll_1 = require("../functions/checkArrayContainsAll");
 const fetchCommand_1 = require("../functions/fetchCommand");
 const globals_1 = require("../globals");
 module.exports = {
@@ -24,6 +25,8 @@ module.exports = {
             config;
             const fetchCommand = fetchCommand_1.fetchCommand;
             fetchCommand;
+            const cf = checkArrayContainsAll_1.arrayContainsAll;
+            cf;
             str = eval(code);
             const embed = new discord_js_1.MessageEmbed();
             embed.setColor(globals_1.embedColor);

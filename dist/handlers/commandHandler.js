@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.commandHandler = void 0;
 const config_1 = require("../config");
+const checkArrayContainsAll_1 = require("../functions/checkArrayContainsAll");
 const fetchCommand_1 = require("../functions/fetchCommand");
 const logBlacklistedUserAction_1 = require("../logs/logBlacklistedUserAction");
 const logCommandError_1 = require("../logs/logCommandError");
@@ -24,6 +25,10 @@ function commandHandler(message) {
         command.restrictions.ownerOnly &&
         !config_1.config.bot.ownerIds.includes(message.author.id))
         return message.channel.send(":warning: Missing Permissions; You need: `Bot Owner`");
+    if (command.restrictions &&
+        command.restrictions.permissions &&
+        !checkArrayContainsAll_1.arrayContainsAll(command.restrictions.permissions, message.member?.permissions.toArray(true) ?? []))
+        return message.channel.send(`:warning: Missing Permissions; You need: \`${command.restrictions.permissions.join(", ")}\``);
     if (command.restrictions &&
         command.restrictions.guildOnly &&
         message.channel.type === "dm")

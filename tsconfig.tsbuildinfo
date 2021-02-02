@@ -236,9 +236,14 @@
         "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
         "affectsGlobalScope": true
       },
+      "./src/functions/checkarraycontainsall.ts": {
+        "version": "0d86f4bfc0c496cac85b7cbe552620bfa5846439922f6f695643ff4d9ec2373d",
+        "signature": "1082f638d3d133e30be36cba47600b68ac81232eb43011663dd3db5d78634fe2",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/icommand.ts": {
-        "version": "2549362a26c23560d9e666e73a89881008b4be573c696578d81fe300df6ad3bd",
-        "signature": "84fd93ee312c756727be222eb04d17c3f8ce56021780cd912d10a48e7c451ace",
+        "version": "1ff0553694cdb184344163d74d8f74d6f3ceadba9f12d976caaa1e0d0790fbe1",
+        "signature": "deeeefd662b889bcab54ad170bb8ac92482aea9e0ea274a76ed78c9defd1a136",
         "affectsGlobalScope": false
       },
       "./src/functions/fetchcommand.ts": {
@@ -267,7 +272,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/commandhandler.ts": {
-        "version": "be5585188ad79be7dcc8f096ba050b7f703745459cf7f64de9d0d5106ad6a462",
+        "version": "19b9530a7bc41b5f22a6a3fe20532599addee38eba5a67d7dcfd4f528e1eda82",
         "signature": "7df144043498de577a5090a825721cd0ab842bb57a672f3f3a05af00c62fb823",
         "affectsGlobalScope": false
       },
@@ -352,12 +357,12 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "35a78ee55eedceaf03deefe4a110e2d85acf17598b61a5ef8e44dca878a33794",
+        "version": "b1e98cb6fb4157323f73caa6dda01b214af976d802c833690fbc4e4070e4bf4a",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "441043d4fc88a00ed8bd101d07f845e8bec70f2789d1dcd7328496ec42033ab6",
+        "version": "a976740e69e5fcb303965e628f0f1f594ac68d06ec0d97e13c3f29f522d23a76",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -372,7 +377,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/owo.ts": {
-        "version": "e578b54d03551bd0b98f2350f6e7a982ff8a943a3cf95bc9929c5d20c95f7f42",
+        "version": "58a0b0c278f39658c2d190e4e0d2e854f029ac6a9ab23e45c59280e7af5d36e1",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -403,6 +408,11 @@
       },
       "./src/commands/server.ts": {
         "version": "072c6a7623d734e5986c07efa091e9c947fe3de42d9759c813de14ed1ebb8fad",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/test.ts": {
+        "version": "ead1cd36335ef154ce5af54fe5de12f55995e34c03065544ab758fe92702b7dc",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -950,6 +960,7 @@
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/checkarraycontainsall.ts",
         "./src/functions/fetchcommand.ts",
         "./src/globals.ts",
         "./src/index.ts",
@@ -974,6 +985,9 @@
         "./src/functions/getlongago.ts",
         "./src/globals.ts",
         "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
+      "./src/commands/test.ts": [
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/user.ts": [
@@ -1026,6 +1040,7 @@
       "./src/handlers/commandhandler.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/checkarraycontainsall.ts",
         "./src/functions/fetchcommand.ts",
         "./src/interfaces/icommand.ts",
         "./src/logs/logblacklisteduseraction.ts",
@@ -1449,9 +1464,11 @@
       "./src/commands/help.ts",
       "./src/commands/owo.ts",
       "./src/commands/server.ts",
+      "./src/commands/test.ts",
       "./src/commands/user.ts",
       "./src/config.ts",
       "./src/functions/capitalizewords.ts",
+      "./src/functions/checkarraycontainsall.ts",
       "./src/functions/fetchcommand.ts",
       "./src/functions/formatid.ts",
       "./src/functions/formattimestamp.ts",

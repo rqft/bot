@@ -9,6 +9,21 @@ module.exports = {
   aliases: ["av"],
   usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {
+    const size = args[1] ? parseInt(args[1]) : 256;
+    if (
+      !(
+        size == 16 ||
+        size == 32 ||
+        size == 64 ||
+        size == 128 ||
+        size == 256 ||
+        size == 512 ||
+        size == 1024 ||
+        size == 2048 ||
+        size == 4096
+      )
+    )
+      return await message.channel.send("You can't choose this!");
     if (args[0]?.toLowerCase() == "discord") args[0] = "643945264868098049";
     if (args[0]?.toLowerCase() == "me") args[0] = message.author.id;
     if (args[0]?.toLowerCase() == "bot" || args[0]?.toLowerCase() == "system")
@@ -35,7 +50,9 @@ module.exports = {
     const avURL =
       user.avatarURL({ dynamic: true, size: 4096 }) ?? user.defaultAvatarURL;
     await message.channel.send(
-      `Here you go! (Done in ${simpleGetLongAgo(message.createdTimestamp)})`,
+      `Here you go! (Done in ${simpleGetLongAgo(
+        message.createdTimestamp - 10
+      )})`,
       {
         files: [
           {

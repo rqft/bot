@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { config } from "../config";
+import { arrayContainsAll } from "../functions/checkArrayContainsAll";
 import { fetchCommand } from "../functions/fetchCommand";
 import { ICommand } from "../interfaces/ICommand";
 import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
@@ -49,6 +50,20 @@ export function commandHandler(message: Message) {
   )
     return message.channel.send(
       ":warning: Missing Permissions; You need: `Bot Owner`"
+    );
+
+  if (
+    command.restrictions &&
+    command.restrictions.permissions &&
+    !arrayContainsAll(
+      command.restrictions.permissions,
+      message.member?.permissions.toArray(true) ?? []
+    )
+  )
+    return message.channel.send(
+      `:warning: Missing Permissions; You need: \`${command.restrictions.permissions.join(
+        ", "
+      )}\``
     );
 
   if (
