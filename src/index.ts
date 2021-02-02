@@ -1,7 +1,7 @@
 import Discord from "discord.js";
 import fs from "fs";
 import { config } from "./config";
-import { path } from "./globals";
+import { CMDFilesPath } from "./globals";
 import { commandHandler } from "./handlers/commandHandler";
 import { discordjsError } from "./handlers/discordjsError";
 import { onReady } from "./handlers/onReady";
@@ -15,10 +15,10 @@ export const client = new Discord.Client({
 });
 export const commands = new Discord.Collection();
 export const commandFiles = fs
-  .readdirSync(path)
+  .readdirSync(CMDFilesPath)
   .filter((file) => file.endsWith(".js"));
 commandFiles.forEach((file) => {
-  const command = require(`${path}/${file}`);
+  const command = require(`${CMDFilesPath}/${file}`);
   commands.set(command.name, command);
 });
 

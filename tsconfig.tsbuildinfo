@@ -222,8 +222,8 @@
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
-        "version": "2e7bf966c0fb379e9d2b4104456a6b58fa31c85904a64fce6d0986dcf3bb5e00",
-        "signature": "adbddaf8bef2d244891cb16797eb092d182ff81b04e394bb171ee389449846c0",
+        "version": "82c5b8f10138c0e2aaeb2f4207d18594aec051155c92abde5bc4e42c3b2793a6",
+        "signature": "87f9454369c97c3df75e99d40ac66566eccfc3fdc3a6949503be90bf5ba98486",
         "affectsGlobalScope": false
       },
       "./node_modules/@discordjs/collection/dist/index.d.ts": {
@@ -332,7 +332,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "6015b0461cd199f272a5330871d663a149590e91399647c9ea92db3c945e203e",
+        "version": "8014d06c1e31c27d18f63c02181d40ee93a689068d85d2b688b44f51210b402f",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },

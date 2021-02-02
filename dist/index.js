@@ -21,10 +21,10 @@ exports.client = new discord_js_1.default.Client({
 });
 exports.commands = new discord_js_1.default.Collection();
 exports.commandFiles = fs_1.default
-    .readdirSync(globals_1.path)
+    .readdirSync(globals_1.CMDFilesPath)
     .filter((file) => file.endsWith(".js"));
 exports.commandFiles.forEach((file) => {
-    const command = require(`${globals_1.path}/${file}`);
+    const command = require(`${globals_1.CMDFilesPath}/${file}`);
     exports.commands.set(command.name, command);
 });
 exports.client.once("ready", () => {
