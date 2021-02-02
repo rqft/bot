@@ -3,8 +3,10 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "test",
   restrictions: {
-    permissions: ["ADD_REACTIONS"],
+    serverOwnerOnly: true,
   },
+  usesArgs: true,
+  usage: "<a: string>",
   async run(message) {
     await message.channel.send(":white_check_mark:");
   },

@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import Discord, { MessageEmbed } from "discord.js";
 import { client as c } from "..";
 import { config as conf } from "../config";
 import { arrayContainsAll } from "../functions/checkArrayContainsAll";
@@ -26,6 +26,8 @@ module.exports = {
       fetchCommand;
       const cf = arrayContainsAll;
       cf;
+      const discord = Discord;
+      discord;
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(embedColor);

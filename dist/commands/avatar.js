@@ -3,21 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
 const getFileExtension_1 = require("../functions/getFileExtension");
 const getLongAgo_1 = require("../functions/getLongAgo");
+const sizes = [16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
 module.exports = {
     name: "avatar",
     aliases: ["av"],
     usage: "[user: User | Snowflake]",
     async run(message, args) {
         const size = args[1] ? parseInt(args[1]) : 256;
-        if (!(size == 16 ||
-            size == 32 ||
-            size == 64 ||
-            size == 128 ||
-            size == 256 ||
-            size == 512 ||
-            size == 1024 ||
-            size == 2048 ||
-            size == 4096))
+        if (!sizes.includes(size))
             return await message.channel.send("You can't choose this!");
         if (args[0]?.toLowerCase() == "discord")
             args[0] = "643945264868098049";
@@ -44,7 +37,8 @@ module.exports = {
         if (!user)
             return;
         const res = await message.channel.send("...");
-        const avURL = user.avatarURL({ dynamic: true, size: 4096 }) ?? user.defaultAvatarURL;
+        const avURL = user.avatarURL({ dynamic: true, size: size }) ??
+            user.defaultAvatarURL;
         await message.channel.send(`Here you go! (Done in ${getLongAgo_1.simpleGetLongAgo(message.createdTimestamp - 10)})`, {
             files: [
                 {

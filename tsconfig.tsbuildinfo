@@ -236,14 +236,9 @@
         "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
         "affectsGlobalScope": true
       },
-      "./src/functions/checkarraycontainsall.ts": {
-        "version": "0d86f4bfc0c496cac85b7cbe552620bfa5846439922f6f695643ff4d9ec2373d",
-        "signature": "1082f638d3d133e30be36cba47600b68ac81232eb43011663dd3db5d78634fe2",
-        "affectsGlobalScope": false
-      },
       "./src/interfaces/icommand.ts": {
-        "version": "1ff0553694cdb184344163d74d8f74d6f3ceadba9f12d976caaa1e0d0790fbe1",
-        "signature": "deeeefd662b889bcab54ad170bb8ac92482aea9e0ea274a76ed78c9defd1a136",
+        "version": "09f239f29303bb282953a96982c9b0803050f10b1e312b0f1887fcd3771c83e0",
+        "signature": "db472cc5326e9dbf6ca643649cad1be4000cfb6325cc6636ab86131df8dd1c1d",
         "affectsGlobalScope": false
       },
       "./src/functions/fetchcommand.ts": {
@@ -272,7 +267,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/commandhandler.ts": {
-        "version": "19b9530a7bc41b5f22a6a3fe20532599addee38eba5a67d7dcfd4f528e1eda82",
+        "version": "d2c2ecc46162e4f2c22c2fae6feb4417b8952a9beb36a39074e6798500022927",
         "signature": "7df144043498de577a5090a825721cd0ab842bb57a672f3f3a05af00c62fb823",
         "affectsGlobalScope": false
       },
@@ -357,12 +352,17 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "b1e98cb6fb4157323f73caa6dda01b214af976d802c833690fbc4e4070e4bf4a",
+        "version": "17e30febc0fde6707d943d94b7b904a73c99ccb67830bc4d9af3666274d0c1c9",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/functions/checkarraycontainsall.ts": {
+        "version": "0d86f4bfc0c496cac85b7cbe552620bfa5846439922f6f695643ff4d9ec2373d",
+        "signature": "1082f638d3d133e30be36cba47600b68ac81232eb43011663dd3db5d78634fe2",
+        "affectsGlobalScope": false
+      },
       "./src/commands/eval.ts": {
-        "version": "a976740e69e5fcb303965e628f0f1f594ac68d06ec0d97e13c3f29f522d23a76",
+        "version": "22e9f0580902ea71d650563a2a56c08000c7e996b4bfabf2f8e990cee37fd847",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -412,7 +412,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/test.ts": {
-        "version": "ead1cd36335ef154ce5af54fe5de12f55995e34c03065544ab758fe92702b7dc",
+        "version": "e6ba5abc037ce545c0d3f8e150189a330be47fbdb1577cf9cca11251e7df81f6",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1040,7 +1040,6 @@
       "./src/handlers/commandhandler.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
-        "./src/functions/checkarraycontainsall.ts",
         "./src/functions/fetchcommand.ts",
         "./src/interfaces/icommand.ts",
         "./src/logs/logblacklisteduseraction.ts",

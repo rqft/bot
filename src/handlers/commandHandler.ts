@@ -1,6 +1,5 @@
-import { Message } from "discord.js";
+import { Message, Permissions } from "discord.js";
 import { config } from "../config";
-import { arrayContainsAll } from "../functions/checkArrayContainsAll";
 import { fetchCommand } from "../functions/fetchCommand";
 import { ICommand } from "../interfaces/ICommand";
 import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
@@ -49,19 +48,27 @@ export function commandHandler(message: Message) {
     !config.bot.ownerIds.includes(message.author.id)
   )
     return message.channel.send(
-      ":warning: Missing Permissions; You need: `Bot Owner`"
+      ":lock: Missing Permissions; You need: `Bot Owner`"
     );
-
+  if (
+    command.restrictions &&
+    command.restrictions.serverOwnerOnly &&
+    message.guild &&
+    message.guild!.ownerID !== message.author.id
+  )
+    return message.channel.send(
+      ":lock: Missing Permissions; You need: `Server Owner`"
+    );
   if (
     command.restrictions &&
     command.restrictions.permissions &&
-    !arrayContainsAll(
-      command.restrictions.permissions,
-      message.member?.permissions.toArray(true) ?? []
+    !message.member?.permissions.has(
+      new Permissions(command.restrictions.permissions),
+      true
     )
   )
     return message.channel.send(
-      `:warning: Missing Permissions; You need: \`${command.restrictions.permissions.join(
+      `:lock: Missing Permissions; You need: \`${command.restrictions.permissions.join(
         ", "
       )}\``
     );
@@ -76,10 +83,10 @@ export function commandHandler(message: Message) {
     );
 
   if (command.usesArgs && !args.length) {
-    let reply = `:warning: You didn't provide any arguments;`;
+    let reply = `:warning: Argument Error (\`<any>\`: missing argument)`;
 
     if (command.usage) {
-      reply += ` The proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+      reply += `\`\`\`${prefix}${command.name} ${command.usage}\`\`\``;
     }
 
     return message.channel.send(reply);

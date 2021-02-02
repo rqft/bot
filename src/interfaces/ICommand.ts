@@ -9,6 +9,7 @@ export interface ICommand {
     ownerOnly?: boolean;
     guildOnly?: boolean;
     permissions?: PermissionString[];
+    serverOwnerOnly?: boolean;
   };
   usesArgs?: boolean;
   run: (message: Message, args: string[]) => Promise<any>;
