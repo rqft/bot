@@ -357,7 +357,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/deploy.ts": {
-        "version": "9eb7c061a20b4e154d4251b57f9c2962b5e806c2458ac79a4500f5b5caa0a41d",
+        "version": "0dc278a980edfb89058c817758430731b6f314330765af44e53a16ff24dd1e0e",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
