@@ -9,15 +9,15 @@ module.exports = {
   usesArgs: true,
   usage: "<message: text>",
   async run(message, args) {
-    await exec(
-      `git add.; git commit -m ${args.join(" ")}`,
-      (_, stdout, _stderr) => {
-        message.channel.send([stdout, _stderr].join("\n\n"), { code: "bash" });
-      }
-    );
-    await message.channel.send(
-      ":white_check_mark: Deployed @ https://github.com/arcy-at/Hallucinate"
-    );
+    exec("git add .");
+    await exec(`git commit -m ${args.join(" ")}`, (_, stdout, _stderr) => {
+      message.channel.send([stdout, _stderr].join("\n\n"), { code: "bash" });
+    });
+    setTimeout(() => {
+      message.channel.send(
+        ":white_check_mark: Deployed @ https://github.com/arcy-at/Hallucinate"
+      );
+    }, 500);
   },
 } as ICommand;
 //
