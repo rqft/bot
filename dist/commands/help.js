@@ -10,6 +10,7 @@ module.exports = {
     aliases: ["commands", "c", "?"],
     usage: "[command: string]",
     run(message, args) {
+        const emb = new discord_js_1.MessageEmbed();
         const data = [];
         const prefix = config_1.config.bot.prefixes[0];
         if (!args[0]) {
@@ -19,10 +20,10 @@ module.exports = {
             data.push("Here's a list of all my commands:");
             data.push(__1.commands.map((command) => command.name).join(", "));
             data.push(`\nYou can send "${prefix}help [command name]" to get info on a specific command!`);
-            return message.channel.send(new discord_js_1.MessageEmbed({
-                description: data.join("\n"),
-                color: globals_1.hallucinateColor,
-            }), { split: true });
+            emb.setDescription(data.join("\n"));
+            emb.setColor(globals_1.hallucinateColor);
+            emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);
+            return message.channel.send(emb);
         }
         const name = args[0].toLowerCase();
         const command = __1.commands.get(name) ||
@@ -37,6 +38,9 @@ module.exports = {
             data.push(`**Description:** ${command.description}`);
         if (command.usage)
             data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
-        message.channel.send(data, { split: true });
+        emb.setDescription(data);
+        emb.setColor(globals_1.hallucinateColor);
+        emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);
+        message.channel.send(emb);
     },
 };

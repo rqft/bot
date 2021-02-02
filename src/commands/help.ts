@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { commands } from "..";
+import { client, commands } from "..";
 import { config } from "../config";
 import { hallucinateColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
@@ -10,6 +10,7 @@ module.exports = {
   aliases: ["commands", "c", "?"],
   usage: "[command: string]",
   run(message, args) {
+    const emb = new MessageEmbed();
     const data = [];
     const prefix = config.bot.prefixes[0];
     if (!args![0]) {
@@ -23,14 +24,13 @@ module.exports = {
       data.push(
         `\nYou can send "${prefix}help [command name]" to get info on a specific command!`
       );
-
-      return message.channel.send(
-        new MessageEmbed({
-          description: data.join("\n"),
-          color: hallucinateColor,
-        }),
-        { split: true }
+      emb.setDescription(data.join("\n"));
+      emb.setColor(hallucinateColor);
+      emb.setAuthor(
+        "Help Menu",
+        client.user?.avatarURL() ?? client.user?.defaultAvatarURL
       );
+      return message.channel.send(emb);
     }
 
     const name = args![0].toLowerCase();
@@ -52,7 +52,12 @@ module.exports = {
       data.push(`**Description:** ${command.description}`);
     if (command.usage)
       data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
-
-    message.channel.send(data, { split: true });
+    emb.setDescription(data);
+    emb.setColor(hallucinateColor);
+    emb.setAuthor(
+      "Help Menu",
+      client.user?.avatarURL() ?? client.user?.defaultAvatarURL
+    );
+    message.channel.send(emb);
   },
 } as ICommand;

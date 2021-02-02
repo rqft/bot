@@ -18,4 +18,3 @@ ${[stdout, _stderr].join("\n\n")}\`\`\``);
     });
   },
 } as ICommand;
-//
