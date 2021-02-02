@@ -10,7 +10,7 @@ module.exports = {
   usage: "<message: text>",
   async run(message, args) {
     exec("git add .");
-    await exec(`git commit -m ${args.join(" ")}`, (_, stdout, _stderr) => {
+    await exec(`git commit -m "${args.join(" ")}"}`, (_, stdout, _stderr) => {
       message.channel.send(`\`\`\`git commit -m "${args.join(
         " "
       )}"\`\`\`\`\`\`cmd
