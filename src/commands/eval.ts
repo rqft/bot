@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { client as c } from "..";
 import { config as conf } from "../config";
+import { fetchCommand as fc } from "../functions/fetchCommand";
 import { embedColor } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
@@ -20,6 +21,8 @@ module.exports = {
       client;
       const config = conf;
       config;
+      const fetchCommand = fc;
+      fetchCommand;
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(embedColor);

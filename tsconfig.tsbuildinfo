@@ -241,6 +241,11 @@
         "signature": "84fd93ee312c756727be222eb04d17c3f8ce56021780cd912d10a48e7c451ace",
         "affectsGlobalScope": false
       },
+      "./src/functions/fetchcommand.ts": {
+        "version": "b01654cc49ebc19a7dc772a89f43a500ab34ac75e0820cee2b3d2549e509ea9d",
+        "signature": "433b65487dfa73e1dde857070dcb41e802362a57c8ab6e853acd30d4e2c0b6cc",
+        "affectsGlobalScope": false
+      },
       "./src/functions/formatid.ts": {
         "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
         "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
@@ -262,7 +267,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/commandhandler.ts": {
-        "version": "71e5538bdf4a306825ff9398ec2e4f0421abbef0857c4825f2def0d6772b9f0c",
+        "version": "be5585188ad79be7dcc8f096ba050b7f703745459cf7f64de9d0d5106ad6a462",
         "signature": "7df144043498de577a5090a825721cd0ab842bb57a672f3f3a05af00c62fb823",
         "affectsGlobalScope": false
       },
@@ -337,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "b4361315b13022f09f051d03a78f86a2d11f972fed55c975604e9eb7c9956f22",
+        "version": "63af257675a5f4a50c6431fc608dd5512f1f959ade1ecd69464fadfcf661c3a2",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -352,7 +357,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "ca7eb88951e3f19dc48316414e1789cbf466ff30c784d17fc7b9042d96999f41",
+        "version": "441043d4fc88a00ed8bd101d07f845e8bec70f2789d1dcd7328496ec42033ab6",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -945,6 +950,7 @@
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/fetchcommand.ts",
         "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
@@ -983,6 +989,10 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/functions/fetchcommand.ts": [
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/functions/getbotbadges.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/maps/botbadge.ts"
@@ -1016,7 +1026,7 @@
       "./src/handlers/commandhandler.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
-        "./src/index.ts",
+        "./src/functions/fetchcommand.ts",
         "./src/interfaces/icommand.ts",
         "./src/logs/logblacklisteduseraction.ts",
         "./src/logs/logcommanderror.ts",
@@ -1313,6 +1323,9 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./src/functions/fetchcommand.ts": [
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/functions/getbotbadges.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1439,6 +1452,7 @@
       "./src/commands/user.ts",
       "./src/config.ts",
       "./src/functions/capitalizewords.ts",
+      "./src/functions/fetchcommand.ts",
       "./src/functions/formatid.ts",
       "./src/functions/formattimestamp.ts",
       "./src/functions/getbotbadges.ts",

@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import { config } from "../config";
-import { commands } from "../index";
+import { fetchCommand } from "../functions/fetchCommand";
 import { ICommand } from "../interfaces/ICommand";
 import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
 import { logCommandError } from "../logs/logCommandError";
@@ -24,11 +24,7 @@ export function commandHandler(message: Message) {
   /**
    * the set of commands owo
    */
-  const command: ICommand =
-    (commands.get(commandName) as ICommand) ||
-    (commands.find(
-      (cmd: any) => cmd.aliases && cmd.aliases.includes(commandName)
-    ) as ICommand);
+  const command: ICommand = fetchCommand(commandName);
 
   /**
    * This is obvious lol
