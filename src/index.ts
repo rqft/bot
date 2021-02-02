@@ -1,9 +1,9 @@
 import Discord from "discord.js";
-import fs from "fs";
 import { config } from "./config";
-import { CMDFilesPath } from "./globals";
 import { commandHandler } from "./handlers/commandHandler";
 import { discordjsError } from "./handlers/discordjsError";
+import { fetchCommandFiles } from "./handlers/fetchCommandFiles";
+import { makeCommands } from "./handlers/makeCommandFromFile";
 import { onReady } from "./handlers/onReady";
 import { setUserPresence } from "./handlers/setUserPresence";
 export const client = new Discord.Client({
@@ -14,13 +14,8 @@ export const client = new Discord.Client({
   },
 });
 export const commands = new Discord.Collection();
-export const commandFiles = fs
-  .readdirSync(CMDFilesPath)
-  .filter((file) => file.endsWith(".js"));
-commandFiles.forEach((file) => {
-  const command = require(`${CMDFilesPath}/${file}`);
-  commands.set(command.name, command);
-});
+export const commandFiles = fetchCommandFiles();
+commandFiles.forEach(makeCommands(commands));
 
 client.once("ready", () => {
   onReady();

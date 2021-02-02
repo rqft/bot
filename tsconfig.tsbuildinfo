@@ -281,6 +281,16 @@
         "signature": "3620ca5e3723d09a2c8f6ae627b2c6f401c129e6220a0cd649e34345642f02ea",
         "affectsGlobalScope": false
       },
+      "./src/handlers/fetchcommandfiles.ts": {
+        "version": "cbdc3b18962b8947d2b40467cf4aa91730e36393cd183ee38e4e664307a7fd93",
+        "signature": "49ce71d9443d286fa40f680ee9ffdf2db3eaab413a71b11606db673bd3299907",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/makecommandfromfile.ts": {
+        "version": "5b0b079febb9a0b3d93046bdf5304606cebf1556a7f845bae26983d036daeac2",
+        "signature": "5f9e9c3dd35ba38d1f84697534210cfcabd5967c00f6cfb33f6e68f3d34f381c",
+        "affectsGlobalScope": false
+      },
       "./src/logs/logblacklistedguild.ts": {
         "version": "772121977c8bec2cad883ace81a19afd2d3d22a8e6bae6305f0dbe347c4e308e",
         "signature": "cc8cfbc13e7c11dd9a44409dade33b08755bfa7e80433e125d6a3a0cc9b14a94",
@@ -332,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "8014d06c1e31c27d18f63c02181d40ee93a689068d85d2b688b44f51210b402f",
+        "version": "638ebd185b53b49a320a613de3f3a5766391cdf2680683f22abc3b6eaa07d1e7",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -1067,6 +1077,14 @@
       "./src/handlers/discordjserror.ts": [
         "./src/logs/logerror.ts"
       ],
+      "./src/handlers/fetchcommandfiles.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./src/globals.ts"
+      ],
+      "./src/handlers/makecommandfromfile.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/globals.ts"
+      ],
       "./src/handlers/makeconsoledeploymessage.ts": [
         "./src/index.ts",
         "./src/types/terminalcolors.ts"
@@ -1090,12 +1108,12 @@
         "./src/config.ts"
       ],
       "./src/index.ts": [
-        "./node_modules/@types/node/fs.d.ts",
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
-        "./src/globals.ts",
         "./src/handlers/commandhandler.ts",
         "./src/handlers/discordjserror.ts",
+        "./src/handlers/fetchcommandfiles.ts",
+        "./src/handlers/makecommandfromfile.ts",
         "./src/handlers/onready.ts",
         "./src/handlers/setuserpresence.ts"
       ],
@@ -1382,6 +1400,9 @@
       "./src/handlers/commandhandler.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/handlers/makecommandfromfile.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/index.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1504,6 +1525,8 @@
       "./src/globals.ts",
       "./src/handlers/commandhandler.ts",
       "./src/handlers/discordjserror.ts",
+      "./src/handlers/fetchcommandfiles.ts",
+      "./src/handlers/makecommandfromfile.ts",
       "./src/handlers/makeconsoledeploymessage.ts",
       "./src/handlers/makedeploymessage.ts",
       "./src/handlers/onready.ts",
