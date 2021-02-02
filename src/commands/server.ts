@@ -34,7 +34,7 @@ module.exports = {
       )}
 :calendar_spiral: **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
-      )} ${formatTimestamp(guild.createdAt)}`
+      )} ago ${formatTimestamp(guild.createdAt)}`
     );
     emb.addField("❯ Server Info", getGuildFeatures(guild));
     emb.setColor(embedColor);

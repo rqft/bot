@@ -30,7 +30,7 @@ module.exports = {
         emb.addField("❯ Server Info", `:gear: **ID**: \`${guild.id}\`
 <:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
-:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
+:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
         emb.addField("❯ Server Info", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.embedColor);
         await message.channel.send(emb);

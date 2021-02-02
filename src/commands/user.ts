@@ -63,7 +63,7 @@ module.exports = {
 :link: **Profile**: ${user}
 :calendar_spiral: **Created**: ${simpleGetLongAgo(
         user.createdTimestamp
-      )} ${formatTimestamp(user.createdAt)}`
+      )} ago ${formatTimestamp(user.createdAt)}`
     );
     var mem = message.guild?.member(user) ?? false;
     if (mem) {
@@ -76,7 +76,7 @@ module.exports = {
         `:inbox_tray: **Joined:** ${getLongAgo(
           mem.joinedTimestamp!,
           2
-        )} ${formatTimestamp(mem.joinedAt!)}
+        )} ago ${formatTimestamp(mem.joinedAt!)}
 ${
   roles.size !== 0
     ? `:shield: **Roles** (${roles.size}): ${roles.array().join(", ")}`

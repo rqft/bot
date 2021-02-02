@@ -53,12 +53,12 @@ module.exports = {
         }) ?? user.defaultAvatarURL);
         emb.addField(`❯ User Info`, `:gear: **󠇰ID**: \`${user.id}\`
 :link: **Profile**: ${user}
-:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(user.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(user.createdAt)}`);
+:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(user.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(user.createdAt)}`);
         var mem = message.guild?.member(user) ?? false;
         if (mem) {
             emb.addField("❯ Presence", getPresence_1.getPresence(user, 30));
             const roles = mem.roles.cache.filter((e) => !e.deleted && e.guild.id !== e.id);
-            emb.addField("❯ Member Information", `:inbox_tray: **Joined:** ${getLongAgo_1.getLongAgo(mem.joinedTimestamp, 2)} ${formatTimestamp_1.formatTimestamp(mem.joinedAt)}
+            emb.addField("❯ Member Information", `:inbox_tray: **Joined:** ${getLongAgo_1.getLongAgo(mem.joinedTimestamp, 2)} ago ${formatTimestamp_1.formatTimestamp(mem.joinedAt)}
 ${roles.size !== 0
                 ? `:shield: **Roles** (${roles.size}): ${roles.array().join(", ")}`
                 : ""}`);
