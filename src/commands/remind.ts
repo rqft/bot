@@ -34,13 +34,14 @@ module.exports = {
         Date.now() - ms
       )} ${formatTimestamp(new Date(Date.now() + ms))}`
     );
+    const exec = Date.now();
     setTimeout(
       async () =>
         await message.channel.send(
           `Hey ${
             message.author
           }! You told me at \`${message.createdAt.toLocaleString()}\` (${simpleGetLongAgo(
-            message.createdTimestamp
+            exec
           )} ago) to remind you about${
             comment ? `: \`${comment}\`` : " something!"
           }`
