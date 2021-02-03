@@ -736,6 +736,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/functions/numtowords.ts": {
+        "version": "f8cd92321fa487241a0339277de015f5633d269608dcdfc50ddc69c76bddf915",
+        "signature": "ea3a4f8927ef7c75671cd14230dbd7b8204d0ebed4af5e16ece31a7d588a3f66",
+        "affectsGlobalScope": false
+      },
       "./src/types/activitytype.ts": {
         "version": "b8fb65022733f16ea90cc71a177dbd68d70a20ea9d05cdacf746994401142f50",
         "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
@@ -1521,6 +1526,7 @@
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
       "./src/functions/getuserpermissions.ts",
+      "./src/functions/numtowords.ts",
       "./src/functions/owoify.ts",
       "./src/globals.ts",
       "./src/handlers/commandhandler.ts",
