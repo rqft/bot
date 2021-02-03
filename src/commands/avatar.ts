@@ -8,11 +8,15 @@ type avatarSize = 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096;
 module.exports = {
   name: "avatar",
   aliases: ["av"],
-  usage: "[user: User | Snowflake]",
+  usage: "[user: User | Snowflake] [size: AvatarSize]",
   async run(message, args: string[]) {
-    const size = args[1] ? parseInt(args[1]) : 256;
+    const size = args[1] ? parseInt(args[1]) : 128;
     if (!sizes.includes(size))
-      return await message.channel.send("You can't choose this!");
+      return await message.channel.send(
+        `You can't choose this! Valid options are: ${sizes
+          .map((e) => `\`${e}\``)
+          .join(", ")}`
+      );
 
     if (args[0]?.toLowerCase() == "discord") args[0] = "643945264868098049";
     if (args[0]?.toLowerCase() == "me") args[0] = message.author.id;
@@ -41,7 +45,7 @@ module.exports = {
       user.avatarURL({ dynamic: true, size: size as avatarSize }) ??
       user.defaultAvatarURL;
     await message.channel.send(
-      `Here you go! (Done in ${simpleGetLongAgo(
+      `Here you go! (size: \`${size}\`x\`${size}\`) (Done in ${simpleGetLongAgo(
         message.createdTimestamp - 10
       )})`,
       {

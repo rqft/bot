@@ -357,12 +357,12 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getfileextension.ts": {
-        "version": "5814c19fd4cb5f008a6602fc9191eb83e138aecb9663201c9301ffc15277c957",
+        "version": "22966bdacedac7ca5ace67ced80f418758df4fa15752f6f92e978dcc9753d964",
         "signature": "697b29bdac0cb57bea54a0d29fc7a2567db88fea68ba4c13c82cf208360863b9",
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "17e30febc0fde6707d943d94b7b904a73c99ccb67830bc4d9af3666274d0c1c9",
+        "version": "3520f94ffdd2ec2751aa1a6d5a2b2d913f7b3964fb2e384183de375f43f7cf0c",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -642,12 +642,12 @@
         "affectsGlobalScope": false
       },
       "./src/functions/numtowords.ts": {
-        "version": "85863a926f0d25ca8d179e033b075fc921452d8f13398c1ff53287de550bacee",
-        "signature": "9b6a1100b36bbd05f020baea654791d78efdba08da1afd4d3b4ea2524b804d59",
+        "version": "a83a2e183fcadca0ed746c40580451fcde7aea5f187240c99121bc18f3e0bf71",
+        "signature": "15c6d447335966bc46b8846257ac8bd00942e0a6b7b26a2ce3461dfb00250d8f",
         "affectsGlobalScope": false
       },
       "./src/commands/ntw.ts": {
-        "version": "95a67873905f589dad2e84e8d76e2b499db7dc5b9642c8f45f3ee398f2dd160c",
+        "version": "580700a3b5d4a7c81ba08117492756e06c390f918706ea3fa412c6b47dd392cd",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -663,6 +663,21 @@
       },
       "./src/commands/publish.ts": {
         "version": "4e3b3f0fb6a3004483c8431050247af781b511b56d6bd6dde0d6c0734e7849d4",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/interfaces/ipylondocs.ts": {
+        "version": "62a95c3c9974ce6f7de204e344e41d38283296f789d65ccc58ada45de95e6854",
+        "signature": "7f2f11dc0169ee02e3b89acf6f384dd578bc652883243b68129b7fb1b9b1acb9",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/builddocsembed.ts": {
+        "version": "ea35ea47d8cf426ce9c5583fd0f8eedc9d6b70ccea363616b1a211051920fde3",
+        "signature": "69c647f58b1f69b9451f2dcb5eee3cb5f558e1666f661b54db6983bb2c5ed1da",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/pylondocs.ts": {
+        "version": "2ee7d27707a80fe2aa6a278b51880c6c8f8ea9b480b862fb83e828c154768805",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -693,6 +708,36 @@
       },
       "./src/commands/server.ts": {
         "version": "072c6a7623d734e5986c07efa091e9c947fe3de42d9759c813de14ed1ebb8fad",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/fancytimeformat.ts": {
+        "version": "ed3dbd1a6278f06e39b840035a79c54ff36af18d579b59f5da77ce580f93110e",
+        "signature": "699b2ef7660c332cdf44e46dce8bedfc25feb896ecac6e23c4a4dde51af4eb32",
+        "affectsGlobalScope": false
+      },
+      "./src/interfaces/spotify/ialbum.ts": {
+        "version": "6116a9fbdccbd44c94fd59d6c5b5d1ea979cb08427d931e3156b27d508a79010",
+        "signature": "b6cbc26cd0462ab9795b1f6287fc78ee4726b84b0dbc115d1240105d7ed46f06",
+        "affectsGlobalScope": false
+      },
+      "./src/interfaces/spotify/iartist.ts": {
+        "version": "6aee4341e5d8da29b778187914542f0eceee57267db20a411bf1583b733525b8",
+        "signature": "0db6cccbbb3b17b5983a7db660265bcdb05a4805510b858b0843bce340f3029a",
+        "affectsGlobalScope": false
+      },
+      "./src/interfaces/spotify/itrack.ts": {
+        "version": "1deff0bc105a2ba35206c0a25fa42a6a9cd10a944b614cb403474d5a2ed1abf0",
+        "signature": "234a6d312b7cba031ba0e435279f2a82160d603fd27f3463190c2b94ef915a65",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/spotifysearch.ts": {
+        "version": "4d5de691409ae059fdd778475b23fefa361186bdce943cb2379002cf22667fcb",
+        "signature": "b0f1ff6944c66c379e547ed3ee7d2984aad3747321399bb1451987401e23d6f9",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/spotify.ts": {
+        "version": "e1c3fedcaf6e6220a52ec4bf6441a1d483549d090e7f5a4f83e5040ab5a32690",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1019,6 +1064,10 @@
         "./node_modules/@types/node/child_process.d.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/pylondocs.ts": [
+        "./src/functions/builddocsembed.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
@@ -1028,6 +1077,15 @@
         "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
+      ],
+      "./src/commands/spotify.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/fancytimeformat.ts",
+        "./src/functions/getlongago.ts",
+        "./src/functions/spotifysearch.ts",
+        "./src/globals.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/interfaces/spotify/iartist.ts"
       ],
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1044,6 +1102,12 @@
       ],
       "./src/functions/api.ts": [
         "./node_modules/@types/node-fetch/index.d.ts"
+      ],
+      "./src/functions/builddocsembed.ts": [
+        "./node_modules/@types/node-fetch/index.d.ts",
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/globals.ts",
+        "./src/interfaces/ipylondocs.ts"
       ],
       "./src/functions/fetchcommand.ts": [
         "./src/index.ts",
@@ -1078,6 +1142,10 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
         "./src/functions/capitalizewords.ts"
+      ],
+      "./src/functions/spotifysearch.ts": [
+        "./src/functions/api.ts",
+        "./src/interfaces/spotify/itrack.ts"
       ],
       "./src/handlers/commandhandler.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1133,6 +1201,10 @@
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/interfaces/spotify/itrack.ts": [
+        "./src/interfaces/spotify/ialbum.ts",
+        "./src/interfaces/spotify/iartist.ts"
       ],
       "./src/logs/leaveblacklistedguilds.ts": [
         "./src/config.ts",
@@ -1387,6 +1459,10 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./src/functions/builddocsembed.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/interfaces/ipylondocs.ts"
+      ],
       "./src/functions/fetchcommand.ts": [
         "./src/interfaces/icommand.ts"
       ],
@@ -1411,6 +1487,9 @@
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/functions/spotifysearch.ts": [
+        "./src/interfaces/spotify/itrack.ts"
+      ],
       "./src/handlers/commandhandler.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1422,6 +1501,10 @@
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/interfaces/spotify/itrack.ts": [
+        "./src/interfaces/spotify/ialbum.ts",
+        "./src/interfaces/spotify/iartist.ts"
       ],
       "./src/logs/logblacklistedguild.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
@@ -1518,12 +1601,16 @@
       "./src/commands/ntw.ts",
       "./src/commands/owo.ts",
       "./src/commands/publish.ts",
+      "./src/commands/pylondocs.ts",
       "./src/commands/server.ts",
+      "./src/commands/spotify.ts",
       "./src/commands/user.ts",
       "./src/config.ts",
       "./src/functions/api.ts",
+      "./src/functions/builddocsembed.ts",
       "./src/functions/capitalizewords.ts",
       "./src/functions/checkarraycontainsall.ts",
+      "./src/functions/fancytimeformat.ts",
       "./src/functions/fetchcommand.ts",
       "./src/functions/formatid.ts",
       "./src/functions/formattimestamp.ts",
@@ -1538,6 +1625,7 @@
       "./src/functions/getuserpermissions.ts",
       "./src/functions/numtowords.ts",
       "./src/functions/owoify.ts",
+      "./src/functions/spotifysearch.ts",
       "./src/globals.ts",
       "./src/handlers/commandhandler.ts",
       "./src/handlers/discordjserror.ts",
@@ -1550,6 +1638,10 @@
       "./src/index.ts",
       "./src/interfaces/element.ts",
       "./src/interfaces/icommand.ts",
+      "./src/interfaces/ipylondocs.ts",
+      "./src/interfaces/spotify/ialbum.ts",
+      "./src/interfaces/spotify/iartist.ts",
+      "./src/interfaces/spotify/itrack.ts",
       "./src/logs/leaveblacklistedguilds.ts",
       "./src/logs/logblacklistedguild.ts",
       "./src/logs/logblacklistedguildowner.ts",

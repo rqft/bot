@@ -34,7 +34,7 @@ export function chunk(n: any) {
     isEmpty(xs) ? [] : [take(n)(xs), ...chunk(n)(drop(n)(xs))];
 }
 
-export function numToWords(n: string | number): any {
+export function numToWords(n: string | number): string {
   let a = [
     "",
     "one",
