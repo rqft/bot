@@ -737,7 +737,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/spotify.ts": {
-        "version": "e1c3fedcaf6e6220a52ec4bf6441a1d483549d090e7f5a4f83e5040ab5a32690",
+        "version": "6e68a9d0fc1d7d1c984cb4bb3c505a5d3e4a1e0d16c8740617b5c27c53b0bca7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -789,6 +789,11 @@
       "./src/commands/user.ts": {
         "version": "d59c40e9fc5242ba363577539a0d7111637587435710a1a2cd0c1abd045cd74b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/factor.ts": {
+        "version": "e36c816ea09229040f529fcd4bf87f55cd8ba27d9fc41fbfbe8dfb585522a2ef",
+        "signature": "399c75dc8866803a2bdb02496919387432459748b21de9d5d845182c441883f8",
         "affectsGlobalScope": false
       },
       "./src/types/activitytype.ts": {
@@ -1108,6 +1113,9 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/globals.ts",
         "./src/interfaces/ipylondocs.ts"
+      ],
+      "./src/functions/factor.ts": [
+        "./src/functions/api.ts"
       ],
       "./src/functions/fetchcommand.ts": [
         "./src/index.ts",
@@ -1610,6 +1618,7 @@
       "./src/functions/builddocsembed.ts",
       "./src/functions/capitalizewords.ts",
       "./src/functions/checkarraycontainsall.ts",
+      "./src/functions/factor.ts",
       "./src/functions/fancytimeformat.ts",
       "./src/functions/fetchcommand.ts",
       "./src/functions/formatid.ts",

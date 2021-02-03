@@ -15,10 +15,7 @@ module.exports = {
       return await message.channel.send("Not found");
     }
     const embed = new MessageEmbed();
-    embed.setAuthor({
-      name: track.artists[0]!.name,
-      iconUrl: track.album.icon.url,
-    });
+    embed.setAuthor(track.artists[0]!.name, track.album.icon.url);
     embed.setThumbnail(track.album.icon.url);
     embed.setTitle(track.name);
 
@@ -35,9 +32,9 @@ Popularity: **${track.popularity}/100**`
         track.album.id
       })
 Tracks: **${track.album.size}**
-Created At: ${simpleGetLongAgo(
+Created At: **${simpleGetLongAgo(
         +new Date(track.album.date)
-      )} ago **[**\`${new Date(track.album.date).toLocaleDateString()}\`**]**`
+      )} ago** **[**\`${new Date(track.album.date).toLocaleDateString()}\`**]**`
     );
     embed.addField(
       "❯ Artists",

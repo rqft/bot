@@ -14,10 +14,7 @@ module.exports = {
             return await message.channel.send("Not found");
         }
         const embed = new discord_js_1.MessageEmbed();
-        embed.setAuthor({
-            name: track.artists[0].name,
-            iconUrl: track.album.icon.url,
-        });
+        embed.setAuthor(track.artists[0].name, track.album.icon.url);
         embed.setThumbnail(track.album.icon.url);
         embed.setTitle(track.name);
         embed.setURL(`https://open.spotify.com/track/${track.id}`);
@@ -26,7 +23,7 @@ module.exports = {
 Popularity: **${track.popularity}/100**`);
         embed.addField("❯ Album Info", `Name: [**\`${track.album.name}\`**](https://open.spotify.com/album/${track.album.id})
 Tracks: **${track.album.size}**
-Created At: ${getLongAgo_1.simpleGetLongAgo(+new Date(track.album.date))} ago **[**\`${new Date(track.album.date).toLocaleDateString()}\`**]**`);
+Created At: **${getLongAgo_1.simpleGetLongAgo(+new Date(track.album.date))} ago** **[**\`${new Date(track.album.date).toLocaleDateString()}\`**]**`);
         embed.addField("❯ Artists", track.artists
             .map((e) => `[\`${e.name}\`](https://open.spotify.com/artist/${e.id})`)
             .join(", "));
