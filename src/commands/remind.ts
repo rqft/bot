@@ -10,7 +10,7 @@ module.exports = {
   async run(message, args) {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
-    const timeSuffix: { [index: string]: number } = {
+    const timeSuffix = {
       i: 1,
       s: 1000,
       m: 60 * 1000,
@@ -22,6 +22,7 @@ module.exports = {
     const TIME_REGEX = /(\d+)([ismhdw])/g;
 
     const ms = Array.from(time.matchAll(TIME_REGEX)).reduce(
+      // @ts-ignore
       (p, [, num, suffix]) => p + parseInt(num!, 10) * timeSuffix[suffix!]!,
       0
     );

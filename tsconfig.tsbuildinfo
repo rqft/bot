@@ -682,7 +682,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/remind.ts": {
-        "version": "edd1caacfe11ddcb19dee07f6e4ae8c27b407a316e0fa90d1190c2cabc33953b",
+        "version": "841443bd3f3cb19f4633ef82fc71f5d3c1a861adf8c7e76243a3300b58a919a3",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
