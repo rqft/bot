@@ -34,7 +34,7 @@ export function chunk(n: any) {
     isEmpty(xs) ? [] : [take(n)(xs), ...chunk(n)(drop(n)(xs))];
 }
 
-export function numToWords(n: any): any {
+export function numToWords(n: string | number): any {
   let a = [
     "",
     "one",
@@ -150,7 +150,7 @@ export function numToWords(n: any): any {
   function thousand(group: any, i: any) {
     return group === "" ? group : `${group} ${g[i]}`;
   }
-  if (typeof n === "number") return numToWords(String(n));
+  if (typeof n === "number") return numToWords(str(n));
   else if (n === "0") return "zero";
   else
     return comp(chunk(3))(reverse)(arr(n)) // what the fuck?

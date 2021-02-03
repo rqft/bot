@@ -641,6 +641,16 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/functions/numtowords.ts": {
+        "version": "85863a926f0d25ca8d179e033b075fc921452d8f13398c1ff53287de550bacee",
+        "signature": "9b6a1100b36bbd05f020baea654791d78efdba08da1afd4d3b4ea2524b804d59",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/ntw.ts": {
+        "version": "95a67873905f589dad2e84e8d76e2b499db7dc5b9642c8f45f3ee398f2dd160c",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/functions/owoify.ts": {
         "version": "fcbb07027de3b6cd56c4d9c40375dc4ae3d5d5ab16b2b61bbfed3a5d706cb087",
         "signature": "1f59d0ad8d35582d4ac868b1f0283f51310fff9fafc3c9b06367f8005e3706af",
@@ -734,11 +744,6 @@
       "./src/commands/user.ts": {
         "version": "d59c40e9fc5242ba363577539a0d7111637587435710a1a2cd0c1abd045cd74b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/numtowords.ts": {
-        "version": "f8cd92321fa487241a0339277de015f5633d269608dcdfc50ddc69c76bddf915",
-        "signature": "ea3a4f8927ef7c75671cd14230dbd7b8204d0ebed4af5e16ece31a7d588a3f66",
         "affectsGlobalScope": false
       },
       "./src/types/activitytype.ts": {
@@ -1000,6 +1005,10 @@
         "./src/config.ts",
         "./src/globals.ts",
         "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
+      "./src/commands/ntw.ts": [
+        "./src/functions/numtowords.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/owo.ts": [
@@ -1506,6 +1515,7 @@
       "./src/commands/cate.ts",
       "./src/commands/eval.ts",
       "./src/commands/help.ts",
+      "./src/commands/ntw.ts",
       "./src/commands/owo.ts",
       "./src/commands/publish.ts",
       "./src/commands/server.ts",

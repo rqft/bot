@@ -162,7 +162,7 @@ function numToWords(n) {
         return group === "" ? group : `${group} ${g[i]}`;
     }
     if (typeof n === "number")
-        return numToWords(String(n));
+        return numToWords(str(n));
     else if (n === "0")
         return "zero";
     else
