@@ -8,7 +8,7 @@ exports.config = {
         timezone: "America/Chicago",
     },
     bot: {
-        prefixes: ["\\$", "p\\/", "<@!?760143615124439040>", ""],
+        prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],
         id: "760143615124439040",
         token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.qMOIPdjMf8sKPIk04g5GvsIlJ08",
         application: {

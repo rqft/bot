@@ -83,7 +83,7 @@ export function commandHandler(message: Message) {
     );
 
   if (command.usesArgs && !args.length) {
-    let reply = `:warning: Argument Error (\`<any>\`: missing argument)`;
+    let reply = `:warning: Argument Error (missing argument)`;
 
     if (command.usage) {
       reply += `\`\`\`${prefix}${command.name} ${command.usage}\`\`\``;

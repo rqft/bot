@@ -39,7 +39,7 @@ function commandHandler(message) {
         message.channel.type === "dm")
         return message.channel.send(":warning: I can't execute that command inside DMs!");
     if (command.usesArgs && !args.length) {
-        let reply = `:warning: Argument Error (\`<any>\`: missing argument)`;
+        let reply = `:warning: Argument Error (missing argument)`;
         if (command.usage) {
             reply += `\`\`\`${prefix}${command.name} ${command.usage}\`\`\``;
         }
