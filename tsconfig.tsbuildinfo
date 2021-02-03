@@ -222,8 +222,8 @@
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
-        "version": "82c5b8f10138c0e2aaeb2f4207d18594aec051155c92abde5bc4e42c3b2793a6",
-        "signature": "87f9454369c97c3df75e99d40ac66566eccfc3fdc3a6949503be90bf5ba98486",
+        "version": "58d3279979a55184c3b01fef89f7b90166260bb818b6a49d03bbc5780f60208a",
+        "signature": "9cb194f885cca28793f25be15f05db1c75ccba397635e4794bd2a0ebbb66aedb",
         "affectsGlobalScope": false
       },
       "./node_modules/@discordjs/collection/dist/index.d.ts": {
@@ -352,7 +352,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "63af257675a5f4a50c6431fc608dd5512f1f959ade1ecd69464fadfcf661c3a2",
+        "version": "475c90d5827d20f92fb86b3bae8bd622bbd33f669283554b432e2d810b922506",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -632,12 +632,12 @@
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "22e9f0580902ea71d650563a2a56c08000c7e996b4bfabf2f8e990cee37fd847",
+        "version": "d5a03ccca0bb5667f74e839b2e859d6123d2ba4a74029b62f29821e88563210f",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "db323a54e2fa583130d9d0e5fc6e9be47341facb9d7a247ade0318d93c9b373c",
+        "version": "849ce11f801790025724575e65c60b0d7a60dc50658d0e77fdfc5290940a97e9",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -672,7 +672,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/builddocsembed.ts": {
-        "version": "ea35ea47d8cf426ce9c5583fd0f8eedc9d6b70ccea363616b1a211051920fde3",
+        "version": "d62fd6c8ee1e14664ea58fe374d077ef8744a26b754b8581c27ab2c4c8dcfcb0",
         "signature": "69c647f58b1f69b9451f2dcb5eee3cb5f558e1666f661b54db6983bb2c5ed1da",
         "affectsGlobalScope": false
       },
@@ -712,7 +712,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "072c6a7623d734e5986c07efa091e9c947fe3de42d9759c813de14ed1ebb8fad",
+        "version": "75547e697767a672842d74debe8625f76c0d094af41d2ac2d9a842d0b712dc5a",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -742,7 +742,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/spotify.ts": {
-        "version": "6e68a9d0fc1d7d1c984cb4bb3c505a5d3e4a1e0d16c8740617b5c27c53b0bca7",
+        "version": "5912b2dba23bd3dd71eab69a3307c3ea90f33bff2c4a55e02d0fcaaa12ec0e8b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -792,7 +792,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "d59c40e9fc5242ba363577539a0d7111637587435710a1a2cd0c1abd045cd74b",
+        "version": "e48f3bcc8bf45d02b0ed760da21fdaad9731d9cfcc87f19a0356d4b6e01b655c",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },

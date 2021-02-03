@@ -3,7 +3,7 @@ import { client, commands } from "..";
 import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
-import { embedColor } from "../globals";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
   async run(message) {
     message.channel.send(
       new MessageEmbed({
-        color: embedColor,
+        color: Color.embed,
         fields: [
           {
             name: "About",

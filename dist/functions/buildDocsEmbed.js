@@ -36,7 +36,7 @@ function buildDocsEmbed(data, maxResults = 10) {
         .replace(/_/g, "\\$&") ?? "⛔ No results found.";
     return new discord_js_1.MessageEmbed()
         .setTitle(`:mag: Search results for: ${result.query} | Page ${result.page + 1}`)
-        .setColor(globals_1.pylonColor)
+        .setColor(globals_1.Color.pylon)
         .setDescription(desc)
         .setFooter(`Processing time: ${result.processingTimeMS}ms ${result.hits.length > maxResults
         ? `| ${result.hits.length - maxResults} results not shown`

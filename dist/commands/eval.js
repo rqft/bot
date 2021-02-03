@@ -50,7 +50,7 @@ module.exports = {
             discord;
             str = eval(code);
             const embed = new discord_js_1.MessageEmbed();
-            embed.setColor(globals_1.embedColor);
+            embed.setColor(globals_1.Color.embed);
             embed.setTitle("✅ Eval Success");
             embed.addField("Input", input);
             if (typeof str == "object") {
@@ -64,7 +64,7 @@ module.exports = {
         catch (e) {
             str = e;
             const embed = new discord_js_1.MessageEmbed();
-            embed.setColor(globals_1.embedColor);
+            embed.setColor(globals_1.Color.embed);
             embed.setTitle("⛔ Eval Failed");
             embed.addField("Input", input);
             const output = `\`\`\`ts\n${str}\`\`\``;

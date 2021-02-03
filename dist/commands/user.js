@@ -67,7 +67,7 @@ ${roles.size !== 0
         }
         emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));
-        emb.setColor(globals_1.embedColor);
+        emb.setColor(globals_1.Color.embed);
         await message.channel.send(emb);
     },
 };

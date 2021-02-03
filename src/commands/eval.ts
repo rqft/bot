@@ -3,7 +3,7 @@ import { client as c } from "..";
 import { config as conf } from "../config";
 import { arrayContainsAll } from "../functions/checkArrayContainsAll";
 import { fetchCommand as fc } from "../functions/fetchCommand";
-import { embedColor } from "../globals";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "eval",
@@ -30,7 +30,7 @@ module.exports = {
       discord;
       str = eval(code);
       const embed = new MessageEmbed();
-      embed.setColor(embedColor);
+      embed.setColor(Color.embed);
       embed.setTitle("✅ Eval Success");
       embed.addField("Input", input);
       if (typeof str == "object") {
@@ -43,7 +43,7 @@ module.exports = {
     } catch (e) {
       str = e;
       const embed = new MessageEmbed();
-      embed.setColor(embedColor);
+      embed.setColor(Color.embed);
       embed.setTitle("⛔ Eval Failed");
       embed.addField("Input", input);
       const output = `\`\`\`ts\n${str}\`\`\``;

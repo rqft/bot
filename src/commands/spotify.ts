@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { fancyTimeFormat } from "../functions/fancyTimeFormat";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { spotifySearch } from "../functions/spotifySearch";
-import { embedColor } from "../globals";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { IArtist } from "../interfaces/spotify/IArtist";
 
@@ -45,7 +45,7 @@ Created At: **${simpleGetLongAgo(
         )
         .join(", ")
     );
-    embed.setColor(embedColor);
+    embed.setColor(Color.spotify);
     await message.channel.send(embed);
   },
 } as ICommand;

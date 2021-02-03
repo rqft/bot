@@ -27,7 +27,7 @@ Created At: **${getLongAgo_1.simpleGetLongAgo(+new Date(track.album.date))} ago*
         embed.addField("❯ Artists", track.artists
             .map((e) => `[\`${e.name}\`](https://open.spotify.com/artist/${e.id})`)
             .join(", "));
-        embed.setColor(globals_1.embedColor);
+        embed.setColor(globals_1.Color.spotify);
         await message.channel.send(embed);
     },
 };

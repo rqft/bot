@@ -7,7 +7,7 @@ import { getLongAgo, simpleGetLongAgo } from "../functions/getLongAgo";
 import { getPresence } from "../functions/getPresence";
 import { getProfileBadges } from "../functions/getProfileBadges";
 import { getUserPermissions } from "../functions/getUserPermissions";
-import { embedColor } from "../globals";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -91,7 +91,7 @@ ${
     }
     emb.addField("❯ Profile Badges", getProfileBadges(user));
     emb.addField("❯ Bot Badges", getBotBadges(user));
-    emb.setColor(embedColor);
+    emb.setColor(Color.embed);
     await message.channel.send(emb);
   },
 } as ICommand;

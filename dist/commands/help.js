@@ -21,7 +21,7 @@ module.exports = {
             data.push(__1.commands.map((command) => command.name).join(", "));
             data.push(`\nYou can send "${prefix}help [command name]" to get info on a specific command!`);
             emb.setDescription(data.join("\n"));
-            emb.setColor(globals_1.hallucinateColor);
+            emb.setColor(globals_1.Color.hallucinate);
             emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);
             return message.channel.send(emb);
         }
@@ -39,7 +39,7 @@ module.exports = {
         if (command.usage)
             data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
         emb.setDescription(data);
-        emb.setColor(globals_1.hallucinateColor);
+        emb.setColor(globals_1.Color.hallucinate);
         emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);
         message.channel.send(emb);
     },

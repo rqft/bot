@@ -32,7 +32,7 @@ module.exports = {
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
         emb.addField("❯ Server Info", getGuildFeatures_1.getGuildFeatures(guild));
-        emb.setColor(globals_1.embedColor);
+        emb.setColor(globals_1.Color.embed);
         await message.channel.send(emb);
     },
 };

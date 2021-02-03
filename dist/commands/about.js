@@ -12,7 +12,7 @@ module.exports = {
     description: "Info about the bot",
     async run(message) {
         message.channel.send(new discord_js_1.MessageEmbed({
-            color: globals_1.embedColor,
+            color: globals_1.Color.embed,
             fields: [
                 {
                     name: "About",

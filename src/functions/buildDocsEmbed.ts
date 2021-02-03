@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
-import { pylonColor } from "../globals";
+import { Color } from "../globals";
 import { AlgoliaResult, Kind, Results } from "../interfaces/IPylonDocs";
 const url =
   "https://4iuxqlhenh-dsn.algolia.net/1/indexes/*/queries?x-algolia-api-key=4cfe00690d1880ca0e048c58a88dfd1a&x-algolia-application-id=4IUXQLHENH";
@@ -44,7 +44,7 @@ export function buildDocsEmbed(
     .setTitle(
       `:mag: Search results for: ${result!.query} | Page ${result!.page + 1}`
     )
-    .setColor(pylonColor)
+    .setColor(Color.pylon)
     .setDescription(desc)
     .setFooter(
       `Processing time: ${result!.processingTimeMS}ms ${

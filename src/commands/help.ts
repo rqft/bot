@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { client, commands } from "..";
 import { config } from "../config";
-import { hallucinateColor } from "../globals";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
         `\nYou can send "${prefix}help [command name]" to get info on a specific command!`
       );
       emb.setDescription(data.join("\n"));
-      emb.setColor(hallucinateColor);
+      emb.setColor(Color.hallucinate);
       emb.setAuthor(
         "Help Menu",
         client.user?.avatarURL() ?? client.user?.defaultAvatarURL
@@ -53,7 +53,7 @@ module.exports = {
     if (command.usage)
       data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
     emb.setDescription(data);
-    emb.setColor(hallucinateColor);
+    emb.setColor(Color.hallucinate);
     emb.setAuthor(
       "Help Menu",
       client.user?.avatarURL() ?? client.user?.defaultAvatarURL
