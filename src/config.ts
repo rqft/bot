@@ -7,7 +7,7 @@ export const config = {
   bot: {
     prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],
     id: "760143615124439040",
-    token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.qMOIPdjMf8sKPIk04g5GvsIlJ08",
+    token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.m20I8OXPRGfHXUdX28IZuf5VXp8",
     application: {
       ownerId: "504698587221852172",
       clientId: "760143615124439040",
@@ -26,6 +26,7 @@ export const config = {
           "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
       },
       browser: "Discord iOS",
+      voiceChannel: "801547371728338975",
     },
   },
   logs: {

@@ -217,8 +217,8 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "44c3bc431640a80e0c778f0be360f413f6abc248af3ba745c9fe53d5af301fcc",
-        "signature": "249f3240c7fc623a13b5d81ec6a3b1f397521ed0f880fa04a89b401869dc882d",
+        "version": "163921942ef549c6ae0eda8fb559ebdb87e5ee942ad7ff7f423c95d225d7234a",
+        "signature": "d97e0f5fdf1173353c048d692bdaeb75e162672891570034043bca31f6a9a9ab",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -327,7 +327,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/onready.ts": {
-        "version": "7dd7215ddf41609c8c851f70bbc9b223794373a67341f1efcb974672cb29f34a",
+        "version": "193c538694358be1830807ee8c836903a738a384b0fca3bbfc67a9b3f593a431",
         "signature": "68d7f746b0aa8f91a540221b872df5aaacdee0740215aea049386cc653c6f725",
         "affectsGlobalScope": false
       },
@@ -342,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "638ebd185b53b49a320a613de3f3a5766391cdf2680683f22abc3b6eaa07d1e7",
+        "version": "b3f1caa18e79a33e502c655eea1e3fd5ebedbda7768afee04a06e44d9b622eb0",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -362,7 +362,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "3520f94ffdd2ec2751aa1a6d5a2b2d913f7b3964fb2e384183de375f43f7cf0c",
+        "version": "7e840231163841589e543ceeb91cf436219c0350810176406f0e8f9ad49d12f0",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -756,6 +756,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/commands/test.ts": {
+        "version": "6c9b4b4909015f3da175bf94265d94b47b263b9abf1487c7c3c867abeeef2a16",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/maps/botbadge.ts": {
         "version": "f9873eba88f2cbd52f31c837c85d29f3059543dccefc63f08b0d2909ae39c114",
         "signature": "85597c8ee65ce404c8a6b96b3a0e8b2f3e34c71cb5572f4b3fc6ecd5079d318b",
@@ -811,6 +816,11 @@
         "signature": "399c75dc8866803a2bdb02496919387432459748b21de9d5d845182c441883f8",
         "affectsGlobalScope": false
       },
+      "./src/interfaces/server.ts": {
+        "version": "c9c841de7fc1417d1f663d612c6c7d8231ceb64896d3df825490b5ca467b4856",
+        "signature": "28d73e147be3e6db63674876677c37acefaf09174310c97237a68406548f9347",
+        "affectsGlobalScope": false
+      },
       "./src/types/activitytype.ts": {
         "version": "b8fb65022733f16ea90cc71a177dbd68d70a20ea9d05cdacf746994401142f50",
         "signature": "dfbf6c574be353e6d4d734a7c6e89cf1cf0b5a6139734b4fbd4187545a1c67fc",
@@ -830,7 +840,7 @@
       "module": 1,
       "outDir": "./dist",
       "rootDir": "./src",
-      "composite": false,
+      "composite": true,
       "removeComments": true,
       "strict": true,
       "noUnusedLocals": true,
@@ -1117,6 +1127,9 @@
         "./src/interfaces/icommand.ts",
         "./src/interfaces/spotify/iartist.ts"
       ],
+      "./src/commands/test.ts": [
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
@@ -1211,6 +1224,7 @@
         "./src/index.ts"
       ],
       "./src/handlers/onready.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
         "./src/handlers/makeconsoledeploymessage.ts",
         "./src/handlers/makedeploymessage.ts",
@@ -1233,6 +1247,9 @@
         "./src/handlers/setuserpresence.ts"
       ],
       "./src/interfaces/icommand.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/interfaces/server.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/interfaces/spotify/itrack.ts": [
@@ -1535,6 +1552,9 @@
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/interfaces/server.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/interfaces/spotify/itrack.ts": [
         "./src/interfaces/spotify/ialbum.ts",
         "./src/interfaces/spotify/iartist.ts"
@@ -1639,6 +1659,7 @@
       "./src/commands/remind.ts",
       "./src/commands/server.ts",
       "./src/commands/spotify.ts",
+      "./src/commands/test.ts",
       "./src/commands/user.ts",
       "./src/config.ts",
       "./src/functions/api.ts",
@@ -1676,6 +1697,7 @@
       "./src/interfaces/icommand.ts",
       "./src/interfaces/ipogfaceelement.ts",
       "./src/interfaces/ipylondocs.ts",
+      "./src/interfaces/server.ts",
       "./src/interfaces/spotify/ialbum.ts",
       "./src/interfaces/spotify/iartist.ts",
       "./src/interfaces/spotify/itrack.ts",

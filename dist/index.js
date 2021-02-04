@@ -28,8 +28,8 @@ exports.client.once("ready", () => {
 exports.client.on("error", (err) => {
     discordjsError_1.discordjsError(err);
 });
-exports.client.on("message", (message) => {
-    commandHandler_1.commandHandler(message);
+exports.client.on("message", async (message) => {
+    await commandHandler_1.commandHandler(message);
 });
 exports.client.login(config_1.config.bot.token);
 setUserPresence_1.setUserPresence();

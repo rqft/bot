@@ -44,7 +44,7 @@ module.exports = {
     const avURL =
       user.avatarURL({ dynamic: true, size: size as avatarSize }) ??
       user.defaultAvatarURL;
-    await message.channel.send(
+    const r = await message.channel.send(
       `Here you go! (size: \`${size}\`x\`${size}\`) (Done in ${simpleGetLongAgo(
         message.createdTimestamp - 10
       )})`,
@@ -57,6 +57,7 @@ module.exports = {
         ],
       }
     );
+    r.edit(`${r.content} (${r.attachments.array()[0]?.size! / 1000} KB)`);
     await res.delete();
   },
 } as ICommand;

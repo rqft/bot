@@ -19,12 +19,13 @@ commandFiles.forEach(makeCommands(commands));
 
 client.once("ready", () => {
   onReady();
+  // console.log("a");
 });
 client.on("error", (err) => {
   discordjsError(err);
 });
-client.on("message", (message) => {
-  commandHandler(message);
+client.on("message", async (message) => {
+  await commandHandler(message);
 });
 client.login(config.bot.token);
 

@@ -41,7 +41,7 @@ module.exports = {
         const res = await message.channel.send("...");
         const avURL = user.avatarURL({ dynamic: true, size: size }) ??
             user.defaultAvatarURL;
-        await message.channel.send(`Here you go! (size: \`${size}\`x\`${size}\`) (Done in ${getLongAgo_1.simpleGetLongAgo(message.createdTimestamp - 10)})`, {
+        const r = await message.channel.send(`Here you go! (size: \`${size}\`x\`${size}\`) (Done in ${getLongAgo_1.simpleGetLongAgo(message.createdTimestamp - 10)})`, {
             files: [
                 {
                     name: `item.${getFileExtension_1.getFileExtension(avURL)}`,
@@ -49,6 +49,7 @@ module.exports = {
                 },
             ],
         });
+        r.edit(`${r.content} (${r.attachments.array()[0]?.size / 1000} KB)`);
         await res.delete();
     },
 };
