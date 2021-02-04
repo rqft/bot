@@ -237,8 +237,8 @@
         "affectsGlobalScope": true
       },
       "./src/interfaces/icommand.ts": {
-        "version": "09f239f29303bb282953a96982c9b0803050f10b1e312b0f1887fcd3771c83e0",
-        "signature": "db472cc5326e9dbf6ca643649cad1be4000cfb6325cc6636ab86131df8dd1c1d",
+        "version": "896ddb0512f1caed47adbe1c0e7ab7fb84121ab2ab9af436856842de4fa5b4ce",
+        "signature": "bd82c89efb395bc9794cf82f9e022a4bd0547a1fb5c06912357ba99e189bcc13",
         "affectsGlobalScope": false
       },
       "./src/functions/fetchcommand.ts": {
@@ -661,6 +661,16 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/interfaces/ipogfaceelement.ts": {
+        "version": "686405245ccfc1807df54b1485890282d92c458929a7da003fe4da5fbb070edf",
+        "signature": "7fadf71727eb4a7e9c0e3e25f8e6e7e4e47827658ebb97562efb17f8b482a284",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/pogface.ts": {
+        "version": "1a0e79bab941e23d5474354a0cb74be6d344c9f07950f4a7e90f80d283d14bdf",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/commands/publish.ts": {
         "version": "4e3b3f0fb6a3004483c8431050247af781b511b56d6bd6dde0d6c0734e7849d4",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
@@ -1069,6 +1079,11 @@
       "./src/commands/owo.ts": [
         "./src/functions/owoify.ts",
         "./src/interfaces/icommand.ts"
+      ],
+      "./src/commands/pogface.ts": [
+        "./src/functions/api.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/interfaces/ipogfaceelement.ts"
       ],
       "./src/commands/publish.ts": [
         "./node_modules/@types/node/child_process.d.ts",
@@ -1618,6 +1633,7 @@
       "./src/commands/help.ts",
       "./src/commands/ntw.ts",
       "./src/commands/owo.ts",
+      "./src/commands/pogface.ts",
       "./src/commands/publish.ts",
       "./src/commands/pylondocs.ts",
       "./src/commands/remind.ts",
@@ -1658,6 +1674,7 @@
       "./src/index.ts",
       "./src/interfaces/element.ts",
       "./src/interfaces/icommand.ts",
+      "./src/interfaces/ipogfaceelement.ts",
       "./src/interfaces/ipylondocs.ts",
       "./src/interfaces/spotify/ialbum.ts",
       "./src/interfaces/spotify/iartist.ts",
