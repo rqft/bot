@@ -237,8 +237,8 @@
         "affectsGlobalScope": true
       },
       "./src/interfaces/icommand.ts": {
-        "version": "896ddb0512f1caed47adbe1c0e7ab7fb84121ab2ab9af436856842de4fa5b4ce",
-        "signature": "bd82c89efb395bc9794cf82f9e022a4bd0547a1fb5c06912357ba99e189bcc13",
+        "version": "09f239f29303bb282953a96982c9b0803050f10b1e312b0f1887fcd3771c83e0",
+        "signature": "db472cc5326e9dbf6ca643649cad1be4000cfb6325cc6636ab86131df8dd1c1d",
         "affectsGlobalScope": false
       },
       "./src/functions/fetchcommand.ts": {
