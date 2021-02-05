@@ -1,11 +1,11 @@
 import { MessageEmbed, User } from "discord.js";
-import { client } from "..";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotBadges } from "../functions/getBotBadges";
 import { getBotLevel } from "../functions/getBotLevel";
 import { getLongAgo, simpleGetLongAgo } from "../functions/getLongAgo";
 import { getPresence } from "../functions/getPresence";
 import { getProfileBadges } from "../functions/getProfileBadges";
+import { getUser } from "../functions/getUser";
 import { getUserPermissions } from "../functions/getUserPermissions";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
@@ -15,46 +15,7 @@ module.exports = {
   aliases: ["u"],
   usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {
-    var res = args.join(" ")?.normalize()!;
-
-    if (res?.toLowerCase() == "discord") res = "643945264868098049";
-    if (res?.toLowerCase() == "me") res = message.author.id;
-    if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")
-      res = client.user?.id!;
-    if (res?.toLowerCase() == "random") {
-      if (!message.guild) {
-        return await message.channel.send(
-          "You need to be in a server to run this!"
-        );
-      }
-      res = message.guild.members.cache.random().id;
-    }
-    if (res?.toLowerCase() == "owner") {
-      if (!message.guild) {
-        return await message.channel.send(
-          "You need to be in a server to run this!"
-        );
-      }
-      res = message.guild.ownerID;
-    }
-    var unresolvedID = args.join(" ").length ? res : message.author.id;
-    if (res.match(/<@!?(\d+)>/g)?.length !== 0)
-      unresolvedID = res.replace(/[<@!>]/g, "");
-    var user: User | null = null;
-    try {
-      user = client.users.cache.find(
-        (e) =>
-          e.username.toLowerCase().normalize() == unresolvedID ||
-          e.tag.toLowerCase().normalize() == unresolvedID ||
-          e.id == unresolvedID ||
-          `${e}` == unresolvedID ||
-          message.guild?.members.cache.get(e.id)?.nickname == unresolvedID
-      )!;
-    } catch (error) {}
-    if (!user) {
-      return await message.channel.send("Unknown User");
-    }
-    message.guild?.members.cache.array;
+    const user = (await getUser(message, args)) as User;
     const emb = new MessageEmbed();
     emb.setAuthor(
       user.tag,
