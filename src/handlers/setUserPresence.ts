@@ -3,12 +3,12 @@ import { pid } from "process";
 import { config } from "../config";
 
 export function setUserPresence() {
-  const cc = new RPC.Client({
+  const RPCClient = new RPC.Client({
     transport: "ipc",
   });
 
-  cc.on("ready", () => {
-    cc.request("SET_ACTIVITY", {
+  RPCClient.on("ready", () => {
+    RPCClient.request("SET_ACTIVITY", {
       pid: pid,
       activity: {
         assets: {
@@ -28,5 +28,5 @@ export function setUserPresence() {
       },
     });
   });
-  cc.login({ clientId: config.bot.application.clientId });
+  RPCClient.login({ clientId: config.bot.application.clientId });
 }

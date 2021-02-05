@@ -1,4 +1,4 @@
-import { GuildMember, PermissionString } from "discord.js";
+import { GuildMember, PermissionString, Role } from "discord.js";
 import { config } from "../config";
 import { capitalizeWords } from "./capitalizeWords";
 const ignoredPermissions: PermissionString[] = [
@@ -19,13 +19,14 @@ const ignoredPermissions: PermissionString[] = [
   "VIEW_CHANNEL",
 ];
 type CustomPermissionString =
+  | "MANAGED"
   | "SERVER_OWNER"
   | "BLACKLISTED_USER"
   | "BLACKLISTED_GUILD_OWNER"
   | "BOT_OWNER"
   | "SYSTEM"
   | "NONE";
-export function getUserPermissions(user: GuildMember) {
+export function getUserPermissions(user: GuildMember | Role) {
   var perms: (
     | PermissionString
     | CustomPermissionString
@@ -41,9 +42,11 @@ export function getUserPermissions(user: GuildMember) {
     perms.unshift("BLACKLISTED_USER");
   if (config.bot.ownerIds.includes(user.id)) perms.unshift("BOT_OWNER");
   if (config.bot.id == user.id) perms.unshift("SYSTEM");
+
   if (perms.length == 0) {
     perms = ["NONE"];
   }
+  if (user instanceof Role && user.managed) perms.unshift("MANAGED");
   return perms
     .map((e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``)
     .join(", ");

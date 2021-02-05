@@ -8,11 +8,11 @@ const discord_rpc_1 = __importDefault(require("discord-rpc"));
 const process_1 = require("process");
 const config_1 = require("../config");
 function setUserPresence() {
-    const cc = new discord_rpc_1.default.Client({
+    const RPCClient = new discord_rpc_1.default.Client({
         transport: "ipc",
     });
-    cc.on("ready", () => {
-        cc.request("SET_ACTIVITY", {
+    RPCClient.on("ready", () => {
+        RPCClient.request("SET_ACTIVITY", {
             pid: process_1.pid,
             activity: {
                 assets: {
@@ -31,6 +31,6 @@ function setUserPresence() {
             },
         });
     });
-    cc.login({ clientId: config_1.config.bot.application.clientId });
+    RPCClient.login({ clientId: config_1.config.bot.application.clientId });
 }
 exports.setUserPresence = setUserPresence;

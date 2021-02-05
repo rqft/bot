@@ -15,6 +15,7 @@ module.exports = {
     aliases: ["u"],
     usage: "[user: User | Snowflake]",
     async run(message, args) {
+        args[0] = args[0]?.normalize();
         if (args[0]?.toLowerCase() == "discord")
             args[0] = "643945264868098049";
         if (args[0]?.toLowerCase() == "me")
@@ -33,12 +34,16 @@ module.exports = {
             }
             args[0] = message.guild.ownerID;
         }
-        var unresolvedID = args[0]
-            ? args[0]?.replace(/\D/g, "")
+        var unresolvedID = args.join(" ").length
+            ? args.join(" ")
             : message.author.id;
         var user = null;
         try {
-            user = await __1.client.users.fetch(unresolvedID, true);
+            user = __1.client.users.cache.find((e) => e.username.toLowerCase().normalize() == unresolvedID ||
+                e.tag.toLowerCase().normalize() == unresolvedID ||
+                e.id == unresolvedID ||
+                `${e}` == unresolvedID ||
+                message.guild?.members.cache.get(e.id)?.nickname == unresolvedID);
         }
         catch (error) { }
         if (!user) {

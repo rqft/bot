@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserPermissions = void 0;
+const discord_js_1 = require("discord.js");
 const config_1 = require("../config");
 const capitalizeWords_1 = require("./capitalizeWords");
 const ignoredPermissions = [
@@ -39,6 +40,8 @@ function getUserPermissions(user) {
     if (perms.length == 0) {
         perms = ["NONE"];
     }
+    if (user instanceof discord_js_1.Role && user.managed)
+        perms.unshift("MANAGED");
     return perms
         .map((e) => `\`${capitalizeWords_1.capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``)
         .join(", ");
