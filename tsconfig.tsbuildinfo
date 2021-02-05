@@ -217,8 +217,8 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "d770f738d7d4d70aa3c7c5efd22a7db243c44812ca48e4905336e1c4833f7662",
-        "signature": "999079746de8a9bd4c15ad72c800891482bf19f20e742296f5d4133cc023c9af",
+        "version": "84c8477a35644a117215a8f0e17827a23a792a0f80dc3e05ce777306ccce50f9",
+        "signature": "736ecf54b535082babd6853bfa5271e2df4fb4eada9dd1e3ae2475c8a79bbb61",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -242,8 +242,8 @@
         "affectsGlobalScope": false
       },
       "./src/interfaces/icommand.ts": {
-        "version": "09f239f29303bb282953a96982c9b0803050f10b1e312b0f1887fcd3771c83e0",
-        "signature": "db472cc5326e9dbf6ca643649cad1be4000cfb6325cc6636ab86131df8dd1c1d",
+        "version": "0d7e7bc9fbecc810862f8ed8ffb7a7b6942347a98c8d1a777e579ad2499d3e8e",
+        "signature": "0c33fb743828a2558b131366e7468d146b416b0281bbbd511da3ee3bdd460383",
         "affectsGlobalScope": false
       },
       "./src/functions/fetchcommand.ts": {
@@ -342,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "93e78351e4c3ddb446fa718499870b903b5358706cd4804641a1c6866344f91c",
+        "version": "fc3b3cbce5d81720322943a45c253fd20cafe5b1d88b8cca8cb963af553dea41",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -696,6 +696,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/commands/replace.ts": {
+        "version": "ae958fb52c8680d0960723835763721594a5bb753d591532b04ef4636fdbf82b",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/element.ts": {
         "version": "d2a1e169450f9a3bdbd71395948df317e972e304187dfe46bf9bc0367a6fc833",
         "signature": "035947c8311963edb228b4df38332ccca3d4db8959d89ae41f491ebb315be33e",
@@ -707,7 +712,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
-        "version": "e989ec4d3109c939007f1c693fd73c5b83ac8d28622ed9a23aa05938e90bca0d",
+        "version": "a92d2b1067b118d942e727c3632ffaa768bbfd5c40251f7f9815f24e89512911",
         "signature": "fba739a8faa2a212e6e657a05985fd6c56692cb1d56455ab01ac76c15c8cb4ce",
         "affectsGlobalScope": false
       },
@@ -807,7 +812,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "b7542f95b46d77ed662b0707c79cf2ca61ab3a9ca015fba2936d66c2c039b46d",
+        "version": "5a6b65dcff9942692fbabd55dcb2eaf5a5591d059ff8a7dbe110f93d9842bf20",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1111,6 +1116,9 @@
       "./src/commands/remind.ts": [
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
+        "./src/interfaces/icommand.ts"
+      ],
+      "./src/commands/replace.ts": [
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/server.ts": [
@@ -1674,6 +1682,7 @@
       "./src/commands/publish.ts",
       "./src/commands/pylondocs.ts",
       "./src/commands/remind.ts",
+      "./src/commands/replace.ts",
       "./src/commands/server.ts",
       "./src/commands/spotify.ts",
       "./src/commands/test.ts",

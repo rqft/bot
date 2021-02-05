@@ -16,7 +16,7 @@ module.exports = {
   usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {
     var res = args.join(" ")?.normalize()!;
-
+    if (!res) res = message.author.id;
     if (res?.toLowerCase() == "discord") res = "643945264868098049";
     if (res?.toLowerCase() == "me") res = message.author.id;
     if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")

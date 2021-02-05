@@ -12,5 +12,5 @@ export interface ICommand {
     serverOwnerOnly?: boolean;
   };
   usesArgs?: boolean;
-  run: (message: Message, args: string[]) => Promise<any>;
+  run: (message: Message, args: string[]) => Promise<Message | void>;
 }

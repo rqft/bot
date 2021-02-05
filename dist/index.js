@@ -32,8 +32,14 @@ exports.client.on("error", (err) => {
 exports.client.on("message", async (message) => {
     const sexes = message.content.match(/sex/gi);
     if (message.author !== exports.client.user && sexes) {
-        (await exports.client.channels.fetch(config_1.config.__global.sex_alarm)).send(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.channel} ${formatID_1.formatID(message.channel.id)}`);
-        await message.react("😳");
+        config_1.config.global.sexAlarm.forEach(async (e) => {
+            (await exports.client.channels.fetch(e))
+                .send(`...`)
+                .then((e) => e.edit(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.guild ? message.channel : "DMs"} ${formatID_1.formatID(message.channel.id)} ${message.guild && message.guild.id !== config_1.config.global.guildId
+                ? `on \`${message.guild.name}\` ${formatID_1.formatID(message.guild.id)}`
+                : ""}`));
+            await message.react("😳");
+        });
     }
     await commandHandler_1.commandHandler(message);
 });

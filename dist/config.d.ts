@@ -1,9 +1,9 @@
 export declare const config: {
-    __global: {
+    global: {
         guildId: string;
         locale: string;
         timezone: string;
-        sex_alarm: string;
+        sexAlarm: string[];
     };
     bot: {
         prefixes: string[];

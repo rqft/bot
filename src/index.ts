@@ -28,16 +28,27 @@ client.on("error", (err) => {
 client.on("message", async (message) => {
   const sexes = message.content.match(/sex/gi);
   if (message.author !== client.user && sexes) {
-    ((await client.channels.fetch(
-      config.__global.sex_alarm
-    )) as Discord.TextChannel).send(
-      `${message.author} ${formatID(message.author.id)} has **sexed** __${
-        sexes.length
-      } time${sexes.length == 1 ? "" : "s"}__ in ${message.channel} ${formatID(
-        message.channel.id
-      )}`
-    );
-    await message.react("😳");
+    // for (var i = 0; i < (sexes.length > 5 ? 5 : sexes.length); i++) {
+    //   await message.author.send(`(${i + 1}) No sex :bangbang:`);
+    // }
+    config.global.sexAlarm.forEach(async (e) => {
+      ((await client.channels.fetch(e)) as Discord.TextChannel)
+        .send(`...`)
+        .then((e) =>
+          e.edit(
+            `${message.author} ${formatID(message.author.id)} has **sexed** __${
+              sexes.length
+            } time${sexes.length == 1 ? "" : "s"}__ in ${
+              message.guild ? message.channel : "DMs"
+            } ${formatID(message.channel.id)} ${
+              message.guild && message.guild.id !== config.global.guildId
+                ? `on \`${message.guild.name}\` ${formatID(message.guild.id)}`
+                : ""
+            }`
+          )
+        );
+      await message.react("😳");
+    });
   }
   await commandHandler(message);
 });
