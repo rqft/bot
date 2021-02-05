@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "p/publish": "git add . && git commit -m",
-    "p/deploy": "git push -u origin main",
+    "p/deploy": "git add . && git commit -m \"unnoticed changes added\" && git push -u origin main",
     "p/start": "nodemon dist"
   },
   "keywords": [],
