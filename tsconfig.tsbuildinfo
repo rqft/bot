@@ -217,8 +217,8 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "163921942ef549c6ae0eda8fb559ebdb87e5ee942ad7ff7f423c95d225d7234a",
-        "signature": "d97e0f5fdf1173353c048d692bdaeb75e162672891570034043bca31f6a9a9ab",
+        "version": "d770f738d7d4d70aa3c7c5efd22a7db243c44812ca48e4905336e1c4833f7662",
+        "signature": "999079746de8a9bd4c15ad72c800891482bf19f20e742296f5d4133cc023c9af",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -236,6 +236,11 @@
         "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
         "affectsGlobalScope": true
       },
+      "./src/functions/formatid.ts": {
+        "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
+        "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/icommand.ts": {
         "version": "09f239f29303bb282953a96982c9b0803050f10b1e312b0f1887fcd3771c83e0",
         "signature": "db472cc5326e9dbf6ca643649cad1be4000cfb6325cc6636ab86131df8dd1c1d",
@@ -244,11 +249,6 @@
       "./src/functions/fetchcommand.ts": {
         "version": "b01654cc49ebc19a7dc772a89f43a500ab34ac75e0820cee2b3d2549e509ea9d",
         "signature": "433b65487dfa73e1dde857070dcb41e802362a57c8ab6e853acd30d4e2c0b6cc",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/formatid.ts": {
-        "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
-        "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
         "affectsGlobalScope": false
       },
       "./src/logs/logblacklisteduseraction.ts": {
@@ -342,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "b3f1caa18e79a33e502c655eea1e3fd5ebedbda7768afee04a06e44d9b622eb0",
+        "version": "93e78351e4c3ddb446fa718499870b903b5358706cd4804641a1c6866344f91c",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -807,13 +807,18 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "e8f9db390d0b0ebf643e5645848ed4c12098eacc958123f8008ae72fe0968581",
+        "version": "7f88069ce5c8e08d0315f1db584a60fb8ff4527451c1ff7ea6b75ae24dbc5a0e",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/functions/factor.ts": {
         "version": "e36c816ea09229040f529fcd4bf87f55cd8ba27d9fc41fbfbe8dfb585522a2ef",
         "signature": "399c75dc8866803a2bdb02496919387432459748b21de9d5d845182c441883f8",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getusersfrommention.ts": {
+        "version": "0a95c62fa4cf4165e9275fe0c975eb91d810114d69ea7bf8edd880d6befcdb83",
+        "signature": "ae505aa206297d5fbc83ea8b62af9f6006d6424b0fb769d302d1720514e925bf",
         "affectsGlobalScope": false
       },
       "./src/interfaces/server.ts": {
@@ -1194,6 +1199,9 @@
         "./src/config.ts",
         "./src/functions/capitalizewords.ts"
       ],
+      "./src/functions/getusersfrommention.ts": [
+        "./src/index.ts"
+      ],
       "./src/functions/spotifysearch.ts": [
         "./src/functions/api.ts",
         "./src/interfaces/spotify/itrack.ts"
@@ -1244,6 +1252,7 @@
       "./src/index.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/formatid.ts",
         "./src/handlers/commandhandler.ts",
         "./src/handlers/discordjserror.ts",
         "./src/handlers/fetchcommandfiles.ts",
@@ -1542,6 +1551,9 @@
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/functions/getusersfrommention.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/spotifysearch.ts": [
         "./src/interfaces/spotify/itrack.ts"
       ],
@@ -1685,6 +1697,7 @@
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
       "./src/functions/getuserpermissions.ts",
+      "./src/functions/getusersfrommention.ts",
       "./src/functions/numtowords.ts",
       "./src/functions/owoify.ts",
       "./src/functions/spotifysearch.ts",

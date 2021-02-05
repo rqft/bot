@@ -15,30 +15,31 @@ module.exports = {
   aliases: ["u"],
   usage: "[user: User | Snowflake]",
   async run(message, args: string[]) {
-    args[0] = args[0]?.normalize()!;
-    if (args[0]?.toLowerCase() == "discord") args[0] = "643945264868098049";
-    if (args[0]?.toLowerCase() == "me") args[0] = message.author.id;
-    if (args[0]?.toLowerCase() == "bot" || args[0]?.toLowerCase() == "system")
-      args[0] = client.user?.id!;
-    if (args[0]?.toLowerCase() == "random") {
+    var res = args.join(" ")?.normalize()!;
+
+    if (res?.toLowerCase() == "discord") res = "643945264868098049";
+    if (res?.toLowerCase() == "me") res = message.author.id;
+    if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")
+      res = client.user?.id!;
+    if (res?.toLowerCase() == "random") {
       if (!message.guild) {
         return await message.channel.send(
           "You need to be in a server to run this!"
         );
       }
-      args[0] = message.guild.members.cache.random().id;
+      res = message.guild.members.cache.random().id;
     }
-    if (args[0]?.toLowerCase() == "owner") {
+    if (res?.toLowerCase() == "owner") {
       if (!message.guild) {
         return await message.channel.send(
           "You need to be in a server to run this!"
         );
       }
-      args[0] = message.guild.ownerID;
+      res = message.guild.ownerID;
     }
-    var unresolvedID = args.join(" ").length
-      ? args.join(" ")
-      : message.author.id;
+    var unresolvedID = args.join(" ").length ? res : message.author.id;
+    if (res.match(/<@!?(\d+)>/g)?.length !== 0)
+      unresolvedID = res.replace(/[<@!>]/g, "");
     var user: User | null = null;
     try {
       user = client.users.cache.find(
@@ -53,6 +54,7 @@ module.exports = {
     if (!user) {
       return await message.channel.send("Unknown User");
     }
+    message.guild?.members.cache.array;
     const emb = new MessageEmbed();
     emb.setAuthor(
       user.tag,

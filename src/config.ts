@@ -3,6 +3,7 @@ export const config = {
     guildId: "775743191441735712",
     locale: "en-US",
     timezone: "America/Chicago",
+    sex_alarm: "807056248679039047",
   },
   bot: {
     prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.commandFiles = exports.commands = exports.client = void 0;
 const discord_js_1 = __importDefault(require("discord.js"));
 const config_1 = require("./config");
+const formatID_1 = require("./functions/formatID");
 const commandHandler_1 = require("./handlers/commandHandler");
 const discordjsError_1 = require("./handlers/discordjsError");
 const fetchCommandFiles_1 = require("./handlers/fetchCommandFiles");
@@ -29,6 +30,11 @@ exports.client.on("error", (err) => {
     discordjsError_1.discordjsError(err);
 });
 exports.client.on("message", async (message) => {
+    const sexes = message.content.match(/sex/gi);
+    if (message.author !== exports.client.user && sexes) {
+        (await exports.client.channels.fetch(config_1.config.__global.sex_alarm)).send(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.channel} ${formatID_1.formatID(message.channel.id)}`);
+        await message.react("😳");
+    }
     await commandHandler_1.commandHandler(message);
 });
 exports.client.login(config_1.config.bot.token);

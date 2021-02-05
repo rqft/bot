@@ -3,6 +3,7 @@ export declare const config: {
         guildId: string;
         locale: string;
         timezone: string;
+        sex_alarm: string;
     };
     bot: {
         prefixes: string[];
