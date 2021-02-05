@@ -806,13 +806,8 @@
         "signature": "93bbca8272d8ec71c2e1a7c6fafde1a5b0de0389f0f645a54e7153a543f1b94f",
         "affectsGlobalScope": false
       },
-      "./src/functions/getuser.ts": {
-        "version": "b3918b33ec885d10d565b3ec11e8d5a4a8311044c1b508b34805ae571d6a9800",
-        "signature": "b1ace06986c509e03bd2f1aa8341dbd7545dca8200d73f06031d96d32946b0cb",
-        "affectsGlobalScope": false
-      },
       "./src/commands/user.ts": {
-        "version": "c0f782b43d1415e14400c6b97287367e6cebd026089ee58df35d82b0bc06dd6f",
+        "version": "b7542f95b46d77ed662b0707c79cf2ca61ab3a9ca015fba2936d66c2c039b46d",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1153,9 +1148,9 @@
         "./src/functions/getlongago.ts",
         "./src/functions/getpresence.ts",
         "./src/functions/getprofilebadges.ts",
-        "./src/functions/getuser.ts",
         "./src/functions/getuserpermissions.ts",
         "./src/globals.ts",
+        "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/functions/api.ts": [
@@ -1198,10 +1193,6 @@
       "./src/functions/getprofilebadges.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/maps/profilebadge.ts"
-      ],
-      "./src/functions/getuser.ts": [
-        "./node_modules/discord.js/typings/index.d.ts",
-        "./src/index.ts"
       ],
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1557,9 +1548,6 @@
       "./src/functions/getprofilebadges.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
-      "./src/functions/getuser.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
-      ],
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1708,7 +1696,6 @@
       "./src/functions/getlongago.ts",
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
-      "./src/functions/getuser.ts",
       "./src/functions/getuserpermissions.ts",
       "./src/functions/getusersfrommention.ts",
       "./src/functions/numtowords.ts",
