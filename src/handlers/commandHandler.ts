@@ -6,7 +6,7 @@ import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
 import { logCommandError } from "../logs/logCommandError";
 import { logCommandUse } from "../logs/logCommandUse";
 
-export function commandHandler(message: Message) {
+export async function commandHandler(message: Message) {
   // check for prefixes;
   const prefixRegex = new RegExp(
     `^(${config.bot.prefixes.join("|")})( ?)`,
@@ -19,7 +19,18 @@ export function commandHandler(message: Message) {
    * Arguments passed to the command
    */
   const args = message.content.slice(prefix!.length).trim().split(/ +/);
+  /**
+   * ```ts
+   * this tbh
+   * ```
+   */
   const commandName = args.shift()!.toLowerCase();
+
+  if (prefix == "p/" && !config.bot.ownerIds.includes(message.author.id)) {
+    return await message.channel.send(
+      `:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`
+    );
+  }
 
   /**
    * the set of commands owo

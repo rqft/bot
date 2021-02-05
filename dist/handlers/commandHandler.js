@@ -7,13 +7,16 @@ const fetchCommand_1 = require("../functions/fetchCommand");
 const logBlacklistedUserAction_1 = require("../logs/logBlacklistedUserAction");
 const logCommandError_1 = require("../logs/logCommandError");
 const logCommandUse_1 = require("../logs/logCommandUse");
-function commandHandler(message) {
+async function commandHandler(message) {
     const prefixRegex = new RegExp(`^(${config_1.config.bot.prefixes.join("|")})( ?)`, "gi");
     if (message.content.match(prefixRegex) == null)
         return;
     const prefix = message.content.match(prefixRegex).join("");
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
+    if (prefix == "p/" && !config_1.config.bot.ownerIds.includes(message.author.id)) {
+        return await message.channel.send(`:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`);
+    }
     const command = fetchCommand_1.fetchCommand(commandName);
     if (!command)
         return;

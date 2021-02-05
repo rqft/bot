@@ -47,21 +47,21 @@ module.exports = {
         +role.createdAt
       )} ${formatTimestamp(role.createdAt)}`
     );
-    const posTop = message.guild.roles.cache.filter(
-      (e) => e.position == role!.position - 1
-    );
-    const posLow = message.guild.roles.cache.filter(
+    const posTop = message.guild.roles.cache.find(
       (e) => e.position == role!.position + 1
+    );
+    const posLow = message.guild.roles.cache.find(
+      (e) => e.position == role!.position - 1
     );
 
     emb.addField(
       "❯ Position",
-      `**${posTop.size ? posTop.array()[0]?.position : ""} ${
-        posTop.size ? posTop.array()[0] : "-- Top Of Role list"
+      `**${posTop ? posTop?.position : ""} ${
+        posTop ? posTop : "-- Top Of Role list"
       }**
 **- ${role.position} ${role}**
-**${posLow.size ? posLow.array()[0]?.position : ""} ${
-        posLow.size ? posLow.array()[0] : "-- Bottom Of Role list"
+**${posLow ? posLow?.position : ""} ${
+        posLow ? posLow : "-- Bottom Of Role list"
       }**`
     );
     emb.addField("❯ Permissions", getUserPermissions(role));

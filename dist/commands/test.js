@@ -38,11 +38,11 @@ module.exports = {
         emb.addField(`❯ Role Info`, `:gear: **ID**: \`${role.id}\`
 :link: **Role**: ${role}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(+role.createdAt)} ${formatTimestamp_1.formatTimestamp(role.createdAt)}`);
-        const posTop = message.guild.roles.cache.filter((e) => e.position == role.position - 1);
-        const posLow = message.guild.roles.cache.filter((e) => e.position == role.position + 1);
-        emb.addField("❯ Position", `**${posTop.size ? posTop.array()[0]?.position : ""} ${posTop.size ? posTop.array()[0] : "-- Top Of Role list"}**
+        const posTop = message.guild.roles.cache.find((e) => e.position == role.position + 1);
+        const posLow = message.guild.roles.cache.find((e) => e.position == role.position - 1);
+        emb.addField("❯ Position", `**${posTop ? posTop?.position : ""} ${posTop ? posTop : "-- Top Of Role list"}**
 **- ${role.position} ${role}**
-**${posLow.size ? posLow.array()[0]?.position : ""} ${posLow.size ? posLow.array()[0] : "-- Bottom Of Role list"}**`);
+**${posLow ? posLow?.position : ""} ${posLow ? posLow : "-- Bottom Of Role list"}**`);
         emb.addField("❯ Permissions", getUserPermissions_1.getUserPermissions(role));
         emb.addField("❯ Members", role.members.size ? role.members.array().join(", ") : "None");
         console.log(emb);
