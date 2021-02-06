@@ -53,7 +53,27 @@ client.on("message", async (message) => {
   await commandHandler(message);
 });
 client.login(config.bot.token);
-
+/**
+ * LOGS
+ */
+function sendLog(message: string) {
+  config.global.logs.forEach((e) => {
+    (client.channels.cache.get(e) as Discord.TextChannel).send(message);
+  });
+}
+client.on(`channelCreate`, async (channel) => {
+  sendLog(
+    `A ${channel.type} channel was created. ${
+      channel instanceof Discord.GuildChannel
+        ? channel.parent
+          ? `\`${channel.parent.name}\`**>**`
+          : ""
+        : ""
+    }\`${
+      channel instanceof Discord.GuildChannel ? channel.name : "DM"
+    }\` ${formatID(channel.id)}`
+  );
+});
 /**
  * Presence Stuff
  */

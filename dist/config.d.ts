@@ -4,6 +4,7 @@ export declare const config: {
         locale: string;
         timezone: string;
         sexAlarm: string[];
+        logs: string[];
     };
     bot: {
         prefixes: string[];

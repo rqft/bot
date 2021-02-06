@@ -44,4 +44,16 @@ exports.client.on("message", async (message) => {
     await commandHandler_1.commandHandler(message);
 });
 exports.client.login(config_1.config.bot.token);
+function sendLog(message) {
+    config_1.config.global.logs.forEach((e) => {
+        exports.client.channels.cache.get(e).send(message);
+    });
+}
+exports.client.on(`channelCreate`, async (channel) => {
+    sendLog(`A ${channel.type} channel was created. ${channel instanceof discord_js_1.default.GuildChannel
+        ? channel.parent
+            ? `\`${channel.parent.name}\`**>**`
+            : ""
+        : ""}\`${channel instanceof discord_js_1.default.GuildChannel ? channel.name : "DM"}\` ${formatID_1.formatID(channel.id)}`);
+});
 setUserPresence_1.setUserPresence();
