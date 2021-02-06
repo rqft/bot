@@ -97,6 +97,24 @@ ${
         `:gear: **Permission List**: ${getUserPermissions(mem)}
         :cyclone: **Bot Level**: __\`${getBotLevel(mem)}\`__`
       );
+      emb.addField(
+        "❯ Invites",
+        (await mem.guild.fetchInvites())
+          .array()
+          .filter((e) => e.inviter == user).length
+          ? (await mem.guild.fetchInvites())
+              .array()
+              .filter((e) => e.inviter == user)
+              .slice(0, 5)
+              .map(
+                (e) =>
+                  `${e.channel} [Invite](${e.url}) ${formatTimestamp(
+                    e.createdAt!
+                  )}`
+              )
+              .join("\n")
+          : "None."
+      );
     }
     emb.addField("❯ Profile Badges", getProfileBadges(user));
     emb.addField("❯ Bot Badges", getBotBadges(user));

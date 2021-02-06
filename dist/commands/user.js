@@ -71,6 +71,16 @@ ${roles.size !== 0
                 : ""}`);
             emb.addField("❯ Permissions", `:gear: **Permission List**: ${getUserPermissions_1.getUserPermissions(mem)}
         :cyclone: **Bot Level**: __\`${getBotLevel_1.getBotLevel(mem)}\`__`);
+            emb.addField("❯ Invites", (await mem.guild.fetchInvites())
+                .array()
+                .filter((e) => e.inviter == user).length
+                ? (await mem.guild.fetchInvites())
+                    .array()
+                    .filter((e) => e.inviter == user)
+                    .slice(0, 5)
+                    .map((e) => `${e.channel} [Invite](${e.url}) ${formatTimestamp_1.formatTimestamp(e.createdAt)}`)
+                    .join("\n")
+                : "None.");
         }
         emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));

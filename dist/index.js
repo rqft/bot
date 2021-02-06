@@ -31,29 +31,17 @@ exports.client.on("error", (err) => {
 });
 exports.client.on("message", async (message) => {
     const sexes = message.content.match(/sex/gi);
-    if (message.author !== exports.client.user && sexes) {
+    if (sexes && !config_1.config.global.sexAlarm.includes(message.channel.id)) {
+        message.author.send(`No sex :bangbang:`);
         config_1.config.global.sexAlarm.forEach(async (e) => {
             (await exports.client.channels.fetch(e))
                 .send(`...`)
                 .then((e) => e.edit(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.guild ? message.channel : "DMs"} ${formatID_1.formatID(message.channel.id)} ${message.guild && message.guild.id !== config_1.config.global.guildId
                 ? `on \`${message.guild.name}\` ${formatID_1.formatID(message.guild.id)}`
                 : ""}`));
-            await message.react("😳");
         });
     }
     await commandHandler_1.commandHandler(message);
 });
 exports.client.login(config_1.config.bot.token);
-function sendLog(message) {
-    config_1.config.global.logs.forEach((e) => {
-        exports.client.channels.cache.get(e).send(message);
-    });
-}
-exports.client.on(`channelCreate`, async (channel) => {
-    sendLog(`A ${channel.type} channel was created. ${channel instanceof discord_js_1.default.GuildChannel
-        ? channel.parent
-            ? `\`${channel.parent.name}\`**>**`
-            : ""
-        : ""}\`${channel instanceof discord_js_1.default.GuildChannel ? channel.name : "DM"}\` ${formatID_1.formatID(channel.id)}`);
-});
 setUserPresence_1.setUserPresence();

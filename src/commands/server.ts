@@ -36,7 +36,22 @@ module.exports = {
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}`
     );
-    emb.addField("❯ Server Info", getGuildFeatures(guild));
+    emb.addField(
+      "❯ Invites",
+      (await guild.fetchInvites()).size
+        ? (await guild.fetchInvites())
+            .array()
+            .slice(0, 5)
+            .map(
+              (e) =>
+                `${e.channel} [Invite](${e.url}) by ${
+                  e.inviter
+                } ${formatTimestamp(e.createdAt!)}`
+            )
+            .join("\n")
+        : "None."
+    );
+    emb.addField("❯ Features", getGuildFeatures(guild));
     emb.setColor(Color.embed);
     await message.channel.send(emb);
   },

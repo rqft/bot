@@ -1,51 +1,22 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
-const formatTimestamp_1 = require("../functions/formatTimestamp");
-const getLongAgo_1 = require("../functions/getLongAgo");
-const getUserPermissions_1 = require("../functions/getUserPermissions");
-const globals_1 = require("../globals");
+const node_fetch_1 = __importDefault(require("node-fetch"));
 module.exports = {
     name: "test",
-    description: "AAAAAAA",
-    restrictions: {
-        guildOnly: true,
-    },
-    usage: "<role: Role>",
-    usesArgs: false,
     async run(message, args) {
-        if (!message.guild)
-            return;
-        var unresolvedID = args.join(" ").length
-            ? args.join(" ")
-            : message.member?.roles.highest.id;
-        var role = null;
-        try {
-            role = message.guild.roles.cache.find((e) => e.name.toLowerCase() == unresolvedID ||
-                e.id == unresolvedID ||
-                `${e}` == unresolvedID);
-        }
-        catch (error) { }
-        if (!role) {
-            return await message.channel.send("Unknown Role");
-        }
-        const col = role.color
-            ? `https://singlecolorimage.com/get/${role.hexColor.replace("#", "")}/256x256`
-            : undefined;
-        const emb = new discord_js_1.MessageEmbed();
-        emb.setAuthor(`Role "${role.name}"`, col);
-        emb.setColor(globals_1.Color.embed);
-        emb.addField(`❯ Role Info`, `:gear: **ID**: \`${role.id}\`
-:link: **Role**: ${role}
-:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(+role.createdAt)} ${formatTimestamp_1.formatTimestamp(role.createdAt)}`);
-        const posTop = message.guild.roles.cache.find((e) => e.position == role.position + 1);
-        const posLow = message.guild.roles.cache.find((e) => e.position == role.position - 1);
-        emb.addField("❯ Position", `**${posTop ? posTop?.position : ""} ${posTop ? posTop : "-- Top Of Role list"}**
-**- ${role.position} ${role}**
-**${posLow ? posLow?.position : ""} ${posLow ? posLow : "-- Bottom Of Role list"}**`);
-        emb.addField("❯ Permissions", getUserPermissions_1.getUserPermissions(role));
-        emb.addField("❯ Members", role.members.size ? role.members.array().join(", ") : "None");
-        console.log(emb);
-        await message.channel.send(emb);
+        const query = args.join(" ");
+        const def = await (await node_fetch_1.default(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${query}`, {
+            method: "GET",
+            headers: {
+                "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com",
+                "x-rapidapi-key": "a9fb0095e3msh7092e19dd0034e9p1261a5jsnb924703f4137",
+            },
+        })).json();
+        await message.channel.send(JSON.stringify(def, null, "\t"), {
+            code: "json",
+        });
     },
 };

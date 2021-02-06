@@ -17,7 +17,6 @@ export const client = new Discord.Client({
 export const commands = new Discord.Collection();
 export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
-
 client.once("ready", () => {
   onReady();
   // console.log("a");
@@ -27,10 +26,8 @@ client.on("error", (err) => {
 });
 client.on("message", async (message) => {
   const sexes = message.content.match(/sex/gi);
-  if (message.author !== client.user && sexes) {
-    // for (var i = 0; i < (sexes.length > 5 ? 5 : sexes.length); i++) {
-    //   await message.author.send(`(${i + 1}) No sex :bangbang:`);
-    // }
+  if (sexes && !config.global.sexAlarm.includes(message.channel.id)) {
+    message.author.send(`No sex :bangbang:`);
     config.global.sexAlarm.forEach(async (e) => {
       ((await client.channels.fetch(e)) as Discord.TextChannel)
         .send(`...`)
@@ -47,33 +44,12 @@ client.on("message", async (message) => {
             }`
           )
         );
-      await message.react("😳");
+      // await message.react("😳");
     });
   }
   await commandHandler(message);
 });
 client.login(config.bot.token);
-/**
- * LOGS
- */
-function sendLog(message: string) {
-  config.global.logs.forEach((e) => {
-    (client.channels.cache.get(e) as Discord.TextChannel).send(message);
-  });
-}
-client.on(`channelCreate`, async (channel) => {
-  sendLog(
-    `A ${channel.type} channel was created. ${
-      channel instanceof Discord.GuildChannel
-        ? channel.parent
-          ? `\`${channel.parent.name}\`**>**`
-          : ""
-        : ""
-    }\`${
-      channel instanceof Discord.GuildChannel ? channel.name : "DM"
-    }\` ${formatID(channel.id)}`
-  );
-});
 /**
  * Presence Stuff
  */

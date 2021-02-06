@@ -31,7 +31,14 @@ module.exports = {
 <:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
-        emb.addField("❯ Server Info", getGuildFeatures_1.getGuildFeatures(guild));
+        emb.addField("❯ Invites", (await guild.fetchInvites()).size
+            ? (await guild.fetchInvites())
+                .array()
+                .slice(0, 5)
+                .map((e) => `${e.channel} [Invite](${e.url}) by ${e.inviter} ${formatTimestamp_1.formatTimestamp(e.createdAt)}`)
+                .join("\n")
+            : "None.");
+        emb.addField("❯ Features", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.Color.embed);
         await message.channel.send(emb);
     },

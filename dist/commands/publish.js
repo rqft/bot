@@ -10,7 +10,7 @@ module.exports = {
     usage: "<message: text>",
     async run(message, args) {
         child_process_1.exec("git add .");
-        await child_process_1.exec(`git commit -m "${args.join(" ")}"`, (_, stdout, _stderr) => {
+        child_process_1.exec(`git commit -m "${args.join(" ")}"`, (_, stdout, _stderr) => {
             message.channel.send(`\`\`\`git commit -m "${args.join(" ")}"\`\`\`\`\`\`cmd
 ${[stdout, _stderr].join("\n\n")}\`\`\``);
         });

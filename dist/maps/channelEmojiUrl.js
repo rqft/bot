@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.channelTypeMap = void 0;
+const __1 = require("..");
+const channelEmojiUrlMap = new Map();
+exports.channelTypeMap = channelEmojiUrlMap;
+channelEmojiUrlMap.set("text", __1.client.emojis.cache.get("798624246905569323").url);
+channelEmojiUrlMap.set("category", __1.client.emojis.cache.get("798624247122493450").url);
+channelEmojiUrlMap.set("dm", __1.client.emojis.cache.get("798624246905569323").url);
+channelEmojiUrlMap.set("group", __1.client.emojis.cache.get("798624241347198987").url);
+channelEmojiUrlMap.set("news", __1.client.emojis.cache.get("798624238793261109").url);
+channelEmojiUrlMap.set("store", __1.client.emojis.cache.get("798624234745757727").url);
+channelEmojiUrlMap.set("unknown", undefined);
+channelEmojiUrlMap.set("voice", __1.client.emojis.cache.get("798624234732781580").url);
