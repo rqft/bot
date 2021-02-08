@@ -6,7 +6,8 @@
   "scripts": {
     "p/publish": "git add . && git commit -m",
     "p/deploy": "git push -u origin main",
-    "p/start": "nodemon dist"
+    "p/start": "nodemon dist",
+    "start": "npm run p/start"
   },
   "keywords": [],
   "author": "",
