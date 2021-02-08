@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { IMyMemoryResponse } from "../interfaces/IMyMemory";
 module.exports = {
   name: "translate",
   usesArgs: true,
@@ -23,10 +24,12 @@ module.exports = {
 ${this.usage}\`\`\``
       );
 
-    var url = `https://api.mymemory.translated.net/get?q=${text}&langpair=${language}|${targetLanguage}`;
+    var url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+      text
+    )}&langpair=${language}|${targetLanguage}`;
     console.log(url);
-    const req = await fetch(encodeURIComponent(url));
-    const data = await req.json();
+    const req = await fetch(url);
+    const data = (await req.json()) as IMyMemoryResponse;
     if (
       data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")
     ) {
@@ -48,16 +51,20 @@ ${this.usage}\`\`\``
     const targetFlag = `:flag_${targetLanguage.replace("en", "us")}:`;
     const emb = new MessageEmbed();
     emb.setColor(Color.embed);
-    emb.addField("Language", `${flag} - (\`${language.toUpperCase()}\`)`);
     emb.addField(
-      "Target",
-      `${targetFlag} - (\`${targetLanguage.toUpperCase()}\`)`
+      "Input",
+      `${flag} - (\`${language.toUpperCase()}\`)\n\`\`\`\n${text}\`\`\``
     );
     emb.addField(
-      "Text",
-      `\`\`\`
-${data.responseData.translatedText}
-\`\`\``
+      "Translated Text",
+      `${targetFlag} - (\`${targetLanguage.toUpperCase()}\`)\n\`\`\`\n${
+        data.responseData.translatedText
+      }\`\`\``
+    );
+    emb.setFooter(
+      `${language.toUpperCase()} => ${targetLanguage.toUpperCase()} | ${
+        data.responseData.match * 100
+      }% match rate`
     );
     message.channel.send(emb);
   },

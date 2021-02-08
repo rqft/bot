@@ -37,12 +37,14 @@ module.exports = {
       }
       res = message.guild.ownerID;
     }
-    var unresolvedID = args.join(" ").length ? res : message.author.id;
-    if (res.match(/<@!?(\d+)>/g)?.length !== 0)
-      unresolvedID = res.replace(/[<@!>]/g, "");
+    var unresolvedID = args.join(" ").length
+      ? res.toLowerCase()
+      : message.author.id;
     var user: User | null = null;
     try {
-      user = client.users.cache.get(unresolvedID)!;
+      user = client.users.cache.find((u) => {
+        return unresolvedID == u.username;
+      })!;
     } catch (error) {}
     if (!user) {
       return await message.channel.send("Unknown User");

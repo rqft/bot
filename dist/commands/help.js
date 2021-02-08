@@ -37,7 +37,7 @@ module.exports = {
         if (command.description)
             data.push(`**Description:** ${command.description}`);
         if (command.usage)
-            data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+            data.push(`**Usage:** \`${prefix?.replace(/\\/g, "")}${command.name} ${command.usage}\``);
         emb.setDescription(data);
         emb.setColor(globals_1.Color.hallucinate);
         emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);

@@ -22,10 +22,10 @@ module.exports = {
             return await message.channel.send(`:warning: Argument Error (missing argument)
 \`\`\`
 ${this.usage}\`\`\``);
-        var url = `https://api.mymemory.translated.net/get?q=${text}&langpair=${language}|${targetLanguage}`;
+        var url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${language}|${targetLanguage}`;
         console.log(url);
-        const req = await node_fetch_1.default(encodeURIComponent(url));
-        const data = await req.json();
+        const req = await node_fetch_1.default(url);
+        const data = (await req.json());
         if (data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")) {
             return await message.channel.send("You must enter a valid language code. e.g `en`, `es`, `etc.`");
         }
@@ -36,11 +36,9 @@ ${this.usage}\`\`\``);
         const targetFlag = `:flag_${targetLanguage.replace("en", "us")}:`;
         const emb = new discord_js_1.MessageEmbed();
         emb.setColor(globals_1.Color.embed);
-        emb.addField("Language", `${flag} - (\`${language.toUpperCase()}\`)`);
-        emb.addField("Target", `${targetFlag} - (\`${targetLanguage.toUpperCase()}\`)`);
-        emb.addField("Text", `\`\`\`
-${data.responseData.translatedText}
-\`\`\``);
+        emb.addField("Input", `${flag} - (\`${language.toUpperCase()}\`)\n\`\`\`\n${text}\`\`\``);
+        emb.addField("Translated Text", `${targetFlag} - (\`${targetLanguage.toUpperCase()}\`)\n\`\`\`\n${data.responseData.translatedText}\`\`\``);
+        emb.setFooter(`${language.toUpperCase()} => ${targetLanguage.toUpperCase()} | ${data.responseData.match * 100}% match rate`);
         message.channel.send(emb);
     },
 };

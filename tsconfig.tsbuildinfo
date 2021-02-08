@@ -362,7 +362,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "7e840231163841589e543ceeb91cf436219c0350810176406f0e8f9ad49d12f0",
+        "version": "c6a9a1139c68852a78a7aa5680230e376597fc3a883e96f2135019c4e7713e64",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -647,7 +647,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "849ce11f801790025724575e65c60b0d7a60dc50658d0e77fdfc5290940a97e9",
+        "version": "876eec0ca0ea32036dfa00e214c2f9930a5d015e4bbf68bbbe75db91a5c215e7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -796,8 +796,13 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/interfaces/imymemory.ts": {
+        "version": "e449f9658ed69f4de5618b727f7d949a70e894c3b311c1337347cdd3120bda5c",
+        "signature": "685b080d0bb7c57cd75d12844c8441662fb315257230b5d69ca79d1364e40451",
+        "affectsGlobalScope": false
+      },
       "./src/commands/translate.ts": {
-        "version": "1a1db6ebe3030468e4fc8ffafdb274aad00506f83894bab18d19a188ba19942b",
+        "version": "7249da09c8dead160982472be166600bf4ba2ecb58896e1072ddd0f02f5bfc26",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -837,7 +842,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "0bf429760ad6895c372ce9e7018f6f0ec4134a874cc0e5d5d9798b5c2e79e6c9",
+        "version": "8a05946245ae636cc834897c2e13969d89b49d4a0628934fc80b16c2c7fc9d0c",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1198,7 +1203,8 @@
         "./node_modules/@types/node-fetch/index.d.ts",
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/globals.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/interfaces/icommand.ts",
+        "./src/interfaces/imymemory.ts"
       ],
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1782,6 +1788,7 @@
       "./src/index.ts",
       "./src/interfaces/element.ts",
       "./src/interfaces/icommand.ts",
+      "./src/interfaces/imymemory.ts",
       "./src/interfaces/ipogfaceelement.ts",
       "./src/interfaces/ipylondocs.ts",
       "./src/interfaces/server.ts",

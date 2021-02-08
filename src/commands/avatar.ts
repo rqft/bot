@@ -44,20 +44,19 @@ module.exports = {
     const avURL =
       user.avatarURL({ dynamic: true, size: size as avatarSize }) ??
       user.defaultAvatarURL;
-    const r = await message.channel.send(
+    const r = await message.channel.send(`Here you go!`, {
+      files: [
+        {
+          name: `item.${getFileExtension(avURL)}`,
+          attachment: avURL,
+        },
+      ],
+    });
+    r.edit(
       `Here you go! (size: \`${size}\`x\`${size}\`) (Done in ${simpleGetLongAgo(
         message.createdTimestamp - 10
-      )})`,
-      {
-        files: [
-          {
-            name: `item.${getFileExtension(avURL)}`,
-            attachment: avURL,
-          },
-        ],
-      }
+      )}) (${r.attachments.array()[0]?.size! / 1000} KB)`
     );
-    r.edit(`${r.content} (${r.attachments.array()[0]?.size! / 1000} KB)`);
     await res.delete();
   },
 } as ICommand;
