@@ -6,7 +6,7 @@ const getLongAgo_1 = require("../functions/getLongAgo");
 const getUserPermissions_1 = require("../functions/getUserPermissions");
 const globals_1 = require("../globals");
 module.exports = {
-    name: "test",
+    name: "role",
     description: "AAAAAAA",
     restrictions: {
         guildOnly: true,

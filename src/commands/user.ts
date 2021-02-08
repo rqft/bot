@@ -42,14 +42,7 @@ module.exports = {
       unresolvedID = res.replace(/[<@!>]/g, "");
     var user: User | null = null;
     try {
-      user = client.users.cache.find(
-        (e) =>
-          e.username.toLowerCase().normalize() == unresolvedID ||
-          e.tag.toLowerCase().normalize() == unresolvedID ||
-          e.id == unresolvedID ||
-          `${e}` == unresolvedID ||
-          message.guild?.members.cache.get(e.id)?.nickname == unresolvedID
-      )!;
+      user = client.users.cache.get(unresolvedID)!;
     } catch (error) {}
     if (!user) {
       return await message.channel.send("Unknown User");

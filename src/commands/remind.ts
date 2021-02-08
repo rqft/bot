@@ -1,5 +1,6 @@
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
+import { parseTimeString } from "../functions/parseTimeString";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -10,22 +11,7 @@ module.exports = {
   async run(message, args) {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
-    const timeSuffix = {
-      i: 1,
-      s: 1000,
-      m: 60 * 1000,
-      h: 60 * 60 * 1000,
-      d: 24 * 60 * 60 * 1000,
-      w: 7 * 24 * 60 * 60 * 1000,
-    };
-
-    const TIME_REGEX = /(\d+)([ismhdw])/g;
-
-    const ms = Array.from(time.matchAll(TIME_REGEX)).reduce(
-      // @ts-ignore
-      (p, [, num, suffix]) => p + parseInt(num!, 10) * timeSuffix[suffix!]!,
-      0
-    );
+    const ms = parseTimeString(time);
     if (ms < 500)
       return await message.channel.send("Must be higher than 500 milliseconds");
 

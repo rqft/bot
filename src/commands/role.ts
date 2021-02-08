@@ -6,7 +6,7 @@ import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "test",
+  name: "role",
   description: "AAAAAAA",
   restrictions: {
     guildOnly: true,

@@ -6,7 +6,9 @@ module.exports = {
     const query = args.join(" ");
     exec(query, (_err, stdout, stderr) => {
       message.channel.send(
-        [query, stdout, stderr].map((e) => `\`\`\`\n${e}\`\`\``).join("")
+        [query, stdout, stderr]
+          .map((e) => `\`\`\`\n${e ?? "<undefined>"}\`\`\``)
+          .join("")
       );
     });
   },

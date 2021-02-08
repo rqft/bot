@@ -23,7 +23,8 @@ module.exports = {
 \`\`\`
 ${this.usage}\`\`\``);
         var url = `https://api.mymemory.translated.net/get?q=${text}&langpair=${language}|${targetLanguage}`;
-        const req = await node_fetch_1.default(url);
+        console.log(url);
+        const req = await node_fetch_1.default(encodeURIComponent(url));
         const data = await req.json();
         if (data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")) {
             return await message.channel.send("You must enter a valid language code. e.g `en`, `es`, `etc.`");

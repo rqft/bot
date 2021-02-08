@@ -22,8 +22,10 @@ module.exports = {
 \`\`\`
 ${this.usage}\`\`\``
       );
+
     var url = `https://api.mymemory.translated.net/get?q=${text}&langpair=${language}|${targetLanguage}`;
-    const req = await fetch(url);
+    console.log(url);
+    const req = await fetch(encodeURIComponent(url));
     const data = await req.json();
     if (
       data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")

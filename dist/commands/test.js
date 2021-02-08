@@ -6,7 +6,9 @@ module.exports = {
     async run(message, args) {
         const query = args.join(" ");
         child_process_1.exec(query, (_err, stdout, stderr) => {
-            message.channel.send([query, stdout, stderr].map((e) => `\`\`\`\n${e}\`\`\``).join(""));
+            message.channel.send([query, stdout, stderr]
+                .map((e) => `\`\`\`\n${e ?? "<undefined>"}\`\`\``)
+                .join(""));
         });
     },
 };

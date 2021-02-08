@@ -236,6 +236,11 @@
         "signature": "bbb87411988e93370461ac33c6437098c8cd39e9a7c92ea0d94b6a375dbe52cc",
         "affectsGlobalScope": true
       },
+      "./src/functions/formatid.ts": {
+        "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
+        "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/icommand.ts": {
         "version": "0d7e7bc9fbecc810862f8ed8ffb7a7b6942347a98c8d1a777e579ad2499d3e8e",
         "signature": "0c33fb743828a2558b131366e7468d146b416b0281bbbd511da3ee3bdd460383",
@@ -244,11 +249,6 @@
       "./src/functions/fetchcommand.ts": {
         "version": "b01654cc49ebc19a7dc772a89f43a500ab34ac75e0820cee2b3d2549e509ea9d",
         "signature": "433b65487dfa73e1dde857070dcb41e802362a57c8ab6e853acd30d4e2c0b6cc",
-        "affectsGlobalScope": false
-      },
-      "./src/functions/formatid.ts": {
-        "version": "c14e03f6e63cc5b23b5553b3d03b773473643ade2c493c815ec7c4d5db21f832",
-        "signature": "ccbaaccdc2375aa8883c9266a95e43006da30b03ffd2113c69daa53d398a4248",
         "affectsGlobalScope": false
       },
       "./src/logs/logblacklisteduseraction.ts": {
@@ -342,7 +342,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "94f4174daf6494ed5fd925fc2216c91975d7e12ad47e1a6d7957731962d17b48",
+        "version": "24bea6da604df1c100a74aac48fe2301da81a87e67cfe9f4247541a901d8c66a",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -661,6 +661,16 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/functions/parsetimestring.ts": {
+        "version": "5ab7794ce55316d3457f4da722a5af982f70b4a74853fbd155d7606f42fc26b2",
+        "signature": "e8062045691073ea560db409b4be7f7798b91277ce0db3ddd01ce72e65288ddd",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/override.ts": {
+        "version": "8b7cd3af47c4cf46812f20a85203e17451b0eefe0a1c87ee701c49b4cb90eea4",
+        "signature": "0e4279a1de371c79346c631b31c94ad4dea1b7e17e9a9bba0e7572a406dbe492",
+        "affectsGlobalScope": false
+      },
       "./src/functions/owoify.ts": {
         "version": "fcbb07027de3b6cd56c4d9c40375dc4ae3d5d5ab16b2b61bbfed3a5d706cb087",
         "signature": "1f59d0ad8d35582d4ac868b1f0283f51310fff9fafc3c9b06367f8005e3706af",
@@ -702,7 +712,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/remind.ts": {
-        "version": "9d7035f721b92b99c29055f8bfc93c88c6de3f6bc3ab42c79eee382b0bbda4a6",
+        "version": "c6523e8be274c88d7de818556c1af6ec544f9e9f1b5851b4fc4d64ccf391b74b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -717,7 +727,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/role.ts": {
-        "version": "b6e26f24ef58904477fb507dc6fc8a7d69147811677a7ce0be311a1367d70bf0",
+        "version": "0e0f794277b2b72ae150c62f57d50853862179b35d67541b435e0b87faf671ad",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -782,12 +792,12 @@
         "affectsGlobalScope": false
       },
       "./src/commands/test.ts": {
-        "version": "3bfca3a7c16aa410c765ff9eae777bb460e7d1a0348d8734122e8c1a3cbe6a45",
+        "version": "1eb5737a610546b87f5edceed53c53aac01df439b222ecddc43924eab3b5dfc5",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/translate.ts": {
-        "version": "e32a9b572363217dd7739344f356d92bbe63987bb7eb6b3f9ddc18374750de07",
+        "version": "1a1db6ebe3030468e4fc8ffafdb274aad00506f83894bab18d19a188ba19942b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -827,7 +837,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "f56ebc0705602b3782de1519e7a13db3e0308a5d91e71c80840a238eb2db9bda",
+        "version": "0bf429760ad6895c372ce9e7018f6f0ec4134a874cc0e5d5d9798b5c2e79e6c9",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1120,6 +1130,13 @@
         "./src/functions/numtowords.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/override.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/getlongago.ts",
+        "./src/functions/parsetimestring.ts",
+        "./src/globals.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/owo.ts": [
         "./src/functions/owoify.ts",
         "./src/interfaces/icommand.ts"
@@ -1140,6 +1157,7 @@
       "./src/commands/remind.ts": [
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
+        "./src/functions/parsetimestring.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/replace.ts": [
@@ -1294,6 +1312,7 @@
       "./src/index.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/formatid.ts",
         "./src/handlers/commandhandler.ts",
         "./src/handlers/discordjserror.ts",
         "./src/handlers/fetchcommandfiles.ts",
@@ -1564,6 +1583,9 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./src/commands/override.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/builddocsembed.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/interfaces/ipylondocs.ts"
@@ -1711,6 +1733,7 @@
       "./src/commands/eval.ts",
       "./src/commands/help.ts",
       "./src/commands/ntw.ts",
+      "./src/commands/override.ts",
       "./src/commands/owo.ts",
       "./src/commands/pogface.ts",
       "./src/commands/publish.ts",
@@ -1745,6 +1768,7 @@
       "./src/functions/getusersfrommention.ts",
       "./src/functions/numtowords.ts",
       "./src/functions/owoify.ts",
+      "./src/functions/parsetimestring.ts",
       "./src/functions/spotifysearch.ts",
       "./src/globals.ts",
       "./src/handlers/commandhandler.ts",
