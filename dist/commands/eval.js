@@ -24,7 +24,7 @@ const __1 = require("..");
 const config_1 = require("../config");
 const checkArrayContainsAll_1 = require("../functions/checkArrayContainsAll");
 const fetchCommand_1 = require("../functions/fetchCommand");
-const globals_1 = require("../globals");
+const globals = __importStar(require("../globals"));
 module.exports = {
     name: "eval",
     description: "Run code",
@@ -39,21 +39,23 @@ module.exports = {
         var str = null;
         try {
             const client = __1.client;
-            client;
             const config = config_1.config;
-            config;
             const fetchCommand = fetchCommand_1.fetchCommand;
-            fetchCommand;
             const cf = checkArrayContainsAll_1.arrayContainsAll;
-            cf;
             const discord = discord_js_1.default;
+            const char = globals.Chars;
+            client;
+            config;
+            fetchCommand;
+            cf;
             discord;
+            char;
             str = eval(code);
             const embed = new discord_js_1.MessageEmbed();
-            embed.setColor(globals_1.Color.embed);
+            embed.setColor(globals.Color.embed);
             embed.setTitle("✅ Eval Success");
             embed.addField("Input", input);
-            if (typeof str == "object") {
+            if (str instanceof Object) {
                 str = JSON.stringify(str, null, 2);
                 lang = "json";
             }
@@ -64,7 +66,7 @@ module.exports = {
         catch (e) {
             str = e;
             const embed = new discord_js_1.MessageEmbed();
-            embed.setColor(globals_1.Color.embed);
+            embed.setColor(globals.Color.embed);
             embed.setTitle("⛔ Eval Failed");
             embed.addField("Input", input);
             const output = `\`\`\`ts\n${str}\`\`\``;

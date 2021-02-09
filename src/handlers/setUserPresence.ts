@@ -11,6 +11,7 @@ export function setUserPresence() {
     RPCClient.request("SET_ACTIVITY", {
       pid: pid,
       activity: {
+        // state: "dot",
         assets: {
           large_image: "glasses",
         },

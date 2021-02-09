@@ -41,15 +41,12 @@ module.exports = {
             : message.author.id;
         var user = null;
         try {
-            user = message.guild
-                ? message.guild.members.cache.find((u) => {
-                    return (unresolvedID == u.user.username.toLowerCase() ||
-                        unresolvedID == u.id ||
-                        unresolvedID == u.user.tag.toLowerCase() ||
-                        unresolvedID == `${u}` ||
-                        unresolvedID == u.nickname?.toLowerCase());
-                }).user
-                : await __1.client.users.fetch(unresolvedID);
+            user =
+                __1.client.users.cache.find((u) => {
+                    return (unresolvedID == u.username.toLowerCase() ||
+                        unresolvedID.replace(/\D/g, "") == u.id ||
+                        unresolvedID == u.tag.toLowerCase());
+                }) ?? (await __1.client.users.fetch(unresolvedID));
         }
         catch (error) { }
         if (!user) {
@@ -61,6 +58,7 @@ module.exports = {
         }) ?? user.defaultAvatarURL);
         emb.setThumbnail(user.avatarURL({
             dynamic: true,
+            size: 512,
         }) ?? user.defaultAvatarURL);
         emb.addField(`❯ User Info`, `:gear: **󠇰ID**: \`${user.id}\`
 :link: **Profile**: ${user}
@@ -75,16 +73,19 @@ ${roles.size !== 0
                 : ""}`);
             emb.addField("❯ Permissions", `:gear: **Permission List**: ${getUserPermissions_1.getUserPermissions(mem)}
         :cyclone: **Bot Level**: __\`${getBotLevel_1.getBotLevel(mem)}\`__`);
-            emb.addField("❯ Invites", (await mem.guild.fetchInvites())
+            if ((await mem.guild.fetchInvites())
                 .array()
-                .filter((e) => e.inviter == user).length
-                ? (await mem.guild.fetchInvites())
+                .filter((e) => e.inviter == user).length)
+                emb.addField("❯ Invites", (await mem.guild.fetchInvites())
                     .array()
-                    .filter((e) => e.inviter == user)
-                    .slice(0, 5)
-                    .map((e) => `${e.channel} [Invite](${e.url}) ${formatTimestamp_1.formatTimestamp(e.createdAt)}`)
-                    .join("\n")
-                : "None.");
+                    .filter((e) => e.inviter == user).length
+                    ? (await mem.guild.fetchInvites())
+                        .array()
+                        .filter((e) => e.inviter == user)
+                        .slice(0, 5)
+                        .map((e) => `${e.channel} [Invite](${e.url}) ${formatTimestamp_1.formatTimestamp(e.createdAt)}`)
+                        .join("\n")
+                    : "None.");
         }
         emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));

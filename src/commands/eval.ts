@@ -3,7 +3,7 @@ import { client as c } from "..";
 import { config as conf } from "../config";
 import { arrayContainsAll } from "../functions/checkArrayContainsAll";
 import { fetchCommand as fc } from "../functions/fetchCommand";
-import { Color } from "../globals";
+import * as globals from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "eval",
@@ -19,21 +19,24 @@ module.exports = {
     var str = null;
     try {
       const client = c;
-      client;
       const config = conf;
-      config;
       const fetchCommand = fc;
-      fetchCommand;
       const cf = arrayContainsAll;
-      cf;
       const discord = Discord;
+      const char = globals.Chars;
+      client;
+      config;
+      fetchCommand;
+      cf;
       discord;
+      char;
       str = eval(code);
       const embed = new MessageEmbed();
-      embed.setColor(Color.embed);
+      embed.setColor(globals.Color.embed);
       embed.setTitle("✅ Eval Success");
       embed.addField("Input", input);
-      if (typeof str == "object") {
+      // if (str instanceof Promise) str = await str;
+      if (str instanceof Object) {
         str = JSON.stringify(str, null, 2);
         lang = "json";
       }
@@ -43,7 +46,7 @@ module.exports = {
     } catch (e) {
       str = e;
       const embed = new MessageEmbed();
-      embed.setColor(Color.embed);
+      embed.setColor(globals.Color.embed);
       embed.setTitle("⛔ Eval Failed");
       embed.addField("Input", input);
       const output = `\`\`\`ts\n${str}\`\`\``;

@@ -42,17 +42,14 @@ module.exports = {
       : message.author.id;
     var user: User | null = null;
     try {
-      user = message.guild
-        ? message.guild.members.cache.find((u) => {
-            return (
-              unresolvedID == u.user.username.toLowerCase() ||
-              unresolvedID == u.id ||
-              unresolvedID == u.user.tag.toLowerCase() ||
-              unresolvedID == `${u}` ||
-              unresolvedID == u.nickname?.toLowerCase()
-            );
-          })!.user
-        : await client.users.fetch(unresolvedID);
+      user =
+        client.users.cache.find((u) => {
+          return (
+            unresolvedID == u.username.toLowerCase() ||
+            unresolvedID.replace(/\D/g, "") == u.id ||
+            unresolvedID == u.tag.toLowerCase()
+          );
+        })! ?? (await client.users.fetch(unresolvedID));
     } catch (error) {}
     if (!user) {
       return await message.channel.send("Unknown User");
@@ -67,6 +64,7 @@ module.exports = {
     emb.setThumbnail(
       user.avatarURL({
         dynamic: true,
+        size: 512,
       }) ?? user.defaultAvatarURL
     );
     emb.addField(
@@ -100,24 +98,29 @@ ${
         `:gear: **Permission List**: ${getUserPermissions(mem)}
         :cyclone: **Bot Level**: __\`${getBotLevel(mem)}\`__`
       );
-      emb.addField(
-        "❯ Invites",
+      if (
         (await mem.guild.fetchInvites())
           .array()
           .filter((e) => e.inviter == user).length
-          ? (await mem.guild.fetchInvites())
-              .array()
-              .filter((e) => e.inviter == user)
-              .slice(0, 5)
-              .map(
-                (e) =>
-                  `${e.channel} [Invite](${e.url}) ${formatTimestamp(
-                    e.createdAt!
-                  )}`
-              )
-              .join("\n")
-          : "None."
-      );
+      )
+        emb.addField(
+          "❯ Invites",
+          (await mem.guild.fetchInvites())
+            .array()
+            .filter((e) => e.inviter == user).length
+            ? (await mem.guild.fetchInvites())
+                .array()
+                .filter((e) => e.inviter == user)
+                .slice(0, 5)
+                .map(
+                  (e) =>
+                    `${e.channel} [Invite](${e.url}) ${formatTimestamp(
+                      e.createdAt!
+                    )}`
+                )
+                .join("\n")
+            : "None."
+        );
     }
     emb.addField("❯ Profile Badges", getProfileBadges(user));
     emb.addField("❯ Bot Badges", getBotBadges(user));
