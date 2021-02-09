@@ -42,9 +42,17 @@ module.exports = {
       : message.author.id;
     var user: User | null = null;
     try {
-      user = client.users.cache.find((u) => {
-        return unresolvedID == u.username;
-      })!;
+      user = message.guild
+        ? message.guild.members.cache.find((u) => {
+            return (
+              unresolvedID == u.user.username.toLowerCase() ||
+              unresolvedID == u.id ||
+              unresolvedID == u.user.tag.toLowerCase() ||
+              unresolvedID == `${u}` ||
+              unresolvedID == u.nickname?.toLowerCase()
+            );
+          })!.user
+        : await client.users.fetch(unresolvedID);
     } catch (error) {}
     if (!user) {
       return await message.channel.send("Unknown User");
