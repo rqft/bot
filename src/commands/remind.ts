@@ -12,8 +12,6 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-    if (ms < 500)
-      return await message.channel.send("Must be higher than 500 milliseconds");
 
     await message.channel.send(
       `:white_check_mark: I will remind you in ${simpleGetLongAgo(

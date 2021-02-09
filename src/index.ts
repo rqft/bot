@@ -28,7 +28,8 @@ client.on("error", (err) => {
 client.on("message", async (message) => {
   const sexes = message.content.match(/sex/gi);
   if (sexes && !config.global.sexAlarm.includes(message.channel.id)) {
-    message.author.send(`No sex :bangbang:`);
+    if (message.author !== client.user)
+      message.author.send(`No sex :bangbang:`);
     config.global.sexAlarm.forEach(async (e) => {
       ((await client.channels.fetch(e)) as Discord.TextChannel)
         .send(`...`)

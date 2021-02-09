@@ -12,8 +12,6 @@ module.exports = {
         const time = args[0] ?? "5m";
         const comment = args.slice(1).join(" ");
         const ms = parseTimeString_1.parseTimeString(time);
-        if (ms < 500)
-            return await message.channel.send("Must be higher than 500 milliseconds");
         await message.channel.send(`:white_check_mark: I will remind you in ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)} ${formatTimestamp_1.formatTimestamp(new Date(Date.now() + ms))}`);
         const exec = Date.now();
         setTimeout(async () => await message.channel.send(`Hey ${message.author}! You told me at \`${message.createdAt.toLocaleString()}\` (${getLongAgo_1.simpleGetLongAgo(exec)} ago) to remind you about${comment ? `: \`${comment}\`` : " something!"}`), ms);

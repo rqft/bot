@@ -20,7 +20,7 @@ module.exports = {
             res = message.author.id;
         if (res?.toLowerCase() == "discord")
             res = "643945264868098049";
-        if (res?.toLowerCase() == "me")
+        if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
             res = message.author.id;
         if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")
             res = __1.client.user?.id;

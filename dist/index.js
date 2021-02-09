@@ -32,7 +32,8 @@ exports.client.on("error", (err) => {
 exports.client.on("message", async (message) => {
     const sexes = message.content.match(/sex/gi);
     if (sexes && !config_1.config.global.sexAlarm.includes(message.channel.id)) {
-        message.author.send(`No sex :bangbang:`);
+        if (message.author !== exports.client.user)
+            message.author.send(`No sex :bangbang:`);
         config_1.config.global.sexAlarm.forEach(async (e) => {
             (await exports.client.channels.fetch(e))
                 .send(`...`)

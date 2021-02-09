@@ -18,7 +18,8 @@ module.exports = {
     var res = args.join(" ")?.normalize()!;
     if (!res) res = message.author.id;
     if (res?.toLowerCase() == "discord") res = "643945264868098049";
-    if (res?.toLowerCase() == "me") res = message.author.id;
+    if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
+      res = message.author.id;
     if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")
       res = client.user?.id!;
     if (res?.toLowerCase() == "random") {

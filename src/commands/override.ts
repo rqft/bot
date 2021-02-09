@@ -24,6 +24,10 @@ export const overrides: { [any: string]: RoleData } = {
     name: "--ov-roles",
     permissions: "MANAGE_ROLES",
   },
+  msgs: {
+    name: "--ov-messages",
+    permissions: "MANAGE_MESSAGES",
+  },
 };
 module.exports = {
   name: "override",
@@ -73,7 +77,11 @@ module.exports = {
     );
     setTimeout(async () => {
       await role?.delete();
-      await message.react("⏲");
+      try {
+        await message.react("⏲");
+      } catch (_) {
+        await message.channel.lastMessage?.react("⏲");
+      }
     }, ms);
   },
 } as ICommand;

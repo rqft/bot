@@ -3,6 +3,13 @@ import fetch from "node-fetch";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { IMyMemoryResponse } from "../interfaces/IMyMemory";
+import * as lang from "../maps/languageCodes.json";
+const langCodes: {
+  [any: string]: {
+    name: string;
+    nativeName: string;
+  };
+} = lang;
 module.exports = {
   name: "translate",
   usesArgs: true,
@@ -34,7 +41,10 @@ ${this.usage}\`\`\``
       data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")
     ) {
       return await message.channel.send(
-        "You must enter a valid language code. e.g `en`, `es`, `etc.`"
+        new MessageEmbed({
+          description:
+            "You must enter a valid language code. e.g `en`, `es`, `etc.`\nYou can view them all [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)",
+        })
       );
     }
 
@@ -47,19 +57,35 @@ ${this.usage}\`\`\``
         "You must enter two distinct languages."
       );
     }
-    const flag = `:flag_${language.replace("en", "us")}:`;
-    const targetFlag = `:flag_${targetLanguage.replace("en", "us")}:`;
+    const flag = `:flag_${language.replace(/en/g, "us").replace(/ja/g, "jp")}:`;
+    const languageNames = {
+      from: langCodes[language],
+      to: langCodes[targetLanguage],
+    };
+    const targetFlag = `:flag_${targetLanguage
+      .replace(/en/g, "us")
+      .replace(/ja/g, "jp")}:`;
     const emb = new MessageEmbed();
     emb.setColor(Color.embed);
     emb.addField(
       "Input",
-      `${flag} - (\`${language.toUpperCase()}\`)\n\`\`\`\n${text}\`\`\``
+      `${flag} - ${
+        languageNames.from?.name
+      } (\`${language.toUpperCase()}\`)\n\`\`\`\n${text}\`\`\``
     );
+    function parseHtmlEntities(str: string) {
+      return str.replace(/&#([0-9]{1,3});/gi, function (_match, numStr) {
+        var num = parseInt(numStr, 10);
+        return String.fromCharCode(num);
+      });
+    }
     emb.addField(
       "Translated Text",
-      `${targetFlag} - (\`${targetLanguage.toUpperCase()}\`)\n\`\`\`\n${
+      `${targetFlag} - ${
+        languageNames.to?.name
+      } (\`${targetLanguage.toUpperCase()}\`)\n\`\`\`\n${parseHtmlEntities(
         data.responseData.translatedText
-      }\`\`\``
+      )}\`\`\``
     );
     emb.setFooter(
       `${language.toUpperCase()} => ${targetLanguage.toUpperCase()} | ${
