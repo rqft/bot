@@ -55,7 +55,7 @@ async function commandHandler(message) {
     catch (error) {
         console.error(error);
         logCommandError_1.logCommandError(message, error);
-        message.channel.send(`:warning: ${error}`);
+        message.channel.send(`:no_entry: ${error}`);
     }
 }
 exports.commandHandler = commandHandler;

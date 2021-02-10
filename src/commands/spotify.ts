@@ -1,5 +1,4 @@
 import { MessageEmbed } from "discord.js";
-import { fancyTimeFormat } from "../functions/fancyTimeFormat";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { spotifySearch } from "../functions/spotifySearch";
 import { Color } from "../globals";
@@ -22,7 +21,7 @@ module.exports = {
     embed.setURL(`https://open.spotify.com/track/${track.id}`);
     embed.addField(
       "❯ Track Info",
-      `Length: **${fancyTimeFormat(track.length)}**
+      `Length: **${simpleGetLongAgo(Date.now() - track.length * 1000)}**
       Explicit: **${track.explicit ? "Yes" : "No"}**
 Popularity: **${track.popularity}/100**`
     );
@@ -32,7 +31,7 @@ Popularity: **${track.popularity}/100**`
         track.album.id
       })
 Tracks: **${track.album.size}**
-Created At: **${simpleGetLongAgo(
+Created **${simpleGetLongAgo(
         +new Date(track.album.date)
       )} ago** **[**\`${new Date(track.album.date).toLocaleDateString()}\`**]**`
     );

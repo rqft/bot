@@ -7,52 +7,25 @@ import { logCommandError } from "../logs/logCommandError";
 import { logCommandUse } from "../logs/logCommandUse";
 
 export async function commandHandler(message: Message) {
-  // check for prefixes;
   const prefixRegex = new RegExp(
     `^(${config.bot.prefixes.join("|")})( ?)`,
     "gi"
   );
   if (message.content.match(prefixRegex) == null) return;
   const prefix = message.content.match(prefixRegex)!.join("");
-
-  /**
-   * Arguments passed to the command
-   */
   const args = message.content.slice(prefix!.length).trim().split(/ +/);
-  /**
-   * ```ts
-   * this tbh
-   * ```
-   */
   const commandName = args.shift()!.toLowerCase();
-
   if (prefix == "p/" && !config.bot.ownerIds.includes(message.author.id)) {
     return await message.channel.send(
       `:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`
     );
   }
-
-  /**
-   * the set of commands owo
-   */
   const command: ICommand = fetchCommand(commandName);
-
-  /**
-   * This is obvious lol
-   */
   if (!command) return;
-
-  /**
-   * Blacklist
-   */
   if (config.blacklist.users.includes(message.author.id)) {
     logBlacklistedUserAction(message);
     return;
   }
-
-  /**
-   * Restriction Stuff
-   */
   if (
     command.restrictions &&
     command.restrictions.ownerOnly &&
@@ -83,7 +56,6 @@ export async function commandHandler(message: Message) {
         ", "
       )}\``
     );
-
   if (
     command.restrictions &&
     command.restrictions.guildOnly &&
@@ -92,7 +64,6 @@ export async function commandHandler(message: Message) {
     return message.channel.send(
       ":warning: I can't execute that command inside DMs!"
     );
-
   if (command.usesArgs && !args.length) {
     let reply = `:warning: Argument Error (missing argument)`;
 
@@ -102,13 +73,12 @@ export async function commandHandler(message: Message) {
 
     return message.channel.send(reply);
   }
-
   try {
     logCommandUse(message);
     command.run(message, args);
   } catch (error) {
     console.error(error);
     logCommandError(message, error);
-    message.channel.send(`:warning: ${error}`);
+    message.channel.send(`:no_entry: ${error}`);
   }
 }

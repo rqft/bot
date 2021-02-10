@@ -43,6 +43,8 @@ module.exports = {
             return await message.channel.send(`:warning: Argument Error (missing argument)
 \`\`\`
 ${this.usage}\`\`\``);
+        if (text.length > 500)
+            return await message.channel.send("The text is too long!");
         var url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${language}|${targetLanguage}`;
         console.log(url);
         const req = await node_fetch_1.default(url);

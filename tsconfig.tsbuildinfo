@@ -267,7 +267,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/commandhandler.ts": {
-        "version": "f9ea25786e7c2434d65ac0d32c4dd7afcf6ec6bc9a1cb47c24bfa70072b4bdd7",
+        "version": "1b592bf0b465d9746370d09726ff9995f3824dfff6dfc03f5e802aeb398fe32a",
         "signature": "94a0900835c3ec15e7948d697c013eda1277f5b8cdb2c361087a4c9893722368",
         "affectsGlobalScope": false
       },
@@ -367,7 +367,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
-        "version": "806a65df8af2e2aa1569a8031fba52584b04d34fb0fd3c8055a895c044e8abe3",
+        "version": "faba26d053248c8c21e3b20d574a7193faad00c5cb13ec40cd35833ee3b6fa45",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -771,11 +771,6 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
-      "./src/functions/fancytimeformat.ts": {
-        "version": "ed3dbd1a6278f06e39b840035a79c54ff36af18d579b59f5da77ce580f93110e",
-        "signature": "699b2ef7660c332cdf44e46dce8bedfc25feb896ecac6e23c4a4dde51af4eb32",
-        "affectsGlobalScope": false
-      },
       "./src/interfaces/spotify/ialbum.ts": {
         "version": "6116a9fbdccbd44c94fd59d6c5b5d1ea979cb08427d931e3156b27d508a79010",
         "signature": "b6cbc26cd0462ab9795b1f6287fc78ee4726b84b0dbc115d1240105d7ed46f06",
@@ -797,12 +792,12 @@
         "affectsGlobalScope": false
       },
       "./src/commands/spotify.ts": {
-        "version": "5912b2dba23bd3dd71eab69a3307c3ea90f33bff2c4a55e02d0fcaaa12ec0e8b",
+        "version": "97f23ec43061049cf1e09e44e8c888c4e3d4d571fad2e2428e74082a62b97ce2",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/test.ts": {
-        "version": "49f1c1dd54f06de9f8223b6de08417b4476007a99eff34f380abd40652f02f99",
+        "version": "e422ceb40ee803748a2485b521032fe9ff1cc7002765e432e2a9f7313f4f659c",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -817,7 +812,7 @@
         "affectsGlobalScope": true
       },
       "./src/commands/translate.ts": {
-        "version": "a422f76bf9feffdceadffcc202994a1f786cef733b30ebb2cca18c077c7d4815",
+        "version": "8f054b9f1cca7864951cf9d89aeeddd001698833c9922e61b29682e4cf25b4b4",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -864,6 +859,11 @@
       "./src/functions/factor.ts": {
         "version": "e36c816ea09229040f529fcd4bf87f55cd8ba27d9fc41fbfbe8dfb585522a2ef",
         "signature": "399c75dc8866803a2bdb02496919387432459748b21de9d5d845182c441883f8",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/fancytimeformat.ts": {
+        "version": "ed3dbd1a6278f06e39b840035a79c54ff36af18d579b59f5da77ce580f93110e",
+        "signature": "699b2ef7660c332cdf44e46dce8bedfc25feb896ecac6e23c4a4dde51af4eb32",
         "affectsGlobalScope": false
       },
       "./src/functions/getusersfrommention.ts": {
@@ -1116,6 +1116,7 @@
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/avatar.ts": [
+        "./src/functions/formatid.ts",
         "./src/functions/getfileextension.ts",
         "./src/functions/getlongago.ts",
         "./src/functions/getuser.ts",
@@ -1216,7 +1217,6 @@
       ],
       "./src/commands/spotify.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/functions/fancytimeformat.ts",
         "./src/functions/getlongago.ts",
         "./src/functions/spotifysearch.ts",
         "./src/globals.ts",

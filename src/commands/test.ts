@@ -6,5 +6,7 @@ module.exports = {
   restrictions: {
     ownerOnly: true,
   },
-  async run() {},
+  async run(message) {
+    await message.channel.send(":white_check_mark:");
+  },
 } as ICommand;

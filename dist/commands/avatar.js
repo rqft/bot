@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const formatID_1 = require("../functions/formatID");
 const getFileExtension_1 = require("../functions/getFileExtension");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const getUser_1 = require("../functions/getUser");
@@ -21,7 +22,7 @@ module.exports = {
         const res = await message.channel.send("...");
         const avURL = user.avatarURL({ dynamic: true, size: size }) ??
             user.defaultAvatarURL;
-        const r = await message.channel.send(`Here you go!`, {
+        const r = await message.channel.send(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)}`, {
             files: [
                 {
                     name: `item.${getFileExtension_1.getFileExtension(avURL)}`,
@@ -29,7 +30,7 @@ module.exports = {
                 },
             ],
         });
-        r.edit(`Here you go! (size: \`${size}\`x\`${size}\`) (Done in ${getLongAgo_1.simpleGetLongAgo(message.createdTimestamp - 10)}) (${r.attachments.array()[0]?.size / 1000} KB)`);
+        r.edit(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)} (size: \`${size}\`x\`${size}\`) (Done in ${getLongAgo_1.simpleGetLongAgo(message.createdTimestamp - 10)}) (${r.attachments.array()[0]?.size / 1000} KB)`);
         await res.delete();
     },
 };
