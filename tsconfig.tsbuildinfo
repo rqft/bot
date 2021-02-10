@@ -331,18 +331,8 @@
         "signature": "68d7f746b0aa8f91a540221b872df5aaacdee0740215aea049386cc653c6f725",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/discord-rpc/index.d.ts": {
-        "version": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
-        "signature": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
-        "affectsGlobalScope": false
-      },
-      "./src/handlers/setuserpresence.ts": {
-        "version": "9a84fe7277857880d1cfcd6d4272541b978e4510a681cecaaf8363493fb04b29",
-        "signature": "5115fe3f03da4c2714b56ed9b005321ef9c317f4ff66304db568f28247974582",
-        "affectsGlobalScope": false
-      },
       "./src/index.ts": {
-        "version": "63953337d9a19b733ae748e87a03d43c44f7c2104c6010ff6191c2af9af0187f",
+        "version": "14b68bdbef856c0b1f313a3864a969e897f94559eca99bdf614404e2e2922766",
         "signature": "504283a3e13c378bf35c0bde51631cec4e9395313cd85756491f45c7e5f6346c",
         "affectsGlobalScope": false
       },
@@ -636,6 +626,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/commands/emoji.ts": {
+        "version": "fcb05e07f13b7cd9b93c8f0cd85a67d858e2b7e3bafae7a97cd9f86de0ad4ef6",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/functions/checkarraycontainsall.ts": {
         "version": "0d86f4bfc0c496cac85b7cbe552620bfa5846439922f6f695643ff4d9ec2373d",
         "signature": "1082f638d3d133e30be36cba47600b68ac81232eb43011663dd3db5d78634fe2",
@@ -647,7 +642,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "876eec0ca0ea32036dfa00e214c2f9930a5d015e4bbf68bbbe75db91a5c215e7",
+        "version": "c3b0e090df686226b4896807d5635d723900f3975033029b1a97f6688c02f2cc",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -792,7 +787,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/test.ts": {
-        "version": "cbc7dd99a48c0481c65cf6c81f6eab8bc6889c285db078f85366b1257f397310",
+        "version": "49f1c1dd54f06de9f8223b6de08417b4476007a99eff34f380abd40652f02f99",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -864,6 +859,16 @@
       "./src/functions/greatestcommonfactor.ts": {
         "version": "264a07b47943440921e73a2f35d258129b02351189e613d73c5159bc2baace68",
         "signature": "ac569d07e215a3ce1c844f8e48158be2488efbe322160ba89f6490c218b2cca0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/discord-rpc/index.d.ts": {
+        "version": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
+        "signature": "aa045f36771042b003acd96e44e8d4414ec0dad2bc14cbd5f06aed65a030dc8d",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/setuserpresence.ts": {
+        "version": "9a84fe7277857880d1cfcd6d4272541b978e4510a681cecaaf8363493fb04b29",
+        "signature": "5115fe3f03da4c2714b56ed9b005321ef9c317f4ff66304db568f28247974582",
         "affectsGlobalScope": false
       },
       "./src/interfaces/server.ts": {
@@ -1125,6 +1130,14 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/emoji.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formattimestamp.ts",
+        "./src/functions/getlongago.ts",
+        "./src/globals.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
@@ -1137,6 +1150,7 @@
       "./src/commands/help.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/capitalizewords.ts",
         "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
@@ -1206,11 +1220,6 @@
         "./src/interfaces/spotify/iartist.ts"
       ],
       "./src/commands/test.ts": [
-        "./node_modules/discord.js/typings/index.d.ts",
-        "./src/functions/formattimestamp.ts",
-        "./src/functions/getlongago.ts",
-        "./src/globals.ts",
-        "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/translate.ts": [
@@ -1338,8 +1347,7 @@
         "./src/handlers/discordjserror.ts",
         "./src/handlers/fetchcommandfiles.ts",
         "./src/handlers/makecommandfromfile.ts",
-        "./src/handlers/onready.ts",
-        "./src/handlers/setuserpresence.ts"
+        "./src/handlers/onready.ts"
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
@@ -1751,6 +1759,7 @@
       "./src/commands/avatar.ts",
       "./src/commands/cate.ts",
       "./src/commands/channel.ts",
+      "./src/commands/emoji.ts",
       "./src/commands/eval.ts",
       "./src/commands/help.ts",
       "./src/commands/ntw.ts",

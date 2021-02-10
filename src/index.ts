@@ -7,7 +7,6 @@ import { discordjsError } from "./handlers/discordjsError";
 import { fetchCommandFiles } from "./handlers/fetchCommandFiles";
 import { makeCommands } from "./handlers/makeCommandFromFile";
 import { onReady } from "./handlers/onReady";
-import { setUserPresence } from "./handlers/setUserPresence";
 export const client = new Discord.Client({
   ws: {
     properties: {
@@ -56,4 +55,4 @@ client.login(config.bot.token);
  * Presence Stuff
  */
 
-setUserPresence();
+// setUserPresence();

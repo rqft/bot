@@ -12,7 +12,6 @@ const discordjsError_1 = require("./handlers/discordjsError");
 const fetchCommandFiles_1 = require("./handlers/fetchCommandFiles");
 const makeCommandFromFile_1 = require("./handlers/makeCommandFromFile");
 const onReady_1 = require("./handlers/onReady");
-const setUserPresence_1 = require("./handlers/setUserPresence");
 exports.client = new discord_js_1.default.Client({
     ws: {
         properties: {
@@ -46,4 +45,3 @@ exports.client.on("message", async (message) => {
     await commandHandler_1.commandHandler(message);
 });
 exports.client.login(config_1.config.bot.token);
-setUserPresence_1.setUserPresence();
