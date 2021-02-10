@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const __1 = require("..");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getBotBadges_1 = require("../functions/getBotBadges");
 const getBotLevel_1 = require("../functions/getBotLevel");
 const getLongAgo_1 = require("../functions/getLongAgo");
 const getPresence_1 = require("../functions/getPresence");
 const getProfileBadges_1 = require("../functions/getProfileBadges");
+const getUser_1 = require("../functions/getUser");
 const getUserPermissions_1 = require("../functions/getUserPermissions");
 const globals_1 = require("../globals");
 module.exports = {
@@ -15,40 +15,7 @@ module.exports = {
     aliases: ["u"],
     usage: "[user: User | Snowflake]",
     async run(message, args) {
-        var res = args.join(" ")?.normalize();
-        if (!res)
-            res = message.author.id;
-        if (res?.toLowerCase() == "discord")
-            res = "643945264868098049";
-        if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
-            res = message.author.id;
-        if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")
-            res = __1.client.user?.id;
-        if (res?.toLowerCase() == "random") {
-            if (!message.guild) {
-                return await message.channel.send("You need to be in a server to run this!");
-            }
-            res = message.guild.members.cache.random().id;
-        }
-        if (res?.toLowerCase() == "owner") {
-            if (!message.guild) {
-                return await message.channel.send("You need to be in a server to run this!");
-            }
-            res = message.guild.ownerID;
-        }
-        var unresolvedID = args.join(" ").length
-            ? res.toLowerCase()
-            : message.author.id;
-        var user = null;
-        try {
-            user =
-                __1.client.users.cache.find((u) => {
-                    return (unresolvedID == u.username.toLowerCase() ||
-                        unresolvedID.replace(/\D/g, "") == u.id ||
-                        unresolvedID == u.tag.toLowerCase());
-                }) ?? (await __1.client.users.fetch(unresolvedID));
-        }
-        catch (error) { }
+        const user = await getUser_1.getUser(message, args, true);
         if (!user) {
             return await message.channel.send("Unknown User");
         }

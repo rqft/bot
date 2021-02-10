@@ -12,6 +12,7 @@ const discordjsError_1 = require("./handlers/discordjsError");
 const fetchCommandFiles_1 = require("./handlers/fetchCommandFiles");
 const makeCommandFromFile_1 = require("./handlers/makeCommandFromFile");
 const onReady_1 = require("./handlers/onReady");
+const setUserPresence_1 = require("./handlers/setUserPresence");
 exports.client = new discord_js_1.default.Client({
     ws: {
         properties: {
@@ -31,17 +32,19 @@ exports.client.on("error", (err) => {
 exports.client.on("message", async (message) => {
     const sexes = message.content.match(/sex/gi);
     if (sexes && !config_1.config.global.sexAlarm.includes(message.channel.id)) {
-        if (message.author !== exports.client.user)
+        if (message.author !== exports.client.user) {
             message.author.send(`No sex :bangbang:`);
+            await message.react("😳");
+        }
         config_1.config.global.sexAlarm.forEach(async (e) => {
             (await exports.client.channels.fetch(e))
                 .send(`...`)
                 .then((e) => e.edit(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.guild ? message.channel : "DMs"} ${formatID_1.formatID(message.channel.id)} ${message.guild && message.guild.id !== config_1.config.global.guildId
                 ? `on \`${message.guild.name}\` ${formatID_1.formatID(message.guild.id)}`
                 : ""}`));
-            await message.react("😳");
         });
     }
     await commandHandler_1.commandHandler(message);
 });
 exports.client.login(config_1.config.bot.token);
+setUserPresence_1.setUserPresence();

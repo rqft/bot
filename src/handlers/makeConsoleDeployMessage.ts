@@ -12,7 +12,10 @@ export function makeConsoleDeployMessage() {
       TerminalColor.normal.BLUE
     )} [${color(client.user?.id, TerminalColor.bright.BRIGHT_BLACK)}]`,
     ``,
-    `Fetching Guilds...`,
+    `Fetching ${color(
+      client.guilds.cache.size,
+      TerminalColor.format.BOLD
+    )} Guilds...`,
     client.guilds.cache
       .array()
       .map(

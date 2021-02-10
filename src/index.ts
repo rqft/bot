@@ -7,6 +7,7 @@ import { discordjsError } from "./handlers/discordjsError";
 import { fetchCommandFiles } from "./handlers/fetchCommandFiles";
 import { makeCommands } from "./handlers/makeCommandFromFile";
 import { onReady } from "./handlers/onReady";
+import { setUserPresence } from "./handlers/setUserPresence";
 export const client = new Discord.Client({
   ws: {
     properties: {
@@ -27,8 +28,10 @@ client.on("error", (err) => {
 client.on("message", async (message) => {
   const sexes = message.content.match(/sex/gi);
   if (sexes && !config.global.sexAlarm.includes(message.channel.id)) {
-    if (message.author !== client.user)
+    if (message.author !== client.user) {
       message.author.send(`No sex :bangbang:`);
+      await message.react("😳");
+    }
     config.global.sexAlarm.forEach(async (e) => {
       ((await client.channels.fetch(e)) as Discord.TextChannel)
         .send(`...`)
@@ -45,7 +48,6 @@ client.on("message", async (message) => {
             }`
           )
         );
-      await message.react("😳");
     });
   }
   await commandHandler(message);
@@ -55,4 +57,4 @@ client.login(config.bot.token);
  * Presence Stuff
  */
 
-// setUserPresence();
+setUserPresence();

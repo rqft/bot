@@ -8,7 +8,7 @@ export function makeDeployMessage(pubChannels: string[]) {
     `${formatTimestamp(new Date())}`,
     `Logged in as ${client.user?.tag} ${formatID(client.user?.id!)}`,
     "",
-    "Fetching Guilds...",
+    `Fetching **${client.guilds.cache.size}** guilds...`,
     client.guilds.cache
       .array()
       .map(

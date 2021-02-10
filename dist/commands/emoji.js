@@ -10,7 +10,7 @@ module.exports = {
     aliases: ["e", "emote"],
     description: "Emojis!",
     async run(message, args) {
-        const unresolvedID = args[0].replace(/\D/g, "");
+        const unresolvedID = args[0].replace(/\D/g, "").toLowerCase();
         var e = __1.client.emojis.cache.get(unresolvedID);
         if (!e) {
             const extension = args[0]?.replace(/[<>]/g, "").startsWith("a")
