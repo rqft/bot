@@ -14,12 +14,14 @@ config_1.config.bot.ownerIds.forEach((e) => {
             icon: "<:GitHub:805634226921013258>",
             text: "Github Person",
         },
-        {
-            icon: ":technologist:",
-            text: "Developer",
-        },
     ]);
 });
+botBadgeMap.set(config_1.config.bot.application.ownerId, botBadgeMap.get(config_1.config.bot.application.ownerId).concat([
+    {
+        icon: ":technologist:",
+        text: "Developer",
+    },
+]));
 botBadgeMap.set(config_1.config.bot.id, [
     {
         icon: "<:Hallucinate:800092998590529557>",
@@ -36,5 +38,11 @@ botBadgeMap.set("411994935395614761", [
     {
         icon: ":+1:",
         text: "ok",
+    },
+]);
+botBadgeMap.set("706159423323635782", [
+    {
+        icon: ":droplet:",
+        text: "funy watr person",
     },
 ]);

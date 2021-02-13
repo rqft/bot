@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const __1 = require("..");
+const config_1 = require("../config");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getBotBadges_1 = require("../functions/getBotBadges");
 const getBotLevel_1 = require("../functions/getBotLevel");
@@ -25,14 +27,15 @@ module.exports = {
         }) ?? user.defaultAvatarURL);
         emb.setThumbnail(user.avatarURL({
             dynamic: true,
-            size: 512,
+            size: 128,
         }) ?? user.defaultAvatarURL);
         emb.addField(`❯ User Info`, `:gear: **󠇰ID**: \`${user.id}\`
 :link: **Profile**: ${user}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(user.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(user.createdAt)}`);
         var mem = message.guild?.member(user) ?? false;
-        if (mem) {
+        if (__1.client.users.cache.has(user.id))
             emb.addField("❯ Presence", getPresence_1.getPresence(user, 30));
+        if (mem) {
             const roles = mem.roles.cache.filter((e) => !e.deleted && e.guild.id !== e.id);
             emb.addField("❯ Member Information", `:inbox_tray: **Joined:** ${getLongAgo_1.getLongAgo(mem.joinedTimestamp, 2)} ago ${formatTimestamp_1.formatTimestamp(mem.joinedAt)}
 ${roles.size !== 0
@@ -54,7 +57,10 @@ ${roles.size !== 0
                         .join("\n")
                     : "None.");
         }
-        emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user));
+        emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user).join("\n") +
+            (user.id == config_1.config.bot.application.ownerId
+                ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer TM`
+                : ""));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));
         emb.setColor(globals_1.Color.embed);
         await message.channel.send(emb);

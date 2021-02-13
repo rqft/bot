@@ -1,6 +1,6 @@
-import { Guild, MessageEmbed } from "discord.js";
-import { client } from "..";
+import { MessageEmbed } from "discord.js";
 import { formatTimestamp } from "../functions/formatTimestamp";
+import { getGuild } from "../functions/getGuild";
 import { getGuildFeatures } from "../functions/getGuildFeatures";
 import { getGuildVoiceRegion } from "../functions/getGuildVoiceRegion";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
@@ -12,16 +12,8 @@ module.exports = {
   aliases: ["s"],
   usage: "[server: Guild | Snowflake]",
   async run(message, args: string[]) {
-    if (!args[0] && !message.guild)
-      return await message.channel.send("You need to provide a server!");
-    const s = args[0] ? args[0].replace(/\D/g, "") : message.guild!.id;
-    var guild: Guild | null = null;
-    try {
-      guild = await client.guilds.fetch(s);
-    } catch {
-      return await message.channel.send("Unknown server");
-    }
-    if (!guild) return;
+    const guild = await getGuild(message, args, true);
+    if (!guild) return await message.channel.send("Unknown Server");
     const emb = new MessageEmbed();
     emb.setAuthor(guild.name, guild.iconURL({ dynamic: true })!);
     emb.setThumbnail(guild.iconURL({ dynamic: true })!);

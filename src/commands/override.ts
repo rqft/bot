@@ -3,6 +3,7 @@ import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { parseTimeString } from "../functions/parseTimeString";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+
 export const overrides: { [any: string]: RoleData } = {
   adm: {
     name: "--ov-admin",
@@ -28,6 +29,10 @@ export const overrides: { [any: string]: RoleData } = {
     name: "--ov-messages",
     permissions: "MANAGE_MESSAGES",
   },
+  nick: {
+    name: "--ov-nicknames",
+    permissions: ["CHANGE_NICKNAME", "MANAGE_NICKNAMES"],
+  },
 };
 module.exports = {
   name: "override",
@@ -51,7 +56,6 @@ module.exports = {
       return await message.channel.send(
         "Must be higher than 500 milliseconds / Invalid Time String"
       );
-
     if (!Object.keys(overrides).includes(override))
       return await message.channel.send(
         `:warning: Unknown Override, available options are ${Object.keys(

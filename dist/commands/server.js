@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const __1 = require("..");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
+const getGuild_1 = require("../functions/getGuild");
 const getGuildFeatures_1 = require("../functions/getGuildFeatures");
 const getGuildVoiceRegion_1 = require("../functions/getGuildVoiceRegion");
 const getLongAgo_1 = require("../functions/getLongAgo");
@@ -12,18 +12,9 @@ module.exports = {
     aliases: ["s"],
     usage: "[server: Guild | Snowflake]",
     async run(message, args) {
-        if (!args[0] && !message.guild)
-            return await message.channel.send("You need to provide a server!");
-        const s = args[0] ? args[0].replace(/\D/g, "") : message.guild.id;
-        var guild = null;
-        try {
-            guild = await __1.client.guilds.fetch(s);
-        }
-        catch {
-            return await message.channel.send("Unknown server");
-        }
+        const guild = await getGuild_1.getGuild(message, args, true);
         if (!guild)
-            return;
+            return await message.channel.send("Unknown Server");
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
         emb.setThumbnail(guild.iconURL({ dynamic: true }));

@@ -9,7 +9,7 @@ async function getUser(message, args, useJoin = false) {
         res = "643945264868098049";
     if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
         res = message.author.id;
-    if (res?.toLowerCase() == "bot" || res?.toLowerCase() == "system")
+    if (["client", "system", "bot"].includes(res.toLowerCase()))
         res = __1.client.user?.id;
     if (res?.toLowerCase() == "random") {
         if (!message.guild) {
@@ -30,7 +30,7 @@ async function getUser(message, args, useJoin = false) {
     try {
         user =
             __1.client.users.cache.find((u) => {
-                return (unresolvedID == u.username.toLowerCase() ||
+                return (u.username.toLowerCase().includes(unresolvedID) ||
                     unresolvedID.replace(/\D/g, "") == u.id ||
                     unresolvedID == u.tag.toLowerCase());
             }) ?? (await __1.client.users.fetch(unresolvedID));

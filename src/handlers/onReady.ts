@@ -1,10 +1,9 @@
 import { ActivityOptions, VoiceChannel } from "discord.js";
+import { client } from "..";
 import { config } from "../config";
-import { client } from "../index";
 import { leaveBlacklistedGuilds } from "../logs/leaveBlacklistedGuilds";
 import { makeConsoleDeployMessage } from "./makeConsoleDeployMessage";
 import { makeDeployMessage } from "./makeDeployMessage";
-
 export function onReady() {
   makeConsoleDeployMessage();
   makeDeployMessage(config.logs.starts.keys);
@@ -13,9 +12,12 @@ export function onReady() {
   ) as VoiceChannel)!.join();
   console.log("ok");
   leaveBlacklistedGuilds();
-  client.user?.setActivity(config.bot.presence.activity.name, {
-    name: config.bot.presence.activity.name,
-    type: config.bot.presence.activity.type as ActivityOptions["type"],
-    url: config.bot.presence.activity.url,
-  });
+  client.user?.setActivity(
+    `${config.bot.presence.activity.name} | ${client.guilds.cache.size} Servers`,
+    {
+      name: `${config.bot.presence.activity.name} | ${client.guilds.cache.size} Servers`,
+      type: config.bot.presence.activity.type as ActivityOptions["type"],
+      url: config.bot.presence.activity.url,
+    }
+  );
 }

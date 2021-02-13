@@ -18,11 +18,12 @@ module.exports = {
     var unresolvedID = args.join(" ").length
       ? args.join(" ")
       : message.member?.roles.highest.id;
+    if (!unresolvedID) return await message.channel.send("Unknown lol");
     var role: Role | undefined | null = null;
     try {
       role = message.guild.roles.cache.find(
         (e) =>
-          e.name.toLowerCase() == unresolvedID ||
+          e.name.toLowerCase().startsWith(unresolvedID!) ||
           e.id == unresolvedID ||
           `${e}` == unresolvedID
       );
@@ -69,7 +70,6 @@ module.exports = {
       "❯ Members",
       role.members.size ? role.members.array().join(", ") : "None"
     );
-    console.log(emb);
     await message.channel.send(emb);
   },
 } as ICommand;

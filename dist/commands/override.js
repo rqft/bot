@@ -29,6 +29,10 @@ exports.overrides = {
         name: "--ov-messages",
         permissions: "MANAGE_MESSAGES",
     },
+    nick: {
+        name: "--ov-nicknames",
+        permissions: ["CHANGE_NICKNAME", "MANAGE_NICKNAMES"],
+    },
 };
 module.exports = {
     name: "override",

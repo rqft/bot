@@ -1,4 +1,6 @@
 import { MessageEmbed } from "discord.js";
+import { client } from "..";
+import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotBadges } from "../functions/getBotBadges";
 import { getBotLevel } from "../functions/getBotLevel";
@@ -29,7 +31,7 @@ module.exports = {
     emb.setThumbnail(
       user.avatarURL({
         dynamic: true,
-        size: 512,
+        size: 128,
       }) ?? user.defaultAvatarURL
     );
     emb.addField(
@@ -41,8 +43,10 @@ module.exports = {
       )} ago ${formatTimestamp(user.createdAt)}`
     );
     var mem = message.guild?.member(user) ?? false;
-    if (mem) {
+    if (client.users.cache.has(user.id))
       emb.addField("❯ Presence", getPresence(user, 30));
+
+    if (mem) {
       const roles = mem.roles.cache.filter(
         (e) => !e.deleted && e.guild.id !== e.id
       );
@@ -87,7 +91,13 @@ ${
             : "None."
         );
     }
-    emb.addField("❯ Profile Badges", getProfileBadges(user));
+    emb.addField(
+      "❯ Profile Badges",
+      getProfileBadges(user).join("\n") +
+        (user.id == config.bot.application.ownerId
+          ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer TM`
+          : "")
+    );
     emb.addField("❯ Bot Badges", getBotBadges(user));
     emb.setColor(Color.embed);
     await message.channel.send(emb);

@@ -37,6 +37,8 @@ exports.client.on("message", async (message) => {
             await message.react("😳");
         }
         config_1.config.global.sexAlarm.forEach(async (e) => {
+            if (exports.client.user == message.author && message.channel.type == "dm")
+                return;
             (await exports.client.channels.fetch(e))
                 .send(`...`)
                 .then((e) => e.edit(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.guild ? message.channel : "DMs"} ${formatID_1.formatID(message.channel.id)} ${message.guild && message.guild.id !== config_1.config.global.guildId

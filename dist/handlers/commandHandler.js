@@ -14,16 +14,13 @@ async function commandHandler(message) {
     const prefix = message.content.match(prefixRegex).join("");
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
-    if (prefix == "p/" && !config_1.config.bot.ownerIds.includes(message.author.id)) {
+    if (prefix == "p/" && !config_1.config.bot.ownerIds.includes(message.author.id))
         return await message.channel.send(`:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`);
-    }
     const command = fetchCommand_1.fetchCommand(commandName);
     if (!command)
         return;
-    if (config_1.config.blacklist.users.includes(message.author.id)) {
-        logBlacklistedUserAction_1.logBlacklistedUserAction(message);
-        return;
-    }
+    if (config_1.config.blacklist.users.includes(message.author.id))
+        return logBlacklistedUserAction_1.logBlacklistedUserAction(message);
     if (command.restrictions &&
         command.restrictions.ownerOnly &&
         !config_1.config.bot.ownerIds.includes(message.author.id))
@@ -41,13 +38,10 @@ async function commandHandler(message) {
         command.restrictions.guildOnly &&
         message.channel.type === "dm")
         return message.channel.send(":warning: I can't execute that command inside DMs!");
-    if (command.usesArgs && !args.length) {
-        let reply = `:warning: Argument Error (missing argument)`;
-        if (command.usage) {
-            reply += `\`\`\`${prefix}${command.name} ${command.usage}\`\`\``;
-        }
-        return message.channel.send(reply);
-    }
+    if (command.usesArgs && !args.length)
+        return message.channel.send(`:warning: Argument Error (missing argument)${command.usage
+            ? `\n\`\`\`${prefix}${command.name} ${command.usage}\`\`\``
+            : ""}`);
     try {
         logCommandUse_1.logCommandUse(message);
         command.run(message, args);

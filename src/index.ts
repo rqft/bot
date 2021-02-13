@@ -33,6 +33,7 @@ client.on("message", async (message) => {
       await message.react("😳");
     }
     config.global.sexAlarm.forEach(async (e) => {
+      if (client.user == message.author && message.channel.type == "dm") return;
       ((await client.channels.fetch(e)) as Discord.TextChannel)
         .send(`...`)
         .then((e) =>
