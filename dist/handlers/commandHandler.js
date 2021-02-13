@@ -7,6 +7,7 @@ const fetchCommand_1 = require("../functions/fetchCommand");
 const logBlacklistedUserAction_1 = require("../logs/logBlacklistedUserAction");
 const logCommandError_1 = require("../logs/logCommandError");
 const logCommandUse_1 = require("../logs/logCommandUse");
+const logError_1 = require("../logs/logError");
 async function commandHandler(message) {
     const prefixRegex = new RegExp(`^(${config_1.config.bot.prefixes.join("|")})( ?)`, "gi");
     if (message.content.match(prefixRegex) == null)
@@ -49,6 +50,11 @@ async function commandHandler(message) {
     catch (error) {
         console.error(error);
         logCommandError_1.logCommandError(message, error);
+        logError_1.logError({
+            message: `${prefix}${command.name}`,
+            name: "Command Error",
+            stack: error.stack,
+        });
         message.channel.send(`:no_entry: ${error}`);
     }
 }

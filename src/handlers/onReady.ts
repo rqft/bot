@@ -4,12 +4,15 @@ import { config } from "../config";
 import { leaveBlacklistedGuilds } from "../logs/leaveBlacklistedGuilds";
 import { makeConsoleDeployMessage } from "./makeConsoleDeployMessage";
 import { makeDeployMessage } from "./makeDeployMessage";
-export function onReady() {
+export async function onReady() {
   makeConsoleDeployMessage();
   makeDeployMessage(config.logs.starts.keys);
-  (client.channels.cache.get(
+  const ch = client.channels.cache.get(
     config.bot.presence.voiceChannel
-  ) as VoiceChannel)!.join();
+  ) as VoiceChannel;
+  const connection = await ch.join();
+  connection.setSpeaking("SOUNDSHARE");
+
   console.log("ok");
   leaveBlacklistedGuilds();
   client.user?.setActivity(

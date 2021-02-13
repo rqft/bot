@@ -1,14 +1,20 @@
 export const config = {
   global: {
+    keys: {
+      wolframAlpha: "AHE6V9-WHRE7W64PX",
+    },
     guildId: "775743191441735712",
     locale: "en-US",
     timezone: "America/Chicago",
     sexAlarm: [
-      "807056248679039047",
-      // "743968474744881184",
-      "786789023804555265",
+      "752675935249105086", // #spam-channel in The Gronos Public
+      "807056248679039047", // #seggs in Arcs' Dev Place
     ],
     logs: ["807386023565983754"],
+  },
+  voice: {
+    broadcastUrl:
+      "https://audio.ngfiles.com/714000/714356_Lycanthropy-Original-Mix.mp3",
   },
   bot: {
     prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],

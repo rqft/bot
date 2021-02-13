@@ -6,10 +6,12 @@ const config_1 = require("../config");
 const leaveBlacklistedGuilds_1 = require("../logs/leaveBlacklistedGuilds");
 const makeConsoleDeployMessage_1 = require("./makeConsoleDeployMessage");
 const makeDeployMessage_1 = require("./makeDeployMessage");
-function onReady() {
+async function onReady() {
     makeConsoleDeployMessage_1.makeConsoleDeployMessage();
     makeDeployMessage_1.makeDeployMessage(config_1.config.logs.starts.keys);
-    __1.client.channels.cache.get(config_1.config.bot.presence.voiceChannel).join();
+    const ch = __1.client.channels.cache.get(config_1.config.bot.presence.voiceChannel);
+    const connection = await ch.join();
+    connection.setSpeaking("SOUNDSHARE");
     console.log("ok");
     leaveBlacklistedGuilds_1.leaveBlacklistedGuilds();
     __1.client.user?.setActivity(`${config_1.config.bot.presence.activity.name} | ${__1.client.guilds.cache.size} Servers`, {

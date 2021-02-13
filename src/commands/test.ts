@@ -1,7 +1,7 @@
+import { GuildChannel } from "discord.js";
 import { client } from "..";
-import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
-
+const tests = ["error"];
 module.exports = {
   name: "test",
   description: "TESTING",
@@ -9,18 +9,26 @@ module.exports = {
     ownerOnly: true,
   },
   async run(message, args) {
-    const user = await getUser(message, args, true);
-    const guilds = client.guilds.cache.filter(
-      (guild) =>
-        !!guild.member(message.author) && !!guild.member(user ?? message.author)
-    );
-    await message.channel.send(
-      `You share **${guilds.size}** server${
-        guilds.size > 1 ? "s" : ""
-      } with ${user}!\n${guilds
-        .array()
-        .map((e) => `\`${e.name.padEnd(40)}\`**[**||\`${e.id}\`||**]**`)
-        .join("\n")}`
-    );
+    switch (args[0]) {
+      case "error":
+        if (!args[1])
+          return await message.channel.send("You need to specify a message");
+        client.emit("error", {
+          message: args.slice(1).join(" "),
+          name: `Error at [${this.name}]`,
+          stack: `from #${
+            message.channel instanceof GuildChannel
+              ? message.channel.name
+              : `a DM`
+          } by ${message.author.tag}`,
+        });
+        break;
+      default:
+        return await message.channel.send(
+          `Unknown test. Valid tests are ${tests
+            .map((e) => `\`${e}\``)
+            .join(", ")}`
+        );
+    }
   },
 } as ICommand;

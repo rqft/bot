@@ -5,6 +5,7 @@ import { ICommand } from "../interfaces/ICommand";
 import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
 import { logCommandError } from "../logs/logCommandError";
 import { logCommandUse } from "../logs/logCommandUse";
+import { logError } from "../logs/logError";
 
 export async function commandHandler(message: Message) {
   const prefixRegex = new RegExp(
@@ -76,6 +77,11 @@ export async function commandHandler(message: Message) {
   } catch (error) {
     console.error(error);
     logCommandError(message, error);
+    logError({
+      message: `${prefix}${command.name}`,
+      name: "Command Error",
+      stack: (error as Error).stack,
+    });
     message.channel.send(`:no_entry: ${error}`);
   }
 }

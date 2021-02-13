@@ -3,14 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
 exports.config = {
     global: {
+        keys: {
+            wolframAlpha: "AHE6V9-WHRE7W64PX",
+        },
         guildId: "775743191441735712",
         locale: "en-US",
         timezone: "America/Chicago",
         sexAlarm: [
+            "752675935249105086",
             "807056248679039047",
-            "786789023804555265",
         ],
         logs: ["807386023565983754"],
+    },
+    voice: {
+        broadcastUrl: "https://audio.ngfiles.com/714000/714356_Lycanthropy-Original-Mix.mp3",
     },
     bot: {
         prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],

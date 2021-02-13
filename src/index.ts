@@ -20,14 +20,11 @@ export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
 client.once("ready", () => {
   onReady();
-  // console.log("a");
 });
-client.on("error", (err) => {
-  discordjsError(err);
-});
+client.on("error", (e) => discordjsError(e));
 client.on("message", async (message) => {
   const sexes = message.content.match(/sex/gi);
-  if (sexes && !config.global.sexAlarm.includes(message.channel.id)) {
+  if (sexes) {
     if (message.author !== client.user) {
       message.author.send(`No sex :bangbang:`);
       await message.react("😳");

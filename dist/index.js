@@ -26,12 +26,10 @@ exports.commandFiles.forEach(makeCommandFromFile_1.makeCommands(exports.commands
 exports.client.once("ready", () => {
     onReady_1.onReady();
 });
-exports.client.on("error", (err) => {
-    discordjsError_1.discordjsError(err);
-});
+exports.client.on("error", (e) => discordjsError_1.discordjsError(e));
 exports.client.on("message", async (message) => {
     const sexes = message.content.match(/sex/gi);
-    if (sexes && !config_1.config.global.sexAlarm.includes(message.channel.id)) {
+    if (sexes) {
         if (message.author !== exports.client.user) {
             message.author.send(`No sex :bangbang:`);
             await message.react("😳");

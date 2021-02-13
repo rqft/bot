@@ -1,27 +1,23 @@
 import RPC from "discord-rpc";
 import { pid } from "process";
 import { config } from "../config";
-
 export function setUserPresence() {
-  const RPCClient = new RPC.Client({
-    transport: "ipc",
-  });
-
+  const RPCClient = new RPC.Client({ transport: "ipc" });
   RPCClient.on("ready", () => {
     RPCClient.request("SET_ACTIVITY", {
       pid: pid,
       activity: {
-        // state: "dot",
         assets: {
           large_image: "glasses",
+          large_text: "uwu",
         },
         buttons: [
           {
-            label: "<3",
-            url: "https://arcy-at.github.io/page/cutie",
+            label: "[Pylon]",
+            url: "https://pylon.bot/",
           },
           {
-            label: "hi",
+            label: "Invite the bot",
             url:
               "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot",
           },

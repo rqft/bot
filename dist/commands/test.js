@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 const __1 = require("..");
-const getUser_1 = require("../functions/getUser");
+const tests = ["error"];
 module.exports = {
     name: "test",
     description: "TESTING",
@@ -9,11 +10,22 @@ module.exports = {
         ownerOnly: true,
     },
     async run(message, args) {
-        const user = await getUser_1.getUser(message, args, true);
-        const guilds = __1.client.guilds.cache.filter((guild) => !!guild.member(message.author) && !!guild.member(user ?? message.author));
-        await message.channel.send(`You share **${guilds.size}** server${guilds.size > 1 ? "s" : ""} with ${user}!\n${guilds
-            .array()
-            .map((e) => `\`${e.name.padEnd(40)}\`**[**||\`${e.id}\`||**]**`)
-            .join("\n")}`);
+        switch (args[0]) {
+            case "error":
+                if (!args[1])
+                    return await message.channel.send("You need to specify a message");
+                __1.client.emit("error", {
+                    message: args.slice(1).join(" "),
+                    name: `Error at [${this.name}]`,
+                    stack: `from #${message.channel instanceof discord_js_1.GuildChannel
+                        ? message.channel.name
+                        : `a DM`} by ${message.author.tag}`,
+                });
+                break;
+            default:
+                return await message.channel.send(`Unknown test. Valid tests are ${tests
+                    .map((e) => `\`${e}\``)
+                    .join(", ")}`);
+        }
     },
 };

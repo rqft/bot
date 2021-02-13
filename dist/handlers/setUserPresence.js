@@ -8,23 +8,22 @@ const discord_rpc_1 = __importDefault(require("discord-rpc"));
 const process_1 = require("process");
 const config_1 = require("../config");
 function setUserPresence() {
-    const RPCClient = new discord_rpc_1.default.Client({
-        transport: "ipc",
-    });
+    const RPCClient = new discord_rpc_1.default.Client({ transport: "ipc" });
     RPCClient.on("ready", () => {
         RPCClient.request("SET_ACTIVITY", {
             pid: process_1.pid,
             activity: {
                 assets: {
                     large_image: "glasses",
+                    large_text: "uwu",
                 },
                 buttons: [
                     {
-                        label: "<3",
-                        url: "https://arcy-at.github.io/page/cutie",
+                        label: "[Pylon]",
+                        url: "https://pylon.bot/",
                     },
                     {
-                        label: "hi",
+                        label: "Invite the bot",
                         url: "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot",
                     },
                 ],
