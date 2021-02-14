@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { config } from "../config";
 import { api } from "../functions/api";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -31,17 +32,21 @@ module.exports = {
       emb.addField("Answer", result.queryresult.pods[0].subpods[0].plaintext);
       emb.addField(
         "Steps",
-        result.queryresult.pods[0].subpods[1].plaintext
+        (result.queryresult.pods[0].subpods[1].plaintext as string)
           .replace(/\|/g, ">")
           .replace("Answer: >", "Answer:")
+          .split("\n")
+          .map((e) => `\`${e}\``)
+          .join("\n")
       );
     } else {
       const ex = await api(
         `http://api.mathjs.org/v4/?expr=${encodeURIComponent(args.join(" "))}`,
         "text"
       );
-      emb.addField("Answer", ex);
+      emb.addField("Answer", `\`${ex}\``);
     }
+    emb.setColor(Color.embed);
     await message.channel.send(emb);
   },
 } as ICommand;

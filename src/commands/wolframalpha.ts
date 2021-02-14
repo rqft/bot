@@ -1,9 +1,11 @@
+import { MessageEmbed } from "discord.js";
 import { config } from "../config";
 import { api } from "../functions/api";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "api",
+  name: "search",
   usesArgs: true,
   usage: "<query: text>",
   async run(message, args) {
@@ -13,10 +15,11 @@ module.exports = {
       }&i=${encodeURIComponent(args.join(" "))}`,
       "text"
     );
-    await message.channel.send(
-      `${res}
-
-(Done in ${Date.now() - message.createdTimestamp}ms)`
-    );
+    const emb = new MessageEmbed();
+    emb.addField("Query", args.join(" "));
+    emb.addField("Result", res);
+    emb.setFooter(`(Done in ${Date.now() - message.createdTimestamp}ms)`);
+    emb.setColor(Color.embed);
+    await message.channel.send(emb);
   },
 } as ICommand;

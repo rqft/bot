@@ -12,7 +12,9 @@ module.exports = {
         const user = await getUser_1.getUser(message, args, false);
         if (!user)
             return;
-        const msg = args.slice(1).join(" ");
+        const msg = args.slice(1).join(" ").split("-hide ").join(" ");
+        if (args.slice(1).join(" ").startsWith("-hide"))
+            await message.delete();
         if (!msg)
             return await message.channel.send("You need to provide a message");
         const wh = await message.channel.createWebhook(user.username, {

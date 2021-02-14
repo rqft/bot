@@ -39,11 +39,12 @@ module.exports = {
     aliases: ["ov"],
     restrictions: {
         ownerOnly: true,
+        guildOnly: true,
     },
     usage: "<override: devOverride>",
     usesArgs: true,
     async run(message, args) {
-        const time = args[0] ?? "1m";
+        const time = args[0] ?? "3m";
         if (args[0] == "clear") {
             message.member?.roles.cache.forEach((e) => {
                 if (e.name.startsWith("--ov-"))

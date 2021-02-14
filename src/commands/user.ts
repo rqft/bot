@@ -1,5 +1,4 @@
 import { MessageEmbed } from "discord.js";
-import { client } from "..";
 import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotBadges } from "../functions/getBotBadges";
@@ -43,10 +42,9 @@ module.exports = {
       )} ago ${formatTimestamp(user.createdAt)}`
     );
     var mem = message.guild?.member(user) ?? false;
-    if (client.users.cache.has(user.id))
-      emb.addField("❯ Presence", getPresence(user, 30));
 
     if (mem) {
+      emb.addField("❯ Presence", getPresence(user, 30));
       const roles = mem.roles.cache.filter(
         (e) => !e.deleted && e.guild.id !== e.id
       );

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const config_1 = require("../config");
 const api_1 = require("../functions/api");
+const globals_1 = require("../globals");
 module.exports = {
     name: "solve",
     restrictions: {},
@@ -23,12 +24,16 @@ module.exports = {
             emb.addField("Answer", result.queryresult.pods[0].subpods[0].plaintext);
             emb.addField("Steps", result.queryresult.pods[0].subpods[1].plaintext
                 .replace(/\|/g, ">")
-                .replace("Answer: >", "Answer:"));
+                .replace("Answer: >", "Answer:")
+                .split("\n")
+                .map((e) => `\`${e}\``)
+                .join("\n"));
         }
         else {
             const ex = await api_1.api(`http://api.mathjs.org/v4/?expr=${encodeURIComponent(args.join(" "))}`, "text");
-            emb.addField("Answer", ex);
+            emb.addField("Answer", `\`${ex}\``);
         }
+        emb.setColor(globals_1.Color.embed);
         await message.channel.send(emb);
     },
 };

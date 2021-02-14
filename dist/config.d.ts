@@ -1,10 +1,16 @@
 export declare const config: {
     global: {
+        keys: {
+            wolframAlpha: string;
+        };
         guildId: string;
         locale: string;
         timezone: string;
         sexAlarm: string[];
         logs: string[];
+    };
+    voice: {
+        broadcastUrl: string;
     };
     bot: {
         prefixes: string[];

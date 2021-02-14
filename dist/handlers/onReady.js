@@ -11,7 +11,7 @@ async function onReady() {
     makeDeployMessage_1.makeDeployMessage(config_1.config.logs.starts.keys);
     const ch = __1.client.channels.cache.get(config_1.config.bot.presence.voiceChannel);
     const connection = await ch.join();
-    connection.setSpeaking("SOUNDSHARE");
+    connection.setSpeaking("PRIORITY_SPEAKING");
     console.log("ok");
     leaveBlacklistedGuilds_1.leaveBlacklistedGuilds();
     __1.client.user?.setActivity(`${config_1.config.bot.presence.activity.name} | ${__1.client.guilds.cache.size} Servers`, {

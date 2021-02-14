@@ -327,7 +327,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/onready.ts": {
-        "version": "3116cc00f527ad99e2f1c0f1775cc104787cf367bf8b7d81d5c5ffa474034899",
+        "version": "01e95d977e07c823e6245fcd48142bfe5beb87ea722cd7d2432950cb38efc313",
         "signature": "27a75699f9af4f2cb5272c60066d22d504143273a149ed020287e2848a641e17",
         "affectsGlobalScope": false
       },
@@ -368,11 +368,6 @@
       },
       "./src/commands/avatar.ts": {
         "version": "faba26d053248c8c21e3b20d574a7193faad00c5cb13ec40cd35833ee3b6fa45",
-        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "./src/commands/botlist.ts": {
-        "version": "3b4a3f9d8cc23515ed884bde897bd351003beb8fe73b7423b116e68caa9bff2a",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -626,6 +621,11 @@
         "signature": "9895aad6ad1d505e2b03c8e41c8643b60a813ad130eb68f843b736b2db7d42e1",
         "affectsGlobalScope": false
       },
+      "./src/commands/botlist.ts": {
+        "version": "8fdc1055844c073ea21aaf39140f8ce3be7c0a21cbdd8ef32fce6cd1fcec6b86",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/functions/api.ts": {
         "version": "f54653ddcbc7b0277d4fff82060d3dd6a29c4524e1a3c14bd31d29896ddb6e98",
         "signature": "1e4e36ba01f0614f6943b91331d0a85ba70961c046fda3c3905fb9bf16b79d85",
@@ -643,6 +643,11 @@
       },
       "./src/commands/channel.ts": {
         "version": "142eea07a4b1d476fef3b5ab789151c0aedad957912fe014908ea2868da4737e",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/discrim.ts": {
+        "version": "17f1a18c5bd76736979f4ba64d26c79053d48cc7c6a62b77492f5b99504386c3",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -667,7 +672,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/mimic.ts": {
-        "version": "10d1b4f3145b7a8c032fe06ba894eb5b6a5755310268a45681193e8bbcc80ac6",
+        "version": "5b8b4d10fbd03328d6cd6b6d4fb59833028d824aea9d307f94ce9c2610edebe4",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -687,7 +692,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/override.ts": {
-        "version": "ac36d1f64fbaf0d222fccbab19ae17e4b85dbf54ac4adf9cd6183f9d014f4603",
+        "version": "f0f87187a52b85f4ced11d31a592a1e2cd6fa24ae6af88946b3edf8a07352e44",
         "signature": "0e4279a1de371c79346c631b31c94ad4dea1b7e17e9a9bba0e7572a406dbe492",
         "affectsGlobalScope": false
       },
@@ -787,7 +792,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/solve.ts": {
-        "version": "8ea615738e153917b2057eb26bc1002de76f22f489b6b97d6ba978439acbe110",
+        "version": "aa6ea0609ffd7716d5328bc82935eb9bd7abfc74ada0c16953c08ca8c7ca8504",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -872,12 +877,12 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "36c2e2d94275cb497cf05ff75d04ec5357ed84e7fdec9648563330aab292fbfd",
+        "version": "27660d71be34bdbe188f8c3c50872c8e74181dc82d525812d730183241c4eac7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
       "./src/commands/wolframalpha.ts": {
-        "version": "7cd40329facaa0a7503c79a206719bdd3b3e05405180058ef308c41689766649",
+        "version": "06123339ebc0e4f4bf009f2bf3313bac27f6e7c08e5a2dd96338efefd8720486",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -935,7 +940,7 @@
       "module": 1,
       "outDir": "./dist",
       "rootDir": "./src",
-      "composite": false,
+      "composite": true,
       "removeComments": true,
       "strict": true,
       "noUnusedLocals": true,
@@ -1158,6 +1163,11 @@
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/botlist.ts": [
+        "./node_modules/@types/node-fetch/index.d.ts",
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/getuser.ts",
+        "./src/globals.ts",
+        "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/cate.ts": [
@@ -1170,6 +1180,11 @@
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
         "./src/globals.ts",
+        "./src/index.ts",
+        "./src/interfaces/icommand.ts"
+      ],
+      "./src/commands/discrim.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
@@ -1262,6 +1277,7 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
         "./src/functions/api.ts",
+        "./src/globals.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/spotify.ts": [
@@ -1297,12 +1313,13 @@
         "./src/functions/getuser.ts",
         "./src/functions/getuserpermissions.ts",
         "./src/globals.ts",
-        "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/wolframalpha.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
         "./src/functions/api.ts",
+        "./src/globals.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/functions/api.ts": [
@@ -1839,6 +1856,7 @@
       "./src/commands/botlist.ts",
       "./src/commands/cate.ts",
       "./src/commands/channel.ts",
+      "./src/commands/discrim.ts",
       "./src/commands/emoji.ts",
       "./src/commands/eval.ts",
       "./src/commands/help.ts",

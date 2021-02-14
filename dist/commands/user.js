@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const __1 = require("..");
 const config_1 = require("../config");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getBotBadges_1 = require("../functions/getBotBadges");
@@ -33,9 +32,8 @@ module.exports = {
 :link: **Profile**: ${user}
 :calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(user.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(user.createdAt)}`);
         var mem = message.guild?.member(user) ?? false;
-        if (__1.client.users.cache.has(user.id))
-            emb.addField("❯ Presence", getPresence_1.getPresence(user, 30));
         if (mem) {
+            emb.addField("❯ Presence", getPresence_1.getPresence(user, 30));
             const roles = mem.roles.cache.filter((e) => !e.deleted && e.guild.id !== e.id);
             emb.addField("❯ Member Information", `:inbox_tray: **Joined:** ${getLongAgo_1.getLongAgo(mem.joinedTimestamp, 2)} ago ${formatTimestamp_1.formatTimestamp(mem.joinedAt)}
 ${roles.size !== 0

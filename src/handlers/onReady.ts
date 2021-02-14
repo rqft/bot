@@ -11,7 +11,7 @@ export async function onReady() {
     config.bot.presence.voiceChannel
   ) as VoiceChannel;
   const connection = await ch.join();
-  connection.setSpeaking("SOUNDSHARE");
+  connection.setSpeaking("PRIORITY_SPEAKING");
 
   console.log("ok");
   leaveBlacklistedGuilds();

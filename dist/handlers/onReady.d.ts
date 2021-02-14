@@ -1,1 +1,1 @@
-export declare function onReady(): void;
+export declare function onReady(): Promise<void>;
