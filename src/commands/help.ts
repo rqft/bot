@@ -4,6 +4,7 @@ import { config } from "../config";
 import { capitalizeWords } from "../functions/capitalizeWords";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "help",
@@ -45,19 +46,24 @@ module.exports = {
       return message.channel.send("that's not a valid command!");
     }
 
-    data.push(`**Name:** \`${command.name}\``);
+    data.push(`${decor.Emojis.NAME_BADGE} **Name:** \`${command.name}\``);
 
     if (command.aliases)
       data.push(
-        `**Aliases:** ${command.aliases.map((e) => `\`${e}\``).join(", ")}`
+        `${decor.Emojis.ABC} **Aliases:** ${command.aliases
+          .map((e) => `\`${e}\``)
+          .join(", ")}`
       );
     if (command.description)
-      data.push(`**Description:** \`${command.description}\``);
+      data.push(
+        `${decor.Emojis.PENCIL} **Description:** \`${command.description}\``
+      );
     if (command.usage)
       data.push(
-        `**Usage:** \`${prefix?.replace(/\\/g, "")}${command.name} ${
-          command.usage
-        }\``
+        `${decor.Emojis.CLOSED_BOOK} **Usage:** \`${prefix?.replace(
+          /\\/g,
+          ""
+        )}${command.name} ${command.usage}\``
       );
     if (command.restrictions) {
       const rest = [];
@@ -70,7 +76,9 @@ module.exports = {
             .map((e) => `${capitalizeWords(e)}`)
             .join(", ")}`
         );
-      data.push(`**Restrictions**: ${rest.join("\n")}`);
+      data.push(
+        `${decor.Emojis.POLICE_OFFICER} **Restrictions**: ${rest.join("\n")}`
+      );
     }
     emb.setDescription(data);
     emb.setColor(Color.hallucinate);

@@ -29,12 +29,12 @@ module.exports = {
         }
         const emb = new discord_js_1.MessageEmbed();
         emb.setColor(globals_1.Color.embed);
-        emb.addField("❯ Emoji Info", `:pencil: **Name**: \`:${e.name}:\`
-:link: **Emoji**: ${e}
-:gear: **ID**: \`${e.id}\`
-:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(e.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(e.createdAt)}`);
-        emb.addField("❯ Server", `:film_frames: **Animated**: ${e.animated ? "Yes" : "No"}
-:computer: **Uploaded to** \`${e.guild.name}\` by ${await e.fetchAuthor()}`);
+        emb.addField("❯ Emoji Info", `${"\uD83D\uDCDD"} **Name**: \`:${e.name}:\`
+${"\uD83D\uDD17"} **Emoji**: ${e}
+${"\u2699\uFE0F"} **ID**: \`${e.id}\`
+${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(e.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(e.createdAt)}`);
+        emb.addField("❯ Server", `${"\uD83C\uDF9E\uFE0F"} **Animated**: ${e.animated ? "Yes" : "No"}
+${"\uD83D\uDCBB"} **Uploaded to** \`${e.guild.name}\` by ${await e.fetchAuthor()}`);
         emb.setThumbnail(e.url);
         return await message.channel.send(emb);
     },

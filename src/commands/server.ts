@@ -6,6 +6,7 @@ import { getGuildVoiceRegion } from "../functions/getGuildVoiceRegion";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "server",
@@ -19,12 +20,12 @@ module.exports = {
     emb.setThumbnail(guild.iconURL({ dynamic: true })!);
     emb.addField(
       "❯ Server Info",
-      `:gear: **ID**: \`${guild.id}\`
+      `${decor.Emojis.GEAR} **ID**: \`${guild.id}\`
 <:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
 <:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion(
         guild
       )}
-:calendar_spiral: **Created**: ${simpleGetLongAgo(
+${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}`
     );

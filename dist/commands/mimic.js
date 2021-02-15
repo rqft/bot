@@ -12,12 +12,15 @@ module.exports = {
         const user = await getUser_1.getUser(message, args, false);
         if (!user)
             return;
-        const msg = args.slice(1).join(" ").split("-hide ").join(" ");
-        if (args.slice(1).join(" ").startsWith("-hide"))
+        const msg = args.slice(1).join(" ").split("-d ").join(" ");
+        if (args.slice(1).join(" ").startsWith("-d"))
             await message.delete();
         if (!msg)
             return await message.channel.send("You need to provide a message");
-        const wh = await message.channel.createWebhook(user.username, {
+        const name = message.guild?.member(user)
+            ? message.guild.member(user)?.displayName ?? user.username
+            : user.username;
+        const wh = await message.channel.createWebhook(name, {
             avatar: user.avatarURL() ?? user.defaultAvatarURL,
         });
         await wh.send(msg);

@@ -4,6 +4,7 @@ import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "emoji",
@@ -31,17 +32,19 @@ module.exports = {
     emb.setColor(Color.embed);
     emb.addField(
       "❯ Emoji Info",
-      `:pencil: **Name**: \`:${e.name}:\`
-:link: **Emoji**: ${e}
-:gear: **ID**: \`${e.id}\`
-:calendar_spiral: **Created**: ${simpleGetLongAgo(
+      `${decor.Emojis.PENCIL} **Name**: \`:${e.name}:\`
+${decor.Emojis.LINK} **Emoji**: ${e}
+${decor.Emojis.GEAR} **ID**: \`${e.id}\`
+${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         e.createdTimestamp
       )} ago ${formatTimestamp(e.createdAt)}`
     );
     emb.addField(
       "❯ Server",
-      `:film_frames: **Animated**: ${e.animated ? "Yes" : "No"}
-:computer: **Uploaded to** \`${e.guild.name}\` by ${await e.fetchAuthor()}`
+      `${decor.Emojis.FILM_FRAMES} **Animated**: ${e.animated ? "Yes" : "No"}
+${decor.Emojis.COMPUTER} **Uploaded to** \`${
+        e.guild.name
+      }\` by ${await e.fetchAuthor()}`
     );
 
     emb.setThumbnail(e.url);

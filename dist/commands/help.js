@@ -32,13 +32,15 @@ module.exports = {
         if (!command) {
             return message.channel.send("that's not a valid command!");
         }
-        data.push(`**Name:** \`${command.name}\``);
+        data.push(`${"\uD83D\uDCDB"} **Name:** \`${command.name}\``);
         if (command.aliases)
-            data.push(`**Aliases:** ${command.aliases.map((e) => `\`${e}\``).join(", ")}`);
+            data.push(`${"\uD83D\uDD24"} **Aliases:** ${command.aliases
+                .map((e) => `\`${e}\``)
+                .join(", ")}`);
         if (command.description)
-            data.push(`**Description:** \`${command.description}\``);
+            data.push(`${"\uD83D\uDCDD"} **Description:** \`${command.description}\``);
         if (command.usage)
-            data.push(`**Usage:** \`${prefix?.replace(/\\/g, "")}${command.name} ${command.usage}\``);
+            data.push(`${"\uD83D\uDCD5"} **Usage:** \`${prefix?.replace(/\\/g, "")}${command.name} ${command.usage}\``);
         if (command.restrictions) {
             const rest = [];
             if (command.restrictions.guildOnly)
@@ -51,7 +53,7 @@ module.exports = {
                 rest.push(`Needs Permissions: ${command.restrictions.permissions
                     .map((e) => `${capitalizeWords_1.capitalizeWords(e)}`)
                     .join(", ")}`);
-            data.push(`**Restrictions**: ${rest.join("\n")}`);
+            data.push(`${"\uD83D\uDC6E"} **Restrictions**: ${rest.join("\n")}`);
         }
         emb.setDescription(data);
         emb.setColor(globals_1.Color.hallucinate);

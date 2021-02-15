@@ -10,6 +10,7 @@ import { getUser } from "../functions/getUser";
 import { getUserPermissions } from "../functions/getUserPermissions";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "user",
@@ -18,7 +19,7 @@ module.exports = {
   async run(message, args: string[]) {
     const user = await getUser(message, args, true);
     if (!user) {
-      return await message.channel.send("Unknown User");
+      return await message.channel.send(`${decor.Emojis.WARNING} Unknown User`);
     }
     const emb = new MessageEmbed();
     emb.setAuthor(
@@ -35,9 +36,9 @@ module.exports = {
     );
     emb.addField(
       `❯ User Info`,
-      `:gear: **󠇰ID**: \`${user.id}\`
-:link: **Profile**: ${user}
-:calendar_spiral: **Created**: ${simpleGetLongAgo(
+      `${decor.Emojis.GEAR} **󠇰ID**: \`${user.id}\`
+${decor.Emojis.LINK} **Profile**: ${user}
+${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         user.createdTimestamp
       )} ago ${formatTimestamp(user.createdAt)}`
     );

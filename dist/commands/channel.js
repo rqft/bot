@@ -41,10 +41,10 @@ module.exports = {
         }
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(`${channel.name}`, __1.client.emojis.cache.get("798624246905569323").url);
-        emb.addField("❯ Channel Info", `:gear: **ID**: \`${channel.id}\`
-:link: **Channel**: ${channel}
-:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(channel.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(channel.createdAt)}
-:jigsaw: **Type**: ${capitalizeWords_1.capitalizeWords(channel.type)}`);
+        emb.addField("❯ Channel Info", `${"\u2699\uFE0F"} **ID**: \`${channel.id}\`
+${"\uD83D\uDD17"} **Channel**: ${channel}
+${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(channel.createdTimestamp)} ${formatTimestamp_1.formatTimestamp(channel.createdAt)}
+${"\uD83E\uDDE9"} **Type**: ${capitalizeWords_1.capitalizeWords(channel.type)}`);
         emb.addField("❯ Invites", (await channel.fetchInvites()).size
             ? (await channel.fetchInvites())
                 .array()

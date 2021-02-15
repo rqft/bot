@@ -9,11 +9,11 @@ module.exports = {
     async run(message, args) {
         const discrim = args[0]?.replace(/\D/g, "") ?? message.author.discriminator;
         const users = __1.client.users.cache
-            .filter((e) => e.discriminator == discrim)
+            .filter((e) => e.discriminator.includes(discrim))
             .array()
             .map((e) => `**${e.username}**#${e.discriminator}`);
         await message.channel.send(new discord_js_1.MessageEmbed({
-            title: `Users with discrim ${discrim}`,
+            title: `Users with discrim #${discrim}`,
             description: `${users.length} Users Found\n\n` + users.length
                 ? users.join("\n")
                 : "",

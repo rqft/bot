@@ -23,6 +23,6 @@ export function makeDeployMessage(pubChannels: string[]) {
   ];
   pubChannels.forEach((e) => {
     const ch = client.channels.cache.get(e) as TextChannel;
-    ch.send(message.join("\n"));
+    ch.send(message.join("\n"), { split: { char: "\n" } });
   });
 }

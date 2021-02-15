@@ -6,12 +6,14 @@ exports.config = {
         keys: {
             wolframAlpha: "AHE6V9-WHRE7W64PX",
         },
+        logging_test: "810894764412502026",
         guildId: "775743191441735712",
         locale: "en-US",
         timezone: "America/Chicago",
         sexAlarm: [
             "752675935249105086",
             "807056248679039047",
+            "773132972543049748",
         ],
         logs: ["807386023565983754"],
     },

@@ -3,6 +3,7 @@ export declare const config: {
         keys: {
             wolframAlpha: string;
         };
+        logging_test: string;
         guildId: string;
         locale: string;
         timezone: string;

@@ -5,6 +5,7 @@ import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "channel",
@@ -48,12 +49,12 @@ module.exports = {
     );
     emb.addField(
       "❯ Channel Info",
-      `:gear: **ID**: \`${channel.id}\`
-:link: **Channel**: ${channel}
-:calendar_spiral: **Created**: ${simpleGetLongAgo(
+      `${decor.Emojis.GEAR} **ID**: \`${channel.id}\`
+${decor.Emojis.LINK} **Channel**: ${channel}
+${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         channel.createdTimestamp
       )} ${formatTimestamp(channel.createdAt)}
-:jigsaw: **Type**: ${capitalizeWords(channel.type)}`
+${decor.Emojis.JIGSAW} **Type**: ${capitalizeWords(channel.type)}`
     );
     emb.addField(
       "❯ Invites",

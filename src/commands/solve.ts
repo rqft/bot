@@ -19,12 +19,10 @@ module.exports = {
       query
     )}&podstate=Step-by-step%20solution&output=json&scanner=Solve`;
     const result = await api(url, "json");
-    console.log(result.queryresult);
     if (!result.queryresult.success) {
       await message.channel.send(
         `:no_entry: Error (${result.queryresult.error.code}): ${result.queryresult.error.msg}`
       );
-      return console.log(result);
     }
     const emb = new MessageEmbed();
     emb.setTitle(query);
@@ -32,12 +30,11 @@ module.exports = {
       emb.addField("Answer", result.queryresult.pods[0].subpods[0].plaintext);
       emb.addField(
         "Steps",
-        (result.queryresult.pods[0].subpods[1].plaintext as string)
-          .replace(/\|/g, ">")
-          .replace("Answer: >", "Answer:")
-          .split("\n")
-          .map((e) => `\`${e}\``)
-          .join("\n")
+        `\`\`\`` +
+          (result.queryresult.pods[0].subpods[1].plaintext as string)
+            .replace(/\|/g, ">")
+            .replace("Answer: >", "Answer:") +
+          `\`\`\``
       );
     } else {
       const ex = await api(
