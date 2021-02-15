@@ -357,8 +357,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "60bda7fd9cf19104e92cdff3479c9239732e34cc910d5f930cece3197292c31f",
-        "signature": "eb68cd26c0973139d1ce2189b5b5baaef76339bdcc5b78f09019d85fb0e3e47f",
+        "version": "47fd723af014bfcabc1fad59e2a5487bec5bea471fe16cc58b52ca883c551283",
+        "signature": "131dd4b5492674c08892168f11f215e01e086dda610ae7c9cafa2ac8519359c8",
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
@@ -366,14 +366,24 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
-      "./src/functions/getfileextension.ts": {
-        "version": "22966bdacedac7ca5ace67ced80f418758df4fa15752f6f92e978dcc9753d964",
-        "signature": "697b29bdac0cb57bea54a0d29fc7a2567db88fea68ba4c13c82cf208360863b9",
+      "./src/functions/getchannel.ts": {
+        "version": "2cbc1a1b040c19d352774791aa462662141fc967e37cf46dac9708bf35df96d6",
+        "signature": "5a4bba3aa5065684db1ef606baf6c52bf14b37e87c346bb9081f0f025ffe5c75",
         "affectsGlobalScope": false
       },
       "./src/functions/getuser.ts": {
-        "version": "49cca3db22859bad903a5e4970b0147f881f4eb7a1d82c0367b32f8edac8cc2c",
-        "signature": "55fbba2443d6093926aa125e663eb05ef9000354c7d35587662b15486b073ebf",
+        "version": "4e4e8bc77fbb4629368368877661d8064d7c8ecd99f150faaa10e500e5d2f70c",
+        "signature": "46cd5682fdb82a3cee4a9f3bf7e32150b7752c0570a7ddba4fadd70919878fd1",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/allow.ts": {
+        "version": "4286c3ffd75208d0f9d69f73db1bfb82b29a0fb8ea3552dae4f375957addef15",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getfileextension.ts": {
+        "version": "22966bdacedac7ca5ace67ced80f418758df4fa15752f6f92e978dcc9753d964",
+        "signature": "697b29bdac0cb57bea54a0d29fc7a2567db88fea68ba4c13c82cf208360863b9",
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
@@ -652,7 +662,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/channel.ts": {
-        "version": "d8764e374e8fdd0a4218dd77b6704a86ca1724e39dc927ccf7aa86d5765cd48d",
+        "version": "4bf83f5f756202cfaea64bfe6edcb896ca7eaab3b55647d518c36b9dd4035d66",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -682,7 +692,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "eba981d9ff53154fb9e8d2669d0bed8e2dea7ee80ce810f5b7f4fa6cd43b3889",
+        "version": "231cb9b50fb95f672673beb843b1b29eed229fdd0606a782a5a62198c6ffdd45",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -761,13 +771,18 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/functions/getrole.ts": {
+        "version": "8fec8450d65bce13501152a301a874e38cc8aa44c99af33d6ec8f81fec05e5e2",
+        "signature": "c332f5f9d4292d73f6ee9316b4fb0f3703e4455fe15cf5edf1326fd7f2fe63a8",
+        "affectsGlobalScope": false
+      },
       "./src/functions/getuserpermissions.ts": {
         "version": "17c95d816969b8faf82bdbc3ac9ae61f809c0125ba9eb814d530eb8a456cc079",
         "signature": "9401723210970757313db13e22f0a05c8ae7d029ebb3eedc886723f32744b076",
         "affectsGlobalScope": false
       },
       "./src/commands/role.ts": {
-        "version": "c3b8384253250ee64a08a59d05578965dff3c28f228f15b626607867709582b1",
+        "version": "597bbd8c5f87bb2439022ced43bf86290c96a2fb2574b9ab689721027cd92a2e",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1175,6 +1190,11 @@
         "./src/index.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/commands/allow.ts": [
+        "./src/functions/getchannel.ts",
+        "./src/functions/getuser.ts",
+        "./src/interfaces/icommand.ts"
+      ],
       "./src/commands/avatar.ts": [
         "./src/functions/formatid.ts",
         "./src/functions/getfileextension.ts",
@@ -1198,6 +1218,7 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/capitalizewords.ts",
         "./src/functions/formattimestamp.ts",
+        "./src/functions/getchannel.ts",
         "./src/functions/getlongago.ts",
         "./src/globals.ts",
         "./src/index.ts",
@@ -1286,6 +1307,7 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
+        "./src/functions/getrole.ts",
         "./src/functions/getuserpermissions.ts",
         "./src/globals.ts",
         "./src/interfaces/icommand.ts"
@@ -1375,6 +1397,9 @@
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts"
       ],
+      "./src/functions/getchannel.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/getguild.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/index.ts"
@@ -1395,6 +1420,9 @@
       "./src/functions/getprofilebadges.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/maps/profilebadge.ts"
+      ],
+      "./src/functions/getrole.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/functions/getuser.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -1467,6 +1495,7 @@
         "./src/handlers/makecommandfromfile.ts",
         "./src/handlers/onready.ts",
         "./src/handlers/setuserpresence.ts",
+        "./src/interfaces/icommand.ts",
         "./src/maps/emojienum.ts"
       ],
       "./src/interfaces/icommand.ts": [
@@ -1749,6 +1778,9 @@
       "./src/functions/getbotlevel.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
+      "./src/functions/getchannel.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
       "./src/functions/getguild.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
@@ -1762,6 +1794,9 @@
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/functions/getprofilebadges.ts": [
+        "./node_modules/discord.js/typings/index.d.ts"
+      ],
+      "./src/functions/getrole.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/functions/getuser.ts": [
@@ -1783,7 +1818,8 @@
         "./node_modules/discord.js/typings/index.d.ts"
       ],
       "./src/index.ts": [
-        "./node_modules/discord.js/typings/index.d.ts"
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/interfaces/icommand.ts"
       ],
       "./src/interfaces/icommand.ts": [
         "./node_modules/discord.js/typings/index.d.ts"
@@ -1883,6 +1919,7 @@
       "./node_modules/discord.js/typings/index.d.ts",
       "./node_modules/form-data/index.d.ts",
       "./src/commands/about.ts",
+      "./src/commands/allow.ts",
       "./src/commands/avatar.ts",
       "./src/commands/botlist.ts",
       "./src/commands/cate.ts",
@@ -1921,6 +1958,7 @@
       "./src/functions/formattimestamp.ts",
       "./src/functions/getbotbadges.ts",
       "./src/functions/getbotlevel.ts",
+      "./src/functions/getchannel.ts",
       "./src/functions/getfileextension.ts",
       "./src/functions/getguild.ts",
       "./src/functions/getguildfeatures.ts",
@@ -1928,6 +1966,7 @@
       "./src/functions/getlongago.ts",
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
+      "./src/functions/getrole.ts",
       "./src/functions/getuser.ts",
       "./src/functions/getuserpermissions.ts",
       "./src/functions/getusersfrommention.ts",

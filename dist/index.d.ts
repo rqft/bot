@@ -1,7 +1,8 @@
 import Discord from "discord.js";
+import { ICommand } from "./interfaces/ICommand";
 import "./logging-test";
 export declare const client: Discord.Client;
-export declare const commands: Discord.Collection<unknown, unknown>;
+export declare const commands: Discord.Collection<any, ICommand>;
 export declare const commandFiles: string[];
 export declare const enum LoggingEmojis {
     DEPLOYED = "\uD83D\uDCE6",

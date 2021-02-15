@@ -8,6 +8,7 @@ import { fetchCommandFiles } from "./handlers/fetchCommandFiles";
 import { makeCommands } from "./handlers/makeCommandFromFile";
 import { onReady } from "./handlers/onReady";
 import { setUserPresence } from "./handlers/setUserPresence";
+import { ICommand } from "./interfaces/ICommand";
 import "./logging-test";
 import { decor } from "./maps/emojiEnum";
 export const client = new Discord.Client({
@@ -17,7 +18,7 @@ export const client = new Discord.Client({
     },
   },
 });
-export const commands = new Discord.Collection();
+export const commands = new Discord.Collection<any, ICommand>();
 export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
 client.once("ready", () => {

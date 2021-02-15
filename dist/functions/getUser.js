@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUser = void 0;
 const __1 = require("..");
-async function getUser(message, args, useJoin = false) {
-    var res = (useJoin ? args.join(" ")?.normalize() : args[0]?.normalize()) ??
+async function getUser(message, args, useJoin = false, argument = 0) {
+    var res = (useJoin ? args.join(" ")?.normalize() : args[argument]?.normalize()) ??
         message.author.id;
     if (res?.toLowerCase() == "discord")
         res = "643945264868098049";

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getLongAgo_1 = require("../functions/getLongAgo");
+const getRole_1 = require("../functions/getRole");
 const getUserPermissions_1 = require("../functions/getUserPermissions");
 const globals_1 = require("../globals");
 module.exports = {
@@ -14,20 +15,7 @@ module.exports = {
     usage: "<role: Role>",
     usesArgs: false,
     async run(message, args) {
-        if (!message.guild)
-            return;
-        var unresolvedID = args.join(" ").length
-            ? args.join(" ")
-            : message.member?.roles.highest.id;
-        if (!unresolvedID)
-            return await message.channel.send("Unknown lol");
-        var role = null;
-        try {
-            role = message.guild.roles.cache.find((e) => e.name.toLowerCase().startsWith(unresolvedID) ||
-                e.id == unresolvedID ||
-                `${e}` == unresolvedID);
-        }
-        catch (error) { }
+        const role = getRole_1.getRole(message, args, true);
         if (!role) {
             return await message.channel.send("Unknown Role");
         }

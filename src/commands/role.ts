@@ -1,6 +1,7 @@
-import { MessageEmbed, Role } from "discord.js";
+import { MessageEmbed } from "discord.js";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
+import { getRole } from "../functions/getRole";
 import { getUserPermissions } from "../functions/getUserPermissions";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
@@ -14,20 +15,7 @@ module.exports = {
   usage: "<role: Role>",
   usesArgs: false,
   async run(message, args) {
-    if (!message.guild) return;
-    var unresolvedID = args.join(" ").length
-      ? args.join(" ")
-      : message.member?.roles.highest.id;
-    if (!unresolvedID) return await message.channel.send("Unknown lol");
-    var role: Role | undefined | null = null;
-    try {
-      role = message.guild.roles.cache.find(
-        (e) =>
-          e.name.toLowerCase().startsWith(unresolvedID!) ||
-          e.id == unresolvedID ||
-          `${e}` == unresolvedID
-      );
-    } catch (error) {}
+    const role = getRole(message, args, true);
     if (!role) {
       return await message.channel.send("Unknown Role");
     }
@@ -48,10 +36,10 @@ module.exports = {
         +role.createdAt
       )} ${formatTimestamp(role.createdAt)}`
     );
-    const posTop = message.guild.roles.cache.find(
+    const posTop = message.guild!.roles.cache.find(
       (e) => e.position == role!.position + 1
     );
-    const posLow = message.guild.roles.cache.find(
+    const posLow = message.guild!.roles.cache.find(
       (e) => e.position == role!.position - 1
     );
 

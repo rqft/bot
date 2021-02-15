@@ -4,10 +4,11 @@ import { client } from "..";
 export async function getUser(
   message: Message,
   args: string[],
-  useJoin: boolean = false
+  useJoin: boolean = false,
+  argument: number = 0
 ) {
   var res =
-    (useJoin ? args.join(" ")?.normalize()! : args[0]?.normalize()!) ??
+    (useJoin ? args.join(" ")?.normalize()! : args[argument]?.normalize()!) ??
     message.author.id;
   if (res?.toLowerCase() == "discord") res = "643945264868098049";
   if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")

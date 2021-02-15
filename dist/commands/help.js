@@ -18,7 +18,7 @@ module.exports = {
             data.push(`My prefixes are: ${config_1.config.bot.prefixes
                 .join(", ")
                 .replace(/\?|\\/g, "")}`);
-            data.push("Here's a list of all my commands:");
+            data.push(`Here's a list of all my commands:`);
             data.push(__1.commands.map((command) => command.name).join(", "));
             data.push(`\nYou can send "${prefix}help [command name]" to get info on a specific command!`);
             emb.setDescription(data.join("\n"));
