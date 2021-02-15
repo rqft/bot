@@ -43,8 +43,8 @@ module.exports = {
   name: "botlist",
   usage: "[bot: User]",
   async run(message, args) {
-    var user = (await getUser(message, args, true))!;
-    if (!user.bot) user = client.user!;
+    var user = (await getUser(message, args, true)) ?? client.user!;
+    if (!user.bot) return await message.channel.send("that user is not a bot");
 
     let output = `${greenTick}: ${user} is on this bot list\n${redTick}: ${user} is not on this bot list\n${grayTick}: This bot list cannot be scanned\n\n`;
 
@@ -54,9 +54,11 @@ module.exports = {
         let res = await fetch(link.url + user.id);
         let ok = res.ok || res.redirected; // Whether or not the page exists
 
-        output += `${ok ? greenTick : redTick} [${link.name}](${link.url})\n`;
+        output += `${ok ? greenTick : redTick} [${link.name}](${link.url}${
+          user.id
+        })\n`;
       } else {
-        output += `${grayTick} [${link.name}](${link.url})`;
+        output += `${grayTick} [${link.name}](${link.url}${user.id})`;
       }
     }
     const emb = new MessageEmbed();

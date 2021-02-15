@@ -642,7 +642,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/botlist.ts": {
-        "version": "8fdc1055844c073ea21aaf39140f8ce3be7c0a21cbdd8ef32fce6cd1fcec6b86",
+        "version": "3eb69e195f30ef068fa2a91877c080618de5ec9ec1fa2d3a94e4bd689df48e6e",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },

@@ -47,18 +47,18 @@ module.exports = {
     name: "botlist",
     usage: "[bot: User]",
     async run(message, args) {
-        var user = (await getUser_1.getUser(message, args, true));
+        var user = (await getUser_1.getUser(message, args, true)) ?? __1.client.user;
         if (!user.bot)
-            user = __1.client.user;
+            return await message.channel.send("that user is not a bot");
         let output = `${greenTick}: ${user} is on this bot list\n${redTick}: ${user} is not on this bot list\n${grayTick}: This bot list cannot be scanned\n\n`;
         for (let link of links) {
             if (link.fetch) {
                 let res = await node_fetch_1.default(link.url + user.id);
                 let ok = res.ok || res.redirected;
-                output += `${ok ? greenTick : redTick} [${link.name}](${link.url})\n`;
+                output += `${ok ? greenTick : redTick} [${link.name}](${link.url}${user.id})\n`;
             }
             else {
-                output += `${grayTick} [${link.name}](${link.url})`;
+                output += `${grayTick} [${link.name}](${link.url}${user.id})`;
             }
         }
         const emb = new discord_js_1.MessageEmbed();

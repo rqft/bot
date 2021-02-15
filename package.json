@@ -7,7 +7,7 @@
     "p/publish": "git add . && git commit -m",
     "p/deploy": "git push -u origin main",
     "p/start": "nodemon dist",
-    "start": "npm run p/start"
+    "start": "node dist"
   },
   "keywords": [],
   "author": "",
