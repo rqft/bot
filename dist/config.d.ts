@@ -16,7 +16,7 @@ export declare const config: {
     bot: {
         prefixes: string[];
         id: string;
-        token: string | undefined;
+        token: string;
         application: {
             ownerId: string;
             clientId: string;

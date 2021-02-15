@@ -23,7 +23,7 @@ exports.config = {
     bot: {
         prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],
         id: "760143615124439040",
-        token: process.env.BOT_TOKEN,
+        token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.m20I8OXPRGfHXUdX28IZuf5VXp8",
         application: {
             ownerId: "504698587221852172",
             clientId: "760143615124439040",

@@ -217,8 +217,8 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "09d41cb0bf67704c5b5f6e2f20df6b3400222c441b4d330ec4ea7f05032ae332",
-        "signature": "05d7932afc81a2615af8a7b3e664ceecfefbda728da1072bdb92b1a2a5ec6d97",
+        "version": "c88084b920f8c9989a1100ad99356ce0da5eb617d6662cdaab94920e30bf5fe6",
+        "signature": "52ae7d3a72910b4f0c0743676793880e97209367a2fe12fcc1aef76813e1d3f2",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
