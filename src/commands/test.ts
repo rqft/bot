@@ -10,7 +10,7 @@ module.exports = {
     ownerOnly: true,
   },
   async run(message, args) {
-    switch (args[0]) {
+    switch (args[0]?.toLowerCase()) {
       case "error":
         if (!args[1])
           return await message.channel.send("You need to specify a message");
@@ -23,6 +23,22 @@ module.exports = {
               : `a DM`
           } by ${message.author.tag}`,
         });
+        await message.react(decor.Emojis.WHITE_CHECK_MARK);
+        break;
+      case "embed":
+        if (!args[1])
+          return await message.channel.send("you need to supply a valid embed");
+        await message.channel.send("", {
+          embed: JSON.parse(args.slice(1).join(" ")),
+        });
+        await message.react(decor.Emojis.WHITE_CHECK_MARK);
+        break;
+      case "setpresence":
+        if (!args[1])
+          return await message.channel.send(
+            "you need to supply a valid presence"
+          );
+        await client.user?.setPresence(JSON.parse(args.slice(1).join(" ")));
         await message.react(decor.Emojis.WHITE_CHECK_MARK);
         break;
       default:

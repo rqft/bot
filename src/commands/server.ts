@@ -44,6 +44,21 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
             .join("\n")
         : "None."
     );
+    if (guild.premiumSubscriptionCount) {
+      const boosters = guild.members.cache.filter((e) => !!e.premiumSince);
+      emb.addField(
+        "❯ Server Boosts",
+        `<:IconGui_OwnerCrown:799657143719952415> **Tier**: ${guild.premiumTier}
+<:IconBadge_Nitro:798624232472051792> **Boosts**: ${
+          guild.premiumSubscriptionCount
+        }
+<:IconGui_Members:798624241868079104> **Boosters (${
+          boosters.size
+        })**: ${boosters.array().slice(0, 10).join(", ")} ${
+          boosters.size > 10 ? `and ${boosters.size - 10} more...` : ""
+        }`
+      );
+    }
     emb.addField("❯ Features", getGuildFeatures(guild));
     emb.setColor(Color.embed);
     await message.channel.send(emb);

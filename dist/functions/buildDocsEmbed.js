@@ -30,7 +30,7 @@ function buildDocsEmbed(data, maxResults = 10) {
         .slice(0, maxResults)
         .map((x) => {
         const text = x.path.replace(new RegExp(result.query, "gi"), "**$&**");
-        return `${IPylonDocs_1.Kind[x.kind]}[${text.slice(0, 50)}${text.length > 10 ? "..." : ""}](${x.url})`;
+        return `${IPylonDocs_1.Kind[x.kind]}[${text.slice(0, 50)}${text.length > 50 ? "..." : ""}](${x.url})`;
     })
         .join("\n")
         .replace(/_/g, "\\$&") ?? "⛔ No results found.";

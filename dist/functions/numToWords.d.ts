@@ -1,0 +1,11 @@
+export declare function arr(x: any): unknown[];
+export declare function num(x: any): number;
+export declare function str(x: any): string;
+export declare function isEmpty(xs: any): boolean;
+export declare function take(n: any): (xs: any) => any;
+export declare function drop(n: any): (xs: any) => any;
+export declare function reverse(xs: any): any;
+export declare function comp(f: any): (g: any) => (x: any) => any;
+export declare function not(x: any): boolean;
+export declare function chunk(n: any): (xs: any) => any;
+export declare function numToWords(n: string | number): string;

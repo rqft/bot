@@ -57,7 +57,7 @@ ${roles.size !== 0
         }
         emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user).join("\n") +
             (user.id == config_1.config.bot.application.ownerId
-                ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer TM`
+                ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer\™️`
                 : ""));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));
         emb.setColor(globals_1.Color.embed);

@@ -94,7 +94,7 @@ ${
       "❯ Profile Badges",
       getProfileBadges(user).join("\n") +
         (user.id == config.bot.application.ownerId
-          ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer TM`
+          ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer\™️`
           : "")
     );
     emb.addField("❯ Bot Badges", getBotBadges(user));

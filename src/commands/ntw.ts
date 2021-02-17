@@ -1,3 +1,4 @@
+import { capitalizeWords } from "../functions/capitalizeWords";
 import { numToWords } from "../functions/numToWords";
 import { ICommand } from "../interfaces/ICommand";
 
@@ -13,7 +14,7 @@ module.exports = {
     if (words.includes("undefined"))
       return await message.channel.send("That's too big of a number!");
     await message.channel.send(
-      `\`${args.join(" ")}\` => \`\`\`\n${words}\`\`\``
+      `\`${args.join(" ")}\` => \`\`\`\n${capitalizeWords(words)}\`\`\``
     );
   },
 } as ICommand;

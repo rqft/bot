@@ -2,8 +2,8 @@ export declare const config: {
     global: {
         keys: {
             wolframAlpha: string;
+            fAPI: string;
         };
-        logging_test: string;
         guildId: string;
         locale: string;
         timezone: string;

@@ -35,7 +35,7 @@ export function buildDocsEmbed(
         const text = x.path.replace(new RegExp(result!.query, "gi"), "**$&**");
         // @ts-ignore
         return `${Kind[x.kind]}[${text.slice(0, 50)}${
-          text.length > 10 ? "..." : ""
+          text.length > 50 ? "..." : ""
         }](${x.url})`;
       })
       .join("\n")
