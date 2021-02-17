@@ -4,6 +4,7 @@ const discord_js_1 = require("discord.js");
 const __1 = require("..");
 const config_1 = require("../config");
 const capitalizeWords_1 = require("../functions/capitalizeWords");
+const getLongAgo_1 = require("../functions/getLongAgo");
 const globals_1 = require("../globals");
 module.exports = {
     name: "help",
@@ -19,7 +20,8 @@ module.exports = {
                 .join(", ")
                 .replace(/\?|\\/g, "")}`);
             data.push(`Here's a list of all my commands:`);
-            data.push(__1.commands.map((command) => command.name).join(", "));
+            const cmds = __1.commands.map((command) => command.name);
+            data.push(cmds.join(", "));
             data.push(`\nYou can send "${prefix}help [command name]" to get info on a specific command!`);
             emb.setDescription(data.join("\n"));
             emb.setColor(globals_1.Color.hallucinate);
@@ -41,6 +43,9 @@ module.exports = {
             data.push(`${"\uD83D\uDCDD"} **Description:** \`${command.description}\``);
         if (command.usage)
             data.push(`${"\uD83D\uDCD5"} **Usage:** \`${prefix?.replace(/\\/g, "")}${command.name} ${command.usage}\``);
+        if (command.cooldown) {
+            data.push(`${"\u23F2\uFE0F"} **Cooldown**: ${getLongAgo_1.simpleShortGetLongAgo(Date.now() - command.cooldown * 1000)}`);
+        }
         if (command.restrictions) {
             const rest = [];
             if (command.restrictions.guildOnly)
@@ -51,7 +56,7 @@ module.exports = {
                 rest.push("`Owner Only`");
             if (command.restrictions.permissions)
                 rest.push(`Needs Permissions: ${command.restrictions.permissions
-                    .map((e) => `${capitalizeWords_1.capitalizeWords(e)}`)
+                    .map((e) => `\`${capitalizeWords_1.capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``)
                     .join(", ")}`);
             data.push(`${"\uD83D\uDC6E"} **Restrictions**: ${rest.join("\n")}`);
         }

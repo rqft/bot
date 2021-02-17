@@ -1,6 +1,7 @@
 import { GuildChannel } from "discord.js";
 import { client } from "..";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 const tests = ["error"];
 module.exports = {
   name: "test",
@@ -22,6 +23,7 @@ module.exports = {
               : `a DM`
           } by ${message.author.tag}`,
         });
+        await message.react(decor.Emojis.WHITE_CHECK_MARK);
         break;
       default:
         return await message.channel.send(

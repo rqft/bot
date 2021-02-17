@@ -11,7 +11,7 @@ module.exports = {
   },
   async run(message, args) {
     const user = await getUser(message, args, false);
-    if (!user) return;
+    if (!user) return await message.channel.send("unknown user");
     const msg = args.slice(1).join(" ").split("-d ").join(" ");
     if (args.slice(1).join(" ").startsWith("-d")) await message.delete();
     if (!msg)
@@ -25,7 +25,7 @@ module.exports = {
         avatar: user.avatarURL() ?? user.defaultAvatarURL,
       }
     );
-    await wh.send(msg);
+    await wh.send(msg, { files: message.attachments.array() });
     await wh.delete();
   },
 } as ICommand;

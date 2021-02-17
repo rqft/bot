@@ -12,8 +12,17 @@ module.exports = {
         const time = args[0] ?? "5m";
         const comment = args.slice(1).join(" ");
         const ms = parseTimeString_1.parseTimeString(time);
-        await message.channel.send(`:white_check_mark: I will remind you in ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)} ${formatTimestamp_1.formatTimestamp(new Date(Date.now() + ms))}`);
-        const exec = Date.now();
-        setTimeout(async () => await message.channel.send(`Hey ${message.author}! You told me at \`${message.createdAt.toLocaleString()}\` (${getLongAgo_1.simpleGetLongAgo(exec)} ago) to remind you about${comment ? `: \`${comment}\`` : " something!"}`), ms);
+        const query = {
+            executedAt: new Date(),
+            user: message.author,
+            comment: comment,
+            expiry: Date.now() + ms,
+        };
+        await message.channel.send(`:white_check_mark: I will remind you in ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)} ${formatTimestamp_1.formatTimestamp(query.expiry)}`);
+        setTimeout(async () => await message.channel.send(`Hey ${query.user}! You told me at \`${query.executedAt.toLocaleString()}\` (${getLongAgo_1.simpleGetLongAgo(+query.executedAt)} ago) to remind you about${query.comment
+            ? `: ${query.comment.length > 50
+                ? `\`\`\`\n${query.comment}\`\`\``
+                : `\`${query.comment}\``} `
+            : " something!"}`), query.expiry - Date.now());
     },
 };

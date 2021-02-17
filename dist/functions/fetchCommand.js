@@ -5,6 +5,7 @@ const __1 = require("..");
 function fetchCommand(commandName) {
     commandName = commandName.toLowerCase();
     return (__1.commands.get(commandName) ||
-        __1.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName)));
+        __1.commands.find((cmd) => cmd.aliases &&
+            cmd.aliases.map((e) => e.toLowerCase()).includes(commandName)));
 }
 exports.fetchCommand = fetchCommand;

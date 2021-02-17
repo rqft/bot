@@ -8,6 +8,7 @@ const logBlacklistedUserAction_1 = require("../logs/logBlacklistedUserAction");
 const logCommandError_1 = require("../logs/logCommandError");
 const logCommandUse_1 = require("../logs/logCommandUse");
 const logError_1 = require("../logs/logError");
+const cooldowns = new discord_js_1.Collection();
 async function commandHandler(message) {
     const prefixRegex = new RegExp(`^(${config_1.config.bot.prefixes.join("|")})( ?)`, "gi");
     if (message.content.match(prefixRegex) == null)
@@ -43,6 +44,21 @@ async function commandHandler(message) {
         return message.channel.send(`:warning: Argument Error (missing argument)${command.usage
             ? `\n\`\`\`${prefix}${command.name} ${command.usage}\`\`\``
             : ""}`);
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new discord_js_1.Collection());
+    }
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 1) * 1000;
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.reply(`please wait ${timeLeft.toFixed(1)} more second${timeLeft == 1 ? "" : "s"} before reusing the \`${command.name}\` command.`);
+        }
+    }
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
     try {
         logCommandUse_1.logCommandUse(message);
         command.run(message, args);

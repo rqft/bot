@@ -5,6 +5,7 @@ export interface ICommand {
   description?: string;
   aliases?: string[];
   usage?: string;
+  cooldown?: number;
   restrictions?: {
     ownerOnly?: boolean;
     guildOnly?: boolean;

@@ -2,15 +2,15 @@ export const config = {
   global: {
     keys: {
       wolframAlpha: "AHE6V9-WHRE7W64PX",
+      fAPI: "129edfb95ed5c6b24425e5d713317a60",
     },
-    logging_test: "810894764412502026", // #logs-test in Arcs' Dev Place
     guildId: "775743191441735712",
     locale: "en-US",
     timezone: "America/Chicago",
     sexAlarm: [
       "752675935249105086", // #spam-channel in The Gronos Public
       "807056248679039047", // #seggs in Arcs' Dev Place
-      "773132972543049748", // #spam-channel in The Royal Kingdom
+      // "773132972543049748", // #spam-channel in The Royal Kingdom
     ],
     logs: ["807386023565983754"],
   },
@@ -63,9 +63,9 @@ export const config = {
   },
   blacklist: {
     guild: {
-      owners: ["606162661184372736"],
+      owners: ["1"],
       ids: [] as string[],
     },
-    users: ["606162661184372736"],
+    users: ["1"],
   },
 };

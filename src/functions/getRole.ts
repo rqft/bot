@@ -7,8 +7,10 @@ export function getRole(
   argument: number = 0
 ) {
   if (!message.guild) return null;
-  var unresolvedID = (useJoin ? args.join(" ") : args[argument])!.length
-    ? args.join(" ")
+  var unresolvedID = (useJoin
+    ? args.join(" ").toLowerCase()
+    : args[argument]?.toLowerCase())!.length
+    ? args.join(" ").toLowerCase()
     : message.member?.roles.highest.id;
   var role: Role | undefined | null = null;
   try {

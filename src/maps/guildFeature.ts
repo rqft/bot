@@ -35,7 +35,7 @@ guildFeatureMap.set("INVITE_SPLASH", {
 });
 guildFeatureMap.set("NEWS", {
   icon: "<:IconChannel_News:798624238793261109>",
-  text: "Store Channels",
+  text: "Announcement Channels",
 });
 guildFeatureMap.set("PARTNERED", {
   icon: "<:IconBadge_Partner:798624238939406416>",

@@ -5,6 +5,7 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "perm",
   usesArgs: true,
+  restrictions: {},
   usage: `<type: "allow | "deny"> <channel: TextChannel> <user: User>`,
   async run(message, args) {
     const user = await getUser(message, args, false, 2);

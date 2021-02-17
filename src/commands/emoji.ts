@@ -10,6 +10,9 @@ module.exports = {
   name: "emoji",
   aliases: ["e", "emote"],
   description: "Emojis!",
+  usesArgs: true,
+  cooldown: 5,
+  usage: "<emoji: Emoji>",
   async run(message, args) {
     const unresolvedID = args[0]!.replace(/\D/g, "").toLowerCase();
     var e = client.emojis.cache.get(unresolvedID)!;

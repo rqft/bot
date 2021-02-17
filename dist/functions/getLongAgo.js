@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.shortLongAgo = exports.simpleGetLongAgo = exports.getLongAgo = void 0;
+exports.simpleShortGetLongAgo = exports.shortLongAgo = exports.simpleGetLongAgo = exports.getLongAgo = void 0;
 const timeMap = new Map([
     ["decade", 1000 * 60 * 60 * 24 * 365 * 10],
     ["year", 1000 * 60 * 60 * 24 * 365],
@@ -100,10 +100,13 @@ function shortLongAgo(ts, limiter, diffSinceNow = true, lowestUnit = undefined) 
         if (lowestUnit === key)
             hitLowest = true;
         let cc = value > 1 ? `${key}s` : key;
-        cc = `${cc.substr(0, 1).toUpperCase()}${cc.substr(1).toLowerCase()}`;
         txtret.push(`${value}${cc}`);
         runsc += 1;
     }
     return txtret.join(", ");
 }
 exports.shortLongAgo = shortLongAgo;
+function simpleShortGetLongAgo(ts) {
+    return shortLongAgo(ts, 2, undefined, undefined);
+}
+exports.simpleShortGetLongAgo = simpleShortGetLongAgo;

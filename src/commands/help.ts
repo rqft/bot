@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { client, commands } from "..";
 import { config } from "../config";
 import { capitalizeWords } from "../functions/capitalizeWords";
+import { simpleShortGetLongAgo } from "../functions/getLongAgo";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { decor } from "../maps/emojiEnum";
@@ -22,7 +23,9 @@ module.exports = {
           .replace(/\?|\\/g, "")}`
       );
       data.push(`Here's a list of all my commands:`);
-      data.push(commands.map((command: any) => command.name).join(", "));
+
+      const cmds = commands.map((command: any) => command.name);
+      data.push(cmds.join(", "));
       data.push(
         `\nYou can send "${prefix}help [command name]" to get info on a specific command!`
       );
@@ -65,6 +68,13 @@ module.exports = {
           ""
         )}${command.name} ${command.usage}\``
       );
+    if (command.cooldown) {
+      data.push(
+        `${decor.Emojis.TIMER} **Cooldown**: ${simpleShortGetLongAgo(
+          Date.now() - command.cooldown * 1000
+        )}`
+      );
+    }
     if (command.restrictions) {
       const rest = [];
       if (command.restrictions.guildOnly) rest.push("`Guild Only`");
@@ -73,7 +83,11 @@ module.exports = {
       if (command.restrictions.permissions)
         rest.push(
           `Needs Permissions: ${command.restrictions.permissions
-            .map((e) => `${capitalizeWords(e)}`)
+
+            .map(
+              (e) =>
+                `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``
+            )
             .join(", ")}`
         );
       data.push(

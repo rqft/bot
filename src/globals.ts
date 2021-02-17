@@ -4,7 +4,7 @@ export namespace Color {
   export const hallucinate = 10166000; // #9b1ef0
   export const spotify = 1947988; // #1DB954
 }
-export const CMDFilesPath = "C:/Users/jkelia6742/Hallucinate/dist/commands";
+export const CMDFilesPath = `${__dirname}\\commands`;
 export enum Chars {
   void = "\u200b",
 }

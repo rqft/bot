@@ -8,7 +8,7 @@ var Color;
     Color.hallucinate = 10166000;
     Color.spotify = 1947988;
 })(Color = exports.Color || (exports.Color = {}));
-exports.CMDFilesPath = "C:/Users/jkelia6742/Hallucinate/dist/commands";
+exports.CMDFilesPath = `${__dirname}\\commands`;
 var Chars;
 (function (Chars) {
     Chars["void"] = "\u200B";

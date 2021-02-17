@@ -6,7 +6,9 @@ export function fetchCommand(commandName: string) {
   return (
     (commands.get(commandName) as ICommand) ||
     (commands.find(
-      (cmd: any) => cmd.aliases && cmd.aliases.includes(commandName)
+      (cmd: any) =>
+        cmd.aliases &&
+        cmd.aliases.map((e: string) => e.toLowerCase()).includes(commandName)
     ) as ICommand)
   );
 }

@@ -4,9 +4,7 @@ const numToWords_1 = require("../functions/numToWords");
 module.exports = {
     name: "ntw",
     aliases: ["numbersToWords"],
-    restrictions: {
-        permissions: ["MANAGE_MESSAGES", "ADD_REACTIONS"],
-    },
+    restrictions: {},
     usesArgs: true,
     usage: "<num: string | number>",
     async run(message, args) {

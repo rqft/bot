@@ -21,6 +21,7 @@ module.exports = {
                         ? message.channel.name
                         : `a DM`} by ${message.author.tag}`,
                 });
+                await message.react("\u2705");
                 break;
             default:
                 return await message.channel.send(`Unknown test. Valid tests are ${tests

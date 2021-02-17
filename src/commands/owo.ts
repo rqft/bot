@@ -1,13 +1,10 @@
-import { owoify } from "../functions/owoify";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "owo",
-  usesArgs: true,
+  name: "cooldown-test",
   description: "owowowowowowowowowowo",
-  aliases: ["uwu", "owoify", "uwuify"],
-  usage: "<text: string>",
-  async run(message, args) {
-    await message.channel.send(owoify(args.join(" ")));
+  cooldown: 5,
+  async run(message) {
+    await message.channel.send("ok");
   },
 } as ICommand;

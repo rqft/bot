@@ -42,6 +42,10 @@ profileBadgeMap.set("PARTNERED_SERVER_OWNER", {
   icon: "<:IconBadge_Partner:798624238939406416>",
   text: "Partnered Server Owner",
 });
+profileBadgeMap.set("DISCORD_PARTNER", {
+  icon: "<:IconBadge_OldPartner:798624234305093672>",
+  text: "Discord Partner",
+});
 profileBadgeMap.set("SYSTEM", {
   icon: "<:IconBadge_Staff:798624241595318272>",
   text: "System",
@@ -56,6 +60,6 @@ profileBadgeMap.set("VERIFIED_BOT", {
 });
 profileBadgeMap.set("VERIFIED_DEVELOPER", {
   icon: "<:IconBadge_BotDeveloper:798624232443478037>",
-  text: "Verified Bot",
+  text: "Verified Developer",
 });
 export { profileBadgeMap };

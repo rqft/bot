@@ -5,31 +5,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUserPresence = void 0;
 const discord_rpc_1 = __importDefault(require("discord-rpc"));
-const process_1 = require("process");
 const config_1 = require("../config");
-function setUserPresence() {
+async function setUserPresence() {
     const RPCClient = new discord_rpc_1.default.Client({ transport: "ipc" });
     RPCClient.on("ready", () => {
-        RPCClient.request("SET_ACTIVITY", {
-            pid: process_1.pid,
-            activity: {
-                assets: {
-                    large_image: "glasses",
-                    large_text: "uwu",
-                },
-                buttons: [
-                    {
-                        label: "[Pylon]",
-                        url: "https://pylon.bot/",
-                    },
-                    {
-                        label: "Invite the bot",
-                        url: "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot",
-                    },
-                ],
-            },
+        RPCClient.setActivity({
+            joinSecret: "0000",
+            instance: true,
+            largeImageKey: "hallucinate",
+            partyMax: 10,
+            partySize: 2,
         });
     });
-    RPCClient.login({ clientId: config_1.config.bot.application.clientId });
+    RPCClient.login({
+        clientId: config_1.config.bot.application.clientId,
+    });
 }
 exports.setUserPresence = setUserPresence;

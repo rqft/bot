@@ -1,4 +1,4 @@
-import { Message, Permissions } from "discord.js";
+import { Collection, Message, Permissions } from "discord.js";
 import { config } from "../config";
 import { fetchCommand } from "../functions/fetchCommand";
 import { ICommand } from "../interfaces/ICommand";
@@ -6,7 +6,7 @@ import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
 import { logCommandError } from "../logs/logCommandError";
 import { logCommandUse } from "../logs/logCommandUse";
 import { logError } from "../logs/logError";
-
+const cooldowns = new Collection<string, Collection<any, any>>();
 export async function commandHandler(message: Message) {
   const prefixRegex = new RegExp(
     `^(${config.bot.prefixes.join("|")})( ?)`,
@@ -70,6 +70,29 @@ export async function commandHandler(message: Message) {
           : ""
       }`
     );
+  if (!cooldowns.has(command.name)) {
+    cooldowns.set(command.name, new Collection());
+  }
+
+  const now = Date.now();
+  const timestamps = cooldowns.get(command.name)!;
+  const cooldownAmount = (command.cooldown || 1) * 1000;
+
+  if (timestamps.has(message.author.id)) {
+    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+    if (now < expirationTime) {
+      const timeLeft = (expirationTime - now) / 1000;
+      return message.reply(
+        `please wait ${timeLeft.toFixed(1)} more second${
+          timeLeft == 1 ? "" : "s"
+        } before reusing the \`${command.name}\` command.`
+      );
+    }
+  }
+
+  timestamps.set(message.author.id, now);
+  setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
   try {
     logCommandUse(message);

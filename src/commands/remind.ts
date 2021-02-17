@@ -2,7 +2,6 @@ import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { parseTimeString } from "../functions/parseTimeString";
 import { ICommand } from "../interfaces/ICommand";
-
 module.exports = {
   name: "remind",
   aliases: ["r"],
@@ -12,25 +11,36 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-
+    const query = {
+      executedAt: new Date(),
+      user: message.author,
+      comment: comment,
+      expiry: Date.now() + ms,
+    };
     await message.channel.send(
       `:white_check_mark: I will remind you in ${simpleGetLongAgo(
         Date.now() - ms
-      )} ${formatTimestamp(new Date(Date.now() + ms))}`
+      )} ${formatTimestamp(query.expiry)}`
     );
-    const exec = Date.now();
+
     setTimeout(
       async () =>
         await message.channel.send(
           `Hey ${
-            message.author
-          }! You told me at \`${message.createdAt.toLocaleString()}\` (${simpleGetLongAgo(
-            exec
+            query.user
+          }! You told me at \`${query.executedAt.toLocaleString()}\` (${simpleGetLongAgo(
+            +query.executedAt
           )} ago) to remind you about${
-            comment ? `: \`${comment}\`` : " something!"
+            query.comment
+              ? `: ${
+                  query.comment.length > 50
+                    ? `\`\`\`\n${query.comment}\`\`\``
+                    : `\`${query.comment}\``
+                } `
+              : " something!"
           }`
         ),
-      ms
+      query.expiry - Date.now()
     );
   },
 } as ICommand;

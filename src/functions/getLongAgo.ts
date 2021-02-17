@@ -99,9 +99,11 @@ export function shortLongAgo(
     }
     if (lowestUnit === key) hitLowest = true;
     let cc: string = value > 1 ? `${key}s` : key;
-    cc = `${cc.substr(0, 1).toUpperCase()}${cc.substr(1).toLowerCase()}`;
     txtret.push(`${value}${cc}`);
     runsc += 1;
   }
   return txtret.join(", ");
+}
+export function simpleShortGetLongAgo(ts: number) {
+  return shortLongAgo(ts, 2, undefined, undefined);
 }

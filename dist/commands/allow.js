@@ -5,6 +5,7 @@ const getUser_1 = require("../functions/getUser");
 module.exports = {
     name: "perm",
     usesArgs: true,
+    restrictions: {},
     usage: `<type: "allow | "deny"> <channel: TextChannel> <user: User>`,
     async run(message, args) {
         const user = await getUser_1.getUser(message, args, false, 2);

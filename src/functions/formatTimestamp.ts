@@ -1,3 +1,3 @@
-export function formatTimestamp(date: Date) {
-  return `**[**\`${date.toLocaleString()}\`**]**`;
+export function formatTimestamp(date: Date | number | string) {
+  return `**[**\`${new Date(date).toLocaleString()}\`**]**`;
 }

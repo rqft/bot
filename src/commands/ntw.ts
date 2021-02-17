@@ -4,9 +4,7 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "ntw",
   aliases: ["numbersToWords"],
-  restrictions: {
-    permissions: ["MANAGE_MESSAGES", "ADD_REACTIONS"],
-  },
+  restrictions: {},
   usesArgs: true,
   usage: "<num: string | number>",
   async run(message, args) {
