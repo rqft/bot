@@ -5,6 +5,7 @@ import { arrayContainsAll } from "../functions/checkArrayContainsAll";
 import { fetchCommand as fc } from "../functions/fetchCommand";
 import * as globals from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+
 module.exports = {
   name: "eval",
   description: "Run code",

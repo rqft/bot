@@ -4,7 +4,7 @@ import { guildFeatureMap } from "../maps/guildFeature";
 
 export function getGuildFeatures(guild: Guild, showIcons: boolean = true) {
   const feat = [];
-  if (guild.id == config.global.guildId)
+  if (guild.id == config.global.mainServerID)
     feat.push(
       `${
         showIcons ? "<:IconGui_OwnerCrown:799657143719952415>" : ""

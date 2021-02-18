@@ -4,7 +4,7 @@ export declare const config: {
             wolframAlpha: string;
             fAPI: string;
         };
-        guildId: string;
+        mainServerID: string;
         locale: string;
         timezone: string;
         sexAlarm: string[];

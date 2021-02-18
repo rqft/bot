@@ -31,7 +31,28 @@ console.log(CMDFilesPath);
 export const commands = new Discord.Collection<any, ICommand>();
 export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
-client.once("ready", () => {
+export async function makeServerSlashCommand(
+  id: string = config.global.mainServerID,
+  data: object,
+  response: object
+) {
+  // @ts-ignore
+  const interaction = client.api
+    // @ts-ignore
+    .applications(client.user?.id)
+    .guilds(id)
+    .commands.post({
+      data: data,
+    });
+  // @ts-ignore
+  client.ws.on("INTERACTION_CREATE", async (interaction) => {
+    // @ts-ignore
+    client.api.interactions(interaction.id, interaction.token).callback.post({
+      data: response,
+    });
+  });
+}
+client.once("ready", async () => {
   onReady();
 });
 client.on("error", (e) => discordjsError(e));
@@ -55,7 +76,7 @@ client.on("message", async (message) => {
             } time${sexes.length == 1 ? "" : "s"}__ in ${
               message.guild ? message.channel : "DMs"
             } ${formatID(message.channel.id)} ${
-              message.guild && message.guild.id !== config.global.guildId
+              message.guild && message.guild.id !== config.global.mainServerID
                 ? `on \`${message.guild.name}\` ${formatID(message.guild.id)}`
                 : ""
             }`

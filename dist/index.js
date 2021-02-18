@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commandFiles = exports.commands = exports.client = void 0;
+exports.makeServerSlashCommand = exports.commandFiles = exports.commands = exports.client = void 0;
 const discord_js_1 = __importDefault(require("discord.js"));
 const config_1 = require("./config");
 const formatID_1 = require("./functions/formatID");
@@ -32,7 +32,21 @@ console.log(globals_1.CMDFilesPath);
 exports.commands = new discord_js_1.default.Collection();
 exports.commandFiles = fetchCommandFiles_1.fetchCommandFiles();
 exports.commandFiles.forEach(makeCommandFromFile_1.makeCommands(exports.commands));
-exports.client.once("ready", () => {
+async function makeServerSlashCommand(id = config_1.config.global.mainServerID, data, response) {
+    const interaction = exports.client.api
+        .applications(exports.client.user?.id)
+        .guilds(id)
+        .commands.post({
+        data: data,
+    });
+    exports.client.ws.on("INTERACTION_CREATE", async (interaction) => {
+        exports.client.api.interactions(interaction.id, interaction.token).callback.post({
+            data: response,
+        });
+    });
+}
+exports.makeServerSlashCommand = makeServerSlashCommand;
+exports.client.once("ready", async () => {
     onReady_1.onReady();
 });
 exports.client.on("error", (e) => discordjsError_1.discordjsError(e));
@@ -51,7 +65,7 @@ exports.client.on("message", async (message) => {
                 return;
             (await exports.client.channels.fetch(e))
                 .send(`...`)
-                .then((e) => e.edit(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.guild ? message.channel : "DMs"} ${formatID_1.formatID(message.channel.id)} ${message.guild && message.guild.id !== config_1.config.global.guildId
+                .then((e) => e.edit(`${message.author} ${formatID_1.formatID(message.author.id)} has **sexed** __${sexes.length} time${sexes.length == 1 ? "" : "s"}__ in ${message.guild ? message.channel : "DMs"} ${formatID_1.formatID(message.channel.id)} ${message.guild && message.guild.id !== config_1.config.global.mainServerID
                 ? `on \`${message.guild.name}\` ${formatID_1.formatID(message.guild.id)}`
                 : ""}`));
         });

@@ -15,6 +15,7 @@ module.exports = {
     usage: '<endpoint: string> <type: "user" | "url"> <thing: User | URL> [args: Object]',
     async run(message, args) {
         var url = null;
+        var usesAtt = false;
         switch (args[1]) {
             case "user":
                 const user = (await getUser_1.getUser(message, args, false, 2)) ?? message.author;
@@ -26,10 +27,16 @@ module.exports = {
                 url = args[2];
                 break;
             default:
-                await message.channel.send("Invalid type. Valid types are: `url`, `user`");
+                if (!message.attachments.array()[0])
+                    return await message.channel.send("Invalid type. Valid types are: `url`, `user`");
+                url = message.attachments.array()[0].url;
+                usesAtt = true;
+                break;
         }
         const endpoint = args[0];
-        const argument = args[3] ? args.slice(3).join(" ") : "{}";
+        const argument = args[usesAtt ? 1 : 3]
+            ? args.slice(usesAtt ? 1 : 3).join(" ")
+            : "{}";
         const baseURL = "https://fapi.wrmsr.io/" + endpoint;
         const headers = {
             "Content-Type": "application/json",

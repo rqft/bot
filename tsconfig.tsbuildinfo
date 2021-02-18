@@ -217,8 +217,8 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "f9c9fdbd1502575f8ce55eb9a688fecb93bbb504ba30d28474b95b95e6b02acf",
-        "signature": "a3441d531de5d1695d98ccb40cb31881a048613247eae1d1ff8ca5fb106ce2b2",
+        "version": "db43637e1e60928c8371e901a54cfeecfd44d551143ab9d5a23378aff1b4f0cd",
+        "signature": "bde0d98c913551d763fd6854d0a9ae62b43c4f9ff5967094aa76bff78f226ed5",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -337,7 +337,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/setuserpresence.ts": {
-        "version": "0d8b1767bf6a2b3bb312618e546d5d9a85ff1f7bbb4c2a381b8b5e9ad022839f",
+        "version": "480cc538b20cabc9402c96c371a71cc4e4570acf8ffb700b5826838f9ca74eec",
         "signature": "72270063dd3d4182639891cf074af3ff6f369b9be326598be8f621c538c12e3c",
         "affectsGlobalScope": false
       },
@@ -347,8 +347,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "9d3285146e3eda18b82547b98619a774dacc7a7220287be6c64207d18e092511",
-        "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
+        "version": "e0ff265b34dd4438d6cdae0d10a1f1d7baf990c10795b52f5a8748fa9639ccf3",
+        "signature": "1e4d5920b6792e91e947e9110fa88a2898553a2e3e52efb57584ebfed37ae0fe",
         "affectsGlobalScope": false
       },
       "./src/functions/getlongago.ts": {
@@ -692,7 +692,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "a7f18e474b83ae39d039a42097461ac2858f845ba08bcd9020f92b88ec3aec0e",
+        "version": "6d98bfdc943e4f8b9b0cace71d7187c7e72a3dfae4cd1790d83a44a3902faade",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -707,7 +707,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/mosaic.ts": {
-        "version": "2ca3eda6db4c6091832f0a05bbd5fdfeca31df92018f0ef2a89fa5732c3263a7",
+        "version": "427b0e10640683eb82255efd68d3658fa5321cf3145d7d29c238848d2465cfab",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -812,7 +812,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getguildfeatures.ts": {
-        "version": "a92d2b1067b118d942e727c3632ffaa768bbfd5c40251f7f9815f24e89512911",
+        "version": "71e91dd1353b422bb5013fff202edc84385e33353c46209df7c7465d2bb85962",
         "signature": "fba739a8faa2a212e6e657a05985fd6c56692cb1d56455ab01ac76c15c8cb4ce",
         "affectsGlobalScope": false
       },
@@ -1536,6 +1536,7 @@
       ],
       "./src/handlers/setuserpresence.ts": [
         "./node_modules/@types/discord-rpc/index.d.ts",
+        "./node_modules/@types/node/process.d.ts",
         "./src/config.ts"
       ],
       "./src/index.ts": [

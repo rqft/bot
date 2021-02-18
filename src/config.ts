@@ -4,7 +4,7 @@ export const config = {
       wolframAlpha: "AHE6V9-WHRE7W64PX",
       fAPI: "129edfb95ed5c6b24425e5d713317a60",
     },
-    guildId: "775743191441735712",
+    mainServerID: "775743191441735712",
     locale: "en-US",
     timezone: "America/Chicago",
     sexAlarm: [
