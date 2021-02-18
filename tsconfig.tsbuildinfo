@@ -277,7 +277,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/commandhandler.ts": {
-        "version": "71717c91541a3cd2044fa278ee5c320cc6f0a8e938702531617d1efd41cd4370",
+        "version": "b21789c074408abc12d24d56bf28b0ce432c276c27af1867a047a4aa270f6ddd",
         "signature": "f640fae244be58c4b621362c9b2cda8f4e20fd21be339ae8161d2ac62860cfe3",
         "affectsGlobalScope": false
       },
@@ -767,7 +767,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/quote.ts": {
-        "version": "c6dae0bf1d94ccf6a5d3fe7c8b6fe981576f497cc992014553d6556adcc42293",
+        "version": "426d76f446a4a58772b6cc50ddd6d57bdad2c814f158bc23501dee2c0d6b311f",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -995,7 +995,7 @@
     "options": {
       "resolveJsonModule": true,
       "esModuleInterop": true,
-      "incremental": false,
+      "incremental": true,
       "target": 7,
       "module": 1,
       "outDir": "./dist",

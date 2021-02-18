@@ -16,10 +16,6 @@ export async function commandHandler(message: Message) {
   const prefix = message.content.match(prefixRegex)!.join("");
   const args = message.content.slice(prefix!.length).trim().split(/ +/);
   const commandName = args.shift()!.toLowerCase();
-  if (prefix == "p/" && !config.bot.ownerIds.includes(message.author.id))
-    return await message.channel.send(
-      `:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`
-    );
   const command: ICommand = fetchCommand(commandName);
   if (!command) return;
   if (config.blacklist.users.includes(message.author.id))
@@ -93,7 +89,10 @@ export async function commandHandler(message: Message) {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
+  if (prefix == "p/" && !config.bot.ownerIds.includes(message.author.id))
+    return await message.channel.send(
+      `:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`
+    );
   try {
     logCommandUse(message);
     command.run(message, args);

@@ -9,9 +9,7 @@ const getUser_1 = require("../functions/getUser");
 module.exports = {
     name: "quote",
     usesArgs: true,
-    restrictions: {
-        ownerOnly: true,
-    },
+    restrictions: {},
     usage: "<user: User> <content: text>",
     async run(message, args) {
         const user = (await getUser_1.getUser(message, args, false, 0)) ?? message.author;
@@ -20,6 +18,7 @@ module.exports = {
             "Content-Type": "application/json",
             Authorization: `Bearer ${config_1.config.global.keys.fAPI}`,
         };
+        const dt = new Date();
         const argument = {
             message: {
                 content: args.slice(1).join(" "),
@@ -38,7 +37,10 @@ module.exports = {
                 bot: user.bot,
                 avatarURL: user.avatarURL({ format: "png", size: 1024 }),
             },
-            timestamp: `Today at ${new Date().toLocaleTimeString()}`,
+            timestamp: `Today at ${dt
+                .toLocaleTimeString()
+                .replace(/:\d\d /g, "")
+                .replace(/AM|PM/g, " $&")}`,
         };
         const body = {
             args: argument,
