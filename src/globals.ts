@@ -8,3 +8,7 @@ export const CMDFilesPath = `${__dirname}\\commands`;
 export enum Chars {
   void = "\u200b",
 }
+export enum SpecialIDs {
+  DISCORD = "643945264868098049",
+  CLYDE = "1",
+}

@@ -27,8 +27,9 @@ module.exports = {
                 url = args[2];
                 break;
             default:
-                if (!message.attachments.array()[0])
-                    return await message.channel.send("Invalid type. Valid types are: `url`, `user`");
+                if (!message.attachments.array()[0]) {
+                    return await message.channel.send("you need to supply an image");
+                }
                 url = message.attachments.array()[0].url;
                 usesAtt = true;
                 break;
@@ -55,10 +56,14 @@ module.exports = {
             return await message.channel.send(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
                 .split("\n")
                 .map((e) => `- ${e}`)}\n\`\`\``);
-        await message.channel.send(``, {
+        await message.channel.send(`Endpoint: \`${endpoint}\`
+Image: \`${url}\`
+Arguments: \`\`\`json
+${JSON.stringify(JSON.parse(argument), null, 2)}
+\`\`\``, {
             files: [
                 {
-                    name: "hi.png",
+                    name: "fAPI.png",
                     attachment: await fAPI.buffer(),
                 },
             ],

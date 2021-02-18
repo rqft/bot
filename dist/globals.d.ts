@@ -8,3 +8,7 @@ export declare const CMDFilesPath: string;
 export declare enum Chars {
     void = "\u200B"
 }
+export declare enum SpecialIDs {
+    DISCORD = "643945264868098049",
+    CLYDE = "1"
+}

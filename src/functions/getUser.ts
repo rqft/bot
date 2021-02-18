@@ -1,5 +1,6 @@
 import { Message, User } from "discord.js";
 import { client } from "..";
+import { SpecialIDs } from "../globals";
 
 export async function getUser(
   message: Message,
@@ -10,7 +11,7 @@ export async function getUser(
   var res =
     (useJoin ? args.join(" ")?.normalize()! : args[argument]?.normalize()!) ??
     message.author.id;
-  if (res?.toLowerCase() == "discord") res = "643945264868098049";
+  if (res?.toLowerCase() == "discord") res = SpecialIDs.DISCORD;
   if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
     res = message.author.id;
   if (["client", "system", "bot"].includes(res.toLowerCase()))

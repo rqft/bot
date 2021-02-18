@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Chars = exports.CMDFilesPath = exports.Color = void 0;
+exports.SpecialIDs = exports.Chars = exports.CMDFilesPath = exports.Color = void 0;
 var Color;
 (function (Color) {
     Color.embed = 3092790;
@@ -13,3 +13,8 @@ var Chars;
 (function (Chars) {
     Chars["void"] = "\u200B";
 })(Chars = exports.Chars || (exports.Chars = {}));
+var SpecialIDs;
+(function (SpecialIDs) {
+    SpecialIDs["DISCORD"] = "643945264868098049";
+    SpecialIDs["CLYDE"] = "1";
+})(SpecialIDs = exports.SpecialIDs || (exports.SpecialIDs = {}));

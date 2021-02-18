@@ -33,6 +33,10 @@ exports.overrides = {
         name: "--ov-nicknames",
         permissions: ["CHANGE_NICKNAME", "MANAGE_NICKNAMES"],
     },
+    bans: {
+        name: "--ov-bans",
+        permissions: ["BAN_MEMBERS"],
+    },
 };
 module.exports = {
     name: "override",

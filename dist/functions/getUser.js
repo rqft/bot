@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUser = void 0;
 const __1 = require("..");
+const globals_1 = require("../globals");
 async function getUser(message, args, useJoin = false, argument = 0) {
     var res = (useJoin ? args.join(" ")?.normalize() : args[argument]?.normalize()) ??
         message.author.id;
     if (res?.toLowerCase() == "discord")
-        res = "643945264868098049";
+        res = globals_1.SpecialIDs.DISCORD;
     if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
         res = message.author.id;
     if (["client", "system", "bot"].includes(res.toLowerCase()))
