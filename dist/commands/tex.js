@@ -5,13 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const imagescript_eval_1 = require("../functions/imagescript_eval");
+const pullCodeFromBlock_1 = require("../functions/pullCodeFromBlock");
 module.exports = {
     name: "latex",
     aliases: ["tex"],
     description: "render LaTeX code",
     usage: "<code: string>",
     async run(message, args) {
-        const query = args.join(" ");
+        const query = pullCodeFromBlock_1.pullCodeFromBlock(args.join(" "));
         const options = {
             formula: query,
             fsize: "48px",

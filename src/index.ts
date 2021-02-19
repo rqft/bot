@@ -35,16 +35,7 @@ export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
 commands.array().forEach((e) => {
   const consoleMessages = [];
-  // if (!e.cooldown)
-  //   console.warn(
-  //     `warning on ${color(
-  //       e.name,
-  //       TerminalColor.normal.RED
-  //     )}: it is recommended to set a ${color(
-  //       "cooldown",
-  //       TerminalColor.normal.GREEN
-  //     )} to stop abuse of any commands`
-  //   );
+
   if (!e.description)
     consoleMessages.push(
       `it is recommended to set a ${color(

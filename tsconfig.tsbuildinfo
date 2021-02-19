@@ -347,7 +347,7 @@
         "affectsGlobalScope": true
       },
       "./src/index.ts": {
-        "version": "7e50df8b41b71cb10cdbfcdf5eeb8c0a5fc918365707dd1e54dc2dbf363e6b61",
+        "version": "9f0ac9612a2e24d4660422510be635eff3f015f6b0fb67a9c1b4943205a3c1db",
         "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
         "affectsGlobalScope": false
       },
@@ -896,8 +896,13 @@
         "signature": "df19d63795523fa0815c023aa0538b887f2fe74c233899c42f4848c42894c9a6",
         "affectsGlobalScope": false
       },
+      "./src/functions/pullcodefromblock.ts": {
+        "version": "46cfab556797331af1d268d8d8ace8fc52efbf1ee00ad55edcf680620ed9aef0",
+        "signature": "87df2fa9273464df5592d47501ca60a076cf50daed5921c7d991ef2a12b9f44c",
+        "affectsGlobalScope": false
+      },
       "./src/commands/tex.ts": {
-        "version": "9f73f085151a24c303b592603c9bbc870ec0fece3df91532c255f7caeb6f6427",
+        "version": "949d9c44ab9f112253bef8b237eec6522fa6af874995ec29fb1ec983eb4d2f55",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -969,6 +974,11 @@
       "./src/functions/greatestcommonfactor.ts": {
         "version": "264a07b47943440921e73a2f35d258129b02351189e613d73c5159bc2baace68",
         "signature": "ac569d07e215a3ce1c844f8e48158be2488efbe322160ba89f6490c218b2cca0",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/makearraydiff.ts": {
+        "version": "e203ec1336c1fb9c9ae4f1151b1cf03abe15b2086690f8a9e2cc646998593a9d",
+        "signature": "34663b06a8826b21ff6b3393fa01c1af11b403abecb49fc814026b01ea9bfa67",
         "affectsGlobalScope": false
       },
       "./src/functions/owoify.ts": {
@@ -1431,6 +1441,7 @@
       "./src/commands/tex.ts": [
         "./node_modules/@types/node-fetch/index.d.ts",
         "./src/functions/imagescript_eval.ts",
+        "./src/functions/pullcodefromblock.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/translate.ts": [
@@ -2083,10 +2094,12 @@
       "./src/functions/getusersfrommention.ts",
       "./src/functions/greatestcommonfactor.ts",
       "./src/functions/imagescript_eval.ts",
+      "./src/functions/makearraydiff.ts",
       "./src/functions/makecodeblock.ts",
       "./src/functions/numtowords.ts",
       "./src/functions/owoify.ts",
       "./src/functions/parsetimestring.ts",
+      "./src/functions/pullcodefromblock.ts",
       "./src/functions/shuffle.ts",
       "./src/functions/spotifysearch.ts",
       "./src/globals.ts",

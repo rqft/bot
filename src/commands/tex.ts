@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { is_eval } from "../functions/imagescript_eval";
+import { pullCodeFromBlock } from "../functions/pullCodeFromBlock";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "latex",
@@ -7,7 +8,7 @@ module.exports = {
   description: "render LaTeX code",
   usage: "<code: string>",
   async run(message, args) {
-    const query = args.join(" ");
+    const query = pullCodeFromBlock(args.join(" "));
     const options = {
       formula: query,
       fsize: "48px",
