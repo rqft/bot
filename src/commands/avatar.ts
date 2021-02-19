@@ -8,6 +8,7 @@ type avatarSize = 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096;
 module.exports = {
   name: "avatar",
   aliases: ["av"],
+  description: "get a users avatar",
   usage: "[user: User | Snowflake] [size: AvatarSize]",
   async run(message, args: string[]) {
     const size = args[1] ? parseInt(args[1]) : 128;

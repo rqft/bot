@@ -8,7 +8,7 @@ const getUserPermissions_1 = require("../functions/getUserPermissions");
 const globals_1 = require("../globals");
 module.exports = {
     name: "role",
-    description: "AAAAAAA",
+    description: "get roles",
     restrictions: {
         guildOnly: true,
     },

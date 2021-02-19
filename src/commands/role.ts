@@ -8,7 +8,7 @@ import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
   name: "role",
-  description: "AAAAAAA",
+  description: "get roles",
   restrictions: {
     guildOnly: true,
   },

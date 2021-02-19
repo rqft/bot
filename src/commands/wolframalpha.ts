@@ -8,6 +8,7 @@ module.exports = {
   name: "search",
   usesArgs: true,
   usage: "<query: text>",
+  description: "search for stuff",
   async run(message, args) {
     const res = await api(
       `http://api.wolframalpha.com/v1/result?appid=${

@@ -8,6 +8,8 @@ module.exports = {
     permissions: ["BAN_MEMBERS"],
     guildOnly: true,
   },
+  usesArgs: true,
+  description: "ban someone",
   usage: "<user: User> [reason: string]",
   async run(message, args) {
     const target = await getUser(message, args, false, 0);

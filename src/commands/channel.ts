@@ -15,8 +15,9 @@ module.exports = {
   restrictions: {
     guildOnly: true,
   },
+  description: "get channel info",
   async run(message, args: string[]) {
-    const channel = await getChannel(message, args);
+    const channel = getChannel(message, args);
     if (!channel) return await message.channel.send("Unknown Channel!");
     const emb = new MessageEmbed();
     emb.setAuthor(

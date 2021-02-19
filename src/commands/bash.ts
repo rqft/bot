@@ -7,7 +7,8 @@ module.exports = {
   restrictions: {
     ownerOnly: true,
   },
-  usage: `<a: text>`,
+  description: "run a bash script",
+  usage: `<script: text>`,
   async run(message, args) {
     exec(args.join(" "), async (err, std, ste) => {
       if (err)

@@ -7,13 +7,13 @@ const node_fetch_1 = __importDefault(require("node-fetch"));
 const config_1 = require("../config");
 const getUser_1 = require("../functions/getUser");
 module.exports = {
-    name: "api",
+    name: "fapi",
     usesArgs: true,
-    restrictions: {
-        ownerOnly: true,
-    },
+    restrictions: {},
+    description: "fAPI image manipulation",
     usage: '<endpoint: string> <type: "user" | "url"> <thing: User | URL> [args: Object]',
     async run(message, args) {
+        const ret = await message.channel.send("<a:IconGui_Typing:798624244351107092>");
         var url = null;
         var usesAtt = false;
         switch (args[1]) {
@@ -52,15 +52,12 @@ module.exports = {
             headers: headers,
             body: JSON.stringify(body),
         });
+        await ret.delete();
         if (!fAPI.ok)
             return await message.channel.send(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
                 .split("\n")
                 .map((e) => `- ${e}`)}\n\`\`\``);
-        await message.channel.send(`Endpoint: \`${endpoint}\`
-Image: \`${url}\`
-Arguments: \`\`\`json
-${JSON.stringify(JSON.parse(argument), null, 2)}
-\`\`\``, {
+        await message.channel.send(``, {
             files: [
                 {
                     name: "fAPI.png",

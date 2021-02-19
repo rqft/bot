@@ -4,6 +4,9 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "cate",
   aliases: ["catpic"],
+  usage: "",
+  usesArgs: false,
+  description: "cats!",
   async run(message, args) {
     const count = parseInt(args[0] ?? "1");
     const urls = [];

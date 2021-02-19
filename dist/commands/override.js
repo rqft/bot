@@ -45,6 +45,7 @@ module.exports = {
         ownerOnly: true,
         guildOnly: true,
     },
+    description: "for dev use; lets them override permissions for testing purposes",
     usage: "<override: devOverride>",
     usesArgs: true,
     async run(message, args) {

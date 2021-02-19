@@ -74,7 +74,10 @@ export async function commandHandler(message: Message) {
   const timestamps = cooldowns.get(command.name)!;
   const cooldownAmount = (command.cooldown || 1) * 1000;
 
-  if (timestamps.has(message.author.id)) {
+  if (
+    timestamps.has(message.author.id) &&
+    !config.bot.ownerIds.includes(message.author.id)
+  ) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
     if (now < expirationTime) {

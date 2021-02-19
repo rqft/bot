@@ -8,6 +8,7 @@ module.exports = {
     name: "search",
     usesArgs: true,
     usage: "<query: text>",
+    description: "search for stuff",
     async run(message, args) {
         const res = await api_1.api(`http://api.wolframalpha.com/v1/result?appid=${config_1.config.global.keys.wolframAlpha}&i=${encodeURIComponent(args.join(" "))}`, "text");
         const emb = new discord_js_1.MessageEmbed();

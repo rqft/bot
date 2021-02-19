@@ -5,6 +5,7 @@ import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "perm",
   usesArgs: true,
+  description: "allow or deny people access to certain channels",
   restrictions: {},
   usage: `<type: "allow | "deny"> <channel: TextChannel> <user: User>`,
   async run(message, args) {

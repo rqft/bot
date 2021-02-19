@@ -10,6 +10,7 @@ import { onReady } from "./handlers/onReady";
 import { setUserPresence } from "./handlers/setUserPresence";
 import { ICommand } from "./interfaces/ICommand";
 import "./logging-test";
+import { color, TerminalColor } from "./types/TerminalColors";
 /**
  * Presence Stuff
  */
@@ -27,31 +28,48 @@ export const client = new Discord.Client({
     users: [],
   },
 });
+client.on("ready", () => console.log("ok"));
 console.log(CMDFilesPath);
 export const commands = new Discord.Collection<any, ICommand>();
 export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
-export async function makeServerSlashCommand(
-  id: string = config.global.mainServerID,
-  data: object,
-  response: object
-) {
-  // @ts-ignore
-  const interaction = client.api
-    // @ts-ignore
-    .applications(client.user?.id)
-    .guilds(id)
-    .commands.post({
-      data: data,
-    });
-  // @ts-ignore
-  client.ws.on("INTERACTION_CREATE", async (interaction) => {
-    // @ts-ignore
-    client.api.interactions(interaction.id, interaction.token).callback.post({
-      data: response,
-    });
-  });
-}
+commands.array().forEach((e) => {
+  const consoleMessages = [];
+  // if (!e.cooldown)
+  //   console.warn(
+  //     `warning on ${color(
+  //       e.name,
+  //       TerminalColor.normal.RED
+  //     )}: it is recommended to set a ${color(
+  //       "cooldown",
+  //       TerminalColor.normal.GREEN
+  //     )} to stop abuse of any commands`
+  //   );
+  if (!e.description)
+    consoleMessages.push(
+      `it is recommended to set a ${color(
+        "description",
+        TerminalColor.normal.GREEN
+      )} for the help menu page for this command`
+    );
+  if (!e.run)
+    consoleMessages.push(
+      `you must set a ${color("run()", TerminalColor.normal.BLUE)} function`
+    );
+  if (e.usage == undefined)
+    consoleMessages.push(
+      `it is recommended to set ${color(
+        "usage",
+        TerminalColor.normal.GREEN
+      )} for the command`
+    );
+  if (consoleMessages.length)
+    console.log(
+      `${color("[COMMAND MANAGER]", TerminalColor.normal.MAGENTA)} ${
+        e.name
+      }:\n${consoleMessages.join("\n")}`
+    );
+});
 client.once("ready", async () => {
   onReady();
 });

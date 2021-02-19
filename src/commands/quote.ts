@@ -7,6 +7,7 @@ module.exports = {
   usesArgs: true,
   restrictions: {},
   usage: "<user: User> <content: text>",
+  description: "quote people",
   async run(message, args) {
     const user = (await getUser(message, args, false, 0)) ?? message.author;
     const baseURL = "https://fapi.wrmsr.io/quote";

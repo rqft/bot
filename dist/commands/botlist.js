@@ -46,6 +46,7 @@ const links = [
 module.exports = {
     name: "botlist",
     usage: "[bot: User]",
+    description: "get if a bot is on a set of bot lists or not",
     async run(message, args) {
         var user = (await getUser_1.getUser(message, args, true)) ?? __1.client.user;
         if (!user.bot)

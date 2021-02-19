@@ -7,6 +7,7 @@ module.exports = {
     restrictions: {
         ownerOnly: true,
     },
+    description: "replace text with regex",
     async run(message, args) {
         const reg = args[0];
         const flags = args[1];

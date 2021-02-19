@@ -12,6 +12,7 @@ module.exports = {
   name: "server",
   aliases: ["s"],
   usage: "[server: Guild | Snowflake]",
+  description: "get server info",
   async run(message, args: string[]) {
     const guild = await getGuild(message, args, true);
     if (!guild) return await message.channel.send("Unknown Server");

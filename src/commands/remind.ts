@@ -7,6 +7,7 @@ module.exports = {
   aliases: ["r"],
   usage: "<time: string> [comment: text]",
   usesArgs: true,
+  description: "set up reminders",
   async run(message, args) {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");

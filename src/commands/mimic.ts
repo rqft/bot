@@ -9,6 +9,8 @@ module.exports = {
   restrictions: {
     guildOnly: true,
   },
+  cooldown: 10,
+  description: "mimic people",
   async run(message, args) {
     const user = await getUser(message, args, false);
     if (!user) return await message.channel.send("unknown user");

@@ -7,6 +7,8 @@ import { IArtist } from "../interfaces/spotify/IArtist";
 
 module.exports = {
   name: "spotify",
+  description: "get a song from spotify",
+  usage: "<query: string>",
   async run(message, args) {
     const search = args.join(" ");
     const track = await spotifySearch(search);

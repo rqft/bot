@@ -6,6 +6,8 @@ const spotifySearch_1 = require("../functions/spotifySearch");
 const globals_1 = require("../globals");
 module.exports = {
     name: "spotify",
+    description: "get a song from spotify",
+    usage: "<query: string>",
     async run(message, args) {
         const search = args.join(" ");
         const track = await spotifySearch_1.spotifySearch(search);

@@ -16,6 +16,7 @@ module.exports = {
   name: "user",
   aliases: ["u"],
   usage: "[user: User | Snowflake]",
+  description: "get user info",
   async run(message, args: string[]) {
     const user = await getUser(message, args, true);
     if (!user) {

@@ -3,14 +3,16 @@ import { config } from "../config";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
-  name: "api",
+  name: "fapi",
   usesArgs: true,
-  restrictions: {
-    ownerOnly: true,
-  },
+  restrictions: {},
+  description: "fAPI image manipulation",
   usage:
     '<endpoint: string> <type: "user" | "url"> <thing: User | URL> [args: Object]',
   async run(message, args) {
+    const ret = await message.channel.send(
+      "<a:IconGui_Typing:798624244351107092>"
+    );
     var url = null;
     var usesAtt = false;
     switch (args[1]) {
@@ -51,6 +53,7 @@ module.exports = {
       headers: headers,
       body: JSON.stringify(body),
     });
+    await ret.delete();
     if (!fAPI.ok)
       return await message.channel.send(
         `There was an error (code ${
@@ -59,20 +62,14 @@ module.exports = {
           .split("\n")
           .map((e) => `- ${e}`)}\n\`\`\``
       );
-    await message.channel.send(
-      `Endpoint: \`${endpoint}\`
-Image: \`${url}\`
-Arguments: \`\`\`json
-${JSON.stringify(JSON.parse(argument), null, 2)}
-\`\`\``,
-      {
-        files: [
-          {
-            name: "fAPI.png",
-            attachment: await fAPI.buffer(),
-          },
-        ],
-      }
-    );
+
+    await message.channel.send(``, {
+      files: [
+        {
+          name: "fAPI.png",
+          attachment: await fAPI.buffer(),
+        },
+      ],
+    });
   },
 } as ICommand;

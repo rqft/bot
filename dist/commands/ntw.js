@@ -8,6 +8,7 @@ module.exports = {
     restrictions: {},
     usesArgs: true,
     usage: "<num: string | number>",
+    description: "numbers to words",
     async run(message, args) {
         const words = numToWords_1.numToWords(args.join(" "));
         if (!words)

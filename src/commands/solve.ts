@@ -9,6 +9,7 @@ module.exports = {
   restrictions: {
     // ownerOnly: true,
   },
+  description: "do math",
   usesArgs: true,
   usage: "<expression: MathString>",
   async run(message, args) {

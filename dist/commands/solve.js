@@ -7,6 +7,7 @@ const globals_1 = require("../globals");
 module.exports = {
     name: "solve",
     restrictions: {},
+    description: "do math",
     usesArgs: true,
     usage: "<expression: MathString>",
     async run(message, args) {

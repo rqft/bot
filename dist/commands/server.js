@@ -11,6 +11,7 @@ module.exports = {
     name: "server",
     aliases: ["s"],
     usage: "[server: Guild | Snowflake]",
+    description: "get server info",
     async run(message, args) {
         const guild = await getGuild_1.getGuild(message, args, true);
         if (!guild)

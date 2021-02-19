@@ -10,6 +10,7 @@ module.exports = {
     name: "about",
     usesArgs: false,
     description: "Info about the bot",
+    usage: "",
     async run(message) {
         message.channel.send(new discord_js_1.MessageEmbed({
             color: globals_1.Color.embed,

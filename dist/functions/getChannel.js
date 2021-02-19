@@ -15,12 +15,11 @@ function getChannel(message, args, useJoin = false, argument = 0) {
     }
     var unresolvedID = args.join(" ").length ? res : message.author.id;
     if (res.match(/<@!?(\d+)>/g)?.length !== 0)
-        unresolvedID = res.replace(/[<@!>]/g, "");
+        unresolvedID = res.replace(/[<#!>]/g, "");
     var channel = null;
     try {
         channel = message.guild?.channels.cache.find((e) => e.name.toLowerCase().normalize() == unresolvedID ||
-            e.id == unresolvedID ||
-            `${e}` == unresolvedID ||
+            e.id == unresolvedID.replace(/\D/g, "") ||
             message.guild?.members.cache.get(e.id)?.nickname == unresolvedID);
     }
     catch (error) { }

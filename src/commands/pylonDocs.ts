@@ -5,6 +5,7 @@ module.exports = {
   name: "pylondocs",
   usage: "<query: string>",
   usesArgs: true,
+  description: "get stuff from pylon docs",
   async run(message, args) {
     const resp = await lookup(args.join(" "), 0);
 

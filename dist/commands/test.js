@@ -9,6 +9,7 @@ module.exports = {
     restrictions: {
         ownerOnly: true,
     },
+    usage: "<test: Test>",
     async run(message, args) {
         switch (args[0]?.toLowerCase()) {
             case "error":

@@ -8,6 +8,8 @@ module.exports = {
     restrictions: {
         guildOnly: true,
     },
+    cooldown: 10,
+    description: "mimic people",
     async run(message, args) {
         const user = await getUser_1.getUser(message, args, false);
         if (!user)
