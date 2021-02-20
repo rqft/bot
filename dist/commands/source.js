@@ -41,7 +41,7 @@ module.exports = {
                     return await message.channel.send("Unknown file");
                 console.log(getFileExtension_1.getFileExtension(args.slice(1).join(" ")));
                 await message.channel.send(file.toString(), {
-                    code: "ts",
+                    code: args.slice(1).join(" ").split(".").pop(),
                     split: { char: "\n" },
                 });
         }

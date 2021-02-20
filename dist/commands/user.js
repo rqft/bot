@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const config_1 = require("../config");
 const formatTimestamp_1 = require("../functions/formatTimestamp");
 const getBotBadges_1 = require("../functions/getBotBadges");
 const getBotLevel_1 = require("../functions/getBotLevel");
@@ -56,10 +55,7 @@ ${roles.size !== 0
                         .join("\n")
                     : "None.");
         }
-        emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user).join("\n") +
-            (user.id == config_1.config.bot.application.ownerId
-                ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer\™️`
-                : ""));
+        emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user).join("\n"));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));
         emb.setColor(globals_1.Color.embed);
         await message.channel.send(emb);

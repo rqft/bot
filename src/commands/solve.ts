@@ -14,7 +14,7 @@ module.exports = {
   usesArgs: true,
   usage: "<expression: MathString>",
   async run(message, args) {
-    const ret = await message.channel.send(CustomEmojis.TYPING);
+    const ret = await message.channel.send(CustomEmojis.GUI_TYPING);
     const query = `solve ${args.join(" ")}`;
     const url = `http://api.wolframalpha.com/v2/query?appid=${
       config.global.keys.wolframAlpha

@@ -19,7 +19,7 @@ module.exports = {
             comment: comment,
             expiry: Date.now() + ms,
         };
-        await message.channel.send(`:white_check_mark: I will remind you in ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)} ${formatTimestamp_1.formatTimestamp(query.expiry)}`);
+        await message.channel.send(`${"\u2705"} I will remind you in ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)} ${formatTimestamp_1.formatTimestamp(query.expiry)}`);
         setTimeout(async () => await message.channel.send(`Hey ${query.user}! You told me at \`${query.executedAt.toLocaleString()}\` (${getLongAgo_1.simpleGetLongAgo(+query.executedAt)} ago) to remind you about${query.comment
             ? `: ${query.comment.length > 50
                 ? `\`\`\`\n${query.comment}\`\`\``

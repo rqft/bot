@@ -20,8 +20,8 @@ module.exports = {
         emb.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
         emb.setThumbnail(guild.iconURL({ dynamic: true }));
         emb.addField("❯ Server Info", `${"\u2699\uFE0F"} **ID**: \`${guild.id}\`
-<:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
-<:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
+${"<:IconGui_OwnerCrown:799657143719952415>"} **Owner**: ${guild.owner}
+${"<:IconChannel_Voice:798624234732781580>"} **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
 ${"\uD83D\uDCC6"} **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
         emb.addField("❯ Invites", (await guild.fetchInvites()).size
             ? (await guild.fetchInvites())
@@ -32,9 +32,9 @@ ${"\uD83D\uDCC6"} **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTime
             : "None.");
         if (guild.premiumSubscriptionCount) {
             const boosters = guild.members.cache.filter((e) => !!e.premiumSince);
-            emb.addField("❯ Server Boosts", `<:IconGui_OwnerCrown:799657143719952415> **Tier**: ${guild.premiumTier}
-<:IconBadge_Nitro:798624232472051792> **Boosts**: ${guild.premiumSubscriptionCount}
-<:IconGui_Members:798624241868079104> **Boosters (${boosters.size})**: ${boosters.array().slice(0, 10).join(", ")} ${boosters.size > 10 ? `and ${boosters.size - 10} more...` : ""}`);
+            emb.addField("❯ Server Boosts", `${"<:IconGui_OwnerCrown:799657143719952415>"} **Tier**: ${guild.premiumTier}
+${"<:IconBadge_Nitro:798624232472051792>"} **Boosts**: ${guild.premiumSubscriptionCount}
+${"<:IconGui_Members:798624241868079104>"} **Boosters (${boosters.size})**: ${boosters.array().slice(0, 10).join(", ")} ${boosters.size > 10 ? `and ${boosters.size - 10} more...` : ""}`);
         }
         emb.addField("❯ Features", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.Color.embed);

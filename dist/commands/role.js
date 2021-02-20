@@ -25,9 +25,9 @@ module.exports = {
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(`Role "${role.name}"`, col);
         emb.setColor(globals_1.Color.embed);
-        emb.addField(`❯ Role Info`, `:gear: **ID**: \`${role.id}\`
-:link: **Role**: ${role}
-:calendar_spiral: **Created**: ${getLongAgo_1.simpleGetLongAgo(+role.createdAt)} ${formatTimestamp_1.formatTimestamp(role.createdAt)}`);
+        emb.addField(`❯ Role Info`, `${"\u2699\uFE0F"} **ID**: \`${role.id}\`
+${"\uD83D\uDD17"} **Role**: ${role}
+${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(+role.createdAt)} ${formatTimestamp_1.formatTimestamp(role.createdAt)}`);
         const posTop = message.guild.roles.cache.find((e) => e.position == role.position + 1);
         const posLow = message.guild.roles.cache.find((e) => e.position == role.position - 1);
         emb.addField("❯ Position", `**${posTop ? posTop?.position : ""} ${posTop ? posTop : "-- Top Of Role list"}**

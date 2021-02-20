@@ -1,4 +1,5 @@
 import { api } from "../functions/api";
+import { arrayToChunks } from "../functions/arrayToChunks";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
@@ -13,10 +14,10 @@ module.exports = {
     for (let i = 0; i < count; i++) {
       urls.push((await api("http://aws.random.cat/meow", "json")).file);
     }
-    await message.channel.send(urls.join("\n"), {
-      split: {
-        char: "\n",
-      },
+
+    const urlGroups = arrayToChunks(urls, 5);
+    urlGroups.forEach((url) => {
+      message.channel.send(url.join("\n"));
     });
   },
 } as ICommand;

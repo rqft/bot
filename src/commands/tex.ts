@@ -9,7 +9,7 @@ module.exports = {
   description: "render LaTeX code",
   usage: "<code: string>",
   async run(message, args) {
-    const ret = await message.channel.send(CustomEmojis.TYPING);
+    const ret = await message.channel.send(CustomEmojis.GUI_TYPING);
     const query = pullCodeFromBlock(args.join(" "));
     const options = {
       formula: query,

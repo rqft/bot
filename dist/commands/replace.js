@@ -15,7 +15,7 @@ module.exports = {
         const source = args.slice(3).join(" ");
         if (!reg || !flags || !replaceWith || !source) {
             return await message.channel.send(`:warning: Argument Error (missing argument)
-\`\`\`
+\`\`\`\`
 ${this.usage}\`\`\``);
         }
         const regex = new RegExp(reg, flags);

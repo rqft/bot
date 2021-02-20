@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { IMyMemoryResponse } from "../interfaces/IMyMemory";
+// @ts-ignore
 import * as lang from "../maps/languageCodes.json";
 const langCodes: {
   [any: string]: {

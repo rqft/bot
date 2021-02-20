@@ -1,5 +1,4 @@
 import { MessageEmbed } from "discord.js";
-import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotBadges } from "../functions/getBotBadges";
 import { getBotLevel } from "../functions/getBotLevel";
@@ -91,13 +90,7 @@ ${
             : "None."
         );
     }
-    emb.addField(
-      "❯ Profile Badges",
-      getProfileBadges(user).join("\n") +
-        (user.id == config.bot.application.ownerId
-          ? `\n<:IconBadge_BotDeveloper:798624232443478037> Very Real Bot Developer\™️`
-          : "")
-    );
+    emb.addField("❯ Profile Badges", getProfileBadges(user).join("\n"));
     emb.addField("❯ Bot Badges", getBotBadges(user));
     emb.setColor(Color.embed);
     await message.channel.send(emb);

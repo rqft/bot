@@ -4,9 +4,7 @@ import { client } from "..";
 import { getUser } from "../functions/getUser";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
-const greenTick = "<:yesTick:804175929995427861>";
-const redTick = "<:noTick:804175930028720178>";
-const grayTick = "<:maybe:801847909795627048>";
+import { CustomEmojis } from "../maps/customEmojis";
 const links = [
   {
     name: "TopGG",
@@ -47,7 +45,7 @@ module.exports = {
     var user = (await getUser(message, args, true)) ?? client.user!;
     if (!user.bot) return await message.channel.send("that user is not a bot");
 
-    let output = `${greenTick}: ${user} is on this bot list\n${redTick}: ${user} is not on this bot list\n${grayTick}: This bot list cannot be scanned\n\n`;
+    let output = `${CustomEmojis.TICK_GREEN}: ${user} is on this bot list\n${CustomEmojis.TICK_RED}: ${user} is not on this bot list\n${CustomEmojis.TICK_GRAY}: This bot list cannot be scanned\n\n`;
 
     for (let link of links) {
       if (link.fetch) {
@@ -55,11 +53,11 @@ module.exports = {
         let res = await fetch(link.url + user.id);
         let ok = res.ok || res.redirected; // Whether or not the page exists
 
-        output += `${ok ? greenTick : redTick} [${link.name}](${link.url}${
-          user.id
-        })\n`;
+        output += `${ok ? CustomEmojis.TICK_GREEN : CustomEmojis.TICK_RED} [${
+          link.name
+        }](${link.url}${user.id})\n`;
       } else {
-        output += `${grayTick} [${link.name}](${link.url}${user.id})`;
+        output += `${CustomEmojis.TICK_GRAY} [${link.name}](${link.url}${user.id})`;
       }
     }
     const emb = new MessageEmbed();

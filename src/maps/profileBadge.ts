@@ -1,65 +1,66 @@
 import { UserFlagsString } from "discord.js";
 import { IconElement } from "../interfaces/element";
+import { CustomEmojis } from "./customEmojis";
 
 const profileBadgeMap = new Map<UserFlagsString, IconElement>();
 profileBadgeMap.set("BUGHUNTER_LEVEL_1", {
-  icon: "<:IconBadge_BugHunter:798624232338227261>",
+  icon: CustomEmojis.BADGE_BUG_HUNTER,
   text: "Bug Hunter Level I",
 });
 profileBadgeMap.set("BUGHUNTER_LEVEL_2", {
-  icon: "<:IconBadge_BugHunterGold:799290353357684797>",
+  icon: CustomEmojis.BADGE_BUG_HUNTER_2,
   text: "Bug Hunter Level II",
 });
 profileBadgeMap.set("DISCORD_EMPLOYEE", {
-  icon: "<:IconBadge_Staff:798624241595318272>",
+  icon: CustomEmojis.BADGE_STAFF,
   text: "Discord Employee",
 });
 profileBadgeMap.set("EARLY_SUPPORTER", {
-  icon: "<:IconBadge_EarlySupporter:798624232471920680>",
+  icon: CustomEmojis.BADGE_EARLY_SUPPORTER,
   text: "Early Supporter",
 });
 profileBadgeMap.set("EARLY_VERIFIED_DEVELOPER", {
-  icon: "<:IconBadge_BotDeveloper:798624232443478037>",
+  icon: CustomEmojis.BADGE_BOT_DEVELOPER,
   text: "Early Verified Developer",
 });
 profileBadgeMap.set("HOUSE_BALANCE", {
-  icon: "<:IconBadge_HypeSquadBalance:798624232409661451>",
+  icon: CustomEmojis.BADGE_HYPESQUAD_BALANCE,
   text: "HypeSquad Balance",
 });
 profileBadgeMap.set("HOUSE_BRAVERY", {
-  icon: "<:IconBadge_HypeSquadBravery:798624232425652244>",
+  icon: CustomEmojis.BADGE_HYPESQUAD_BRAVERY,
   text: "HypeSquad Bravery",
 });
 profileBadgeMap.set("HOUSE_BRILLIANCE", {
-  icon: "<:IconBadge_HypeSquadBrilliance:798624232552529920>",
+  icon: CustomEmojis.BADGE_HYPESQUAD_BRILLIANCE,
   text: "HypeSquad Brilliance",
 });
 profileBadgeMap.set("HYPESQUAD_EVENTS", {
-  icon: "<:IconBadge_HypeSquadEvents:798624232694087682>",
+  icon: CustomEmojis.BADGE_HYPESQUAD_EVENTS,
   text: "HypeSquad Events",
 });
 profileBadgeMap.set("PARTNERED_SERVER_OWNER", {
-  icon: "<:IconBadge_Partner:798624238939406416>",
+  icon: CustomEmojis.BADGE_PARTNER,
   text: "Partnered Server Owner",
 });
 profileBadgeMap.set("DISCORD_PARTNER", {
-  icon: "<:IconBadge_OldPartner:798624234305093672>",
+  icon: CustomEmojis.BADGE_OLD_PARTNER,
   text: "Discord Partner",
 });
 profileBadgeMap.set("SYSTEM", {
-  icon: "<:IconBadge_Staff:798624241595318272>",
+  icon: CustomEmojis.BADGE_STAFF,
   text: "System",
 });
 profileBadgeMap.set("TEAM_USER", {
-  icon: "<:IconGui_Invite:798624241347198987>",
+  icon: CustomEmojis.GUI_INVITE,
   text: "Team User",
 });
 profileBadgeMap.set("VERIFIED_BOT", {
-  icon: "<:IconBadge_VerifiedBot:798624262533283865>",
+  icon: CustomEmojis.BADGE_VERIFIED_BOT,
   text: "Verified Bot",
 });
 profileBadgeMap.set("VERIFIED_DEVELOPER", {
-  icon: "<:IconBadge_BotDeveloper:798624232443478037>",
+  icon: CustomEmojis.BADGE_BOT_DEVELOPER,
   text: "Verified Developer",
 });
 export { profileBadgeMap };

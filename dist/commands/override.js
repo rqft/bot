@@ -55,14 +55,14 @@ module.exports = {
                 if (e.name.startsWith("--ov-"))
                     e.delete();
             });
-            return await message.channel.send(`:white_check_mark: Cleared`);
+            return await message.channel.send(`${"\u2705"} Cleared`);
         }
         const override = args.slice(1).join(" ").toLowerCase();
         const ms = parseTimeString_1.parseTimeString(time);
         if (ms < 500)
             return await message.channel.send("Must be higher than 500 milliseconds / Invalid Time String");
         if (!Object.keys(exports.overrides).includes(override))
-            return await message.channel.send(`:warning: Unknown Override, available options are ${Object.keys(exports.overrides)
+            return await message.channel.send(`${"\u26A0\uFE0F"} Unknown Override, available options are ${Object.keys(exports.overrides)
                 .map((e) => `\`${e}\``)
                 .join(", ")}`);
         const ovRole = exports.overrides[override];
@@ -74,14 +74,14 @@ module.exports = {
             },
         });
         await message.member?.roles.add(role);
-        await message.channel.send(`:white_check_mark: Gave you \`${ovRole?.name}\` override for ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)}`);
+        await message.channel.send(`${"\u2705"} Gave you \`${ovRole?.name}\` override for ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)}`);
         setTimeout(async () => {
             await role?.delete();
             try {
-                await message.react("⏲");
+                await message.react("\u23F2\uFE0F");
             }
             catch (_) {
-                await message.channel.lastMessage?.react("⏲");
+                await message.channel.lastMessage?.react("\u23F2\uFE0F");
             }
         }, ms);
     },

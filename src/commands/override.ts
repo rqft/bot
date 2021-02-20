@@ -3,6 +3,7 @@ import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { parseTimeString } from "../functions/parseTimeString";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 export const overrides: { [any: string]: RoleData } = {
   adm: {
@@ -55,7 +56,9 @@ module.exports = {
       message.member?.roles.cache.forEach((e) => {
         if (e.name.startsWith("--ov-")) e.delete();
       });
-      return await message.channel.send(`:white_check_mark: Cleared`);
+      return await message.channel.send(
+        `${decor.Emojis.WHITE_CHECK_MARK} Cleared`
+      );
     }
     const override = args.slice(1).join(" ").toLowerCase();
     const ms = parseTimeString(time);
@@ -65,9 +68,9 @@ module.exports = {
       );
     if (!Object.keys(overrides).includes(override))
       return await message.channel.send(
-        `:warning: Unknown Override, available options are ${Object.keys(
-          overrides
-        )
+        `${
+          decor.Emojis.WARNING
+        } Unknown Override, available options are ${Object.keys(overrides)
           .map((e) => `\`${e}\``)
           .join(", ")}`
       );
@@ -82,16 +85,16 @@ module.exports = {
     });
     await message.member?.roles.add(role!);
     await message.channel.send(
-      `:white_check_mark: Gave you \`${
+      `${decor.Emojis.WHITE_CHECK_MARK} Gave you \`${
         ovRole?.name
       }\` override for ${simpleGetLongAgo(Date.now() - ms)}`
     );
     setTimeout(async () => {
       await role?.delete();
       try {
-        await message.react("⏲");
+        await message.react(decor.Emojis.TIMER);
       } catch (_) {
-        await message.channel.lastMessage?.react("⏲");
+        await message.channel.lastMessage?.react(decor.Emojis.TIMER);
       }
     }, ms);
   },

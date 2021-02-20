@@ -1,27 +1,28 @@
 import { IconElement } from "../interfaces/element";
+import { CustomEmojis } from "./customEmojis";
 
 const UserStatusMap = new Map<
   "online" | "idle" | "dnd" | "offline" | "invisible",
   IconElement
 >();
 UserStatusMap.set("dnd", {
-  icon: "<:IconStatus_Dnd:798624244669087805>",
+  icon: CustomEmojis.STATUS_DND,
   text: "Busy",
 });
 UserStatusMap.set("idle", {
-  icon: "<:IconStatus_Idle:798624247295246336>",
+  icon: CustomEmojis.STATUS_IDLE,
   text: "Idle",
 });
 UserStatusMap.set("offline", {
-  icon: "<:IconStatus_Offline:798624247546511370>",
+  icon: CustomEmojis.STATUS_OFFLINE,
   text: "Offline",
 });
 UserStatusMap.set("invisible", {
-  icon: "<:IconStatus_Offline:798624247546511370>",
+  icon: CustomEmojis.STATUS_OFFLINE,
   text: "Offline",
 });
 UserStatusMap.set("online", {
-  icon: "<:IconStatus_Online:798624246728228874>",
+  icon: CustomEmojis.STATUS_ONLINE,
   text: "Online",
 });
 export { UserStatusMap };

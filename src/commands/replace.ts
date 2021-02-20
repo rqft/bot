@@ -16,7 +16,7 @@ module.exports = {
     if (!reg || !flags || !replaceWith || !source) {
       return await message.channel.send(
         `:warning: Argument Error (missing argument)
-\`\`\`
+\`\`\`\`
 ${this.usage}\`\`\``
       );
     }

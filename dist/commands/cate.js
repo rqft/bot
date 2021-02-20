@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const api_1 = require("../functions/api");
+const arrayToChunks_1 = require("../functions/arrayToChunks");
 module.exports = {
     name: "cate",
     aliases: ["catpic"],
@@ -13,10 +14,9 @@ module.exports = {
         for (let i = 0; i < count; i++) {
             urls.push((await api_1.api("http://aws.random.cat/meow", "json")).file);
         }
-        await message.channel.send(urls.join("\n"), {
-            split: {
-                char: "\n",
-            },
+        const urlGroups = arrayToChunks_1.arrayToChunks(urls, 5);
+        urlGroups.forEach((url) => {
+            message.channel.send(url.join("\n"));
         });
     },
 };

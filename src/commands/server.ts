@@ -6,6 +6,7 @@ import { getGuildVoiceRegion } from "../functions/getGuildVoiceRegion";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 import { decor } from "../maps/emojiEnum";
 
 module.exports = {
@@ -22,10 +23,8 @@ module.exports = {
     emb.addField(
       "❯ Server Info",
       `${decor.Emojis.GEAR} **ID**: \`${guild.id}\`
-<:IconGui_OwnerCrown:799657143719952415> **Owner**: ${guild.owner}
-<:IconChannel_Voice:798624234732781580> **Voice Region**: ${getGuildVoiceRegion(
-        guild
-      )}
+${CustomEmojis.GUI_OWNERCROWN} **Owner**: ${guild.owner}
+${CustomEmojis.CHANNEL_VOICE} **Voice Region**: ${getGuildVoiceRegion(guild)}
 ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}`
@@ -49,11 +48,9 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
       const boosters = guild.members.cache.filter((e) => !!e.premiumSince);
       emb.addField(
         "❯ Server Boosts",
-        `<:IconGui_OwnerCrown:799657143719952415> **Tier**: ${guild.premiumTier}
-<:IconBadge_Nitro:798624232472051792> **Boosts**: ${
-          guild.premiumSubscriptionCount
-        }
-<:IconGui_Members:798624241868079104> **Boosters (${
+        `${CustomEmojis.GUI_OWNERCROWN} **Tier**: ${guild.premiumTier}
+${CustomEmojis.BADGE_NITRO} **Boosts**: ${guild.premiumSubscriptionCount}
+${CustomEmojis.GUI_MEMBERS} **Boosters (${
           boosters.size
         })**: ${boosters.array().slice(0, 10).join(", ")} ${
           boosters.size > 10 ? `and ${boosters.size - 10} more...` : ""

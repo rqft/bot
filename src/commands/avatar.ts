@@ -3,6 +3,7 @@ import { getFileExtension } from "../functions/getFileExtension";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 const sizes = [16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
 type avatarSize = 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096;
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
     if (!user) {
       return await message.channel.send("Unknown User");
     }
-    const res = await message.channel.send("...");
+    const res = await message.channel.send(CustomEmojis.GUI_TYPING);
     const avURL =
       user.avatarURL({ dynamic: true, size: size as avatarSize }) ??
       user.defaultAvatarURL;

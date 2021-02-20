@@ -5,6 +5,7 @@ import { getRole } from "../functions/getRole";
 import { getUserPermissions } from "../functions/getUserPermissions";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "role",
@@ -30,9 +31,9 @@ module.exports = {
     emb.setColor(Color.embed);
     emb.addField(
       `❯ Role Info`,
-      `:gear: **ID**: \`${role.id}\`
-:link: **Role**: ${role}
-:calendar_spiral: **Created**: ${simpleGetLongAgo(
+      `${decor.Emojis.GEAR} **ID**: \`${role.id}\`
+${decor.Emojis.LINK} **Role**: ${role}
+${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         +role.createdAt
       )} ${formatTimestamp(role.createdAt)}`
     );

@@ -18,7 +18,7 @@ config_1.config.bot.ownerIds.forEach((e) => {
 });
 botBadgeMap.set(config_1.config.bot.application.ownerId, botBadgeMap.get(config_1.config.bot.application.ownerId).concat([
     {
-        icon: ":technologist:",
+        icon: "\uD83E\uDDD1\u200D\uD83D\uDCBB",
         text: "Developer",
     },
 ]));
@@ -36,13 +36,13 @@ botBadgeMap.set("697071919639560254", [
 ]);
 botBadgeMap.set("411994935395614761", [
     {
-        icon: ":+1:",
+        icon: "\uD83D\uDC4D",
         text: "ok",
     },
 ]);
 botBadgeMap.set("706159423323635782", [
     {
-        icon: ":droplet:",
+        icon: "\uD83D\uDCA7",
         text: "funy watr person",
     },
 ]);

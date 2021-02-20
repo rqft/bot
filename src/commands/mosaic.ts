@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import { config } from "../config";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 module.exports = {
   name: "fapi",
   usesArgs: true,
@@ -10,9 +11,7 @@ module.exports = {
   usage:
     '<endpoint: string> <type: "user" | "url"> <thing: User | URL> [args: Object]',
   async run(message, args) {
-    const ret = await message.channel.send(
-      "<a:IconGui_Typing:798624244351107092>"
-    );
+    const ret = await message.channel.send(CustomEmojis.GUI_TYPING);
     var url = null;
     var usesAtt = false;
     switch (args[1]) {

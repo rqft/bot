@@ -5,6 +5,7 @@ import { arrayContainsAll } from "../functions/checkArrayContainsAll";
 import { fetchCommand as fc } from "../functions/fetchCommand";
 import * as globals from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 
 module.exports = {
   name: "eval",
@@ -34,7 +35,7 @@ module.exports = {
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);
-      embed.setTitle("✅ Eval Success");
+      embed.setTitle(`${decor.Emojis.WHITE_CHECK_MARK} Eval Success`);
       embed.addField("Input", input);
       // if (str instanceof Promise) str = await str;
       if (str instanceof Object) {
@@ -48,7 +49,7 @@ module.exports = {
       str = e;
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);
-      embed.setTitle("⛔ Eval Failed");
+      embed.setTitle(`${decor.Emojis.NO_ENTRY} Eval Failed`);
       embed.addField("Input", input);
       const output = `\`\`\`ts\n${str}\`\`\``;
       embed.addField("Output", output);

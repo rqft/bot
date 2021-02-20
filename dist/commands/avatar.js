@@ -20,7 +20,7 @@ module.exports = {
         if (!user) {
             return await message.channel.send("Unknown User");
         }
-        const res = await message.channel.send("...");
+        const res = await message.channel.send("<a:IconGui_Typing:798624244351107092>");
         const avURL = user.avatarURL({ dynamic: true, size: size }) ??
             user.defaultAvatarURL;
         const r = await message.channel.send(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)}`, {

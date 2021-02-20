@@ -2,6 +2,7 @@ import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { parseTimeString } from "../functions/parseTimeString";
 import { ICommand } from "../interfaces/ICommand";
+import { decor } from "../maps/emojiEnum";
 module.exports = {
   name: "remind",
   aliases: ["r"],
@@ -19,7 +20,7 @@ module.exports = {
       expiry: Date.now() + ms,
     };
     await message.channel.send(
-      `:white_check_mark: I will remind you in ${simpleGetLongAgo(
+      `${decor.Emojis.WHITE_CHECK_MARK} I will remind you in ${simpleGetLongAgo(
         Date.now() - ms
       )} ${formatTimestamp(query.expiry)}`
     );
