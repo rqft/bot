@@ -4,66 +4,66 @@ exports.guildVoiceRegionMap = void 0;
 const guildVoiceRegionMap = new Map();
 exports.guildVoiceRegionMap = guildVoiceRegionMap;
 guildVoiceRegionMap.set("brazil", {
-    icon: ":flag_br:",
+    icon: "\uD83C\uDDE7\uD83C\uDDF7",
     text: "Brazil",
 });
 guildVoiceRegionMap.set("europe", {
-    icon: ":flag_eu:",
+    icon: "\uD83C\uDDEA\uD83C\uDDFA",
     text: "Europe",
 });
 guildVoiceRegionMap.set("eu-central", {
-    icon: ":flag_eu:",
+    icon: "\uD83C\uDDEA\uD83C\uDDFA",
     text: "Europe (Central)",
 });
 guildVoiceRegionMap.set("eu-west", {
-    icon: ":flag_eu:",
+    icon: "\uD83C\uDDEA\uD83C\uDDFA",
     text: "Europe (West)",
 });
 guildVoiceRegionMap.set("hongkong", {
-    icon: ":flag_hk:",
+    icon: "\uD83C\uDDED\uD83C\uDDF0",
     text: "Hong Kong",
 });
 guildVoiceRegionMap.set("india", {
-    icon: ":flag_in:",
+    icon: "\uD83C\uDDEE\uD83C\uDDF3",
     text: "India",
 });
 guildVoiceRegionMap.set("japan", {
-    icon: ":flag_jp:",
+    icon: "\uD83C\uDDEF\uD83C\uDDF5",
     text: "Japan",
 });
 guildVoiceRegionMap.set("russia", {
-    icon: ":flag_ru:",
+    icon: "\uD83C\uDDF7\uD83C\uDDFA",
     text: "Russia",
 });
 guildVoiceRegionMap.set("singapore", {
-    icon: ":flag_sg:",
+    icon: "\uD83C\uDDF8\uD83C\uDDEC",
     text: "Singapore",
 });
 guildVoiceRegionMap.set("southafrica", {
-    icon: ":flag_za:",
+    icon: "\uD83C\uDDFF\uD83C\uDDE6",
     text: "South Africa",
 });
 guildVoiceRegionMap.set("south-korea", {
-    icon: ":flag_sk:",
+    icon: "\uD83C\uDDF8\uD83C\uDDF0",
     text: "South Korea",
 });
 guildVoiceRegionMap.set("sydney", {
-    icon: ":flag_au:",
+    icon: "\uD83C\uDDE6\uD83C\uDDFA",
     text: "Sydney",
 });
 guildVoiceRegionMap.set("us-central", {
-    icon: ":flag_us:",
+    icon: "\uD83C\uDDFA\uD83C\uDDF8",
     text: "United States (Central)",
 });
 guildVoiceRegionMap.set("us-east", {
-    icon: ":flag_us:",
+    icon: "\uD83C\uDDFA\uD83C\uDDF8",
     text: "United States (East)",
 });
 guildVoiceRegionMap.set("us-south", {
-    icon: ":flag_us:",
+    icon: "\uD83C\uDDFA\uD83C\uDDF8",
     text: "United States (South)",
 });
 guildVoiceRegionMap.set("us-west", {
-    icon: ":flag_us:",
+    icon: "\uD83C\uDDFA\uD83C\uDDF8",
     text: "United States (West)",
 });

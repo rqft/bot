@@ -33,34 +33,37 @@ console.log(CMDFilesPath);
 export const commands = new Discord.Collection<any, ICommand>();
 export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
-commands.array().forEach((e) => {
-  const consoleMessages = [];
+commands
+  .array()
+  .sort((a, b) => (a.name > b.name ? 1 : -1))
+  .forEach((e) => {
+    const consoleMessages = [];
 
-  if (!e.description)
-    consoleMessages.push(
-      `it is recommended to set a ${color(
-        "description",
-        TerminalColor.normal.GREEN
-      )} for the help menu page for this command`
-    );
-  if (!e.run)
-    consoleMessages.push(
-      `you must set a ${color("run()", TerminalColor.normal.BLUE)} function`
-    );
-  if (e.usage == undefined)
-    consoleMessages.push(
-      `it is recommended to set ${color(
-        "usage",
-        TerminalColor.normal.GREEN
-      )} for the command`
-    );
-  if (consoleMessages.length)
-    console.log(
-      `${color("[COMMAND MANAGER]", TerminalColor.normal.MAGENTA)} ${
-        e.name
-      }:\n${consoleMessages.join("\n")}`
-    );
-});
+    if (!e.description)
+      consoleMessages.push(
+        `it is recommended to set a ${color(
+          "description",
+          TerminalColor.normal.GREEN
+        )} for the help menu page for this command`
+      );
+    if (!e.run)
+      consoleMessages.push(
+        `you must set a ${color("run()", TerminalColor.normal.BLUE)} function`
+      );
+    if (e.usage == undefined)
+      consoleMessages.push(
+        `it is recommended to set ${color(
+          "usage",
+          TerminalColor.normal.GREEN
+        )} for the command`
+      );
+    if (consoleMessages.length)
+      console.log(
+        `${color("[COMMAND MANAGER]", TerminalColor.normal.MAGENTA)} ${
+          e.name
+        }:\n${consoleMessages.join("\n")}`
+      );
+  });
 client.once("ready", async () => {
   onReady();
 });

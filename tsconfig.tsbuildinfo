@@ -347,7 +347,7 @@
         "affectsGlobalScope": true
       },
       "./src/index.ts": {
-        "version": "9f0ac9612a2e24d4660422510be635eff3f015f6b0fb67a9c1b4943205a3c1db",
+        "version": "a5de4d782082f2156357ef5c4159dedbba5bab5dd2fb24a2be4ba513f6346034",
         "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
         "affectsGlobalScope": false
       },
@@ -852,7 +852,7 @@
         "affectsGlobalScope": false
       },
       "./src/maps/guildvoiceregion.ts": {
-        "version": "bfc2950e6bc3bf18296fa6a94520c2b9da3c687f4ad65df4d76265f2b16db50c",
+        "version": "047948fd3b573e4f8c05cf6b40892c1b3ad41df59c798835b77f7e86a6dd7806",
         "signature": "a5937cbca875b2488d17ab1455fabf9207bbb354f39792bd461b3ef05d46b5c9",
         "affectsGlobalScope": false
       },
@@ -1701,7 +1701,8 @@
         "./src/maps/customemojis.ts"
       ],
       "./src/maps/guildvoiceregion.ts": [
-        "./src/interfaces/element.ts"
+        "./src/interfaces/element.ts",
+        "./src/maps/emojienum.ts"
       ],
       "./src/maps/profilebadge.ts": [
         "./node_modules/discord.js/typings/index.d.ts",

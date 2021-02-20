@@ -1,4 +1,5 @@
 import { IconElement } from "../interfaces/element";
+import { decor } from "./emojiEnum";
 
 const enum VoiceRegionString {
   BRAZIL = "brazil",
@@ -20,70 +21,70 @@ const enum VoiceRegionString {
 }
 const guildVoiceRegionMap = new Map<VoiceRegionString, IconElement>();
 guildVoiceRegionMap.set(VoiceRegionString.BRAZIL, {
-  icon: ":flag_br:",
+  icon: decor.Emojis.FLAG_BR,
   text: "Brazil",
 });
 guildVoiceRegionMap.set(VoiceRegionString.EUROPE, {
-  icon: ":flag_eu:",
+  icon: decor.Emojis.FLAG_EU,
   text: "Europe",
 });
 guildVoiceRegionMap.set(VoiceRegionString.EU_CENTRAL, {
-  icon: ":flag_eu:",
+  icon: decor.Emojis.FLAG_EU,
   text: "Europe (Central)",
 });
 
 guildVoiceRegionMap.set(VoiceRegionString.EU_WEST, {
-  icon: ":flag_eu:",
+  icon: decor.Emojis.FLAG_EU,
   text: "Europe (West)",
 });
 
 guildVoiceRegionMap.set(VoiceRegionString.HONGKONG, {
-  icon: ":flag_hk:",
+  icon: decor.Emojis.FLAG_HK,
   text: "Hong Kong",
 });
 
 guildVoiceRegionMap.set(VoiceRegionString.INDIA, {
-  icon: ":flag_in:",
+  icon: decor.Emojis.FLAG_IN,
   text: "India",
 });
 guildVoiceRegionMap.set(VoiceRegionString.JAPAN, {
-  icon: ":flag_jp:",
+  icon: decor.Emojis.FLAG_JP,
   text: "Japan",
 });
 guildVoiceRegionMap.set(VoiceRegionString.RUSSIA, {
-  icon: ":flag_ru:",
+  icon: decor.Emojis.FLAG_RU,
   text: "Russia",
 });
 guildVoiceRegionMap.set(VoiceRegionString.SINGAPORE, {
-  icon: ":flag_sg:",
+  icon: decor.Emojis.FLAG_SG,
   text: "Singapore",
 });
 guildVoiceRegionMap.set(VoiceRegionString.SOUTHAFRICA, {
-  icon: ":flag_za:",
+  icon: decor.Emojis.FLAG_ZA,
   text: "South Africa",
 });
 guildVoiceRegionMap.set(VoiceRegionString.SOUTH_KOREA, {
-  icon: ":flag_sk:",
+  icon: decor.Emojis.FLAG_SK,
   text: "South Korea",
 });
 guildVoiceRegionMap.set(VoiceRegionString.SYDNEY, {
-  icon: ":flag_au:",
+  icon: decor.Emojis.FLAG_AU,
   text: "Sydney",
 });
 guildVoiceRegionMap.set(VoiceRegionString.US_CENTRAL, {
-  icon: ":flag_us:",
+  icon: decor.Emojis.FLAG_US,
   text: "United States (Central)",
 });
 guildVoiceRegionMap.set(VoiceRegionString.US_EAST, {
-  icon: ":flag_us:",
+  icon: decor.Emojis.FLAG_US,
   text: "United States (East)",
 });
 guildVoiceRegionMap.set(VoiceRegionString.US_SOUTH, {
-  icon: ":flag_us:",
+  icon: decor.Emojis.FLAG_US,
   text: "United States (South)",
 });
 guildVoiceRegionMap.set(VoiceRegionString.US_WEST, {
-  icon: ":flag_us:",
+  icon: decor.Emojis.FLAG_US,
   text: "United States (West)",
 });
 export { VoiceRegionString, guildVoiceRegionMap };

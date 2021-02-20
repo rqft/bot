@@ -34,7 +34,10 @@ console.log(globals_1.CMDFilesPath);
 exports.commands = new discord_js_1.default.Collection();
 exports.commandFiles = fetchCommandFiles_1.fetchCommandFiles();
 exports.commandFiles.forEach(makeCommandFromFile_1.makeCommands(exports.commands));
-exports.commands.array().forEach((e) => {
+exports.commands
+    .array()
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+    .forEach((e) => {
     const consoleMessages = [];
     if (!e.description)
         consoleMessages.push(`it is recommended to set a ${TerminalColors_1.color("description", "\u001B[32m")} for the help menu page for this command`);
