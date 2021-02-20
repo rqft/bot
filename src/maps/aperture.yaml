@@ -27,11 +27,8 @@ plugins:
         filter_invites: true
         invites_guild_whitelist: [775743191441735712]
         invites_whitelist: ["haru"]
-        #        invites_blacklist: []
         filter_domains: true
-        #        domains_whitelist: []
         domains_blacklist: ["pornhub.com"]
-        blocked_tokens: ["token1", "token2"]
         blocked_words: ["fag", "nigga"]
   infractions:
     confirm_actions: true
