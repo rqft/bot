@@ -75,7 +75,10 @@ module.exports = {
         )}`
       );
     }
-    if (command.restrictions) {
+    if (
+      Object.keys(command.restrictions as Object).length &&
+      command.restrictions
+    ) {
       const rest = [];
       if (command.restrictions.guildOnly) rest.push("`Guild Only`");
       if (command.restrictions.ownerOnly) rest.push("`Bot Owner Only`");

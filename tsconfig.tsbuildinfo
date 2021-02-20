@@ -377,7 +377,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getfileextension.ts": {
-        "version": "22966bdacedac7ca5ace67ced80f418758df4fa15752f6f92e978dcc9753d964",
+        "version": "c890c94e1ef43a3dc8e43e77af29f46091053b9bf864bdecc594de0706ab9e49",
         "signature": "697b29bdac0cb57bea54a0d29fc7a2567db88fea68ba4c13c82cf208360863b9",
         "affectsGlobalScope": false
       },
@@ -707,7 +707,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/help.ts": {
-        "version": "517c20c5661dc507973f9d8253debf8fa1b40ad87731071cf5bbbf433e82025b",
+        "version": "22fd37cba2c14a2c44942123d84cc32f51c58477c6c5eed64b0791d5e7d4ece7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -857,7 +857,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/source.ts": {
-        "version": "4d7d54ad1188d164f44ee7db999bf2511371acb8f59f04623cd1a13eb58b9b3f",
+        "version": "a40345dc67384ff476644a4a3020cc881911d96f03fbcc38e837e4d341bb8c02",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1422,6 +1422,7 @@
       "./src/commands/source.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./src/functions/fetchcommand.ts",
+        "./src/functions/getfileextension.ts",
         "./src/interfaces/icommand.ts"
       ],
       "./src/commands/spotify.ts": [

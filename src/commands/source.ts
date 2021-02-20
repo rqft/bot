@@ -1,5 +1,6 @@
 import fs from "fs";
 import { fetchCommand } from "../functions/fetchCommand";
+import { getFileExtension } from "../functions/getFileExtension";
 import { ICommand } from "../interfaces/ICommand";
 module.exports = {
   name: "source",
@@ -21,7 +22,7 @@ module.exports = {
           `Configuration: \`\`\`json\n${JSON.stringify(cmd, null, 2)}\`\`\``
         );
         await message.channel.send(cmd.run.toString(), {
-          code: "typescript",
+          code: "ts",
           split: { char: "\n" },
         });
         break;
@@ -33,8 +34,9 @@ module.exports = {
           await message.channel.send(e, { code: "txt" });
         }
         if (!file) return await message.channel.send("Unknown file");
+        console.log(getFileExtension(args.slice(1).join(" ")));
         await message.channel.send(file.toString(), {
-          code: "typescript",
+          code: "ts",
           split: { char: "\n" },
         });
     }

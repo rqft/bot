@@ -46,7 +46,8 @@ module.exports = {
         if (command.cooldown) {
             data.push(`${"\u23F2\uFE0F"} **Cooldown**: ${getLongAgo_1.simpleShortGetLongAgo(Date.now() - command.cooldown * 1000)}`);
         }
-        if (command.restrictions) {
+        if (Object.keys(command.restrictions).length &&
+            command.restrictions) {
             const rest = [];
             if (command.restrictions.guildOnly)
                 rest.push("`Guild Only`");

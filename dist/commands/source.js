@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const fetchCommand_1 = require("../functions/fetchCommand");
+const getFileExtension_1 = require("../functions/getFileExtension");
 module.exports = {
     name: "source",
     restrictions: {
@@ -24,7 +25,7 @@ module.exports = {
                     return await message.channel.send("Unknown Command");
                 await message.channel.send(`Configuration: \`\`\`json\n${JSON.stringify(cmd, null, 2)}\`\`\``);
                 await message.channel.send(cmd.run.toString(), {
-                    code: "typescript",
+                    code: "ts",
                     split: { char: "\n" },
                 });
                 break;
@@ -38,8 +39,9 @@ module.exports = {
                 }
                 if (!file)
                     return await message.channel.send("Unknown file");
+                console.log(getFileExtension_1.getFileExtension(args.slice(1).join(" ")));
                 await message.channel.send(file.toString(), {
-                    code: "typescript",
+                    code: "ts",
                     split: { char: "\n" },
                 });
         }
