@@ -1,0 +1,99 @@
+web:
+  504698587221852172: admin # HighArcs#0001
+  533757461706964993: admin # insyri#7314
+  485489103870230528: editor # viirall#6276
+  344837487526412300: viewer # metal#0666
+commands:
+  prefix: ">"
+  overrides:
+    - { plugin.name: "utilities", out: { level: 10 } }
+    - { group: "clean", out: { level: 40 } }
+    - { name: "mute", out: { level: 40 } }
+nickname: i like yaml
+levels:
+  504698587221852172: 888 # HighArcs#0001 (User Permission Override)
+  801618235484930110: 100 # Administrators
+  788821931771428945: 10 # Trusted
+plugins:
+  admin:
+    persist:
+      roles: true
+      nickname: true
+      voice: false
+  censor:
+    levels:
+      50:
+        filter_zalgo: true
+        filter_invites: true
+        invites_guild_whitelist: [775743191441735712]
+        invites_whitelist: ["haru"]
+        #        invites_blacklist: []
+        filter_domains: true
+        #        domains_whitelist: []
+        domains_blacklist: ["pornhub.com"]
+        blocked_tokens: ["token1", "token2"]
+        blocked_words: ["fag", "nigga"]
+  infractions:
+    confirm_actions: true
+    confirm_actions_reaction: false
+    confirm_actions_expiry: 0
+    mute_role: 812783972052369450
+    reason_edit_level: 100
+    notify_actions: [WARN, KICK, BAN, TEMPBAN, SOFTBAN, UNMUTE, MUTE, TEMPMUTE]
+    show_moderator: true
+    silence_level: 100
+  modlog:
+    channels:
+      811678324391804968:
+        exclude: []
+        include: []
+        timestamps: true
+        compact: true
+        timezone: America/Chicago
+    ignored_users: [807056248679039047]
+    ignored_channels: []
+  music:
+    # Empty
+  reddit:
+    # Empty
+  spam:
+    levels:
+      30:
+        punishment: TEMPMUTE
+        punishment_duration: 600
+        clean: true
+        max_messages:
+          count: 7
+          interval: 10
+          clean: true
+        max_mentions:
+          count: 5
+          interval: 10
+          clean: true
+        max_links:
+          count: 5
+          interval: 30
+          clean: true
+        max_emojis:
+          count: 10
+          interval: 60
+          clean: true
+        max_newlines:
+          count: 60
+          interval: 120
+          clean: true
+        max_duplicates:
+          count: 5
+          interval: 20
+          clean: true
+        max_capitals:
+          count: 50
+          interval: 120
+          clean: true
+  starboard:
+    # Empty
+  tags:
+    max_tag_length: 1000
+    min_level_remove_others: 50
+  utility:
+    # Empty

@@ -71,7 +71,7 @@ client.on("error", (e) => discordjsError(e));
 client.on("message", async (message) => {
   const sexes = message.content.match(/sex/gi);
   if (sexes) {
-    if (message.author !== client.user) {
+    if (message.author !== client.user && !message.author.bot) {
       try {
         message.author.send(`No sex :bangbang:`);
       } catch (e) {}
@@ -79,6 +79,7 @@ client.on("message", async (message) => {
     }
     config.global.sexAlarm.forEach(async (e) => {
       if (client.user == message.author && message.channel.type == "dm") return;
+      if (message.author.bot) return;
       ((await client.channels.fetch(e)) as Discord.TextChannel)
         .send(`...`)
         .then((e) =>

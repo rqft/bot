@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const config_1 = require("../config");
+const api_1 = require("../functions/api");
 const getUser_1 = require("../functions/getUser");
 module.exports = {
     name: "fapi",
@@ -53,10 +54,15 @@ module.exports = {
             body: JSON.stringify(body),
         });
         await ret.delete();
-        if (!fAPI.ok)
-            return await message.channel.send(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
+        if (!fAPI.ok) {
+            await message.channel.send(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
                 .split("\n")
                 .map((e) => `- ${e}`)}\n\`\`\``);
+            const endpoints = await api_1.api("https://fapi.wrmsr.io/pathlist", "json");
+            return await message.channel.send(JSON.stringify(endpoints.Index), {
+                code: "json",
+            });
+        }
         await message.channel.send(``, {
             files: [
                 {

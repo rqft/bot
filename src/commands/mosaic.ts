@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { config } from "../config";
+import { api } from "../functions/api";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
 import { CustomEmojis } from "../maps/customEmojis";
@@ -53,14 +54,19 @@ module.exports = {
       body: JSON.stringify(body),
     });
     await ret.delete();
-    if (!fAPI.ok)
-      return await message.channel.send(
+    if (!fAPI.ok) {
+      await message.channel.send(
         `There was an error (code ${
           fAPI.status
         }). \`\`\`diff\n${fAPI.statusText
           .split("\n")
           .map((e) => `- ${e}`)}\n\`\`\``
       );
+      const endpoints = await api("https://fapi.wrmsr.io/pathlist", "json");
+      return await message.channel.send(JSON.stringify(endpoints.Index), {
+        code: "json",
+      });
+    }
 
     await message.channel.send(``, {
       files: [

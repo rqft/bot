@@ -347,7 +347,7 @@
         "affectsGlobalScope": true
       },
       "./src/index.ts": {
-        "version": "a5de4d782082f2156357ef5c4159dedbba5bab5dd2fb24a2be4ba513f6346034",
+        "version": "40512c2d26b124c828300ee69163ceafd4b22d2ce13ca8514f96e0f6c1e9ad27",
         "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
         "affectsGlobalScope": false
       },
@@ -662,8 +662,8 @@
         "affectsGlobalScope": false
       },
       "./src/functions/api.ts": {
-        "version": "f54653ddcbc7b0277d4fff82060d3dd6a29c4524e1a3c14bd31d29896ddb6e98",
-        "signature": "1e4e36ba01f0614f6943b91331d0a85ba70961c046fda3c3905fb9bf16b79d85",
+        "version": "d892035daa78520bded2065eb91c2d02e24df0f8f5268fef014305b617736b4f",
+        "signature": "db8ff1f573a174e2c00c0cc5645df7d32528f96450c169012c042716d3be02b3",
         "affectsGlobalScope": false
       },
       "./src/functions/arraytochunks.ts": {
@@ -732,7 +732,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/mosaic.ts": {
-        "version": "9edf1a3e19d046aa1e2b9f2590f36cffefd948c98541ed869bb32719c2f4e26b",
+        "version": "d8c14996e153df0840e0a43e60950bb9480049e595e12aa52171538d50a6d6f9",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1365,6 +1365,7 @@
       "./src/commands/mosaic.ts": [
         "./node_modules/@types/node-fetch/index.d.ts",
         "./src/config.ts",
+        "./src/functions/api.ts",
         "./src/functions/getuser.ts",
         "./src/interfaces/icommand.ts",
         "./src/maps/customemojis.ts"

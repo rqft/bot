@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 export async function api(
   url: string,
   type: "json" | "text" | "buffer" | "arrayBuffer" = "json"
-) {
+): Promise<ArrayBuffer | Buffer | any | string> {
   const fetched = await fetch(url);
   switch (type) {
     case "arrayBuffer":
