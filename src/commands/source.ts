@@ -27,6 +27,7 @@ module.exports = {
         });
         break;
       case "file":
+        //
         var file;
         try {
           file = fs.readFileSync(args.slice(1).join(" "));
