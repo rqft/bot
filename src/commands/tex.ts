@@ -2,12 +2,14 @@ import fetch from "node-fetch";
 import { is_eval } from "../functions/imagescript_eval";
 import { pullCodeFromBlock } from "../functions/pullCodeFromBlock";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 module.exports = {
   name: "latex",
   aliases: ["tex"],
   description: "render LaTeX code",
   usage: "<code: string>",
   async run(message, args) {
+    const ret = await message.channel.send(CustomEmojis.TYPING);
     const query = pullCodeFromBlock(args.join(" "));
     const options = {
       formula: query,
@@ -28,6 +30,7 @@ module.exports = {
         .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
         .join("&"),
     });
+    await ret.delete();
     if (!res.ok)
       return message.channel.send(
         `An error occurred: \`\`\`\n${await res.text()}\`\`\``

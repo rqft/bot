@@ -3,11 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const getUser_1 = require("../functions/getUser");
 const makeCodeblock_1 = require("../functions/makeCodeblock");
 module.exports = {
-    name: "ban",
+    name: "kick",
     restrictions: {
         permissions: ["KICK_MEMBERS"],
         guildOnly: true,
     },
+    description: "kick someone",
     usage: "<user: User> [reason: string]",
     async run(message, args) {
         const targetUser = await getUser_1.getUser(message, args, false, 0);

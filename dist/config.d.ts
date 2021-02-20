@@ -3,6 +3,7 @@ export declare const config: {
         keys: {
             wolframAlpha: string;
             fAPI: string;
+            inStatus: string;
         };
         mainServerID: string;
         locale: string;

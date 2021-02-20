@@ -3,6 +3,7 @@ export const config = {
     keys: {
       wolframAlpha: "AHE6V9-WHRE7W64PX",
       fAPI: "129edfb95ed5c6b24425e5d713317a60",
+      inStatus: "e62546d6d0d8416fece37a165d6736f3",
     },
     mainServerID: "775743191441735712",
     locale: "en-US",

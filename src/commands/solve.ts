@@ -3,6 +3,7 @@ import { config } from "../config";
 import { api } from "../functions/api";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 
 module.exports = {
   name: "solve",
@@ -13,6 +14,7 @@ module.exports = {
   usesArgs: true,
   usage: "<expression: MathString>",
   async run(message, args) {
+    const ret = await message.channel.send(CustomEmojis.TYPING);
     const query = `solve ${args.join(" ")}`;
     const url = `http://api.wolframalpha.com/v2/query?appid=${
       config.global.keys.wolframAlpha
@@ -45,6 +47,7 @@ module.exports = {
       emb.addField("Answer", `\`${ex}\``);
     }
     emb.setColor(Color.embed);
+    await ret.delete();
     await message.channel.send(emb);
   },
 } as ICommand;

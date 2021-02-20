@@ -3,11 +3,12 @@ import { makeCodeblock } from "../functions/makeCodeblock";
 import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
-  name: "ban",
+  name: "kick",
   restrictions: {
     permissions: ["KICK_MEMBERS"],
     guildOnly: true,
   },
+  description: "kick someone",
   usage: "<user: User> [reason: string]",
   async run(message, args) {
     const targetUser = await getUser(message, args, false, 0);
