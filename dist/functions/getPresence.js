@@ -23,8 +23,9 @@ function getPresence(user, maxTextLength = 45) {
         }
         if (item.type == "PLAYING") {
             const text = item.details ? `${item.details} - ` : "";
+            const state = item.state ? `\n┗— ${item.state}` : "";
             const name = item.name;
-            statuses.push(`${"\uD83C\uDFAE"} ${text}**${name}**`);
+            statuses.push(`${"\uD83C\uDFAE"} ${text}**${name}**${state}`);
         }
         if (item.type == "LISTENING") {
             const text = item.details ? `${item.details}` : "";
@@ -35,13 +36,15 @@ function getPresence(user, maxTextLength = 45) {
         }
         if (item.type == "WATCHING") {
             const text = item.details ? `${item.details} - ` : "";
+            const state = item.state ? `\n┗— ${item.state}` : "";
             const name = item.name;
-            statuses.push(`${"\uD83D\uDCFA"} ${text}**${name}**`);
+            statuses.push(`${"\uD83D\uDCFA"} ${text}**${name}**${state}`);
         }
         if (item.type == "STREAMING") {
             const text = item.details ? `${item.details} - ` : "";
+            const state = item.state ? `\n┗— ${item.state}` : "";
             const name = item.name;
-            statuses.push(`${"\uD83D\uDCE1"} ${text}**${name}**`);
+            statuses.push(`${"\uD83D\uDCE1"} ${text}**${name}**${state}`);
         }
     }
     return `${stat}${custom ? `\n${custom}` : ""}${statuses.length !== 0 ? `\n${statuses.sort().join("\n")}` : ""}`;

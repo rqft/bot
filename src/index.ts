@@ -1,7 +1,7 @@
 import Discord from "discord.js";
 import { config } from "./config";
 import { formatID } from "./functions/formatID";
-import { CMDFilesPath } from "./globals";
+import { CMDFilesPath, regexes } from "./globals";
 import { commandHandler } from "./handlers/commandHandler";
 import { discordjsError } from "./handlers/discordjsError";
 import { fetchCommandFiles } from "./handlers/fetchCommandFiles";
@@ -70,7 +70,7 @@ client.once("ready", async () => {
 });
 client.on("error", (e) => discordjsError(e));
 client.on("message", async (message) => {
-  const sexes = message.content.match(/sex/gi);
+  const sexes = message.content.match(regexes.sex);
   if (sexes) {
     if (message.author !== client.user && !message.author.bot) {
       try {
@@ -78,6 +78,7 @@ client.on("message", async (message) => {
       } catch (e) {}
       await message.react("😳");
     }
+
     config.global.sexAlarm.forEach(async (e) => {
       if (client.user == message.author && message.channel.type == "dm") return;
       if (message.author.bot) return;

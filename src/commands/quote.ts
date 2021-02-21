@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import { config } from "../config";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 module.exports = {
   name: "quote",
   usesArgs: true,
@@ -9,6 +10,7 @@ module.exports = {
   usage: "<user: User> <content: text>",
   description: "quote people",
   async run(message, args) {
+    const ret = await message.reply(CustomEmojis.GUI_TYPING);
     const user = (await getUser(message, args, false, 0)) ?? message.author;
     const baseURL = "https://fapi.wrmsr.io/quote";
     const headers = {
@@ -47,6 +49,7 @@ module.exports = {
       headers: headers,
       body: JSON.stringify(body),
     });
+    await ret.delete();
     if (!fAPI.ok)
       return await message.reply(
         `There was an error (code ${

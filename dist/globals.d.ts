@@ -12,3 +12,6 @@ export declare enum SpecialIDs {
     DISCORD = "643945264868098049",
     CLYDE = "1"
 }
+export declare const regexes: {
+    sex: RegExp;
+};

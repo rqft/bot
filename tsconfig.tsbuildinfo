@@ -222,8 +222,8 @@
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
-        "version": "ec582c240e392b87917000a5629b236e3895f26ec1d80332896494e9ee898928",
-        "signature": "dbb0e74fa2ee8a7b58b8a1f45f2f2192948e77fb3bbfad1a5dac726f9c350118",
+        "version": "ee170401ba056cbfd1321b11d2cd20c93c690f8bb96e698698d234cc3fc24f93",
+        "signature": "f65d35c66c7fd74018f52148d2c8768577ca7b65daf0bb9ad49672d606d75d59",
         "affectsGlobalScope": false
       },
       "./node_modules/@discordjs/collection/dist/index.d.ts": {
@@ -347,7 +347,7 @@
         "affectsGlobalScope": true
       },
       "./src/index.ts": {
-        "version": "ad9b83573650b1fbdeae401dc2a7fd84a901dfc4d4bbba2fd246d4c3b004f311",
+        "version": "a49faddb71732c5b760932dea49728749c75ad5ade7f9e4bb5fcba1e8e8b5825",
         "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
         "affectsGlobalScope": false
       },
@@ -372,7 +372,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/allow.ts": {
-        "version": "b0aef041f04a62da16abc55235f89cb3dc8849e5eefe039c414d873ba42a31b9",
+        "version": "6fcbd0c50fedbce67f1b109511324b240cbf720d48650fee319a600ddcdd7cd1",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -777,7 +777,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getpresence.ts": {
-        "version": "f7c1b2779ea8d53f782d3a9e949dc820f1eaf39214f8e45fe2703a2bee8ef5b6",
+        "version": "4a02d4360a9d2aea33675e7927deceb4cf4dd3c1b2399bd081bded7c5fd27671",
         "signature": "e431ec1919c452fa62d687b0e95ad22f94c9aac5058c8ad9cc695a8804f8cac8",
         "affectsGlobalScope": false
       },
@@ -802,7 +802,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/quote.ts": {
-        "version": "3140525313e423c53707b953e427f8ac63764d237e61ab710688516400098afe",
+        "version": "c0ced7412d5ebab0839710f1f753516bdb5fdabfd00e11ab481b6acc1481c0b9",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -962,7 +962,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "37928947c284388de27671c04ce456ef342a2e58860f47ef11d3a213f90aec12",
+        "version": "95a3975acfd3704ae96432d91ed84dd7b2b659f7e24cf89959fd2af09ac396a9",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1402,7 +1402,8 @@
         "./node_modules/@types/node-fetch/index.d.ts",
         "./src/config.ts",
         "./src/functions/getuser.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/interfaces/icommand.ts",
+        "./src/maps/customemojis.ts"
       ],
       "./src/commands/remind.ts": [
         "./src/functions/formattimestamp.ts",

@@ -13,6 +13,7 @@ module.exports = {
     usage: "<user: User> <content: text>",
     description: "quote people",
     async run(message, args) {
+        const ret = await message.reply("<a:IconGui_Typing:798624244351107092>");
         const user = (await getUser_1.getUser(message, args, false, 0)) ?? message.author;
         const baseURL = "https://fapi.wrmsr.io/quote";
         const headers = {
@@ -51,6 +52,7 @@ module.exports = {
             headers: headers,
             body: JSON.stringify(body),
         });
+        await ret.delete();
         if (!fAPI.ok)
             return await message.reply(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
                 .split("\n")

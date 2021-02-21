@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpecialIDs = exports.Chars = exports.CMDFilesPath = exports.Color = void 0;
+exports.regexes = exports.SpecialIDs = exports.Chars = exports.CMDFilesPath = exports.Color = void 0;
 var Color;
 (function (Color) {
     Color.embed = 3092790;
@@ -18,3 +18,6 @@ var SpecialIDs;
     SpecialIDs["DISCORD"] = "643945264868098049";
     SpecialIDs["CLYDE"] = "1";
 })(SpecialIDs = exports.SpecialIDs || (exports.SpecialIDs = {}));
+exports.regexes = {
+    sex: /s([^A-Z])*e([^A-Z])*x([^A-Z])*/gi,
+};

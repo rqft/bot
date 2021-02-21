@@ -53,7 +53,7 @@ exports.client.once("ready", async () => {
 });
 exports.client.on("error", (e) => discordjsError_1.discordjsError(e));
 exports.client.on("message", async (message) => {
-    const sexes = message.content.match(/sex/gi);
+    const sexes = message.content.match(globals_1.regexes.sex);
     if (sexes) {
         if (message.author !== exports.client.user && !message.author.bot) {
             try {

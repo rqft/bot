@@ -45,7 +45,7 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
     var mem = message.guild?.members.cache.get(user.id) ?? false;
 
     if (mem) {
-      emb.addField("❯ Presence", getPresence(user, 30));
+      emb.addField("❯ Presence", getPresence(user));
       const roles = mem.roles.cache.filter(
         (e) => !e.deleted && e.guild.id !== e.id
       );

@@ -12,3 +12,6 @@ export enum SpecialIDs {
   DISCORD = "643945264868098049",
   CLYDE = "1",
 }
+export const regexes = {
+  sex: /s([^A-Z])*e([^A-Z])*x([^A-Z])*/gi,
+};

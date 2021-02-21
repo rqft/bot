@@ -9,7 +9,7 @@ module.exports = {
     restrictions: {},
     usage: `<type: "allow | "deny"> <channel: TextChannel> <user: User>`,
     async run(message, args) {
-        const user = await getUser_1.getUser(message, args, false, 2);
+        const user = await getUser_1.getUser(message, args, true, 2);
         if (!user || !message.guild?.members.cache.has(user.id))
             return await message.reply("no");
         const channel = getChannel_1.getChannel(message, args, false, 1);

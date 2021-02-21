@@ -27,8 +27,9 @@ export function getPresence(user: User, maxTextLength: number = 45) {
     }
     if (item.type == "PLAYING") {
       const text = item.details ? `${item.details} - ` : "";
+      const state = item.state ? `\n┗— ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${decor.Emojis.VIDEO_GAME} ${text}**${name}**`);
+      statuses.push(`${decor.Emojis.VIDEO_GAME} ${text}**${name}**${state}`);
     }
     if (item.type == "LISTENING") {
       const text = item.details ? `${item.details}` : "";
@@ -43,13 +44,15 @@ export function getPresence(user: User, maxTextLength: number = 45) {
     }
     if (item.type == "WATCHING") {
       const text = item.details ? `${item.details} - ` : "";
+      const state = item.state ? `\n┗— ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${decor.Emojis.TV} ${text}**${name}**`);
+      statuses.push(`${decor.Emojis.TV} ${text}**${name}**${state}`);
     }
     if (item.type == "STREAMING") {
       const text = item.details ? `${item.details} - ` : "";
+      const state = item.state ? `\n┗— ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${decor.Emojis.SATELLITE} ${text}**${name}**`);
+      statuses.push(`${decor.Emojis.SATELLITE} ${text}**${name}**${state}`);
     }
   }
   return `${stat}${custom ? `\n${custom}` : ""}${
