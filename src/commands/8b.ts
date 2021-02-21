@@ -15,7 +15,8 @@ module.exports = {
     await message.reply(
       new MessageEmbed({
         description: `**You Asked**: ${query}
-**Response**: ${response}`,
+**Response**
+┗— ${response}`,
         color: Color.embed,
       })
     );

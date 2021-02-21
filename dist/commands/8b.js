@@ -14,7 +14,8 @@ module.exports = {
         const response = random_1.random(_8ball_1.responses);
         await message.reply(new discord_js_1.MessageEmbed({
             description: `**You Asked**: ${query}
-**Response**: ${response}`,
+**Response**
+┗— ${response}`,
             color: globals_1.Color.embed,
         }));
     },
