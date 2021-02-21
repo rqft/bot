@@ -23,7 +23,6 @@ export const client = new Discord.Client({
     },
   },
   allowedMentions: {
-    parse: ["everyone", "roles", "users"],
     roles: [],
     users: [],
   },
@@ -80,21 +79,17 @@ client.on("message", async (message) => {
     config.global.sexAlarm.forEach(async (e) => {
       if (client.user == message.author && message.channel.type == "dm") return;
       if (message.author.bot) return;
-      ((await client.channels.fetch(e)) as Discord.TextChannel)
-        .send(`...`)
-        .then((e) =>
-          e.edit(
-            `${message.author} ${formatID(message.author.id)} has **sexed** __${
-              sexes.length
-            } time${sexes.length == 1 ? "" : "s"}__ in ${
-              message.guild ? message.channel : "DMs"
-            } ${formatID(message.channel.id)} ${
-              message.guild && message.guild.id !== config.global.mainServerID
-                ? `on \`${message.guild.name}\` ${formatID(message.guild.id)}`
-                : ""
-            }`
-          )
-        );
+      ((await client.channels.fetch(e)) as Discord.TextChannel).send(
+        `${message.author} ${formatID(message.author.id)} has **sexed** __${
+          sexes.length
+        } time${sexes.length == 1 ? "" : "s"}__ in ${
+          message.guild ? message.channel : "DMs"
+        } ${formatID(message.channel.id)} ${
+          message.guild && message.guild.id !== config.global.mainServerID
+            ? `on \`${message.guild.name}\` ${formatID(message.guild.id)}`
+            : ""
+        }`
+      );
     });
   }
   await commandHandler(message);
