@@ -19,7 +19,7 @@ profileBadgeMap.set("EARLY_SUPPORTER", {
   icon: CustomEmojis.BADGE_EARLY_SUPPORTER,
   text: "Early Supporter",
 });
-profileBadgeMap.set("EARLY_VERIFIED_DEVELOPER", {
+profileBadgeMap.set("EARLY_VERIFIED_BOT_DEVELOPER", {
   icon: CustomEmojis.BADGE_BOT_DEVELOPER,
   text: "Early Verified Developer",
 });
@@ -43,10 +43,6 @@ profileBadgeMap.set("PARTNERED_SERVER_OWNER", {
   icon: CustomEmojis.BADGE_PARTNER,
   text: "Partnered Server Owner",
 });
-profileBadgeMap.set("DISCORD_PARTNER", {
-  icon: CustomEmojis.BADGE_OLD_PARTNER,
-  text: "Discord Partner",
-});
 profileBadgeMap.set("SYSTEM", {
   icon: CustomEmojis.BADGE_STAFF,
   text: "System",
@@ -58,9 +54,5 @@ profileBadgeMap.set("TEAM_USER", {
 profileBadgeMap.set("VERIFIED_BOT", {
   icon: CustomEmojis.BADGE_VERIFIED_BOT,
   text: "Verified Bot",
-});
-profileBadgeMap.set("VERIFIED_DEVELOPER", {
-  icon: CustomEmojis.BADGE_BOT_DEVELOPER,
-  text: "Verified Developer",
 });
 export { profileBadgeMap };

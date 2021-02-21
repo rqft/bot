@@ -9,8 +9,9 @@ export async function getUser(
   argument: number = 0
 ) {
   var res =
-    (useJoin ? args.join(" ")?.normalize()! : args[argument]?.normalize()!) ??
-    message.author.id;
+    (useJoin
+      ? args.slice(argument).join(" ")?.normalize()!
+      : args[argument]?.normalize()!) ?? message.author.id;
   if (res?.toLowerCase() == "discord") res = SpecialIDs.DISCORD;
   if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
     res = message.author.id;

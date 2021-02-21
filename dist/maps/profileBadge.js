@@ -19,7 +19,7 @@ profileBadgeMap.set("EARLY_SUPPORTER", {
     icon: "<:IconBadge_EarlySupporter:798624232471920680>",
     text: "Early Supporter",
 });
-profileBadgeMap.set("EARLY_VERIFIED_DEVELOPER", {
+profileBadgeMap.set("EARLY_VERIFIED_BOT_DEVELOPER", {
     icon: "<:IconBadge_BotDeveloper:798624232443478037>",
     text: "Early Verified Developer",
 });
@@ -43,10 +43,6 @@ profileBadgeMap.set("PARTNERED_SERVER_OWNER", {
     icon: "<:IconBadge_Partner:798624238939406416>",
     text: "Partnered Server Owner",
 });
-profileBadgeMap.set("DISCORD_PARTNER", {
-    icon: "<:IconBadge_OldPartner:798624234305093672>",
-    text: "Discord Partner",
-});
 profileBadgeMap.set("SYSTEM", {
     icon: "<:IconBadge_Staff:798624241595318272>",
     text: "System",
@@ -58,8 +54,4 @@ profileBadgeMap.set("TEAM_USER", {
 profileBadgeMap.set("VERIFIED_BOT", {
     icon: "<:IconBadge_VerifiedBot:798624262533283865>",
     text: "Verified Bot",
-});
-profileBadgeMap.set("VERIFIED_DEVELOPER", {
-    icon: "<:IconBadge_BotDeveloper:798624232443478037>",
-    text: "Verified Developer",
 });

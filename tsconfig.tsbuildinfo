@@ -351,6 +351,21 @@
         "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
         "affectsGlobalScope": false
       },
+      "./src/functions/random.ts": {
+        "version": "816cb41aff4a25faf9fe1aa56060f3e02dc08c8d5e39e65cb20d65563069550d",
+        "signature": "844658ea9f52ae5becf093b831b2b9e3f6298ffd42cc79618d029001d02f74e5",
+        "affectsGlobalScope": false
+      },
+      "./src/maps/8ball.ts": {
+        "version": "f0b7b1296cee3deadc1c33fa33cb051237af1d015497456703c683afd0a8eb4c",
+        "signature": "e6cdba8d449d85663cd5aa61df9baf455f8b6bb3ca1aa650b90d336690281782",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/8b.ts": {
+        "version": "55811c1ce0e581be6591423b2ad9a2e4c0f375d7f635744afac2cd87436c1d6d",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/functions/getlongago.ts": {
         "version": "a0190a22cc3966641c32f4291c5dc186334c7caba9b5da0558cb54ae41bce8b2",
         "signature": "dafb316071d93b89acafd6dbef0dd1854d64488d8b7103ad7be63f5c3a128dbd",
@@ -367,12 +382,12 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getuser.ts": {
-        "version": "6e023b6bb08c1aeb3e5a52085664043a496b6c03da3dfd499ef4dcf0c91400f3",
+        "version": "c9014050144bb5d662338588e7e2dbdf30e9f0dd5c02267aff565b1113e4961d",
         "signature": "46cd5682fdb82a3cee4a9f3bf7e32150b7752c0570a7ddba4fadd70919878fd1",
         "affectsGlobalScope": false
       },
       "./src/commands/allow.ts": {
-        "version": "6fcbd0c50fedbce67f1b109511324b240cbf720d48650fee319a600ddcdd7cd1",
+        "version": "fadc89c868fb18448a838e7cf432a6694e1d1bc72ddf3d155ab9404cb718f5c0",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -952,7 +967,7 @@
         "affectsGlobalScope": false
       },
       "./src/maps/profilebadge.ts": {
-        "version": "e59aee1c7f9e4943f4cf9a7773a2041b2ab8b88fdc9ded9e790e4de93d97e199",
+        "version": "54f6ea7d37ee718914d536bf524a25a26d896d8ac05194c0e6406b68c66dcee6",
         "signature": "ecf743a7a2a0b9f586bce49f0e02ce7d0c39b496b4b9d6de8c2a00d76490b8be",
         "affectsGlobalScope": false
       },
@@ -1256,6 +1271,13 @@
         "./node_modules/@types/node/http.d.ts",
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./src/commands/8b.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/random.ts",
+        "./src/globals.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/maps/8ball.ts"
       ],
       "./src/commands/about.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -2078,6 +2100,7 @@
       "./node_modules/@types/node/zlib.d.ts",
       "./node_modules/discord.js/typings/index.d.ts",
       "./node_modules/form-data/index.d.ts",
+      "./src/commands/8b.ts",
       "./src/commands/about.ts",
       "./src/commands/allow.ts",
       "./src/commands/avatar.ts",
@@ -2146,6 +2169,7 @@
       "./src/functions/owoify.ts",
       "./src/functions/parsetimestring.ts",
       "./src/functions/pullcodefromblock.ts",
+      "./src/functions/random.ts",
       "./src/functions/shuffle.ts",
       "./src/functions/spotifysearch.ts",
       "./src/globals.ts",
@@ -2175,6 +2199,7 @@
       "./src/logs/logcommanderror.ts",
       "./src/logs/logcommanduse.ts",
       "./src/logs/logerror.ts",
+      "./src/maps/8ball.ts",
       "./src/maps/botbadge.ts",
       "./src/maps/customemojis.ts",
       "./src/maps/emojienum.ts",
@@ -2182,35 +2207,7 @@
       "./src/maps/guildvoiceregion.ts",
       "./src/maps/languagecodes.json",
       "./src/maps/logs.ts",
-      [
-        "./src/maps/profilebadge.ts",
-        [
-          {
-            "file": "./src/maps/profilebadge.ts",
-            "start": 712,
-            "length": 26,
-            "code": 2345,
-            "category": 1,
-            "messageText": "Argument of type '\"EARLY_VERIFIED_DEVELOPER\"' is not assignable to parameter of type 'UserFlagsString'."
-          },
-          {
-            "file": "./src/maps/profilebadge.ts",
-            "start": 1472,
-            "length": 17,
-            "code": 2345,
-            "category": 1,
-            "messageText": "Argument of type '\"DISCORD_PARTNER\"' is not assignable to parameter of type 'UserFlagsString'."
-          },
-          {
-            "file": "./src/maps/profilebadge.ts",
-            "start": 1888,
-            "length": 20,
-            "code": 2345,
-            "category": 1,
-            "messageText": "Argument of type '\"VERIFIED_DEVELOPER\"' is not assignable to parameter of type 'UserFlagsString'."
-          }
-        ]
-      ],
+      "./src/maps/profilebadge.ts",
       "./src/maps/slurs.ts",
       "./src/maps/userstatus.ts",
       "./src/types/activitytype.ts",
