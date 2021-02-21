@@ -22,7 +22,7 @@ module.exports = {
         : ".png";
       console.log(args[0]?.replace(/[<>]/g, ""));
       const baseURL = "https://cdn.discordapp.com/emojis/";
-      return await message.channel.send("", {
+      return await message.reply("", {
         files: [
           {
             name: "emoji" + extension,
@@ -51,6 +51,6 @@ ${decor.Emojis.COMPUTER} **Uploaded to** \`${
     );
 
     emb.setThumbnail(e.url);
-    return await message.channel.send(emb);
+    return await message.reply(emb);
   },
 } as ICommand;

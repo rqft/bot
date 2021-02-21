@@ -35,7 +35,7 @@ module.exports = {
         "Help Menu",
         client.user?.avatarURL() ?? client.user?.defaultAvatarURL
       );
-      return message.channel.send(emb);
+      return message.reply(emb);
     }
 
     const name = args![0].toLowerCase();
@@ -46,7 +46,7 @@ module.exports = {
       ) as ICommand);
 
     if (!command) {
-      return message.channel.send("that's not a valid command!");
+      return message.reply("that's not a valid command!");
     }
 
     data.push(`${decor.Emojis.NAME_BADGE} **Name:** \`${command.name}\``);
@@ -103,6 +103,6 @@ module.exports = {
       "Help Menu",
       client.user?.avatarURL() ?? client.user?.defaultAvatarURL
     );
-    message.channel.send(emb);
+    message.reply(emb);
   },
 } as ICommand;

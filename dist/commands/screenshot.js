@@ -13,7 +13,7 @@ module.exports = {
     usage: "<url: URL>",
     async run(message, args) {
         message.suppressEmbeds(true);
-        const ret = await message.channel.send("<a:IconGui_Typing:798624244351107092>");
+        const ret = await message.reply("<a:IconGui_Typing:798624244351107092>");
         const url = args[0];
         const waitTime = parseInt(args[1] ?? "500");
         const baseURL = "https://fapi.wrmsr.io/screenshot";
@@ -39,7 +39,7 @@ module.exports = {
         });
         await ret.delete();
         if (!fAPI.ok)
-            return await message.channel.send(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
+            return await message.reply(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
                 .split("\n")
                 .map((e) => `- ${e}`)}\n\`\`\``);
         await message.reply(`here is your screenshot`, {

@@ -15,7 +15,7 @@ module.exports = {
     async run(message, args) {
         const guild = await getGuild_1.getGuild(message, args, true);
         if (!guild)
-            return await message.channel.send("Unknown Server");
+            return await message.reply("Unknown Server");
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
         emb.setThumbnail(guild.iconURL({ dynamic: true }));
@@ -38,6 +38,6 @@ ${"<:IconGui_Members:798624241868079104>"} **Boosters (${boosters.size})**: ${bo
         }
         emb.addField("❯ Features", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.Color.embed);
-        await message.channel.send(emb);
+        await message.reply(emb);
     },
 };

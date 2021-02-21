@@ -18,6 +18,7 @@ require("./logging-test");
 const TerminalColors_1 = require("./types/TerminalColors");
 setUserPresence_1.setUserPresence();
 exports.client = new discord_js_1.default.Client({
+    intents: discord_js_1.default.Intents.NON_PRIVILEGED + discord_js_1.default.Intents.FLAGS.GUILD_PRESENCES,
     ws: {
         properties: {
             $browser: config_1.config.bot.presence.browser,

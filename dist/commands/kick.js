@@ -14,7 +14,7 @@ module.exports = {
         const targetUser = await getUser_1.getUser(message, args, false, 0);
         if (!targetUser)
             return await message.channel.send("You need to supply a **kickable** user!");
-        const member = message.guild?.member(targetUser);
+        const member = message.guild?.members.cache.get(targetUser.id);
         if (!member)
             return await message.channel.send("You need to supply a **kickable** user!");
         const reason = args[1] ? args.slice(1).join(" ") : undefined;

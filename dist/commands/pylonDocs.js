@@ -8,6 +8,6 @@ module.exports = {
     description: "get stuff from pylon docs",
     async run(message, args) {
         const resp = await buildDocsEmbed_1.lookup(args.join(" "), 0);
-        await message.channel.send(buildDocsEmbed_1.buildDocsEmbed(resp, 15));
+        await message.reply(buildDocsEmbed_1.buildDocsEmbed(resp, 15));
     },
 };

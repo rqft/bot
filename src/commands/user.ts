@@ -19,7 +19,7 @@ module.exports = {
   async run(message, args: string[]) {
     const user = await getUser(message, args, true);
     if (!user) {
-      return await message.channel.send(`${decor.Emojis.WARNING} Unknown User`);
+      return await message.reply(`${decor.Emojis.WARNING} Unknown User`);
     }
     const emb = new MessageEmbed();
     emb.setAuthor(
@@ -42,7 +42,7 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         user.createdTimestamp
       )} ago ${formatTimestamp(user.createdAt)}`
     );
-    var mem = message.guild?.member(user) ?? false;
+    var mem = message.guild?.members.cache.get(user.id) ?? false;
 
     if (mem) {
       emb.addField("❯ Presence", getPresence(user, 30));
@@ -93,6 +93,6 @@ ${
     emb.addField("❯ Profile Badges", getProfileBadges(user).join("\n"));
     emb.addField("❯ Bot Badges", getBotBadges(user));
     emb.setColor(Color.embed);
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

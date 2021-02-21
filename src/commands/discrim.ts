@@ -13,7 +13,7 @@ module.exports = {
       .filter((e) => e.discriminator.includes(discrim))
       .array()
       .map((e) => `**${e.username}**#${e.discriminator}`);
-    await message.channel.send(
+    await message.reply(
       new MessageEmbed({
         title: `Users with discrim #${discrim}`,
         description:

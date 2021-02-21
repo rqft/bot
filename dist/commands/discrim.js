@@ -12,7 +12,7 @@ module.exports = {
             .filter((e) => e.discriminator.includes(discrim))
             .array()
             .map((e) => `**${e.username}**#${e.discriminator}`);
-        await message.channel.send(new discord_js_1.MessageEmbed({
+        await message.reply(new discord_js_1.MessageEmbed({
             title: `Users with discrim #${discrim}`,
             description: `${users.length} Users Found\n\n` + users.length
                 ? users.join("\n")

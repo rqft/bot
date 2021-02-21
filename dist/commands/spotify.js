@@ -12,7 +12,7 @@ module.exports = {
         const search = args.join(" ");
         const track = await spotifySearch_1.spotifySearch(search);
         if (!track) {
-            return await message.channel.send("Not found");
+            return await message.reply("Not found");
         }
         const embed = new discord_js_1.MessageEmbed();
         embed.setAuthor(track.artists[0].name, track.album.icon.url);
@@ -29,6 +29,6 @@ Created **${getLongAgo_1.simpleGetLongAgo(+new Date(track.album.date))} ago** **
             .map((e) => `[\`${e.name}\`](https://open.spotify.com/artist/${e.id})`)
             .join(", "));
         embed.setColor(globals_1.Color.spotify);
-        await message.channel.send(embed);
+        await message.reply(embed);
     },
 };

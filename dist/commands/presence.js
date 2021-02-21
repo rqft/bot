@@ -12,7 +12,7 @@ module.exports = {
     async run(message, args) {
         const target = (await getUser_1.getUser(message, args, true)) ?? message.author;
         const pres = getPresence_1.getPresence(target, 8888);
-        message.channel.send(new discord_js_1.MessageEmbed({
+        message.reply(new discord_js_1.MessageEmbed({
             description: pres,
             title: `Presence of ${target.tag}`,
             color: globals_1.Color.embed,

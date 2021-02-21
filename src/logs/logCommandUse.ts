@@ -9,7 +9,7 @@ export function logCommandUse(message: Discord.Message) {
   config.logs.commands.onError.keys.forEach((e) => {
     const ch = client.channels.cache.get(e) as Discord.TextChannel;
     ch.send(
-      `:pencil: **${message.author.tag}** ${formatID(
+      `:pencil: **${message.author}** ${formatID(
         message.author.id
       )} used command \`${message.cleanContent}\` in ${channelName} ${formatID(
         message.channel.id

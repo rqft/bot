@@ -19,7 +19,7 @@ module.exports = {
       comment: comment,
       expiry: Date.now() + ms,
     };
-    await message.channel.send(
+    await message.reply(
       `${decor.Emojis.WHITE_CHECK_MARK} I will remind you in ${simpleGetLongAgo(
         Date.now() - ms
       )} ${formatTimestamp(query.expiry)}`

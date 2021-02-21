@@ -12,7 +12,7 @@ export function logBlacklistedGuildOwner(
     ch.send(
       `:warning: Blacklisted Guild \`${guild.name}\` ${formatID(
         guild.id
-      )} owned by **${user.tag}** tried to add the bot`
+      )} owned by **${user}** tried to add the bot`
     );
   });
 }

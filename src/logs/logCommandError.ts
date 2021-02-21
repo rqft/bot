@@ -9,7 +9,7 @@ export function logCommandError(message: Discord.Message, error: Error) {
     const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
     const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
     ch.send(
-      `:x: **${message.author.tag}** ${formatID(
+      `:x: **${message.author}** ${formatID(
         message.author.id
       )} tried to use command \`${
         message.cleanContent

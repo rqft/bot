@@ -12,7 +12,7 @@ module.exports = {
   description: "Info about the bot",
   usage: "",
   async run(message) {
-    message.channel.send(
+    message.reply(
       new MessageEmbed({
         color: Color.embed,
         fields: [

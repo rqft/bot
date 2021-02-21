@@ -16,6 +16,6 @@ module.exports = {
         emb.addField("Result", res);
         emb.setFooter(`(Done in ${Date.now() - message.createdTimestamp}ms)`);
         emb.setColor(globals_1.Color.embed);
-        await message.channel.send(emb);
+        await message.reply(emb);
     },
 };

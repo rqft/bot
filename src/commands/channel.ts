@@ -18,7 +18,7 @@ module.exports = {
   description: "get channel info",
   async run(message, args: string[]) {
     const channel = getChannel(message, args);
-    if (!channel) return await message.channel.send("Unknown Channel!");
+    if (!channel) return await message.reply("Unknown Channel!");
     const emb = new MessageEmbed();
     emb.setAuthor(
       `${channel.name}`,
@@ -49,6 +49,6 @@ ${decor.Emojis.JIGSAW} **Type**: ${capitalizeWords(channel.type)}`
         : "None."
     );
     emb.setColor(Color.embed);
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

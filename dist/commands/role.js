@@ -17,7 +17,7 @@ module.exports = {
     async run(message, args) {
         const role = getRole_1.getRole(message, args, true);
         if (!role) {
-            return await message.channel.send("Unknown Role");
+            return await message.reply("Unknown Role");
         }
         const col = role.color
             ? `https://singlecolorimage.com/get/${role.hexColor.replace("#", "")}/256x256`
@@ -35,6 +35,6 @@ ${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(+role.creat
 **${posLow ? posLow?.position : ""} ${posLow ? posLow : "-- Bottom Of Role list"}**`);
         emb.addField("❯ Permissions", getUserPermissions_1.getUserPermissions(role));
         emb.addField("❯ Members", role.members.size ? role.members.array().join(", ") : "None");
-        await message.channel.send(emb);
+        await message.reply(emb);
     },
 };

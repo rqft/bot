@@ -19,8 +19,8 @@ module.exports = {
             await message.delete();
         if (!msg)
             return await message.channel.send("You need to provide a message");
-        const name = message.guild?.member(user)
-            ? message.guild.member(user)?.displayName ?? user.username
+        const name = message.guild?.members.cache.get(user.id)
+            ? message.guild.members.cache.get(user.id)?.displayName ?? user.username
             : user.username;
         const wh = await message.channel.createWebhook(name, {
             avatar: user.avatarURL() ?? user.defaultAvatarURL,

@@ -43,7 +43,7 @@ module.exports = {
   description: "get if a bot is on a set of bot lists or not",
   async run(message, args) {
     var user = (await getUser(message, args, true)) ?? client.user!;
-    if (!user.bot) return await message.channel.send("that user is not a bot");
+    if (!user.bot) return await message.reply("that user is not a bot");
 
     let output = `${CustomEmojis.TICK_GREEN}: ${user} is on this bot list\n${CustomEmojis.TICK_RED}: ${user} is not on this bot list\n${CustomEmojis.TICK_GRAY}: This bot list cannot be scanned\n\n`;
 
@@ -68,6 +68,6 @@ module.exports = {
     emb.setTitle(`Bot list links for ${user.username} (${user.id})`);
     emb.setDescription(output);
     emb.setColor(Color.embed);
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

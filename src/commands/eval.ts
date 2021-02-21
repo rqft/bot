@@ -44,7 +44,7 @@ module.exports = {
       }
       const output = `\`\`\`${lang}\n${str}\`\`\``;
       embed.addField("Output", output);
-      await message.channel.send(embed);
+      await message.reply(embed);
     } catch (e) {
       str = e;
       const embed = new MessageEmbed();
@@ -53,7 +53,7 @@ module.exports = {
       embed.addField("Input", input);
       const output = `\`\`\`ts\n${str}\`\`\``;
       embed.addField("Output", output);
-      await message.channel.send(embed);
+      await message.reply(embed);
     }
   },
 } as ICommand;

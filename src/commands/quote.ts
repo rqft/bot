@@ -22,13 +22,13 @@ module.exports = {
       },
       author: {
         color: message.guild
-          ? message.guild.member(user)
-            ? message.guild.member(user)?.displayHexColor
+          ? message.guild.members.cache.get(user.id)
+            ? message.guild.members.cache.get(user.id)?.displayHexColor
             : "#ffffff"
           : "#ffffff",
         username: message.guild
-          ? message.guild.member(user)
-            ? message.guild.member(user)?.displayName
+          ? message.guild.members.cache.get(user.id)
+            ? message.guild.members.cache.get(user.id)?.displayName
             : user.username
           : user.username,
         bot: user.bot,
@@ -48,14 +48,14 @@ module.exports = {
       body: JSON.stringify(body),
     });
     if (!fAPI.ok)
-      return await message.channel.send(
+      return await message.reply(
         `There was an error (code ${
           fAPI.status
         }). \`\`\`diff\n${fAPI.statusText
           .split("\n")
           .map((e) => `- ${e}`)}\n\`\`\``
       );
-    await message.channel.send(``, {
+    await message.reply(``, {
       files: [
         {
           name: "hi.png",

@@ -47,7 +47,7 @@ module.exports = {
     async run(message, args) {
         var user = (await getUser_1.getUser(message, args, true)) ?? __1.client.user;
         if (!user.bot)
-            return await message.channel.send("that user is not a bot");
+            return await message.reply("that user is not a bot");
         let output = `${"<:maybe:801847909795627048>"}: ${user} is on this bot list\n${"<:noTick:804175930028720178>"}: ${user} is not on this bot list\n${"<:maybe:801847909795627048>"}: This bot list cannot be scanned\n\n`;
         for (let link of links) {
             if (link.fetch) {
@@ -64,6 +64,6 @@ module.exports = {
         emb.setTitle(`Bot list links for ${user.username} (${user.id})`);
         emb.setDescription(output);
         emb.setColor(globals_1.Color.embed);
-        await message.channel.send(emb);
+        await message.reply(emb);
     },
 };

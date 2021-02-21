@@ -21,6 +21,6 @@ module.exports = {
     emb.addField("Result", res);
     emb.setFooter(`(Done in ${Date.now() - message.createdTimestamp}ms)`);
     emb.setColor(Color.embed);
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

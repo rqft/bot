@@ -14,7 +14,7 @@ module.exports = {
         const replaceWith = args[2];
         const source = args.slice(3).join(" ");
         if (!reg || !flags || !replaceWith || !source) {
-            return await message.channel.send(`:warning: Argument Error (missing argument)
+            return await message.reply(`:warning: Argument Error (missing argument)
 \`\`\`\`
 ${this.usage}\`\`\``);
         }
@@ -23,6 +23,6 @@ ${this.usage}\`\`\``);
             .replace(regex, "**$&**")
             .replace(/\*{4}/g, "")
             .replace(regex, replaceWith);
-        await message.channel.send(t.slice(0, 1500) + (t.length > 1500 ? "..." : ""));
+        await message.reply(t.slice(0, 1500) + (t.length > 1500 ? "..." : ""));
     },
 };

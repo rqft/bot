@@ -18,7 +18,7 @@ module.exports = {
   async run(message, args) {
     const role = getRole(message, args, true);
     if (!role) {
-      return await message.channel.send("Unknown Role");
+      return await message.reply("Unknown Role");
     }
     const col = role.color
       ? `https://singlecolorimage.com/get/${role.hexColor.replace(
@@ -59,6 +59,6 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
       "❯ Members",
       role.members.size ? role.members.array().join(", ") : "None"
     );
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

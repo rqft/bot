@@ -18,7 +18,7 @@ module.exports = {
     async run(message, args) {
         const channel = getChannel_1.getChannel(message, args);
         if (!channel)
-            return await message.channel.send("Unknown Channel!");
+            return await message.reply("Unknown Channel!");
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(`${channel.name}`, __1.client.emojis.cache.get("798624246905569323").url);
         emb.addField("❯ Channel Info", `${"\u2699\uFE0F"} **ID**: \`${channel.id}\`
@@ -33,6 +33,6 @@ ${"\uD83E\uDDE9"} **Type**: ${capitalizeWords_1.capitalizeWords(channel.type)}`)
                 .join("\n")
             : "None.");
         emb.setColor(globals_1.Color.embed);
-        await message.channel.send(emb);
+        await message.reply(emb);
     },
 };

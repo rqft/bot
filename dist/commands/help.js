@@ -26,13 +26,13 @@ module.exports = {
             emb.setDescription(data.join("\n"));
             emb.setColor(globals_1.Color.hallucinate);
             emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);
-            return message.channel.send(emb);
+            return message.reply(emb);
         }
         const name = args[0].toLowerCase();
         const command = __1.commands.get(name) ||
             __1.commands.find((c) => c.aliases && c.aliases.includes(name));
         if (!command) {
-            return message.channel.send("that's not a valid command!");
+            return message.reply("that's not a valid command!");
         }
         data.push(`${"\uD83D\uDCDB"} **Name:** \`${command.name}\``);
         if (command.aliases)
@@ -64,6 +64,6 @@ module.exports = {
         emb.setDescription(data);
         emb.setColor(globals_1.Color.hallucinate);
         emb.setAuthor("Help Menu", __1.client.user?.avatarURL() ?? __1.client.user?.defaultAvatarURL);
-        message.channel.send(emb);
+        message.reply(emb);
     },
 };

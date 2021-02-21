@@ -13,7 +13,7 @@ module.exports = {
     const search = args.join(" ");
     const track = await spotifySearch(search);
     if (!track) {
-      return await message.channel.send("Not found");
+      return await message.reply("Not found");
     }
     const embed = new MessageEmbed();
     embed.setAuthor(track.artists[0]!.name, track.album.icon.url);
@@ -47,6 +47,6 @@ Created **${simpleGetLongAgo(
         .join(", ")
     );
     embed.setColor(Color.spotify);
-    await message.channel.send(embed);
+    await message.reply(embed);
   },
 } as ICommand;

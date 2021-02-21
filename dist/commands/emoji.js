@@ -21,7 +21,7 @@ module.exports = {
                 : ".png";
             console.log(args[0]?.replace(/[<>]/g, ""));
             const baseURL = "https://cdn.discordapp.com/emojis/";
-            return await message.channel.send("", {
+            return await message.reply("", {
                 files: [
                     {
                         name: "emoji" + extension,
@@ -39,6 +39,6 @@ ${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(e.createdTi
         emb.addField("❯ Server", `${"\uD83C\uDF9E\uFE0F"} **Animated**: ${e.animated ? "Yes" : "No"}
 ${"\uD83D\uDCBB"} **Uploaded to** \`${e.guild.name}\` by ${await e.fetchAuthor()}`);
         emb.setThumbnail(e.url);
-        return await message.channel.send(emb);
+        return await message.reply(emb);
     },
 };

@@ -12,7 +12,7 @@ module.exports = {
     description: "render LaTeX code",
     usage: "<code: string>",
     async run(message, args) {
-        const ret = await message.channel.send("<a:IconGui_Typing:798624244351107092>");
+        const ret = await message.reply("<a:IconGui_Typing:798624244351107092>");
         const query = pullCodeFromBlock_1.pullCodeFromBlock(args.join(" "));
         const options = {
             formula: query,
@@ -34,10 +34,10 @@ module.exports = {
         });
         await ret.delete();
         if (!res.ok)
-            return message.channel.send(`An error occurred: \`\`\`\n${await res.text()}\`\`\``);
+            return message.reply(`An error occurred: \`\`\`\n${await res.text()}\`\`\``);
         const resTxt = await res.text();
         if (parseInt(resTxt.split("\n")[0]) < 0)
-            return await message.channel.send(`${resTxt.split("\n").slice(2, Infinity).join("\n")}`, { code: "txt" });
+            return await message.reply(`${resTxt.split("\n").slice(2, Infinity).join("\n")}`, { code: "txt" });
         const url = resTxt.split("\n")[1].split(/\s/)[0];
         const [ok, isres] = await imagescript_eval_1.is_eval(`
     const formula = Image.load(url);
@@ -46,8 +46,8 @@ module.exports = {
     image = background
     `, { url });
         if (!ok)
-            return message.channel.send(isres);
-        await message.channel.send(``, {
+            return message.reply(isres);
+        await message.reply(``, {
             files: [
                 {
                     name: "latex.png",

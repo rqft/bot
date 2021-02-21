@@ -26,13 +26,12 @@ module.exports = {
     const targetLanguage = args[1];
     const text = args.slice(2).join(" ");
     if (!text || !targetLanguage || !language)
-      return await message.channel.send(
+      return await message.reply(
         `:warning: Argument Error (missing argument)
 \`\`\`
 ${this.usage}\`\`\``
       );
-    if (text.length > 500)
-      return await message.channel.send("The text is too long!");
+    if (text.length > 500) return await message.reply("The text is too long!");
     var url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
       text
     )}&langpair=${language}|${targetLanguage}`;
@@ -42,7 +41,7 @@ ${this.usage}\`\`\``
     if (
       data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")
     ) {
-      return await message.channel.send(
+      return await message.reply(
         new MessageEmbed({
           description:
             "You must enter a valid language code. e.g `en`, `es`, `etc.`\nYou can view them all [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)",
@@ -55,9 +54,7 @@ ${this.usage}\`\`\``
         "PLEASE SELECT TWO DISTINCT LANGUAGES"
       )
     ) {
-      return await message.channel.send(
-        "You must enter two distinct languages."
-      );
+      return await message.reply("You must enter two distinct languages.");
     }
     const flag = `:flag_${language.replace(/en/g, "us").replace(/ja/g, "jp")}:`;
     const languageNames = {
@@ -94,6 +91,6 @@ ${this.usage}\`\`\``
         data.responseData.match * 100
       }% match rate`
     );
-    message.channel.send(emb);
+    message.reply(emb);
   },
 } as ICommand;

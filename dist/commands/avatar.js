@@ -13,17 +13,17 @@ module.exports = {
     async run(message, args) {
         const size = args[1] ? parseInt(args[1]) : 128;
         if (!sizes.includes(size))
-            return await message.channel.send(`You can't choose this! Valid options are: ${sizes
+            return await message.reply(`You can't choose this! Valid options are: ${sizes
                 .map((e) => `\`${e}\``)
                 .join(", ")}`);
         const user = await getUser_1.getUser(message, args, false);
         if (!user) {
-            return await message.channel.send("Unknown User");
+            return await message.reply("Unknown User");
         }
-        const res = await message.channel.send("<a:IconGui_Typing:798624244351107092>");
+        const res = await message.reply("<a:IconGui_Typing:798624244351107092>");
         const avURL = user.avatarURL({ dynamic: true, size: size }) ??
             user.defaultAvatarURL;
-        const r = await message.channel.send(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)}`, {
+        const r = await message.reply(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)}`, {
             files: [
                 {
                     name: `item.${getFileExtension_1.getFileExtension(avURL)}`,

@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
 import { config } from "../config";
-import { api } from "../functions/api";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
 import { CustomEmojis } from "../maps/customEmojis";
@@ -12,7 +11,7 @@ module.exports = {
   usage:
     '<endpoint: string> <type: "user" | "url"> <thing: User | URL> [args: Object]',
   async run(message, args) {
-    const ret = await message.channel.send(CustomEmojis.GUI_TYPING);
+    const ret = await message.reply(CustomEmojis.GUI_TYPING);
     var url = null;
     var usesAtt = false;
     switch (args[1]) {
@@ -27,7 +26,7 @@ module.exports = {
         break;
       default:
         if (!message.attachments.array()[0]) {
-          return await message.channel.send("you need to supply an image");
+          return await message.reply("you need to supply an image");
         }
         url = message.attachments.array()[0]!.url;
 
@@ -55,20 +54,16 @@ module.exports = {
     });
     await ret.delete();
     if (!fAPI.ok) {
-      await message.channel.send(
+      return await message.reply(
         `There was an error (code ${
           fAPI.status
         }). \`\`\`diff\n${fAPI.statusText
           .split("\n")
           .map((e) => `- ${e}`)}\n\`\`\``
       );
-      const endpoints = await api("https://fapi.wrmsr.io/pathlist", "json");
-      return await message.channel.send(JSON.stringify(endpoints.Index), {
-        code: "json",
-      });
     }
 
-    await message.channel.send(``, {
+    await message.reply(``, {
       files: [
         {
           name: "fAPI.png",

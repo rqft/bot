@@ -1,4 +1,5 @@
 import { GuildMember, User } from "discord.js";
+import { decor } from "../maps/emojiEnum";
 import { profileBadgeMap } from "../maps/profileBadge";
 
 export function getProfileBadges(
@@ -14,7 +15,7 @@ export function getProfileBadges(
     const get = profileBadgeMap.get(e);
     badges.push(`${showIcons ? get?.icon : ""} ${get?.text}`);
   });
-  if (user.bot) badges.unshift(`${showIcons ? ":gear:" : ""} Bot`);
+  if (user.bot) badges.unshift(`${showIcons ? decor.Emojis.GEAR : ""} Bot`);
   if (badges.length == 0) return ["No Badges"];
   return badges;
 }

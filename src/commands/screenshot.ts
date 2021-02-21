@@ -2,6 +2,7 @@ import { GuildChannel, TextChannel } from "discord.js";
 import fetch from "node-fetch";
 import { config } from "../config";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 module.exports = {
   name: "screenshot",
   aliases: ["ss"],
@@ -10,9 +11,7 @@ module.exports = {
   usage: "<url: URL>",
   async run(message, args) {
     message.suppressEmbeds(true);
-    const ret = await message.channel.send(
-      "<a:IconGui_Typing:798624244351107092>"
-    );
+    const ret = await message.reply(CustomEmojis.GUI_TYPING);
     const url = args[0];
     const waitTime = parseInt(args[1] ?? "500");
     const baseURL = "https://fapi.wrmsr.io/screenshot";
@@ -38,7 +37,7 @@ module.exports = {
     });
     await ret.delete();
     if (!fAPI.ok)
-      return await message.channel.send(
+      return await message.reply(
         `There was an error (code ${
           fAPI.status
         }). \`\`\`diff\n${fAPI.statusText

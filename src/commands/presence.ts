@@ -12,7 +12,7 @@ module.exports = {
   async run(message, args) {
     const target = (await getUser(message, args, true)) ?? message.author;
     const pres = getPresence(target, 8888);
-    message.channel.send(
+    message.reply(
       new MessageEmbed({
         description: pres,
         title: `Presence of ${target.tag}`,

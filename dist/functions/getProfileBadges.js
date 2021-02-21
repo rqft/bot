@@ -13,7 +13,7 @@ function getProfileBadges(userResolvable, showIcons = true) {
         badges.push(`${showIcons ? get?.icon : ""} ${get?.text}`);
     });
     if (user.bot)
-        badges.unshift(`${showIcons ? ":gear:" : ""} Bot`);
+        badges.unshift(`${showIcons ? "\u2699\uFE0F" : ""} Bot`);
     if (badges.length == 0)
         return ["No Badges"];
     return badges;

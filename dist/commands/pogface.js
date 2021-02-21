@@ -11,7 +11,7 @@ module.exports = {
         const url = "https://raw.githubusercontent.com/MattIPv4/pogchamp/master/build/history.json";
         const pogAPI = (await api_1.api(url));
         const face = pogAPI[~~(Math.random() * pogAPI.length)]?.img.large;
-        await message.channel.send("poger", {
+        await message.reply("poger", {
             files: [
                 {
                     name: "pog.png",

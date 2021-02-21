@@ -14,7 +14,7 @@ module.exports = {
   usesArgs: true,
   usage: "<expression: MathString>",
   async run(message, args) {
-    const ret = await message.channel.send(CustomEmojis.GUI_TYPING);
+    const ret = await message.reply(CustomEmojis.GUI_TYPING);
     const query = `solve ${args.join(" ")}`;
     const url = `http://api.wolframalpha.com/v2/query?appid=${
       config.global.keys.wolframAlpha
@@ -23,7 +23,7 @@ module.exports = {
     )}&podstate=Step-by-step%20solution&output=json&scanner=Solve`;
     const result = await api(url, "json");
     if (!result.queryresult.success) {
-      await message.channel.send(
+      await message.reply(
         `:no_entry: Error (${result.queryresult.error.code}): ${result.queryresult.error.msg}`
       );
     }
@@ -48,6 +48,6 @@ module.exports = {
     }
     emb.setColor(Color.embed);
     await ret.delete();
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

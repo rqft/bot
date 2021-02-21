@@ -16,7 +16,7 @@ module.exports = {
   description: "get server info",
   async run(message, args: string[]) {
     const guild = await getGuild(message, args, true);
-    if (!guild) return await message.channel.send("Unknown Server");
+    if (!guild) return await message.reply("Unknown Server");
     const emb = new MessageEmbed();
     emb.setAuthor(guild.name, guild.iconURL({ dynamic: true })!);
     emb.setThumbnail(guild.iconURL({ dynamic: true })!);
@@ -59,6 +59,6 @@ ${CustomEmojis.GUI_MEMBERS} **Boosters (${
     }
     emb.addField("❯ Features", getGuildFeatures(guild));
     emb.setColor(Color.embed);
-    await message.channel.send(emb);
+    await message.reply(emb);
   },
 } as ICommand;

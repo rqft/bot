@@ -17,14 +17,14 @@ module.exports = {
     async run(message, args) {
         switch (args[0]) {
             default:
-                await message.channel.send("invalid type");
+                await message.reply("invalid type");
                 break;
             case "command":
                 const cmd = fetchCommand_1.fetchCommand(args.slice(1).join(" "));
                 if (!cmd)
-                    return await message.channel.send("Unknown Command");
-                await message.channel.send(`Configuration: \`\`\`json\n${JSON.stringify(cmd, null, 2)}\`\`\``);
-                await message.channel.send(cmd.run.toString(), {
+                    return await message.reply("Unknown Command");
+                await message.reply(`Configuration: \`\`\`json\n${JSON.stringify(cmd, null, 2)}\`\`\``);
+                await message.reply(cmd.run.toString(), {
                     code: "ts",
                     split: { char: "\n" },
                 });
@@ -35,12 +35,12 @@ module.exports = {
                     file = fs_1.default.readFileSync(args.slice(1).join(" "));
                 }
                 catch (e) {
-                    await message.channel.send(e, { code: "txt" });
+                    await message.reply(e, { code: "txt" });
                 }
                 if (!file)
-                    return await message.channel.send("Unknown file");
+                    return await message.reply("Unknown file");
                 console.log(getFileExtension_1.getFileExtension(args.slice(1).join(" ")));
-                await message.channel.send(file.toString(), {
+                await message.reply(file.toString(), {
                     code: args.slice(1).join(" ").split(".").pop(),
                     split: { char: "\n" },
                 });

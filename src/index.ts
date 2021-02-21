@@ -17,6 +17,8 @@ import { color, TerminalColor } from "./types/TerminalColors";
 
 setUserPresence();
 export const client = new Discord.Client({
+  intents:
+    Discord.Intents.NON_PRIVILEGED + Discord.Intents.FLAGS.GUILD_PRESENCES,
   ws: {
     properties: {
       $browser: config.bot.presence.browser,

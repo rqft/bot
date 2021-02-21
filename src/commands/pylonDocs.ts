@@ -9,6 +9,6 @@ module.exports = {
   async run(message, args) {
     const resp = await lookup(args.join(" "), 0);
 
-    await message.channel.send(buildDocsEmbed(resp, 15));
+    await message.reply(buildDocsEmbed(resp, 15));
   },
 } as ICommand;

@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const config_1 = require("../config");
-const api_1 = require("../functions/api");
 const getUser_1 = require("../functions/getUser");
 module.exports = {
     name: "fapi",
@@ -14,7 +13,7 @@ module.exports = {
     description: "fAPI image manipulation",
     usage: '<endpoint: string> <type: "user" | "url"> <thing: User | URL> [args: Object]',
     async run(message, args) {
-        const ret = await message.channel.send("<a:IconGui_Typing:798624244351107092>");
+        const ret = await message.reply("<a:IconGui_Typing:798624244351107092>");
         var url = null;
         var usesAtt = false;
         switch (args[1]) {
@@ -29,7 +28,7 @@ module.exports = {
                 break;
             default:
                 if (!message.attachments.array()[0]) {
-                    return await message.channel.send("you need to supply an image");
+                    return await message.reply("you need to supply an image");
                 }
                 url = message.attachments.array()[0].url;
                 usesAtt = true;
@@ -55,15 +54,11 @@ module.exports = {
         });
         await ret.delete();
         if (!fAPI.ok) {
-            await message.channel.send(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
+            return await message.reply(`There was an error (code ${fAPI.status}). \`\`\`diff\n${fAPI.statusText
                 .split("\n")
                 .map((e) => `- ${e}`)}\n\`\`\``);
-            const endpoints = await api_1.api("https://fapi.wrmsr.io/pathlist", "json");
-            return await message.channel.send(JSON.stringify(endpoints.Index), {
-                code: "json",
-            });
         }
-        await message.channel.send(``, {
+        await message.reply(``, {
             files: [
                 {
                     name: "fAPI.png",

@@ -19,29 +19,29 @@ function getPresence(user, maxTextLength = 45) {
         if (item.type == "COMPETING") {
             const text = item.details ? `${item.details} - ` : "";
             const name = item.name;
-            statuses.push(`:crossed_swords: ${text}**${name}**`);
+            statuses.push(`${"\u2694\uFE0F"} ${text}**${name}**`);
         }
         if (item.type == "PLAYING") {
             const text = item.details ? `${item.details} - ` : "";
             const name = item.name;
-            statuses.push(`:video_game: ${text}**${name}**`);
+            statuses.push(`${"\uD83C\uDFAE"} ${text}**${name}**`);
         }
         if (item.type == "LISTENING") {
             const text = item.details ? `${item.details}` : "";
             const author = item.state ? ` by ${item.state}` : "";
             const track = text + author !== "" ? `${text}${author} - ` : "";
             const name = item.name;
-            statuses.push(`${item.name == "Spotify" ? spotifyIcon : ":musical_note:"} ${track}**${name}**`);
+            statuses.push(`${item.name == "Spotify" ? spotifyIcon : "\uD83C\uDFB5"} ${track}**${name}**`);
         }
         if (item.type == "WATCHING") {
             const text = item.details ? `${item.details} - ` : "";
             const name = item.name;
-            statuses.push(`:tv: ${text}**${name}**`);
+            statuses.push(`${"\uD83D\uDCFA"} ${text}**${name}**`);
         }
         if (item.type == "STREAMING") {
             const text = item.details ? `${item.details} - ` : "";
             const name = item.name;
-            statuses.push(`:satellite: ${text}**${name}**`);
+            statuses.push(`${"\uD83D\uDCE1"} ${text}**${name}**`);
         }
     }
     return `${stat}${custom ? `\n${custom}` : ""}${statuses.length !== 0 ? `\n${statuses.sort().join("\n")}` : ""}`;

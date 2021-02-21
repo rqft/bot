@@ -9,7 +9,7 @@ export function logBlacklistedUserAction(message: Discord.Message) {
     const channelName = message.channel.type == "dm" ? "DMs" : message.channel;
     const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
     ch.send(
-      `:warning: Blacklisted User **${message.author.tag}** ${formatID(
+      `:warning: Blacklisted User **${message.author}** ${formatID(
         message.author.id
       )} tried to use command \`${
         message.cleanContent

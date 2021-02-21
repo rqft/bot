@@ -55,26 +55,24 @@ module.exports = {
                 if (e.name.startsWith("--ov-"))
                     e.delete();
             });
-            return await message.channel.send(`${"\u2705"} Cleared`);
+            return await message.reply(`${"\u2705"} Cleared`);
         }
         const override = args.slice(1).join(" ").toLowerCase();
         const ms = parseTimeString_1.parseTimeString(time);
         if (ms < 500)
-            return await message.channel.send("Must be higher than 500 milliseconds / Invalid Time String");
+            return await message.reply("Must be higher than 500 milliseconds / Invalid Time String");
         if (!Object.keys(exports.overrides).includes(override))
-            return await message.channel.send(`${"\u26A0\uFE0F"} Unknown Override, available options are ${Object.keys(exports.overrides)
+            return await message.reply(`${"\u26A0\uFE0F"} Unknown Override, available options are ${Object.keys(exports.overrides)
                 .map((e) => `\`${e}\``)
                 .join(", ")}`);
         const ovRole = exports.overrides[override];
         const role = await message.guild?.roles.create({
-            data: {
-                name: ovRole?.name,
-                permissions: ovRole?.permissions,
-                color: globals_1.Color.embed,
-            },
+            name: ovRole?.name,
+            permissions: ovRole?.permissions,
+            color: globals_1.Color.embed,
         });
         await message.member?.roles.add(role);
-        await message.channel.send(`${"\u2705"} Gave you \`${ovRole?.name}\` override for ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)}`);
+        await message.reply(`${"\u2705"} Gave you \`${ovRole?.name}\` override for ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)}`);
         setTimeout(async () => {
             await role?.delete();
             try {

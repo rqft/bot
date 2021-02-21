@@ -40,22 +40,22 @@ module.exports = {
         const targetLanguage = args[1];
         const text = args.slice(2).join(" ");
         if (!text || !targetLanguage || !language)
-            return await message.channel.send(`:warning: Argument Error (missing argument)
+            return await message.reply(`:warning: Argument Error (missing argument)
 \`\`\`
 ${this.usage}\`\`\``);
         if (text.length > 500)
-            return await message.channel.send("The text is too long!");
+            return await message.reply("The text is too long!");
         var url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${language}|${targetLanguage}`;
         console.log(url);
         const req = await node_fetch_1.default(url);
         const data = (await req.json());
         if (data.responseData.translatedText.includes("IS AN INVALID TARGET LANGUAGE")) {
-            return await message.channel.send(new discord_js_1.MessageEmbed({
+            return await message.reply(new discord_js_1.MessageEmbed({
                 description: "You must enter a valid language code. e.g `en`, `es`, `etc.`\nYou can view them all [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)",
             }));
         }
         if (data.responseData.translatedText.includes("PLEASE SELECT TWO DISTINCT LANGUAGES")) {
-            return await message.channel.send("You must enter two distinct languages.");
+            return await message.reply("You must enter two distinct languages.");
         }
         const flag = `:flag_${language.replace(/en/g, "us").replace(/ja/g, "jp")}:`;
         const languageNames = {
@@ -76,6 +76,6 @@ ${this.usage}\`\`\``);
         }
         emb.addField("Translated Text", `${targetFlag} - ${languageNames.to?.name} (\`${targetLanguage.toUpperCase()}\`)\n\`\`\`\n${parseHtmlEntities(data.responseData.translatedText)}\`\`\``);
         emb.setFooter(`${language.toUpperCase()} => ${targetLanguage.toUpperCase()} | ${data.responseData.match * 100}% match rate`);
-        message.channel.send(emb);
+        message.reply(emb);
     },
 };

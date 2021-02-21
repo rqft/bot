@@ -18,7 +18,7 @@ module.exports = {
     async run(message, args) {
         const user = await getUser_1.getUser(message, args, true);
         if (!user) {
-            return await message.channel.send(`${"\u26A0\uFE0F"} Unknown User`);
+            return await message.reply(`${"\u26A0\uFE0F"} Unknown User`);
         }
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(user.tag, user.avatarURL({
@@ -31,7 +31,7 @@ module.exports = {
         emb.addField(`❯ User Info`, `${"\u2699\uFE0F"} **󠇰ID**: \`${user.id}\`
 ${"\uD83D\uDD17"} **Profile**: ${user}
 ${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(user.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(user.createdAt)}`);
-        var mem = message.guild?.member(user) ?? false;
+        var mem = message.guild?.members.cache.get(user.id) ?? false;
         if (mem) {
             emb.addField("❯ Presence", getPresence_1.getPresence(user, 30));
             const roles = mem.roles.cache.filter((e) => !e.deleted && e.guild.id !== e.id);
@@ -58,6 +58,6 @@ ${roles.size !== 0
         emb.addField("❯ Profile Badges", getProfileBadges_1.getProfileBadges(user).join("\n"));
         emb.addField("❯ Bot Badges", getBotBadges_1.getBotBadges(user));
         emb.setColor(globals_1.Color.embed);
-        await message.channel.send(emb);
+        await message.reply(emb);
     },
 };

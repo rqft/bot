@@ -9,7 +9,7 @@ function logCommandUse(message) {
     const guildName = message.guild ? `on \`${message.guild.name}\`` : "";
     config_1.config.logs.commands.onError.keys.forEach((e) => {
         const ch = index_1.client.channels.cache.get(e);
-        ch.send(`:pencil: **${message.author.tag}** ${formatID_1.formatID(message.author.id)} used command \`${message.cleanContent}\` in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
+        ch.send(`:pencil: **${message.author}** ${formatID_1.formatID(message.author.id)} used command \`${message.cleanContent}\` in ${channelName} ${formatID_1.formatID(message.channel.id)} ${guildName} ${message.guild ? formatID_1.formatID(message.guild.id) : ""}`);
     });
 }
 exports.logCommandUse = logCommandUse;

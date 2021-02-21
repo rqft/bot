@@ -9,7 +9,7 @@ module.exports = {
   description: "render LaTeX code",
   usage: "<code: string>",
   async run(message, args) {
-    const ret = await message.channel.send(CustomEmojis.GUI_TYPING);
+    const ret = await message.reply(CustomEmojis.GUI_TYPING);
     const query = pullCodeFromBlock(args.join(" "));
     const options = {
       formula: query,
@@ -32,12 +32,12 @@ module.exports = {
     });
     await ret.delete();
     if (!res.ok)
-      return message.channel.send(
+      return message.reply(
         `An error occurred: \`\`\`\n${await res.text()}\`\`\``
       );
     const resTxt = await res.text();
     if (parseInt(resTxt.split("\n")[0]!) < 0)
-      return await message.channel.send(
+      return await message.reply(
         `${resTxt.split("\n").slice(2, Infinity).join("\n")}`,
         { code: "txt" }
       );
@@ -51,8 +51,8 @@ module.exports = {
     `,
       { url }
     );
-    if (!ok) return message.channel.send(isres as string);
-    await message.channel.send(``, {
+    if (!ok) return message.reply(isres as string);
+    await message.reply(``, {
       files: [
         {
           name: "latex.png",
