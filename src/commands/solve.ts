@@ -23,7 +23,7 @@ module.exports = {
     )}&podstate=Step-by-step%20solution&output=json&scanner=Solve`;
     const result = await api(url, "json");
     if (!result.queryresult.success) {
-      await message.reply(
+      return await message.reply(
         `:no_entry: Error (${result.queryresult.error.code}): ${result.queryresult.error.msg}`
       );
     }

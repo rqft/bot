@@ -23,7 +23,7 @@ type CustomPermissionString =
   | "SERVER_OWNER"
   | "BLACKLISTED_USER"
   | "BLACKLISTED_GUILD_OWNER"
-  | "BOT_OWNER"
+  | "GLOBAL_ADMIN"
   | "SYSTEM"
   | "NONE";
 export function getUserPermissions(user: GuildMember | Role) {
@@ -40,7 +40,7 @@ export function getUserPermissions(user: GuildMember | Role) {
     perms.unshift("BLACKLISTED_GUILD_OWNER");
   if (config.blacklist.users.includes(user.id))
     perms.unshift("BLACKLISTED_USER");
-  if (config.bot.ownerIds.includes(user.id)) perms.unshift("BOT_OWNER");
+  if (config.bot.ownerIds.includes(user.id)) perms.unshift("GLOBAL_ADMIN");
   if (config.bot.id == user.id) perms.unshift("SYSTEM");
 
   if (perms.length == 0) {

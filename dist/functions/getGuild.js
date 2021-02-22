@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGuild = void 0;
 const __1 = require("..");
-async function getGuild(message, args, useJoin = false) {
+async function getGuild(message, args, useJoin = false, argument = 0) {
     var res = useJoin
-        ? args.join(" ")?.normalize()
-        : args[0]?.normalize() ?? (message.guild ? "here" : "0");
+        ? args.slice(argument).join(" ")?.normalize()
+        : args[argument]?.normalize() ?? (message.guild ? "here" : "0");
     if (!res.length && !message.guild)
         return null;
     if (res == "here" && message.guild)

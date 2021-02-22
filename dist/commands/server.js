@@ -31,10 +31,16 @@ ${"\uD83D\uDCC6"} **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTime
                 .join("\n")
             : "None.");
         if (guild.premiumSubscriptionCount) {
-            const boosters = guild.members.cache.filter((e) => !!e.premiumSince);
+            const boosters = guild.members.cache
+                .filter((e) => !!e.premiumSince)
+                .array();
             emb.addField("❯ Server Boosts", `${"<:IconGui_OwnerCrown:799657143719952415>"} **Tier**: ${guild.premiumTier}
 ${"<:IconBadge_Nitro:798624232472051792>"} **Boosts**: ${guild.premiumSubscriptionCount}
-${"<:IconGui_Members:798624241868079104>"} **Boosters (${boosters.size})**: ${boosters.array().slice(0, 10).join(", ")} ${boosters.size > 10 ? `and ${boosters.size - 10} more...` : ""}`);
+${"<:IconGui_Members:798624241868079104>"} **Boosters (${boosters.length})**:
+${boosters
+                .map((e) => `${e} for ${getLongAgo_1.simpleGetLongAgo(e.premiumSinceTimestamp)}`)
+                .slice(0, 10)
+                .join("\n")} ${boosters.length > 10 ? `and ${boosters.length - 10} more...` : ""}`);
         }
         emb.addField("❯ Features", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.Color.embed);

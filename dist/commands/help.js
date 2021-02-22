@@ -31,6 +31,7 @@ module.exports = {
         const name = args[0].toLowerCase();
         const command = __1.commands.get(name) ||
             __1.commands.find((c) => c.aliases && c.aliases.includes(name));
+        console.log(command);
         if (!command) {
             return message.reply("that's not a valid command!");
         }
@@ -44,10 +45,11 @@ module.exports = {
         if (command.usage)
             data.push(`${"\uD83D\uDCD5"} **Usage:** \`${prefix?.replace(/\\/g, "")}${command.name} ${command.usage}\``);
         if (command.cooldown) {
-            data.push(`${"\u23F2\uFE0F"} **Cooldown**: ${getLongAgo_1.simpleShortGetLongAgo(Date.now() - command.cooldown * 1000)}`);
+            data.push(`${"\u23F2\uFE0F"} **Cooldown**: \`${getLongAgo_1.simpleShortGetLongAgo(Date.now() - command.cooldown * 1000)}\``);
         }
-        if (Object.keys(command.restrictions).length &&
-            command.restrictions) {
+        if (command.restrictions) {
+            if (!Object.keys(command.restrictions).length)
+                return;
             const rest = [];
             if (command.restrictions.guildOnly)
                 rest.push("`Guild Only`");

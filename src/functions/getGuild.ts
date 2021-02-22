@@ -4,11 +4,12 @@ import { client } from "..";
 export async function getGuild(
   message: Message,
   args: string[],
-  useJoin: boolean = false
+  useJoin: boolean = false,
+  argument: number = 0
 ) {
   var res = useJoin
-    ? args.join(" ")?.normalize()!
-    : args[0]?.normalize()! ?? (message.guild ? "here" : "0");
+    ? args.slice(argument).join(" ")?.normalize()!
+    : args[argument]?.normalize()! ?? (message.guild ? "here" : "0");
   if (!res.length && !message.guild) return null;
   if (res == "here" && message.guild) res = message.guild.id;
   if (res?.toLowerCase() == "random") res = client.guilds.cache.random().id;

@@ -27,8 +27,8 @@ module.exports = {
 
     setTimeout(
       async () =>
-        await message.channel.send(
-          `Hey ${
+        await message.channel.send({
+          content: `Hey ${
             query.user
           }! You told me at \`${query.executedAt.toLocaleString()}\` (${simpleGetLongAgo(
             +query.executedAt
@@ -40,8 +40,11 @@ module.exports = {
                     : `\`${query.comment}\``
                 } `
               : " something!"
-          }`
-        ),
+          }`,
+          allowedMentions: {
+            users: [message.author.id],
+          },
+        }),
       query.expiry - Date.now()
     );
   },

@@ -34,9 +34,8 @@ module.exports = {
           await message.reply(e, { code: "txt" });
         }
         if (!file) return await message.reply("Unknown file");
-        console.log(getFileExtension(args.slice(1).join(" ")));
         await message.reply(file.toString(), {
-          code: args.slice(1).join(" ").split(".").pop(),
+          code: getFileExtension(args.slice(1).join(" ")),
           split: { char: "\n" },
         });
     }

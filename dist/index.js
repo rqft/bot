@@ -15,10 +15,11 @@ const makeCommandFromFile_1 = require("./handlers/makeCommandFromFile");
 const onReady_1 = require("./handlers/onReady");
 const setUserPresence_1 = require("./handlers/setUserPresence");
 require("./logging-test");
+const logError_1 = require("./logs/logError");
 const TerminalColors_1 = require("./types/TerminalColors");
 setUserPresence_1.setUserPresence();
 exports.client = new discord_js_1.default.Client({
-    intents: discord_js_1.default.Intents.NON_PRIVILEGED + discord_js_1.default.Intents.FLAGS.GUILD_PRESENCES,
+    intents: discord_js_1.default.Intents.ALL,
     ws: {
         properties: {
             $browser: config_1.config.bot.presence.browser,
@@ -27,6 +28,18 @@ exports.client = new discord_js_1.default.Client({
     allowedMentions: {
         roles: [],
         users: [],
+        repliedUser: false,
+    },
+    retryLimit: 10,
+    presence: {
+        activity: {
+            name: config_1.config.bot.presence.activity.name,
+            type: config_1.config.bot.presence.activity.type,
+        },
+        afk: true,
+    },
+    http: {
+        version: 8,
     },
 });
 exports.client.on("ready", () => console.log("ok"));
@@ -74,5 +87,6 @@ exports.client.on("message", async (message) => {
     }
     await commandHandler_1.commandHandler(message);
 });
+process.on("uncaughtException", (e) => logError_1.logError(e));
 exports.client.login(config_1.config.bot.token);
 exports.client.on("guildCreate", () => exports.client.emit("ready"));

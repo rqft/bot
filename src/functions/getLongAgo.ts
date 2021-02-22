@@ -102,7 +102,7 @@ export function shortLongAgo(
     txtret.push(`${value}${cc}`);
     runsc += 1;
   }
-  return txtret.join(", ");
+  return txtret.join("");
 }
 export function simpleShortGetLongAgo(ts: number) {
   return shortLongAgo(ts, 2, undefined, undefined);

@@ -8,13 +8,18 @@ config_1.config.bot.ownerIds.forEach((e) => {
     botBadgeMap.set(e, [
         {
             icon: "<:IconGui_OwnerCrown:799657143719952415>",
-            text: "Bot Owner",
+            text: "Global Admin",
         },
+    ]);
+});
+const githubPeople = ["504698587221852172", "533757461706964993"];
+githubPeople.forEach((e) => {
+    botBadgeMap.set(e, botBadgeMap.get(e).concat([
         {
             icon: "<:GitHub:805634226921013258>",
             text: "Github Person",
         },
-    ]);
+    ]));
 });
 botBadgeMap.set(config_1.config.bot.application.ownerId, botBadgeMap.get(config_1.config.bot.application.ownerId).concat([
     {

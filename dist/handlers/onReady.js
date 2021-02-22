@@ -14,10 +14,5 @@ async function onReady() {
     connection.setSpeaking("PRIORITY_SPEAKING");
     console.log("ok");
     leaveBlacklistedGuilds_1.leaveBlacklistedGuilds();
-    __1.client.user?.setActivity(`${config_1.config.bot.presence.activity.name} | ${__1.client.guilds.cache.size} Servers`, {
-        name: `${config_1.config.bot.presence.activity.name} | ${__1.client.guilds.cache.size} Servers`,
-        type: config_1.config.bot.presence.activity.type,
-        url: config_1.config.bot.presence.activity.url,
-    });
 }
 exports.onReady = onReady;

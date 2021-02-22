@@ -1,6 +1,4 @@
 import { formatID } from "../functions/formatID";
-import { getFileExtension } from "../functions/getFileExtension";
-import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
 import { CustomEmojis } from "../maps/customEmojis";
@@ -28,23 +26,9 @@ module.exports = {
     const avURL =
       user.avatarURL({ dynamic: true, size: size as avatarSize }) ??
       user.defaultAvatarURL;
-    const r = await message.reply(
-      `Avatar of ${user.tag} ${formatID(user.id)}`,
-      {
-        files: [
-          {
-            name: `item.${getFileExtension(avURL)}`,
-            attachment: avURL,
-          },
-        ],
-      }
-    );
-    r.edit(
-      `Avatar of ${user.tag} ${formatID(
-        user.id
-      )} (size: \`${size}\`x\`${size}\`) (Done in ${simpleGetLongAgo(
-        message.createdTimestamp - 10
-      )}) (${r.attachments.array()[0]?.size! / 1000} KB)`
+    await message.reply(
+      `Avatar of ${user.tag} ${formatID(user.id)}
+${avURL}`
     );
     await res.delete();
   },

@@ -16,7 +16,8 @@ module.exports = {
     var usesAtt = false;
     switch (args[1]) {
       case "user":
-        const user = (await getUser(message, args, false, 2)) ?? message.author;
+        const user = await getUser(message, args, false, 2);
+        if (!user) return await message.channel.send(":warning: Unknown User");
         url =
           user.avatarURL({ size: 1024, format: "png" }) ??
           user.defaultAvatarURL;
@@ -26,6 +27,7 @@ module.exports = {
         break;
       default:
         if (!message.attachments.array()[0]) {
+          await ret.delete();
           return await message.reply("you need to supply an image");
         }
         url = message.attachments.array()[0]!.url;

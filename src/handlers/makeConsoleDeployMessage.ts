@@ -2,6 +2,7 @@ import { client } from "..";
 import { color, TerminalColor } from "../types/TerminalColors";
 //
 export function makeConsoleDeployMessage() {
+  const start = Date.now();
   const message = [
     `[${color(
       new Date().toLocaleString(),
@@ -16,6 +17,7 @@ export function makeConsoleDeployMessage() {
       client.guilds.cache.size,
       TerminalColor.format.BOLD
     )} Guilds...`,
+
     client.guilds.cache
       .array()
       .map(
@@ -25,14 +27,17 @@ export function makeConsoleDeployMessage() {
           )} [${color(e.id, TerminalColor.bright.BRIGHT_BLACK)}] as ${color(
             e.me?.displayName,
             TerminalColor.normal.RED
-          ).padStart(32)} (${color(
+          ).padStart(32)} \n-- (${color(
+            `${e.members.cache.size} members`,
+            TerminalColor.bright.BRIGHT_BLACK
+          )}) (${color(
             "owned by " + e.owner?.user.tag,
             TerminalColor.bright.BRIGHT_BLACK
           )})`
       )
       .join("\n")
       .replace(/\n{2}/gm, "\n"),
-    color("Ready!", TerminalColor.normal.CYAN),
+    color(`ready in ${Date.now() - start}ms`, TerminalColor.normal.CYAN),
   ];
   console.log(message.join("\n"));
 }

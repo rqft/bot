@@ -103,7 +103,7 @@ function shortLongAgo(ts, limiter, diffSinceNow = true, lowestUnit = undefined) 
         txtret.push(`${value}${cc}`);
         runsc += 1;
     }
-    return txtret.join(", ");
+    return txtret.join("");
 }
 exports.shortLongAgo = shortLongAgo;
 function simpleShortGetLongAgo(ts) {

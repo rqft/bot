@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import Discord, { ActivityOptions } from "discord.js";
 import { config } from "./config";
 import { formatID } from "./functions/formatID";
 import { CMDFilesPath, regexes } from "./globals";
@@ -10,6 +10,7 @@ import { onReady } from "./handlers/onReady";
 import { setUserPresence } from "./handlers/setUserPresence";
 import { ICommand } from "./interfaces/ICommand";
 import "./logging-test";
+import { logError } from "./logs/logError";
 import { color, TerminalColor } from "./types/TerminalColors";
 /**
  * Presence Stuff
@@ -17,8 +18,7 @@ import { color, TerminalColor } from "./types/TerminalColors";
 
 setUserPresence();
 export const client = new Discord.Client({
-  intents:
-    Discord.Intents.NON_PRIVILEGED + Discord.Intents.FLAGS.GUILD_PRESENCES,
+  intents: Discord.Intents.ALL,
   ws: {
     properties: {
       $browser: config.bot.presence.browser,
@@ -27,6 +27,19 @@ export const client = new Discord.Client({
   allowedMentions: {
     roles: [],
     users: [],
+    repliedUser: false,
+  },
+  retryLimit: 10,
+  presence: {
+    activity: {
+      name: config.bot.presence.activity.name,
+      type: config.bot.presence.activity.type as ActivityOptions["type"],
+    },
+    afk: true,
+    // status: "idle",
+  },
+  http: {
+    version: 8,
   },
 });
 client.on("ready", () => console.log("ok"));
@@ -97,5 +110,6 @@ client.on("message", async (message) => {
   }
   await commandHandler(message);
 });
+process.on("uncaughtException", (e) => logError(e));
 client.login(config.bot.token);
 client.on("guildCreate", () => client.emit("ready"));

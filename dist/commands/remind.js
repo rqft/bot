@@ -20,10 +20,15 @@ module.exports = {
             expiry: Date.now() + ms,
         };
         await message.reply(`${"\u2705"} I will remind you in ${getLongAgo_1.simpleGetLongAgo(Date.now() - ms)} ${formatTimestamp_1.formatTimestamp(query.expiry)}`);
-        setTimeout(async () => await message.channel.send(`Hey ${query.user}! You told me at \`${query.executedAt.toLocaleString()}\` (${getLongAgo_1.simpleGetLongAgo(+query.executedAt)} ago) to remind you about${query.comment
-            ? `: ${query.comment.length > 50
-                ? `\`\`\`\n${query.comment}\`\`\``
-                : `\`${query.comment}\``} `
-            : " something!"}`), query.expiry - Date.now());
+        setTimeout(async () => await message.channel.send({
+            content: `Hey ${query.user}! You told me at \`${query.executedAt.toLocaleString()}\` (${getLongAgo_1.simpleGetLongAgo(+query.executedAt)} ago) to remind you about${query.comment
+                ? `: ${query.comment.length > 50
+                    ? `\`\`\`\n${query.comment}\`\`\``
+                    : `\`${query.comment}\``} `
+                : " something!"}`,
+            allowedMentions: {
+                users: [message.author.id],
+            },
+        }), query.expiry - Date.now());
     },
 };

@@ -1,4 +1,4 @@
-import { ActivityOptions, VoiceChannel } from "discord.js";
+import { VoiceChannel } from "discord.js";
 import { client } from "..";
 import { config } from "../config";
 import { leaveBlacklistedGuilds } from "../logs/leaveBlacklistedGuilds";
@@ -15,12 +15,4 @@ export async function onReady() {
 
   console.log("ok");
   leaveBlacklistedGuilds();
-  client.user?.setActivity(
-    `${config.bot.presence.activity.name} | ${client.guilds.cache.size} Servers`,
-    {
-      name: `${config.bot.presence.activity.name} | ${client.guilds.cache.size} Servers`,
-      type: config.bot.presence.activity.type as ActivityOptions["type"],
-      url: config.bot.presence.activity.url,
-    }
-  );
 }

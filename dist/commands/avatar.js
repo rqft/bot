@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const formatID_1 = require("../functions/formatID");
-const getFileExtension_1 = require("../functions/getFileExtension");
-const getLongAgo_1 = require("../functions/getLongAgo");
 const getUser_1 = require("../functions/getUser");
 const sizes = [16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
 module.exports = {
@@ -23,15 +21,8 @@ module.exports = {
         const res = await message.reply("<a:IconGui_Typing:798624244351107092>");
         const avURL = user.avatarURL({ dynamic: true, size: size }) ??
             user.defaultAvatarURL;
-        const r = await message.reply(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)}`, {
-            files: [
-                {
-                    name: `item.${getFileExtension_1.getFileExtension(avURL)}`,
-                    attachment: avURL,
-                },
-            ],
-        });
-        r.edit(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)} (size: \`${size}\`x\`${size}\`) (Done in ${getLongAgo_1.simpleGetLongAgo(message.createdTimestamp - 10)}) (${r.attachments.array()[0]?.size / 1000} KB)`);
+        await message.reply(`Avatar of ${user.tag} ${formatID_1.formatID(user.id)}
+${avURL}`);
         await res.delete();
     },
 };

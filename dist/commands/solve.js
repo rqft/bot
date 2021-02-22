@@ -16,7 +16,7 @@ module.exports = {
         const url = `http://api.wolframalpha.com/v2/query?appid=${config_1.config.global.keys.wolframAlpha}&input=${encodeURIComponent(query)}&podstate=Step-by-step%20solution&output=json&scanner=Solve`;
         const result = await api_1.api(url, "json");
         if (!result.queryresult.success) {
-            await message.reply(`:no_entry: Error (${result.queryresult.error.code}): ${result.queryresult.error.msg}`);
+            return await message.reply(`:no_entry: Error (${result.queryresult.error.code}): ${result.queryresult.error.msg}`);
         }
         const emb = new discord_js_1.MessageEmbed();
         emb.setTitle(query);

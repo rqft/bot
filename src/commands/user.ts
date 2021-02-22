@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { client } from "..";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotBadges } from "../functions/getBotBadges";
 import { getBotLevel } from "../functions/getBotLevel";
@@ -43,28 +44,32 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
       )} ago ${formatTimestamp(user.createdAt)}`
     );
     var mem = message.guild?.members.cache.get(user.id) ?? false;
-
+    if (user.presence.guild) emb.addField("❯ Presence", getPresence(user));
     if (mem) {
-      emb.addField("❯ Presence", getPresence(user));
-      const roles = mem.roles.cache.filter(
-        (e) => !e.deleted && e.guild.id !== e.id
-      );
+      const roles = mem.roles.cache
+        .filter((e) => !e.deleted && e.guild.id !== e.id)
+        .array()
+        .sort((a, b) => a.position - b.position);
       emb.addField(
         "❯ Member Information",
-        `:inbox_tray: **Joined:** ${getLongAgo(
+        `${decor.Emojis.INBOX_TRAY} **Joined:** ${getLongAgo(
           mem.joinedTimestamp!,
           2
         )} ago ${formatTimestamp(mem.joinedAt!)}
 ${
-  roles.size !== 0
-    ? `:shield: **Roles** (${roles.size}): ${roles.array().join(", ")}`
+  roles.length !== 0
+    ? `${decor.Emojis.SHIELD} **Roles** (${roles.length}): ${roles
+        .slice(0, 10)
+        .join(", ")}${
+        roles.length > 10 ? `\nand ${roles.length - 10} more...` : ""
+      }`
     : ""
 }`
       );
       emb.addField(
         "❯ Permissions",
-        `:gear: **Permission List**: ${getUserPermissions(mem)}
-        :cyclone: **Bot Level**: __\`${getBotLevel(mem)}\`__`
+        `${decor.Emojis.GEAR} **Permission List**: ${getUserPermissions(mem)}
+${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
       );
       if (
         (await mem.guild.fetchInvites())
@@ -92,6 +97,23 @@ ${
     }
     emb.addField("❯ Profile Badges", getProfileBadges(user).join("\n"));
     emb.addField("❯ Bot Badges", getBotBadges(user));
+    const seenOn = client.guilds.cache
+      .filter((e) => e.members.cache.has(user.id))
+      .array();
+    if (seenOn.length) {
+      emb.addField(
+        `❯ Seen on ${seenOn.length} servers`,
+        `${seenOn
+          .slice(0, 3)
+          .map(
+            (e) =>
+              `*${e.name}* as \`${e.members.cache.get(user.id)?.displayName}\``
+          )
+          .join("\n")}${
+          seenOn.length > 3 ? `\nand ${seenOn.length - 3} more...` : ""
+        }`
+      );
+    }
     emb.setColor(Color.embed);
     await message.reply(emb);
   },

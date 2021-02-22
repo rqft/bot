@@ -32,6 +32,7 @@ export const config = {
     ownerIds: [
       "533757461706964993", // insyri
       "504698587221852172", // me
+      "621224863100829716",
     ],
     presence: {
       activity: {

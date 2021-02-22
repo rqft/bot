@@ -45,15 +45,20 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         : "None."
     );
     if (guild.premiumSubscriptionCount) {
-      const boosters = guild.members.cache.filter((e) => !!e.premiumSince);
+      const boosters = guild.members.cache
+        .filter((e) => !!e.premiumSince)
+        .array();
       emb.addField(
         "❯ Server Boosts",
         `${CustomEmojis.GUI_OWNERCROWN} **Tier**: ${guild.premiumTier}
 ${CustomEmojis.BADGE_NITRO} **Boosts**: ${guild.premiumSubscriptionCount}
-${CustomEmojis.GUI_MEMBERS} **Boosters (${
-          boosters.size
-        })**: ${boosters.array().slice(0, 10).join(", ")} ${
-          boosters.size > 10 ? `and ${boosters.size - 10} more...` : ""
+${CustomEmojis.GUI_MEMBERS} **Boosters (${boosters.length})**:
+${boosters
+
+  .map((e) => `${e} for ${simpleGetLongAgo(e.premiumSinceTimestamp!)}`)
+  .slice(0, 10)
+  .join("\n")} ${
+          boosters.length > 10 ? `and ${boosters.length - 10} more...` : ""
         }`
       );
     }

@@ -44,7 +44,7 @@ module.exports = {
       (commands.find(
         (c: any) => c.aliases && c.aliases.includes(name)
       ) as ICommand);
-
+    console.log(command);
     if (!command) {
       return message.reply("that's not a valid command!");
     }
@@ -70,15 +70,13 @@ module.exports = {
       );
     if (command.cooldown) {
       data.push(
-        `${decor.Emojis.TIMER} **Cooldown**: ${simpleShortGetLongAgo(
+        `${decor.Emojis.TIMER} **Cooldown**: \`${simpleShortGetLongAgo(
           Date.now() - command.cooldown * 1000
-        )}`
+        )}\``
       );
     }
-    if (
-      Object.keys(command.restrictions as Object).length &&
-      command.restrictions
-    ) {
+    if (command.restrictions) {
+      if (!Object.keys(command.restrictions).length) return;
       const rest = [];
       if (command.restrictions.guildOnly) rest.push("`Guild Only`");
       if (command.restrictions.ownerOnly) rest.push("`Bot Owner Only`");

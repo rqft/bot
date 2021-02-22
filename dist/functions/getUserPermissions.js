@@ -34,7 +34,7 @@ function getUserPermissions(user) {
     if (config_1.config.blacklist.users.includes(user.id))
         perms.unshift("BLACKLISTED_USER");
     if (config_1.config.bot.ownerIds.includes(user.id))
-        perms.unshift("BOT_OWNER");
+        perms.unshift("GLOBAL_ADMIN");
     if (config_1.config.bot.id == user.id)
         perms.unshift("SYSTEM");
     if (perms.length == 0) {
