@@ -62,8 +62,18 @@ ${boosters
         }`
       );
     }
+    if (guild.vanityURLCode) {
+      emb.addField(
+        "❯ Vanity URL",
+        `**Code**: ${guild.vanityURLCode}
+**Uses**: ${guild.vanityURLUses}`
+      );
+    }
     emb.addField("❯ Features", getGuildFeatures(guild));
     emb.setColor(Color.embed);
+    if (guild.banner) {
+      emb.setImage(guild.bannerURL({ format: "gif", size: 1024 })!);
+    }
     await message.reply(emb);
   },
 } as ICommand;

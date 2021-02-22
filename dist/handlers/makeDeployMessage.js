@@ -19,7 +19,7 @@ function makeDeployMessage(pubChannels) {
     ];
     pubChannels.forEach((e) => {
         const ch = __1.client.channels.cache.get(e);
-        ch.send(message.join("\n"), { split: { char: "\n" } });
+        ch.send(message.join("\n"), { split: { char: "\n", prepend: "\u200b\n" } });
     });
 }
 exports.makeDeployMessage = makeDeployMessage;

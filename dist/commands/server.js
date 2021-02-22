@@ -42,8 +42,15 @@ ${boosters
                 .slice(0, 10)
                 .join("\n")} ${boosters.length > 10 ? `and ${boosters.length - 10} more...` : ""}`);
         }
+        if (guild.vanityURLCode) {
+            emb.addField("❯ Vanity URL", `**Code**: ${guild.vanityURLCode}
+**Uses**: ${guild.vanityURLUses}`);
+        }
         emb.addField("❯ Features", getGuildFeatures_1.getGuildFeatures(guild));
         emb.setColor(globals_1.Color.embed);
+        if (guild.banner) {
+            emb.setImage(guild.bannerURL({ format: "gif", size: 1024 }));
+        }
         await message.reply(emb);
     },
 };

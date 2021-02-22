@@ -37,7 +37,7 @@ export const config = {
     presence: {
       activity: {
         name: "$",
-        type: "STREAMING",
+        type: "PLAYING",
         url:
           "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
       },
