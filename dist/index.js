@@ -38,9 +38,6 @@ exports.client = new discord_js_1.default.Client({
         },
         afk: true,
     },
-    http: {
-        version: 8,
-    },
 });
 exports.client.on("ready", () => console.log("ok"));
 console.log(globals_1.CMDFilesPath);

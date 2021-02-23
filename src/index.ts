@@ -38,9 +38,6 @@ export const client = new Discord.Client({
     afk: true,
     // status: "idle",
   },
-  http: {
-    version: 8,
-  },
 });
 client.on("ready", () => console.log("ok"));
 console.log(CMDFilesPath);
