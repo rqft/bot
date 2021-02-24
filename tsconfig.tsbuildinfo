@@ -337,7 +337,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/setuserpresence.ts": {
-        "version": "480cc538b20cabc9402c96c371a71cc4e4570acf8ffb700b5826838f9ca74eec",
+        "version": "42921fd3eb3d61f5a2234e790e3874f2086e8432cda4108274523ce26f5634e6",
         "signature": "72270063dd3d4182639891cf074af3ff6f369b9be326598be8f621c538c12e3c",
         "affectsGlobalScope": false
       },

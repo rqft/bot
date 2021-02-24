@@ -25,13 +25,6 @@ export async function setUserPresence() {
         ],
       },
     });
-    // RPCClient.setActivity({
-    //   joinSecret: "0000",
-    //   instance: true,
-    //   largeImageKey: "hallucinate",
-    //   partyMax: 10,
-    //   partySize: 2,
-    // });
   });
 
   RPCClient.login({
