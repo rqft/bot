@@ -91,7 +91,8 @@ ${changes}`;
         });
         message.reply(lgs.join("\n"));
         break;
-
+      case "message":
+        return await message.channel.send(decor.Emojis.WHITE_CHECK_MARK);
       default:
         return await message.reply(
           `Unknown test. Valid tests are ${tests

@@ -90,6 +90,8 @@ ${changes}`;
                 });
                 message.reply(lgs.join("\n"));
                 break;
+            case "message":
+                return await message.channel.send("\u2705");
             default:
                 return await message.reply(`Unknown test. Valid tests are ${tests
                     .map((e) => `\`${e}\``)

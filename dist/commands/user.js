@@ -71,8 +71,8 @@ ${roles.length !== 0
                     .slice(0, 10)
                     .join(", ")}${roles.length > 10 ? `\nand ${roles.length - 10} more...` : ""}`
                 : ""}
-${"\uD83D\uDCAC"} **Last Message**: [\`${mem.lastMessage?.cleanContent.slice(0, 30) ??
-                "<embed>" + (mem.lastMessage?.cleanContent.length > 30 ? "..." : "")}\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>
+${"\uD83D\uDCAC"} **Last Message**: [\`${mem.lastMessage?.cleanContent.slice(0, 30) +
+                (mem.lastMessage?.cleanContent.length > 30 ? "..." : "")}\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>
 ${mem.voice.channel
                 ? `${"\u260E\uFE0F"} **Voice**: In ${joinedVoice}`
                 : ""}`);

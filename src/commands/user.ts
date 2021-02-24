@@ -95,8 +95,8 @@ ${
     : ""
 }
 ${decor.Emojis.SPEECH_BALLOON} **Last Message**: [\`${
-          mem.lastMessage?.cleanContent.slice(0, 30) ??
-          "<embed>" + (mem.lastMessage?.cleanContent.length! > 30 ? "..." : "")
+          mem.lastMessage?.cleanContent.slice(0, 30) +
+          (mem.lastMessage?.cleanContent.length! > 30 ? "..." : "")
         }\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>
 ${
   mem.voice.channel
