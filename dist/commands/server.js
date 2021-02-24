@@ -19,11 +19,46 @@ module.exports = {
         const emb = new discord_js_1.MessageEmbed();
         emb.setAuthor(guild.name, guild.iconURL({ dynamic: true }));
         emb.setThumbnail(guild.iconURL({ dynamic: true }));
+        const channels = {
+            text: guild.channels.cache.filter((e) => e.type == "text").size,
+            category: guild.channels.cache.filter((e) => e.type == "category").size,
+            store: guild.channels.cache.filter((e) => e.type == "store").size,
+            voice: guild.channels.cache.filter((e) => e.type == "voice").size,
+            news: guild.channels.cache.filter((e) => e.type == "news").size,
+        };
+        const counts = [
+            {
+                text: `${"\uD83D\uDEE1\uFE0F"} **Roles**: ${(await guild.roles.fetch()).size}`,
+                enabled: (await guild.roles.fetch()).filter((e) => !e.managed && guild.roles.everyone.id !== e.id).size > 0,
+            },
+            {
+                text: `${"\uD83D\uDD28"} **Bans**: ${(await guild.fetchBans()).size}`,
+                enabled: (await guild.fetchBans()).size > 0,
+            },
+            {
+                text: `${"\uD83D\uDE03"} **Emojis**: ${(await guild.emojis.fetch()).size}`,
+                enabled: (await guild.emojis.fetch()).size > 0,
+            },
+            {
+                text: `${"\uD83D\uDCD1"} **Integrations**: ${(await guild.fetchIntegrations()).size}`,
+                enabled: (await guild.fetchIntegrations()).size > 0,
+            },
+            {
+                text: `${"\uD83D\uDCD6"} **Channels**: ${guild.channels.cache.size}
+${"<:IconChannel_Text:798624246905569323>"}: ${channels.text} | ${"<:IconChannel_Category:798624247122493450>"}: ${channels.category} | ${"<:IconChannel_Voice:798624234732781580>"}: ${channels.voice} | ${"<:IconChannel_News:798624238793261109>"}: ${channels.news}`,
+                enabled: guild.channels.cache.size > 1,
+            },
+        ];
+        const enabled = counts
+            .filter((e) => e.enabled == true)
+            .map((e) => e.text)
+            .join("\n");
         emb.addField("❯ Server Info", `${"\u2699\uFE0F"} **ID**: \`${guild.id}\`
 ${"<:IconGui_OwnerCrown:799657143719952415>"} **Owner**: ${guild.owner}
 ${"<:IconChannel_Voice:798624234732781580>"} **Voice Region**: ${getGuildVoiceRegion_1.getGuildVoiceRegion(guild)}
 ${"\uD83D\uDCC6"} **Created**: ${getLongAgo_1.simpleGetLongAgo(guild.createdTimestamp)} ago ${formatTimestamp_1.formatTimestamp(guild.createdAt)}`);
-        emb.addField("❯ Invites", (await guild.fetchInvites()).size
+        emb.addField("❯ Counts", enabled);
+        emb.addField(`❯ (${(await guild.fetchInvites()).size}) Invites`, (await guild.fetchInvites()).size
             ? (await guild.fetchInvites())
                 .array()
                 .slice(0, 5)

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commandFiles = exports.commands = exports.client = void 0;
+exports.getLatency = exports.commandFiles = exports.commands = exports.client = void 0;
 const discord_js_1 = __importDefault(require("discord.js"));
 const config_1 = require("./config");
 const formatID_1 = require("./functions/formatID");
@@ -86,4 +86,10 @@ exports.client.on("message", async (message) => {
 });
 process.on("uncaughtException", (e) => logError_1.logError(e));
 exports.client.login(config_1.config.bot.token);
-exports.client.on("guildCreate", () => exports.client.emit("ready"));
+exports.client.on("guildCreate", onReady_1.onReady);
+async function getLatency(cb) {
+    const s = Date.now();
+    await cb();
+    return Date.now() - s;
+}
+exports.getLatency = getLatency;

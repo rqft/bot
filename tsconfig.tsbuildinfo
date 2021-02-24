@@ -317,7 +317,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/makeconsoledeploymessage.ts": {
-        "version": "0f3085dd5621934becb1723b356598217d552ad877beaab1325f1e46072c1d15",
+        "version": "883c03794fe62c91dd2820fb6ff7da92ccf1c4043df433c6d6a805031f91fdb5",
         "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
         "affectsGlobalScope": false
       },
@@ -327,7 +327,7 @@
         "affectsGlobalScope": false
       },
       "./src/handlers/onready.ts": {
-        "version": "04d99b31e41b3dda48a55617aa5627dbaa134d0fe2571e222a9e5fceb5ea8f0d",
+        "version": "7ed0133c9e7f4257da2f611a7c51df9bc14f39d07ae24a4d0638e8f947d9a33a",
         "signature": "27a75699f9af4f2cb5272c60066d22d504143273a149ed020287e2848a641e17",
         "affectsGlobalScope": false
       },
@@ -347,8 +347,8 @@
         "affectsGlobalScope": true
       },
       "./src/index.ts": {
-        "version": "362a8aaf2d7560a3e2ec630ded3e9abcee7fd8af15f5ae6b4fce5a6f30b4376d",
-        "signature": "57788a35c9f91b60a84854d16690adb461acaebe2b9ff40456c8c6dd69de9da8",
+        "version": "76f81b70a1cdde65ebcf3d0082cf5a2b128bcf736142d61c6f1005b86052dd7f",
+        "signature": "e5328e9656269a74a82b8d15eece9d2d2d9a28319771061847a237e06676d0f7",
         "affectsGlobalScope": false
       },
       "./src/functions/random.ts": {
@@ -372,7 +372,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/about.ts": {
-        "version": "92d105237a6f3087eecd5575f214edb57b3c2a5c955c1ef418c3f5bdcf1014df",
+        "version": "9706e3d09dce24ee708a7592fc9d3efad142b9bff2064ced4baf2dbdde4ad79d",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -392,8 +392,8 @@
         "affectsGlobalScope": false
       },
       "./src/maps/customemojis.ts": {
-        "version": "24e1f47e1d5817b7e71193d81701bc2a924aa8b323fbd9a3fb6832d9cb068455",
-        "signature": "12f0408eecf7bf8f50dace8ebc775813d88ae15dfca88cba0aad93788bea3c5f",
+        "version": "d0a4df871832d0a50f7a7ae15f619b3ac18a24fc172a28b9205388015913c9d1",
+        "signature": "47d2a9edb5eb5b7b60b67c7431234bbd784b8067839bbb228f18abc663ebadfc",
         "affectsGlobalScope": false
       },
       "./src/commands/avatar.ts": {
@@ -722,7 +722,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "780628a293faf1489a1a9e93674cdc529d4d3c5afee0ae028449d892083e4140",
+        "version": "1a7c9b5867b2ad0bd99e47433c3653321172176c35c2c5ee438aa014d5ad3972",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -757,7 +757,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/parsetimestring.ts": {
-        "version": "5ab7794ce55316d3457f4da722a5af982f70b4a74853fbd155d7606f42fc26b2",
+        "version": "bbbf47b39c4d3da3a113724e5abffa289099868b671d2d9b24177591fdf56804",
         "signature": "e8062045691073ea560db409b4be7f7798b91277ce0db3ddd01ce72e65288ddd",
         "affectsGlobalScope": false
       },
@@ -877,7 +877,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/server.ts": {
-        "version": "12e61e78a8d8f74bd2f30fd542f72269bc9770ee28083110ab9877c90f1cd154",
+        "version": "bee50a167fa3795622bb57db0ea5a66cc7e5bc7ed0cd5d81b79df6d8236f16f7",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -918,6 +918,16 @@
       },
       "./src/commands/spotify.ts": {
         "version": "fddfa3434a194c71898e0d1f4fe3e3f03860364951ed1740e9a05f85657bf2ae",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/moment/ts3.1-typings/moment.d.ts": {
+        "version": "f97edc4d3b4dd0b32766e9633086497565c37657fb591cc84a35864db4bc2fc5",
+        "signature": "f97edc4d3b4dd0b32766e9633086497565c37657fb591cc84a35864db4bc2fc5",
+        "affectsGlobalScope": false
+      },
+      "./src/commands/status.ts": {
+        "version": "318083c903f85cae8f57d4071b1ed670c4ed2c0403d9d11bc200887268656afa",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -982,7 +992,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "47173c14ab2b238668c1e69fae1497d733504c72931b1f6833b48394b2ad7faa",
+        "version": "2b054ae8b56b17a99dca86512e0956d6fc08224f878b4d3f00e9cc2e320b9d92",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1360,6 +1370,8 @@
       "./src/commands/eval.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
+        "./src/functions/api.ts",
+        "./src/functions/capitalizewords.ts",
         "./src/functions/checkarraycontainsall.ts",
         "./src/functions/fetchcommand.ts",
         "./src/globals.ts",
@@ -1495,6 +1507,14 @@
         "./src/globals.ts",
         "./src/interfaces/icommand.ts",
         "./src/interfaces/spotify/iartist.ts"
+      ],
+      "./src/commands/status.ts": [
+        "./node_modules/@types/node-fetch/index.d.ts",
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./node_modules/moment/ts3.1-typings/moment.d.ts",
+        "./src/functions/capitalizewords.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/maps/customemojis.ts"
       ],
       "./src/commands/test.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
@@ -2112,6 +2132,7 @@
       "./node_modules/@types/node/zlib.d.ts",
       "./node_modules/discord.js/typings/index.d.ts",
       "./node_modules/form-data/index.d.ts",
+      "./node_modules/moment/ts3.1-typings/moment.d.ts",
       "./src/commands/8b.ts",
       "./src/commands/about.ts",
       "./src/commands/allow.ts",
@@ -2144,6 +2165,7 @@
       "./src/commands/solve.ts",
       "./src/commands/source.ts",
       "./src/commands/spotify.ts",
+      "./src/commands/status.ts",
       "./src/commands/test.ts",
       "./src/commands/tex.ts",
       "./src/commands/translate.ts",

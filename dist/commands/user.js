@@ -36,15 +36,45 @@ ${"\uD83D\uDDD3\uFE0F"} **Created**: ${getLongAgo_1.simpleGetLongAgo(user.create
         if (user.presence.guild)
             emb.addField("❯ Presence", getPresence_1.getPresence(user));
         if (mem) {
+            const voice = {
+                deaf: mem.voice.deaf
+                    ? `${mem.voice.serverDeaf ? "Server" : "Self"} Deafened`
+                    : "Undeafened",
+                channel: mem.voice.channel ? mem.voice.channel.name : "Unknown Channel",
+                mute: mem.voice.mute
+                    ? `${mem.voice.serverMute ? "Server" : "Self"} Muted`
+                    : "Unmuted",
+                speaking: mem.voice.speaking ? "Speaking" : "",
+                streaming: mem.voice.streaming ? "Streaming" : "",
+                video: mem.voice.selfVideo ? "On Video" : "",
+            };
+            const joinedVoice = [
+                `${voice.channel}`,
+                voice.deaf,
+                voice.mute,
+                voice.speaking,
+                voice.streaming,
+                voice.video,
+            ]
+                .filter((e) => e != "")
+                .map((e) => `\`${e}\``)
+                .join(", ");
             const roles = mem.roles.cache
                 .filter((e) => !e.deleted && e.guild.id !== e.id)
                 .array()
                 .sort((a, b) => a.position - b.position);
-            emb.addField("❯ Member Information", `${"\uD83D\uDCE5"} **Joined:** ${getLongAgo_1.getLongAgo(mem.joinedTimestamp, 2)} ago ${formatTimestamp_1.formatTimestamp(mem.joinedAt)}
+            emb.addField("❯ Member Information", `${"\uD83D\uDCE5"} **Joined:** ${getLongAgo_1.getLongAgo(mem.joinedTimestamp, 2)} ago ${formatTimestamp_1.formatTimestamp(mem.joinedAt)} ${mem.pending ? `(Currently Pending)` : ""}${mem.nickname
+                ? `\n${"\u270F\uFE0F"} **Nickname**: ${mem.nickname}`
+                : ""}
 ${roles.length !== 0
                 ? `${"\uD83D\uDEE1\uFE0F"} **Roles** (${roles.length}): ${roles
                     .slice(0, 10)
                     .join(", ")}${roles.length > 10 ? `\nand ${roles.length - 10} more...` : ""}`
+                : ""}
+${"\uD83D\uDCAC"} **Last Message**: [\`${mem.lastMessage?.cleanContent.slice(0, 30) ??
+                "<embed>" + (mem.lastMessage?.cleanContent.length > 30 ? "..." : "")}\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>
+${mem.voice.channel
+                ? `${"\u260E\uFE0F"} **Voice**: In ${joinedVoice}`
                 : ""}`);
             emb.addField("❯ Permissions", `${"\u2699\uFE0F"} **Permission List**: ${getUserPermissions_1.getUserPermissions(mem)}
 ${"\uD83C\uDF00"} **Bot Level**: __\`${getBotLevel_1.getBotLevel(mem)}\`__`);

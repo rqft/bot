@@ -22,19 +22,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = __importStar(require("discord.js"));
 const __1 = require("..");
 const config_1 = require("../config");
+const api_1 = require("../functions/api");
+const capitalizeWords_1 = require("../functions/capitalizeWords");
 const checkArrayContainsAll_1 = require("../functions/checkArrayContainsAll");
 const fetchCommand_1 = require("../functions/fetchCommand");
 const globals = __importStar(require("../globals"));
 module.exports = {
     name: "eval",
     description: "Run code",
-    usage: "<code: text>",
+    usage: "<code: text | Attachment>",
     restrictions: {
         ownerOnly: true,
     },
     async run(message, args) {
         var lang = "ts";
-        const code = args.join(" ").replace(/\`{3}\n?(.+)?/g, "");
+        const code = args.length
+            ? args.join(" ").replace(/\`{3}\n?(.+)?/g, "")
+            : await api_1.api(message.attachments.array()[0]
+                ? message.attachments.array()[0].url
+                : "undefined", "text");
         const input = `\`\`\`ts\n${code}\`\`\``;
         var str = null;
         try {
@@ -55,12 +61,15 @@ module.exports = {
             embed.setColor(globals.Color.embed);
             embed.setTitle(`${"\u2705"} Eval Success`);
             embed.addField("Input", input);
+            if (typeof str == "string") {
+                str = `"${str}"`;
+            }
             if (str instanceof Object) {
                 str = JSON.stringify(str, null, 2);
                 lang = "json";
             }
             const output = `\`\`\`${lang}\n${str}\`\`\``;
-            embed.addField("Output", output);
+            embed.addField(`Output - ${capitalizeWords_1.capitalizeWords(typeof str)}`, output);
             await message.reply(embed);
         }
         catch (e) {
@@ -68,9 +77,9 @@ module.exports = {
             const embed = new discord_js_1.MessageEmbed();
             embed.setColor(globals.Color.embed);
             embed.setTitle(`${"\u26D4"} Eval Failed`);
-            embed.addField("Input", input);
+            embed.addField("Input", input.slice(0, 500));
             const output = `\`\`\`ts\n${str}\`\`\``;
-            embed.addField("Output", output);
+            embed.addField(`Output - ${capitalizeWords_1.capitalizeWords(typeof str)}`, output);
             await message.reply(embed);
         }
     },

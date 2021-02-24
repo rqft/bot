@@ -8,12 +8,15 @@ const getLongAgo_1 = require("../functions/getLongAgo");
 const globals_1 = require("../globals");
 module.exports = {
     name: "about",
-    aliases: ["abt"],
+    aliases: ["abt", ""],
     usesArgs: false,
     description: "Info about the bot",
     usage: "",
     cooldown: 109497,
     async run(message) {
+        const here = `[here](https://discord.com/api/oauth2/authorize?client_id=${(await __1.client.fetchApplication()).id}&permissions=8&scope=bot)`;
+        const colon = `[:](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=createInvite)`;
+        const botServ = `[Bot Server](https://arcy-at.github.io/invite)`;
         message.reply(new discord_js_1.MessageEmbed({
             color: globals_1.Color.embed,
             fields: [
@@ -21,11 +24,9 @@ module.exports = {
                     name: "About",
                     value: `Hi! This is a bot made by ${(await __1.client.fetchApplication()).owner} made with [DiscordJS](https://discord.js.org/#/) and a stupid idea.
 
-You can invite the bot to your server [here](https://discord.com/api/oauth2/authorize?client_id=${(await __1.client.fetchApplication()).id}&permissions=8&scope=bot)
-My prefixes are[:](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=createInvite) ${config_1.config.bot.prefixes
-                        .join(", ")
-                        .replace(/\?/g, "")}
-Join the [Bot Server](https://arcy-at.github.io/invite)`,
+You can invite the bot to your server ${here}
+My prefixes are${colon} ${config_1.config.bot.prefixes.join(", ").replace(/\?/g, "")}
+Join the ${botServ}`,
                 },
                 {
                     name: "Stats",

@@ -11,8 +11,9 @@ export function parseTimeString(time: string) {
   const TIME_REGEX = /(\d+)([ismhdw])/g;
 
   return Array.from(time.matchAll(TIME_REGEX)).reduce(
-    // @ts-ignore
-    (p, [, num, suffix]) => p + parseInt(num!, 10) * timeSuffix[suffix!]!,
+    (p, [, num, suffix]) =>
+      // @ts-ignore
+      p + parseInt(num!, 10) * (timeSuffix[suffix! as any] as any)!,
     0
   );
 }

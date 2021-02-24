@@ -1,8 +1,6 @@
 import { client } from "..";
 import { color, TerminalColor } from "../types/TerminalColors";
-//
 export function makeConsoleDeployMessage() {
-  const start = Date.now();
   const message = [
     `[${color(
       new Date().toLocaleString(),
@@ -37,7 +35,7 @@ export function makeConsoleDeployMessage() {
       )
       .join("\n")
       .replace(/\n{2}/gm, "\n"),
-    color(`ready in ${Date.now() - start}ms`, TerminalColor.normal.CYAN),
+    color(`ready`, TerminalColor.normal.CYAN),
   ];
   console.log(message.join("\n"));
 }

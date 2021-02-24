@@ -8,13 +8,18 @@ import { ICommand } from "../interfaces/ICommand";
 
 module.exports = {
   name: "about",
-  aliases: ["abt"],
+  aliases: ["abt", ""],
   usesArgs: false,
   description: "Info about the bot",
   usage: "",
   // restrictions: {},
   cooldown: 109497,
   async run(message) {
+    const here = `[here](https://discord.com/api/oauth2/authorize?client_id=${
+      (await client.fetchApplication()).id
+    }&permissions=8&scope=bot)`;
+    const colon = `[:](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=createInvite)`;
+    const botServ = `[Bot Server](https://arcy-at.github.io/invite)`;
     message.reply(
       new MessageEmbed({
         color: Color.embed,
@@ -25,13 +30,9 @@ module.exports = {
               (await client.fetchApplication()).owner
             } made with [DiscordJS](https://discord.js.org/#/) and a stupid idea.
 
-You can invite the bot to your server [here](https://discord.com/api/oauth2/authorize?client_id=${
-              (await client.fetchApplication()).id
-            }&permissions=8&scope=bot)
-My prefixes are[:](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=createInvite) ${config.bot.prefixes
-              .join(", ")
-              .replace(/\?/g, "")}
-Join the [Bot Server](https://arcy-at.github.io/invite)`,
+You can invite the bot to your server ${here}
+My prefixes are${colon} ${config.bot.prefixes.join(", ").replace(/\?/g, "")}
+Join the ${botServ}`,
           },
           {
             name: "Stats",

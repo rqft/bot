@@ -20,6 +20,51 @@ module.exports = {
     const emb = new MessageEmbed();
     emb.setAuthor(guild.name, guild.iconURL({ dynamic: true })!);
     emb.setThumbnail(guild.iconURL({ dynamic: true })!);
+    const channels = {
+      text: guild.channels.cache.filter((e) => e.type == "text").size,
+      category: guild.channels.cache.filter((e) => e.type == "category").size,
+      store: guild.channels.cache.filter((e) => e.type == "store").size,
+      voice: guild.channels.cache.filter((e) => e.type == "voice").size,
+      news: guild.channels.cache.filter((e) => e.type == "news").size,
+    };
+    const counts = [
+      {
+        text: `${decor.Emojis.SHIELD} **Roles**: ${
+          (await guild.roles.fetch()).size
+        }`,
+        enabled:
+          (await guild.roles.fetch()).filter(
+            (e) => !e.managed && guild.roles.everyone.id !== e.id
+          ).size > 0,
+      },
+      {
+        text: `${decor.Emojis.HAMMER} **Bans**: ${
+          (await guild.fetchBans()).size
+        }`,
+        enabled: (await guild.fetchBans()).size > 0,
+      },
+      {
+        text: `${decor.Emojis.SMILEY} **Emojis**: ${
+          (await guild.emojis.fetch()).size
+        }`,
+        enabled: (await guild.emojis.fetch()).size > 0,
+      },
+      {
+        text: `${decor.Emojis.BOOKMARK_TABS} **Integrations**: ${
+          (await guild.fetchIntegrations()).size
+        }`,
+        enabled: (await guild.fetchIntegrations()).size > 0,
+      },
+      {
+        text: `${decor.Emojis.BOOK} **Channels**: ${guild.channels.cache.size}
+${CustomEmojis.CHANNEL_TEXT}: ${channels.text} | ${CustomEmojis.CHANNEL_CATEGORY}: ${channels.category} | ${CustomEmojis.CHANNEL_VOICE}: ${channels.voice} | ${CustomEmojis.CHANNEL_NEWS}: ${channels.news}`,
+        enabled: guild.channels.cache.size > 1,
+      },
+    ];
+    const enabled = counts
+      .filter((e) => e.enabled == true)
+      .map((e) => e.text)
+      .join("\n");
     emb.addField(
       "❯ Server Info",
       `${decor.Emojis.GEAR} **ID**: \`${guild.id}\`
@@ -29,8 +74,9 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}`
     );
+    emb.addField("❯ Counts", enabled);
     emb.addField(
-      "❯ Invites",
+      `❯ (${(await guild.fetchInvites()).size}) Invites`,
       (await guild.fetchInvites()).size
         ? (await guild.fetchInvites())
             .array()

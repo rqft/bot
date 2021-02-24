@@ -46,6 +46,29 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
     var mem = message.guild?.members.cache.get(user.id) ?? false;
     if (user.presence.guild) emb.addField("❯ Presence", getPresence(user));
     if (mem) {
+      const voice = {
+        deaf: mem.voice.deaf
+          ? `${mem.voice.serverDeaf ? "Server" : "Self"} Deafened`
+          : "Undeafened",
+        channel: mem.voice.channel ? mem.voice.channel.name : "Unknown Channel",
+        mute: mem.voice.mute
+          ? `${mem.voice.serverMute ? "Server" : "Self"} Muted`
+          : "Unmuted",
+        speaking: mem.voice.speaking ? "Speaking" : "",
+        streaming: mem.voice.streaming ? "Streaming" : "",
+        video: mem.voice.selfVideo ? "On Video" : "",
+      };
+      const joinedVoice = [
+        `${voice.channel}`,
+        voice.deaf,
+        voice.mute,
+        voice.speaking,
+        voice.streaming,
+        voice.video,
+      ]
+        .filter((e) => e != "")
+        .map((e) => `\`${e}\``)
+        .join(", ");
       const roles = mem.roles.cache
         .filter((e) => !e.deleted && e.guild.id !== e.id)
         .array()
@@ -55,7 +78,13 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         `${decor.Emojis.INBOX_TRAY} **Joined:** ${getLongAgo(
           mem.joinedTimestamp!,
           2
-        )} ago ${formatTimestamp(mem.joinedAt!)}
+        )} ago ${formatTimestamp(mem.joinedAt!)} ${
+          mem.pending ? `(Currently Pending)` : ""
+        }${
+          mem.nickname
+            ? `\n${decor.Emojis.PENCIL2} **Nickname**: ${mem.nickname}`
+            : ""
+        }
 ${
   roles.length !== 0
     ? `${decor.Emojis.SHIELD} **Roles** (${roles.length}): ${roles
@@ -63,6 +92,15 @@ ${
         .join(", ")}${
         roles.length > 10 ? `\nand ${roles.length - 10} more...` : ""
       }`
+    : ""
+}
+${decor.Emojis.SPEECH_BALLOON} **Last Message**: [\`${
+          mem.lastMessage?.cleanContent.slice(0, 30) ??
+          "<embed>" + (mem.lastMessage?.cleanContent.length! > 30 ? "..." : "")
+        }\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>
+${
+  mem.voice.channel
+    ? `${decor.Emojis.TELEPHONE} **Voice**: In ${joinedVoice}`
     : ""
 }`
       );

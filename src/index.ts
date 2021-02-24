@@ -109,4 +109,9 @@ client.on("message", async (message) => {
 });
 process.on("uncaughtException", (e) => logError(e));
 client.login(config.bot.token);
-client.on("guildCreate", () => client.emit("ready"));
+client.on("guildCreate", onReady);
+export async function getLatency(cb: (...any: any[]) => Promise<any>) {
+  const s = Date.now();
+  await cb();
+  return Date.now() - s;
+}
