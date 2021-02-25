@@ -36,11 +36,14 @@ module.exports = {
     },
     async run(message, args) {
         var lang = "ts";
+        const hasAttachment = message.attachments.array()[0]
+            ? `// Has Attachment\n`
+            : "";
         const code = args.length
             ? args.join(" ").replace(/\`{3}\n?(.+)?/g, "")
             : await api_1.api(message.attachments.array()[0]
                 ? message.attachments.array()[0].url
-                : "undefined", "text");
+                : "https://raw.githubusercontent.com/arcy-at/arcy-at/main/bot-default-eval-file.js", "text");
         const input = `\`\`\`ts\n${code}\`\`\``;
         var str = null;
         try {
@@ -68,7 +71,7 @@ module.exports = {
                 str = JSON.stringify(str, null, 2);
                 lang = "json";
             }
-            const output = `\`\`\`${lang}\n${str}\`\`\``;
+            const output = `\`\`\`${lang}\n${hasAttachment}${str}\`\`\``;
             embed.addField(`Output - ${capitalizeWords_1.capitalizeWords(typeof str)} (${str.constructor.name})`, output);
             await message.reply(embed);
         }
@@ -78,7 +81,7 @@ module.exports = {
             embed.setColor(globals.Color.embed);
             embed.setTitle(`${"\u26D4"} Eval Failed`);
             embed.addField("Input", input.slice(0, 500));
-            const output = `\`\`\`ts\n${str}\`\`\``;
+            const output = `\`\`\`ts\n${hasAttachment}${str}\`\`\``;
             embed.addField(`Output - ${capitalizeWords_1.capitalizeWords(typeof str)}`, output);
             await message.reply(embed);
         }
