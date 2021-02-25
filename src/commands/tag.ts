@@ -69,7 +69,7 @@ module.exports = {
         tag.increment("usage_count");
         const emb = new MessageEmbed();
         emb.setTitle(`tag "${tag.get("name")}"`);
-        emb.addField("value", tag.get("description"));
+        emb.setDescription(tag.get("description"));
         emb.setFooter(`${decor.Emojis.PENCIL} set by ${tag.get("username")}`);
         return message.reply(emb);
 
