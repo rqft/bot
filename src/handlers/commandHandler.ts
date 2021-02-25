@@ -1,5 +1,6 @@
 import { Collection, Message, Permissions } from "discord.js";
 import { config } from "../config";
+import { capitalizeWords } from "../functions/capitalizeWords";
 import { fetchCommand } from "../functions/fetchCommand";
 import { ICommand } from "../interfaces/ICommand";
 import { logBlacklistedUserAction } from "../logs/logBlacklistedUserAction";
@@ -46,9 +47,9 @@ export async function commandHandler(message: Message) {
     )
   )
     return message.channel.send(
-      `:lock: Missing Permissions; You need: \`${command.restrictions.permissions.join(
-        ", "
-      )}\``
+      `:lock: Missing Permissions; You need: \`${command.restrictions.permissions
+        .map((e) => capitalizeWords(e.toLowerCase().replace(/_/g, " ")))
+        .join(", ")}\``
     );
   if (
     command.restrictions &&

@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commandFiles = exports.commands = exports.client = void 0;
+exports.Tags = exports.sequelize = exports.commandFiles = exports.commands = exports.client = void 0;
 const discord_js_1 = __importDefault(require("discord.js"));
+const sequelize_1 = require("sequelize");
 const config_1 = require("./config");
 const formatID_1 = require("./functions/formatID");
 const globals_1 = require("./globals");
@@ -55,7 +56,27 @@ exports.commands
     if (consoleMessages.length)
         console.log(`${TerminalColors_1.color("[COMMAND MANAGER]", "\u001B[35m")} ${e.name}:\n${consoleMessages.join("\n")}`);
 });
+exports.sequelize = new sequelize_1.Sequelize("database", "user", "password", {
+    host: "localhost",
+    dialect: "sqlite",
+    logging: false,
+    storage: "database.sqlite",
+});
+exports.Tags = exports.sequelize.define("tags", {
+    name: {
+        type: sequelize_1.STRING,
+        unique: true,
+    },
+    description: sequelize_1.TEXT,
+    username: sequelize_1.STRING,
+    usage_count: {
+        type: sequelize_1.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+    },
+});
 exports.client.once("ready", async () => {
+    exports.Tags.sync();
     onReady_1.onReady();
 });
 exports.client.on("error", (e) => discordjsError_1.discordjsError(e));

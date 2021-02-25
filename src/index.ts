@@ -1,4 +1,5 @@
 import Discord, { ActivityOptions } from "discord.js";
+import { INTEGER, Sequelize, STRING, TEXT } from "sequelize";
 import { config } from "./config";
 import { formatID } from "./functions/formatID";
 import { regexes } from "./globals";
@@ -72,7 +73,28 @@ commands
         }:\n${consoleMessages.join("\n")}`
       );
   });
+export const sequelize = new Sequelize("database", "user", "password", {
+  host: "localhost",
+  dialect: "sqlite",
+  logging: false,
+  // SQLite only
+  storage: "database.sqlite",
+});
+export const Tags = sequelize.define("tags", {
+  name: {
+    type: STRING,
+    unique: true,
+  },
+  description: TEXT,
+  username: STRING,
+  usage_count: {
+    type: INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+  },
+});
 client.once("ready", async () => {
+  Tags.sync();
   onReady();
 });
 client.on("error", (e) => discordjsError(e));

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.commandHandler = void 0;
 const discord_js_1 = require("discord.js");
 const config_1 = require("../config");
+const capitalizeWords_1 = require("../functions/capitalizeWords");
 const fetchCommand_1 = require("../functions/fetchCommand");
 const logBlacklistedUserAction_1 = require("../logs/logBlacklistedUserAction");
 const logCommandError_1 = require("../logs/logCommandError");
@@ -33,7 +34,9 @@ async function commandHandler(message) {
     if (command.restrictions &&
         command.restrictions.permissions &&
         !message.member?.permissions.has(new discord_js_1.Permissions(command.restrictions.permissions), true))
-        return message.channel.send(`:lock: Missing Permissions; You need: \`${command.restrictions.permissions.join(", ")}\``);
+        return message.channel.send(`:lock: Missing Permissions; You need: \`${command.restrictions.permissions
+            .map((e) => capitalizeWords_1.capitalizeWords(e.toLowerCase().replace(/_/g, " ")))
+            .join(", ")}\``);
     if (command.restrictions &&
         command.restrictions.guildOnly &&
         message.channel.type === "dm")
