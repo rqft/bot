@@ -26,7 +26,6 @@ module.exports = {
             `${decor.Emojis.NO_ENTRY} you need to supply a tag value!`
           );
         try {
-          // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
           await Tags.create({
             name: createname,
             description: value,

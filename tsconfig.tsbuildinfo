@@ -1057,7 +1057,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/tag.ts": {
-        "version": "ca5846b81cb8a6f3be430a7de3edfc3190eddf73e669e78de98fdcdc9f643b63",
+        "version": "0dc41e1d0f710f1fba98dacbd43f3e8d79c526c2ded8867961da86cff932c8fa",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
