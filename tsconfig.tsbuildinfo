@@ -722,7 +722,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/eval.ts": {
-        "version": "e3293b267b8a8df102f8e1403cdd14324be4a92fef64ed506b0f2212d8503e9a",
+        "version": "6493f592da534e0f25fbae0d1f229b8c519e702b4929a61f00c291a113af588f",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },

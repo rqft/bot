@@ -59,10 +59,7 @@ module.exports = {
         lang = "json";
       }
       const output = `\`\`\`${lang}\n${hasAttachment}${str}\`\`\``;
-      embed.addField(
-        `Output - ${capitalizeWords(typeof str)} (${str.constructor.name})`,
-        output
-      );
+      embed.addField(`Output - ${capitalizeWords(typeof str)}`, output);
       await message.reply(embed);
     } catch (e) {
       str = e;
