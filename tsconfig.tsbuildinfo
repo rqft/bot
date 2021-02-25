@@ -342,8 +342,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "29d3df848993ad3ad19d550761e121222de9c4dac54943ac18820e1c86ebe517",
-        "signature": "0104b4ad5350edf075fc5e431f5d8bbff65580e38fb52338498f46699c34b0b7",
+        "version": "8e51a287bb0b92fdebe6dd38c5ecd30d37cc4b421061b94884b7790df6c3a568",
+        "signature": "cfb69f664deec2e2a3ca90fc6871ef4313199767ce57919f0c9f2f048d463d2a",
         "affectsGlobalScope": false
       },
       "./src/logging-test.ts": {
@@ -1009,6 +1009,11 @@
       "./src/functions/fancytimeformat.ts": {
         "version": "ed3dbd1a6278f06e39b840035a79c54ff36af18d579b59f5da77ce580f93110e",
         "signature": "699b2ef7660c332cdf44e46dce8bedfc25feb896ecac6e23c4a4dde51af4eb32",
+        "affectsGlobalScope": false
+      },
+      "./src/functions/getlatencyon.ts": {
+        "version": "488e5038d2fad681f4b94ff06c6558f7d3001d98c9ff497cec6c831d663836e7",
+        "signature": "90474fa439e19c453cb23c10d40dcc17f0a5b8dbaaf2fee3a6646bb29319c979",
         "affectsGlobalScope": false
       },
       "./src/functions/getusersfrommention.ts": {
@@ -2189,6 +2194,7 @@
       "./src/functions/getguild.ts",
       "./src/functions/getguildfeatures.ts",
       "./src/functions/getguildvoiceregion.ts",
+      "./src/functions/getlatencyon.ts",
       "./src/functions/getlongago.ts",
       "./src/functions/getpresence.ts",
       "./src/functions/getprofilebadges.ts",
