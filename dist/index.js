@@ -28,7 +28,6 @@ exports.client = new discord_js_1.default.Client({
     allowedMentions: {
         roles: [],
         users: [],
-        repliedUser: false,
     },
     retryLimit: 10,
     presence: {

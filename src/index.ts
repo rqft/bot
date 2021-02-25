@@ -27,7 +27,6 @@ export const client = new Discord.Client({
   allowedMentions: {
     roles: [],
     users: [],
-    repliedUser: false,
   },
   retryLimit: 10,
   presence: {
