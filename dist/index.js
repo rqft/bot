@@ -14,7 +14,6 @@ const fetchCommandFiles_1 = require("./handlers/fetchCommandFiles");
 const makeCommandFromFile_1 = require("./handlers/makeCommandFromFile");
 const onReady_1 = require("./handlers/onReady");
 const setUserPresence_1 = require("./handlers/setUserPresence");
-require("./logging-test");
 const logError_1 = require("./logs/logError");
 const TerminalColors_1 = require("./types/TerminalColors");
 setUserPresence_1.setUserPresence();
@@ -28,6 +27,7 @@ exports.client = new discord_js_1.default.Client({
     allowedMentions: {
         roles: [],
         users: [],
+        repliedUser: false,
     },
     retryLimit: 10,
     presence: {
@@ -38,8 +38,6 @@ exports.client = new discord_js_1.default.Client({
         afk: true,
     },
 });
-exports.client.on("ready", () => console.log("ok"));
-console.log(globals_1.CMDFilesPath);
 exports.commands = new discord_js_1.default.Collection();
 exports.commandFiles = fetchCommandFiles_1.fetchCommandFiles();
 exports.commandFiles.forEach(makeCommandFromFile_1.makeCommands(exports.commands));

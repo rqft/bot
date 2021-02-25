@@ -341,15 +341,15 @@
         "signature": "72270063dd3d4182639891cf074af3ff6f369b9be326598be8f621c538c12e3c",
         "affectsGlobalScope": false
       },
+      "./src/index.ts": {
+        "version": "29d3df848993ad3ad19d550761e121222de9c4dac54943ac18820e1c86ebe517",
+        "signature": "0104b4ad5350edf075fc5e431f5d8bbff65580e38fb52338498f46699c34b0b7",
+        "affectsGlobalScope": false
+      },
       "./src/logging-test.ts": {
         "version": "e4cdbf68a33cec63245a01f3ef4bec24db16b7ea7eda0f0b6012e5495bc7194a",
         "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "affectsGlobalScope": true
-      },
-      "./src/index.ts": {
-        "version": "700a45f239ccde009dd28f4b3893de0ce5b1b514f67734ac396719c88da2e4bb",
-        "signature": "e5328e9656269a74a82b8d15eece9d2d2d9a28319771061847a237e06676d0f7",
-        "affectsGlobalScope": false
       },
       "./src/functions/random.ts": {
         "version": "816cb41aff4a25faf9fe1aa56060f3e02dc08c8d5e39e65cb20d65563069550d",

@@ -1,7 +1,7 @@
 import Discord, { ActivityOptions } from "discord.js";
 import { config } from "./config";
 import { formatID } from "./functions/formatID";
-import { CMDFilesPath, regexes } from "./globals";
+import { regexes } from "./globals";
 import { commandHandler } from "./handlers/commandHandler";
 import { discordjsError } from "./handlers/discordjsError";
 import { fetchCommandFiles } from "./handlers/fetchCommandFiles";
@@ -9,7 +9,6 @@ import { makeCommands } from "./handlers/makeCommandFromFile";
 import { onReady } from "./handlers/onReady";
 import { setUserPresence } from "./handlers/setUserPresence";
 import { ICommand } from "./interfaces/ICommand";
-import "./logging-test";
 import { logError } from "./logs/logError";
 import { color, TerminalColor } from "./types/TerminalColors";
 /**
@@ -27,6 +26,7 @@ export const client = new Discord.Client({
   allowedMentions: {
     roles: [],
     users: [],
+    repliedUser: false,
   },
   retryLimit: 10,
   presence: {
@@ -38,8 +38,6 @@ export const client = new Discord.Client({
     // status: "idle",
   },
 });
-client.on("ready", () => console.log("ok"));
-console.log(CMDFilesPath);
 export const commands = new Discord.Collection<any, ICommand>();
 export const commandFiles = fetchCommandFiles();
 commandFiles.forEach(makeCommands(commands));
@@ -79,6 +77,8 @@ client.once("ready", async () => {
 });
 client.on("error", (e) => discordjsError(e));
 client.on("message", async (message) => {
+  // if (message.channel.type == "dm")
+  //   console.log(`ok from ${message.author.tag}`);
   const sexes = message.content.match(regexes.sex);
   if (sexes) {
     if (message.author !== client.user && !message.author.bot) {
