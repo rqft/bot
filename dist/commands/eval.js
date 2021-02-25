@@ -69,7 +69,7 @@ module.exports = {
                 lang = "json";
             }
             const output = `\`\`\`${lang}\n${str}\`\`\``;
-            embed.addField(`Output - ${capitalizeWords_1.capitalizeWords(typeof str)}`, output);
+            embed.addField(`Output - ${capitalizeWords_1.capitalizeWords(typeof str)} (${str.constructor.name})`, output);
             await message.reply(embed);
         }
         catch (e) {
