@@ -1,3 +1,5 @@
+import { Secrets } from "./secrets";
+
 export const config = {
   global: {
     keys: {
@@ -27,7 +29,7 @@ export const config = {
       "<:Hallucinate:800092998590529557>",
     ],
     id: "760143615124439040",
-    token: process.env.BOT_TOKEN,
+    token: Secrets.BOT_TOKEN,
     application: {
       ownerId: "504698587221852172",
       clientId: "760143615124439040",

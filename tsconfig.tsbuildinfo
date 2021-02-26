@@ -216,9 +216,14 @@
         "signature": "f58c6d0669d1ee04b2fcb0e87fb949b6828602f3f29c7bf6c76a214f16fd50d5",
         "affectsGlobalScope": false
       },
+      "./src/secrets.ts": {
+        "version": "7f1a9597583394d30deb81c3275f0649a6b1842f3d3cbcfbea7b9eec53fed725",
+        "signature": "adcb259e409afed4952d7f2022e29a3c72fa1c286c3104d2181c5c2ecab85c23",
+        "affectsGlobalScope": false
+      },
       "./src/config.ts": {
-        "version": "0ca4762c3e1df6041c2c7691b4c2ec6609703dff3e42edd49182c265dd8b51b9",
-        "signature": "f46211fc5bfd4541c5074e8f563837e1dd372f146a4c9d9e7956fed90b6d6a27",
+        "version": "15154b8a646c0dea1c0b9d0b00185dd315957f654390dbba075b4df0bac7f414",
+        "signature": "ea7da00e59f1b29858a22d642297dd106680985e14f48a8b6966d9e770f0dd70",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
@@ -1812,6 +1817,9 @@
         "./src/globals.ts",
         "./src/interfaces/icommand.ts"
       ],
+      "./src/config.ts": [
+        "./src/secrets.ts"
+      ],
       "./src/functions/api.ts": [
         "./node_modules/@types/node-fetch/index.d.ts"
       ],
@@ -2625,6 +2633,7 @@
       "./src/maps/profilebadge.ts",
       "./src/maps/slurs.ts",
       "./src/maps/userstatus.ts",
+      "./src/secrets.ts",
       "./src/types/activitytype.ts",
       "./src/types/terminalcolors.ts",
       "../../../node-v14.15.1-win-x86/node_modules/typescript/lib/lib.dom.d.ts",

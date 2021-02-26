@@ -39,6 +39,7 @@ web_modules/
 # Optional eslint cache
 .eslintcache
 .env
+src/secrets.ts
 # Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/
