@@ -5,5 +5,5 @@ export function getBotBadges(user: User, showIcons: boolean = true) {
   const badges = botBadgeMap
     .get(user.id)
     ?.map((e) => `${showIcons ? e.icon : ""} ${e.text}`);
-  return badges ?? "No Bot Badges";
+  return badges ?? [];
 }

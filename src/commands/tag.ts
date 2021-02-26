@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { Tags } from "..";
+import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { decor } from "../maps/emojiEnum";
 module.exports = {
@@ -53,6 +54,7 @@ module.exports = {
           new MessageEmbed({
             title: "list of tags",
             description: tagString,
+            color: Color.embed,
           })
         );
       case "get":
@@ -71,6 +73,7 @@ module.exports = {
         emb.setTitle(`tag "${tag.get("name")}"`);
         emb.setDescription(tag.get("description"));
         emb.setFooter(`${decor.Emojis.PENCIL} set by ${tag.get("username")}`);
+        emb.setColor(Color.embed);
         return message.reply(emb);
 
       case "update":

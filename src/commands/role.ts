@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { capitalizeWords } from "../functions/capitalizeWords";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { getRole } from "../functions/getRole";
@@ -54,7 +55,14 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         posLow ? posLow : "-- Bottom Of Role list"
       }**`
     );
-    emb.addField("❯ Permissions", getUserPermissions(role));
+    emb.addField(
+      "❯ Permissions",
+      getUserPermissions(role)
+        .map(
+          (e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``
+        )
+        .join(", ")
+    );
     emb.addField(
       "❯ Members",
       role.members.size ? role.members.array().join(", ") : "None"

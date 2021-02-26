@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { client } from "..";
+import { capitalizeWords } from "../functions/capitalizeWords";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getBotBadges } from "../functions/getBotBadges";
 import { getBotLevel } from "../functions/getBotLevel";
@@ -84,29 +85,34 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
           mem.nickname
             ? `\n${decor.Emojis.PENCIL2} **Nickname**: ${mem.nickname}`
             : ""
-        }
-${
-  roles.length !== 0
-    ? `${decor.Emojis.SHIELD} **Roles** (${roles.length}): ${roles
-        .slice(0, 10)
-        .join(", ")}${
-        roles.length > 10 ? `\nand ${roles.length - 10} more...` : ""
-      }`
-    : ""
-}
-${decor.Emojis.SPEECH_BALLOON} **Last Message**: [\`${
-          mem.lastMessage?.cleanContent.slice(0, 30) +
-          (mem.lastMessage?.cleanContent.length! > 30 ? "..." : "")
-        }\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>
-${
-  mem.voice.channel
-    ? `${decor.Emojis.TELEPHONE} **Voice**: In ${joinedVoice}`
-    : ""
-}`
+        }${
+          roles.length !== 0
+            ? `\n${decor.Emojis.SHIELD} **Roles** (${
+                roles.length
+              }): ${roles.slice(0, 10).join(", ")}${
+                roles.length > 10 ? `\nand ${roles.length - 10} more...` : ""
+              }`
+            : ""
+        }${
+          mem.lastMessage
+            ? `\n${decor.Emojis.SPEECH_BALLOON} **Last Message**: [\`${
+                mem.lastMessage?.cleanContent.slice(0, 30) +
+                (mem.lastMessage?.cleanContent.length! > 30 ? "..." : "")
+              }\`](${mem.lastMessage?.url}) in <#${mem.lastMessageChannelID}>`
+            : ""
+        }${
+          mem.voice.channel
+            ? `\n${decor.Emojis.TELEPHONE} **Voice**: In ${joinedVoice}`
+            : ""
+        }`
       );
       emb.addField(
         "❯ Permissions",
-        `${decor.Emojis.GEAR} **Permission List**: ${getUserPermissions(mem)}
+        `${decor.Emojis.GEAR} **Permission List**: ${getUserPermissions(mem)
+          .map(
+            (e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``
+          )
+          .join(", ")}
 ${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
       );
       if (
@@ -133,8 +139,10 @@ ${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
             : "None."
         );
     }
-    emb.addField("❯ Profile Badges", getProfileBadges(user).join("\n"));
-    emb.addField("❯ Bot Badges", getBotBadges(user));
+    if (user.flags?.toArray().length)
+      emb.addField("❯ Profile Badges", getProfileBadges(user).join("\n"));
+    if (getBotBadges(user).length)
+      emb.addField("❯ Bot Badges", getBotBadges(user));
     const seenOn = client.guilds.cache
       .filter((e) => e.members.cache.has(user.id))
       .array();

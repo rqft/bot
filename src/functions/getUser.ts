@@ -13,6 +13,7 @@ export async function getUser(
       ? args.slice(argument).join(" ")?.normalize()!
       : args[argument]?.normalize()!) ?? message.author.id;
   if (res?.toLowerCase() == "discord") res = SpecialIDs.DISCORD;
+  if (res?.toLowerCase() == "updates") res = SpecialIDs.COMMUNITY_UPDATES;
   if (res?.toLowerCase() == "me" || res?.toLowerCase() == "self")
     res = message.author.id;
   if (["client", "system", "bot"].includes(res.toLowerCase()))

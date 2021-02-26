@@ -217,13 +217,13 @@
         "affectsGlobalScope": false
       },
       "./src/config.ts": {
-        "version": "6060d6e9b827a50d589da8454dba223014ff13b72b6800128eedab1988868372",
-        "signature": "ea7da00e59f1b29858a22d642297dd106680985e14f48a8b6966d9e770f0dd70",
+        "version": "0ca4762c3e1df6041c2c7691b4c2ec6609703dff3e42edd49182c265dd8b51b9",
+        "signature": "f46211fc5bfd4541c5074e8f563837e1dd372f146a4c9d9e7956fed90b6d6a27",
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
-        "version": "cc535537c45385c7a0be27afbcce82672c8689a10715c9c187a0afa0dec89f01",
-        "signature": "fa47dbad064c1a7d1cc59677a7555a04a6fc390abac1cc96532f7591fa0181fc",
+        "version": "78d8eed8dd46673bc9948beea575f10bee157ca723289da8ef4d1b1528089efc",
+        "signature": "80b5b0bafecfd28a59b8359126081a6a7a6189eb599294499e04d5a69302453c",
         "affectsGlobalScope": false
       },
       "./node_modules/@discordjs/collection/dist/index.d.ts": {
@@ -512,7 +512,7 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getuser.ts": {
-        "version": "c9014050144bb5d662338588e7e2dbdf30e9f0dd5c02267aff565b1113e4961d",
+        "version": "487d03589e6833d9fe7689a5d5b0232cdd8aee36df508c26e307b4684d2319bd",
         "signature": "46cd5682fdb82a3cee4a9f3bf7e32150b7752c0570a7ddba4fadd70919878fd1",
         "affectsGlobalScope": false
       },
@@ -536,8 +536,13 @@
         "signature": "617533393d21aa2359777a7cc438de00dfb135ad12b0c5e2ef94fa6986d0673c",
         "affectsGlobalScope": false
       },
+      "./src/maps/emojienum.ts": {
+        "version": "7d7dd89cef48ac13ddb3d62443d13f9ff5fcbb602c5d36b83a2a0989f77c6b67",
+        "signature": "ec3bcc0e59d345d7732021ddea35a28a69975f0b905ceb85f8914eb1ca6e153a",
+        "affectsGlobalScope": false
+      },
       "./src/commands/ban.ts": {
-        "version": "938e9c307af21db2a6022f6af461d531405edc14c100cc43205de6cb1352c2c2",
+        "version": "f2d08d8c95a2f3a07665bba71b2850e56f0b7a56a324f19e265f08ec044a76d3",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -816,11 +821,6 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
-      "./src/maps/emojienum.ts": {
-        "version": "7d7dd89cef48ac13ddb3d62443d13f9ff5fcbb602c5d36b83a2a0989f77c6b67",
-        "signature": "ec3bcc0e59d345d7732021ddea35a28a69975f0b905ceb85f8914eb1ca6e153a",
-        "affectsGlobalScope": false
-      },
       "./src/commands/channel.ts": {
         "version": "b3e01479a44df9cbb7e4235aa6217432e77c22a8dd4817014ca704c7eccc3484",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
@@ -962,12 +962,12 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getuserpermissions.ts": {
-        "version": "6bae4eb96828a39506423746a0a6b059771884d0501d3817382734244577df46",
-        "signature": "9401723210970757313db13e22f0a05c8ae7d029ebb3eedc886723f32744b076",
+        "version": "9e979e34457fe4d3351a3ee9c29d6fa86c5f97cc08fd3ff3f2cbf5b48819e399",
+        "signature": "c3b3aca16d6dd4b9109cefd636fc35ad4185b23e4dc572013179408044fc4446",
         "affectsGlobalScope": false
       },
       "./src/commands/role.ts": {
-        "version": "6c10645c5f0b9fe6c0d316a9c5c4c95be4d197657560944d31082dd0f9975b41",
+        "version": "97049753d382ce4580a732a39b8d25f7fa3476938743047c6c35fac080509ce6",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1057,7 +1057,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/tag.ts": {
-        "version": "126bb9bdf9a57669e3f4f444349616455e7e40934d872b70467a2f98578701c7",
+        "version": "3fec6f66bc23ee52d8f4fba7a9c9f36836129b296a534a13cf28d97dbaf8a876",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1102,8 +1102,8 @@
         "affectsGlobalScope": false
       },
       "./src/functions/getbotbadges.ts": {
-        "version": "68eb91d8eb1c54a0740e42e57cd1091819ba609bb62965860a9120ce1fca23c1",
-        "signature": "e371cbce7ceb29272c4382e3cdeccc8a36bcb3a8db104e891b4b34de107b2b5d",
+        "version": "52b012e0e294a266dd612a7ef89b2f954eaf72ab718116ca90a67186e5855d8c",
+        "signature": "6f2bb0dd583063a2e91b513ea5f39b489ce015b49d0e1387291d7b5c1e2d426a",
         "affectsGlobalScope": false
       },
       "./src/functions/getbotlevel.ts": {
@@ -1122,7 +1122,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "6ed4b994938c5f9fca50e359df617f9bdbf36c33ef78cdba158c193564e3f115",
+        "version": "2f7a1134eec378ccb12dc95dee26cc15e5df0d49cb2152e6f9e04df4840a1773",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -1550,9 +1550,15 @@
         "./src/maps/customemojis.ts"
       ],
       "./src/commands/ban.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/formatid.ts",
+        "./src/functions/formattimestamp.ts",
+        "./src/functions/getlongago.ts",
         "./src/functions/getuser.ts",
         "./src/functions/makecodeblock.ts",
-        "./src/interfaces/icommand.ts"
+        "./src/globals.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/maps/emojienum.ts"
       ],
       "./src/commands/bash.ts": [
         "./node_modules/@types/node/child_process.d.ts",
@@ -1695,6 +1701,7 @@
       ],
       "./src/commands/role.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/capitalizewords.ts",
         "./src/functions/formattimestamp.ts",
         "./src/functions/getlongago.ts",
         "./src/functions/getrole.ts",
@@ -1754,6 +1761,7 @@
       ],
       "./src/commands/tag.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
+        "./src/globals.ts",
         "./src/index.ts",
         "./src/interfaces/icommand.ts",
         "./src/maps/emojienum.ts"
@@ -1783,6 +1791,7 @@
       ],
       "./src/commands/user.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/capitalizewords.ts",
         "./src/functions/formattimestamp.ts",
         "./src/functions/getbotbadges.ts",
         "./src/functions/getbotlevel.ts",
@@ -1865,8 +1874,7 @@
       ],
       "./src/functions/getuserpermissions.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts",
-        "./src/functions/capitalizewords.ts"
+        "./src/config.ts"
       ],
       "./src/functions/getusersfrommention.ts": [
         "./src/index.ts"

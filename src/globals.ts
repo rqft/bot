@@ -62,6 +62,7 @@ export enum Chars {
 export enum SpecialIDs {
   DISCORD = "643945264868098049",
   CLYDE = "1",
+  COMMUNITY_UPDATES = "798610321925210122",
 }
 export const regexes = {
   sex: /s([^A-Z])*e([^A-Z])*x([^A-Z])*/gi,

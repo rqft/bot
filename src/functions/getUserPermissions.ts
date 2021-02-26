@@ -1,6 +1,5 @@
 import { GuildMember, PermissionString, Role } from "discord.js";
 import { config } from "../config";
-import { capitalizeWords } from "./capitalizeWords";
 const ignoredPermissions: PermissionString[] = [
   "ADD_REACTIONS",
   "ATTACH_FILES",
@@ -47,7 +46,5 @@ export function getUserPermissions(user: GuildMember | Role) {
     perms = ["NONE"];
   }
   if (user instanceof Role && user.managed) perms.unshift("MANAGED");
-  return perms
-    .map((e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``)
-    .join(", ");
+  return perms;
 }

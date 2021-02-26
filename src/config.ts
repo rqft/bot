@@ -20,9 +20,14 @@ export const config = {
       "https://audio.ngfiles.com/714000/714356_Lycanthropy-Original-Mix.mp3",
   },
   bot: {
-    prefixes: ["\\$", "p\\/", "<@!?760143615124439040>"],
+    prefixes: [
+      "\\$",
+      "p\\/",
+      "<@!?760143615124439040>",
+      "<:Hallucinate:800092998590529557>",
+    ],
     id: "760143615124439040",
-    token: "NzYwMTQzNjE1MTI0NDM5MDQw.X3Hw6A.m20I8OXPRGfHXUdX28IZuf5VXp8",
+    token: process.env.BOT_TOKEN,
     application: {
       ownerId: "504698587221852172",
       clientId: "760143615124439040",
@@ -32,7 +37,8 @@ export const config = {
     ownerIds: [
       "533757461706964993", // insyri
       "504698587221852172", // me
-      "621224863100829716",
+      "624786939022671893", // alt
+      "621224863100829716", // TestingBotPleaseIgnore,
     ],
     presence: {
       activity: {
