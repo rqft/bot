@@ -227,8 +227,8 @@
         "affectsGlobalScope": false
       },
       "./src/globals.ts": {
-        "version": "78d8eed8dd46673bc9948beea575f10bee157ca723289da8ef4d1b1528089efc",
-        "signature": "80b5b0bafecfd28a59b8359126081a6a7a6189eb599294499e04d5a69302453c",
+        "version": "2d621d888cdbe80e17ef3b5530ad11b1a6fd0fa6fcdacba78d96edaa3bb7e09d",
+        "signature": "7db0924d3f7052e3964794d50608cf8ba2a30deafd4c69713617d652fd021664",
         "affectsGlobalScope": false
       },
       "./node_modules/@discordjs/collection/dist/index.d.ts": {
@@ -431,38 +431,8 @@
         "signature": "5f9e9c3dd35ba38d1f84697534210cfcabd5967c00f6cfb33f6e68f3d34f381c",
         "affectsGlobalScope": false
       },
-      "./src/logs/logblacklistedguild.ts": {
-        "version": "772121977c8bec2cad883ace81a19afd2d3d22a8e6bae6305f0dbe347c4e308e",
-        "signature": "cc8cfbc13e7c11dd9a44409dade33b08755bfa7e80433e125d6a3a0cc9b14a94",
-        "affectsGlobalScope": false
-      },
-      "./src/logs/logblacklistedguildowner.ts": {
-        "version": "3f98057cb65b793857e5783d93d8108a4b3efbdfcb7f26a3966eb9954af0ea55",
-        "signature": "524e31e70f42e6bba9b95f1c7260318a47c6b819e37af253310b4db3411e2bd4",
-        "affectsGlobalScope": false
-      },
-      "./src/logs/leaveblacklistedguilds.ts": {
-        "version": "2ed69b1833d26c6d9bbdde37ed7c48fbe122ab5fc5443a4acef7723ef4cbd3ae",
-        "signature": "d4530bddb37ed8b05a4bf29886983390152cdaa66571d709a1ebef5898ae2b9c",
-        "affectsGlobalScope": false
-      },
-      "./src/types/terminalcolors.ts": {
-        "version": "b095b5df3de41e3ab1b63266a2833c072ebfdfccaffe460766fdda397c722e97",
-        "signature": "bb7c47309919986529e0ca781a5e7b850a94897e983a8e684c771314e70018b8",
-        "affectsGlobalScope": false
-      },
-      "./src/handlers/makeconsoledeploymessage.ts": {
-        "version": "883c03794fe62c91dd2820fb6ff7da92ccf1c4043df433c6d6a805031f91fdb5",
-        "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
-        "affectsGlobalScope": false
-      },
-      "./src/handlers/makedeploymessage.ts": {
-        "version": "0d34eb30d111785f422323e731f27d76f194c1741c54ca26eaf1312a18bc281e",
-        "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
-        "affectsGlobalScope": false
-      },
       "./src/handlers/onready.ts": {
-        "version": "7ed0133c9e7f4257da2f611a7c51df9bc14f39d07ae24a4d0638e8f947d9a33a",
+        "version": "febb440302b0c9a105b237ba64d2fe7b6a7cff034596d6e2ad84d58dc71fd55a",
         "signature": "27a75699f9af4f2cb5272c60066d22d504143273a149ed020287e2848a641e17",
         "affectsGlobalScope": false
       },
@@ -474,6 +444,11 @@
       "./src/handlers/setuserpresence.ts": {
         "version": "42921fd3eb3d61f5a2234e790e3874f2086e8432cda4108274523ce26f5634e6",
         "signature": "72270063dd3d4182639891cf074af3ff6f369b9be326598be8f621c538c12e3c",
+        "affectsGlobalScope": false
+      },
+      "./src/types/terminalcolors.ts": {
+        "version": "b095b5df3de41e3ab1b63266a2833c072ebfdfccaffe460766fdda397c722e97",
+        "signature": "bb7c47309919986529e0ca781a5e7b850a94897e983a8e684c771314e70018b8",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
@@ -856,6 +831,11 @@
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
+      "./src/commands/github.ts": {
+        "version": "27c797272181f97a81e69ca288361d73859684499a104c8b2ef011d6c3c59539",
+        "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
+        "affectsGlobalScope": false
+      },
       "./src/commands/help.ts": {
         "version": "f8632b93bdc5437ba9f30486646c99b2c0a76f38aefb2eacfb201a97ed964b0b",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
@@ -1176,9 +1156,34 @@
         "signature": "2a9299b05bd000e6768e9490a53bbc1029ab0dc04a1e03d6dfe447204f45e36c",
         "affectsGlobalScope": false
       },
+      "./src/handlers/makeconsoledeploymessage.ts": {
+        "version": "883c03794fe62c91dd2820fb6ff7da92ccf1c4043df433c6d6a805031f91fdb5",
+        "signature": "86052b186cd3a88329f5dab971a5179c986cfec3a4da3bcf249ee8bf8cbea39e",
+        "affectsGlobalScope": false
+      },
+      "./src/handlers/makedeploymessage.ts": {
+        "version": "0d34eb30d111785f422323e731f27d76f194c1741c54ca26eaf1312a18bc281e",
+        "signature": "fcfa0bea6081065b4357671388a597e8c0801eaf3162b0c66d40a6b020364eb0",
+        "affectsGlobalScope": false
+      },
       "./src/interfaces/server.ts": {
         "version": "1d2111a9ae4f75e93ff3de4ee3c8f7491d98eb86335cc6ab410e1e8962acb0f5",
         "signature": "736ba48f30788208ffb8398605fa5c7357cdae13967ce9f64a0cfac6b6fbc35e",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logblacklistedguild.ts": {
+        "version": "772121977c8bec2cad883ace81a19afd2d3d22a8e6bae6305f0dbe347c4e308e",
+        "signature": "cc8cfbc13e7c11dd9a44409dade33b08755bfa7e80433e125d6a3a0cc9b14a94",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/logblacklistedguildowner.ts": {
+        "version": "3f98057cb65b793857e5783d93d8108a4b3efbdfcb7f26a3966eb9954af0ea55",
+        "signature": "524e31e70f42e6bba9b95f1c7260318a47c6b819e37af253310b4db3411e2bd4",
+        "affectsGlobalScope": false
+      },
+      "./src/logs/leaveblacklistedguilds.ts": {
+        "version": "2ed69b1833d26c6d9bbdde37ed7c48fbe122ab5fc5443a4acef7723ef4cbd3ae",
+        "signature": "d4530bddb37ed8b05a4bf29886983390152cdaa66571d709a1ebef5898ae2b9c",
         "affectsGlobalScope": false
       },
       "./src/maps/logs.ts": {
@@ -1626,6 +1631,16 @@
         "./src/interfaces/icommand.ts",
         "./src/maps/emojienum.ts"
       ],
+      "./src/commands/github.ts": [
+        "./node_modules/discord.js/typings/index.d.ts",
+        "./src/functions/api.ts",
+        "./src/functions/formattimestamp.ts",
+        "./src/functions/getlongago.ts",
+        "./src/globals.ts",
+        "./src/interfaces/icommand.ts",
+        "./src/maps/customemojis.ts",
+        "./src/maps/emojienum.ts"
+      ],
       "./src/commands/help.ts": [
         "./node_modules/discord.js/typings/index.d.ts",
         "./src/config.ts",
@@ -1926,14 +1941,6 @@
         "./src/functions/formatid.ts",
         "./src/functions/formattimestamp.ts",
         "./src/index.ts"
-      ],
-      "./src/handlers/onready.ts": [
-        "./node_modules/discord.js/typings/index.d.ts",
-        "./src/config.ts",
-        "./src/handlers/makeconsoledeploymessage.ts",
-        "./src/handlers/makedeploymessage.ts",
-        "./src/index.ts",
-        "./src/logs/leaveblacklistedguilds.ts"
       ],
       "./src/handlers/setuserpresence.ts": [
         "./node_modules/@types/discord-rpc/index.d.ts",
@@ -2532,6 +2539,7 @@
       "./src/commands/discrim.ts",
       "./src/commands/emoji.ts",
       "./src/commands/eval.ts",
+      "./src/commands/github.ts",
       "./src/commands/help.ts",
       "./src/commands/kick.ts",
       "./src/commands/mimic.ts",
