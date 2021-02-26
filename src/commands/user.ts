@@ -153,7 +153,11 @@ ${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
           .slice(0, 3)
           .map(
             (e) =>
-              `*${e.name}* as \`${e.members.cache.get(user.id)?.displayName}\``
+              `*${e.name}* ${
+                e.members.cache.get(user.id)?.nickname
+                  ? `as \`${e.members.cache.get(user.id)?.displayName}\``
+                  : ""
+              }`
           )
           .join("\n")}${
           seenOn.length > 3 ? `\nand ${seenOn.length - 3} more...` : ""

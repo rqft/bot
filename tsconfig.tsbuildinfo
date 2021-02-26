@@ -1127,7 +1127,7 @@
         "affectsGlobalScope": false
       },
       "./src/commands/user.ts": {
-        "version": "2f7a1134eec378ccb12dc95dee26cc15e5df0d49cb2152e6f9e04df4840a1773",
+        "version": "ecb4999910cd559684b146dd2fe3f1397f8c723c6f9393c5713e498c23f98fc8",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
