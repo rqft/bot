@@ -148,7 +148,7 @@ ${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
       .array();
     if (seenOn.length) {
       emb.addField(
-        `❯ Seen on ${seenOn.length} servers`,
+        `❯ Seen on ${seenOn.length} server${seenOn.length !== 1 ? "s" : ""}`,
         `${seenOn
           .slice(0, 3)
           .map(
