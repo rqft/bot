@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { api } from "../functions/api";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
-import { BaseUrls } from "../globals";
+import { BaseUrls, Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { CustomEmojis } from "../maps/customEmojis";
 import { decor } from "../maps/emojiEnum";
@@ -17,7 +17,6 @@ module.exports = {
       case "user":
         const uURL = BaseUrls.GitHub + "users/" + search;
         const ugAPI = await api(uURL, "json");
-        await message.reply(uURL);
         if (ugAPI.message == "Not Found")
           return await message.reply("not found");
         const uEmb = new MessageEmbed();
@@ -59,6 +58,7 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created At**: ${simpleGetLongAgo(
             `${company}${location}${blog}${twitter}`
           );
         if (counts.length) uEmb.addField("❯ Counts", `${counts.join("\n")}`);
+        uEmb.setColor(Color.embed);
         await message.reply(uEmb);
         break;
       case "repo":
@@ -77,7 +77,7 @@ ${decor.Emojis.LINK} **Profile**: [${rgAPI.full_name}](${rgAPI.html_url})
 ${decor.Emojis.CALENDAR_SPIRAL} **Created At**: ${simpleGetLongAgo(
             +rcreated
           )} ${formatTimestamp(rcreated)}
-${decor.Emojis.SPEECH_LEFT} **Main Language**: ${rgAPI.language}
+${decor.Emojis.SPEECH_LEFT} **Main Language**: ${rgAPI.language ?? `Unknown`}
 ${CustomEmojis.GUI_OWNERCROWN} **Owned By**: [\`${rgAPI.owner.login}\`](${
             rgAPI.owner.html_url
           })`
@@ -90,7 +90,7 @@ ${CustomEmojis.GUI_OWNERCROWN} **Owned By**: [\`${rgAPI.owner.login}\`](${
           `${decor.Emojis.TIMER} **Last Updated**: ${simpleGetLongAgo(
             +lUpdated
           )} ${formatTimestamp(lUpdated)}
-${decor.Emojis.TIMER} **Last Pushed**: ${simpleGetLongAgo(
+${decor.Emojis.OUTBOX_TRAY} **Last Pushed**: ${simpleGetLongAgo(
             +lPushed
           )} ${formatTimestamp(lPushed)}
 ${CustomEmojis.CHANNEL_CATEGORY} **Default Branch**: \`${
@@ -106,6 +106,7 @@ ${CustomEmojis.CHANNEL_CATEGORY} **Default Branch**: \`${
           ${decor.Emojis.PERSON_RAISING_HAND} **Subscribers**: ${rgAPI.subscribers_count}
           ${decor.Emojis._1234} **Size**: ${rgAPI.size}`
         );
+        rEmb.setColor(Color.embed);
         await message.reply(rEmb);
         break;
       default:
