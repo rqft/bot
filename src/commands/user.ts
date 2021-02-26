@@ -9,6 +9,7 @@ import { getPresence } from "../functions/getPresence";
 import { getProfileBadges } from "../functions/getProfileBadges";
 import { getUser } from "../functions/getUser";
 import { getUserPermissions } from "../functions/getUserPermissions";
+import { s } from "../functions/s";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { decor } from "../maps/emojiEnum";
@@ -86,6 +87,10 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
             ? `\n${decor.Emojis.PENCIL2} **Nickname**: ${mem.nickname}`
             : ""
         }${
+          mem.displayColor
+            ? `\n${decor.Emojis.PAINTBRUSH} **Custom Color**: \`${mem.displayHexColor}\``
+            : ""
+        }${
           roles.length !== 0
             ? `\n${decor.Emojis.SHIELD} **Roles** (${
                 roles.length
@@ -148,7 +153,7 @@ ${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
       .array();
     if (seenOn.length) {
       emb.addField(
-        `❯ Seen on ${seenOn.length} server${seenOn.length !== 1 ? "s" : ""}`,
+        `❯ Seen on ${seenOn.length} server${s(seenOn)}`,
         `${seenOn
           .slice(0, 3)
           .map(
