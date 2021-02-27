@@ -1,10 +1,9 @@
-import { GuildChannel, GuildMember, Role } from "discord.js";
+import { GuildChannel } from "discord.js";
 import { client } from "..";
-import { formatID } from "../functions/formatID";
 import { getGuild } from "../functions/getGuild";
+import { pullCodeFromBlock } from "../functions/pullCodeFromBlock";
 import { ICommand } from "../interfaces/ICommand";
 import { decor } from "../maps/emojiEnum";
-const tests = ["error"];
 module.exports = {
   name: "test",
   description: "TESTING",
@@ -32,14 +31,16 @@ module.exports = {
         if (!args[1])
           return await message.reply("you need to supply a valid embed");
         await message.reply("", {
-          embed: JSON.parse(args.slice(1).join(" ")),
+          embed: JSON.parse(pullCodeFromBlock(args.slice(1).join(" "))),
         });
         await message.react(decor.Emojis.WHITE_CHECK_MARK);
         break;
       case "setpresence":
         if (!args[1])
           return await message.reply("you need to supply a valid presence");
-        client.user?.setPresence(JSON.parse(args.slice(1).join(" ")));
+        client.user?.setPresence(
+          JSON.parse(pullCodeFromBlock(args.slice(1).join(" ")))
+        );
         await message.react(decor.Emojis.WHITE_CHECK_MARK);
         break;
       case "invite":
@@ -58,47 +59,29 @@ module.exports = {
           return await message.channel.send("something unexpected happened");
         await message.reply(inv!.url);
         break;
-      case "logs":
-        if (!message.guild) return await message.reply("you need a guild");
-
-        const logs = await message.guild.fetchAuditLogs({
-          limit: 5,
-        });
-        const trackChanges = (old: any, newVal: any) => {
-          if (!old && newVal) return `added: ${newVal}`;
-          else if (!newVal && old) return `removed: ${old}`;
-          else return `changed: ${old} => ${newVal}`;
-        };
-        const lgs = logs.entries.array().map((e) => {
-          const changes = e.changes
-            ? `Changes: ${e.changes.map(
-                (e) => `\`${e.key}\` was ${trackChanges(e.old, e.new)}`
-              )}`
-            : "";
-          var extra = null;
-          if (e.extra instanceof Role)
-            extra = `${e.extra.name} ${formatID(e.extra.id)}`;
-          else if (e.extra instanceof GuildMember)
-            extra = `${e.extra.user.tag} ${formatID(e.extra.id)}`;
-          else if (e.extra == null) extra = undefined;
-          else extra = `\`\`\`json\n${JSON.stringify(e.extra)}\`\`\``;
-
-          return `\`${e.action}\` by ${e.executor} to ${e.target} ${
-            e.reason ? `with reason \`${e.reason}\`` : ""
-          }
-          Extra: ${extra}
-${changes}`;
-        });
-        message.reply(lgs.join("\n"));
-        break;
       case "message":
-        return await message.channel.send(decor.Emojis.WHITE_CHECK_MARK);
+        const tests: { DM?: string; GuildMessage?: string } = {
+          DM: undefined,
+          GuildMessage: undefined,
+        };
+        try {
+          await (await message.author.send("test")).delete();
+          tests.DM = `${decor.Emojis.WHITE_CHECK_MARK} Can Send DMs to this user`;
+        } catch {
+          tests.DM = `${decor.Emojis.NO_ENTRY} Cannot Send DMs to this user`;
+        }
+        try {
+          await (await message.channel.send("test")).delete();
+          tests.GuildMessage = `${decor.Emojis.WHITE_CHECK_MARK} Can send messages to this channel`;
+        } catch {
+          tests.GuildMessage = `${decor.Emojis.NO_ENTRY} Cannot send messages to this channel`;
+        }
+        await message.reply(`\u200b
+${tests.DM}
+${tests.GuildMessage}`);
+        break;
       default:
-        return await message.reply(
-          `Unknown test. Valid tests are ${tests
-            .map((e) => `\`${e}\``)
-            .join(", ")}`
-        );
+        return await message.reply(`Unknown test`);
     }
   },
 } as ICommand;

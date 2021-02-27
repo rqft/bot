@@ -26,6 +26,7 @@
     "discord-rpc": "^3.1.4",
     "discord.js": "github:discordjs/discord.js",
     "eslint": "^7.18.0",
+    "fastify": "^3.12.0",
     "fs": "0.0.1-security",
     "imagescript": "^1.1.16",
     "moment": "^2.29.1",
@@ -33,6 +34,7 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "sequelize": "^6.5.0",
+    "slash-create": "^2.1.0",
     "sqlite3": "^5.0.2"
   },
   "dependencies": {},

@@ -24,12 +24,19 @@ module.exports = {
     }
     const res = await message.reply(CustomEmojis.GUI_TYPING);
     const avURL =
-      user.avatarURL({ dynamic: true, size: size as avatarSize }) ??
-      user.defaultAvatarURL;
-    await message.reply(
-      `Avatar of ${user.tag} ${formatID(user.id)}
-${avURL}`
-    );
+      user.avatarURL({
+        dynamic: true,
+        size: size as avatarSize,
+      }) ?? user.defaultAvatarURL;
+    try {
+      await message.reply(`Avatar of ${user.tag} ${formatID(user.id)}`, {
+        files: [avURL],
+      });
+    } catch (e) {
+      await message.reply(
+        `lol the discord api is dogshit and decided to error for some reason`
+      );
+    }
     await res.delete();
   },
 } as ICommand;
