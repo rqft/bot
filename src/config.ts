@@ -3,9 +3,9 @@ import { Secrets } from "./secrets";
 export const config = {
   global: {
     keys: {
-      wolframAlpha: "AHE6V9-WHRE7W64PX",
-      fAPI: "129edfb95ed5c6b24425e5d713317a60",
-      inStatus: "e62546d6d0d8416fece37a165d6736f3",
+      wolframAlpha: Secrets.Key.wolframAlpha,
+      fAPI: Secrets.Key.fAPI,
+      inStatus: Secrets.Key.inStatus,
     },
     mainServerID: "775743191441735712",
     locale: "en-US",
