@@ -11,11 +11,26 @@ export const config = {
     locale: "en-US",
     timezone: "America/Chicago",
     sexAlarm: [
-      "752675935249105086", // #spam-channel in The Gronos Public
-      "807056248679039047", // #seggs in Arcs' Dev Place
-      // "773132972543049748", // #spam-channel in The Royal Kingdom
+      /**
+       * #spam-channel in The Gronos Public
+       */
+      "752675935249105086",
+
+      /**
+       * #seggs in Arcs' Dev Place
+       */
+      "807056248679039047",
+      /**
+       * #spam-channel in The Royal Kingdom
+       */
+      // "773132972543049748",
     ],
-    logs: ["807386023565983754"],
+    logs: [
+      /**
+       * #bot-logs in Arcs' Dev Place
+       */
+      "807386023565983754",
+    ],
   },
   voice: {
     broadcastUrl:
@@ -26,10 +41,10 @@ export const config = {
       "\\$",
       "p\\/",
       "<@!?760143615124439040>",
-      "<:Hallucinate:800092998590529557>",
+      "<:Hallucinate:800092998590529557>", // lol
     ],
     id: "760143615124439040",
-    token: Secrets.BOT_TOKEN,
+    token: Secrets.BOT_TOKEN, // no, you cant have my shit
     application: {
       ownerId: "504698587221852172",
       clientId: "760143615124439040",
@@ -40,7 +55,7 @@ export const config = {
       "533757461706964993", // insyri
       "504698587221852172", // me
       "624786939022671893", // alt
-      "621224863100829716", // TestingBotPleaseIgnore,
+      "621224863100829716", // lol,
     ],
     presence: {
       activity: {
@@ -49,7 +64,12 @@ export const config = {
         url:
           "https://www.youtube.com/watch?v=db_sYdSPD24&ab_channel=FalseNoise-Topic",
       },
-      browser: "Discord iOS",
+      browser: "Discord iOS", // lol
+      /**
+       * ```
+       * `
+       * ```  in Arcs' Dev Place
+       */
       voiceChannel: "801547371728338975",
     },
   },

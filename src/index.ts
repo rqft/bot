@@ -5,12 +5,7 @@ import {
   Intents,
   TextChannel,
 } from "discord.js";
-import path from "path";
 import { INTEGER, Sequelize, STRING, TEXT } from "sequelize";
-/**
- * Presence Stuff
- */
-import { FastifyServer, SlashCreator } from "slash-create";
 import { config } from "./config";
 import { formatID } from "./functions/formatID";
 import { regexes } from "./globals";
@@ -23,18 +18,11 @@ import { runCommandManager } from "./handlers/runCommandManager";
 import { setUserPresence } from "./handlers/setUserPresence";
 import { ICommand } from "./interfaces/ICommand";
 import { logError } from "./logs/logError";
-
-const creator = new SlashCreator({
-  applicationID: config.bot.application.clientId,
-  publicKey: config.bot.application.publicKey,
-  token: config.bot.token,
-  serverPort: 8020,
-});
-creator
-  .withServer(new FastifyServer())
-  .registerCommandsIn(path.join(__dirname, "slashcommands"))
-  .syncCommands()
-  .startServer();
+import { decor } from "./maps/emojiEnum";
+import { color, TerminalColor } from "./types/TerminalColors";
+/**
+ * Presence Stuff
+ */
 setUserPresence();
 export const client = new Client({
   intents: Intents.ALL,
@@ -94,11 +82,10 @@ client.on("message", async (message) => {
   if (sexes) {
     if (message.author !== client.user && !message.author.bot) {
       try {
-        message.author.send(`No sex :bangbang:`);
+        message.author.send(`No sex ${decor.Emojis.BANGBANG}`);
       } catch (e) {}
-      await message.react("😳");
+      await message.react(decor.Emojis.FLUSHED);
     }
-
     config.global.sexAlarm.forEach(async (e) => {
       if (client.user == message.author && message.channel.type == "dm") return;
       if (message.author.bot) return;
@@ -118,5 +105,13 @@ client.on("message", async (message) => {
   await commandHandler(message);
 });
 process.on("uncaughtException", (e) => logError(e));
-client.login(config.bot.token);
 client.on("guildCreate", onReady);
+client.on("disconnect", function (erMsg, code) {
+  console.log(
+    "----- Bot disconnected from Discord with code",
+    color(code, TerminalColor.normal.BLUE),
+    "for reason:",
+    erMsg
+  );
+});
+client.login(config.bot.token);
