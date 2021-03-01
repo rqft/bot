@@ -1,4 +1,5 @@
 import { client } from "..";
+import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { ICommand } from "../interfaces/ICommand";
 import { CustomEmojis } from "../maps/customEmojis";
 
@@ -11,9 +12,9 @@ module.exports = {
     const ret = await message.reply(CustomEmojis.GUI_TYPING);
     await ret.delete();
     await message.reply(
-      `Ping @${client.ws.ping}ms; Message replied @${
-        Date.now() - message.createdTimestamp
-      }ms`
+      `Ping in ${simpleGetLongAgo(
+        Date.now() - client.ws.ping
+      )}; Message replied ${simpleGetLongAgo(message.createdTimestamp)}`
     );
   },
 } as ICommand;

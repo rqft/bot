@@ -81,9 +81,6 @@ client.on("message", async (message) => {
   const sexes = message.content.match(regexes.sex);
   if (sexes) {
     if (message.author !== client.user && !message.author.bot) {
-      try {
-        message.author.send(`No sex ${decor.Emojis.BANGBANG}`);
-      } catch (e) {}
       await message.react(decor.Emojis.FLUSHED);
     }
     config.global.sexAlarm.forEach(async (e) => {
