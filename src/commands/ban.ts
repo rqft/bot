@@ -16,11 +16,17 @@ module.exports = {
   },
   usesArgs: true,
   description: "ban someone",
-  usage: "<user: User> [reason: string]",
+  usage: "<fn: BanFn> <user: User> [reason: string]",
   async run(message, args) {
     const fn = args[0];
     if (!fn) await message.reply("");
     switch (fn) {
+      default:
+        await message.reply(
+          "invalid type, valid ones are: " +
+            ["add", "remove", "list", "info"].map((e) => `\`${e}\``).join(", ")
+        );
+        break;
       case "add":
         const target = await getUser(message, args, false, 1);
         if (!target)
@@ -51,7 +57,8 @@ module.exports = {
         break;
       case "list":
         const banList = await message.guild?.fetchBans();
-        if (!banList) return await message.reply("nobody here is banned yet");
+        if (!banList || !banList.size)
+          return await message.reply("nobody here is banned yet");
         const banMentions = banList
           .array()
           .map((e) => e.user)

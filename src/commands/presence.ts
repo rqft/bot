@@ -3,7 +3,6 @@ import { getPresence } from "../functions/getPresence";
 import { getUser } from "../functions/getUser";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
-
 module.exports = {
   name: "presence",
   aliases: ["pres"],

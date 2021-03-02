@@ -57,4 +57,10 @@ botBadgeMap.set("706159423323635782", [
     text: "funy watr person",
   },
 ]);
+botBadgeMap.set("476015483968290846", [
+  {
+    icon: "<:mels_lol:815997559000006726>",
+    text: "mels.",
+  },
+]);
 export { botBadgeMap };

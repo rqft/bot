@@ -29,11 +29,9 @@ module.exports = {
     };
     const counts = [
       {
-        text: `${decor.Emojis.SHIELD} **Roles**: ${
-          (await guild.roles.fetch()).size
-        }`,
+        text: `${decor.Emojis.SHIELD} **Roles**: ${guild.roles.cache.size}`,
         enabled:
-          (await guild.roles.fetch()).filter(
+          guild.roles.cache.filter(
             (e) => !e.managed && guild.roles.everyone.id !== e.id
           ).size > 0,
       },
@@ -44,10 +42,8 @@ module.exports = {
         enabled: (await guild.fetchBans()).size > 0,
       },
       {
-        text: `${decor.Emojis.SMILEY} **Emojis**: ${
-          (await guild.emojis.fetch()).size
-        }`,
-        enabled: (await guild.emojis.fetch()).size > 0,
+        text: `${decor.Emojis.SMILEY} **Emojis**: ${guild.emojis.cache.size}`,
+        enabled: guild.emojis.cache.size > 0,
       },
       {
         text: `${decor.Emojis.BOOKMARK_TABS} **Integrations**: ${
@@ -74,22 +70,23 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}`
     );
-    emb.addField("❯ Counts", enabled);
-    emb.addField(
-      `❯ (${(await guild.fetchInvites()).size}) Invites`,
-      (await guild.fetchInvites()).size
-        ? (await guild.fetchInvites())
-            .array()
-            .slice(0, 5)
-            .map(
-              (e) =>
-                `${e.channel} [Invite](${e.url}) by ${
-                  e.inviter
-                } ${formatTimestamp(e.createdAt!)}`
-            )
-            .join("\n")
-        : "None."
-    );
+    if (message.guild?.id == guild.id) emb.addField("❯ Counts", enabled);
+    if (message.guild?.id == guild.id)
+      emb.addField(
+        `❯ (${(await guild.fetchInvites()).size}) Invites`,
+        (await guild.fetchInvites()).size
+          ? (await guild.fetchInvites())
+              .array()
+              .slice(0, 5)
+              .map(
+                (e) =>
+                  `${e.channel} [Invite](${e.url}) by ${
+                    e.inviter
+                  } ${formatTimestamp(e.createdAt!)}`
+              )
+              .join("\n")
+          : "None."
+      );
     if (guild.premiumSubscriptionCount) {
       const boosters = guild.members.cache
         .filter((e) => !!e.premiumSince)

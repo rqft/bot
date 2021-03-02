@@ -1,6 +1,9 @@
 import { GuildChannel } from "discord.js";
 import { client } from "..";
+import { formatTimestamp } from "../functions/formatTimestamp";
 import { getGuild } from "../functions/getGuild";
+import { getUser } from "../functions/getUser";
+import { makeCodeblock } from "../functions/makeCodeblock";
 import { pullCodeFromBlock } from "../functions/pullCodeFromBlock";
 import { ICommand } from "../interfaces/ICommand";
 import { decor } from "../maps/emojiEnum";
@@ -13,6 +16,21 @@ module.exports = {
   usage: "<test: Test>",
   async run(message, args) {
     switch (args[0]?.toLowerCase()) {
+      case "getmessages":
+        const user = await getUser(message, args, true, 1);
+        const msgs = (await message.channel.messages.fetch())
+          .filter((e) => (user ? e.author == user : true))
+          .array()
+          .sort((a, b) => b.createdTimestamp - a.createdTimestamp)
+          .map(
+            (e) =>
+              `${formatTimestamp(new Date())}**${
+                e.author.tag
+              }** - ${makeCodeblock(e.content, 30)}`
+          )
+          .slice(0, 5)
+          .join("\n");
+        return await message.reply(msgs);
       case "error":
         if (!args[1])
           return await message.reply("You need to specify a message");

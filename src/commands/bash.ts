@@ -18,7 +18,11 @@ Error on ${err.cmd} (${err.code}) [${err.signal}]
 ${err.name}: ${err.message}
 ${err.stack}
 \`\`\``);
-      else message.reply(`\`\`\`\n${[std, ste].join("\n\n")}\`\`\``);
+      else
+        message.reply([std, ste].join("\n\n"), {
+          split: { char: "\n" },
+          code: "txt",
+        });
     });
   },
 } as ICommand;
