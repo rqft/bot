@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { capitalizeWords } from "../functions/capitalizeWords";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getGuild } from "../functions/getGuild";
 import { getGuildFeatures } from "../functions/getGuildFeatures";
@@ -68,7 +69,13 @@ ${CustomEmojis.GUI_OWNERCROWN} **Owner**: ${guild.owner}
 ${CustomEmojis.CHANNEL_VOICE} **Voice Region**: ${getGuildVoiceRegion(guild)}
 ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
-      )} ago ${formatTimestamp(guild.createdAt)}`
+      )} ago ${formatTimestamp(guild.createdAt)}
+${CustomEmojis.GUI_ROLE} **Verification Level**: ${capitalizeWords(
+        guild.verificationLevel.replace(/_/g, "").toLowerCase()
+      )}
+${CustomEmojis.TICK_RED} **NSFW Content Filter**: ${capitalizeWords(
+        guild.explicitContentFilter.replace(/_/g, "").toLowerCase()
+      )}`
     );
     if (message.guild?.id == guild.id) {
       emb.addField("❯ Counts", enabled);

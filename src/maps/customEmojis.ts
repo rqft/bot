@@ -16,6 +16,9 @@ export const enum CustomEmojis {
   GUI_INVITE = "<:IconGui_Invite:798624241347198987>",
   GUI_RICH_PRESENCE = "<:IconGui_RichPresence:798624241351655514>",
   GUI_SLOWMODE = "<:IconGui_Slowmode:798624247337058354>",
+  GUI_SETTINGS = "<:IconGui_Settings:798624241402511420>",
+  GUI_ADD_REACTION = "<:IconGui_AddReaction:798624236935053332>",
+  GUI_ROLE = "<:IconGui_Role:816328284245196840>",
 
   BADGE_NITRO = "<:IconBadge_Nitro:798624232472051792>",
   BADGE_PARTNER = "<:IconBadge_Partner:798624238939406416>",

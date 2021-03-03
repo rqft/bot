@@ -30,14 +30,11 @@ export const client = new Client({
     repliedUser: false,
   },
   retryLimit: 10,
-  presence: {
-    activity: {
-      name: config.bot.presence.activity.name,
-      type: config.bot.presence.activity.type as ActivityOptions["type"],
-    },
-    afk: true,
-    // status: "idle",
-  },
+});
+client.user?.setActivity(config.bot.presence.activity.name, {
+  name: config.bot.presence.activity.name,
+  type: config.bot.presence.activity.type as ActivityOptions["type"],
+  url: config.bot.presence.activity.url,
 });
 export const commands = new Collection<any, ICommand>();
 export const commandFiles = fetchCommandFiles();
@@ -69,8 +66,6 @@ client.once("ready", async () => {
 });
 client.on("error", (e) => discordjsError(e));
 client.on("message", async (message) => {
-  // if (message.channel.type == "dm")
-  //   console.log(`ok from ${message.author.tag}`);
   const sexes = message.content.match(regexes.sex);
   if (sexes)
     if (message.author !== client.user && !message.author.bot)
@@ -78,6 +73,7 @@ client.on("message", async (message) => {
 
   await commandHandler(message);
 });
+
 process.on("uncaughtException", (e) => logError(e));
 client.on("guildCreate", onReady);
 client.on("disconnect", function (erMsg, code) {

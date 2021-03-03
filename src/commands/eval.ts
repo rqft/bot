@@ -8,6 +8,7 @@ import { fetchCommand as fc } from "../functions/fetchCommand";
 import * as globals from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { decor } from "../maps/emojiEnum";
+import { Secrets } from "../secrets";
 
 module.exports = {
   name: "eval",
@@ -44,6 +45,9 @@ module.exports = {
       cf;
       discord;
       char;
+      const data = Secrets.USER_DATA;
+      data;
+
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);

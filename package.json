@@ -35,7 +35,9 @@
     "slash-create": "^2.1.0",
     "sqlite3": "^5.0.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "markdown-escape": "^1.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arcy-at/Hallucinate.git"

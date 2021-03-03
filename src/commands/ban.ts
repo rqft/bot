@@ -61,8 +61,8 @@ module.exports = {
           return await message.reply("nobody here is banned yet");
         const banMentions = banList
           .array()
-          .map((e) => e.user)
-          .join(", ");
+          .map((e) => `${e.user} ${e.reason ? `- \`${e.reason}\`` : ""}`)
+          .join("\n");
         const emb = new MessageEmbed();
         emb.addField("List of bans", banMentions);
         emb.setColor(Color.embed);

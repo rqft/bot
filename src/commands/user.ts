@@ -84,7 +84,7 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
           mem.pending ? `(Currently Pending)` : ""
         }${
           mem.nickname
-            ? `\n${decor.Emojis.PENCIL2} **Nickname**: ${mem.nickname}`
+            ? `\n${decor.Emojis.PENCIL2} **Nickname**: \`${mem.nickname}\``
             : ""
         }${
           mem.displayColor

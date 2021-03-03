@@ -63,4 +63,10 @@ botBadgeMap.set("476015483968290846", [
     text: "mels.",
   },
 ]);
+botBadgeMap.set("179261209529417729", [
+  {
+    icon: decor.Emojis.FOX,
+    text: "fat furry weeb lol",
+  },
+]);
 export { botBadgeMap };
