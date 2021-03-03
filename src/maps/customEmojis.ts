@@ -44,7 +44,7 @@ export const enum CustomEmojis {
 
   ICON_GITHUB = "<:GitHub:805634226921013258>",
 
-  TICK_GREEN = "<:maybe:801847909795627048>",
+  TICK_GREEN = "<:yesTick:804175929995427861>",
   TICK_RED = "<:noTick:804175930028720178>",
   TICK_GRAY = "<:maybe:801847909795627048>",
 }

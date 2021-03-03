@@ -21,6 +21,32 @@ module.exports = {
       },
     };
     switch (args[0]) {
+      case "code":
+        const id = args[1];
+        if (!id) return await message.reply("you need a deployment id");
+        const dreq = await (
+          await fetch(`https://pylon.bot/api/deployments/${id}`, reqinit)
+        ).json();
+        const file = JSON.parse(dreq.script.project).files[0];
+
+        const res = await message.reply(
+          `here you go!
+        
+        
+*This will be deleted in 15 seconds*`,
+          {
+            files: [
+              {
+                name: "main.ts",
+                attachment: Buffer.from(file.content),
+              },
+            ],
+          }
+        );
+        setTimeout(() => {
+          res.delete();
+        }, 15000);
+        break;
       case "guilds":
         const greq = (await (
           await fetch(`https://pylon.bot/api/user/guilds`, reqinit)
@@ -46,7 +72,7 @@ module.exports = {
           `https://pylon.bot/api/guilds/${message.guild.id}/stats`,
           reqinit
         ).then((e) => e.json());
-        console.log(stats);
+
         const data = await req.json();
         const emb = new MessageEmbed();
         emb.setAuthor(
@@ -59,10 +85,10 @@ module.exports = {
           const conf = JSON.parse(e.config);
           const crons = conf.tasks.cronTasks as ICronTask[];
           return {
-            name: `❯ ${e.name} ${formatID(e.script_id)}`,
+            name: `❯ ${e.name} ${formatID(e.id)}`,
             value: `**${decor.Emojis.PENCIL} Revision**: \`#${e.revision}\`
 ${
-  crons.length > 0
+  crons && crons.length > 0
     ? `**${CustomEmojis.GUI_SLOWMODE} Crons**:
 ${crons.map((e) => `**${e.name}** - \`${e.cronString}\``).join("\n")}`
     : ""
