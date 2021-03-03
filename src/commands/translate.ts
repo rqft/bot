@@ -3,7 +3,6 @@ import fetch from "node-fetch";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { IMyMemoryResponse } from "../interfaces/IMyMemory";
-// @ts-ignore
 import * as lang from "../maps/languageCodes.json";
 const langCodes: {
   [any: string]: {
@@ -43,6 +42,7 @@ ${this.usage}\`\`\``
     ) {
       return await message.reply(
         new MessageEmbed({
+          color: Color.embed,
           description:
             "You must enter a valid language code. e.g `en`, `es`, `etc.`\nYou can view them all [here](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)",
         })

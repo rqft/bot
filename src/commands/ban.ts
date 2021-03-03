@@ -102,6 +102,7 @@ ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
             infBan.reason ?? "No Reason",
             30
           )}
+
 ${decor.Emojis.HAMMER} **Banned By**: ${auditLogEntry?.executor} ${formatID(
             auditLogEntry?.executor.id!
           )}

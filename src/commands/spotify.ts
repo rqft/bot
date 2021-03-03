@@ -12,14 +12,11 @@ module.exports = {
   async run(message, args) {
     const search = args.join(" ");
     const track = await spotifySearch(search);
-    if (!track) {
-      return await message.reply("Not found");
-    }
+    if (!track) return await message.reply("Not found");
     const embed = new MessageEmbed();
     embed.setAuthor(track.artists[0]!.name, track.album.icon.url);
     embed.setThumbnail(track.album.icon.url);
     embed.setTitle(track.name);
-
     embed.setURL(`https://open.spotify.com/track/${track.id}`);
     embed.addField(
       "❯ Track Info",

@@ -1,8 +1,10 @@
 import { GuildChannel } from "discord.js";
 import { client } from "..";
+import { capitalizeWords } from "../functions/capitalizeWords";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { getGuild } from "../functions/getGuild";
 import { getUser } from "../functions/getUser";
+import { getUserPermissions } from "../functions/getUserPermissions";
 import { makeCodeblock } from "../functions/makeCodeblock";
 import { pullCodeFromBlock } from "../functions/pullCodeFromBlock";
 import { ICommand } from "../interfaces/ICommand";
@@ -16,6 +18,20 @@ module.exports = {
   usage: "<test: Test>",
   async run(message, args) {
     switch (args[0]?.toLowerCase()) {
+      case "perms":
+        if (!message.guild)
+          return await message.reply("lol u need to be in a server for this");
+        const puser = message.guild.members.cache.get(
+          (await getUser(message, args, true, 1))!.id
+        );
+        if (!puser) return await message.reply("whos that lol");
+        const perm = getUserPermissions(puser)
+          .map(
+            (e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``
+          )
+          .join(", ");
+        await message.reply(`Permissions of ${puser}: ${perm}`);
+        break;
       case "getmessages":
         const user = await getUser(message, args, true, 1);
         const msgs = (await message.channel.messages.fetch())

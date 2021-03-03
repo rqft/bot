@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, Permissions } from "discord.js";
 import { client, commands } from "..";
 import { config } from "../config";
 import { formatTimestamp } from "../functions/formatTimestamp";
@@ -17,7 +17,7 @@ module.exports = {
   async run(message) {
     const here = `[here](https://discord.com/api/oauth2/authorize?client_id=${
       (await client.fetchApplication()).id
-    }&permissions=8&scope=bot)`;
+    }&permissions=${new Permissions()}&scope=bot)`;
     const colon = `[:](https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=createInvite)`;
     const botServ = `[Bot Server](https://arcy-at.github.io/invite)`;
     message.reply(

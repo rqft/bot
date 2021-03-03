@@ -93,13 +93,6 @@ export async function commandHandler(message: Message) {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-  if (
-    prefix.toLowerCase() == "p/" &&
-    !config.bot.ownerIds.includes(message.author.id)
-  )
-    return await message.channel.send(
-      `:lock: The prefix \`p/\` is intended for dev use only. Use \`$${commandName}\` instead.`
-    );
   try {
     logCommandUse(message);
     command.run(message, args);

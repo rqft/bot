@@ -70,8 +70,9 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}`
     );
-    if (message.guild?.id == guild.id) emb.addField("❯ Counts", enabled);
-    if (message.guild?.id == guild.id)
+    if (message.guild?.id == guild.id) {
+      emb.addField("❯ Counts", enabled);
+
       emb.addField(
         `❯ (${(await guild.fetchInvites()).size}) Invites`,
         (await guild.fetchInvites()).size
@@ -87,6 +88,7 @@ ${decor.Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
               .join("\n")
           : "None."
       );
+    }
     if (guild.premiumSubscriptionCount) {
       const boosters = guild.members.cache
         .filter((e) => !!e.premiumSince)
