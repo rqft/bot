@@ -6,6 +6,7 @@ import { decor } from "../maps/emojiEnum";
 module.exports = {
   name: "tag",
   cooldown: 3,
+  description: "put key value pairs lol",
   usesArgs: true,
   usage: "<function: TagFunc> <name: string> [value: Text]",
   async run(message, args) {

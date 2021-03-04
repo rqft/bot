@@ -32,6 +32,28 @@ module.exports = {
           .join(", ");
         await message.reply(`Permissions of ${puser}: ${perm}`);
         break;
+      case "vanityhtml":
+        const url = (
+          await (message.channel as GuildChannel).createInvite({
+            maxAge: 0,
+            maxUses: 0,
+          })
+        ).url;
+        return await message.reply(
+          `<title>hi</title>
+<meta content="${message.guild?.name}" property="og:title">
+<meta content="join if you want lol idc" property="og:description">
+<meta content="${url}" property="og:url">
+<meta content="${message.guild?.iconURL()}" property="og:image">
+<meta content="#2f3136" data-react-helmet="true" name="theme-color">
+<script>
+    window.location.replace("${url}");
+</script>
+
+hi
+<!-- HOW ARE YOU READING THIS O_O -->`,
+          { code: "html" }
+        );
       case "getmessages":
         const user = await getUser(message, args, true, 1);
         const msgs = (await message.channel.messages.fetch())

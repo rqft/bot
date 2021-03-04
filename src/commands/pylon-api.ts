@@ -10,6 +10,8 @@ import { decor } from "../maps/emojiEnum";
 import { Secrets } from "../secrets";
 module.exports = {
   name: "pylonapi",
+  usage: "<unknown>",
+  description: "Get Pylon API stats lol",
   restrictions: {
     ownerOnly: true,
     guildOnly: true,
@@ -27,7 +29,14 @@ module.exports = {
         const dreq = await (
           await fetch(`https://pylon.bot/api/deployments/${id}`, reqinit)
         ).json();
-        const file = JSON.parse(dreq.script.project).files[0];
+        const files = JSON.parse(dreq.script.project).files;
+        const atts: { name: string; attachment: Buffer }[] = [];
+        files.forEach((file: any) => {
+          atts.push({
+            name: "script.ts",
+            attachment: Buffer.from(file.content),
+          });
+        });
 
         const res = await message.reply(
           `here you go!
@@ -35,12 +44,7 @@ module.exports = {
         
 *This will be deleted in 15 seconds*`,
           {
-            files: [
-              {
-                name: "main.ts",
-                attachment: Buffer.from(file.content),
-              },
-            ],
+            files: atts,
           }
         );
         setTimeout(() => {
