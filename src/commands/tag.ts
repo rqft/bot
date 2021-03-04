@@ -59,11 +59,11 @@ module.exports = {
           })
         );
       case "get":
-        let getname = args[1]!.normalize();
-        if (!getname)
+        if (!args[1])
           return await message.reply(
             `${decor.Emojis.NO_ENTRY} you need to supply a tag name!`
           );
+        let getname = args[1].normalize();
         const tag = await Tags.findOne({ where: { name: getname } });
         if (!tag)
           return await message.reply(
