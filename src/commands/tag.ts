@@ -18,28 +18,63 @@ module.exports = {
       );
     switch (func) {
       case "set":
-        const createname = args[1]!.normalize();
-        if (!createname)
+        if (!args[1])
           return await message.reply(
             `${decor.Emojis.NO_ENTRY} you need to supply a tag name!`
           );
+        const createname = args[1].normalize();
+
         if (!value)
           return await message.reply(
             `${decor.Emojis.NO_ENTRY} you need to supply a tag value!`
           );
+        const old = await Tags.findOne({ where: { name: createname } });
         try {
           await Tags.create({
             name: createname,
             description: value,
             username: message.author.tag,
           });
-          return message.reply(
-            `${decor.Emojis.WHITE_CHECK_MARK} Tag ${createname} added.`
+          return await message.reply(
+            `${decor.Emojis.WHITE_CHECK_MARK} Tag ${createname} was edited.`,
+            new MessageEmbed({
+              fields: [
+                {
+                  name: "Old Value",
+                  value: old ? old.get("description") : "<unset>",
+                },
+                {
+                  name: "new value",
+                  value: value,
+                },
+              ],
+            })
           );
         } catch (e) {
           if (e.name === "SequelizeUniqueConstraintError") {
-            return message.reply(
-              `${decor.Emojis.NO_ENTRY} that tag already exists`
+            const affectedRows = await Tags.update(
+              { description: value },
+              { where: { name: createname } }
+            );
+            if (!(affectedRows.length > 0)) {
+              return await message.reply(
+                `${decor.Emojis.NO_ENTRY} unable to find that tag`
+              );
+            }
+            return await message.reply(
+              `${decor.Emojis.WHITE_CHECK_MARK} Tag ${createname} was edited.`,
+              new MessageEmbed({
+                fields: [
+                  {
+                    name: "Old Value",
+                    value: old ? old.get("description") : "<unset>",
+                  },
+                  {
+                    name: "new value",
+                    value: value,
+                  },
+                ],
+              })
             );
           }
           return message.reply(
@@ -58,12 +93,12 @@ module.exports = {
             color: Color.embed,
           })
         );
-      case "get":
-        if (!args[1])
+      default:
+        if (!args[0])
           return await message.reply(
             `${decor.Emojis.NO_ENTRY} you need to supply a tag name!`
           );
-        let getname = args[1].normalize();
+        let getname = args[0].normalize();
         const tag = await Tags.findOne({ where: { name: getname } });
         if (!tag)
           return await message.reply(
@@ -76,30 +111,6 @@ module.exports = {
         emb.setFooter(`${decor.Emojis.PENCIL} set by ${tag.get("username")}`);
         emb.setColor(Color.embed);
         return message.reply(emb);
-
-      case "update":
-        let updatename = args[1]!.normalize();
-        if (!updatename)
-          return await message.reply(
-            `${decor.Emojis.NO_ENTRY} you need to supply a tag name!`
-          );
-        const affectedRows = await Tags.update(
-          { description: value },
-          { where: { name: updatename } }
-        );
-        if (!(affectedRows.length > 0)) {
-          return await message.reply(
-            `${decor.Emojis.NO_ENTRY} unable to find that tag`
-          );
-        }
-        await message.reply(
-          `${decor.Emojis.WHITE_CHECK_MARK} Tag ${updatename} was edited.`
-        );
-        break;
-      default:
-        return await message.reply(
-          `${decor.Emojis.NO_ENTRY} invalid function; valid ones are \`get\`, \`set\`, \`list\`, \`update\``
-        );
     }
   },
 } as ICommand;

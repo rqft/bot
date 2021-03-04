@@ -1,4 +1,5 @@
 import { GuildChannel, TextChannel } from "discord.js";
+import { client } from "..";
 import { getUser } from "../functions/getUser";
 import { ICommand } from "../interfaces/ICommand";
 
@@ -13,11 +14,11 @@ module.exports = {
   description: "mimic people",
   async run(message, args) {
     const user = await getUser(message, args, false);
-    if (!user) return await message.channel.send("unknown user");
+    if (!user) return await message.reply("unknown user");
+    if (user.id == client.user!.id) return await message.reply("no");
     const msg = args.slice(1).join(" ").split("-d ").join(" ");
     if (args.slice(1).join(" ").startsWith("-d")) await message.delete();
-    if (!msg)
-      return await message.channel.send("You need to provide a message");
+    if (!msg) return await message.reply("You need to provide a message");
     const name = message.guild?.members.cache.get(user.id)
       ? message.guild.members.cache.get(user.id)?.displayName ?? user.username
       : user.username;
