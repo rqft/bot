@@ -12,6 +12,7 @@ import { getUserPermissions } from "../functions/getUserPermissions";
 import { s } from "../functions/s";
 import { Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
+import { CustomEmojis } from "../maps/customEmojis";
 import { decor } from "../maps/emojiEnum";
 
 module.exports = {
@@ -43,7 +44,10 @@ module.exports = {
 ${decor.Emojis.LINK} **Profile**: ${user}
 ${decor.Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         user.createdTimestamp
-      )} ago ${formatTimestamp(user.createdAt)}`
+      )} ago ${formatTimestamp(user.createdAt)}
+${
+  user.bot ? CustomEmojis.GUI_SETTINGS : CustomEmojis.GUI_ROLE
+} **Account Type**: ${user.bot ? `Bot` : `User`}`
     );
     var mem = message.guild?.members.cache.get(user.id) ?? false;
     if (user.presence.guild) emb.addField("❯ Presence", getPresence(user));

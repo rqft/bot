@@ -51,6 +51,7 @@ module.exports = {
     `,
       { url }
     );
+
     if (!ok) return message.reply(isres as string);
     await message.reply(``, {
       files: [

@@ -17,7 +17,7 @@ export function getRole(
     role = message.guild!.roles.cache.find(
       (e) =>
         e.name.toLowerCase().includes(unresolvedID!) ||
-        e.id.replace(/\D/g, "") == unresolvedID
+        e.id == unresolvedID!.replace(/\D/g, "")
     );
   } catch (error) {}
   return role;

@@ -93,8 +93,8 @@ export async function commandHandler(message: Message) {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+  logCommandUse(message);
   try {
-    logCommandUse(message);
     command.run(message, args);
   } catch (error) {
     console.error(error);

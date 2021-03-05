@@ -74,7 +74,7 @@ client.on("message", async (message) => {
   await commandHandler(message);
 });
 
-process.on("uncaughtException", (e) => logError(e));
+process.on("warning", (e) => logError(e));
 client.on("guildCreate", onReady);
 client.on("disconnect", function (erMsg, code) {
   console.log(

@@ -74,7 +74,7 @@ ${CustomEmojis.GUI_ROLE} **Verification Level**: ${capitalizeWords(
         guild.verificationLevel.replace(/_/g, "").toLowerCase()
       )}
 ${CustomEmojis.TICK_RED} **NSFW Content Filter**: ${capitalizeWords(
-        guild.explicitContentFilter.replace(/_/g, "").toLowerCase()
+        guild.explicitContentFilter.replace(/_/g, " ").toLowerCase()
       )}`
     );
     if (message.guild?.id == guild.id) {

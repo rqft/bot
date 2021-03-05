@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { client } from "..";
 import { formatID } from "../functions/formatID";
 import { formatTimestamp } from "../functions/formatTimestamp";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
@@ -29,9 +30,12 @@ module.exports = {
         break;
       case "add":
         const target = await getUser(message, args, false, 1);
-        if (!target)
+        if (!target || target.id == client.user!.id)
           return await message.reply("You need to supply a **bannable** user!");
         const reason = args[2] ? args.slice(2).join(" ") : undefined;
+        if (target.id == message.author.id)
+          return await message.reply("no, lets not do that.");
+        if (target.id == client.user!.id) return await message.reply(":(");
         if (
           message.guild?.members.cache.get(target.id) &&
           !message.guild.members.cache.get(target.id)?.bannable
