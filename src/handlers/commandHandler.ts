@@ -53,6 +53,19 @@ export async function commandHandler(message: Message) {
     );
   if (
     command.restrictions &&
+    command.restrictions.neededPerms &&
+    !message.guild?.me?.permissions.has(
+      new Permissions(command.restrictions.neededPerms),
+      true
+    )
+  )
+    return message.channel.send(
+      `:x: I need these permissions to run this command: \`${command.restrictions.neededPerms
+        .map((e) => capitalizeWords(e.toLowerCase().replace(/_/g, " ")))
+        .join(", ")}\``
+    );
+  if (
+    command.restrictions &&
     command.restrictions.guildOnly &&
     message.channel.type === "dm"
   )

@@ -10,7 +10,7 @@ import { getProfileBadges } from "../functions/getProfileBadges";
 import { getUser } from "../functions/getUser";
 import { getUserPermissions } from "../functions/getUserPermissions";
 import { s } from "../functions/s";
-import { Color } from "../globals";
+import { Chars, Color } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { CustomEmojis } from "../maps/customEmojis";
 import { decor } from "../maps/emojiEnum";
@@ -140,9 +140,9 @@ ${decor.Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
                 .slice(0, 5)
                 .map(
                   (e) =>
-                    `${e.channel} [Invite](${e.url}) ${formatTimestamp(
-                      e.createdAt!
-                    )}`
+                    `${e.channel} [Invite](${e.url}) (\`${e.uses || 0}/${
+                      e.maxUses || Chars.INFINITY
+                    } uses\`) ${formatTimestamp(e.createdAt!)}`
                 )
                 .join("\n")
             : "None."

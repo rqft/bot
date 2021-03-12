@@ -10,6 +10,7 @@ export interface ICommand {
     ownerOnly?: boolean;
     guildOnly?: boolean;
     permissions?: PermissionString[];
+    neededPerms?: PermissionString[];
     serverOwnerOnly?: boolean;
   };
   usesArgs?: boolean;

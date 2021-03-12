@@ -79,22 +79,6 @@ ${CustomEmojis.TICK_RED} **NSFW Content Filter**: ${capitalizeWords(
     );
     if (message.guild?.id == guild.id) {
       emb.addField("❯ Counts", enabled);
-
-      emb.addField(
-        `❯ (${(await guild.fetchInvites()).size}) Invites`,
-        (await guild.fetchInvites()).size
-          ? (await guild.fetchInvites())
-              .array()
-              .slice(0, 5)
-              .map(
-                (e) =>
-                  `${e.channel} [Invite](${e.url}) by ${
-                    e.inviter
-                  } ${formatTimestamp(e.createdAt!)}`
-              )
-              .join("\n")
-          : "None."
-      );
     }
     if (guild.premiumSubscriptionCount) {
       const boosters = guild.members.cache

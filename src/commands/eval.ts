@@ -30,7 +30,7 @@ module.exports = {
             : "https://raw.githubusercontent.com/arcy-at/arcy-at/main/bot-default-eval-file.js",
           "text"
         );
-    const input = `\`\`\`ts\n${code}\`\`\``;
+    const input = `\`\`\`ts\n${code.slice(0, 1000)}\`\`\``;
     var str = null;
     try {
       const client = c;

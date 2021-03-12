@@ -91,6 +91,9 @@ module.exports = {
           return {
             name: `❯ ${e.name} ${formatID(e.id)}`,
             value: `**${decor.Emojis.PENCIL} Revision**: \`#${e.revision}\`
+${decor.Emojis.LINK} **URL**: [Editor](https://pylon.bot/studio/deployments/${
+              e.id
+            }/editor) | [Guild](https://pylon.bot/studio/guilds/${e.guild_id})
 ${
   crons && crons.length > 0
     ? `**${CustomEmojis.GUI_SLOWMODE} Crons**:

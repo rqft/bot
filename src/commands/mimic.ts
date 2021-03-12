@@ -8,6 +8,7 @@ module.exports = {
   usage: "<user: User> <message: text>",
   usesArgs: true,
   restrictions: {
+    neededPerms: ["MANAGE_WEBHOOKS"],
     guildOnly: true,
   },
   cooldown: 10,
