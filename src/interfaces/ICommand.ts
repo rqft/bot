@@ -1,5 +1,9 @@
 import { Message, PermissionString } from "discord.js";
-
+export interface IArgument {
+  name: string;
+  required: boolean;
+  type: string;
+}
 export interface ICommand {
   name: string;
   aliases?: string[];
@@ -10,9 +14,6 @@ export interface ICommand {
     serverOwnerOnly?: boolean;
     ownerOnly?: boolean;
   };
-  args: {
-    enabled: boolean;
-    usage: string;
-  };
+  args: IArgument[];
   run(message: Message, args?: string[]): Promise<void | Message>;
 }

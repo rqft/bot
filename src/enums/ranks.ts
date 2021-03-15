@@ -1,0 +1,11 @@
+export const enum Ranks {
+  RESTRICTED = -1,
+  USER = 0,
+  AUTHORIZED = 10,
+  HELPER = 30,
+  MODERATOR = 50,
+  ADMIN = 70,
+  ADMINISTRATOR = 100,
+  SERVER_OWNER = 200,
+  SYSTEM = 500,
+}

@@ -2,20 +2,20 @@ import { Message, Permissions } from "discord.js";
 import { commands } from "..";
 import { escapeRegex } from "../functions/escapeRegex";
 import { getBotLevel } from "../functions/getBotLevel";
-import { getConfig } from "../functions/getConfig";
 import { replacer } from "../functions/replacer";
 import { globalConf } from "../globalConf";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
 export async function onCommand(message: Message) {
   if (!message.guild || !message.member) return;
-  const config = getConfig(message.guild.id);
-  if (!config) return;
+  if (!globalConf) return;
+  const pre = globalConf.modules.commands.prefixes;
+  if (globalConf.modules.commands.mentionPrefix) {
+    pre.push(`<@!${message.guild.me!.id}>`);
+    pre.push(`<@${message.guild.me!.id}>`);
+  }
   const prefixRegex = new RegExp(
-    `^(${
-      config.modules.commands.prefixes ??
-      ["!"].map((e) => escapeRegex(e)).join("|")
-    }|<@!?${message.guild.me!.id}>)( ?)`,
+    `^(${pre.map((e) => escapeRegex(e)).join("|")})( ?)`,
     "gi"
   );
   if (message.content.match(prefixRegex) == null) return;
@@ -29,9 +29,48 @@ export async function onCommand(message: Message) {
     );
   if (!command) return;
   if (
+    command.args &&
+    command.args.filter((e) => e.required).length &&
+    !args.length
+  )
+    return await message.reply(
+      replacer(
+        messages.commands.args.missing_args,
+        new Map([
+          ["{USER}", message.author.toString()],
+          [
+            "{MISSING_ARG}",
+
+            command.args[
+              command.args.filter((e) => e.required).length - args.length
+            ]?.name,
+          ],
+          [
+            "{USAGE_MESSAGE}",
+            replacer(
+              messages.commands.args.missing_args_usage,
+              new Map([
+                [
+                  "{USAGE}",
+                  command.args
+                    .map((e) => {
+                      return `${e.required ? "<" : "("}${e.name}: ${e.type}${
+                        e.required ? ">" : ")"
+                      }`;
+                    })
+                    .join(" "),
+                  // lol
+                ],
+              ])
+            ),
+          ],
+        ])
+      )
+    );
+  if (
     command.restrictions &&
     command.restrictions.level !== undefined &&
-    getBotLevel(message.member!, config) < command.restrictions.level
+    getBotLevel(message.member!) < command.restrictions.level
   ) {
     return await message.reply(
       replacer(

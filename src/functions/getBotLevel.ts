@@ -1,6 +1,7 @@
 import { GuildMember, User } from "discord.js";
-import { IConfig } from "../interfaces/IConfig";
-export function getBotLevel(user: User | GuildMember, config: IConfig) {
+import { globalConf } from "../globalConf";
+globalConf;
+export function getBotLevel(user: User | GuildMember) {
   var $level = 0;
   if (user instanceof GuildMember) {
     const perms = user.permissions.toArray();
@@ -27,9 +28,9 @@ export function getBotLevel(user: User | GuildMember, config: IConfig) {
       $level = 70;
     if (perms.includes("ADMINISTRATOR")) $level = 100;
     if (user.user.id == user.guild.ownerID) $level = 200;
-    if (Object.keys(config.levels).includes(user.user.id))
-      $level = config.levels[user.user.id] as number;
-  } else if (Object.keys(config.levels).includes(user.id))
-    $level = config.levels[user.id] as number;
+    if (Object.keys(globalConf.levels).includes(user.user.id))
+      $level = globalConf.levels[user.user.id] as number;
+  } else if (Object.keys(globalConf.levels).includes(user.id))
+    $level = globalConf.levels[user.id] as number;
   return $level;
 }
