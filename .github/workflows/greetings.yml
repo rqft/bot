@@ -1,0 +1,13 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Hey! Welcome to Hallucinate. Please make sure the issue is an actual problem/bug'
+        pr-message: 'Hey! Welcome to Hallucinate. Please make sure that your PR has things worth changing.'
