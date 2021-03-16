@@ -31,9 +31,15 @@ export const messages = {
       "❌ There was an error running this command: ```\n{ERROR}```",
   },
   commands: {
-    kick: {
+    infractions: {
       failed_kick: "❌ Failed to kick member.",
       kicked_member: "✅ Kicked {USER} from the server{REASON}",
+      failed_ban: "❌ Failed to ban member.",
+      banned_member: "✅ Banned {USER} from the server{REASON}",
+      already_banned: "❌ {USER} is already banned",
+      failed_unban: "❌ Failed to unban member.",
+      not_banned: "❌ {USER} is not banned",
+      unbanned_member: "✅ Unbanned {USER} from the server",
     },
     args: {
       missing_args:

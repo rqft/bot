@@ -11,16 +11,11 @@ module.exports = {
       required: true,
       type: "GuildMember",
     },
-    {
-      name: "reason",
-      required: false,
-      type: "text",
-    },
   ],
   restrictions: {
-    botPermissions: ["KICK_MEMBERS"],
+    botPermissions: ["MANAGE_CHANNELS", "MANAGE_MESSAGES", "MANAGE_ROLES"],
     level: 50,
-    permissions: ["KICK_MEMBERS"],
+    permissions: ["MANAGE_MESSAGES", "MANAGE_CHANNELS"],
   },
   async run(message, args) {
     const user = await search_guildMember(args[0]!, message.guild!);
@@ -32,13 +27,13 @@ module.exports = {
     if (!tg.checks.globalAdm || !tg.checks.level || !tg.checks.roles)
       return message.reply(tg.messages.join("\n"));
     try {
-      user.kick(reason);
+      user.ban({ reason });
     } catch {
-      return message.reply(messages.commands.kick.failed_kick);
+      return message.reply(messages.commands.infractions.failed_ban);
     }
     return message.reply(
       replacer(
-        messages.commands.kick.kicked_member,
+        messages.commands.infractions.banned_member,
         new Map([
           ["{USER}", user.toString()],
           ["{REASON}", reason ? `with reason \`${reason}\`` : ""],

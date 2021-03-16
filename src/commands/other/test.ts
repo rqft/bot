@@ -20,6 +20,7 @@ module.exports = {
       : message.member!;
     if (!user)
       return await message.reply(messages.targeting.not_found.guild_member);
+    const self = user.id == message.author.id;
     const bl = getBotLevel(user!);
     const tg = checkTargets(message.member!, user);
     if (!tg.checks.globalAdm || !tg.checks.level || !tg.checks.roles)
@@ -27,7 +28,9 @@ module.exports = {
     const globaladm = globalConf.ownerIDs.includes(user.id)
       ? `and are a global admin!`
       : "";
-    await message.reply(`${Emojis.WHITE_CHECK_MARK} Test complete. (this doesn't actually do anything)
-${user}'s bot level is **${bl}** ${globaladm}`);
+    await message.reply(`${
+      Emojis.WHITE_CHECK_MARK
+    } Test complete. (this doesn't actually do anything)
+${self ? "Your" : `${user}'s`} bot level is **${bl}** ${globaladm}`);
   },
 } as ICommand;
