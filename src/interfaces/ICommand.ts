@@ -15,5 +15,5 @@ export interface ICommand {
     ownerOnly?: boolean;
   };
   args: IArgument[];
-  run(message: Message, args?: string[]): Promise<void | Message>;
+  run(message: Message, args: string[]): Promise<void | Message>;
 }

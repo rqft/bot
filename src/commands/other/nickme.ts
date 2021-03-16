@@ -1,0 +1,29 @@
+import { ICommand } from "../../interfaces/ICommand";
+import { messages } from "../../messages";
+module.exports = {
+  name: "nickme",
+  aliases: ["nm"],
+  args: [
+    {
+      name: "content",
+      required: false,
+      type: "text",
+    },
+  ],
+  restrictions: {
+    level: 50,
+    botPermissions: ["CHANGE_NICKNAME"],
+  },
+  async run(message, args) {
+    var content = args.join(" ");
+    content = content.toLowerCase() == "invisible" ? "឵឵" : content;
+    if (message.guild?.me?.nickname == content)
+      return await message.reply(messages.commands.nickme.already_nick);
+    try {
+      message.guild?.me?.edit({ nick: content });
+    } catch {
+      return await message.reply(messages.commands.nickme.failed_nick);
+    }
+    return await message.reply(messages.commands.nickme.done);
+  },
+} as ICommand;
