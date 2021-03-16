@@ -41,15 +41,37 @@ export const messages = {
       not_banned: "❌ {USER} is not banned",
       unbanned_member: "✅ Unbanned {USER} from the server",
     },
+    admin: {
+      clean: {
+        too_many_msgs: "❌ Can't clean that many messages at once!",
+        invalid_count: "❌ Count must be a number",
+        already_cleaning:
+          "❌ Already performing a clean operation, please try again later",
+        failed_clean: "❌ Failed to clean messages.",
+        no_messages_cleaned: "❌ No messages were cleaned.",
+        cleaned_messages_images:
+          "✅ Cleaned {COUNT} messages with attachments.",
+        cleaned_messages_all: "✅ Cleaned {COUNT} messages.",
+        cleaned_messages_self: "✅ Cleaned {COUNT} of your messages.",
+        cleaned_messages_bots: "✅ Cleaned {COUNT} messages from bots.",
+      },
+    },
     args: {
       missing_args:
         "❌ {USER} Argument error (missing required argument(s): {MISSING_ARG}) {USAGE_MESSAGE}",
       missing_args_usage: "\n```\n{USAGE}```",
     },
-    nickme: {
-      already_nick: "❌ I already have that nickname!",
-      done: "✅ Done!",
-      failed_nick: "❌ Failed to set my nickname",
+    other: {
+      nickme: {
+        already_nick: "❌ I already have that nickname!",
+        done: "✅ Done!",
+        failed_nick: "❌ Failed to set my nickname",
+      },
+      avatar: {
+        avatar_of: "Avatar of {USER}: \nLinks: {URLS}",
+        requested_by: "Requested by {USER_TAG} ({USER_ID})",
+      },
     },
+    dm: "❌ Commands must be run in a server",
   },
 };

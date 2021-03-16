@@ -6,13 +6,12 @@ import { replacer } from "../functions/replacer";
 import globalConf from "../globalConf";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
-export async function onCommand(message: Message) {
-  if (!message.guild || !message.member) return;
+export async function onCommand(message: Message): Promise<Message | void> {
   if (!globalConf) return;
   const pre = globalConf.modules.commands.prefixes;
   if (globalConf.modules.commands.mentionPrefix) {
-    pre.push(`<@!${message.guild.me!.id}>`);
-    pre.push(`<@${message.guild.me!.id}>`);
+    pre.push(`<@!760143615124439040>`);
+    pre.push(`<@760143615124439040>`);
   }
   const prefixRegex = new RegExp(
     `^(${pre.map((e) => escapeRegex(e)).join("|")})( ?)`,
@@ -27,6 +26,7 @@ export async function onCommand(message: Message) {
     commands.find(
       (cmd: ICommand) => cmd.aliases! && cmd.aliases.includes(commandName)!
     );
+
   if (!command) return;
   if (
     command.args &&

@@ -18,12 +18,12 @@ module.exports = {
     var content = args.join(" ");
     content = content.toLowerCase() == "invisible" ? "឵឵" : content;
     if (message.guild?.me?.nickname == content)
-      return await message.reply(messages.commands.nickme.already_nick);
+      return await message.reply(messages.commands.other.nickme.already_nick);
     try {
       message.guild?.me?.edit({ nick: content });
     } catch {
-      return await message.reply(messages.commands.nickme.failed_nick);
+      return await message.reply(messages.commands.other.nickme.failed_nick);
     }
-    return await message.reply(messages.commands.nickme.done);
+    return await message.reply(messages.commands.other.nickme.done);
   },
 } as ICommand;

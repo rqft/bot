@@ -18,7 +18,11 @@ client.once("ready", () => {
   );
   client.user?.setActivity(
     `${globalConf.modules.commands.prefixes[0]} | ${client.guilds.cache.size} guilds`,
-    { url: "https://arcy-at.github.io/discord" }
+    {
+      url: "https://www.youtube.com/watch?v=XSjN9c5zilY",
+      type: "STREAMING",
+      name: `${globalConf.modules.commands.prefixes[0]} | ${client.guilds.cache.size} guilds`,
+    }
   );
 });
 client.on("ready", () => console.log(messages.client.ready));
@@ -33,7 +37,5 @@ for (const folder of commandFolders) {
     commands.set(command.name, command);
   }
 }
-client.on("message", async (message) => {
-  onCommand(message);
-});
+client.on("message", onCommand);
 client.login(globalConf.token);
