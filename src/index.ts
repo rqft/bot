@@ -1,7 +1,7 @@
 import { Client, Collection, Intents } from "discord.js";
 import fs from "fs";
 import { replacer } from "./functions/replacer";
-import { globalConf } from "./globalConf";
+import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
 import { messages } from "./messages";
 export const client = new Client({
@@ -15,6 +15,10 @@ client.once("ready", () => {
   if (!client.user) console.log(messages.client.unable_to_get_user);
   console.log(
     replacer(messages.client.logged_in, new Map([["{USER}", client.user!.tag]]))
+  );
+  client.user?.setActivity(
+    `${globalConf.modules.commands.prefixes[0]} | ${client.guilds.cache.size} guilds`,
+    { url: "https://arcy-at.github.io/discord" }
   );
 });
 client.on("ready", () => console.log(messages.client.ready));

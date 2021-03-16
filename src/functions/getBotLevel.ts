@@ -1,5 +1,5 @@
 import { GuildMember, User } from "discord.js";
-import { globalConf } from "../globalConf";
+import globalConf from "../globalConf";
 globalConf;
 export function getBotLevel(user: User | GuildMember) {
   var $level = 0;

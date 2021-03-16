@@ -3,7 +3,7 @@ import { commands } from "..";
 import { escapeRegex } from "../functions/escapeRegex";
 import { getBotLevel } from "../functions/getBotLevel";
 import { replacer } from "../functions/replacer";
-import { globalConf } from "../globalConf";
+import globalConf from "../globalConf";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
 export async function onCommand(message: Message) {
@@ -31,7 +31,7 @@ export async function onCommand(message: Message) {
   if (
     command.args &&
     command.args.filter((e) => e.required).length &&
-    !args.length
+    !(args.length >= command.args.filter((e) => e.required).length)
   )
     return await message.reply(
       replacer(
@@ -40,10 +40,12 @@ export async function onCommand(message: Message) {
           ["{USER}", message.author.toString()],
           [
             "{MISSING_ARG}",
-
-            command.args[
-              command.args.filter((e) => e.required).length - args.length
-            ]?.name,
+            Array.from(command.args.filter((e) => e.required).keys())
+              .filter(function (v) {
+                return !Array.from(args.keys()).includes(v);
+              })
+              .map((e) => `\`${command.args[e]?.name}\``)
+              .join(", "),
           ],
           [
             "{USAGE_MESSAGE}",
