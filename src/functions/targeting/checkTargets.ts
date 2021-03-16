@@ -16,25 +16,15 @@ export function checkTargets(user: GuildMember, target: GuildMember) {
     },
   };
   if (user.guild.ownerID == user.id || user.id == target.id) return data;
-  const ga = compareGA(user, target);
-  const rs = compareRoles(user, target);
-  const lv = compareLevel(user, target);
-  if (!ga) {
-    data.checks.globalAdm = false;
-    data.messages.push(messages.targeting.actor_cant_admin);
-  }
-  if (!lv) {
-    data.checks.level = false;
-    data.messages.push(
-      replacer(
-        messages.targeting.actor_cant_level,
-        new Map([["{LEVEL}", getBotLevel(target)]])
-      )
-    );
-  }
-  if (!rs) {
-    data.checks.roles = false;
+  if (!compareRoles(user, target)) data.checks.roles = false;
+  if (!compareGA(user, target)) data.checks.globalAdm = false;
+  if (!compareLevel(user, target)) data.checks.level = false;
+  if (!data.checks.roles)
     data.messages.push(messages.targeting.actor_cant_hierarchy);
-  }
+  if (!data.checks.globalAdm)
+    data.messages.push(messages.targeting.actor_cant_admin);
+  const map = new Map([["{LEVEL}", getBotLevel(target)]]);
+  const rep = replacer(messages.targeting.actor_cant_level, map);
+  if (!data.checks.level) data.messages.push(rep);
   return data;
 }
