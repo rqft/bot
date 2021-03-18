@@ -1,5 +1,6 @@
 import { DMChannel, TextChannel } from "discord.js";
 import { replacer } from "../../functions/replacer";
+import { search_guildMember } from "../../functions/searching/guildMember";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -110,7 +111,6 @@ module.exports = {
         );
         break;
       }
-
       case "me": {
         await message.channel.messages
           .fetch({
@@ -120,6 +120,39 @@ module.exports = {
           .then((messages) => {
             const userMessages = messages.filter(
               (msg) => msg.author.id == message.author.id
+            );
+            return (message.channel as TextChannel).bulkDelete(
+              userMessages,
+              true
+            );
+          })
+          .catch((e) => {
+            if (e)
+              return message.channel.send(
+                messages.commands.admin.clean.failed_clean
+              );
+          });
+        await message.reply(
+          replacer(
+            messages.commands.admin.clean.cleaned_messages_self,
+            new Map([["{COUNT}", count]])
+          )
+        );
+        break;
+      }
+
+      case "user": {
+        const target = await search_guildMember(args[2]!, message.guild!);
+        if (!target)
+          return await message.reply(messages.targeting.not_found.guild_member);
+        await message.channel.messages
+          .fetch({
+            limit: count,
+            before: message.id,
+          })
+          .then((messages) => {
+            const userMessages = messages.filter(
+              (msg) => msg.author.id == target.id
             );
             return (message.channel as TextChannel).bulkDelete(
               userMessages,
