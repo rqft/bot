@@ -28,6 +28,8 @@ export async function onCommand(message: Message): Promise<Message | void> {
     );
 
   if (!command) return;
+  if (!message.guild || !message.member)
+    return await message.reply(messages.commands.dm);
   if (
     command.args &&
     command.args.filter((e) => e.required).length &&

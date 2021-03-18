@@ -4,6 +4,7 @@ type List<T> = {
   [any: string]: T;
 };
 const globalConf = {
+  botId: "760143615124439040",
   badges: {
     "504698587221852172": [`${CustomEmojis.GUI_OWNERCROWN} Bot Owner`],
   } as List<string[]>,

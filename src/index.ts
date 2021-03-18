@@ -1,5 +1,7 @@
+import RPC from "discord-rpc";
 import { Client, Collection, Intents } from "discord.js";
 import fs from "fs";
+import { pid } from "process";
 import { replacer } from "./functions/replacer";
 import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
@@ -39,3 +41,29 @@ for (const folder of commandFolders) {
 }
 client.on("message", onCommand);
 client.login(globalConf.token);
+
+const rpc = new RPC.Client({ transport: "ipc" });
+
+rpc.on("ready", () => {
+  rpc.request("SET_ACTIVITY", {
+    pid: pid,
+    activity: {
+      assets: {
+        large_image: "glasses",
+      },
+      buttons: [
+        {
+          label: "Discord",
+          url: "https://arcy-at.github.io/discord",
+        },
+        {
+          label: "Bot Invite",
+          url:
+            "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot%20applications.commands",
+        },
+      ],
+    },
+  });
+});
+
+rpc.login({ clientId: "760143615124439040" });

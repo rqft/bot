@@ -1,10 +1,11 @@
 import { replacer } from "../../functions/replacer";
 import { search_user } from "../../functions/searching/user";
 import { checkTargets } from "../../functions/targeting/checkTargets";
+import globalConf from "../../globalConf";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
-  name: "kick",
+  name: "ban",
   args: [
     {
       name: "user",
@@ -27,6 +28,9 @@ module.exports = {
     if (!user) return message.reply(messages.targeting.not_found.user);
     if (user.id == message.author.id)
       return await message.reply(messages.targeting.actor_cant_self);
+
+    if (user.id == globalConf.botId)
+      return await message.reply(messages.targeting.me);
     const reason = args.slice(1).join(" ");
     const m = await message.guild?.members.fetch(user.id);
     if (m) {

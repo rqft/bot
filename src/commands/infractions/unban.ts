@@ -3,7 +3,7 @@ import { search_user } from "../../functions/searching/user";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
-  name: "kick",
+  name: "unban",
   args: [
     {
       name: "user",

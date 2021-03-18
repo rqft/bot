@@ -18,7 +18,8 @@ export const messages = {
       "❌ You can't target this user (due to their role hierarchy)",
     actor_cant_admin:
       "❌ You can't target this user as they are a global admin.",
-    actor_cant_self: "You can't target yourself",
+    actor_cant_self: "❌ You can't target yourself",
+    me: "❌ You can't target me",
     not_found: {
       guild_member: "❌ I can't find that member (are they in the server?)",
       user: "❌ I can't find that user",

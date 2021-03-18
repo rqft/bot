@@ -1,6 +1,7 @@
 import { replacer } from "../../functions/replacer";
 import { search_guildMember } from "../../functions/searching/guildMember";
 import { checkTargets } from "../../functions/targeting/checkTargets";
+import globalConf from "../../globalConf";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -27,6 +28,8 @@ module.exports = {
     if (!user) return message.reply(messages.targeting.not_found.guild_member);
     if (user.id == message.author.id)
       return await message.reply(messages.targeting.actor_cant_self);
+    if (user.id == globalConf.botId)
+      return await message.reply(messages.targeting.me);
     const reason = args.slice(1).join(" ");
     const tg = checkTargets(message.member!, user);
     if (!tg.checks.globalAdm || !tg.checks.level || !tg.checks.roles)
