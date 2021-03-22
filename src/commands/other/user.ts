@@ -120,8 +120,10 @@ ${
           .map(
             (e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``
           )
-          .join(", ")}
-${Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem)}\`__`
+          .join("  ")}
+${Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem).level}\`__ (${
+          getBotLevel(mem).type
+        })`
       );
     }
     if (user.flags?.toArray().length)

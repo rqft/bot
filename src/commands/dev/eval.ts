@@ -6,7 +6,7 @@ import { capitalizeWords } from "../../functions/capitalizeWords";
 import globalConf from "../../globalConf";
 import * as globals from "../../globals";
 import { ICommand } from "../../interfaces/ICommand";
-
+import _utils from "../../utils";
 module.exports = {
   name: "eval",
   restrictions: {
@@ -43,6 +43,8 @@ module.exports = {
       config;
       discord;
       char;
+      const utils = _utils;
+      utils;
 
       str = eval(code);
       const embed = new MessageEmbed();

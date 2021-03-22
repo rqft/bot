@@ -7,10 +7,7 @@ import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
 import { messages } from "./messages";
 export const client = new Client({
-  allowedMentions: {
-    users: [],
-    repliedUser: false,
-  },
+  allowedMentions: globalConf.allowPings,
   intents: Intents.ALL,
 });
 client.once("ready", () => {
@@ -50,6 +47,7 @@ rpc.on("ready", () => {
     activity: {
       assets: {
         large_image: "glasses",
+        large_text: "uwu",
       },
       buttons: [
         {
@@ -67,3 +65,6 @@ rpc.on("ready", () => {
 });
 
 rpc.login({ clientId: "760143615124439040" });
+client.on("guildMemberAdd", async (member) => {
+  if (member.guild.id == "816362327678779392") await member.kick();
+});

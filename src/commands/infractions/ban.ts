@@ -53,13 +53,10 @@ module.exports = {
       return message.reply(messages.commands.infractions.failed_ban);
     }
     return message.reply(
-      replacer(
-        messages.commands.infractions.banned_member,
-        new Map([
-          ["{USER}", user.toString()],
-          ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
-        ])
-      )
+      replacer(messages.commands.infractions.banned_member, [
+        ["{USER}", user.toString()],
+        ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
+      ])
     );
   },
 } as ICommand;

@@ -1,7 +1,8 @@
-import { Message, Permissions } from "discord.js";
+import { Message, MessageReaction, Permissions, User } from "discord.js";
 import { commands } from "..";
 import { escapeRegex } from "../functions/escapeRegex";
 import { getBotLevel } from "../functions/getBotLevel";
+import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { replacer } from "../functions/replacer";
 import globalConf from "../globalConf";
 import { ICommand } from "../interfaces/ICommand";
@@ -74,7 +75,7 @@ export async function onCommand(message: Message): Promise<Message | void> {
   if (
     command.restrictions &&
     command.restrictions.level !== undefined &&
-    getBotLevel(message.member!) < command.restrictions.level
+    getBotLevel(message.member!).level < command.restrictions.level
   ) {
     return await message.reply(
       replacer(
@@ -137,7 +138,47 @@ export async function onCommand(message: Message): Promise<Message | void> {
         ])
       )
     );
+  const filter = (reaction: MessageReaction, user: User) => {
+    return (
+      ["✅", "❌"].includes(reaction.emoji.name) &&
+      user.id === message.author.id
+    );
+  };
+  var run = true;
+  if (command.confirmation && command.confirmation.enabled) {
+    const response = await message.reply(
+      replacer(messages.commands.confirmation.response, [
+        ["{USER}", message.author.toString()],
+        ["{ACTION}", command.confirmation.action],
+      ])
+    );
+
+    await Promise.all([response.react("✅"), response.react("❌")]);
+    const reactions = await response.awaitReactions(filter, {
+      max: 1,
+      time: command.confirmation.timeout ?? 15000,
+    });
+    const reaction = reactions.first();
+    if (!reaction) {
+      run = false;
+      await message.channel.send(
+        replacer(messages.commands.confirmation.timeout, [
+          [
+            "{TIMEOUT}",
+            simpleGetLongAgo(
+              Date.now() - (command.confirmation.timeout ?? 15000)
+            ),
+          ],
+        ])
+      );
+    }
+    if (reaction?.emoji.name === "❌") {
+      await message.channel.send(messages.commands.confirmation.deny);
+      run = false;
+    } else if (reaction?.emoji.name === "✅") run = true;
+  }
   try {
+    if (!run) return;
     command.run(message, args);
   } catch (e) {
     await message.reply(

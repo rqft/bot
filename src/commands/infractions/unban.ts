@@ -42,13 +42,10 @@ module.exports = {
       return message.reply(messages.commands.infractions.failed_unban);
     }
     return message.reply(
-      replacer(
-        messages.commands.infractions.unbanned_member,
-        new Map([
-          ["{USER}", user.toString()],
-          ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
-        ])
-      )
+      replacer(messages.commands.infractions.unbanned_member, [
+        ["{USER}", user.toString()],
+        ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
+      ])
     );
   },
 } as ICommand;

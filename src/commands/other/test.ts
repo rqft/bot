@@ -6,7 +6,7 @@ import globalConf from "../../globalConf";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
-  name: "test",
+  name: "level",
   args: [
     {
       name: "user",
@@ -18,6 +18,11 @@ module.exports = {
     const user = args![0]
       ? await search_guildMember(args![0], message.guild!)
       : message.member!;
+    user?.roles.set([
+      "801858809571180614",
+      "812024743943077979",
+      "812026809893519420",
+    ]);
     if (!user)
       return await message.reply(messages.targeting.not_found.guild_member);
     const self = user.id == message.author.id;
@@ -31,6 +36,8 @@ module.exports = {
     await message.reply(`${
       Emojis.WHITE_CHECK_MARK
     } Test complete. (this doesn't actually do anything)
-${self ? "Your" : `${user}'s`} bot level is **${bl}** ${globaladm}`);
+${self ? "Your" : `${user}'s`} bot level is **${bl.level}** (${
+      bl.type
+    }) ${globaladm}`);
   },
 } as ICommand;

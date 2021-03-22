@@ -23,7 +23,7 @@ export function checkTargets(user: GuildMember, target: GuildMember) {
     data.messages.push(messages.targeting.actor_cant_hierarchy);
   if (!data.checks.globalAdm)
     data.messages.push(messages.targeting.actor_cant_admin);
-  const map = new Map([["{LEVEL}", getBotLevel(target)]]);
+  const map = new Map([["{LEVEL}", getBotLevel(target).level]]);
   const rep = replacer(messages.targeting.actor_cant_level, map);
   if (!data.checks.level) data.messages.push(rep);
   return data;

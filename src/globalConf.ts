@@ -1,3 +1,4 @@
+import { ClientOptions } from "discord.js";
 import { CustomEmojis } from "./enums/customEmojis";
 import { Secrets } from "./secrets";
 type List<T> = {
@@ -12,7 +13,11 @@ const globalConf = {
     "760143615124439040": 999,
   } as List<number>,
   token: Secrets.BOT_TOKEN,
-  ownerIDs: ["504698587221852172", "760143615124439040"],
+  allowPings: {
+    repliedUser: false,
+    users: [],
+  } as ClientOptions["allowedMentions"],
+  ownerIDs: ["504698587221852172", "760143615124439040", "533757461706964993"],
   modules: {
     commands: {
       prefixes: ["$"] as string[],

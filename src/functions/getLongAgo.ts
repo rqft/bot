@@ -98,7 +98,7 @@ export function shortLongAgo(
       break;
     }
     if (lowestUnit === key) hitLowest = true;
-    let cc: string = value > 1 ? `${key}s` : key;
+    let cc: string = value > 1 ? `${key}` : key;
     txtret.push(`${value}${cc}`);
     runsc += 1;
   }

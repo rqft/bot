@@ -35,13 +35,16 @@ module.exports = {
       user.avatarURL({ dynamic: true, size: 4096 }) ?? user.defaultAvatarURL
     );
     emb.setDescription(
-      replacer(
-        messages.commands.other.avatar.avatar_of,
-        new Map([
-          ["{USER}", user.toString()],
-          ["{URLS}", avs.join(" | ")],
-        ])
-      )
+      replacer(messages.commands.other.avatar.avatar_of, [
+        ["{USER}", user.toString()],
+        ["{URLS}", avs.join(" | ")],
+      ])
+    );
+    emb.setFooter(
+      replacer(messages.commands.other.avatar.requested_by, [
+        ["{USER_TAG}", message.author.tag],
+        ["{USER_ID}", message.author.id],
+      ])
     );
     emb.setColor(Color.embed);
     await message.reply(emb);

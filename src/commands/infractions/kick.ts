@@ -40,13 +40,10 @@ module.exports = {
       return message.reply(messages.commands.infractions.failed_kick);
     }
     return message.reply(
-      replacer(
-        messages.commands.infractions.kicked_member,
-        new Map([
-          ["{USER}", user.toString()],
-          ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
-        ])
-      )
+      replacer(messages.commands.infractions.kicked_member, [
+        ["{USER}", user.toString()],
+        ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
+      ])
     );
   },
 } as ICommand;

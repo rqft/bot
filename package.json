@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "nodemon dist",
-    "build": "tsc"
+    "build": "tsc",
+    "reload": "rmdir dist /s && tsc"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
+    "number-utils": "^1.0.5",
     "sequelize": "^6.5.0",
     "slash-create": "^2.1.0",
     "sqlite3": "^5.0.2"

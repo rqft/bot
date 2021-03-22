@@ -23,7 +23,7 @@ module.exports = {
     },
   ],
   async run(message, args) {
-    const valid = ["channel", "user", "bots", "images", "here", "me"];
+    const valid = ["user", "bots", "images", "here", "me"];
     const type = args[0]?.toLowerCase()!;
     if (!valid.includes(type))
       return await message.reply(
@@ -36,29 +36,6 @@ module.exports = {
       return message.reply(messages.commands.admin.clean.too_many_msgs);
     if (message.channel instanceof DMChannel) return;
     switch (type) {
-      case "channel": {
-        await message.channel.messages
-          .fetch({
-            limit: count,
-            before: message.id,
-          })
-          .then(() => {
-            (message.channel as TextChannel).bulkDelete(count, true);
-          })
-          .catch((e) => {
-            if (e)
-              return message.channel.send(
-                messages.commands.admin.clean.failed_clean
-              );
-          });
-        await message.reply(
-          replacer(
-            messages.commands.admin.clean.cleaned_messages_all,
-            new Map([["{COUNT}", count]])
-          )
-        );
-        break;
-      }
       case "here": {
         await message.channel.messages
           .fetch({
@@ -140,8 +117,8 @@ module.exports = {
         );
         break;
       }
-
       case "user": {
+        if (!args[2]) return await message.reply("you need to supply a user");
         const target = await search_guildMember(args[2]!, message.guild!);
         if (!target)
           return await message.reply(messages.targeting.not_found.guild_member);

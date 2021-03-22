@@ -6,6 +6,6 @@ export function compareLevel(
   target: User | GuildMember | number
 ) {
   if (target instanceof GuildMember || target instanceof User)
-    target = getBotLevel(target);
-  return getBotLevel(user) > target;
+    target = getBotLevel(target).level;
+  return getBotLevel(user).level > target;
 }

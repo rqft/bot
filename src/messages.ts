@@ -51,11 +51,26 @@ export const messages = {
         failed_clean: "❌ Failed to clean messages.",
         no_messages_cleaned: "❌ No messages were cleaned.",
         cleaned_messages_images:
-          "✅ Cleaned {COUNT} messages with attachments.",
-        cleaned_messages_all: "✅ Cleaned {COUNT} messages.",
-        cleaned_messages_self: "✅ Cleaned {COUNT} of your messages.",
-        cleaned_messages_bots: "✅ Cleaned {COUNT} messages from bots.",
+          "✅ Cleaned ~{COUNT} messages with attachments.",
+        cleaned_messages_all: "✅ Cleaned ~{COUNT} messages.",
+        cleaned_messages_self: "✅ Cleaned ~{COUNT} of your messages.",
+        cleaned_messages_bots:
+          "✅ Cleaned ~{COUNT} messages from bots. (this command is unreliable, so it may not be exactly {COUNT})",
       },
+      slowmode: {
+        channel_already_slowmode: "❌ Channel is already at this slowmode",
+        slowmode_enabled:
+          "This channel has been set to {SECONDS}s slowmode by {ACTOR}",
+        slowmode_disabled: "This channel has had slowmode disabled by {ACTOR}",
+        slowmode_cmd: "✅ Set slowmode on {CHANNEL} to **{SECONDS}s**",
+        slowmode_failed: "❌ Failed to set slowmode",
+      },
+    },
+    confirmation: {
+      deny: "✅ Okay! I will not run that command.",
+      response:
+        "🔨 {USER} Are you sure you want to run this command? This action ({ACTION}) can be destructive to the server.",
+      timeout: "❌ User failed to confirm the command within {TIMEOUT}",
     },
     args: {
       missing_args:
@@ -63,14 +78,25 @@ export const messages = {
       missing_args_usage: "\n```\n{USAGE}```",
     },
     other: {
+      invite: {
+        invalid_invite: "❌ Invalid invite code!",
+        unknown_invite: "❌ Unknown invite `{CODE}`",
+        uses: "📡 {USES} out of {USES_MAX} max uses",
+        created: "⏰ Created {CREATED} ago",
+        expires_in: "🔨 Will expire in {EXPIRY}",
+        inviter: "📩 Invitation by {USER}",
+        channel: "🎯 Sends to {CHANNEL}",
+        no_stats: "❌ No statistics available",
+      },
       nickme: {
         already_nick: "❌ I already have that nickname!",
         done: "✅ Done!",
         failed_nick: "❌ Failed to set my nickname",
       },
+      ping: "🤖 Pong in @{DIFF}ms; Heartbeat ping @{HEARTBEAT}ms",
       avatar: {
-        avatar_of: "Avatar of {USER}: \nLinks: {URLS}",
-        requested_by: "Requested by {USER_TAG} ({USER_ID})",
+        avatar_of: "🖼 Avatar of {USER}: \n🔗 Links: {URLS}",
+        requested_by: "🌀 Requested by {USER_TAG} ({USER_ID})",
       },
     },
     dm: "❌ Commands must be run in a server",

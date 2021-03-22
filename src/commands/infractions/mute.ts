@@ -34,10 +34,10 @@
 //     return message.reply(
 //       replacer(
 //         messages.commands.infractions.banned_member,
-//         new Map([
+//         [
 //           ["{USER}", user.toString()],
 //           ["{REASON}", reason ? `with reason \`${reason}\`` : ""],
-//         ])
+//         ]
 //       )
 //     );
 //   },

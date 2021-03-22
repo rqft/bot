@@ -7,6 +7,11 @@ export interface IArgument {
 export interface ICommand {
   name: string;
   aliases?: string[];
+  confirmation?: {
+    enabled: boolean;
+    action: string;
+    timeout?: number;
+  };
   restrictions?: {
     permissions: PermissionString[];
     botPermissions: PermissionString[];
