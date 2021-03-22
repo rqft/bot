@@ -77,6 +77,9 @@ export const messages = {
       missing_args_usage: "\n```\n{USAGE}```",
     },
     other: {
+      snowflake: {
+        invalid_snowflake: '❌ Invalid snowflake "`{SNOWFLAKE}`"',
+      },
       invite: {
         invalid_invite: "❌ Invalid invite code!",
         unknown_invite: "❌ Unknown invite `{CODE}`",

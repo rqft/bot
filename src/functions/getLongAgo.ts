@@ -1,4 +1,6 @@
 const timeMap = new Map([
+  ["millenium", 1000 * 60 * 60 * 24 * 365 * 10 * 10 * 10],
+  ["century", 1000 * 60 * 60 * 24 * 365 * 10 * 10],
   ["decade", 1000 * 60 * 60 * 24 * 365 * 10],
   ["year", 1000 * 60 * 60 * 24 * 365],
   ["month", 1000 * 60 * 60 * 24 * 31],
@@ -54,6 +56,8 @@ export function simpleGetLongAgo(ts: number) {
   return getLongAgo(ts, 2, undefined, undefined);
 }
 const shortTimeMap = new Map([
+  ["ml", 1000 * 60 * 60 * 24 * 365 * 10 * 10 * 10],
+  ["ct", 1000 * 60 * 60 * 24 * 365 * 10 * 10],
   ["dc", 1000 * 60 * 60 * 24 * 365 * 10],
   ["y", 1000 * 60 * 60 * 24 * 365],
   ["mo", 1000 * 60 * 60 * 24 * 31],

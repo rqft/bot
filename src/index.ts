@@ -2,6 +2,7 @@ import RPC from "discord-rpc";
 import { Client, Collection, Intents } from "discord.js";
 import fs from "fs";
 import { pid } from "process";
+import { simpleGetLongAgo } from "./functions/getLongAgo";
 import { replacer } from "./functions/replacer";
 import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
@@ -49,6 +50,7 @@ rpc.on("ready", () => {
         large_image: "glasses",
         large_text: "uwu",
       },
+      details: `for ${simpleGetLongAgo(Date.now() - 3.154e12)}`,
       buttons: [
         {
           label: "Discord",
