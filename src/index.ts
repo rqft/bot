@@ -65,6 +65,6 @@ rpc.on("ready", () => {
 });
 
 rpc.login({ clientId: "760143615124439040" });
-client.on("guildMemberAdd", async (member) => {
-  if (member.guild.id == "816362327678779392") await member.kick();
-});
+// client.on("guildMemberAdd", async (member) => {
+//   if (member.guild.id == "816362327678779392") await member.kick();
+// });

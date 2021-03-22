@@ -68,8 +68,7 @@ export const messages = {
     },
     confirmation: {
       deny: "✅ Okay! I will not run that command.",
-      response:
-        "🔨 {USER} Are you sure you want to run this command? This action ({ACTION}) can be destructive to the server.",
+      response: "🔨 Awaiting confirmation...",
       timeout: "❌ User failed to confirm the command within {TIMEOUT}",
     },
     args: {
