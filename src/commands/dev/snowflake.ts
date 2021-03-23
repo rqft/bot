@@ -9,6 +9,7 @@ module.exports = {
   name: "snowflake",
   restrictions: {
     level: 5,
+    ownerOnly: true,
   },
   args: [
     {
