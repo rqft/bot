@@ -1,15 +1,15 @@
 export const messages = {
   client: {
     unable_to_get_user: "❌ Unable to get bot user",
-    ready: "📦 Ready!",
+    ready: "📦 Ready",
     logged_in: "✅ Logged in as {USER}",
   },
   permissions: {
-    missing_permissions: "❌ You need {PERMISSIONS} to run this command!",
-    missing_permissions_me: "❌ I need {PERMISSIONS} to run this command!",
-    missing_level: "❌ You need bot level **{LEVEL}** to run this command!",
-    missing_dev: "❌ You need to be a global admin to run this command!",
-    missing_owner: "❌ You need to be the server owner to run this command!",
+    missing_permissions: "❌ You need {PERMISSIONS} to run this command",
+    missing_permissions_me: "❌ I need {PERMISSIONS} to run this command",
+    missing_level: "❌ You need bot level **{LEVEL}** to run this command",
+    missing_dev: "❌ You need to be a global admin to run this command",
+    missing_owner: "❌ You need to be the server owner to run this command",
   },
   targeting: {
     actor_cant_level:
@@ -44,7 +44,7 @@ export const messages = {
     },
     admin: {
       clean: {
-        too_many_msgs: "❌ Can't clean that many messages at once!",
+        too_many_msgs: "❌ Can't clean that many messages at once",
         invalid_count: "❌ Count must be a number",
         already_cleaning:
           "❌ Already performing a clean operation, please try again later",
@@ -67,7 +67,7 @@ export const messages = {
       },
     },
     confirmation: {
-      deny: "✅ Okay! I will not run that command.",
+      deny: "✅ Okay, I will not run that command.",
       response: "🔨 Awaiting confirmation...",
       timeout: "❌ User failed to confirm the command within {TIMEOUT}",
     },
@@ -78,10 +78,10 @@ export const messages = {
     },
     other: {
       snowflake: {
-        invalid_snowflake: '❌ Invalid snowflake "`{SNOWFLAKE}`"',
+        invalid_snowflake: "❌ Invalid snowflake `{SNOWFLAKE}`",
       },
       invite: {
-        invalid_invite: "❌ Invalid invite code!",
+        invalid_invite: "❌ Invalid invite code",
         unknown_invite: "❌ Unknown invite `{CODE}`",
         uses: "📡 {USES} out of {USES_MAX} max uses",
         created: "⏰ Created {CREATED} ago",
@@ -91,14 +91,21 @@ export const messages = {
         no_stats: "❌ No statistics available",
       },
       nickme: {
-        already_nick: "❌ I already have that nickname!",
-        done: "✅ Done!",
+        already_nick: "❌ I already have that nickname",
+        done: "✅ Done",
         failed_nick: "❌ Failed to set my nickname",
       },
+      emoji: "🖼 Here is your emoji",
       ping: "🤖 Pong in @{DIFF}ms; Heartbeat ping @{HEARTBEAT}ms",
       avatar: {
         avatar_of: "🖼 Avatar of {USER}: \n🔗 Links: {URLS}",
         requested_by: "🌀 Requested by {USER_TAG} ({USER_ID})",
+      },
+      reminder: {
+        will_remind_in: "✅ I will remind you in {DURATION}",
+        remind_message:
+          "⌛ Hey {USER_MENTION}, You asked me at `{TIME_UTC} UTC` ({TIME_AGO} ago) to remind you about: {REMINDER_TEXT}",
+        reminder_time_limit: "❌ Time must be between 10 seconds and 1 week",
       },
     },
     dm: "❌ Commands must be run in a server",

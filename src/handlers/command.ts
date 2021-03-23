@@ -177,6 +177,7 @@ export async function onCommand(message: Message): Promise<Message | void> {
       run = false;
     } else if (reaction?.emoji.name === "✅") run = true;
   }
+
   try {
     if (!run) return;
     command.run(message, args);

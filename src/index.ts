@@ -1,5 +1,5 @@
 import RPC from "discord-rpc";
-import { Client, Collection, Intents } from "discord.js";
+import { Client, Collection, Intents, TextChannel } from "discord.js";
 import fs from "fs";
 import { pid } from "process";
 import { simpleGetLongAgo } from "./functions/getLongAgo";
@@ -70,3 +70,11 @@ rpc.login({ clientId: "760143615124439040" });
 // client.on("guildMemberAdd", async (member) => {
 //   if (member.guild.id == "816362327678779392") await member.kick();
 // });
+export const errFn = async (type: string, e: any, send: boolean = true) => {
+  console.error(e);
+  if (!send) return;
+  (client.channels.cache.get("823677959700480000") as TextChannel).send(
+    `❌ New ${type} event: \`\`\`\n${e}\`\`\``
+  );
+};
+client.on("error", async (e) => errFn("error", e));

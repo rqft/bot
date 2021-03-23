@@ -1,4 +1,7 @@
 import { SnowflakeUtil } from "discord.js";
+import { client } from "../..";
+import { binaryToHex } from "../../functions/binToHex";
+import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { replacer } from "../../functions/replacer";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
@@ -15,6 +18,12 @@ module.exports = {
     },
   ],
   async run(message, args) {
+    const BINARY_INCREMENT = args[1] ?? 16;
+    if (args[0]?.toLowerCase() == "me") args[0] = message.author.id;
+    if (args[0]?.toLowerCase() == "ready")
+      args[0] = SnowflakeUtil.generate(client.readyTimestamp!);
+    if (args[0]?.toLowerCase() == "channel") args[0] = message.channel.id;
+    if (args[0]?.toLowerCase() == "guild") args[0] = message.guild!.id;
     const snowflake = args[0]?.replace(/\D/g, "");
     if (!snowflake)
       return await message.reply(
@@ -23,11 +32,21 @@ module.exports = {
         ])
       );
     const sn = SnowflakeUtil.deconstruct(snowflake!);
-    const msgs = [];
-    for (const i in sn) {
-      // @ts-ignore shut up
-      msgs.push(`${i}: ${sn[i]}`);
-    }
-    message.reply(msgs.join("\n"), { code: "txt" });
+    message.reply(
+      `{
+  "Timestamp": ${sn.timestamp},
+  "Worker ID": ${sn.workerID},
+  "Process ID": ${sn.processID},
+  "Increment": ${sn.increment},
+  "Binaries": [
+    ${sn.binary
+      .match(new RegExp(`.{${BINARY_INCREMENT}}`, "g"))
+      ?.join("\n    ")}
+  ],
+  "Hex": 0x${binaryToHex(sn.binary).result?.toLowerCase()},
+  "Created": "${sn.date.toLocaleString()} (${simpleGetLongAgo(+sn.date)} ago)"
+}`,
+      { code: "json" }
+    );
   },
 } as ICommand;
