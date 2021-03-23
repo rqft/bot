@@ -34,6 +34,7 @@ module.exports = {
     const sn = SnowflakeUtil.deconstruct(snowflake!);
     message.reply(
       `{
+  "ID": ${snowflake},
   "Timestamp": ${sn.timestamp},
   "Worker ID": ${sn.workerID},
   "Process ID": ${sn.processID},
