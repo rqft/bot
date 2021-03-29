@@ -11,6 +11,7 @@ const globalConf = {
   } as List<string[]>,
   levels: {
     "760143615124439040": 999,
+    // "586112943150596101": 70,
   } as List<number>,
   token: Secrets.BOT_TOKEN,
   allowPings: {
@@ -21,7 +22,6 @@ const globalConf = {
   modules: {
     commands: {
       prefixes: ["$"] as string[],
-      mentionPrefix: true,
     },
   },
 };

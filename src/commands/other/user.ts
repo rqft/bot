@@ -1,5 +1,4 @@
 import { MessageEmbed } from "discord.js";
-import { client } from "../..";
 import { CustomEmojis } from "../../enums/customEmojis";
 import { Emojis } from "../../enums/emojis";
 import { capitalizeWords } from "../../functions/capitalizeWords";
@@ -26,14 +25,9 @@ module.exports = {
     },
   ],
   async run(message, args: string[]) {
-    var user = await search_user(args[0] ? args.join(" ") : message.member!.id);
-    try {
-      user = await client.users.fetch(
-        args[0] ? args.join(" ") : message.member!.id
-      );
-    } catch {
-      return await message.reply(messages.targeting.not_found.user);
-    }
+    const user = await search_user(
+      args[0] ? args.join(" ") : message.member!.id
+    );
     if (!user) {
       return await message.reply(messages.targeting.not_found.user);
     }

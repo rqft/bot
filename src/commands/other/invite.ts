@@ -116,6 +116,7 @@ module.exports = {
           `${(await invite.guild.fetchInvites())
             .array()
             .map((e) => `[\`${e.code}\`](${e.url})`)
+            .slice(0, 8)
             .join(" ")}`
         );
     }

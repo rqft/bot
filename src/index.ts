@@ -1,5 +1,5 @@
 import RPC from "discord-rpc";
-import { Client, Collection, Intents, TextChannel } from "discord.js";
+import { Client, Collection, Guild, Intents, TextChannel } from "discord.js";
 import fs from "fs";
 import { pid } from "process";
 import { simpleGetLongAgo } from "./functions/getLongAgo";
@@ -10,6 +10,7 @@ import { messages } from "./messages";
 export const client = new Client({
   allowedMentions: globalConf.allowPings,
   intents: Intents.ALL,
+  restTimeOffset: 0,
 });
 client.once("ready", () => {
   if (!client.user) console.log(messages.client.unable_to_get_user);
@@ -25,7 +26,27 @@ client.once("ready", () => {
     }
   );
 });
-client.on("ready", () => console.log(messages.client.ready));
+// var DELAY = 0;
+client.on("ready", async () => {
+  // DELAY = ~~((Math.random() * 100 + 50) ** 6);
+  // console.log(DELAY);
+  console.log(messages.client.ready);
+  // const c = await (client.channels.cache.get(
+  //   "824083100899606559"
+  // ) as VoiceChannel).join();
+  // await c.setSpeaking("PRIORITY_SPEAKING");
+  // function play() {
+  //   return c.play(
+  //     fs.createReadStream(
+  //       "C:/Users/jkelia6742/Downloads/889238_Creo---Never-Make-It.mp3"
+  //     ),
+  //     { type: "unknown" }
+  //   );
+  // }
+
+  // play();
+  // c.dispatcher?.on("finish", play);
+});
 export const commands = new Collection<string, any>();
 export const commandFolders = fs.readdirSync(__dirname + "\\commands");
 for (const folder of commandFolders) {
@@ -37,20 +58,29 @@ for (const folder of commandFolders) {
     commands.set(command.name, command);
   }
 }
-client.on("message", onCommand);
+client.on("message", async (m) => {
+  // console.log(
+  //   `${m.createdAt.toLocaleString()} (${m.author.tag}): ${m.content} [${m.url}]`
+  // );
+  // setTimeout(async () => {
+  await onCommand(m);
+  // }, DELAY);
+});
 client.login(globalConf.token);
 
 const rpc = new RPC.Client({ transport: "ipc" });
 
 rpc.on("ready", () => {
+  var da = simpleGetLongAgo(Date.now() - 3.154e139);
+  console.log(da);
   rpc.request("SET_ACTIVITY", {
     pid: pid,
     activity: {
       assets: {
         large_image: "glasses",
-        large_text: "uwu",
+        large_text: "✅ sami is a furry",
       },
-      details: `for ${simpleGetLongAgo(Date.now() - 3.154e12)}`,
+      details: `🎷`,
       buttons: [
         {
           label: "Discord",
@@ -78,3 +108,4 @@ export const errFn = async (type: string, e: any, send: boolean = true) => {
   );
 };
 client.on("error", async (e) => errFn("error", e));
+Guild.prototype;

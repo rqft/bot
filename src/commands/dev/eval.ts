@@ -1,4 +1,5 @@
 import Discord, { MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { client as c } from "../..";
 import { Emojis } from "../../enums/emojis";
 import { api } from "../../functions/api";
@@ -45,16 +46,18 @@ module.exports = {
       char;
       const utils = _utils;
       utils;
+      const fs = fetch;
+      fs;
 
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);
       embed.setTitle(`${Emojis.WHITE_CHECK_MARK} Eval Success`);
       embed.addField("Input", input);
-
       if (typeof str == "string") {
         str = `"${str}"`;
       }
+
       // if (str instanceof Promise) str = await str;
       if (str instanceof Object) {
         str = JSON.stringify(str, null, 2);

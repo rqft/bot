@@ -1,5 +1,4 @@
 import { AllowedImageFormat, MessageEmbed } from "discord.js";
-import { client } from "../..";
 import { replacer } from "../../functions/replacer";
 import { search_user } from "../../functions/searching/user";
 import { Color } from "../../globals";
@@ -17,13 +16,6 @@ module.exports = {
   ],
   async run(message, args) {
     var user = await search_user(args[0] ? args.join(" ") : message.member!.id);
-    try {
-      user = await client.users.fetch(
-        args[0] ? args.join(" ") : message.member!.id
-      );
-    } catch {
-      return await message.reply(messages.targeting.not_found.user);
-    }
     if (!user) {
       return await message.reply(messages.targeting.not_found.user);
     }

@@ -21,18 +21,18 @@ module.exports = {
   restrictions: {
     botPermissions: ["BAN_MEMBERS"],
     level: 70,
-    permissions: ["BAN_MEMBERS"],
+    // permissions: ["BAN_MEMBERS"],
   },
   async run(message, args) {
     const user = await search_user(args[0]!);
     if (!user) return message.reply(messages.targeting.not_found.user);
-    if (user.id == message.author.id)
+    if (user.id === message.author.id)
       return await message.reply(messages.targeting.actor_cant_self);
 
-    if (user.id == globalConf.botId)
+    if (user.id === globalConf.botId)
       return await message.reply(messages.targeting.me);
     const reason = args.slice(1).join(" ");
-    const m = await message.guild?.members.fetch(user.id);
+    const m = message.guild?.members.cache.get(user.id);
     if (m) {
       const tg = checkTargets(message.member!, m);
       if (!tg.checks.globalAdm || !tg.checks.level || !tg.checks.roles)
@@ -48,7 +48,9 @@ module.exports = {
         )
       );
     try {
-      message.guild?.members.ban(user, { reason });
+      message.guild?.members.ban(user, {
+        reason: `🔨 [${message.author.tag}] ${reason ?? ""}`,
+      });
     } catch {
       return message.reply(messages.commands.infractions.failed_ban);
     }

@@ -8,8 +8,8 @@ import { messages } from "../../messages";
 module.exports = {
   name: "snowflake",
   restrictions: {
-    level: 5,
-    ownerOnly: true,
+    level: 0,
+    ownerOnly: false,
   },
   args: [
     {

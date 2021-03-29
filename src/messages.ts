@@ -33,14 +33,20 @@ export const messages = {
   },
   commands: {
     infractions: {
-      failed_kick: "❌ Failed to kick member.",
-      kicked_member: "✅ Kicked {USER} from the server{REASON}",
-      failed_ban: "❌ Failed to ban member.",
-      banned_member: "✅ Banned {USER} from the server{REASON}",
+      failed_kick: "❌ Failed to kick member",
+      kicked_member: "✅ Kicked {USER} from the server {REASON}",
+      failed_ban: "❌ Failed to ban member",
+      banned_member: "✅ Banned {USER} from the server {REASON}",
       already_banned: "❌ {USER} is already banned",
-      failed_unban: "❌ Failed to unban member.",
+      failed_unban: "❌ Failed to unban member",
       not_banned: "❌ {USER} is not banned",
       unbanned_member: "✅ Unbanned {USER} from the server",
+      failed_mute: "❌ Failed to mute member",
+      muted_member: "✅ Muted {USER} in this channel",
+      already_muted: "❌ {USER} is already muted",
+      failed_unmute: "❌ Failed to unmute member",
+      unmuted_member: "✅ Unmuted {USER} in this channel",
+      not_muted: "❌ {USER} is not muted",
     },
     admin: {
       clean: {
@@ -60,9 +66,9 @@ export const messages = {
       slowmode: {
         channel_already_slowmode: "❌ Channel is already at this slowmode",
         slowmode_enabled:
-          "This channel has been set to {SECONDS}s slowmode by {ACTOR}",
+          "This channel has been set to `{TIME}` slowmode by {ACTOR}",
         slowmode_disabled: "This channel has had slowmode disabled by {ACTOR}",
-        slowmode_cmd: "✅ Set slowmode on {CHANNEL} to **{SECONDS}s**",
+        slowmode_cmd: "✅ Set slowmode on {CHANNEL} to `{TIME}`",
         slowmode_failed: "❌ Failed to set slowmode",
       },
     },
@@ -96,10 +102,42 @@ export const messages = {
         failed_nick: "❌ Failed to set my nickname",
       },
       emoji: "🖼 Here is your emoji",
-      ping: "🤖 Pong in @{DIFF}ms; Heartbeat ping @{HEARTBEAT}ms",
+      ping: {
+        base: " ({DIFF}; Heartbeat is {HEARTBEAT} [`{UPTIME}` uptime])",
+        normal: ["yo", "hi hi"],
+        fast: ["lol speedy", "mmmmm the internet works again", "fast bot"],
+        slow: [
+          "thanks discord api, very swag",
+          "mmmmm look at this shit cli",
+          "what the fuck happened here lol",
+        ],
+      },
       avatar: {
         avatar_of: "🖼 Avatar of {USER}: \n🔗 Links: {URLS}",
         requested_by: "🌀 Requested by {USER_TAG} ({USER_ID})",
+      },
+      spotify: {
+        not_found: "❌ Not found",
+      },
+      help: {
+        invalid_command: "❌ Invalid command `{QUERY}`",
+        commands_list: "🔨 Here's a list of all my commands: {COMMANDS}",
+        info_on_specific:
+          '\n🎯 You can send "{PREFIX}help [command name]" to get info on a specific command!',
+        cmd: {
+          name: "📝 **Name**: `{NAME}`",
+          module: "🔗 **Module**: `{MODULE}`",
+          aliases: "📌 **Aliases**: {ALIASES}",
+          args: "🎯 **Arguments**: `{USAGE}`",
+          confirm: "⚠ **Confirmation**: Expires after {TIMEOUT}",
+          restrictions: {
+            level: "🔨 **Bot Level**: `{LEVEL}`",
+            bot_permissions: "📡 **Bot Permissions**: {PERMISSIONS}",
+            permissions: "🎯 **User Permissions**: {PERMISSIONS}",
+            dev: "🔗 **Bot Owner Only**",
+            server_owner: "🔗 **Server Owner Only**",
+          },
+        },
       },
       reminder: {
         will_remind_in: "✅ I will remind you in {DURATION}",

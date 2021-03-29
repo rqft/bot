@@ -1,5 +1,6 @@
 import { Message, MessageReaction, Permissions, User } from "discord.js";
 import { commands } from "..";
+import { CustomEmojis } from "../enums/customEmojis";
 import { escapeRegex } from "../functions/escapeRegex";
 import { getBotLevel } from "../functions/getBotLevel";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
@@ -8,12 +9,7 @@ import globalConf from "../globalConf";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
 export async function onCommand(message: Message): Promise<Message | void> {
-  if (!globalConf) return;
   const pre = globalConf.modules.commands.prefixes;
-  if (globalConf.modules.commands.mentionPrefix) {
-    pre.push(`<@!760143615124439040>`);
-    pre.push(`<@760143615124439040>`);
-  }
   const prefixRegex = new RegExp(
     `^(${pre.map((e) => escapeRegex(e)).join("|")})( ?)`,
     "gi"
@@ -44,9 +40,7 @@ export async function onCommand(message: Message): Promise<Message | void> {
           [
             "{MISSING_ARG}",
             Array.from(command.args.filter((e) => e.required).keys())
-              .filter(function (v) {
-                return !Array.from(args.keys()).includes(v);
-              })
+              .filter((v) => !Array.from(args.keys()).includes(v))
               .map((e) => `\`${command.args[e]?.name}\``)
               .join(", "),
           ],
@@ -177,10 +171,10 @@ export async function onCommand(message: Message): Promise<Message | void> {
       run = false;
     } else if (reaction?.emoji.name === "✅") run = true;
   }
-
+  const res = await message.channel.send(CustomEmojis.GUI_TYPING);
   try {
     if (!run) return;
-    command.run(message, args);
+    await command.run(message, args).then(() => res.delete());
   } catch (e) {
     await message.reply(
       replacer(messages.error.error_running_command, new Map([["{ERROR}", e]]))

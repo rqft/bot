@@ -16,6 +16,9 @@ import { ICommand } from "../../interfaces/ICommand";
 module.exports = {
   name: "server",
   aliases: ["guild", "s"],
+  restrictions: {
+    botPermissions: ["BAN_MEMBERS"],
+  },
   args: [
     {
       name: "server",
@@ -70,11 +73,11 @@ ${CustomEmojis.CHANNEL_TEXT}: ${channels.text} | ${CustomEmojis.CHANNEL_CATEGORY
       .filter((e) => e.enabled == true)
       .map((e) => e.text)
       .join("\n");
-    var tick = CustomEmojis.TICK_RED;
+    var tick = Emojis.X;
     if (guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES")
-      tick = CustomEmojis.TICK_GRAY;
+      tick = Emojis.CYCLONE;
     if (guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES")
-      tick = CustomEmojis.TICK_GREEN;
+      tick = Emojis.WHITE_CHECK_MARK;
     emb.addField(
       "❯ Server Info",
       `${Emojis.GEAR} **ID**: \`${guild.id}\`
@@ -103,7 +106,6 @@ ${tick} **NSFW Content Filter**: ${capitalizeWords(
 ${CustomEmojis.BADGE_NITRO} **Boosts**: ${guild.premiumSubscriptionCount}
 ${CustomEmojis.GUI_MEMBERS} **Boosters (${boosters.length})**:
 ${boosters
-
   .map((e) => `${e} for ${simpleGetLongAgo(e.premiumSinceTimestamp!)}`)
   .slice(0, 10)
   .join("\n")} ${

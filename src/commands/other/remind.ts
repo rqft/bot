@@ -22,7 +22,7 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-    // if (ms < 10 * 1000 || ms > timeSuffix.w)
+    // if (ms < 10 * || ms > timeSuffix.w)
     //   return await message.reply(
     //     messages.commands.other.reminder.reminder_time_limit
     //   );
@@ -38,7 +38,6 @@ module.exports = {
         ["{DURATION}", simpleGetLongAgo(Date.now() - query.duration)],
       ])
     );
-
     setTimeout(
       async () =>
         await message.channel.send({
@@ -52,7 +51,7 @@ module.exports = {
             users: [message.author.id],
           },
         }),
-      query.expiry - Date.now()
+      query.expiry - Date.now() + 5000
     );
   },
 } as ICommand;

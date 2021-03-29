@@ -1,4 +1,5 @@
 import { TextChannel } from "discord.js";
+import { parseTimeString } from "../../functions/parseTimeString";
 import { replacer } from "../../functions/replacer";
 import { search_channel } from "../../functions/searching/channel";
 import { ICommand } from "../../interfaces/ICommand";
@@ -14,13 +15,15 @@ module.exports = {
     botPermissions: ["MANAGE_CHANNELS"],
   },
   async run(message, args) {
-    const slowmd = parseInt(args[0]!) ?? undefined;
+    const slowmd = parseTimeString(args[0]!) / 1000;
     const target = args[1]
       ? await search_channel(args[1], message.guild!)
       : message.channel;
     if (!target) return await message.reply("❌ Unable to find that channel");
     if (!(target instanceof TextChannel))
       return await message.reply("❌ Cannot set slowmode of non-text channels");
+    if (target.rateLimitPerUser == slowmd)
+      return await message.reply("❌ Channel is already at this slowmode");
     try {
       target.setRateLimitPerUser(slowmd);
     } catch {
@@ -31,7 +34,7 @@ module.exports = {
     await message.reply(
       replacer(messages.commands.admin.slowmode.slowmode_cmd, [
         ["{CHANNEL}", target.toString()],
-        ["{SECONDS}", (slowmd ?? 0).toString()],
+        ["{TIME}", (args[0] ?? 0).toString()],
       ])
     );
     const chosen = replacer(
@@ -40,7 +43,7 @@ module.exports = {
         : messages.commands.admin.slowmode.slowmode_enabled,
       [
         ["{ACTOR}", message.member!.toString()],
-        ["{SECONDS}", slowmd.toString()],
+        ["{TIME}", (args[0] ?? 0).toString()],
       ]
     );
     await target.send(chosen);

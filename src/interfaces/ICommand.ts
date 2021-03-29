@@ -6,6 +6,7 @@ export interface IArgument {
 }
 export interface ICommand {
   name: string;
+  module?: string;
   aliases?: string[];
   confirmation?: {
     enabled: boolean;
