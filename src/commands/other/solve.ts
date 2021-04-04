@@ -33,9 +33,10 @@ module.exports = {
       emb.addField(
         "Steps",
         `\`\`\`` +
-          (result.queryresult.pods[0].subpods[1].plaintext as string)
-            .replace(/\|/g, ">")
-            .replace("Answer: >", "Answer:") +
+          (result.queryresult.pods[0].subpods[1].plaintext as string).replace(
+            /\|/g,
+            ""
+          ) +
           `\`\`\``
       );
     } else {

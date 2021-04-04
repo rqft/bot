@@ -1,5 +1,4 @@
-import { api } from "../../functions/api";
-import { getFileExtension } from "../../functions/getFileExtension";
+import { MessageAttachment } from "discord.js";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -23,9 +22,9 @@ module.exports = {
         emoj?.startsWith("<a:") ? "gif" : "png"
       }`;
     }
-    const img = await api(url, "buffer");
+    const img = new MessageAttachment(url);
     await message.reply(messages.commands.other.emoji, {
-      files: [{ name: "emoji." + getFileExtension(url), attachment: img }],
+      files: [img],
     });
   },
 } as ICommand;

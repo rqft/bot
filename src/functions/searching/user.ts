@@ -1,7 +1,9 @@
 import { client } from "../..";
+import { SpecialIDs } from "../../globals";
 
 export async function search_user(query: string) {
-  if (query.toLowerCase() == "discord") query = "643945264868098049";
+  if (query.toLowerCase() == "discord") query = SpecialIDs.DISCORD;
+  if (query.toLowerCase() == "updated") query = SpecialIDs.DISCORD;
   var user = client.users.cache.find((user) => {
     return (
       user.username.toLowerCase().includes(query) ||

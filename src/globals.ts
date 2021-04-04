@@ -2,7 +2,7 @@ export namespace Color {
   export const embed = 3092790; // 0x2f3136
   export const pylon = 4089312; // 0x3e65e0
   export const hallucinate = 10166000; // 0x9b1ef0
-  export const spotify = 1947988; // 0x1DB954
+  export const spotify = 1947988; // 0x1db954
 }
 export enum Chars {
   ZERO_WIDTH_JOINER = "\u200b",

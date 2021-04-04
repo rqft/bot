@@ -1,5 +1,5 @@
 {
-    "discord.enabled": false,
+    "discord.enabled": true,
     "svn.ignoreMissingSvnWarning": true,
     "liveServer.settings.port": 5501
 }

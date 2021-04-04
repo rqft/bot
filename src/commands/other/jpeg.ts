@@ -5,7 +5,7 @@ import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 import { Secrets } from "../../secrets";
 module.exports = {
-  name: "emojify",
+  name: "jpeg",
   args: [
     {
       name: "imagetype",
@@ -41,14 +41,13 @@ module.exports = {
     }
     if (!url) return await message.reply("what image is that");
     console.log([url]);
-    const res = await fetch("https://api.pxlapi.dev/emojimosaic", {
+    const res = await fetch("https://api.pxlapi.dev/jpeg", {
       headers: {
         Authorization: `Application ${Secrets.Key.pxlAPI}`,
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify({
-        groupSize: 6,
         images: [url],
       }),
     });
@@ -61,7 +60,7 @@ module.exports = {
     await message.reply("🎷", {
       files: [
         {
-          name: "emoji.png",
+          name: "jpeg.png",
           attachment: buffer,
         },
       ],

@@ -16,9 +16,10 @@
     "scope": "typescript",
     "prefix": "makemod",
     "body": [
-      "import { ICommand } from \"../interfaces/ICommand\";",
+      "import { ICommand } from \"../../interfaces/ICommand\";",
       "module.exports = {",
-      "\t$0",
+      "\tname: \"$0\",",
+      "\tasync run(message, args) {}",
       "} as ICommand"
     ],
     "description": "make a module"

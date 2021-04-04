@@ -1,6 +1,6 @@
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { parseBlock } from "../../functions/parseBlock";
-import { parseTimeString } from "../../functions/parseTimeString";
+import { parseTimeString, timeSuffix } from "../../functions/parseTimeString";
 import { replacer } from "../../functions/replacer";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
@@ -22,10 +22,10 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-    // if (ms < 10 * || ms > timeSuffix.w)
-    //   return await message.reply(
-    //     messages.commands.other.reminder.reminder_time_limit
-    //   );
+    if (ms > timeSuffix.w)
+      return await message.reply(
+        messages.commands.other.reminder.reminder_time_limit
+      );
     const query = {
       executedAt: new Date(),
       user: message.author,
@@ -51,7 +51,7 @@ module.exports = {
             users: [message.author.id],
           },
         }),
-      query.expiry - Date.now() + 5000
+      query.expiry - Date.now()
     );
   },
 } as ICommand;

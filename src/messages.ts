@@ -60,14 +60,14 @@ export const messages = {
           "✅ Cleaned ~{COUNT} messages with attachments.",
         cleaned_messages_all: "✅ Cleaned ~{COUNT} messages.",
         cleaned_messages_self: "✅ Cleaned ~{COUNT} of your messages.",
-        cleaned_messages_bots:
-          "✅ Cleaned ~{COUNT} messages from bots. (this command is unreliable, so it may not be exactly {COUNT})",
+        cleaned_messages_bots: "✅ Cleaned ~{COUNT} messages from bots.",
       },
       slowmode: {
         channel_already_slowmode: "❌ Channel is already at this slowmode",
         slowmode_enabled:
-          "This channel has been set to `{TIME}` slowmode by {ACTOR}",
-        slowmode_disabled: "This channel has had slowmode disabled by {ACTOR}",
+          "⏲ This channel has been set to `{TIME}` slowmode by {ACTOR}",
+        slowmode_disabled:
+          "⏲ This channel has had slowmode disabled by {ACTOR}",
         slowmode_cmd: "✅ Set slowmode on {CHANNEL} to `{TIME}`",
         slowmode_failed: "❌ Failed to set slowmode",
       },
@@ -102,16 +102,7 @@ export const messages = {
         failed_nick: "❌ Failed to set my nickname",
       },
       emoji: "🖼 Here is your emoji",
-      ping: {
-        base: " ({DIFF}; Heartbeat is {HEARTBEAT} [`{UPTIME}` uptime])",
-        normal: ["yo", "hi hi"],
-        fast: ["lol speedy", "mmmmm the internet works again", "fast bot"],
-        slow: [
-          "thanks discord api, very swag",
-          "mmmmm look at this shit cli",
-          "what the fuck happened here lol",
-        ],
-      },
+      ping: "{DIFF}; Heartbeat is {HEARTBEAT} [`{UPTIME}` uptime]",
       avatar: {
         avatar_of: "🖼 Avatar of {USER}: \n🔗 Links: {URLS}",
         requested_by: "🌀 Requested by {USER_TAG} ({USER_ID})",
@@ -143,7 +134,20 @@ export const messages = {
         will_remind_in: "✅ I will remind you in {DURATION}",
         remind_message:
           "⌛ Hey {USER_MENTION}, You asked me at `{TIME_UTC} UTC` ({TIME_AGO} ago) to remind you about: {REMINDER_TEXT}",
-        reminder_time_limit: "❌ Time must be between 10 seconds and 1 week",
+        reminder_time_limit: "❌ Time must be less than 1 week",
+      },
+      ocr: {
+        needs_image: "❌ You need to supply an image",
+        no_text_identified: "❌ No text was identified",
+        error_with_api: "❌ Something went wrong with reading your image",
+        ocr_cmd: "📝🖼\n```\n{CONTENT}```",
+      },
+      plot: {
+        something_wrong: "❌ There was something wrong with the graphing API",
+        error: "❌ There was an error",
+        no_pods: "❌ No valid results found",
+        no_subpods: "❌ I found results, but none of them had what you wanted.",
+        plot_cmd: "🗺 Plots of `{QUERY}` (took {TIME}ms to complete):",
       },
     },
     dm: "❌ Commands must be run in a server",

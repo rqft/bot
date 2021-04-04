@@ -15,7 +15,9 @@ module.exports = {
   // usage: "[command: string]",
   async run(message, args) {
     const emb = new MessageEmbed();
-    const data: string[] = [];
+    const data: string[] = [
+      "Invites: [Bot](https://arcy-at.github.io/bot) | [Support Server](https://arcy-at.github.io/discord) (you have to get the bot testers role to see the channel)",
+    ];
     const prefix = globalConf.modules.commands.prefixes[0];
     if (!args![0]) {
       data.push(

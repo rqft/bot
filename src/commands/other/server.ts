@@ -27,9 +27,7 @@ module.exports = {
     },
   ],
   async run(message, args) {
-    const guild = await search_guild(
-      (args.length ? args : [message.guild?.name]).join(" ")
-    );
+    const guild = args[0] ? await search_guild(args.join(" ")) : message.guild!;
     if (!guild) return await message.reply("Unknown Server");
     const emb = new MessageEmbed();
     emb.setAuthor(guild.name, guild.iconURL({ dynamic: true })!);
@@ -42,6 +40,12 @@ module.exports = {
       news: guild.channels.cache.filter((e) => e.type == "news").size,
     };
     const counts = [
+      {
+        text: `${Emojis.CYCLONE} **Members**: ${
+          guild.members.cache.filter((e) => !e.user.bot).size
+        } (${guild.members.cache.filter((e) => e.user.bot).size} bots)`,
+        enabled: true,
+      },
       {
         text: `${Emojis.SHIELD} **Roles**: ${guild.roles.cache.size}`,
         enabled:

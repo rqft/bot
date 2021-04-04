@@ -1,12 +1,18 @@
 import { GuildMember } from "discord.js";
 import fetch from "node-fetch";
+import { validflags } from "../../enums/flag";
 import { search_user } from "../../functions/searching/user";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 import { Secrets } from "../../secrets";
 module.exports = {
-  name: "emojify",
+  name: "flag",
   args: [
+    {
+      name: "flag",
+      required: true,
+      type: "string",
+    },
     {
       name: "imagetype",
       required: true,
@@ -19,10 +25,16 @@ module.exports = {
     },
   ],
   async run(message, args) {
+    const flag = args[0]?.toLowerCase()!;
+    if (!validflags.includes(flag))
+      return await message.reply(
+        "invalid flag. valid flags are: " +
+          validflags.map((e) => `\`${e}\``).join(" ")
+      );
     var url = null;
-    switch (args[0]) {
+    switch (args[1]) {
       case "url":
-        url = args.slice(1).join(" ");
+        url = args.slice(2).join(" ");
         break;
       case "user":
         const user = await search_user(args.slice(1).join(" "));
@@ -41,14 +53,14 @@ module.exports = {
     }
     if (!url) return await message.reply("what image is that");
     console.log([url]);
-    const res = await fetch("https://api.pxlapi.dev/emojimosaic", {
+    const res = await fetch("https://api.pxlapi.dev/flag/" + flag, {
       headers: {
         Authorization: `Application ${Secrets.Key.pxlAPI}`,
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify({
-        groupSize: 6,
+        opacity: 120,
         images: [url],
       }),
     });
@@ -58,10 +70,10 @@ module.exports = {
       );
     const buffer = await res.buffer();
     console.log(res);
-    await message.reply("🎷", {
+    await message.reply("🏳", {
       files: [
         {
-          name: "emoji.png",
+          name: "flag.png",
           attachment: buffer,
         },
       ],

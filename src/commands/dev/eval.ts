@@ -33,7 +33,7 @@ module.exports = {
             : "https://raw.githubusercontent.com/arcy-at/arcy-at/main/bot-default-eval-file.js",
           "text"
         );
-    const input = `\`\`\`ts\n${code.slice(0, 1000)}\`\`\``;
+    // const input = `\`\`\`ts\n${code.slice(0, 1000)}\`\`\``;
     var str = null;
     try {
       const client = c;
@@ -48,12 +48,11 @@ module.exports = {
       utils;
       const fs = fetch;
       fs;
-
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);
       embed.setTitle(`${Emojis.WHITE_CHECK_MARK} Eval Success`);
-      embed.addField("Input", input);
+      // embed.addField("Input", input);
       if (typeof str == "string") {
         str = `"${str}"`;
       }
@@ -64,7 +63,9 @@ module.exports = {
         lang = "json";
       }
       const output = `\`\`\`${lang}\n${hasAttachment}${str}\`\`\``;
-      embed.addField(`Output - ${capitalizeWords(typeof str)}`, output);
+      embed.setDescription(
+        `Output - ${capitalizeWords(typeof str)}\n` + output
+      );
       await message.reply(embed);
     } catch (e) {
       str = e;
@@ -72,9 +73,11 @@ module.exports = {
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);
       embed.setTitle(`${Emojis.NO_ENTRY} Eval Failed`);
-      embed.addField("Input", input.slice(0, 500));
+      // embed.addField("Input", input.slice(0, 500));
       const output = `\`\`\`ts\n${hasAttachment}${str}\`\`\``;
-      embed.addField(`Output - ${capitalizeWords(typeof str)}`, output);
+      embed.setDescription(
+        `Output - ${capitalizeWords(typeof str)}\n` + output
+      );
       await message.reply(embed);
     }
   },

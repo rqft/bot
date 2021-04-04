@@ -40,6 +40,7 @@ module.exports = {
     try {
       (message.channel as GuildChannel).createOverwrite(user, {
         SEND_MESSAGES: false,
+        ADD_REACTIONS: false,
       });
     } catch {
       return message.reply(messages.commands.infractions.failed_mute);

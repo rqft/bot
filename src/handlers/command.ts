@@ -33,38 +33,33 @@ export async function onCommand(message: Message): Promise<Message | void> {
     !(args.length >= command.args.filter((e) => e.required).length)
   )
     return await message.reply(
-      replacer(
-        messages.commands.args.missing_args,
-        new Map([
-          ["{USER}", message.author.toString()],
-          [
-            "{MISSING_ARG}",
-            Array.from(command.args.filter((e) => e.required).keys())
-              .filter((v) => !Array.from(args.keys()).includes(v))
-              .map((e) => `\`${command.args[e]?.name}\``)
-              .join(", "),
-          ],
-          [
-            "{USAGE_MESSAGE}",
-            replacer(
-              messages.commands.args.missing_args_usage,
-              new Map([
-                [
-                  "{USAGE}",
-                  command.args
-                    .map((e) => {
-                      return `${e.required ? "<" : "("}${e.name}: ${e.type}${
-                        e.required ? ">" : ")"
-                      }`;
-                    })
-                    .join(" "),
-                  // lol
-                ],
-              ])
-            ),
-          ],
-        ])
-      )
+      replacer(messages.commands.args.missing_args, [
+        ["{USER}", message.author.toString()],
+        [
+          "{MISSING_ARG}",
+          Array.from(command.args.filter((e) => e.required).keys())
+            .filter((v) => !Array.from(args.keys()).includes(v))
+            .map((e) => `\`${command.args[e]?.name}\``)
+            .join(", "),
+        ],
+        [
+          "{USAGE_MESSAGE}",
+          replacer(messages.commands.args.missing_args_usage, [
+            [
+              "{USAGE}",
+              command.args
+                .map(
+                  (e) =>
+                    `${e.required ? "<" : "("}${e.name}: ${e.type}${
+                      e.required ? ">" : ")"
+                    }`
+                )
+                .join(" "),
+              // lol
+            ],
+          ]),
+        ],
+      ])
     );
   if (
     command.restrictions &&
@@ -72,10 +67,9 @@ export async function onCommand(message: Message): Promise<Message | void> {
     getBotLevel(message.member!).level < command.restrictions.level
   ) {
     return await message.reply(
-      replacer(
-        messages.permissions.missing_level,
-        new Map([["{LEVEL}", command.restrictions.level]])
-      )
+      replacer(messages.permissions.missing_level, [
+        ["{LEVEL}", command.restrictions.level],
+      ])
     );
   }
   if (
@@ -101,15 +95,12 @@ export async function onCommand(message: Message): Promise<Message | void> {
     )
   )
     return await message.reply(
-      replacer(
-        messages.permissions.missing_permissions,
-        new Map([
-          [
-            "{PERMISSIONS}",
-            command.restrictions.permissions.map((e) => `\`${e}\``).join(" "),
-          ],
-        ])
-      )
+      replacer(messages.permissions.missing_permissions, [
+        [
+          "{PERMISSIONS}",
+          command.restrictions.permissions.map((e) => `\`${e}\``).join(" "),
+        ],
+      ])
     );
   if (
     command.restrictions &&
@@ -120,22 +111,19 @@ export async function onCommand(message: Message): Promise<Message | void> {
     )
   )
     return await message.reply(
-      replacer(
-        messages.permissions.missing_permissions_me,
-        new Map([
-          [
-            "{PERMISSIONS}",
-            command.restrictions.botPermissions
-              .map((e) => `\`${e}\``)
-              .join(" "),
-          ],
-        ])
-      )
+      replacer(messages.permissions.missing_permissions_me, [
+        [
+          "{PERMISSIONS}",
+          command.restrictions.botPermissions.map((e) => `\`${e}\``).join(" "),
+        ],
+      ])
     );
   const filter = (reaction: MessageReaction, user: User) => {
     return (
-      ["✅", "❌"].includes(reaction.emoji.name) &&
-      user.id === message.author.id
+      [
+        globalConf.modules.commands.confirmation.emojis.yes,
+        globalConf.modules.commands.confirmation.emojis.no,
+      ].includes(reaction.emoji.name) && user.id === message.author.id
     );
   };
   var run = true;
@@ -147,10 +135,15 @@ export async function onCommand(message: Message): Promise<Message | void> {
       ])
     );
 
-    await Promise.all([response.react("✅"), response.react("❌")]);
+    await Promise.all([
+      response.react(globalConf.modules.commands.confirmation.emojis.yes),
+      response.react(globalConf.modules.commands.confirmation.emojis.yes),
+    ]);
     const reactions = await response.awaitReactions(filter, {
       max: 1,
-      time: command.confirmation.timeout ?? 15000,
+      time:
+        command.confirmation.timeout ??
+        globalConf.modules.commands.confirmation.defaultTimeout,
     });
     const reaction = reactions.first();
     if (!reaction) {
@@ -177,7 +170,7 @@ export async function onCommand(message: Message): Promise<Message | void> {
     await command.run(message, args).then(() => res.delete());
   } catch (e) {
     await message.reply(
-      replacer(messages.error.error_running_command, new Map([["{ERROR}", e]]))
+      replacer(messages.error.error_running_command, [["{ERROR}", e]])
     );
   }
 }
