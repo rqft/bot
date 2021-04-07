@@ -70,6 +70,7 @@ export const messages = {
           "⏲ This channel has had slowmode disabled by {ACTOR}",
         slowmode_cmd: "✅ Set slowmode on {CHANNEL} to `{TIME}`",
         slowmode_failed: "❌ Failed to set slowmode",
+        not_text: "❌ Cannot set slowmode of non-text channels",
       },
     },
     confirmation: {
@@ -79,8 +80,10 @@ export const messages = {
     },
     args: {
       missing_args:
-        "❌ {USER} Argument error (missing required argument(s): {MISSING_ARG}) {USAGE_MESSAGE}",
-      missing_args_usage: "\n```\n{USAGE}```",
+        "❌ {USER} Argument error (missing required argument(s): {MISSING_ARG}) \n```\n{USAGE}```",
+      missing_args_usage: "",
+      wrong_type:
+        "❌ {USER} Argument error (`{ARG}`: not a {TYPE}) \n```\n{USAGE}```",
     },
     other: {
       snowflake: {

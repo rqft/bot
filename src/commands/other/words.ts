@@ -24,7 +24,7 @@ module.exports = {
     const query = args.slice(1).join(" ");
     const reg = new RegExp(`${query}`, "gi");
     const sorts = new Map([
-      ["normal", undefined],
+      ["normal", null],
       [
         "most",
         (a: string, b: string) =>
@@ -39,7 +39,7 @@ module.exports = {
       ["shortest", (a: string, b: string) => a.length - b.length],
     ]);
     const fn = sorts.get(args[0]?.toLowerCase()!);
-    if (!fn)
+    if (fn === undefined)
       return await message.reply(
         "invalid sort type, valid types are: " +
           Array.from(sorts.keys())
@@ -50,7 +50,7 @@ module.exports = {
       "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt",
       "text"
     )) as string;
-    const words = _words.split("\n").sort(fn);
+    const words = _words.split("\n").sort(fn ?? undefined);
     await message.reply(
       words
         .filter((e) => e.includes(query))

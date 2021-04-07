@@ -4,6 +4,7 @@ import { client as c } from "../..";
 import { Emojis } from "../../enums/emojis";
 import { api } from "../../functions/api";
 import { capitalizeWords } from "../../functions/capitalizeWords";
+import { parseTimeString } from "../../functions/parseTimeString";
 import globalConf from "../../globalConf";
 import * as globals from "../../globals";
 import { ICommand } from "../../interfaces/ICommand";
@@ -48,6 +49,7 @@ module.exports = {
       utils;
       const fs = fetch;
       fs;
+      const parse = parseTimeString;
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);

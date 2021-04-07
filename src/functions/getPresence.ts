@@ -3,7 +3,7 @@ import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { UserStatusMap } from "../enums/userStatus";
 
-const spotifyIcon = "<:spotify:794402275472179240>";
+const spotifyIcon = "<:spotify:826151198603870239>";
 export function getPresence(user: User, maxTextLength: number = 45) {
   const pres = user.presence;
   var stat = `${UserStatusMap.get(user.presence.status)?.icon} ${

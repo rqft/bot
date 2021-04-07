@@ -31,10 +31,9 @@ module.exports = {
     const alreadyBanned = b && b.has(user.id);
     if (!alreadyBanned)
       return await message.reply(
-        replacer(
-          messages.commands.infractions.not_banned,
-          new Map([["{USER}", user.toString()]])
-        )
+        replacer(messages.commands.infractions.not_banned, [
+          ["{USER}", user.toString()],
+        ])
       );
     try {
       message.guild?.members.unban(user, reason);

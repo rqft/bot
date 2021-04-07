@@ -1,4 +1,5 @@
 import { TextChannel } from "discord.js";
+import { generateUsage } from "../../functions/generateUsage";
 import { parseTimeString } from "../../functions/parseTimeString";
 import { replacer } from "../../functions/replacer";
 import { search_channel } from "../../functions/searching/channel";
@@ -15,15 +16,28 @@ module.exports = {
     botPermissions: ["MANAGE_CHANNELS"],
   },
   async run(message, args) {
-    const slowmd = parseTimeString(args[0]!) / 1000;
+    const slowmd = parseTimeString(args[0]!);
+    console.log(slowmd);
+    if (!slowmd)
+      return await message.reply(
+        replacer(messages.commands.args.wrong_type, [
+          ["{USER}", message.author.toString()],
+          ["{ARG}", this.args[0]?.name],
+          ["{TYPE}", this.args[0]?.type],
+          ["{USAGE}", generateUsage(this)],
+        ])
+      );
     const target = args[1]
       ? await search_channel(args[1], message.guild!)
       : message.channel;
-    if (!target) return await message.reply("❌ Unable to find that channel");
+    if (!target)
+      return await message.reply(messages.targeting.not_found.channel);
     if (!(target instanceof TextChannel))
-      return await message.reply("❌ Cannot set slowmode of non-text channels");
+      return await message.reply(messages.commands.admin.slowmode.not_text);
     if (target.rateLimitPerUser == slowmd)
-      return await message.reply("❌ Channel is already at this slowmode");
+      return await message.reply(
+        messages.commands.admin.slowmode.channel_already_slowmode
+      );
     try {
       target.setRateLimitPerUser(slowmd);
     } catch {

@@ -22,13 +22,7 @@ module.exports = {
 
     const emb = new MessageEmbed();
 
-    const avs = ([
-      "webp",
-      "jpg",
-      "png",
-      "jpeg",
-      "gif",
-    ] as AllowedImageFormat[]).map(
+    const avs = (["webp", "jpg", "png", "gif"] as AllowedImageFormat[]).map(
       (e) => `[${e.toUpperCase()}](${user!.avatarURL({ format: e })})`
     );
 

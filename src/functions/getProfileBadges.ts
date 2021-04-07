@@ -12,7 +12,11 @@ export function getProfileBadges(
       : userResolvable;
   user.flags?.toArray().forEach((e) => {
     const get = profileBadgeMap.get(e);
-    badges.push(`${showIcons ? get?.icon : ""} ${get?.text}`);
+    badges.push(
+      `[${
+        showIcons ? get?.icon : ""
+      }](https://arcy.gitbook.io/vybose/infos/profile-badges#${get?.anchor})`
+    );
   });
   if (badges.length == 0) return ["No Badges"];
   return badges;

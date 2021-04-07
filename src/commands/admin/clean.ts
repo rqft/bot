@@ -52,10 +52,9 @@ module.exports = {
               );
           });
         await message.reply(
-          replacer(
-            messages.commands.admin.clean.cleaned_messages_all,
-            new Map([["{COUNT}", count]])
-          )
+          replacer(messages.commands.admin.clean.cleaned_messages_all, [
+            ["{COUNT}", count],
+          ])
         );
         break;
       }
@@ -81,10 +80,9 @@ module.exports = {
               );
           });
         await message.reply(
-          replacer(
-            messages.commands.admin.clean.cleaned_messages_bots,
-            new Map([["{COUNT}", count]])
-          )
+          replacer(messages.commands.admin.clean.cleaned_messages_bots, [
+            ["{COUNT}", count],
+          ])
         );
         break;
       }
@@ -110,10 +108,9 @@ module.exports = {
               );
           });
         await message.reply(
-          replacer(
-            messages.commands.admin.clean.cleaned_messages_self,
-            new Map([["{COUNT}", count]])
-          )
+          replacer(messages.commands.admin.clean.cleaned_messages_self, [
+            ["{COUNT}", count],
+          ])
         );
         break;
       }
@@ -143,10 +140,9 @@ module.exports = {
               );
           });
         await message.reply(
-          replacer(
-            messages.commands.admin.clean.cleaned_messages_self,
-            new Map([["{COUNT}", count]])
-          )
+          replacer(messages.commands.admin.clean.cleaned_messages_self, [
+            ["{COUNT}", count],
+          ])
         );
         break;
       }
@@ -172,10 +168,9 @@ module.exports = {
               );
           });
         await message.reply(
-          replacer(
-            messages.commands.admin.clean.cleaned_messages_images,
-            new Map([["{COUNT}", count]])
-          )
+          replacer(messages.commands.admin.clean.cleaned_messages_images, [
+            ["{COUNT}", count],
+          ])
         );
         break;
       }

@@ -1,7 +1,7 @@
 import { Message, MessageReaction, Permissions, User } from "discord.js";
 import { commands } from "..";
-import { CustomEmojis } from "../enums/customEmojis";
 import { escapeRegex } from "../functions/escapeRegex";
+import { generateUsage } from "../functions/generateUsage";
 import { getBotLevel } from "../functions/getBotLevel";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { replacer } from "../functions/replacer";
@@ -42,23 +42,7 @@ export async function onCommand(message: Message): Promise<Message | void> {
             .map((e) => `\`${command.args[e]?.name}\``)
             .join(", "),
         ],
-        [
-          "{USAGE_MESSAGE}",
-          replacer(messages.commands.args.missing_args_usage, [
-            [
-              "{USAGE}",
-              command.args
-                .map(
-                  (e) =>
-                    `${e.required ? "<" : "("}${e.name}: ${e.type}${
-                      e.required ? ">" : ")"
-                    }`
-                )
-                .join(" "),
-              // lol
-            ],
-          ]),
-        ],
+        ["{USAGE}", generateUsage(command)],
       ])
     );
   if (
@@ -164,10 +148,11 @@ export async function onCommand(message: Message): Promise<Message | void> {
       run = false;
     } else if (reaction?.emoji.name === "✅") run = true;
   }
-  const res = await message.channel.send(CustomEmojis.GUI_TYPING);
+
   try {
     if (!run) return;
-    await command.run(message, args).then(() => res.delete());
+    message.channel.startTyping();
+    command.run(message, args).then(() => message.channel.stopTyping(true));
   } catch (e) {
     await message.reply(
       replacer(messages.error.error_running_command, [["{ERROR}", e]])

@@ -3,7 +3,7 @@ import { CustomEmojis } from "../enums/customEmojis";
 import { capitalizeWords } from "./capitalizeWords";
 const add = CustomEmojis.GUI_ADD_FILE;
 const other = CustomEmojis.GUI_RICH_PRESENCE;
-type GuildFeature =
+export type GuildFeature =
   | "ANIMATED_ICON"
   | "BANNER"
   | "COMMERCE"
@@ -26,6 +26,30 @@ type GuildFeature =
   | "VERIFIED"
   | "VIP_REGIONS"
   | "WELCOME_SCREEN_ENABLED";
+export const features = [
+  "ANIMATED_ICON",
+  "BANNER",
+  "COMMERCE",
+  "COMMUNITY",
+  "DISCOVERABLE",
+  "DISCOVERABLE_DISABLED",
+  "ENABLED_DISCOVERABLE_BEFORE",
+  "FEATURABLE",
+  "INVITE_SPLASH",
+  "MEMBER_LIST_DISABLED",
+  "MEMBER_VERIFICATION_GATE_ENABLED",
+  "MORE_EMOJI",
+  "NEWS",
+  "PARTNERED",
+  "PREVIEW_ENABLED",
+  "PUBLIC",
+  "PUBLIC_DISABLED",
+  "RELAY_ENABLED",
+  "VANITY_URL",
+  "VERIFIED",
+  "VIP_REGIONS",
+  "WELCOME_SCREEN_ENABLED",
+];
 const guildFeatureMap = new Map<GuildFeature, CustomEmojis>([
   ["ANIMATED_ICON", add],
   ["BANNER", add],

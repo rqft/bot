@@ -42,10 +42,9 @@ module.exports = {
     const alreadyBanned = b && b.has(user.id);
     if (alreadyBanned)
       return await message.reply(
-        replacer(
-          messages.commands.infractions.already_banned,
-          new Map([["{USER}", user.toString()]])
-        )
+        replacer(messages.commands.infractions.already_banned, [
+          ["{USER}", user.toString()],
+        ])
       );
     try {
       message.guild?.members.ban(user, {

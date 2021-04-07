@@ -1,6 +1,6 @@
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { parseBlock } from "../../functions/parseBlock";
-import { parseTimeString, timeSuffix } from "../../functions/parseTimeString";
+import { parseTimeString, timeUnits } from "../../functions/parseTimeString";
 import { replacer } from "../../functions/replacer";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
@@ -22,7 +22,7 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-    if (ms > timeSuffix.w)
+    if (!ms || ms > timeUnits.w)
       return await message.reply(
         messages.commands.other.reminder.reminder_time_limit
       );

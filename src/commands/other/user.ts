@@ -127,7 +127,7 @@ ${Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem).level}\`__ (${
       );
     }
     if (user.flags?.toArray().length)
-      emb.addField("❯ Profile Badges", getProfileBadges(user).join("\n"));
+      emb.addField("❯ Profile Badges", getProfileBadges(user).join(" "));
     if (globalConf.badges[user.id])
       emb.addField("❯ Bot Badges", globalConf.badges[user.id]?.join("\n"));
     emb.setColor(Color.embed);

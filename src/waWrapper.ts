@@ -85,15 +85,15 @@ class WolframAlpha {
     return await api.text();
   }
 
-  public async recognizeQuery(query: string, filterAccepted: boolean = true) {
-    const api = await fetch(
-      this.urls.fastQueryRecognizer +
-        `appid=${this.appid}&mode=Default&i=${encodeURIComponent(
-          query
-        )}&output=${this.config.output}`
-    );
-    if (!api.ok) throw new Error(this.messages.error);
-  }
+  // public async recognizeQuery(query: string, filterAccepted: boolean = true) {
+  //   const api = await fetch(
+  //     this.urls.fastQueryRecognizer +
+  //       `appid=${this.appid}&mode=Default&i=${encodeURIComponent(
+  //         query
+  //       )}&output=${this.config.output}`
+  //   );
+  //   if (!api.ok) throw new Error(this.messages.error);
+  // }
 }
 const cc = new WolframAlpha(Secrets.Key.wolframAlpha);
 cc.getAppID();

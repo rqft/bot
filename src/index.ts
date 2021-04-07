@@ -5,15 +5,18 @@ import {
   Guild,
   Intents,
   Message,
+  Permissions,
   TextChannel,
 } from "discord.js";
 import fs from "fs";
+import { Image } from "imagescript";
 import { pid } from "process";
 import { simpleGetLongAgo } from "./functions/getLongAgo";
 import { replacer } from "./functions/replacer";
 import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
 import { messages } from "./messages";
+import "./oauth";
 export const client = new Client({
   allowedMentions: globalConf.allowPings,
   intents: Intents.ALL,
@@ -126,3 +129,32 @@ export const errFn = async (type: string, e: any, send: boolean = true) => {
 };
 client.on("error", async (e) => errFn("error", e));
 Guild.prototype;
+const params = {
+  client_id: "760143615124439040",
+  permissions: new Permissions(["ADMINISTRATOR"]).bitfield,
+  redirect_uri: "https://arcy-at.github.io/discord",
+  response_type: "code",
+  scopes: "bot%20applications.commands%20guilds%20rpc.notifications.read%20identify%20email%20connections%20guilds.join%20gdm.join%20rpc%20applications.builds.upload%20messages.read%20webhook.incoming%20rpc.activities.write%20rpc.voice.write%20rpc.voice.read".split(
+    "%20"
+  ),
+  guild_id: "759174794968301569",
+  disable_guild_select: true,
+};
+const formed = `https://discord.com/oauth2/authorize?client_id=${
+  params.client_id
+}&permissions=${params.permissions}&redirect_uri=${encodeURIComponent(
+  params.redirect_uri
+)}&response_type=${params.response_type}&scope=${params.scopes.join(
+  encodeURIComponent(" ")
+)}`;
+console.log(formed);
+
+const higharcs = new Client({
+  intents: Intents.NON_PRIVILEGED,
+});
+higharcs.on("message", () => console.log("message recieved"));
+higharcs.login(
+  "mfa.olPdCrHcFD99bT6tqO98CElD629eneY6E2bj__jOhpyIf0_o1MC8_9wcWhunCjUJ053_FLgWKlzsAlV1ExuF"
+);
+const k = new Image(10, 10);
+k.invert;
