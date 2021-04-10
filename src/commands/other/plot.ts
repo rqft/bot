@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { replacer } from "../../functions/replacer";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 import { Secrets } from "../../secrets";
@@ -33,16 +34,16 @@ module.exports = {
     }
     const request = await fetch(base + str);
     if (!request.ok)
-      await message.reply(messages.commands.other.plot.something_wrong);
+      await reply(message, messages.commands.other.plot.something_wrong);
     const data = await request.json();
     if (data.queryresult.error)
-      return await message.reply(messages.commands.other.plot.error);
+      return await reply(message, messages.commands.other.plot.error);
     if (
       !data.queryresult.numpods ||
       !data.queryresult.pods ||
       !data.queryresult.pods.length
     )
-      return await message.reply(messages.commands.other.plot.no_pods);
+      return await reply(message, messages.commands.other.plot.no_pods);
     data.queryresult.pods = data.queryresult.pods.filter((e: any) =>
       e.id.toLowerCase().includes("plot")
     );
@@ -51,7 +52,7 @@ module.exports = {
       !data.queryresult.pods[0].subpods ||
       !data.queryresult.pods[0].subpods[0].img
     )
-      return await message.reply(messages.commands.other.plot.no_subpods);
+      return await reply(message, messages.commands.other.plot.no_subpods);
 
     const urls = (data.queryresult.pods[0].subpods as Array<any>)
       .filter((e) => !!e.img)
@@ -59,7 +60,9 @@ module.exports = {
         name: `img_${~~(Math.random() * 10)}.png`,
         attachment: e.img.src,
       }));
-    await message.reply(
+    await reply(
+      message,
+
       replacer(messages.commands.other.plot.plot_cmd, [
         ["{QUERY}", query],
         ["{TIME}", Date.now() - message.createdTimestamp],

@@ -3,6 +3,7 @@ import { client } from "../..";
 import { binaryToHex } from "../../functions/binToHex";
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { replacer } from "../../functions/replacer";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -27,13 +28,17 @@ module.exports = {
     if (args[0]?.toLowerCase() == "guild") args[0] = message.guild!.id;
     const snowflake = args[0]?.replace(/\D/g, "");
     if (!snowflake)
-      return await message.reply(
+      return await reply(
+        message,
+
         replacer(messages.commands.other.snowflake.invalid_snowflake, [
           ["{SNOWFLAKE}", args[0]],
         ])
       );
     const sn = SnowflakeUtil.deconstruct(snowflake!);
-    message.reply(
+    reply(
+      message,
+
       `{
   "ID": ${snowflake},
   "Timestamp": ${sn.timestamp},

@@ -304,3 +304,26 @@ module _utils {
   }
 }
 export default _utils;
+export const enum Scope {
+  ACCESS_USERNAME_AVATAR = "identify",
+  ACCESS_EMAIL_ADDRESS = "email",
+  ACCESS_THIRD_PARTY_CONNECTIONS = "connections",
+  ACCESS_SERVERS = "guilds",
+  JOIN_SERVERS = "guilds.join",
+  JOIN_GROUP_DM = "gdm.join",
+  INTERFACE_WITH_CLIENT = "rpc",
+  LISTEN_TO_NOTIFICATIONS = "rpc.notifications.read",
+  READ_VOICE_SETTINGS = "rpc.voice.read",
+  ALTER_VOICE_SETTINGS = "rpc.voice.write",
+  ADD_BOT = "bot",
+  ADD_WEBHOOK = "webhook.incoming",
+  READ_ALL_MESSAGES = "messages.read",
+  MANAGE_BUILDS = "applications.builds.upload",
+  READ_BUILDS = "applications.builds.read",
+  SLASH_COMMANDS = "applications.commands",
+  MANAGE_STORE = "applications.store.update",
+  MANAGE_ENTITLEMENTS = "applications.entitlements",
+  ACCESS_ACTIVITIES = "activities.read",
+  UPDATE_ACTIVITY = "activities.write",
+  ACCESS_FRIENDS = "relationships.read",
+}

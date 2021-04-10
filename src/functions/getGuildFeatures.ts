@@ -1,5 +1,6 @@
 import { Guild } from "discord.js";
 import { CustomEmojis } from "../enums/customEmojis";
+import { IElement } from "../interfaces/IElement";
 import { capitalizeWords } from "./capitalizeWords";
 const add = CustomEmojis.GUI_ADD_FILE;
 const other = CustomEmojis.GUI_RICH_PRESENCE;
@@ -77,13 +78,12 @@ const guildFeatureMap = new Map<GuildFeature, CustomEmojis>([
 export { guildFeatureMap };
 
 export function getGuildFeatures(guild: Guild, showIcons: boolean = true) {
-  const feat: string[] = [];
+  const feat: IElement[] = [];
   guild.features.forEach((element) => {
-    feat.push(
-      `${showIcons ? guildFeatureMap.get(element) : ""} ${capitalizeWords(
-        element.toLowerCase().replace(/_/g, " ")
-      )}`
-    );
+    feat.push({
+      icon: showIcons ? guildFeatureMap.get(element) ?? "" : "",
+      text: capitalizeWords(element.toLowerCase().replace(/_/g, " ")),
+    });
   });
-  return feat.length !== 0 ? feat.sort().join("\n") : "None";
+  return feat.sort() ?? [];
 }

@@ -2,6 +2,7 @@ import { AllowedImageFormat, MessageEmbed } from "discord.js";
 import { replacer } from "../../functions/replacer";
 import { search_user } from "../../functions/searching/user";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
   async run(message, args) {
     var user = await search_user(args[0] ? args.join(" ") : message.member!.id);
     if (!user) {
-      return await message.reply(messages.targeting.not_found.user);
+      return await reply(message, messages.targeting.not_found.user);
     }
 
     const emb = new MessageEmbed();
@@ -42,6 +43,6 @@ module.exports = {
       ])
     );
     emb.setColor(Color.embed);
-    await message.reply(emb);
+    await reply(message, emb);
   },
 } as ICommand;

@@ -5,7 +5,6 @@ import {
   Guild,
   Intents,
   Message,
-  Permissions,
   TextChannel,
 } from "discord.js";
 import fs from "fs";
@@ -86,37 +85,38 @@ client.on("messageUpdate", async (_oldMessage, newMessage) => {
   if (newMessage instanceof Message) await onCommand(newMessage); // fuck partials
 });
 client.login(globalConf.token);
+if (globalConf.enableRichPresence) {
+  const rpc = new RPC.Client({ transport: "ipc" });
 
-const rpc = new RPC.Client({ transport: "ipc" });
-
-rpc.on("ready", () => {
-  var da = simpleGetLongAgo(Date.now() - 3.154e139);
-  console.log(da);
-  rpc.request("SET_ACTIVITY", {
-    pid: pid,
-    activity: {
-      assets: {
-        large_image: "glasses",
-        large_text: "✅ sami is a furry",
+  rpc.on("ready", () => {
+    var da = simpleGetLongAgo(Date.now() - 3.154e139);
+    console.log(da);
+    rpc.request("SET_ACTIVITY", {
+      pid: pid,
+      activity: {
+        assets: {
+          large_image: "glasses",
+          large_text: "✅ sami is a furry",
+        },
+        details: `🎷`,
+        buttons: [
+          {
+            label: "Discord",
+            url: "https://arcy-at.github.io/discord",
+          },
+          {
+            label: "Bot Invite",
+            url:
+              "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot%20applications.commands",
+          },
+        ],
       },
-      details: `🎷`,
-      buttons: [
-        {
-          label: "Discord",
-          url: "https://arcy-at.github.io/discord",
-        },
-        {
-          label: "Bot Invite",
-          url:
-            "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot%20applications.commands",
-        },
-      ],
-    },
+    });
   });
-});
-// 790910161953882147 slashtags
-// 760143615124439040 vyb
-rpc.login({ clientId: "760143615124439040" });
+  // 790910161953882147 slashtags
+  // 760143615124439040 vyb
+  rpc.login({ clientId: "760143615124439040" });
+}
 // client.on("guildMemberAdd", async (member) => {
 //   if (member.guild.id == "816362327678779392") await member.kick();
 // });
@@ -129,25 +129,8 @@ export const errFn = async (type: string, e: any, send: boolean = true) => {
 };
 client.on("error", async (e) => errFn("error", e));
 Guild.prototype;
-const params = {
-  client_id: "760143615124439040",
-  permissions: new Permissions(["ADMINISTRATOR"]).bitfield,
-  redirect_uri: "https://arcy-at.github.io/discord",
-  response_type: "code",
-  scopes: "bot%20applications.commands%20guilds%20rpc.notifications.read%20identify%20email%20connections%20guilds.join%20gdm.join%20rpc%20applications.builds.upload%20messages.read%20webhook.incoming%20rpc.activities.write%20rpc.voice.write%20rpc.voice.read".split(
-    "%20"
-  ),
-  guild_id: "759174794968301569",
-  disable_guild_select: true,
-};
-const formed = `https://discord.com/oauth2/authorize?client_id=${
-  params.client_id
-}&permissions=${params.permissions}&redirect_uri=${encodeURIComponent(
-  params.redirect_uri
-)}&response_type=${params.response_type}&scope=${params.scopes.join(
-  encodeURIComponent(" ")
-)}`;
-console.log(formed);
+
+console.log(globalConf.botInvite.url());
 
 const higharcs = new Client({
   intents: Intents.NON_PRIVILEGED,

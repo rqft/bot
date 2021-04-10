@@ -1,18 +1,87 @@
-import { ClientOptions } from "discord.js";
+import { ClientOptions, Permissions } from "discord.js";
 import { CustomEmojis } from "./enums/customEmojis";
+import { IElement } from "./interfaces/IElement";
 import { Secrets } from "./secrets";
+import { Scope } from "./utils";
 type List<T> = {
   [any: string]: T;
 };
+const p = {
+  botOwner: {
+    icon: CustomEmojis.GUI_OWNERCROWN,
+    text: "Bot Owner",
+    anchor: "bot",
+  },
+  cutie: {
+    icon: "🤠",
+    text: "Cutie",
+    anchor: "bot",
+  },
+  gh: {
+    icon: CustomEmojis.GUI_ROLE,
+    text: "Access To Github",
+    anchor: "bot",
+  },
+};
+type ResponseType = "code" | "token";
 const globalConf = {
+  botInvite: {
+    scope: [
+      Scope.SLASH_COMMANDS,
+      Scope.ADD_BOT,
+      Scope.ACCESS_USERNAME_AVATAR,
+      Scope.ACCESS_THIRD_PARTY_CONNECTIONS,
+    ] as Scope[],
+    permissions: new Permissions([
+      "SEND_MESSAGES",
+      "EMBED_LINKS",
+      "ADD_REACTIONS",
+      "VIEW_CHANNEL",
+      "VIEW_GUILD_INSIGHTS",
+    ]),
+    redirect_uri: "https://arcy-at.github.io/",
+    guild_id: undefined,
+    response_type: "code" as ResponseType,
+    client_id: "760143615124439040",
+    url() {
+      return `https://discord.com/oauth2/authorize?client_id=${
+        this.client_id
+      }&scope=${this.scope.join("%20")}${
+        this.scope.includes(Scope.ADD_BOT)
+          ? `&permissions=${this.permissions.bitfield}`
+          : ""
+      }${
+        this.redirect_uri
+          ? `&redirect_uri=${encodeURIComponent(this.redirect_uri)}`
+          : ""
+      }${
+        this.guild_id
+          ? `&guild_id=${this.guild_id}&disable_guild_select=true`
+          : ""
+      }&response_type=${this.response_type}`;
+    },
+  },
+  enableRichPresence: false,
   botId: "760143615124439040",
   badges: {
-    "504698587221852172": [`${CustomEmojis.GUI_OWNERCROWN} Bot Owner`],
-  } as List<string[]>,
+    "504698587221852172": [p.botOwner, p.gh], // HighArcs
+    "533757461706964993": [p.botOwner, p.cutie, p.gh], /// insyri
+    "485489103870230528": [p.gh], // viirall
+    "481812817628889102": [p.gh], // ClashCrafter
+    "760143615124439040": [
+      // bot
+      {
+        icon: CustomEmojis.BOT_HALLUCINATE,
+        text: "System",
+        anchor: "bot",
+      },
+    ],
+    "697071919639560254": [p.cutie], // Meji
+    "332741001355591680": [p.cutie], // alex_mino
+    "503274209003175970": [p.cutie], // Foxo
+  } as List<IElement[]>,
   levels: {
-    "760143615124439040": 999,
-    // "586112943150596101": 70,
-    "751230359227727914": 50,
+    "760143615124439040": 999, // bot
   } as List<number>,
   token: Secrets.BOT_TOKEN,
   allowPings: {

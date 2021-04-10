@@ -1,16 +1,15 @@
 import { MessageEmbed } from "discord.js";
+import { client } from "../..";
 import { CustomEmojis } from "../../enums/customEmojis";
 import { Emojis } from "../../enums/emojis";
 import { capitalizeWords } from "../../functions/capitalizeWords";
 import { formatTimestamp } from "../../functions/formatTimestamp";
 import { getGuildFeatures } from "../../functions/getGuildFeatures";
 import { getGuildVoiceRegion } from "../../functions/getGuildVoiceRegion";
-import {
-  simpleGetLongAgo,
-  simpleShortGetLongAgo,
-} from "../../functions/getLongAgo";
+import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { search_guild } from "../../functions/searching/guild";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 
 module.exports = {
@@ -28,55 +27,13 @@ module.exports = {
   ],
   async run(message, args) {
     const guild = args[0] ? await search_guild(args.join(" ")) : message.guild!;
-    if (!guild) return await message.reply("Unknown Server");
+    if (!guild) return await reply(message, "Unknown Server");
+    guild.members.fetch();
+    var marked = false;
+    if (client.guilds.cache.has(guild.id)) marked = true;
     const emb = new MessageEmbed();
-    emb.setAuthor(guild.name, guild.iconURL({ dynamic: true })!);
-    emb.setThumbnail(guild.iconURL({ dynamic: true })!);
-    const channels = {
-      text: guild.channels.cache.filter((e) => e.type == "text").size,
-      category: guild.channels.cache.filter((e) => e.type == "category").size,
-      store: guild.channels.cache.filter((e) => e.type == "store").size,
-      voice: guild.channels.cache.filter((e) => e.type == "voice").size,
-      news: guild.channels.cache.filter((e) => e.type == "news").size,
-    };
-    const counts = [
-      {
-        text: `${Emojis.CYCLONE} **Members**: ${
-          guild.members.cache.filter((e) => !e.user.bot).size
-        } (${guild.members.cache.filter((e) => e.user.bot).size} bots)`,
-        enabled: true,
-      },
-      {
-        text: `${Emojis.SHIELD} **Roles**: ${guild.roles.cache.size}`,
-        enabled:
-          guild.roles.cache.filter(
-            (e) => !e.managed && guild.roles.everyone.id !== e.id
-          ).size > 0,
-      },
-      {
-        text: `${Emojis.HAMMER} **Bans**: ${(await guild.fetchBans()).size}`,
-        enabled: (await guild.fetchBans()).size > 0,
-      },
-      {
-        text: `${Emojis.SMILEY} **Emojis**: ${guild.emojis.cache.size}`,
-        enabled: guild.emojis.cache.size > 0,
-      },
-      {
-        text: `${Emojis.BOOKMARK_TABS} **Integrations**: ${
-          (await guild.fetchIntegrations()).size
-        }`,
-        enabled: (await guild.fetchIntegrations()).size > 0,
-      },
-      {
-        text: `${Emojis.BOOK} **Channels**: ${guild.channels.cache.size}
-${CustomEmojis.CHANNEL_TEXT}: ${channels.text} | ${CustomEmojis.CHANNEL_CATEGORY}: ${channels.category} | ${CustomEmojis.CHANNEL_VOICE}: ${channels.voice} | ${CustomEmojis.CHANNEL_NEWS}: ${channels.news}`,
-        enabled: guild.channels.cache.size > 1,
-      },
-    ];
-    const enabled = counts
-      .filter((e) => e.enabled == true)
-      .map((e) => e.text)
-      .join("\n");
+    emb.setAuthor(guild.name, guild.iconURL({ dynamic: true, size: 4096 })!);
+    emb.setThumbnail(guild.iconURL({ dynamic: true, size: 4096 })!);
     var tick = Emojis.X;
     if (guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES")
       tick = Emojis.CYCLONE;
@@ -84,22 +41,107 @@ ${CustomEmojis.CHANNEL_TEXT}: ${channels.text} | ${CustomEmojis.CHANNEL_CATEGORY
       tick = Emojis.WHITE_CHECK_MARK;
     emb.addField(
       "❯ Server Info",
-      `${Emojis.GEAR} **ID**: \`${guild.id}\`
-${CustomEmojis.GUI_OWNERCROWN} **Owner**: ${guild.owner}
-${CustomEmojis.CHANNEL_VOICE} **Voice Region**: ${getGuildVoiceRegion(guild)}
+      `${Emojis.GEAR} **ID**: \`${guild.id}\`${
+        marked
+          ? `\n${CustomEmojis.GUI_OWNERCROWN} **Owner**: ${
+              guild.owner
+                ? guild.owner.toString()
+                : "Unable to fetch guild owner"
+            }`
+          : ""
+      }${
+        marked
+          ? `\n${
+              CustomEmojis.CHANNEL_VOICE
+            } ** Voice Region **: ${getGuildVoiceRegion(guild)}`
+          : ""
+      }
+${Emojis.LINK} **Links**: [\`Icon\`](${guild.iconURL({
+        dynamic: true,
+        size: 4096,
+      })}) ${
+        guild.bannerURL()
+          ? `| [\`Banner\`](${guild.bannerURL({ size: 4096 })})`
+          : ""
+      }${
+        guild.discoverySplashURL()
+          ? ` | [\`Discovery Splash\`](${guild.discoverySplashURL({
+              size: 4096,
+            })})`
+          : ""
+      }${
+        guild.splashURL()
+          ? ` | [\`Invite Splash\`](${guild.splashURL({ size: 4096 })})`
+          : ""
+      }
 ${Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
       )} ago ${formatTimestamp(guild.createdAt)}
 ${CustomEmojis.GUI_ROLE} **Verification Level**: ${capitalizeWords(
-        guild.verificationLevel.replace(/_/g, "").toLowerCase()
-      )}
-${tick} **NSFW Content Filter**: ${capitalizeWords(
-        guild.explicitContentFilter.replace(/_/g, " ").toLowerCase()
-      )}`
+        guild.verificationLevel.replace(/_/g, " ").toLowerCase()
+      )}${guild.mfaLevel === 1 ? " (Elevated)" : ""}${
+        marked
+          ? `\n${tick} **NSFW Content Filter**: ${capitalizeWords(
+              guild.explicitContentFilter.replace(/_/g, " ").toLowerCase()
+            )}`
+          : ""
+      }`
     );
-    if (message.guild?.id == guild.id) {
-      emb.addField("❯ Counts", enabled);
+    if (true) {
+      const channels = {
+        text: guild.channels.cache.filter((e) => e.type == "text").size,
+        category: guild.channels.cache.filter((e) => e.type == "category").size,
+        store: guild.channels.cache.filter((e) => e.type == "store").size,
+        voice: guild.channels.cache.filter((e) => e.type == "voice").size,
+        news: guild.channels.cache.filter((e) => e.type == "news").size,
+      };
+      const counts = [
+        {
+          text: `${Emojis.CYCLONE} **Members**: ${
+            guild.members.cache.filter((e) => !e.user.bot).size
+          } (${guild.members.cache.filter((e) => e.user.bot).size} bots)`,
+          enabled: guild.members.cache.size > 0,
+        },
+        {
+          text: `${Emojis.SHIELD} **Roles**: ${guild.roles.cache.size}`,
+          enabled:
+            guild.roles.cache.filter(
+              (e) => !e.managed && guild.roles.everyone.id !== e.id
+            ).size > 0,
+        },
+        marked
+          ? {
+              text: `${Emojis.HAMMER} **Bans**: ${
+                (await guild.fetchBans()).size
+              }`,
+              enabled: (await guild.fetchBans()).size > 0,
+            }
+          : { text: ``, enabled: false },
+        {
+          text: `${Emojis.SMILEY} **Emojis**: ${guild.emojis.cache.size}`,
+          enabled: guild.emojis.cache.size > 0,
+        },
+        marked
+          ? {
+              text: `${Emojis.BOOKMARK_TABS} **Integrations**: ${
+                (await guild.fetchIntegrations()).size
+              }`,
+              enabled: (await guild.fetchIntegrations()).size > 0,
+            }
+          : { text: ``, enabled: false },
+        {
+          text: `${Emojis.BOOK} **Channels**: ${guild.channels.cache.size}
+${CustomEmojis.CHANNEL_TEXT}: ${channels.text} | ${CustomEmojis.CHANNEL_CATEGORY}: ${channels.category} | ${CustomEmojis.CHANNEL_VOICE}: ${channels.voice} | ${CustomEmojis.CHANNEL_NEWS}: ${channels.news}`,
+          enabled: guild.channels.cache.size > 1,
+        },
+      ];
+      const enabled = counts
+        .filter((e) => e.enabled == true)
+        .map((e) => e.text);
+
+      if (enabled.length) emb.addField("❯ Counts", enabled.join("\n"));
     }
+
     if (guild.premiumSubscriptionCount) {
       const boosters = guild.members.cache
         .filter((e) => !!e.premiumSince)
@@ -120,28 +162,23 @@ ${boosters
     if (guild.vanityURLCode) {
       emb.addField(
         "❯ Vanity URL",
-        `**Code**: ${guild.vanityURLCode}
-**Uses**: ${guild.vanityURLUses}`
+        `**Code**: [\`${guild.vanityURLCode}\`](https://discord.com/invite/${
+          guild.vanityURLCode
+        })
+**Uses**: ${guild.vanityURLUses ?? "Unknown"}`
       );
     }
-    emb.addField("❯ Features", getGuildFeatures(guild));
+    if (guild.features.length)
+      emb.addField(
+        "❯ Features",
+        getGuildFeatures(guild)
+          .map((e) => `\`${e.text}\``)
+          .join(", ")
+      );
     emb.setColor(Color.embed);
-    if (guild.banner) {
-      emb.setImage(guild.bannerURL({ format: "gif", size: 1024 })!);
-    }
-    emb.addField(
-      "❯ Newest Members",
-      guild.members.cache
-        .array()
-        .sort((a, b) => b.joinedTimestamp! - a.joinedTimestamp!)
-        .slice(0, 5)
-        .map(
-          (e) =>
-            `📥 ${e.toString()} (joined ${simpleShortGetLongAgo(
-              e.joinedTimestamp!
-            )} ago)`
-        )
-    );
-    await message.reply(emb);
+    if (guild.splashURL()) emb.setImage(guild.splashURL({ size: 4096 })!);
+
+    // console.log(emb);
+    await reply(message, emb);
   },
 } as ICommand;

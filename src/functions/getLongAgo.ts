@@ -21,19 +21,12 @@ export function getLongAgo(
   let runcheck = ts + 0;
   const txt = new Map();
   for (const [k, v] of timeMap) {
-    if (runcheck < v || txt.entries.length >= limiter) {
-      continue;
-    }
+    if (runcheck < v || txt.entries.length >= limiter) continue;
     const runs = Math.ceil(runcheck / v) + 1;
     for (let i = 0; i <= runs; i += 1) {
-      if (runcheck < v) {
-        break;
-      }
-      if (txt.has(k)) {
-        txt.set(k, txt.get(k) + 1);
-      } else {
-        txt.set(k, 1);
-      }
+      if (runcheck < v) break;
+      if (txt.has(k)) txt.set(k, txt.get(k) + 1);
+      else txt.set(k, 1);
       runcheck -= v;
     }
   }
@@ -41,9 +34,7 @@ export function getLongAgo(
   let runsc = 0;
   let hitLowest = false;
   for (const [key, value] of txt) {
-    if (runsc >= limiter || hitLowest === true) {
-      break;
-    }
+    if (runsc >= limiter || hitLowest === true) break;
     if (lowestUnit === key) hitLowest = true;
     let cc: string = value > 1 ? `${key}s` : key;
     cc = `${cc.substr(0, 1).toUpperCase()}${cc.substr(1).toLowerCase()}`;
@@ -52,9 +43,9 @@ export function getLongAgo(
   }
   return txtret.join(", ");
 }
-export function simpleGetLongAgo(ts: number) {
-  return getLongAgo(ts, 2, undefined, undefined);
-}
+export const simpleGetLongAgo = (ts: number) =>
+  getLongAgo(ts, 2, undefined, undefined);
+export const expandMs = (ms: number) => simpleGetLongAgo(Date.now() - ms);
 const shortTimeMap = new Map([
   ["ml", 1000 * 60 * 60 * 24 * 365 * 10 * 10 * 10],
   ["ct", 1000 * 60 * 60 * 24 * 365 * 10 * 10],
@@ -108,6 +99,5 @@ export function shortLongAgo(
   }
   return txtret.join("");
 }
-export function simpleShortGetLongAgo(ts: number) {
-  return shortLongAgo(ts, 2, undefined, undefined);
-}
+export const simpleShortGetLongAgo = (ts: number) =>
+  shortLongAgo(ts, 2, undefined, undefined);

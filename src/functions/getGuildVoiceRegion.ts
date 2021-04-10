@@ -94,6 +94,6 @@ export function getGuildVoiceRegion(guild: Guild, showFlag: boolean = true) {
   const reg = guildVoiceRegionMap.get(
     (guild.region as unknown) as VoiceRegionString
   );
-  if (!reg) return "Unknown Voice Region";
+  if (!reg) return;
   return `${showFlag ? reg.icon : ""} ${reg.text}`;
 }

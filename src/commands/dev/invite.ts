@@ -1,4 +1,5 @@
 import { search_guild } from "../../functions/searching/guild";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 module.exports = {
   name: "makeinvite",
@@ -16,11 +17,11 @@ module.exports = {
   },
   async run(message, args) {
     const guild = await search_guild(args.join(" "));
-    if (!guild) return await message.reply("what guild is that");
+    if (!guild) return await reply(message, "what guild is that");
     const invite = await guild.channels.cache
       .random()
       ?.createInvite({ maxUses: 1 });
-    if (!invite) return await message.reply("something bad happened");
-    message.reply(invite!.url);
+    if (!invite) return await reply(message, "something bad happened");
+    reply(message, invite!.url);
   },
 } as ICommand;

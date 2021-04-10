@@ -14,7 +14,7 @@ export enum timeUnits {
   cen = 1000 * 60 * 60 * 24 * 365 * 100,
 }
 
-export const timeUnitsAlliases = {
+const timeUnitsAlliases = {
   ns: ["nanosecond(s)", "nanosec(s)"],
   μs: ["microsec(s)", "microsecond(s)"],
   ms: ["millisecond(s)", "millisec(s)"],
@@ -23,7 +23,7 @@ export const timeUnitsAlliases = {
   h: ["hr(s)", "hour(s)"],
   d: ["day(s)"],
   w: ["wk(s)", "week(s)"],
-  mth: ["mth(s)", "month(s)"],
+  mth: ["mth(s)", "month(s)", "mo(s)"],
   y: ["year(s)"],
   a: ["julianyear(s)"],
   dec: ["decade(s)"],
@@ -31,36 +31,29 @@ export const timeUnitsAlliases = {
 };
 
 export function parseTimeString(time: string): number | undefined {
-  console.log(time);
-  // if (time === undefined) return;
   time = time.split(" ").join("").toLowerCase();
   for (const key in timeUnitsAlliases) {
     let finalTime: number | undefined;
-    finalTime = TimeCalculator(time.replace(key, ""), key as any);
-    if (finalTime == undefined) return finalTime;
+    finalTime = calc(time.replace(key, ""), key as any);
+    if (finalTime !== undefined) return finalTime;
     for (const keys of timeUnitsAlliases[key as "ms"]) {
       if (keys.includes("(s)")) {
-        finalTime = TimeCalculator(
+        finalTime = calc(
           time.replace(keys.replace("(s)", "s"), ""),
           key as any
         );
-        if (finalTime == undefined) return finalTime;
-        finalTime = TimeCalculator(
-          time.replace(keys.replace("(s)", ""), ""),
-          key as any
-        );
-        if (finalTime == undefined) return finalTime;
+        if (finalTime !== undefined) return finalTime;
+        finalTime = calc(time.replace(keys.replace("(s)", ""), ""), key as any);
+        if (finalTime !== undefined) return finalTime;
       } else {
-        finalTime = TimeCalculator(time.replace(keys, ""), key as any);
-        if (finalTime == undefined) return finalTime;
+        finalTime = calc(time.replace(keys, ""), key as any);
+        if (finalTime !== undefined) return finalTime;
       }
     }
-    console.log(finalTime);
   }
   return;
 }
-
-export function TimeCalculator(
+function calc(
   time: string,
   size:
     | "ns"
@@ -77,54 +70,25 @@ export function TimeCalculator(
     | "dec"
     | "cen"
 ): number | undefined {
-  if (
-    time
-      .split("")
-      .some((s) =>
-        [
-          "0",
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          ".",
-          ",",
-          ":",
-        ].includes(s)
-      )
-  )
-    return;
+  if (time.split("").some((s) => !/[0-9.,:]/g.test(s))) return;
 
-  if (time.includes(":")) {
+  if (!time.includes(":")) {
     if (isNaN(Number.parseFloat(time))) return;
     else return Number.parseFloat(time) * timeUnits[size];
   }
 
   const times: string[] = time.split(":");
-  if (
-    times.length == 2 ||
-    isNaN(Number.parseInt(times[0]!)) ||
-    isNaN(Number.parseInt(times[1]!))
-  )
-    return;
-
   const firstTime: number = Number.parseInt(times[0]!);
   let secondTime: number = Number.parseInt(times[1]!);
+  if (times.length !== 2 || isNaN(firstTime) || isNaN(secondTime)) return;
 
   if (times[1]!.toString().length < 2) secondTime *= 10;
   else
     while (secondTime.toString().length > 2)
       secondTime = Number.parseInt(secondTime / 10 + "");
-
   if (size === "min")
     return firstTime * timeUnits["min"] + secondTime * timeUnits["s"];
   if (size === "h")
     return firstTime * timeUnits["h"] + secondTime * timeUnits["min"];
-
   return;
 }

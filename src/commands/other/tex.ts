@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { Secrets } from "../../secrets";
 async function is_eval(
@@ -51,12 +52,16 @@ module.exports = {
         .join("&"),
     });
     if (!res.ok)
-      return message.reply(
+      return reply(
+        message,
+
         `An error occurred: \`\`\`\n${await res.text()}\`\`\``
       );
     const resTxt = await res.text();
     if (parseInt(resTxt.split("\n")[0]!) < 0)
-      return await message.reply(
+      return await reply(
+        message,
+
         `${resTxt.split("\n").slice(2, Infinity).join("\n")}`,
         { code: "txt" }
       );
@@ -71,8 +76,8 @@ module.exports = {
       { url }
     );
 
-    if (!ok) return message.reply(isres as string);
-    await message.reply(``, {
+    if (!ok) return reply(message, isres as string);
+    await reply(message, ``, {
       files: [
         {
           name: "latex.png",

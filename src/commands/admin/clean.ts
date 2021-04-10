@@ -1,6 +1,7 @@
 import { DMChannel, TextChannel } from "discord.js";
 import { replacer } from "../../functions/replacer";
 import { search_guildMember } from "../../functions/searching/guildMember";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -26,14 +27,15 @@ module.exports = {
     const valid = ["user", "bots", "images", "here", "me"];
     const type = args[0]?.toLowerCase()!;
     if (!valid.includes(type))
-      return await message.reply(
+      return await reply(
+        message,
         `Invalid sub-command. Try: ${valid.join(", ")}`
       );
     const count = parseInt(args[1]!);
     if (isNaN(count))
-      return message.reply(messages.commands.admin.clean.invalid_count);
+      return reply(message, messages.commands.admin.clean.invalid_count);
     if (count > 100)
-      return message.reply(messages.commands.admin.clean.too_many_msgs);
+      return reply(message, messages.commands.admin.clean.too_many_msgs);
     if (message.channel instanceof DMChannel) return;
     switch (type) {
       case "here": {
@@ -47,11 +49,10 @@ module.exports = {
           })
           .catch((e) => {
             if (e)
-              return message.channel.send(
-                messages.commands.admin.clean.failed_clean
-              );
+              return reply(message, messages.commands.admin.clean.failed_clean);
           });
-        await message.reply(
+        await reply(
+          message,
           replacer(messages.commands.admin.clean.cleaned_messages_all, [
             ["{COUNT}", count],
           ])
@@ -75,11 +76,10 @@ module.exports = {
           })
           .catch((e) => {
             if (e)
-              return message.channel.send(
-                messages.commands.admin.clean.failed_clean
-              );
+              return reply(message, messages.commands.admin.clean.failed_clean);
           });
-        await message.reply(
+        await reply(
+          message,
           replacer(messages.commands.admin.clean.cleaned_messages_bots, [
             ["{COUNT}", count],
           ])
@@ -103,11 +103,10 @@ module.exports = {
           })
           .catch((e) => {
             if (e)
-              return message.channel.send(
-                messages.commands.admin.clean.failed_clean
-              );
+              return reply(message, messages.commands.admin.clean.failed_clean);
           });
-        await message.reply(
+        await reply(
+          message,
           replacer(messages.commands.admin.clean.cleaned_messages_self, [
             ["{COUNT}", count],
           ])
@@ -115,10 +114,13 @@ module.exports = {
         break;
       }
       case "user": {
-        if (!args[2]) return await message.reply("you need to supply a user");
+        if (!args[2]) return await reply(message, "you need to supply a user");
         const target = await search_guildMember(args[2]!, message.guild!);
         if (!target)
-          return await message.reply(messages.targeting.not_found.guild_member);
+          return await reply(
+            message,
+            messages.targeting.not_found.guild_member
+          );
         await message.channel.messages
           .fetch({
             limit: count,
@@ -135,11 +137,10 @@ module.exports = {
           })
           .catch((e) => {
             if (e)
-              return message.channel.send(
-                messages.commands.admin.clean.failed_clean
-              );
+              return reply(message, messages.commands.admin.clean.failed_clean);
           });
-        await message.reply(
+        await reply(
+          message,
           replacer(messages.commands.admin.clean.cleaned_messages_self, [
             ["{COUNT}", count],
           ])
@@ -163,11 +164,10 @@ module.exports = {
           })
           .catch((e) => {
             if (e)
-              return message.channel.send(
-                messages.commands.admin.clean.failed_clean
-              );
+              return reply(message, messages.commands.admin.clean.failed_clean);
           });
-        await message.reply(
+        await reply(
+          message,
           replacer(messages.commands.admin.clean.cleaned_messages_images, [
             ["{COUNT}", count],
           ])

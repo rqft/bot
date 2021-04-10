@@ -1,7 +1,7 @@
 import { api } from "../../functions/api";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 
-[""].sort(undefined);
 module.exports = {
   module: "other",
   name: "words",
@@ -40,7 +40,9 @@ module.exports = {
     ]);
     const fn = sorts.get(args[0]?.toLowerCase()!);
     if (fn === undefined)
-      return await message.reply(
+      return await reply(
+        message,
+
         "invalid sort type, valid types are: " +
           Array.from(sorts.keys())
             .map((k) => `\`${k}\``)
@@ -51,7 +53,9 @@ module.exports = {
       "text"
     )) as string;
     const words = _words.split("\n").sort(fn ?? undefined);
-    await message.reply(
+    await reply(
+      message,
+
       words
         .filter((e) => e.includes(query))
         .map((e) => e.replace(reg, "__**$&**__"))

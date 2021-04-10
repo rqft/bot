@@ -1,4 +1,5 @@
 import { MessageAttachment } from "discord.js";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
       }`;
     }
     const img = new MessageAttachment(url);
-    await message.reply(messages.commands.other.emoji, {
+    await reply(message, messages.commands.other.emoji, {
       files: [img],
     });
   },

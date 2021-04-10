@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { spotifySearch } from "../../functions/spotifySearch";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { IArtist } from "../../interfaces/ISpotify";
 import { messages } from "../../messages";
@@ -14,7 +15,7 @@ module.exports = {
     const search = args.join(" ");
     const track = await spotifySearch(search);
     if (!track)
-      return await message.reply(messages.commands.other.spotify.not_found);
+      return await reply(message, messages.commands.other.spotify.not_found);
     const embed = new MessageEmbed();
     embed.setAuthor(track.artists[0]!.name, track.album.icon.url);
     embed.setThumbnail(track.album.icon.url);
@@ -47,6 +48,6 @@ module.exports = {
           .join(" ")
       );
     embed.setColor(Color.spotify);
-    await message.reply(embed);
+    await reply(message, embed);
   },
 } as ICommand;

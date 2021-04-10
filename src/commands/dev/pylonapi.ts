@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import { CustomEmojis } from "../../enums/customEmojis";
 import { Emojis } from "../../enums/emojis";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { ICronTask, IDeploy } from "../../interfaces/IPylon";
 import { Secrets } from "../../secrets";
@@ -24,7 +25,7 @@ module.exports = {
     switch (args[0]) {
       case "code":
         const id = args[1];
-        if (!id) return await message.reply("you need a deployment id");
+        if (!id) return await reply(message, "you need a deployment id");
         const dreq = await (
           await fetch(`https://pylon.bot/api/deployments/${id}`, reqinit)
         ).json();
@@ -32,12 +33,14 @@ module.exports = {
         const atts: { name: string; attachment: Buffer }[] = [];
         files.forEach((file: any) => {
           atts.push({
-            name: file.path.replace(/\//, ""),
+            name: file.path.replace(/\//, "").replace(/\//g, "_"),
             attachment: Buffer.from(file.content),
           });
         });
 
-        const res = await message.reply(
+        const res = await reply(
+          message,
+
           `here you go!
         
         
@@ -54,7 +57,9 @@ module.exports = {
         const greq = (await (
           await fetch(`https://pylon.bot/api/user/guilds`, reqinit)
         ).json()) as { name: string; id: string; icon?: string }[];
-        await message.reply(
+        await reply(
+          message,
+
           new MessageEmbed({
             title: "Available Pylon guilds",
             description: greq
@@ -66,7 +71,7 @@ module.exports = {
         break;
       default:
         if (!message.guild?.members.cache.has("270148059269300224"))
-          return await message.reply("pylon is not authorized on this server");
+          return await reply(message, "pylon is not authorized on this server");
         const req = await fetch(
           `https://pylon.bot/api/guilds/${message.guild.id}`,
           reqinit
@@ -124,7 +129,7 @@ ${CustomEmojis.GUI_RICH_PRESENCE} **Events**: ${stat.events}
 **└╴ Host Function Calls**: ${stat.hostFunctionCalls ?? 0}`
         );
 
-        await message.reply(emb);
+        await reply(message, emb);
         break;
     }
   },

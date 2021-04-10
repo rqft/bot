@@ -11,6 +11,7 @@ import { getUserPermissions } from "../../functions/getUserPermissions";
 import { search_user } from "../../functions/searching/user";
 import globalConf from "../../globalConf";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 
@@ -29,7 +30,7 @@ module.exports = {
       args[0] ? args.join(" ") : message.member!.id
     );
     if (!user) {
-      return await message.reply(messages.targeting.not_found.user);
+      return await reply(message, messages.targeting.not_found.user);
     }
     const emb = new MessageEmbed();
     emb.setAuthor(
@@ -71,7 +72,7 @@ ${
         video: mem.voice.selfVideo ? "On Video" : "",
       };
       const joinedVoice = [
-        `${voice.channel}`,
+        voice.channel,
         voice.deaf,
         voice.mute,
         voice.speaking,
@@ -97,10 +98,6 @@ ${
             ? `\n${Emojis.PENCIL2} **Nickname**: \`${mem.nickname}\``
             : ""
         }${
-          mem.displayColor
-            ? `\n${Emojis.PAINTBRUSH} **Custom Color**: \`${mem.displayHexColor}\``
-            : ""
-        }${
           mem.voice.channel
             ? `\n${Emojis.TELEPHONE} **Voice**: In ${joinedVoice}`
             : ""
@@ -121,16 +118,23 @@ ${
             (e) => `\`${capitalizeWords(e.toLowerCase().replace(/_/g, " "))}\``
           )
           .join("  ")}
-${Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem).level}\`__ (${
+${Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem).level}\`__ [(${
           getBotLevel(mem).type
-        })`
+        })](https://arcy.gitbook.io/vybose/guides/targeting#levels)`
       );
     }
-    if (user.flags?.toArray().length)
-      emb.addField("❯ Profile Badges", getProfileBadges(user).join(" "));
-    if (globalConf.badges[user.id])
-      emb.addField("❯ Bot Badges", globalConf.badges[user.id]?.join("\n"));
+    const listedBadges = user.flags?.toArray().length
+      ? getProfileBadges(user)
+      : [];
+    listedBadges.push(
+      ...(globalConf.badges[user.id] ?? []).map(
+        (e) =>
+          `[${e.icon}](https://arcy.gitbook.io/vybose/infos/profile-badges#${e.anchor})`
+      )
+    );
+    if (listedBadges.length) emb.setDescription(listedBadges.join(" "));
+
     emb.setColor(Color.embed);
-    await message.reply(emb);
+    await reply(message, emb);
   },
 } as ICommand;

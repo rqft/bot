@@ -2,6 +2,7 @@ import { GuildChannel } from "discord.js";
 import { replacer } from "../../functions/replacer";
 import { search_guildMember } from "../../functions/searching/guildMember";
 import { checkTargets } from "../../functions/targeting/checkTargets";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -21,18 +22,20 @@ module.exports = {
   aliases: ["stoptalking", "shutup"],
   async run(message, args) {
     const user = await search_guildMember(args[0]!, message.guild!);
-    if (!user) return message.reply(messages.targeting.not_found.guild_member);
+    if (!user) return reply(message, messages.targeting.not_found.guild_member);
     if (user.id == message.author.id)
-      return await message.reply(messages.targeting.actor_cant_self);
+      return await reply(message, messages.targeting.actor_cant_self);
     const tg = checkTargets(message.member!, user);
     if (!tg.checks.globalAdm || !tg.checks.level || !tg.checks.roles)
-      return message.reply(tg.messages.join("\n"));
+      return reply(message, tg.messages.join("\n"));
     if (
       (message.channel as GuildChannel).permissionOverwrites
         .array()
         .find((e) => e.id === user.id && e.deny.has("SEND_MESSAGES"))
     )
-      return await message.reply(
+      return await reply(
+        message,
+
         replacer(messages.commands.infractions.already_muted, [
           ["{USER}", user.toString()],
         ])
@@ -43,9 +46,11 @@ module.exports = {
         ADD_REACTIONS: false,
       });
     } catch {
-      return message.reply(messages.commands.infractions.failed_mute);
+      return reply(message, messages.commands.infractions.failed_mute);
     }
-    return message.reply(
+    return reply(
+      message,
+
       replacer(messages.commands.infractions.muted_member, [
         ["{USER}", user.toString()],
       ])

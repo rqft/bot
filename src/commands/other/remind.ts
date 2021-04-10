@@ -2,6 +2,7 @@ import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { parseBlock } from "../../functions/parseBlock";
 import { parseTimeString, timeUnits } from "../../functions/parseTimeString";
 import { replacer } from "../../functions/replacer";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -22,8 +23,11 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-    if (!ms || ms > timeUnits.w)
-      return await message.reply(
+
+    if (!ms || ms > timeUnits.y)
+      return await reply(
+        message,
+
         messages.commands.other.reminder.reminder_time_limit
       );
     const query = {
@@ -33,14 +37,16 @@ module.exports = {
       expiry: Date.now() + ms,
       duration: ms,
     };
-    await message.reply(
+    await reply(
+      message,
+
       replacer(messages.commands.other.reminder.will_remind_in, [
         ["{DURATION}", simpleGetLongAgo(Date.now() - query.duration)],
       ])
     );
     setTimeout(
       async () =>
-        await message.channel.send({
+        await message.channel.send(message, {
           content: replacer(messages.commands.other.reminder.remind_message, [
             ["{USER_MENTION}", query.user.toString()],
             ["{TIME_UTC}", query.executedAt.toUTCString()],

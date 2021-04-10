@@ -5,6 +5,7 @@ import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { replacer } from "../../functions/replacer";
 import globalConf from "../../globalConf";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 
@@ -45,7 +46,7 @@ module.exports = {
         "Help Menu",
         client.user?.avatarURL() ?? client.user?.defaultAvatarURL
       );
-      return message.reply(emb);
+      return reply(message, emb);
     }
 
     const name = args![0].toLowerCase();
@@ -56,7 +57,9 @@ module.exports = {
       ) as ICommand);
     console.log(command);
     if (!command) {
-      return message.reply(
+      return reply(
+        message,
+
         replacer(messages.commands.other.help.invalid_command, [
           ["{QUERY}", name],
         ])
@@ -149,6 +152,6 @@ module.exports = {
       "Help Menu",
       client.user?.avatarURL() ?? client.user?.defaultAvatarURL
     );
-    message.reply(emb);
+    reply(message, emb);
   },
 } as ICommand;

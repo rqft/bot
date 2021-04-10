@@ -3,6 +3,7 @@ import { Emojis } from "../../enums/emojis";
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { parseTimeString } from "../../functions/parseTimeString";
 import { Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 export const overrides: { [any: string]: RoleData } = {
   adm: {
@@ -68,24 +69,32 @@ module.exports = {
         e.name.startsWith("--ov-")
       );
       if (!found?.size)
-        return await message.reply(
+        return await reply(
+          message,
+
           "❌ You have no overrides currently enabled"
         );
       message.member?.roles.cache.forEach((e) => {
         if (e.name.startsWith("--ov-")) e.delete();
       });
-      return await message.reply(
+      return await reply(
+        message,
+
         `${Emojis.WHITE_CHECK_MARK} Cleared ${found?.size} overrides.`
       );
     }
     const override = args.slice(1).join(" ").toLowerCase();
     const ms = parseTimeString(time!);
-    if (ms < 500)
-      return await message.reply(
+    if (!ms || ms < 500)
+      return await reply(
+        message,
+
         "Must be higher than 500 milliseconds / Invalid Time String"
       );
     if (!Object.keys(overrides).includes(override))
-      return await message.reply(
+      return await reply(
+        message,
+
         `${
           Emojis.WARNING
         } Unknown Override, available options are ${Object.keys(overrides)
@@ -100,7 +109,9 @@ module.exports = {
       color: Color.embed,
     });
     await message.member?.roles.add(role!);
-    await message.reply(
+    await reply(
+      message,
+
       `${Emojis.WHITE_CHECK_MARK} Gave you \`${
         ovRole?.name
       }\` override for ${simpleGetLongAgo(Date.now() - ms)}`

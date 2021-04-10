@@ -4,6 +4,7 @@ import { CustomEmojis } from "../../enums/customEmojis";
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { replacer } from "../../functions/replacer";
 import { Chars, Color } from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import { messages } from "../../messages";
 module.exports = {
@@ -29,10 +30,15 @@ module.exports = {
             )[0]
       );
     } catch {
-      return await message.reply(messages.commands.other.invite.invalid_invite);
+      return await reply(
+        message,
+        messages.commands.other.invite.invalid_invite
+      );
     }
     if (!invite)
-      return await message.reply(
+      return await reply(
+        message,
+
         replacer(messages.commands.other.invite.unknown_invite, [
           ["{CODE}", args[0]],
         ])
@@ -45,7 +51,7 @@ module.exports = {
       (e) => e.code == invite!.code
     );
     if (find) invite = find;
-    if (!invite) return await message.reply("?");
+    if (!invite) return await reply(message, "?");
     const emb = new MessageEmbed();
     emb.setAuthor(
       invite.guild!.name,
@@ -125,6 +131,6 @@ module.exports = {
       `${CustomEmojis.STATUS_OFFLINE} ${baseMembers.members} Members ${CustomEmojis.STATUS_ONLINE} ${baseMembers.online} Online`
     );
     emb.setColor(Color.embed);
-    await message.reply(emb);
+    await reply(message, emb);
   },
 } as ICommand;

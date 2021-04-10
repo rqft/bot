@@ -8,6 +8,19 @@ import { replacer } from "../functions/replacer";
 import globalConf from "../globalConf";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
+const responses = new Map();
+export async function reply(
+  message: Message,
+  messageData: any,
+  other?: any
+): Promise<Message> {
+  const response: Message | undefined = responses.get(message.id);
+  if (response) return await response.edit(messageData, other);
+  const newResponse = await message.reply(messageData, other);
+  responses.set(message.id, newResponse);
+  // message.channel.stopTyping(true);
+  return newResponse;
+}
 export async function onCommand(message: Message): Promise<Message | void> {
   const pre = globalConf.modules.commands.prefixes;
   const prefixRegex = new RegExp(
@@ -26,13 +39,15 @@ export async function onCommand(message: Message): Promise<Message | void> {
 
   if (!command) return;
   if (!message.guild || !message.member)
-    return await message.reply(messages.commands.dm);
+    return await reply(message, messages.commands.dm);
   if (
     command.args &&
     command.args.filter((e) => e.required).length &&
     !(args.length >= command.args.filter((e) => e.required).length)
   )
-    return await message.reply(
+    return await reply(
+      message,
+
       replacer(messages.commands.args.missing_args, [
         ["{USER}", message.author.toString()],
         [
@@ -50,7 +65,9 @@ export async function onCommand(message: Message): Promise<Message | void> {
     command.restrictions.level !== undefined &&
     getBotLevel(message.member!).level < command.restrictions.level
   ) {
-    return await message.reply(
+    return await reply(
+      message,
+
       replacer(messages.permissions.missing_level, [
         ["{LEVEL}", command.restrictions.level],
       ])
@@ -61,14 +78,14 @@ export async function onCommand(message: Message): Promise<Message | void> {
     command.restrictions.ownerOnly &&
     !globalConf.ownerIDs.includes(message.member.id)
   ) {
-    return await message.reply(messages.permissions.missing_dev);
+    return await reply(message, messages.permissions.missing_dev);
   }
   if (
     command.restrictions &&
     command.restrictions.serverOwnerOnly &&
     message.member.id !== message.guild.ownerID
   ) {
-    return await message.reply(messages.permissions.missing_owner);
+    return await reply(message, messages.permissions.missing_owner);
   }
   if (
     command.restrictions &&
@@ -78,7 +95,9 @@ export async function onCommand(message: Message): Promise<Message | void> {
       true
     )
   )
-    return await message.reply(
+    return await reply(
+      message,
+
       replacer(messages.permissions.missing_permissions, [
         [
           "{PERMISSIONS}",
@@ -94,7 +113,9 @@ export async function onCommand(message: Message): Promise<Message | void> {
       true
     )
   )
-    return await message.reply(
+    return await reply(
+      message,
+
       replacer(messages.permissions.missing_permissions_me, [
         [
           "{PERMISSIONS}",
@@ -132,7 +153,9 @@ export async function onCommand(message: Message): Promise<Message | void> {
     const reaction = reactions.first();
     if (!reaction) {
       run = false;
-      await message.channel.send(
+      await reply(
+        message,
+
         replacer(messages.commands.confirmation.timeout, [
           [
             "{TIMEOUT}",
@@ -144,17 +167,19 @@ export async function onCommand(message: Message): Promise<Message | void> {
       );
     }
     if (reaction?.emoji.name === "❌") {
-      await message.channel.send(messages.commands.confirmation.deny);
+      await reply(message, messages.commands.confirmation.deny);
       run = false;
     } else if (reaction?.emoji.name === "✅") run = true;
   }
 
   try {
     if (!run) return;
-    message.channel.startTyping();
-    command.run(message, args).then(() => message.channel.stopTyping(true));
+    // message.channel.startTyping();
+    command.run(message, args);
   } catch (e) {
-    await message.reply(
+    await reply(
+      message,
+
       replacer(messages.error.error_running_command, [["{ERROR}", e]])
     );
   }

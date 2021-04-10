@@ -4,9 +4,9 @@ import { client as c } from "../..";
 import { Emojis } from "../../enums/emojis";
 import { api } from "../../functions/api";
 import { capitalizeWords } from "../../functions/capitalizeWords";
-import { parseTimeString } from "../../functions/parseTimeString";
 import globalConf from "../../globalConf";
 import * as globals from "../../globals";
+import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 import _utils from "../../utils";
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
       utils;
       const fs = fetch;
       fs;
-      const parse = parseTimeString;
+      // const parse = parseTimeString;
       str = eval(code);
       const embed = new MessageEmbed();
       embed.setColor(globals.Color.embed);
@@ -68,7 +68,7 @@ module.exports = {
       embed.setDescription(
         `Output - ${capitalizeWords(typeof str)}\n` + output
       );
-      await message.reply(embed);
+      await reply(message, embed);
     } catch (e) {
       str = e;
 
@@ -80,7 +80,7 @@ module.exports = {
       embed.setDescription(
         `Output - ${capitalizeWords(typeof str)}\n` + output
       );
-      await message.reply(embed);
+      await reply(message, embed);
     }
   },
 } as ICommand;
