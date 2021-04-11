@@ -6,6 +6,7 @@ import { getBotLevel } from "../functions/getBotLevel";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { replacer } from "../functions/replacer";
 import globalConf from "../globalConf";
+import { Chars } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
 const responses = new Map();
@@ -15,10 +16,25 @@ export async function reply(
   other?: any
 ): Promise<Message> {
   const response: Message | undefined = responses.get(message.id);
-  if (response) return await response.edit(messageData, other);
-  const newResponse = await message.reply(messageData, other);
+  if (response) {
+    const fn = response.attachments.size || response.embeds.length || other;
+    if (fn) {
+      response.delete();
+      return await message.reply(
+        messageData ?? Chars.ZERO_WIDTH_CHARACTER,
+        other
+      );
+    }
+    return await response.edit(
+      messageData ?? Chars.ZERO_WIDTH_CHARACTER,
+      other
+    );
+  }
+  const newResponse = await message.reply(
+    messageData ?? Chars.ZERO_WIDTH_CHARACTER,
+    other
+  );
   responses.set(message.id, newResponse);
-  // message.channel.stopTyping(true);
   return newResponse;
 }
 export async function onCommand(message: Message): Promise<Message | void> {
