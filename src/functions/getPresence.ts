@@ -2,6 +2,7 @@ import { User } from "discord.js";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { UserStatusMap } from "../enums/userStatus";
+import { Chars } from "../globals";
 
 const spotifyIcon = "<:spotify:826151198603870239>";
 export function getPresence(user: User, maxTextLength: number = 45) {
@@ -23,12 +24,13 @@ export function getPresence(user: User, maxTextLength: number = 45) {
     }
     if (item.type == "COMPETING") {
       const text = item.details ? `${item.details} - ` : "";
+      const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${Emojis.CROSSED_SWORDS} ${text}**${name}**`);
+      statuses.push(`${Emojis.CROSSED_SWORDS} ${text}**${name}**${state}`);
     }
     if (item.type == "PLAYING") {
       const text = item.details ? `${item.details} - ` : "";
-      const state = item.state ? `\n┗— ${item.state}` : "";
+      const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
       statuses.push(`${Emojis.VIDEO_GAME} ${text}**${name}**${state}`);
     }
@@ -45,13 +47,13 @@ export function getPresence(user: User, maxTextLength: number = 45) {
     }
     if (item.type == "WATCHING") {
       const text = item.details ? `${item.details} - ` : "";
-      const state = item.state ? `\n┗— ${item.state}` : "";
+      const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
       statuses.push(`${Emojis.TV} ${text}**${name}**${state}`);
     }
     if (item.type == "STREAMING") {
       const text = item.details ? `${item.details} - ` : "";
-      const state = item.state ? `\n┗— ${item.state}` : "";
+      const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
       statuses.push(`${Emojis.SATELLITE} ${text}**${name}**${state}`);
     }

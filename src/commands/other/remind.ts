@@ -1,6 +1,6 @@
 import { simpleGetLongAgo } from "../../functions/getLongAgo";
 import { parseBlock } from "../../functions/parseBlock";
-import { parseTimeString, timeUnits } from "../../functions/parseTimeString";
+import { parseTimeString } from "../../functions/parseTimeString";
 import { replacer } from "../../functions/replacer";
 import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
@@ -23,12 +23,13 @@ module.exports = {
     const time = args[0] ?? "5m";
     const comment = args.slice(1).join(" ");
     const ms = parseTimeString(time);
-
-    if (!ms || ms > timeUnits.y)
+    const max = Date.now() - 2 ** 31 - 1;
+    if (!ms || ms > max)
       return await reply(
         message,
-
-        messages.commands.other.reminder.reminder_time_limit
+        replacer(messages.commands.other.reminder.reminder_time_limit, [
+          ["{MAX_TIME}", simpleGetLongAgo(max)],
+        ])
       );
     const query = {
       executedAt: new Date(),
@@ -39,7 +40,6 @@ module.exports = {
     };
     await reply(
       message,
-
       replacer(messages.commands.other.reminder.will_remind_in, [
         ["{DURATION}", simpleGetLongAgo(Date.now() - query.duration)],
       ])

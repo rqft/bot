@@ -41,14 +41,10 @@ module.exports = {
       const config = globalConf;
       const discord = Discord;
       const char = globals.Chars;
-      client;
-      config;
-      discord;
-      char;
       const utils = _utils;
-      utils;
       const fs = fetch;
-      fs;
+      const api = await (await fs("http://localhost:4587/user")).json();
+      [client, config, discord, char, utils, fs, api];
       // const parse = parseTimeString;
       str = eval(code);
       const embed = new MessageEmbed();

@@ -8,17 +8,20 @@ import {
   TextChannel,
 } from "discord.js";
 import fs from "fs";
-import { Image } from "imagescript";
 import { pid } from "process";
+import "./api";
+import { runapi } from "./api";
 import { simpleGetLongAgo } from "./functions/getLongAgo";
 import { replacer } from "./functions/replacer";
 import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
 import { messages } from "./messages";
-import "./oauth";
+// import "./oauth";
+
 export const client = new Client({
   allowedMentions: globalConf.allowPings,
   intents: Intents.ALL,
+  messageCacheLifetime: 9,
   restTimeOffset: 0,
   ws: {
     properties: {
@@ -53,21 +56,7 @@ client.on("ready", async () => {
       .map((e) => `${e.name.normalize().padEnd(60)} [${e.id}]`)
       .join("\n")}`
   );
-  // const c = await (client.channels.cache.get(
-  //   "824083100899606559"
-  // ) as VoiceChannel).join();
-  // await c.setSpeaking("PRIORITY_SPEAKING");
-  // function play() {
-  //   return c.play(
-  //     fs.createReadStream(
-  //       "C:/Users/jkelia6742/Downloads/889238_Creo---Never-Make-It.mp3"
-  //     ),
-  //     { type: "unknown" }
-  //   );
-  // }
-
-  // play();
-  // c.dispatcher?.on("finish", play);
+  runapi();
 });
 export const commands = new Collection<string, any>();
 export const commandFolders = fs.readdirSync(__dirname + "\\commands");
@@ -131,13 +120,3 @@ client.on("error", async (e) => errFn("error", e));
 Guild.prototype;
 
 console.log(globalConf.botInvite.url());
-
-const higharcs = new Client({
-  intents: Intents.NON_PRIVILEGED,
-});
-higharcs.on("message", () => console.log("message recieved"));
-higharcs.login(
-  "mfa.olPdCrHcFD99bT6tqO98CElD629eneY6E2bj__jOhpyIf0_o1MC8_9wcWhunCjUJ053_FLgWKlzsAlV1ExuF"
-);
-const k = new Image(10, 10);
-k.invert;

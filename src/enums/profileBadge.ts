@@ -2,7 +2,26 @@ import { UserFlagsString } from "discord.js";
 import { IElement } from "../interfaces/IElement";
 import { CustomEmojis } from "./customEmojis";
 
-const profileBadgeMap = new Map<UserFlagsString, IElement>([
+const profileBadgeMap = new Map<
+  UserFlagsString | "NITRO" | "SERVER_BOOSTER",
+  IElement
+>([
+  [
+    "NITRO",
+    {
+      icon: CustomEmojis.BADGE_NITRO,
+      text: "Nitro",
+      anchor: "nitro",
+    },
+  ],
+  [
+    "SERVER_BOOSTER",
+    {
+      icon: CustomEmojis.BADGE_SERVER_BOOSTER,
+      text: "Server Booster",
+      anchor: "nitro",
+    },
+  ],
   [
     "BUGHUNTER_LEVEL_1",
     {

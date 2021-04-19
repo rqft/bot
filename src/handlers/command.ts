@@ -1,4 +1,11 @@
-import { Message, MessageReaction, Permissions, User } from "discord.js";
+import {
+  Message,
+  MessageAttachment,
+  MessageEmbed,
+  MessageReaction,
+  Permissions,
+  User,
+} from "discord.js";
 import { commands } from "..";
 import { escapeRegex } from "../functions/escapeRegex";
 import { generateUsage } from "../functions/generateUsage";
@@ -6,36 +13,27 @@ import { getBotLevel } from "../functions/getBotLevel";
 import { simpleGetLongAgo } from "../functions/getLongAgo";
 import { replacer } from "../functions/replacer";
 import globalConf from "../globalConf";
-import { Chars } from "../globals";
 import { ICommand } from "../interfaces/ICommand";
 import { messages } from "../messages";
 const responses = new Map();
-export async function reply(
-  message: Message,
-  messageData: any,
-  other?: any
-): Promise<Message> {
-  const response: Message | undefined = responses.get(message.id);
+export async function reply(message: Message, ...data: [any?, any?]) {
+  const response: Message = responses.get(message.id);
   if (response) {
-    const fn = response.attachments.size || response.embeds.length || other;
-    if (fn) {
+    if (
+      data[0]?.constructor === MessageAttachment ||
+      data[1]?.constructor === MessageAttachment ||
+      data[0]?.constructor === MessageEmbed ||
+      data[1]?.constructor === MessageEmbed ||
+      data[0]?.files?.length ||
+      data[1]?.files?.length ||
+      response.embeds.length ||
+      response.attachments.size
+    )
       response.delete();
-      return await message.reply(
-        messageData ?? Chars.ZERO_WIDTH_CHARACTER,
-        other
-      );
-    }
-    return await response.edit(
-      messageData ?? Chars.ZERO_WIDTH_CHARACTER,
-      other
-    );
+    else return response.edit(...data);
   }
-  const newResponse = await message.reply(
-    messageData ?? Chars.ZERO_WIDTH_CHARACTER,
-    other
-  );
+  const newResponse = await message.reply(...data);
   responses.set(message.id, newResponse);
-  return newResponse;
 }
 export async function onCommand(message: Message): Promise<Message | void> {
   const pre = globalConf.modules.commands.prefixes;
@@ -53,9 +51,8 @@ export async function onCommand(message: Message): Promise<Message | void> {
       (cmd: ICommand) => cmd.aliases! && cmd.aliases.includes(commandName)!
     );
 
-  if (!command) return;
-  if (!message.guild || !message.member)
-    return await reply(message, messages.commands.dm);
+  if (!command || !message.member) return;
+  if (!message.guild) return await reply(message, messages.commands.dm);
   if (
     command.args &&
     command.args.filter((e) => e.required).length &&
@@ -187,7 +184,7 @@ export async function onCommand(message: Message): Promise<Message | void> {
       run = false;
     } else if (reaction?.emoji.name === "✅") run = true;
   }
-
+  message.channel.startTyping();
   try {
     if (!run) return;
     // message.channel.startTyping();
@@ -199,4 +196,5 @@ export async function onCommand(message: Message): Promise<Message | void> {
       replacer(messages.error.error_running_command, [["{ERROR}", e]])
     );
   }
+  message.channel.stopTyping();
 }

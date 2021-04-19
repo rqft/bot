@@ -14,7 +14,7 @@ module.exports = {
       message,
 
       replacer(messages.commands.other.ping, [
-        ["{DIFF}", simpleShortGetLongAgo(Date.now() - Math.abs(diff))],
+        ["{DIFF}", simpleShortGetLongAgo(Date.now() - Math.abs(diff) / 3)],
         ["{HEARTBEAT}", client.ws.ping + "ms"],
         ["{UPTIME}", simpleShortGetLongAgo(Date.now() - client.uptime!)],
       ])

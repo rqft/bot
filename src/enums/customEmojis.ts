@@ -34,6 +34,7 @@ export const enum CustomEmojis {
   BADGE_HYPESQUAD_EVENTS = "<:IconBadge_HypeSquadEvents:798624232694087682>",
   BADGE_OLD_PARTNER = "<:IconBadge_OldPartner:798624234305093672>",
   BADGE_VERIFIED_BOT = "<:IconBadge_VerifiedBot:798624262533283865>",
+  BADGE_SERVER_BOOSTER = "<:IconBadge_Booster:833696487724023838>",
 
   STATUS_DND = "<:IconStatus_Dnd:798624244669087805>",
   STATUS_IDLE = "<:IconStatus_Idle:798624247295246336>",

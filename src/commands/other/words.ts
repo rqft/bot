@@ -1,6 +1,7 @@
-import { api } from "../../functions/api";
+import fs from "fs";
 import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
+const cc = fs.readFileSync("words.txt", "utf8");
 
 module.exports = {
   module: "other",
@@ -22,7 +23,7 @@ module.exports = {
   ],
   async run(message, args) {
     const query = args.slice(1).join(" ");
-    const reg = new RegExp(`${query}`, "gi");
+    const reg = new RegExp(query, "gi");
     const sorts = new Map([
       ["normal", null],
       [
@@ -48,11 +49,15 @@ module.exports = {
             .map((k) => `\`${k}\``)
             .join(" ")
       );
-    const _words = (await api(
-      "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt",
-      "text"
-    )) as string;
-    const words = _words.split("\n").sort(fn ?? undefined);
+
+    const words = cc
+      .split("\n")
+      .sort(fn ?? undefined)
+      .sort((a, b) => {
+        if (!a.startsWith(query) && b.startsWith(query)) return 1;
+        if (a.startsWith(query) && !b.startsWith(query)) return -1;
+        return a.localeCompare(b);
+      });
     await reply(
       message,
 

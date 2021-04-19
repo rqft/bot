@@ -17,6 +17,8 @@
     "prefix": "makemod",
     "body": [
       "import { ICommand } from \"../../interfaces/ICommand\";",
+      "import { reply } from \"../../handlers/command\";",
+      "import { messages } from \"../../messages\";",
       "module.exports = {",
       "\tname: \"$0\",",
       "\tasync run(message, args) {}",

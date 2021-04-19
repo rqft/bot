@@ -11,9 +11,3 @@ export function generateUsage(command: ICommand) {
     )
     .join(" ")}`;
 }
-enum hi {
-  o = 1,
-  n = 2,
-}
-const keys = Object.keys(hi);
-keys;

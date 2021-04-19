@@ -27,10 +27,27 @@ type ResponseType = "code" | "token";
 const globalConf = {
   botInvite: {
     scope: [
-      Scope.SLASH_COMMANDS,
-      Scope.ADD_BOT,
-      Scope.ACCESS_USERNAME_AVATAR,
+      Scope.ACCESS_ACTIVITIES, //
+      Scope.ACCESS_EMAIL_ADDRESS, //
+      Scope.ACCESS_FRIENDS, //
+      Scope.ACCESS_SERVERS,
       Scope.ACCESS_THIRD_PARTY_CONNECTIONS,
+      Scope.ACCESS_USERNAME_AVATAR,
+      Scope.ADD_BOT,
+      Scope.ADD_WEBHOOK, //
+      Scope.ALTER_VOICE_SETTINGS, //
+      Scope.INTERFACE_WITH_CLIENT, //
+      Scope.JOIN_GROUP_DM, //
+      Scope.JOIN_SERVERS, //
+      Scope.LISTEN_TO_NOTIFICATIONS, //
+      Scope.MANAGE_BUILDS, //
+      Scope.MANAGE_ENTITLEMENTS, //
+      Scope.MANAGE_STORE, //
+      Scope.READ_ALL_MESSAGES, //
+      Scope.READ_BUILDS, //
+      Scope.READ_VOICE_SETTINGS, //
+      Scope.SLASH_COMMANDS,
+      Scope.UPDATE_ACTIVITY, //
     ] as Scope[],
     permissions: new Permissions([
       "SEND_MESSAGES",
@@ -61,7 +78,7 @@ const globalConf = {
       }&response_type=${this.response_type}`;
     },
   },
-  enableRichPresence: false,
+  enableRichPresence: true,
   botId: "760143615124439040",
   badges: {
     "504698587221852172": [p.botOwner, p.gh], // HighArcs

@@ -14,7 +14,7 @@ export enum timeUnits {
   cen = 1000 * 60 * 60 * 24 * 365 * 100,
 }
 
-const timeUnitsAlliases = {
+export const timeUnitsAlliases = {
   ns: ["nanosecond(s)", "nanosec(s)"],
   μs: ["microsec(s)", "microsecond(s)"],
   ms: ["millisecond(s)", "millisec(s)"],
@@ -71,17 +71,13 @@ function calc(
     | "cen"
 ): number | undefined {
   if (time.split("").some((s) => !/[0-9.,:]/g.test(s))) return;
-
-  if (!time.includes(":")) {
+  if (!time.includes(":"))
     if (isNaN(Number.parseFloat(time))) return;
     else return Number.parseFloat(time) * timeUnits[size];
-  }
-
   const times: string[] = time.split(":");
   const firstTime: number = Number.parseInt(times[0]!);
   let secondTime: number = Number.parseInt(times[1]!);
   if (times.length !== 2 || isNaN(firstTime) || isNaN(secondTime)) return;
-
   if (times[1]!.toString().length < 2) secondTime *= 10;
   else
     while (secondTime.toString().length > 2)

@@ -86,6 +86,9 @@ export const messages = {
         "❌ {USER} Argument error (`{ARG}`: not a {TYPE}) \n```\n{USAGE}```",
     },
     other: {
+      urban: {
+        no_results: "❌ No results found",
+      },
       snowflake: {
         invalid_snowflake: "❌ Invalid snowflake `{SNOWFLAKE}`",
       },
@@ -137,7 +140,7 @@ export const messages = {
         will_remind_in: "✅ I will remind you in {DURATION}",
         remind_message:
           "⌛ Hey {USER_MENTION}, You asked me at `{TIME_UTC} UTC` ({TIME_AGO} ago) to remind you about: {REMINDER_TEXT}",
-        reminder_time_limit: "❌ Time must be less than 1 week",
+        reminder_time_limit: "❌ Time must be less than {MAX_TIME}",
       },
       ocr: {
         needs_image: "❌ You need to supply an image",

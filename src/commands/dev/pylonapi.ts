@@ -38,9 +38,7 @@ module.exports = {
           });
         });
 
-        const res = await reply(
-          message,
-
+        const res = await message.reply(
           `here you go!
         
         
