@@ -12,25 +12,25 @@ export function getProfileBadges(
     userResolvable instanceof GuildMember
       ? userResolvable.user
       : userResolvable;
-  const flags: (UserFlagsString | "NITRO" | "SERVER_BOOSTER")[] = (
+  const flags: (UserFlagsString | "NITRO_USER" | "SERVER_BOOSTER")[] = (
     user.flags ?? new UserFlags(0)
   ).toArray();
   if (
     user.avatar?.startsWith("a_") ||
-    (
-      user.presence.status &&
-      user.presence.activities.filter(
+    (user.presence.status &&
+      user.presence.activities.some(
+        // test if the user has a custom emoji in their status
         (e) =>
           e.type === "CUSTOM_STATUS" &&
           e.emoji &&
           (e.emoji.animated || e.emoji.id)
-      )
-    ).length ||
-    client.guilds.cache
+      )) ||
+    client.guilds.cache // test if the user boosts any server
       .filter((e) => e.members.cache.has(user.id))
-      .some((e) => !!e.members.cache.get(user.id)?.premiumSinceTimestamp)
+      .some((e) => !!e.members.cache.get(user.id)?.premiumSinceTimestamp) ||
+    flags.includes("PARTNERED_SERVER_OWNER")
   )
-    flags.push("NITRO");
+    flags.push("NITRO_USER");
   if (
     client.guilds.cache
       .filter((e) => e.members.cache.has(user.id))

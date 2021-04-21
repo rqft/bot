@@ -4,7 +4,6 @@ import { ICommand } from "../../interfaces/ICommand";
 const cc = fs.readFileSync("words.txt", "utf8");
 
 module.exports = {
-  module: "other",
   name: "words",
   restrictions: {
     level: 0,

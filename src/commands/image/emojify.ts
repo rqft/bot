@@ -24,7 +24,6 @@ module.exports = {
     if (res.status !== 200)
       return await reply(
         message,
-
         `something stupid happened (${res.status}): \`\`\`\n${res.statusText}\`\`\``
       );
     const buffer = await res.buffer();
@@ -32,7 +31,7 @@ module.exports = {
     await reply(message, "🎷", {
       files: [
         {
-          name: "emoji.png",
+          name: `${this.name}.png`,
           attachment: buffer,
         },
       ],

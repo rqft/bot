@@ -1,5 +1,6 @@
-import { MessageEmbed } from "discord.js";
-import { client } from "../..";
+import * as Structures from "detritus-client/lib/structures";
+import { Guild, MessageEmbed } from "discord.js";
+import { client, userBotGuilds } from "../..";
 import { CustomEmojis } from "../../enums/customEmojis";
 import { Emojis } from "../../enums/emojis";
 import { capitalizeWords } from "../../functions/capitalizeWords";
@@ -11,7 +12,6 @@ import { search_guild } from "../../functions/searching/guild";
 import { Color } from "../../globals";
 import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
-
 module.exports = {
   name: "server",
   aliases: ["guild", "s"],
@@ -28,21 +28,31 @@ module.exports = {
   async run(message, args) {
     const guild = args[0] ? await search_guild(args.join(" ")) : message.guild!;
     if (!guild) return await reply(message, "Unknown Server");
-    guild.members.fetch();
     var marked = false;
-    if (client.guilds.cache.has(guild.id)) marked = true;
+    if (client.guilds.cache.has(guild.id) || userBotGuilds.has(guild.id))
+      marked = true;
     const emb = new MessageEmbed();
     emb.setAuthor(guild.name, guild.iconURL({ dynamic: true, size: 4096 })!);
-    emb.setThumbnail(guild.iconURL({ dynamic: true, size: 4096 })!);
+    emb.setThumbnail(
+      guild instanceof Structures.Guild
+        ? guild.iconUrl!
+        : guild.iconURL({ dynamic: true, size: 4096 })!
+    );
     var tick = Emojis.X;
-    if (guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES")
+    if (
+      guild instanceof Guild &&
+      guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES"
+    )
       tick = Emojis.CYCLONE;
-    if (guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES")
+    if (
+      guild instanceof Guild &&
+      guild.explicitContentFilter === "MEMBERS_WITHOUT_ROLES"
+    )
       tick = Emojis.WHITE_CHECK_MARK;
     emb.addField(
       "❯ Server Info",
       `${Emojis.GEAR} **ID**: \`${guild.id}\`${
-        marked
+        guild instanceof Guild && marked
           ? `\n${CustomEmojis.GUI_OWNERCROWN} **Owner**: ${
               guild.owner
                 ? guild.owner.toString()
@@ -50,7 +60,7 @@ module.exports = {
             }`
           : ""
       }${
-        marked
+        marked && guild instanceof Guild
           ? `\n${
               CustomEmojis.CHANNEL_VOICE
             } ** Voice Region **: ${getGuildVoiceRegion(guild)}`
@@ -60,7 +70,7 @@ ${Emojis.LINK} **Links**: [\`Icon\`](${guild.iconURL({
         dynamic: true,
         size: 4096,
       })}) ${
-        guild.bannerURL()
+        guild instanceof Guild && guild.bannerURL()
           ? `| [\`Banner\`](${guild.bannerURL({ size: 4096 })})`
           : ""
       }${
@@ -74,20 +84,27 @@ ${Emojis.LINK} **Links**: [\`Icon\`](${guild.iconURL({
           ? ` | [\`Invite Splash\`](${guild.splashURL({ size: 4096 })})`
           : ""
       }
-${Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
+${
+  guild instanceof Guild
+    ? `\n${Emojis.CALENDAR} **Created**: ${simpleGetLongAgo(
         guild.createdTimestamp
-      )} ago ${formatTimestamp(guild.createdAt)}
-${CustomEmojis.GUI_ROLE} **Verification Level**: ${capitalizeWords(
-        guild.verificationLevel.replace(/_/g, " ").toLowerCase()
-      )}${guild.mfaLevel === 1 ? " (Elevated)" : ""}${
-        marked
+      )} ago ${formatTimestamp(guild.createdAt)}`
+    : ""
+}${
+        guild instanceof Guild
+          ? `${CustomEmojis.GUI_ROLE} **Verification Level**: ${capitalizeWords(
+              guild.verificationLevel.replace(/_/g, " ").toLowerCase()
+            )}${guild.mfaLevel === 1 ? " (Elevated)" : ""}`
+          : ""
+      }${
+        guild instanceof Guild && marked
           ? `\n${tick} **NSFW Content Filter**: ${capitalizeWords(
               guild.explicitContentFilter.replace(/_/g, " ").toLowerCase()
             )}`
           : ""
       }`
     );
-    if (true) {
+    if (guild instanceof Guild) {
       const channels = {
         text: guild.channels.cache.filter((e) => e.type == "text").size,
         category: guild.channels.cache.filter((e) => e.type == "category").size,
@@ -142,7 +159,7 @@ ${CustomEmojis.CHANNEL_TEXT}: ${channels.text} | ${CustomEmojis.CHANNEL_CATEGORY
       if (enabled.length) emb.addField("❯ Counts", enabled.join("\n"));
     }
 
-    if (guild.premiumSubscriptionCount) {
+    if (guild instanceof Guild && guild.premiumSubscriptionCount) {
       const boosters = guild.members.cache
         .filter((e) => !!e.premiumSince)
         .array();
@@ -159,7 +176,7 @@ ${boosters
         }`
       );
     }
-    if (guild.vanityURLCode) {
+    if (guild instanceof Guild && guild.vanityURLCode) {
       emb.addField(
         "❯ Vanity URL",
         `**Code**: [\`${guild.vanityURLCode}\`](https://discord.com/invite/${
@@ -171,13 +188,13 @@ ${boosters
     if (guild.features.length)
       emb.addField(
         "❯ Features",
-        getGuildFeatures(guild)
+        getGuildFeatures(guild as Guild)
           .map((e) => `\`${e.text}\``)
           .join(", ")
       );
     emb.setColor(Color.embed);
     if (guild.splashURL()) emb.setImage(guild.splashURL({ size: 4096 })!);
-
+    emb.setDescription(guild.description);
     // console.log(emb);
     await reply(message, emb);
   },

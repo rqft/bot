@@ -1,4 +1,4 @@
-import { Activity, User } from "discord.js";
+import { Activity, GuildPreview, User } from "discord.js";
 import express from "express";
 import { client } from "..";
 import { UserStatusMap } from "../enums/userStatus";
@@ -22,7 +22,7 @@ export function runapi() {
     if (!_req.query.query)
       return res.send({ error: "Missing 'query' argument" });
     const c = await search_guild((_req.query.query as string).toLowerCase());
-    if (!c)
+    if (!c || c instanceof GuildPreview)
       return res.send({
         error: "❌ Guild not found",
       });
@@ -48,10 +48,44 @@ export function runapi() {
       },
     });
   });
+
+  app.get("/known_guilds", async (_req, res) => {
+    res.setHeader("content-type", "application/json");
+    _req.query.query = _req.query.query ?? "760143615124439040";
+    const c = await search_user((_req.query.query as string).toLowerCase());
+    if (!c)
+      return res.send({
+        error: messages.targeting.not_found.user,
+      });
+
+    res.send(
+      ((c: User) => {
+        const object: any[] = [];
+        client.guilds.cache
+          .filter((e) => e.members.cache.has(c.id))
+          .forEach((v) => {
+            const member = v.members.cache.get(c.id)!;
+            const o: any = {
+              name: v.name,
+              id: v.id,
+              joined: v.joinedAt,
+            };
+            if (member.lastMessage)
+              o["last_typing"] = {
+                created_at: member.lastMessage!.createdAt,
+                since_now: `${simpleGetLongAgo(
+                  member.lastMessage!.createdTimestamp!
+                )} ago`,
+              };
+            object.push(o);
+          });
+        return object;
+      })(c)
+    );
+  });
   app.get("/user", async (_req, res) => {
     res.setHeader("content-type", "application/json");
-    if (!_req.query.query)
-      return res.send({ error: "Missing 'query' argument" });
+    _req.query.query = _req.query.query ?? "760143615124439040";
     const c = await search_user((_req.query.query as string).toLowerCase());
     if (!c)
       return res.send({
@@ -72,15 +106,9 @@ export function runapi() {
         created_at: c.createdAt,
         since_now: `${simpleGetLongAgo(c.createdTimestamp)} ago`,
       },
-      known_guilds: ((c: User) => {
-        const object: { [a: string]: any } = {};
-        client.guilds.cache
-          .filter((e) => e.members.cache.has(c.id))
-          .forEach((v) => {
-            object[v.id] = v.name;
-          });
-        return object;
-      })(c),
+      known_guilds: client.guilds.cache
+        .filter((e) => e.members.cache.has(c.id))
+        .map((e) => e.id),
       profile_badges: getProfileBadges(c, undefined, true),
       custom_badges: (globalConf.badges[c.id] ?? []).map((e) => e.text),
       presence: {

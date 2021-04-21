@@ -1,3 +1,6 @@
+import chalk from "chalk";
+import { ShardClient } from "detritus-client";
+import * as Structure from "detritus-client/lib/structures";
 import RPC from "discord-rpc";
 import {
   Client,
@@ -15,9 +18,23 @@ import { simpleGetLongAgo } from "./functions/getLongAgo";
 import { replacer } from "./functions/replacer";
 import globalConf from "./globalConf";
 import { onCommand } from "./handlers/command";
+import { ICommand } from "./interfaces/ICommand";
 import { messages } from "./messages";
 // import "./oauth";
-
+//#region userbot data
+export const selfclient = new ShardClient(
+  "mfa.olPdCrHcFD99bT6tqO98CElD629eneY6E2bj__jOhpyIf0_o1MC8_9wcWhunCjUJ053_FLgWKlzsAlV1ExuF",
+  {
+    isBot: false,
+  }
+);
+async function loadUserBot() {
+  const user = await selfclient.run();
+  user.guilds.forEach((e) => userBotGuilds.set(e.id, e));
+  console.log(`Loaded ${chalk.red(user.user)} with ${user.shardCount} shards`);
+}
+export const userBotGuilds = new Collection<string, Structure.Guild>();
+//#endregion
 export const client = new Client({
   allowedMentions: globalConf.allowPings,
   intents: Intents.ALL,
@@ -48,14 +65,10 @@ client.once("ready", () => {
   // );
 });
 // var DELAY = 0;
+const date = Date.now();
 client.on("ready", async () => {
-  console.log(messages.client.ready);
-  console.log(
-    `Current guilds (${client.guilds.cache.size}):\n${client.guilds.cache
-      .array()
-      .map((e) => `${e.name.normalize().padEnd(60)} [${e.id}]`)
-      .join("\n")}`
-  );
+  console.log(`${messages.client.ready} after ${Date.now() - date} ms`);
+  await loadUserBot();
   runapi();
 });
 export const commands = new Collection<string, any>();
@@ -65,8 +78,8 @@ for (const folder of commandFolders) {
     .readdirSync(__dirname + `\\commands\\${folder}`)
     .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
-    const command = require(`./commands/${folder}/${file}`);
-    commands.set(command.name, command);
+    const command: ICommand = require(`./commands/${folder}/${file}`);
+    commands.set(command.name, { ...command, module: folder });
   }
 }
 client.on("message", onCommand);
@@ -87,7 +100,7 @@ if (globalConf.enableRichPresence) {
           large_image: "glasses",
           large_text: "✅ sami is a furry",
         },
-        details: `🎷`,
+        // details: ``,
         buttons: [
           {
             label: "Discord",

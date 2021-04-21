@@ -11,7 +11,6 @@ module.exports = {
       type: "text",
     },
   ],
-  module: "utility",
   async run(message, args) {
     const query = args.join(" ").replace(/\`{3}\n?(.+)?/g, "");
     const options = {

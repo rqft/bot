@@ -3,11 +3,11 @@ import { IElement } from "../interfaces/IElement";
 import { CustomEmojis } from "./customEmojis";
 
 const profileBadgeMap = new Map<
-  UserFlagsString | "NITRO" | "SERVER_BOOSTER",
+  UserFlagsString | "NITRO_USER" | "SERVER_BOOSTER",
   IElement
 >([
   [
-    "NITRO",
+    "NITRO_USER",
     {
       icon: CustomEmojis.BADGE_NITRO,
       text: "Nitro",

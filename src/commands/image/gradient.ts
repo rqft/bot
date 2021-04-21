@@ -3,9 +3,6 @@ import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 module.exports = {
   name: "gradient",
-  restrictions: {
-    level: 100,
-  },
   args: [
     {
       name: "top",
@@ -35,7 +32,7 @@ module.exports = {
     await reply(message, `Gradient (\`${args[0]}\` => \`${args[1]}\`)`, {
       files: [
         {
-          name: "gradient.png",
+          name: `${this.name}.png`,
           attachment: c,
         },
       ],

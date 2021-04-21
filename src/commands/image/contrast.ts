@@ -5,11 +5,11 @@ import { Arguments } from "../../globals";
 import { reply } from "../../handlers/command";
 import { ICommand } from "../../interfaces/ICommand";
 module.exports = {
-  name: "red",
+  name: "hue",
   args: [
     Arguments.ImageResolvable,
     {
-      name: "power",
+      name: "shift",
       required: false,
       type: "number",
     },
@@ -17,18 +17,17 @@ module.exports = {
   async run(message, args) {
     var url = await getImageUrl(args[0]!);
     if (!url) return await reply(message, "what image is that");
-
     const fetched = await fetch(url);
     const image = await Image.decode(await fetched.buffer());
     const power = parseFloat(args[1]!);
-    if (power < -1) return await reply(message, "Cannot be less than -1");
-    image.red((isNaN(power) ? 1 : power) + 1);
+    if (power < 0) return await reply(message, "Cannot be less than 0");
+    image.hueShift(isNaN(power) ? 180 : power);
     const c = Buffer.from(await image.encode());
     console.log(c);
-    await reply(message, "🟥", {
+    await reply(message, "", {
       files: [
         {
-          name: "red.png",
+          name: `${this.name}.png`,
           attachment: c,
         },
       ],

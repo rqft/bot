@@ -28,7 +28,7 @@ module.exports = {
     await reply(message, "", {
       files: [
         {
-          name: "green.png",
+          name: `${this.name}.png`,
           attachment: c,
         },
       ],
