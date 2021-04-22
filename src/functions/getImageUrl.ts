@@ -1,14 +1,13 @@
-import { AllowedImageFormat } from "discord.js";
 import fetch from "node-fetch";
-import { search_user } from "./searching/user";
+import { findUser } from "./findUser";
 
 export async function getImageUrl(
   query: string,
-  format: AllowedImageFormat = "png"
+  format: "gif" | "jpeg" | "jpg" | "png" | "webp" = "png"
 ) {
   var url = null;
-  const user = await search_user(query);
-  if (user) url = user.avatarURL({ format, size: 4096 });
+  const user = await findUser(query);
+  if (user) url = user.avatarUrl;
   else if (/<a?:.+:\d+>/gi.test(query))
     url = `https://cdn.discordapp.com/emojis/${query?.replace(/\D/g, "")}.${
       query?.startsWith("<a:") && format !== "png" ? format : "png"

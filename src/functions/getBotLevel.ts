@@ -1,13 +1,15 @@
-import { GuildMember, User } from "discord.js";
+import { Member, User } from "detritus-client/lib/structures";
+import { PermissionString } from "../enums/utils";
 import globalConf from "../globalConf";
-globalConf;
-export function getBotLevel(user: User | GuildMember) {
+import { bitfieldToArray } from "./bitfieldToArray";
+
+export function getBotLevel(user: User | Member) {
   var $level = {
     level: 0,
     type: "User",
   };
-  if (user instanceof GuildMember) {
-    const perms = user.permissions.toArray();
+  if (user instanceof Member) {
+    const perms = bitfieldToArray(user.permissions, PermissionString);
     if (
       perms.includes("MENTION_EVERYONE") ||
       perms.includes("MANAGE_MESSAGES") ||
@@ -47,7 +49,7 @@ export function getBotLevel(user: User | GuildMember) {
         level: 100,
         type: "Admin",
       };
-    if (user.user.id == user.guild.ownerID)
+    if (user.user.id == user.guild!.ownerId)
       $level = {
         level: 200,
         type: "Server Owner",

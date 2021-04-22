@@ -1,4 +1,4 @@
-import { Guild } from "discord.js";
+import { Guild } from "detritus-client/lib/structures";
 import { Emojis } from "../enums/emojis";
 import { IElement } from "../interfaces/IElement";
 
@@ -91,9 +91,7 @@ guildVoiceRegionMap.set(VoiceRegionString.US_WEST, {
 export { VoiceRegionString, guildVoiceRegionMap };
 
 export function getGuildVoiceRegion(guild: Guild, showFlag: boolean = true) {
-  const reg = guildVoiceRegionMap.get(
-    (guild.region as unknown) as VoiceRegionString
-  );
+  const reg = guildVoiceRegionMap.get(guild.region as VoiceRegionString);
   if (!reg) return;
   return `${showFlag ? reg.icon : ""} ${reg.text}`;
 }

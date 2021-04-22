@@ -1,10 +1,8 @@
 import { IElement } from "../interfaces/IElement";
 import { CustomEmojis } from "./customEmojis";
+import { PresenceStatusUnion } from "./utils";
 
-const UserStatusMap = new Map<
-  "online" | "idle" | "dnd" | "offline" | "invisible",
-  IElement
->();
+const UserStatusMap = new Map<PresenceStatusUnion, IElement>();
 UserStatusMap.set("dnd", {
   icon: CustomEmojis.STATUS_DND,
   text: "Busy",

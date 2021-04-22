@@ -1,4 +1,4 @@
-import { Guild } from "discord.js";
+import { Guild } from "detritus-client/lib/structures";
 import { CustomEmojis } from "../enums/customEmojis";
 import { IElement } from "../interfaces/IElement";
 import { capitalizeWords } from "./capitalizeWords";
@@ -81,7 +81,7 @@ export function getGuildFeatures(guild: Guild, showIcons: boolean = true) {
   const feat: IElement[] = [];
   guild.features.forEach((element) => {
     feat.push({
-      icon: showIcons ? guildFeatureMap.get(element) ?? "" : "",
+      icon: showIcons ? guildFeatureMap.get(element as GuildFeature) ?? "" : "",
       text: capitalizeWords(element.toLowerCase().replace(/_/g, " ")),
     });
   });

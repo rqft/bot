@@ -1,6 +1,8 @@
-import { GuildMember, PermissionString, Role } from "discord.js";
+import { Member, Role } from "detritus-client/lib/structures";
+import { PermissionString, PermissionStringUnion } from "../enums/utils";
 import globalConf from "../globalConf";
-const ignoredPermissions: PermissionString[] = [
+import { bitfieldToArray } from "./bitfieldToArray";
+const ignoredPermissions: PermissionStringUnion[] = [
   "ADD_REACTIONS",
   "ATTACH_FILES",
   "CHANGE_NICKNAME",
@@ -25,16 +27,16 @@ type CustomPermissionString =
   | "GLOBAL_ADMIN"
   | "SYSTEM"
   | "NONE";
-export function getUserPermissions(user: GuildMember | Role) {
+export function getUserPermissions(user: Member | Role) {
   var perms: (
-    | PermissionString
+    | PermissionStringUnion
     | CustomPermissionString
-  )[] = user.permissions
-    .toArray()
-    .filter((e) => !ignoredPermissions.includes(e));
+  )[] = bitfieldToArray(user.permissions, PermissionString).filter(
+    (e) => !ignoredPermissions.includes(e)
+  );
 
   if (perms.includes("ADMINISTRATOR")) perms = ["ADMINISTRATOR"];
-  if (user == user.guild.owner) perms = ["SERVER_OWNER"];
+  if (user.id == user.guild!.owner!.id) perms = ["SERVER_OWNER"];
   if (globalConf.ownerIDs.includes(user.id)) perms.unshift("GLOBAL_ADMIN");
   if ("760143615124439040" == user.id) perms.unshift("SYSTEM");
 

@@ -1,9 +1,9 @@
-import { UserFlagsString } from "discord.js";
 import { IElement } from "../interfaces/IElement";
 import { CustomEmojis } from "./customEmojis";
+import { UserFlagUnion } from "./utils";
 
 const profileBadgeMap = new Map<
-  UserFlagsString | "NITRO_USER" | "SERVER_BOOSTER",
+  UserFlagUnion | "NITRO_USER" | "SERVER_BOOSTER",
   IElement
 >([
   [
@@ -23,7 +23,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "BUGHUNTER_LEVEL_1",
+    "BUG_HUNTER_LEVEL_1",
     {
       icon: CustomEmojis.BADGE_BUG_HUNTER,
       text: "Bug Hunter Level I",
@@ -31,7 +31,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "BUGHUNTER_LEVEL_2",
+    "BUG_HUNTER_LEVEL_2",
     {
       icon: CustomEmojis.BADGE_BUG_HUNTER_2,
       text: "Bug Hunter Level II",
@@ -39,7 +39,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "DISCORD_EMPLOYEE",
+    "STAFF",
     {
       icon: CustomEmojis.BADGE_STAFF,
       text: "Discord Employee",
@@ -47,7 +47,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "EARLY_SUPPORTER",
+    "PREMIUM_EARLY_SUPPORTER",
     {
       icon: CustomEmojis.BADGE_EARLY_SUPPORTER,
       text: "Early Supporter",
@@ -55,7 +55,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "EARLY_VERIFIED_BOT_DEVELOPER",
+    "VERIFIED_DEVELOPER",
     {
       icon: CustomEmojis.BADGE_BOT_DEVELOPER,
       text: "Early Verified Developer",
@@ -63,31 +63,31 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "HOUSE_BALANCE",
+    "HYPESQUAD_ONLINE_HOUSE_1",
     {
-      icon: CustomEmojis.BADGE_HYPESQUAD_BALANCE,
+      icon: CustomEmojis.BADGE_HYPESQUAD_BRAVERY,
       text: "HypeSquad Balance",
       anchor: "hypesquad",
     },
   ],
   [
-    "HOUSE_BRAVERY",
+    "HYPESQUAD_ONLINE_HOUSE_2",
     {
-      icon: CustomEmojis.BADGE_HYPESQUAD_BRAVERY,
+      icon: CustomEmojis.BADGE_HYPESQUAD_BRILLIANCE,
       text: "HypeSquad Bravery",
       anchor: "hypesquad",
     },
   ],
   [
-    "HOUSE_BRILLIANCE",
+    "HYPESQUAD_ONLINE_HOUSE_3",
     {
-      icon: CustomEmojis.BADGE_HYPESQUAD_BRILLIANCE,
+      icon: CustomEmojis.BADGE_HYPESQUAD_BALANCE,
       text: "HypeSquad Brilliance",
       anchor: "hypesquad",
     },
   ],
   [
-    "HYPESQUAD_EVENTS",
+    "HYPESQUAD",
     {
       icon: CustomEmojis.BADGE_HYPESQUAD_EVENTS,
       text: "HypeSquad Events",
@@ -95,7 +95,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "PARTNERED_SERVER_OWNER",
+    "PARTNER",
     {
       icon: CustomEmojis.BADGE_PARTNER,
       text: "Partnered Server Owner",

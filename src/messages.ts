@@ -1,8 +1,13 @@
+import chalk from "chalk";
 export const messages = {
   client: {
-    unable_to_get_user: "❌ Unable to get bot user",
+    unable_to_get_user: "❌ Unable to get user",
     ready: "📦 Ready",
-    logged_in: "✅ Logged in as {USER}",
+    logged_in: `✅ Took ${chalk.yellow(`{TIME}`)} to log in as ${chalk.red(
+      "{USER}"
+    )} (uploading ${chalk.green("{GUILDS} guilds")} and ${chalk.blue(
+      "{MEMBERS} members"
+    )}) with a ${chalk.redBright("shard count of {SHARDS}")}`,
   },
   permissions: {
     missing_permissions: "❌ You need {PERMISSIONS} to run this command",
@@ -29,7 +34,7 @@ export const messages = {
   },
   error: {
     error_running_command:
-      "❌ There was an error running this command: ```\n{ERROR}```",
+      "❌ There was an error running this command: ```js\n{ERROR}```",
   },
   commands: {
     infractions: {

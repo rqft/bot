@@ -1,82 +1,49 @@
-import Discord, { MessageEmbed } from "discord.js";
-import fetch from "node-fetch";
-import { client as c } from "../..";
-import { Emojis } from "../../enums/emojis";
-import { api } from "../../functions/api";
-import { capitalizeWords } from "../../functions/capitalizeWords";
-import globalConf from "../../globalConf";
-import * as globals from "../../globals";
-import { reply } from "../../handlers/command";
-import { ICommand } from "../../interfaces/ICommand";
-import _utils from "../../utils";
-module.exports = {
+import { Constants, Utils } from "detritus-client";
+import { commands } from "../../globals";
+
+commands.add({
+  label: "code",
   name: "eval",
-  restrictions: {
-    ownerOnly: true,
-  },
   args: [
-    {
-      name: "code",
-      required: false,
-      type: "any",
-    },
+    { default: false, name: "noreply", type: "bool" },
+    { default: false, name: "verbose", type: "bool" },
+    { default: 2, name: "jsonspacing", type: "number" },
   ],
-  async run(message, args: string[]) {
-    var lang: "json" | "ts" | "js" = "ts";
-    const hasAttachment = message.attachments.array()[0]
-      ? `// Has Attachment\n`
-      : "";
-    const code = args.length
-      ? args.join(" ").replace(/\`{3}\n?(.+)?/g, "")
-      : await api(
-          message.attachments.array()[0]
-            ? message.attachments.array()[0]!.url
-            : "https://raw.githubusercontent.com/arcy-at/arcy-at/main/bot-default-eval-file.js",
-          "text"
-        );
-    // const input = `\`\`\`ts\n${code.slice(0, 1000)}\`\`\``;
-    var str = null;
+  onBefore: (context) => context.user.isClientOwner,
+  onCancel: (context) =>
+    context.editOrReply(
+      `${context.user.mention}, you're not this bot's owner or part of it's team.`
+    ),
+  run: async (context, args) => {
+    const { matches } = Utils.regex(
+      Constants.DiscordRegexNames.TEXT_CODEBLOCK,
+      args.code
+    );
+    if (matches.length) {
+      args.code = matches[0]?.text;
+    }
+
+    let language = "js";
+    let message;
     try {
-      const client = c;
-      const config = globalConf;
-      const discord = Discord;
-      const char = globals.Chars;
-      const utils = _utils;
-      const fs = fetch;
-      const api = await (await fs("http://localhost:4587/user")).json();
-      [client, config, discord, char, utils, fs, api];
-      // const parse = parseTimeString;
-      str = eval(code);
-      const embed = new MessageEmbed();
-      embed.setColor(globals.Color.embed);
-      embed.setTitle(`${Emojis.WHITE_CHECK_MARK} Eval Success`);
-      // embed.addField("Input", input);
-      if (typeof str == "string") {
-        str = `"${str}"`;
+      message = await Promise.resolve(eval(args.code));
+      if (typeof message === "object") {
+        message = JSON.stringify(message, null, args.jsonspacing);
+        language = "json";
       }
-
-      // if (str instanceof Promise) str = await str;
-      if (str instanceof Object) {
-        str = JSON.stringify(str, null, 2);
-        lang = "json";
-      }
-      const output = `\`\`\`${lang}\n${hasAttachment}${str}\`\`\``;
-      embed.setDescription(
-        `Output - ${capitalizeWords(typeof str)}\n` + output
+      if (args.verbose) context.message.react("✅");
+    } catch (error) {
+      if (args.verbose) context.message.react("❌");
+      message = error ? error.stack || error.message : error;
+    }
+    const max = 1990 - language.length;
+    if (!args.noreply) {
+      return context.editOrReply(
+        ["```" + language, String(message).slice(0, max), "```"].join("\n")
       );
-      await reply(message, embed);
-    } catch (e) {
-      str = e;
-
-      const embed = new MessageEmbed();
-      embed.setColor(globals.Color.embed);
-      embed.setTitle(`${Emojis.NO_ENTRY} Eval Failed`);
-      // embed.addField("Input", input.slice(0, 500));
-      const output = `\`\`\`ts\n${hasAttachment}${str}\`\`\``;
-      embed.setDescription(
-        `Output - ${capitalizeWords(typeof str)}\n` + output
-      );
-      await reply(message, embed);
     }
   },
-} as ICommand;
+  onError: (_context, _args, error) => {
+    console.error(error);
+  },
+});
