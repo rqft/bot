@@ -1,20 +1,15 @@
-import { client, selfclient } from "..";
-
-export function findUser(query: string) {
+import { User } from "detritus-client/lib/structures";
+import { client } from "..";
+import { restClient } from "../globals";
+import { getCollectiveUsers } from "./getters";
+export async function findUser(query: string): Promise<User> {
+  query = query.toLowerCase();
   return (
-    client.users
-      .toArray()
-      .find(
-        (e) =>
-          e.username.toLowerCase().includes(query) ||
-          (e.username + "#" + e.toString()).toLowerCase().includes(query) ||
-          e.id === query.replace(/\D/g, "")
-      ) ??
-    selfclient.users.find(
+    getCollectiveUsers().find(
       (e) =>
         e.username.toLowerCase().includes(query) ||
-        (e.username + "#" + e.toString()).toLowerCase().includes(query) ||
+        e.toString().toLowerCase() === query ||
         e.id === query.replace(/\D/g, "")
-    )
+    ) ?? new User(client, await restClient.fetchUser(query))
   );
 }

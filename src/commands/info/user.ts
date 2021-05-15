@@ -1,47 +1,125 @@
-import { Permissions, PlatformTypes } from "detritus-client/lib/constants";
-import { Embed } from "detritus-client/lib/utils";
+import { Command, CommandClient } from "detritus-client";
+import { Api } from "detritus-client-rest/lib/endpoints";
+import { HTTPMethods } from "detritus-rest/lib/constants";
 import { CustomEmojis } from "../../enums/customEmojis";
 import { Emojis } from "../../enums/emojis";
-import { ConnectionMap, UserFlagArray } from "../../enums/utils";
-import { bitfieldToArray } from "../../functions/bitfieldToArray";
+import {
+  APIProfile,
+  ConnectionMap,
+  connectionUrls,
+  ValidAccount,
+  ValidAccountType,
+} from "../../enums/utils";
 import { capitalizeWords } from "../../functions/capitalizeWords";
 import { findUser } from "../../functions/findUser";
 import { formatTimestamp } from "../../functions/formatTimestamp";
+import { generateEmbed } from "../../functions/generateEmbedTemplate";
 import { getBotLevel } from "../../functions/getBotLevel";
 import { getLongAgo, simpleGetLongAgo } from "../../functions/getLongAgo";
 import { getPresence } from "../../functions/getPresence";
 import { getProfileBadges } from "../../functions/getProfileBadges";
+import { getCollectiveGuilds } from "../../functions/getters";
 import { getUserPermissions } from "../../functions/getUserPermissions";
 import globalConf from "../../globalConf";
-import { Color, commands, selfclient } from "../../globals";
-import { messages } from "../../messages";
+import { CustomError, restSelfClient } from "../../globals";
+import { IElement } from "../../interfaces/IElement";
+import { BaseCommand } from "../basecommand";
 
-commands.add({
-  label: "user",
-  name: "user",
-  permissions: [Permissions.ADMINISTRATOR],
-  run: async (context, args) => {
-    const user = findUser(args.user || context.userId);
-    if (!user)
-      return await context.editOrReply(messages.targeting.not_found.user);
-
-    const emb = new Embed();
-
-    emb.setAuthor(user.toString(), user.avatarUrl ?? user.defaultAvatarUrl);
+export default class UserCommand extends BaseCommand {
+  constructor(client: CommandClient) {
+    super(client, {
+      label: "user",
+      name: "user",
+    });
+  }
+  async run(context: Command.Context, args: Command.ParsedArgs) {
+    const user = await findUser(args.user || context.userId);
+    if (!user) throw new CustomError("I can't find that user");
+    const emb = generateEmbed({ user: context.user });
+    emb.setAuthor(
+      user.toString(),
+      user.avatarUrl ?? user.defaultAvatarUrl,
+      user.jumpLink
+    );
     emb.setThumbnail(user.avatarUrl ?? user.defaultAvatarUrl);
+
+    const notes = [];
+    if (user.bot) {
+      const app = context.client.applications.find((v) => v.id === user.id);
+      console.log(context.client.applications.map((v) => v.name));
+      if (app) {
+        console.log(`found application for user ${user}: ${app}`);
+        if (app.description) notes.push(app.description);
+        if (app.summary) notes.push(app.summary);
+        if (app.youtubeTrailerUrl)
+          notes.push(`[Youtube Trailer](${app.youtubeTrailerUrl})`);
+        if (app.iconUrl) emb.setThumbnail(app.iconUrl);
+        if (app.developers)
+          notes.push(
+            `Developed by ${app.developers
+              .map((v) => "<@" + v.id + ">")
+              .join("\n")}`
+          );
+        if (app.publishers)
+          notes.push(
+            `Published by ${app.publishers
+              .map((v) => "<@" + v.id + ">")
+              .join("\n")}`
+          );
+        if (!app.botPublic) notes.push(`Bot cannot be added to servers`);
+        if (app.botRequireCodeGrant) notes.push(`Bot requires a code grant`);
+      }
+      if (user.hasVerifiedBot) notes.push(`This application has been verified`);
+    }
+    const profile: APIProfile = await restSelfClient.request({
+      route: {
+        method: HTTPMethods.GET,
+        path: Api.USER_PROFILE,
+        params: { userId: user.id },
+      },
+    });
+
+    const knownGuilds = getCollectiveGuilds().filter((v) =>
+      v.members.has(user.id)
+    );
+    if (knownGuilds.length)
+      notes.push(
+        `Seen on **${knownGuilds.length}** guild${
+          knownGuilds.length > 1 ? "s" : ""
+        }`
+      );
+    const nicks = knownGuilds
+      .filter((v) => !!v.members.get(user.id)?.nick)
+      .map((v) => v.members.get(user.id)?.nick);
+    if (nicks.length)
+      notes.push(
+        `Also known as ${[...new Set(nicks)].map((v) => `**${v}**`).join(", ")}`
+      );
+    const boosts = knownGuilds.filter(
+      (v) => !!v.members.get(user.id)?.isBoosting
+    );
+    if (boosts.length)
+      notes.push(
+        `Currently boosting **${boosts.length}** guild${
+          boosts.length > 1 ? "s" : ""
+        }`
+      );
+    if (notes.length) emb.addField("❯ Notes", notes.join("\n"));
+    const accountType = new Map<ValidAccountType | ValidAccount, IElement>([
+      ["bot", { icon: CustomEmojis.GUI_SETTINGS, text: "Bot" }],
+      ["user", { icon: CustomEmojis.GUI_FRIENDS, text: "User" }],
+      ["team", { icon: CustomEmojis.GUI_ROLE, text: "Team Account" }],
+    ]).get(user.hasTeamUser ? "team" : user.bot ? "bot" : "user")!;
     emb.addField(
       `❯ User Info`,
       `${Emojis.GEAR} **󠇰ID**: \`${user.id}\`
-${Emojis.LINK} **Profile**: ${user}
+${Emojis.LINK} **Profile**: ${user.mention}
 ${Emojis.CALENDAR_SPIRAL} **Created**: ${simpleGetLongAgo(
         user.createdAtUnix
       )} ago ${formatTimestamp(user.createdAt)}
-${
-  user.bot ? CustomEmojis.GUI_SETTINGS : CustomEmojis.GUI_ROLE
-} **Account Type**: ${user.bot ? `Bot` : `User`}`
+${accountType.icon} **Account Type**: ${accountType.text}`
     );
-
-    var mem = context.message.guild?.members.cache.get(user.id) ?? false;
+    var mem = context.message.guild?.members.cache.get(user.id);
     if (user.presence) emb.addField("❯ Presence", getPresence(user));
     if (mem) {
       const voice = {
@@ -99,6 +177,7 @@ ${
             : ""
         }`
       );
+
       emb.addField(
         "❯ Permissions",
         `${Emojis.GEAR} **Permission List**: ${getUserPermissions(mem)
@@ -111,45 +190,34 @@ ${Emojis.CYCLONE} **Bot Level**: __\`${getBotLevel(mem).level}\`__ [(${
         })](https://arcy.gitbook.io/vybose/guides/targeting#levels)`
       );
     }
-    console.log(
-      bitfieldToArray(
-        selfclient.users.get(user.id)?.publicFlags ?? 0,
-        UserFlagArray
-      )
-    );
-    const listedBadges = bitfieldToArray(
-      selfclient.users.get(user.id)?.publicFlags ?? 0,
-      UserFlagArray
-    ).length
-      ? await getProfileBadges(user)
-      : [];
+    const listedBadges = [];
+    if (user.publicFlags)
+      listedBadges.push((await getProfileBadges(user)).join(" "));
     listedBadges.push(
       ...(globalConf.badges[user.id] ?? []).map(
         (e) =>
           `[${e.icon}](https://arcy.gitbook.io/vybose/infos/profile-badges#${e.anchor})`
       )
     );
-    var formed = listedBadges.join(" ");
-    const connections = (
-      await selfclient.users.get(user.id)?.fetchProfile()
-    )?.connectedAccounts.toArray();
-    const connections2 = connections?.map((e) => {
-      const useLink = ![
-        PlatformTypes.BATTLENET,
-        PlatformTypes.CONTACTS,
-        PlatformTypes.LEAGUE_OF_LEGENDS,
-        PlatformTypes.SAMSUNG,
-      ].includes(e.type);
-      const ic = ConnectionMap.get(e.type)!;
-      return useLink ? `[${ic?.icon}](${ic!.anchor}${e.name})` : ic!.icon;
-    });
 
-    if (connections2?.length) formed += "\n" + connections2.join(" ");
+    const connections = profile.connected_accounts.filter(
+      (v) => v.type.toUpperCase() in connectionUrls
+    );
+
+    if (connections.length)
+      listedBadges.push(
+        "\n",
+        ...connections.map(
+          (v) =>
+            `[${ConnectionMap.get(v.type)!.icon}](${connectionUrls[
+              v.type.toUpperCase()
+            ]!(v)})`
+        )
+      );
+    var formed = listedBadges.join(" ");
     if (formed.length) emb.setDescription(formed);
-    console.log(emb);
-    emb.setColor(Color.embed);
     context.editOrReply({
       embed: emb,
     });
-  },
-});
+  }
+}

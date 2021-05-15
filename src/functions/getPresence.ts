@@ -1,12 +1,18 @@
-import { User } from "detritus-client/lib/structures";
+import { PresenceActivity, User } from "detritus-client/lib/structures";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { UserStatusMap } from "../enums/userStatus";
 import { PresenceStatus, PresenceStatusUnion } from "../enums/utils";
 import { Chars } from "../globals";
+import { formatTimestamp } from "./formatTimestamp";
+import { simpleGetLongAgo } from "./getLongAgo";
 const spotifyIcon = "<:spotify:826151198603870239>";
 
 export function getPresence(user: User, maxTextLength: number = 45) {
+  const genTime = (item: PresenceActivity) =>
+    `\n${Chars.TAB_SPACER_END} for ${simpleGetLongAgo(
+      item.createdAt ?? Date.now()
+    )} ${formatTimestamp(item.createdAt ?? Date.now())}`;
   const pres = user.presence!;
   var stat = `${UserStatusMap.get(pres.status as PresenceStatusUnion)?.icon} ${
     UserStatusMap.get(pres.status as PresenceStatusUnion)?.text
@@ -22,13 +28,17 @@ export function getPresence(user: User, maxTextLength: number = 45) {
             item.state.length > maxTextLength ? "..." : ""
           }`
         : "";
-      custom = `${e} ${text} (${item.name})`;
+      custom = `${e} ${text} (${item.name})${genTime(item)}`;
     }
     if (item.type == PresenceStatus.PLAYING) {
       const text = item.details ? `${item.details} - ` : "";
       const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${Emojis.VIDEO_GAME} ${text}**${name}**${state}`);
+      statuses.push(
+        `${
+          item.isOnXbox ? CustomEmojis.CONNECTION_XBOX : Emojis.VIDEO_GAME
+        } ${text}**${name}**${state}${genTime(item)}`
+      );
     }
     if (item.type == PresenceStatus.LISTENING) {
       const text = item.details ? `${item.details}` : "";
@@ -37,21 +47,23 @@ export function getPresence(user: User, maxTextLength: number = 45) {
       const name = item.name;
       statuses.push(
         `${
-          item.name == "Spotify" ? spotifyIcon : Emojis.MUSICAL_NOTE
-        } ${track}**${name}**`
+          item.isOnSpotify ? spotifyIcon : Emojis.MUSICAL_NOTE
+        } ${track}**${name}**${genTime(item)}`
       );
     }
     if (item.type == PresenceStatus.WATCHING) {
       const text = item.details ? `${item.details} - ` : "";
       const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${Emojis.TV} ${text}**${name}**${state}`);
+      statuses.push(`${Emojis.TV} ${text}**${name}**${state}${genTime(item)}`);
     }
     if (item.type == PresenceStatus.STREAMING) {
       const text = item.details ? `${item.details} - ` : "";
       const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
-      statuses.push(`${Emojis.SATELLITE} ${text}**${name}**${state}`);
+      statuses.push(
+        `${Emojis.SATELLITE} ${text}**${name}**${state}${genTime(item)}`
+      );
     }
   }
   return `${stat}${custom ? `\n${custom}` : ""}${

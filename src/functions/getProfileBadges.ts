@@ -15,7 +15,10 @@ export async function getProfileBadges(
     | UserFlagUnion
     | "NITRO_USER"
     | "SERVER_BOOSTER"
-  )[] = bitfieldToArray(user.publicFlags ?? 0, UserFlagArray);
+  )[] = bitfieldToArray<UserFlagUnion | "NITRO_USER" | "SERVER_BOOSTER">(
+    user.publicFlags ?? 0,
+    UserFlagArray
+  );
   if (
     user.avatar?.startsWith("a_") ||
     (user.presence?.status &&
@@ -29,14 +32,15 @@ export async function getProfileBadges(
     client.guilds // test if the user boosts any server
       .filter((e) => e.members.cache.has(user.id))
       .some((e) => !!e.members.cache.get(user.id)?.premiumSinceUnix) ||
-    flags.includes("PARTNER") || // test if the user is a discord partner
-    (await user.fetchProfile()).premiumSince
+    flags.includes("PARTNER") // test if the user is a discord partner
   )
     flags.push("NITRO_USER");
   if (
-    client.guilds
-      .filter((e) => e.members.cache.has(user.id))
-      .some((e) => !!e.members.cache.get(user.id)?.premiumSinceUnix)
+    client.guilds.some(
+      (e) =>
+        e.members.cache.has(user.id) &&
+        !!e.members.cache.get(user.id)?.premiumSinceUnix // loop thru all guilds and see if they boost any
+    )
   )
     flags.push("SERVER_BOOSTER");
   if (raw) return flags.map((e) => profileBadgeMap.get(e)!.text);
@@ -48,6 +52,6 @@ export async function getProfileBadges(
       }](https://arcy.gitbook.io/vybose/infos/profile-badges#${get?.anchor})`
     );
   });
-  if (badges.length == 0) return ["No Badges"];
+  if (badges.length == 0) return [];
   return badges;
 }

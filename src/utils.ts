@@ -327,3 +327,6 @@ export const enum Scope {
   UPDATE_ACTIVITY = "activities.write",
   ACCESS_FRIENDS = "relationships.read",
 }
+export type List<T> = {
+  [any: string]: T;
+};

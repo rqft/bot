@@ -1,8 +1,12 @@
 import { Member, Role } from "detritus-client/lib/structures";
-import { PermissionString, PermissionStringUnion } from "../enums/utils";
+import {
+  CustomPermissionString,
+  PermissionString,
+  PermissionStringUnion,
+} from "../enums/utils";
 import globalConf from "../globalConf";
 import { bitfieldToArray } from "./bitfieldToArray";
-const ignoredPermissions: PermissionStringUnion[] = [
+const ignoredPermissions: (PermissionStringUnion | CustomPermissionString)[] = [
   "ADD_REACTIONS",
   "ATTACH_FILES",
   "CHANGE_NICKNAME",
@@ -19,21 +23,14 @@ const ignoredPermissions: PermissionStringUnion[] = [
   "USE_VAD",
   "VIEW_CHANNEL",
 ];
-type CustomPermissionString =
-  | "MANAGED"
-  | "SERVER_OWNER"
-  | "BLACKLISTED_USER"
-  | "BLACKLISTED_GUILD_OWNER"
-  | "GLOBAL_ADMIN"
-  | "SYSTEM"
-  | "NONE";
 export function getUserPermissions(user: Member | Role) {
   var perms: (
     | PermissionStringUnion
     | CustomPermissionString
-  )[] = bitfieldToArray(user.permissions, PermissionString).filter(
-    (e) => !ignoredPermissions.includes(e)
-  );
+  )[] = bitfieldToArray<PermissionStringUnion | CustomPermissionString>(
+    user.permissions,
+    PermissionString
+  ).filter((e) => !ignoredPermissions.includes(e));
 
   if (perms.includes("ADMINISTRATOR")) perms = ["ADMINISTRATOR"];
   if (user.id == user.guild!.owner!.id) perms = ["SERVER_OWNER"];

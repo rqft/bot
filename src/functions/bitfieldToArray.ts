@@ -1,3 +1,5 @@
+export function bitfieldToArray<T>(bitfield: number | bigint, array: T[]): T[];
+export function bitfieldToArray(bitfield: number | bigint, array: any[]): any[];
 export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
   bitfield = BigInt(bitfield);
   return array.filter((_, i) => {

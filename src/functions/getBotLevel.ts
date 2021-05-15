@@ -21,7 +21,7 @@ export function getBotLevel(user: User | Member) {
       };
     if (
       perms.includes("MANAGE_CHANNELS") ||
-      perms.includes("MANAGE_NICKNAMES") ||
+      perms.includes("CHANGE_NICKNAMES") ||
       perms.includes("DEAFEN_MEMBERS") ||
       perms.includes("MOVE_MEMBERS") ||
       perms.includes("MUTE_MEMBERS")

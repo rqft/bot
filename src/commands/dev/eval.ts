@@ -1,20 +1,29 @@
-import { Constants, Utils } from "detritus-client";
-import { commands } from "../../globals";
-
-commands.add({
-  label: "code",
-  name: "eval",
-  args: [
-    { default: false, name: "noreply", type: "bool" },
-    { default: false, name: "verbose", type: "bool" },
-    { default: 2, name: "jsonspacing", type: "number" },
-  ],
-  onBefore: (context) => context.user.isClientOwner,
-  onCancel: (context) =>
-    context.editOrReply(
-      `${context.user.mention}, you're not this bot's owner or part of it's team.`
-    ),
-  run: async (context, args) => {
+import { Command, CommandClient, Constants, Utils } from "detritus-client";
+import { client as client_ } from "../..";
+import globalConf from "../../globalConf";
+import { altclients, selfclient } from "../../globals";
+import { messages } from "../../messages";
+import { BaseCommand } from "../basecommand";
+export default class EvalCommand extends BaseCommand {
+  constructor(client: CommandClient) {
+    super(client, {
+      label: "code",
+      name: "eval",
+      priority: 4587,
+      required: true,
+      args: [
+        { default: false, name: "noreply", type: Boolean },
+        { default: 2, name: "jsonspacing", type: "number" },
+      ],
+      onBefore: (context) =>
+        context.user.isClientOwner ||
+        globalConf.ownerIDs.includes(context.user.id),
+      onCancel: (context) =>
+        context.editOrReply(messages.permissions.missing_dev),
+      onError: (_context, _args, error) => console.error(error),
+    });
+  }
+  async run(context: Command.Context, args: Command.ParsedArgs) {
     const { matches } = Utils.regex(
       Constants.DiscordRegexNames.TEXT_CODEBLOCK,
       args.code
@@ -26,14 +35,16 @@ commands.add({
     let language = "js";
     let message;
     try {
+      const client = client_;
+      const userBot = selfclient;
+      const alts = altclients;
+      [client, userBot, ...alts];
       message = await Promise.resolve(eval(args.code));
       if (typeof message === "object") {
         message = JSON.stringify(message, null, args.jsonspacing);
         language = "json";
       }
-      if (args.verbose) context.message.react("✅");
     } catch (error) {
-      if (args.verbose) context.message.react("❌");
       message = error ? error.stack || error.message : error;
     }
     const max = 1990 - language.length;
@@ -42,8 +53,5 @@ commands.add({
         ["```" + language, String(message).slice(0, max), "```"].join("\n")
       );
     }
-  },
-  onError: (_context, _args, error) => {
-    console.error(error);
-  },
-});
+  }
+}

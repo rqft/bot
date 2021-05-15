@@ -1,10 +1,8 @@
 import { CustomEmojis } from "./enums/customEmojis";
 import { IElement } from "./interfaces/IElement";
 import { Secrets } from "./secrets";
+import { List } from "./utils";
 
-type List<T> = {
-  [any: string]: T;
-};
 const p = {
   botOwner: {
     icon: CustomEmojis.GUI_OWNERCROWN,
@@ -17,13 +15,13 @@ const p = {
     anchor: "bot",
   },
   gh: {
-    icon: CustomEmojis.GUI_ROLE,
+    icon: CustomEmojis.CONNECTION_GITHUB,
     text: "Access To Github",
     anchor: "bot",
   },
 };
 const globalConf = {
-  enableRichPresence: true,
+  enableRichPresence: false,
   botId: "760143615124439040",
   badges: {
     "504698587221852172": [p.botOwner, p.gh], // HighArcs
@@ -54,7 +52,7 @@ const globalConf = {
   ],
   modules: {
     commands: {
-      prefixes: ["$", "<@760143615124439040>"] as string[],
+      prefixes: ["$"] as string[],
       // prefixes: [""],
       confirmation: {
         emojis: {

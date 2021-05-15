@@ -8,6 +8,10 @@ export const messages = {
     )} (uploading ${chalk.green("{GUILDS} guilds")} and ${chalk.blue(
       "{MEMBERS} members"
     )}) with a ${chalk.redBright("shard count of {SHARDS}")}`,
+    recieved_event: `🌀 ${chalk.grey(`{TIMESTAMP}`)} ${chalk.blue(
+      "{USER}"
+    )} Recieved event ${chalk.red('"{EVENT}"')} `,
+    unable_to_get_application: "❌ Unable to get bot application",
   },
   permissions: {
     missing_permissions: "❌ You need {PERMISSIONS} to run this command",
@@ -30,11 +34,24 @@ export const messages = {
       user: "❌ I can't find that user",
       role: "❌ I can't find that role",
       channel: "❌ I couldn't find that channel (do I have access to it?)",
+      guild: "❌ I can't find that server",
+      emoji: "❌ I can't find that emoji",
     },
   },
   error: {
+    ratelimit: {
+      message:
+        "using {COMMAND} too fast (`{COMMANDS}/{COMMANDS_MAX}` commands within `{TIME}`). Please wait `{REMAINING}`.",
+      guild: "❌ This server ({CAUSE}) is ",
+      channel: "❌ This channel ({CAUSE}) is ",
+      user: "❌ You ({CAUSE}) are using ",
+    },
+    error_command:
+      "❌ There was an error while using command: ```js\n{ERROR}```",
     error_running_command:
       "❌ There was an error running this command: ```js\n{ERROR}```",
+    command_failed:
+      "❌ An error caused this command to fail: ```js\n{ERROR}```",
   },
   commands: {
     infractions: {
