@@ -1,5 +1,6 @@
 import { Command, CommandClient, Constants, Utils } from "detritus-client";
 import { client as client_ } from "../..";
+import { tsEval } from "../../functions/eval";
 import globalConf from "../../globalConf";
 import { altclients, selfclient } from "../../globals";
 import { messages } from "../../messages";
@@ -39,7 +40,7 @@ export default class EvalCommand extends BaseCommand {
       const userBot = selfclient;
       const alts = altclients;
       [client, userBot, ...alts];
-      message = await Promise.resolve(eval(args.code));
+      message = await Promise.resolve(tsEval(args.code));
       if (typeof message === "object") {
         message = JSON.stringify(message, null, args.jsonspacing);
         language = "json";
