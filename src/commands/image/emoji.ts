@@ -75,7 +75,3 @@ export default class EmojisCommand extends BaseCommand {
     });
   }
 }
-if (1) {
-  if (2) {
-  }
-}
