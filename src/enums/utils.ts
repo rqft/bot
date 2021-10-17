@@ -8,9 +8,8 @@ import {
   Guild,
   User,
 } from "detritus-client/lib/structures";
-import { simpleGetLongAgo } from "../functions/getLongAgo";
-import { replacer } from "../functions/replacer";
-import { IElement } from "../interfaces/IElement";
+import { replacer, simpleGetLongAgo } from "../functions/tools";
+import { IElement } from "../types";
 import { CustomEmojis } from "./customEmojis";
 
 export type PresenceStatusUnion =

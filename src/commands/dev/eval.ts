@@ -1,10 +1,10 @@
 import { Command, CommandClient, Constants, Utils } from "detritus-client";
-import { client as client_ } from "../..";
-import { tsEval } from "../../functions/eval";
+import { transpile } from "typescript";
 import globalConf from "../../globalConf";
-import { altclients, selfclient } from "../../globals";
+import { altclients, client, selfclient } from "../../globals";
 import { messages } from "../../messages";
 import { BaseCommand } from "../basecommand";
+
 export default class EvalCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
@@ -24,7 +24,7 @@ export default class EvalCommand extends BaseCommand {
       onError: (_context, _args, error) => console.error(error),
     });
   }
-  async run(context: Command.Context, args: Command.ParsedArgs) {
+  async run(_context: Command.Context, args: Command.ParsedArgs) {
     const { matches } = Utils.regex(
       Constants.DiscordRegexNames.TEXT_CODEBLOCK,
       args.code
@@ -33,26 +33,17 @@ export default class EvalCommand extends BaseCommand {
       args.code = matches[0]?.text;
     }
 
-    let language = "js";
-    let message;
-    try {
-      const client = client_;
-      const userBot = selfclient;
-      const alts = altclients;
-      [client, userBot, ...alts];
-      message = await Promise.resolve(tsEval(args.code));
-      if (typeof message === "object") {
-        message = JSON.stringify(message, null, args.jsonspacing);
-        language = "json";
-      }
-    } catch (error) {
-      message = error ? error.stack || error.message : error;
-    }
-    const max = 1990 - language.length;
-    if (!args.noreply) {
-      return context.editOrReply(
-        ["```" + language, String(message).slice(0, max), "```"].join("\n")
-      );
-    }
+    let language = "ts";
+    let output;
+
+    const userBot = selfclient;
+    const alts = altclients;
+    [client, userBot, ...alts];
+    const input = args.code;
+    const transpiled = transpile(input, { strict: true });
+    output = await Promise.resolve(eval(transpiled));
+    if (typeof output === "object") language = "json";
+
+    // const em = new Embed();
   }
 }

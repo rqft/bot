@@ -1,7 +1,6 @@
 import { CustomEmojis } from "./enums/customEmojis";
-import { IElement } from "./interfaces/IElement";
+import { Emojis } from "./enums/emojis";
 import { Secrets } from "./secrets";
-import { List } from "./utils";
 
 const p = {
   botOwner: {
@@ -10,7 +9,7 @@ const p = {
     anchor: "bot",
   },
   cutie: {
-    icon: "🤠",
+    icon: Emojis.COWBOY,
     text: "Cutie",
     anchor: "bot",
   },
@@ -39,10 +38,13 @@ const globalConf = {
     "697071919639560254": [p.cutie], // Meji
     "332741001355591680": [p.cutie], // alex_mino
     "503274209003175970": [p.cutie], // Foxo
-  } as List<IElement[]>,
+  } as Record<
+    string,
+    { icon: CustomEmojis | Emojis; text: string; anchor: string }[]
+  >,
   levels: {
     "760143615124439040": 999, // bot
-  } as List<number>,
+  } as Record<string, number>,
   token: Secrets.BOT_TOKEN,
   ownerIDs: [
     "504698587221852172",

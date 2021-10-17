@@ -1,30 +1,33 @@
-import { ShardClient } from "detritus-client";
 import RPC from "discord-rpc";
 import { pid } from "process";
-import { findMessageWithObject } from "./functions/findMessage";
-import { simpleGetLongAgo } from "./functions/getLongAgo";
-import { makeFoundMessageEmbed } from "./functions/makeFoundMessageEmbed";
-import { replacer } from "./functions/replacer";
+import { replacer, simpleGetLongAgo } from "./functions/tools";
 import globalConf from "./globalConf";
-import { altclients, commands, selfclient, trackedMessages } from "./globals";
+import {
+  altclients,
+  client,
+  commands,
+  selfclient,
+  trackedMessages,
+} from "./globals";
 import { messages } from "./messages";
 
 //#region rich presence
 if (globalConf.enableRichPresence) {
   const rpc = new RPC.Client({ transport: "ipc" });
   rpc.on("ready", () => {
+    // @ts-ignore
     rpc.request("SET_ACTIVITY", {
       pid: pid,
       activity: {
         assets: {
           large_image: "glasses",
-          large_text: "✅ sami is a furry",
+          large_text: "✅",
         },
         // details: ``,
         buttons: [
           {
-            label: "Discord",
-            url: "https://arcy-at.github.io/discord",
+            label: "Website",
+            url: "https://rqft.space/lol",
           },
           {
             label: "Bot Invite",
@@ -40,12 +43,10 @@ if (globalConf.enableRichPresence) {
 }
 commands.addMultipleIn("/commands", { subdirectories: true });
 commands.on("commandDelete", ({ reply }) => reply.delete());
-export var client: ShardClient;
 
 async function run() {
   const start = Date.now();
-  client = (await commands.run()) as ShardClient;
-
+  await commands.run();
   (async () => {
     console.log(
       replacer(messages.client.logged_in, [
@@ -120,18 +121,7 @@ commands.client.on("ready", () => {
     .filter((guild) => guild.ownerId === "606162661184372736")
     .forEach((guild) => guild.leave());
 });
-commands.client.on("messageCreate", async (payload) => {
-  const link = (payload.message.content.match(
-    /(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(\@me|\d+)\/(\d+)\/(\d+)/g
-  ) ?? [])[0];
-  if (!link) return;
-  payload.message.referencedMessage = null;
-  const message =
-    (await findMessageWithObject(payload.message, link)) ?? payload.message;
-  if (!message) return;
-  const emb = await makeFoundMessageEmbed(payload.message, message);
-  payload.message.reply({ embed: emb });
-});
+
 run();
 selfclient.on("messageCreate", async (payload) => {
   if (payload.message.author.id !== selfclient.userId) return;

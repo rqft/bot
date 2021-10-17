@@ -7,35 +7,35 @@ import { Message } from "detritus-client/lib/structures";
 import globalConf from "./globalConf";
 import { Secrets } from "./secrets";
 
-export namespace Color {
-  export const embed = 3092790; // 0x2f3136
-  export const pylon = 4089312; // 0x3e65e0
-  export const hallucinate = 10166000; // 0x9b1ef0
+export enum Color {
+  EMBED = 3092790, // 0x2f3136
+  PYLON = 4089312, // 0x3e65e0
+  VYBOSE = 10166000, // 0x9b1ef0
 
-  export const presenceOnline = 4437377; // 0x43b581
-  export const presenceDoNotDisturb = 15746887; // 0xf04747
-  export const presenceIdle = 16426522; // faa61a
-  export const presenceOffline = 7634829; // 0x747f8d
-  export const presenceStream = 5846677; // 0x593695
-  export const presenceSpotify = 1947988; // 0x1db954
+  PRESENCE_ONLINE = 4437377, // 0x43b581
+  PRESENCE_BUSY = 15746887, // 0xf04747
+  PRESENCE_IDLE = 16426522, // faa61a
+  PRESENCE_OFFLINE = 7634829, // 0x747f8d
+  PRESENCE_STREAM = 5846677, // 0x593695
+  PRESENCE_SPOTIFY = 1947988, // 0x1db954
 
-  export const houseBravery = 10192110; // 0x9b84ee
-  export const houseBalance = 4513215; // 0x44ddbf
-  export const houseBrilliance = 16022376; // 0xf47b68
+  HOUSE_BRAVERY = 10192110, // 0x9b84ee
+  HOUSE_BALANCE = 4513215, // 0x44ddbf
+  HOUSE_BRILLIANCE = 16022376, // 0xf47b68
 
-  export const high = 16086833; // 0xf57731
-  export const skin = 16370089; // 0xf9c9a9
-  export const info = 4886754; // 0x4a90e2
-  export const link = 45300; // 0x00b0f4
-  export const notice = 15885602; // 0xf26522
+  HIGH = 16086833, // 0xf57731
+  SKIN = 16370089, // 0xf9c9a9
+  INFO = 4886754, // 0x4a90e2
+  LINK = 45300, // 0x00b0f4
+  NOTICE = 15885602, // 0xf26522
 
-  export const blurple = 16496712; // 0x7289da
-  export const newBlurple = 6321129; // 0x6073e9
-  export const gold = 16496712; // 0xfbb848
-  export const white = 16777215; // 0xffffff
-  export const grey = 10070709; // 0x99aab5
-  export const chat = 3553599; // 0x36393f
-  export const servers = 2105893; // 0x202225
+  BLURPLE_OLD = 16496712, // 0x7289da
+  BLURPLE = 6321129, // 0x6073e9
+  GOLD = 16496712, // 0xfbb848
+  WHITE = 16777215, // 0xffffff
+  GREY = 10070709, // 0x99aab5
+  CHAT = 3553599, // 0x36393f
+  SERVERS = 2105893, // 0x202225
 }
 
 export enum Chars {
@@ -62,7 +62,8 @@ export const gateway: GatewayHandlerOptions & SocketOptions = {
   disabledEvents: ["INTERACTION_CREATE"],
   loadAllMembers: true,
 };
-export const commands = new CommandClient(globalConf.token, {
+export const client = new ShardClient(globalConf.token);
+export const commands = new CommandClient(client, {
   prefixes: globalConf.modules.commands.prefixes,
   activateOnEdits: true,
   mentionsEnabled: true,

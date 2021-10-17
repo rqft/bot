@@ -1,4 +1,4 @@
-import { IElement } from "../interfaces/IElement";
+import { IElement } from "../types";
 import { CustomEmojis } from "./customEmojis";
 import { PresenceStatusUnion } from "./utils";
 
