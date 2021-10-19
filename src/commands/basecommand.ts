@@ -12,11 +12,13 @@ import {
 import { CommandRatelimitTypes } from "detritus-client/lib/constants";
 import { Message } from "detritus-client/lib/structures";
 import { PermissionString } from "../enums/utils";
-import { bitfieldToArray } from "../functions/bitfieldToArray";
-import { capitalizeWords } from "../functions/capitalizeWords";
-import { generateUsage } from "../functions/generateUsage";
-import { simpleGetLongAgo } from "../functions/getLongAgo";
-import { replacer } from "../functions/replacer";
+import {
+  bitfieldToArray,
+  capitalizeWords,
+  simpleGetLongAgo,
+  replacer,
+  generateUsage,
+} from "../functions/tools";
 import { CustomError } from "../globals";
 import { messages } from "../messages";
 export class BaseCommand extends Command {

@@ -1,3 +1,5 @@
+import globalConf from "../globalConf";
+
 export const REMOVE_REGEX = /_/g;
 export const CAPITALIZE_REGEX = /(^|[ ])./g;
 export function capitalizeWords(s: string): string {
@@ -14,7 +16,14 @@ export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
     return ((bitfield as bigint) & current) === current;
   });
 }
-
+export function generateUsage(command: Command.CommandOptions) {
+  return `${globalConf.modules.commands.prefixes[0]}${command.name} ${command
+    .args!.map(
+      (e) =>
+        `${e.required ? "<" : "("}${e.name}: ${e.type}${e.required ? ">" : ")"}`
+    )
+    .join(" ")}`;
+}
 export function removeCamelCase(s: string): string {
   return s
     .replace(/^./g, (m) => m.toUpperCase())
@@ -156,6 +165,7 @@ import { profileBadgeMap } from "../enums/profileBadge";
 import { UserFlagArray, UserFlagUnion } from "../enums/utils";
 import { client } from "../globals";
 import { IElement } from "../types";
+import { Command } from "detritus-client";
 export async function getProfileBadges(
   userResolvable: User | Member
 ): Promise<IElement[]> {
