@@ -23,8 +23,9 @@ export default class UserCommand extends BaseCommand {
       default: DefaultParameters.user,
     });
   }
-  async run(context: Command.Context, { user }: UserArgs) {
-    const embed = createBrandEmbed(Brand.VYBOSE, context.user);
+  async run(context: Command.Context, args: UserArgs) {
+    const { user } = args;
+    const embed = createBrandEmbed(Brand.VYBOSE, context);
 
     embed.setTitle(user.toString()).setUrl(user.jumpLink);
 
@@ -35,7 +36,6 @@ export default class UserCommand extends BaseCommand {
         params: { userId: user.id },
       },
     });
-    console.log(profile);
 
     const customBadges = globalConf.badges[user.id] ?? [];
     const userBadges = await getProfileBadges(user);
@@ -57,6 +57,11 @@ export default class UserCommand extends BaseCommand {
       ].join("\n")
     );
 
-    context.editOrReply({ embed });
+    {
+      const description: Array<string> = [];
+      user;
+    }
+
+    await context.editOrReply({ embed });
   }
 }
