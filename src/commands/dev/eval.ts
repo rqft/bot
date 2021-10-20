@@ -28,16 +28,19 @@ export default class EvalCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: EvalArgs) {
+    console.log(args.code);
     const { matches } = Utils.regex(
       Constants.DiscordRegexNames.TEXT_CODEBLOCK,
       args.code
     );
     let inputLanguage = "ts";
 
-    const [match] = matches;
-    if (!match || !match.text) throw new Error("Unable to parse this code");
-    args.code = match.text;
-    if (match.language) inputLanguage = match.language;
+    const match = matches[0];
+    //if (!match || !match.text) throw new Error("Unable to parse this code");
+    if (match) {
+      args.code! = match!.text!;
+      if (match!.language) inputLanguage = match!.language;
+    }
 
     let language = "ts";
     let output;

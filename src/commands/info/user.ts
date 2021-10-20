@@ -10,6 +10,7 @@ import { getProfileBadges } from "../../functions/tools";
 import globalConf from "../../globalConf";
 import { restSelfClient } from "../../globals";
 import { BaseCommand } from "../basecommand";
+import { Emojis } from "../../enums/emojis";
 export interface UserArgs {
   user: User;
 }
@@ -59,7 +60,12 @@ export default class UserCommand extends BaseCommand {
 
     {
       const description: Array<string> = [];
-      user;
+      description.push(
+        `${Emojis.LINK} **Profile**: ${
+          user.mention
+        } ([Avatar](${user.avatarUrlFormat(null, { size: 1024 })}))`
+      );
+      embed.addField("User Info", description.join("\n"));
     }
 
     await context.editOrReply({ embed });

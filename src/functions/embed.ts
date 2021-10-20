@@ -1,6 +1,7 @@
 import { Context } from "detritus-client/lib/command";
 import { Embed } from "detritus-client/lib/utils";
 import { Brand, BrandColors, BrandIcons, BrandNames } from "../enums/brands";
+import { capitalizeWords } from "./tools";
 
 export function createUserEmbed(context: Context, embed: Embed = new Embed()) {
   return embed.setAuthor(
@@ -18,7 +19,9 @@ export function createBrandEmbed(
   return createUserEmbed(context, embed)
     .setFooter(
       `${BrandNames[brand]} ${
-        named && context.command ? context.command.name : ""
+        brand === Brand.VYBOSE && named && context.command
+          ? capitalizeWords(context.command.name)
+          : ""
       }`,
       BrandIcons[brand]
     )

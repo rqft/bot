@@ -1,5 +1,4 @@
 import RPC from "discord-rpc";
-import { pid } from "process";
 import { replacer, simpleGetLongAgo } from "./functions/tools";
 import globalConf from "./globalConf";
 import {
@@ -16,25 +15,19 @@ if (globalConf.enableRichPresence) {
   const rpc = new RPC.Client({ transport: "ipc" });
   rpc.on("ready", () => {
     // @ts-ignore
-    rpc.request("SET_ACTIVITY", {
-      pid: pid,
-      activity: {
-        assets: {
-          large_image: "glasses",
-          large_text: "✅",
+    selfclient.gateway.setPresence({
+      activities: [
+        {
+          name: "Detriment",
+          type: 0,
+          assets: {
+            largeImage: "infinity",
+            largeText: "hello",
+          },
+          applicationId: "760143615124439040",
         },
-        // details: ``,
-        buttons: [
-          {
-            label: "Website",
-            url: "https://rqft.space/lol",
-          },
-          {
-            label: "Bot Invite",
-            url: "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=8&scope=bot%20applications.commands",
-          },
-        ],
-      },
+      ],
+      status: "dnd",
     });
   });
   // 790910161953882147 slashtags
