@@ -25,7 +25,29 @@ export const enum PresenceStatus {
   WATCHING = 3,
   CUSTOM_STATUS = 4,
 }
-
+export const IrrelevantPermissions = [
+  "CREATE_INSTANT_INVITE",
+  "ADD_REACTIONS",
+  "STREAM",
+  "VIEW_CHANNEL",
+  "SEND_MESSAGES",
+  "SEND_TTS_MESSAGES",
+  "EMBED_LINKS",
+  "ATTACH_FILES",
+  "READ_MESSAGE_HISTORY",
+  "USE_EXTERNAL_EMOJIS",
+  "CONNECT",
+  "SPEAK",
+  "USE_VOICE_ACTIVITY",
+  "CHANGE_NICKNAME",
+  "VIEW_GUILD_INSIGHTS",
+  "VIEW_AUDIT_LOG",
+  "PRIORITY_SPEAKER",
+  "USE_SLASH_COMMANDS",
+  "REQUEST_TO_SPEAK",
+  "USE_PUBLIC_THREADS",
+  "USE_PRIVATE_THREADS",
+];
 export const UserFlagArray: UserFlagUnion[] = [
   "STAFF",
   "PARTNER",
@@ -372,7 +394,6 @@ export function makeSystemMessage(
     ["{PREMIUM_TIER}", available_objects.premium_tier],
   ]);
 }
-makeSystemMessage(SystemMessage.APPLICATION_COMMAND_USED, {});
 export enum ValidAccount {
   BOT = "bot",
   USER = "user",

@@ -1,4 +1,11 @@
+import { Command } from "detritus-client";
+import { Member, User } from "detritus-client/lib/structures";
+import { profileBadgeMap } from "../enums/profileBadge";
+import { UserFlagArray, UserFlagUnion } from "../enums/utils";
 import globalConf from "../globalConf";
+import { client } from "../globals";
+import { IElement } from "../types";
+import { Markup } from "./markup";
 
 export const REMOVE_REGEX = /_/g;
 export const CAPITALIZE_REGEX = /(^|[ ])./g;
@@ -160,12 +167,6 @@ export function shortLongAgo(
 }
 export const simpleShortGetLongAgo = (ts: number) =>
   shortLongAgo(ts, 2, undefined, undefined);
-import { Member, User } from "detritus-client/lib/structures";
-import { profileBadgeMap } from "../enums/profileBadge";
-import { UserFlagArray, UserFlagUnion } from "../enums/utils";
-import { client } from "../globals";
-import { IElement } from "../types";
-import { Command } from "detritus-client";
 export async function getProfileBadges(
   userResolvable: User | Member
 ): Promise<IElement[]> {
@@ -201,4 +202,10 @@ export async function getProfileBadges(
   )
     flags.push("SERVER_BOOSTER");
   return flags.map((e) => profileBadgeMap.get(e)!);
+}
+export function formatTimestamp(unix: number | Date) {
+  if (unix instanceof Date) unix = +unix;
+  const timeAgo = Markup.timestamp(unix, "R");
+  const timestamp = Markup.timestamp(unix, "D");
+  return `${timeAgo} **[${timestamp}]**`;
 }
