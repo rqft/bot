@@ -1,6 +1,11 @@
 import { Command, CommandClient } from "detritus-client";
 import { HTTPMethods } from "detritus-client-rest/lib/constants";
 import { Api } from "detritus-client-rest/lib/endpoints";
+import {
+  PERMISSIONS_ALL_TEXT,
+  PERMISSIONS_ALL_VOICE,
+  PresenceStatuses,
+} from "detritus-client/lib/constants";
 import { Role, User } from "detritus-client/lib/structures";
 import { Brand } from "../../enums/brands";
 import { CustomEmojis } from "../../enums/customEmojis";
@@ -9,15 +14,20 @@ import {
   APIProfile,
   ConnectionMap,
   connectionUrls,
+  guildVoiceRegionMap,
   IrrelevantPermissions,
   PermissionString,
+  PresenceStatusColors,
+  VoiceRegionString,
 } from "../../enums/utils";
 import { createBrandEmbed } from "../../functions/embed";
 import { Markup } from "../../functions/markup";
 import { DefaultParameters, Parameters } from "../../functions/parameters";
 import {
   bitfieldToArray,
+  capitalizeWords,
   formatTimestamp,
+  getPresence,
   getProfileBadges,
 } from "../../functions/tools";
 import globalConf from "../../globalConf";
@@ -50,25 +60,31 @@ export default class UserCommand extends BaseCommand {
       },
     });
 
-    const customBadges = globalConf.badges[user.id] ?? [];
-    const userBadges = await getProfileBadges(user);
-    const userConnections = profile.connected_accounts.filter(
-      (v) => v.type.toUpperCase() in connectionUrls
-    );
-    embed.setDescription(
-      [
-        customBadges.map((v) => v.icon).join(""),
-        userBadges.map((v) => v.icon).join(""),
-        userConnections
-          .map(
-            (v) =>
-              `[${ConnectionMap.get(v.type)!.icon}](${connectionUrls[
-                v.type.toUpperCase()
-              ]!(v)})`
-          )
-          .join(""),
-      ].join("\n")
-    );
+    {
+      const description: Array<string> = [];
+      const customBadges = globalConf.badges[user.id] ?? [];
+      const userBadges = await getProfileBadges(user);
+      const userConnections = profile.connected_accounts.filter(
+        (v) => v.type.toUpperCase() in connectionUrls
+      );
+      description.push(
+        [
+          customBadges.map((v) => v.icon).join(""),
+          userBadges.map((v) => v.icon).join(""),
+          userConnections
+            .map(
+              (v) =>
+                `[${ConnectionMap.get(v.type)!.icon}](${connectionUrls[
+                  v.type.toUpperCase()
+                ]!(v)})`
+            )
+            .join(""),
+        ].join("\n")
+      );
+
+      if (description.filter((v) => !!v.length).length)
+        embed.setDescription(description.join("\n"));
+    }
 
     {
       const description: Array<string> = [];
@@ -88,10 +104,10 @@ export default class UserCommand extends BaseCommand {
       );
 
       if (user.presence) {
-        const presences: Array<string> = [];
-        for (let [key, activity] of user.presence.activities) {
-          activity;
-        }
+        description.push(getPresence(user));
+        embed.setColor(
+          PresenceStatusColors[user.presence.status as PresenceStatuses]
+        );
       }
       embed.addField("User Info", description.join("\n"));
     }
@@ -153,6 +169,85 @@ export default class UserCommand extends BaseCommand {
                 `${Emojis.SHIELD} **Key Roles (${keyRoles.length})**`
               );
             }
+          }
+        }
+        {
+          if (member.pending)
+            description.push(`${Emojis.CLOCK330} **Pending**: Yes`);
+          if (member.voiceState) {
+            const state: Array<string> = [];
+            if (member.voiceState.channel) {
+              if (member.voiceState.channel.isGuildStageVoice)
+                state.push(CustomEmojis.CHANNEL_STAGE);
+
+              if (typeof member.voiceState.channel.rtcRegion === "string") {
+                state.push(
+                  guildVoiceRegionMap.get(
+                    member.voiceState.channel.rtcRegion as VoiceRegionString
+                  )?.icon!
+                );
+              }
+            }
+
+            if (member.voiceState.deaf || member.voiceState.selfDeaf)
+              state.push(CustomEmojis.GUI_DEAFENED);
+            else state.push(CustomEmojis.GUI_UNDEAFENED);
+
+            if (
+              member.voiceState.mute ||
+              member.voiceState.selfMute ||
+              member.voiceState.suppress
+            )
+              state.push(CustomEmojis.GUI_MUTED);
+            else state.push(CustomEmojis.GUI_UNMUTED);
+
+            if (member.voiceState.selfStream)
+              state.push(CustomEmojis.GUI_STREAM);
+
+            description.push(
+              `${CustomEmojis.CHANNEL_VOICE} **Voice State**: ${state.join(
+                " "
+              )}`
+            );
+          }
+        }
+        {
+          let permissions = bitfieldToArray(
+            member.permissions,
+            PermissionString
+          );
+
+          let textPermissions = permissions.filter((v) =>
+            bitfieldToArray(PERMISSIONS_ALL_TEXT, PermissionString).includes(v)
+          );
+          if (textPermissions.length) {
+            description.push(
+              `${CustomEmojis.CHANNEL_THREAD} ${textPermissions.map((v) =>
+                capitalizeWords(v.toLowerCase())
+              )}`
+            );
+          }
+
+          let voicePermissions = permissions.filter((v) =>
+            bitfieldToArray(PERMISSIONS_ALL_VOICE, PermissionString).includes(v)
+          );
+          if (voicePermissions.length) {
+            description.push(
+              `${CustomEmojis.CHANNEL_VOICE} ${voicePermissions.map((v) =>
+                capitalizeWords(v.toLowerCase())
+              )}`
+            );
+          }
+
+          let staffPermissions = permissions.filter(
+            (v) => !IrrelevantPermissions.includes(v)
+          );
+          if (staffPermissions.length) {
+            description.push(
+              `${CustomEmojis.GUI_SETTINGS} ${staffPermissions.map((v) =>
+                capitalizeWords(v.toLowerCase())
+              )}`
+            );
           }
         }
         embed.addField("Member Info", description.join("\n"));
