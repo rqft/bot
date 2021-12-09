@@ -22,7 +22,7 @@ import { Chars, client } from "../globals";
 import { IElement } from "../types";
 import { Markup } from "./markup";
 
-export const REMOVE_REGEX = /_/g;
+export const REMOVE_REGEX = /[_-]/g;
 export const CAPITALIZE_REGEX = /(^|[ ])./g;
 export function capitalizeWords(s: string): string {
   return s
@@ -338,5 +338,5 @@ export function hslToHex(h: number, s: number, l: number) {
       .toString(16)
       .padStart(2, "0"); // convert to Hex and prefix "0" if needed
   };
-  return `#${f(0)}${f(8)}${f(4)}`;
+  return parseInt(`0x${f(0)}${f(8)}${f(4)}`);
 }

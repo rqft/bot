@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { CommandRatelimitTypes } from "detritus-client/lib/constants";
 export const messages = {
   client: {
     unable_to_get_user: "❌ Unable to get user",
@@ -42,9 +43,9 @@ export const messages = {
     ratelimit: {
       message:
         "using {COMMAND} too fast (`{COMMANDS}/{COMMANDS_MAX}` commands within `{TIME}`). Please wait `{REMAINING}`.",
-      guild: "❌ This server ({CAUSE}) is ",
-      channel: "❌ This channel ({CAUSE}) is ",
-      user: "❌ You ({CAUSE}) are using ",
+      [CommandRatelimitTypes.GUILD]: "❌ This server ({CAUSE}) is ",
+      [CommandRatelimitTypes.CHANNEL]: "❌ This channel ({CAUSE}) is ",
+      [CommandRatelimitTypes.USER]: "❌ You ({CAUSE}) are using ",
     },
     error_command:
       "❌ There was an error while using command: ```js\n{ERROR}```",

@@ -2,8 +2,7 @@ import { CommandClient } from "detritus-client/lib";
 import {
   Command,
   CommandOptions,
-  CommandRatelimit,
-  CommandRatelimitItem,
+  CommandRatelimitInfo,
   Context,
   FailedPermissions,
   ParsedArgs,
@@ -15,9 +14,9 @@ import { PermissionString } from "../enums/utils";
 import {
   bitfieldToArray,
   capitalizeWords,
-  simpleGetLongAgo,
-  replacer,
   generateUsage,
+  replacer,
+  simpleGetLongAgo,
 } from "../functions/tools";
 import { CustomError } from "../globals";
 import { messages } from "../messages";
@@ -91,11 +90,7 @@ export class BaseCommand extends Command {
 
   onRatelimit(
     context: Context,
-    ratelimits: Array<{
-      item: CommandRatelimitItem;
-      ratelimit: CommandRatelimit;
-      remaining: number;
-    }>,
+    ratelimits: Array<CommandRatelimitInfo>,
     global: { global: boolean; now: number }
   ) {
     for (const rate of ratelimits) {
@@ -113,8 +108,9 @@ export class BaseCommand extends Command {
 
       context.reply(
         replacer(
-          messages.error.ratelimit[rate.ratelimit.type]! +
-            messages.error.ratelimit.message,
+          messages.error.ratelimit[
+            rate.ratelimit.type as CommandRatelimitTypes
+          ]! + messages.error.ratelimit.message,
           [
             ["{CAUSE}", cause],
             ["{COMMAND}", command],

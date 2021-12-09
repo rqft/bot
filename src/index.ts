@@ -116,15 +116,3 @@ commands.client.on("ready", () => {
 });
 
 run();
-selfclient.on("messageCreate", async (payload) => {
-  if (payload.message.author.id !== selfclient.userId) return;
-  if (
-    ["--remove-embeds", "-re"].some((v) =>
-      payload.message.content.toLowerCase().endsWith(v.toLowerCase())
-    )
-  ) {
-    payload.message
-      .edit(payload.message.content.replace(/--remove-embeds|-re/g, ""))
-      .then((v) => v.suppressEmbeds(true));
-  }
-});

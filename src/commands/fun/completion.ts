@@ -36,7 +36,7 @@ export default class CompletionCommand extends BaseCommand {
       bestOf: 5,
     });
     let pageLimit = completion.data.choices.length;
-    new Paginator(context, {
+    let paginator = new Paginator(context, {
       pageLimit,
       onPage: (page) => {
         const embed = createBrandEmbed(Brand.OPENAI, context);
@@ -50,5 +50,6 @@ export default class CompletionCommand extends BaseCommand {
         return embed;
       },
     });
+    paginator.start();
   }
 }
