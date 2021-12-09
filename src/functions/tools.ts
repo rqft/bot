@@ -293,3 +293,50 @@ export function getGuildVoiceRegion(guild: Guild, showFlag: boolean = true) {
   if (!reg) return;
   return `${showFlag ? reg.icon : ""} ${reg.text}`;
 }
+export function editOrReply(
+  context: Command.Context,
+  options: Command.EditOrReply | string = {}
+) {
+  if (typeof options === "string") {
+    options = { content: options };
+  }
+  // check if the message is not deleted and we can read history
+  if (
+    !context.message.deleted &&
+    (!context.channel || context.channel.canReadHistory)
+  ) {
+    options.messageReference = {
+      channelId: context.channelId,
+      guildId: context.guildId,
+      messageId: context.messageId,
+    };
+  }
+  return context.editOrReply({
+    ...options,
+    allowedMentions: {
+      parse: [],
+      repliedUser: false,
+      ...options.allowedMentions,
+    },
+  });
+}
+export function colorPercent(percent: number, start: number, end: number) {
+  var a = percent / 100,
+    b = (end - start) * a,
+    c = b + start;
+
+  // Return a CSS HSL string
+  return hslToHex(c, 100, 50);
+}
+export function hslToHex(h: number, s: number, l: number) {
+  l /= 100;
+  const a = (s * Math.min(l, 1 - l)) / 100;
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, "0"); // convert to Hex and prefix "0" if needed
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
