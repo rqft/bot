@@ -10,7 +10,7 @@ import { Secrets } from "./secrets";
 export enum Color {
   EMBED = 3092790, // 0x2f3136
   PYLON = 4089312, // 0x3e65e0
-  VYBOSE = 10166000, // 0x9b1ef0
+  VYBOSE = 11370173, // 0xad7ebd
 
   PRESENCE_ONLINE = 4437377, // 0x43b581
   PRESENCE_BUSY = 15746887, // 0xf04747

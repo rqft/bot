@@ -20,7 +20,7 @@ const p = {
   },
 };
 const globalConf = {
-  enableRichPresence: true,
+  enableRichPresence: false,
   botId: "760143615124439040",
   badges: {
     "504698587221852172": [p.botOwner, p.gh], // HighArcs
