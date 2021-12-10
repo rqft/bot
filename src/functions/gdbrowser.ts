@@ -69,6 +69,43 @@ export interface LevelSpecialResult {
   nextDaily: number;
   nextDailyTimestamp: number;
 }
+export type ProfileAvailability = "all" | "friends" | "off";
+export enum ProfileModeratorStatus {
+  None = 0,
+  Moderator = 1,
+  ElderModerator = 2,
+}
+export interface ProfileResult {
+  username: string;
+  playerID: string;
+  accountID: string;
+  rank: number;
+  stars: number;
+  diamonds: number;
+  coins: number;
+  userCoins: number;
+  demons: number;
+  cp: number;
+  friendRequests: boolean;
+  messages: ProfileAvailability;
+  commentHistory: ProfileAvailability;
+  moderator: ProfileModeratorStatus;
+  youtube: string;
+  twitter: string;
+  twitch: string;
+  glow: boolean;
+  icon: number;
+  ship: number;
+  ball: number;
+  ufo: number;
+  wave: number;
+  robot: number;
+  spider: number;
+  col1: number;
+  col2: number;
+  deathEffect: number;
+}
+
 export class GDBrowser {
   public raw: Pariah;
   constructor() {
@@ -98,4 +135,5 @@ export class GDBrowser {
       "/api/level/" + levelId + this.raw.toUrlParams({ download })
     );
   }
+  public async profiles(user: string) {}
 }
