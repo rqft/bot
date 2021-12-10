@@ -1,10 +1,13 @@
 import { Command } from "detritus-client";
 import {
+  Attachment,
+  ChannelGuildText,
   Guild,
   Member,
   PresenceActivity,
   User,
 } from "detritus-client/lib/structures";
+import gm from "gm";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { profileBadgeMap } from "../enums/profileBadge";
@@ -339,4 +342,20 @@ export function hslToHex(h: number, s: number, l: number) {
       .padStart(2, "0"); // convert to Hex and prefix "0" if needed
   };
   return parseInt(`0x${f(0)}${f(8)}${f(4)}`);
+}
+export async function storeImage(
+  value: Buffer,
+  filename: string
+): Promise<Attachment> {
+  const format = gm(value).format((err, format) => {
+    if (err) throw err;
+    return format;
+  });
+  const storageChannel = client.channels.get(
+    globalConf.storageId
+  ) as ChannelGuildText;
+  const storageMessage = await storageChannel.createMessage({
+    files: [{ key: "a", filename: `${filename}.${format}`, value }],
+  });
+  return storageMessage.attachments.first()!;
 }

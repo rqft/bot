@@ -4,7 +4,7 @@ import gm from "gm";
 import fetch from "node-fetch";
 import { Brand, BrandColors, BrandIcons, BrandNames } from "../enums/brands";
 import { Color } from "../globals";
-import { capitalizeWords } from "./tools";
+import { capitalizeWords, storeImage } from "./tools";
 
 export function createUserEmbed(context: Context, embed: Embed = new Embed()) {
   return embed.setAuthor(
@@ -32,9 +32,11 @@ export function createBrandEmbed(
 }
 export async function createImageEmbed(
   context: Context,
-  imageUrl: URL | string,
+  imageUrl: URL | string | Buffer,
   name?: string
 ) {
+  if (imageUrl instanceof Buffer)
+    imageUrl = (await storeImage(imageUrl, name ?? "image")).url!;
   if (imageUrl instanceof URL) imageUrl = imageUrl.toString();
 
   const embed = createUserEmbed(context);
