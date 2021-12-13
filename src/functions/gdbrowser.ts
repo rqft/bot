@@ -69,12 +69,27 @@ export interface LevelSpecialResult {
   nextDaily: number;
   nextDailyTimestamp: number;
 }
-export type ProfileAvailability = "all" | "friends" | "off";
+export enum ProfileAvailability {
+  ALL = "all",
+  FRIENDS = "friends",
+  OFF = "off",
+}
+export const ProfileAvailabilityString = {
+  [ProfileAvailability.ALL]: "All",
+  [ProfileAvailability.FRIENDS]: "Friends",
+  [ProfileAvailability.OFF]: "Disabled",
+};
+
 export enum ProfileModeratorStatus {
   None = 0,
   Moderator = 1,
   ElderModerator = 2,
 }
+export const ProfileModeratorString = {
+  [ProfileModeratorStatus.None]: "None",
+  [ProfileModeratorStatus.Moderator]: "Moderator",
+  [ProfileModeratorStatus.ElderModerator]: "Elder Moderator",
+};
 export interface ProfileResult {
   username: string;
   playerID: string;
@@ -90,9 +105,9 @@ export interface ProfileResult {
   messages: ProfileAvailability;
   commentHistory: ProfileAvailability;
   moderator: ProfileModeratorStatus;
-  youtube: string;
-  twitter: string;
-  twitch: string;
+  youtube?: string;
+  twitter?: string;
+  twitch?: string;
   glow: boolean;
   icon: number;
   ship: number;
@@ -123,17 +138,14 @@ export class GDBrowser {
     levelId: string,
     download: false
   ): Promise<(LevelResult & Partial<LevelSpecialResult>) | -1>;
-  public async levels(
-    levelId: string,
-    download: boolean = false
-  ): Promise<
-    | (LevelResult & Partial<LevelSpecialResult>)
-    | (LevelResult & LevelDownloadedResult & Partial<LevelSpecialResult>)
-    | -1
-  > {
-    return this.raw.getJSON(
-      "/api/level/" + levelId + this.raw.toUrlParams({ download })
-    );
+  public async levels(levelId: string, download: boolean = false) {
+    return this.raw.getJSON<
+      | (LevelResult & Partial<LevelSpecialResult>)
+      | (LevelResult & LevelDownloadedResult & Partial<LevelSpecialResult>)
+      | -1
+    >("/api/level/" + levelId + this.raw.toUrlParams({ download }));
   }
-  public async profiles(user: string) {}
+  public async profiles(user: string) {
+    return this.raw.getJSON<ProfileResult | -1>("/api/profile/" + user);
+  }
 }
