@@ -12,7 +12,7 @@ export interface GDLevelArgs {
 export default class GDLevelCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "level",
+      name: "glevel",
 
       label: "levelId",
       required: true,
@@ -75,8 +75,16 @@ export default class GDLevelCommand extends BaseCommand {
     {
       const description: Array<string> = [];
 
-      embed.addField("Rewards", description.join("\n"));
       if (level.stars) description.push(`${level.stars} Stars`);
+      if (level.coins)
+        description.push(
+          `${level.coins} ${level.verifiedCoins ? "Silver" : "Bronze"} Coins`
+        );
+      if (level.cp)
+        description.push(`${level.cp} Creator Points (toward creator)`);
+      if (level.diamonds) description.push(`${level.diamonds} Diamonds`);
+      if (level.orbs) description.push(`${level.orbs} Orbs`);
+      embed.addField("Rewards", description.join("\n"));
     }
     await context.editOrReply({ embed });
   }

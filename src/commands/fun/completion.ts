@@ -3,8 +3,6 @@ import { Markup } from "detritus-client/lib/utils";
 import OpenAI from "openai-api";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
-import { Paginator } from "../../functions/paginator";
-import { colorPercent } from "../../functions/tools";
 import { Secrets } from "../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface CompletionArgs {
@@ -22,34 +20,28 @@ export default class CompletionCommand extends BaseCommand {
       required: true,
 
       args: [
-        { name: "engine", type: "string", default: "davinci" },
+        { name: "engine", type: "string", default: "davinci-instruct-beta-v3" },
         { name: "temperature", type: "number", default: 0.5 },
       ],
     });
   }
   async run(context: Command.Context, args: CompletionArgs) {
-    let openAi = new OpenAI(Secrets.Key.DEEP_AI);
+    let openAi = new OpenAI(Secrets.Key.openAI);
     let completion = await openAi.complete({
       engine: args.engine,
       prompt: args.input,
       temperature: args.temperature,
-      bestOf: 5,
+      bestOf: 3,
+      maxTokens: 100,
+      stop: ["\n\n"],
     });
-    let pageLimit = completion.data.choices.length;
-    let paginator = new Paginator(context, {
-      pageLimit,
-      onPage: (page) => {
-        const embed = createBrandEmbed(Brand.OPENAI, context);
-        embed.setTitle(`OpenAI Completion (${args.engine})`);
-        embed.setDescription(
-          Markup.codeblock(
-            completion.data.choices[page]!.text.replace(args.input, "[$&]")
-          )
-        );
-        embed.setColor(colorPercent(args.temperature, 0, 0));
-        return embed;
-      },
-    });
-    paginator.start();
+    let choices = completion.data.choices;
+    const choice = choices[0]!;
+    console.log(choice);
+    const embed = createBrandEmbed(Brand.OPENAI, context);
+    embed.addField("Prompt", Markup.codeblock(args.input));
+    embed.addField("Response", Markup.codeblock(choice.text));
+
+    return context.editOrReply({ embed });
   }
 }

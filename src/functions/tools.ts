@@ -42,8 +42,10 @@ export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
   });
 }
 export function generateUsage(command: Command.CommandOptions) {
-  return `${globalConf.modules.commands.prefixes[0]}${command.name} ${command
-    .args!.map(
+  return `${globalConf.modules.commands.prefixes[0]}${command.name} ${(
+    command.args ?? []
+  )
+    .map(
       (e) =>
         `${e.required ? "<" : "("}${e.name}: ${e.type}${e.required ? ">" : ")"}`
     )

@@ -40,7 +40,7 @@ export default class UserCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       label: "user",
-      name: "user",
+      name: "guser",
       priority: 4587,
       type: Parameters.user,
       default: DefaultParameters.user,
