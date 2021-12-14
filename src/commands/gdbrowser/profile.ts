@@ -1,19 +1,23 @@
 // https://gdbrowser.com/icon/
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
+import { Image } from "imagescript";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
 import {
   GDBrowser,
+  IconForm,
   ProfileAvailabilityString,
   ProfileModeratorStatus,
   ProfileModeratorString,
+  ProfileResult,
 } from "../../functions/gdbrowser";
+import { storeImage } from "../../functions/tools";
 import { BaseCommand } from "../basecommand";
-export interface GDLevelArgs {
+export interface GDProfileArgs {
   userId: string;
 }
-export default class GDLevelCommand extends BaseCommand {
+export default class GDProfileCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "gprofile",
@@ -23,11 +27,11 @@ export default class GDLevelCommand extends BaseCommand {
       type: "string",
     });
   }
-  async run(context: Command.Context, args: GDLevelArgs) {
+  async run(context: Command.Context, args: GDProfileArgs) {
     let gd = new GDBrowser();
     let profile = await gd.profiles(args.userId);
     if (profile === -1) {
-      return context.editOrReply("that isnt a level");
+      return context.editOrReply("that isnt a user");
     }
     let embed = createBrandEmbed(Brand.GD_BROWSER, context);
     embed.setTitle(`${profile.username}'s Profile`);
@@ -38,7 +42,7 @@ export default class GDLevelCommand extends BaseCommand {
         `**-> Account ID:** ${Markup.codestring(profile.accountID)}`
       );
       description.push(`**Global Rank:** ${profile.rank}`);
-      if (profile.moderator !== ProfileModeratorStatus.None) {
+      if (profile.moderator !== ProfileModeratorStatus.NONE) {
         description.push(
           `**Moderator Status:** ${ProfileModeratorString[profile.moderator]}`
         );
@@ -98,7 +102,38 @@ export default class GDLevelCommand extends BaseCommand {
       embed.addField("Settings", settings.join("\n"));
     }
     embed.setThumbnail(`https://gdbrowser.com/icon/${profile.playerID}`);
-    // fuck you
+
+    // i hate
+    const iconSet = await composeIconSet(profile);
+    const iconSetUrl = await storeImage(
+      iconSet,
+      `icons_${profile.playerID}.png`
+    );
+    embed.setImage(iconSetUrl.url!);
     context.editOrReply({ embed });
   }
+}
+async function composeIconSet(profile: ProfileResult) {
+  const forms: IconForm[] = [
+    IconForm.CUBE,
+    IconForm.SHIP,
+    IconForm.BALL,
+    IconForm.UFO,
+    IconForm.WAVE,
+    IconForm.ROBOT,
+    IconForm.SPIDER,
+    IconForm.SWING,
+  ];
+  let gd = new GDBrowser();
+  const icons: Array<ArrayBuffer> = await Promise.all(
+    forms.map((form) => {
+      return gd.icon(profile.playerID, form);
+    })
+  );
+  let composite = new Image(128 * forms.length, 128);
+  icons.forEach(async (icon, index) => {
+    let img = await Image.decode(Buffer.from(icon));
+    composite.composite(img, 128 * index, 0);
+  });
+  return Buffer.from(await composite.encode());
 }

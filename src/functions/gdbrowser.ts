@@ -81,14 +81,14 @@ export const ProfileAvailabilityString = {
 };
 
 export enum ProfileModeratorStatus {
-  None = 0,
-  Moderator = 1,
-  ElderModerator = 2,
+  NONE = 0,
+  MODERATOR = 1,
+  ELDER_MODERATOR = 2,
 }
 export const ProfileModeratorString = {
-  [ProfileModeratorStatus.None]: "None",
-  [ProfileModeratorStatus.Moderator]: "Moderator",
-  [ProfileModeratorStatus.ElderModerator]: "Elder Moderator",
+  [ProfileModeratorStatus.NONE]: "None",
+  [ProfileModeratorStatus.MODERATOR]: "Moderator",
+  [ProfileModeratorStatus.ELDER_MODERATOR]: "Elder Moderator",
 };
 export interface ProfileResult {
   username: string;
@@ -120,6 +120,35 @@ export interface ProfileResult {
   col2: number;
   deathEffect: number;
 }
+export enum IconForm {
+  CUBE = "cube",
+  SHIP = "ship",
+  BALL = "ball",
+  UFO = "ufo",
+  WAVE = "wave",
+  ROBOT = "robot",
+  SPIDER = "spider",
+  SWING = "swing",
+  CURSED = "cursed",
+}
+export interface LeaderboardResult {
+  rank: number;
+  username: string;
+  playerID: string;
+  stars: number;
+  demons: number;
+  cp: number;
+  coins: number;
+  usercoins: number;
+  diamonds: number;
+  icon: {
+    form: IconForm | "icon";
+    icon: number;
+    col1: number;
+    col2: number;
+    glow: boolean;
+  };
+}
 
 export class GDBrowser {
   public raw: Pariah;
@@ -147,5 +176,19 @@ export class GDBrowser {
   }
   public async profiles(user: string) {
     return this.raw.getJSON<ProfileResult | -1>("/api/profile/" + user);
+  }
+  public async icon(
+    user: string,
+    form: IconForm = IconForm.CUBE,
+    size: number = 128
+  ) {
+    return this.raw.getArrayBuffer(
+      "/icon/" + user + this.raw.toUrlParams({ form, size })
+    );
+  }
+  public async leaderboard(count: number = 100) {
+    return this.raw.getJSON<LeaderboardResult[] | -1>(
+      "/api/leaderboard/" + this.raw.toUrlParams({ count })
+    );
   }
 }
