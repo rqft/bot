@@ -186,9 +186,15 @@ export class GDBrowser {
       "/icon/" + user + this.raw.toUrlParams({ form, size })
     );
   }
-  public async leaderboard(count: number = 100) {
+  public async leaderboard(
+    count: number = 100,
+    type: { creator: boolean; accuracy: boolean } = {
+      creator: false,
+      accuracy: false,
+    }
+  ) {
     return this.raw.getJSON<LeaderboardResult[] | -1>(
-      "/api/leaderboard/" + this.raw.toUrlParams({ count })
+      "/api/leaderboard/" + this.raw.toUrlParams({ count, ...type })
     );
   }
 }
