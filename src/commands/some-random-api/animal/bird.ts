@@ -1,6 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
-import { Animals, someRandomApiAnimal } from "../../functions/formatter";
-import { BaseCommand } from "../basecommand";
+import { Animals, someRandomApiAnimal } from "../../../functions/formatter";
+import { BaseCommand } from "../../basecommand";
 
 export default class SRABirdCommand extends BaseCommand {
   constructor(client: CommandClient) {
