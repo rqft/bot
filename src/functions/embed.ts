@@ -1,10 +1,10 @@
 import { Context } from "detritus-client/lib/command";
+import { Attachment } from "detritus-client/lib/structures";
 import { Embed } from "detritus-client/lib/utils";
-import gm from "gm";
 import fetch from "node-fetch";
 import { Brand, BrandColors, BrandIcons, BrandNames } from "../enums/brands";
 import { Color } from "../globals";
-import { capitalizeWords, storeImage } from "./tools";
+import { capitalizeWords, simpleGetLongAgo, storeImage } from "./tools";
 
 export function createUserEmbed(context: Context, embed: Embed = new Embed()) {
   return embed.setAuthor(
@@ -32,41 +32,43 @@ export function createBrandEmbed(
 }
 export async function createImageEmbed(
   context: Context,
-  imageUrl: URL | string | Buffer,
+  input: URL | string | Buffer | Attachment | ArrayBuffer,
   name?: string
 ) {
-  if (imageUrl instanceof Buffer)
-    imageUrl = (await storeImage(imageUrl, name ?? "image")).url!;
-  if (imageUrl instanceof URL) imageUrl = imageUrl.toString();
+  if (input instanceof ArrayBuffer) {
+    let buf = Buffer.alloc(input.byteLength);
+    let view = new Uint8Array(input);
+    for (var i = 0; i < buf.length; ++i) {
+      buf[i] = view[i]!;
+    }
+    input = buf;
+  }
+  if (input.constructor == String) input = new URL(input);
+  if (input instanceof URL) input = await (await fetch(input)).buffer();
+
+  const image = await storeImage(input as Buffer, name ?? "attachment");
+  console.log(image.url);
 
   const embed = createUserEmbed(context);
-  embed.setImage(imageUrl);
-
-  const buffer = await (await fetch(imageUrl)).buffer();
-  const graphics = gm(buffer);
-
-  let value: gm.ImageInfo = {} as gm.ImageInfo;
-  graphics.identify((err, _value) => {
-    if (err) {
-      throw new Error("Error while doing exif: " + err);
-    }
-    value = _value;
-  });
-
-  let footer = name ? `${name}${value.format}` : new URL(imageUrl).pathname;
-  if (value.size) {
-    footer += `, ${value.size.width}x${value.size.height} (${formatBytes(
-      value.Filesize
-    )})`;
-  }
-
   embed.setColor(Color.EMBED);
+
+  embed.setImage(image.url!);
+
+  let footer = [image.filename];
+  if (image.size) {
+    footer.push(`${image.width}x${image.height} (${formatBytes(image.size)})`);
+  }
+  footer.push(
+    `Took ${simpleGetLongAgo(context.message.createdAtUnix)} to complete`
+  );
+
+  embed.setFooter(footer.join(", "));
+
   return embed;
 }
-function formatBytes(size: string) {
+function formatBytes(size: string | number) {
+  const i = Number(size);
   const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (size === "0") return "0 Bytes";
-  const i = parseInt(size);
   if (i === 0) return "0 Bytes";
   const n = Math.floor(Math.log(i) / Math.log(1024));
   return `${(i / Math.pow(1024, n)).toFixed(n >= 2 ? 2 : 0)} ${sizes[n]}`;

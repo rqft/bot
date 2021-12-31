@@ -7,7 +7,6 @@ import {
   PresenceActivity,
   User,
 } from "detritus-client/lib/structures";
-import gm from "gm";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { profileBadgeMap } from "../enums/profileBadge";
@@ -349,15 +348,11 @@ export async function storeImage(
   value: Buffer,
   filename: string
 ): Promise<Attachment> {
-  const format = gm(value).format((err, format) => {
-    if (err) throw err;
-    return format;
-  });
   const storageChannel = client.channels.get(
     globalConf.storageId
   ) as ChannelGuildText;
   const storageMessage = await storageChannel.createMessage({
-    files: [{ key: "a", filename: `${filename}.${format}`, value }],
+    files: [{ key: "a", filename: `${filename}.gif`, value }],
   });
   return storageMessage.attachments.first()!;
 }

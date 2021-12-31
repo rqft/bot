@@ -64,6 +64,16 @@ export namespace Parameters {
         v.url.toLowerCase() === emoj
     );
   }
+  export function color(value: string) {
+    let hex = value.replace(/\D/g, "");
+    if (![3, 6].some((v) => v === hex.length)) throw new Error("Invalid color");
+    if (hex.length === 3)
+      hex = hex
+        .split("")
+        .map((v) => v + v)
+        .join("");
+    return hex;
+  }
 }
 export namespace DefaultParameters {
   export function user(context: Context) {

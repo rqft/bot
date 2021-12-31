@@ -135,3 +135,6 @@ export class BaseCommand extends Command {
     return context.editOrReply(description.join("\n"));
   }
 }
+export interface ImageArgs {
+  image: Buffer;
+}

@@ -13,7 +13,7 @@ export default class SRABase64DecodeCommand extends BaseCommand {
     super(client, {
       name: "decode",
       // subcommand
-      prefix: "base64",
+      prefix: "base64 ",
 
       label: "text",
       type: "string",
@@ -21,10 +21,11 @@ export default class SRABase64DecodeCommand extends BaseCommand {
     });
   }
   async run(context: Context, args: SRABase64DecodeArgs) {
-    const { base64 } = await new SomeRandomAPI().base64Decode(args.text);
+    const { text } = await new SomeRandomAPI().base64Decode(args.text);
 
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
     embed.setTitle("Base64 Decoding");
-    embed.setDescription(Markup.codeblock(base64));
+    embed.setDescription(Markup.codeblock(text));
+    return await context.editOrReply({ embed });
   }
 }

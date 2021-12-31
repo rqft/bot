@@ -20,7 +20,7 @@ const p = {
   },
 };
 const globalConf = {
-  storageId: "1234567812345678",
+  storageId: "842855906508275713",
   enableRichPresence: false,
   botId: "760143615124439040",
   badges: {

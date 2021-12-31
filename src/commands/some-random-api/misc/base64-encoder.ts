@@ -13,7 +13,7 @@ export default class SRABase64EncodeCommand extends BaseCommand {
     super(client, {
       name: "encode",
       // subcommand
-      prefix: "base64",
+      prefix: "base64 ",
 
       label: "text",
       type: "string",
@@ -26,5 +26,6 @@ export default class SRABase64EncodeCommand extends BaseCommand {
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
     embed.setTitle("Base64 Encoding");
     embed.setDescription(Markup.codeblock(base64));
+    return await context.editOrReply({ embed });
   }
 }

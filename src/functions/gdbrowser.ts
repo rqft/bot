@@ -167,7 +167,7 @@ export class GDBrowser {
     levelId: string,
     download: false
   ): Promise<(LevelResult & Partial<LevelSpecialResult>) | -1>;
-  public async levels(levelId: string, download: boolean = false) {
+  public async levels(levelId: string, download = false) {
     return this.raw.getJSON<
       | (LevelResult & Partial<LevelSpecialResult>)
       | (LevelResult & LevelDownloadedResult & Partial<LevelSpecialResult>)
@@ -177,17 +177,13 @@ export class GDBrowser {
   public async profiles(user: string) {
     return this.raw.getJSON<ProfileResult | -1>("/api/profile/" + user);
   }
-  public async icon(
-    user: string,
-    form: IconForm = IconForm.CUBE,
-    size: number = 128
-  ) {
+  public async icon(user: string, form: IconForm = IconForm.CUBE, size = 128) {
     return this.raw.getArrayBuffer(
       "/icon/" + user + this.raw.toUrlParams({ form, size })
     );
   }
   public async leaderboard(
-    count: number = 100,
+    count = 100,
     type: { creator: boolean; accuracy: boolean } = {
       creator: false,
       accuracy: false,

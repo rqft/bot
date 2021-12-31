@@ -33,7 +33,6 @@
     "detritus-utils": "^0.4.0",
     "discord-rpc": "^3.1.4",
     "discord.js-selfbot": "^12.0.2",
-    "eslint": "^7.18.0",
     "exif": "^0.6.0",
     "exifr": "^7.0.0",
     "exiftool": "0.0.3",
