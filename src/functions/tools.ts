@@ -40,15 +40,15 @@ export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
     return ((bitfield as bigint) & current) === current;
   });
 }
-export function generateUsage(command: Command.CommandOptions) {
-  return `${globalConf.modules.commands.prefixes[0]}${command.name} ${(
-    command.args ?? []
-  )
-    .map(
-      (e) =>
-        `${e.required ? "<" : "("}${e.name}: ${e.type}${e.required ? ">" : ")"}`
-    )
-    .join(" ")}`;
+export function generateUsage(command: Command.Command) {
+  const flags = ([command.arg, ...(command.args || [])] || [])
+    .map((e) => {
+      // ok im done.
+      const type = e.type instanceof Function ? e.type.name : String(e.type);
+      `${e.required ? "<" : "("}${e.name}: ${type}${e.required ? ">" : ")"}`;
+    })
+    .join(" ");
+  return `${globalConf.modules.commands.prefixes[0]}${command.name} ${flags}`;
 }
 export function removeCamelCase(s: string): string {
   return s
@@ -96,6 +96,7 @@ const timeMap = new Map([
   ["second", 1000],
   ["millisecond", 1],
 ]);
+// anything related to getLongAgo is stolen from metal
 export function getLongAgo(
   ts: number,
   limiter: number,
@@ -122,7 +123,7 @@ export function getLongAgo(
     if (runsc >= limiter || hitLowest === true) break;
     if (lowestUnit === key) hitLowest = true;
     let cc: string = value > 1 ? `${key}s` : key;
-    cc = `${cc.substr(0, 1).toUpperCase()}${cc.substr(1).toLowerCase()}`;
+    cc = `${cc.slice(0, 1).toUpperCase()}${cc.slice(1).toLowerCase()}`; // stfu
     txtret.push(`${value} ${cc}`);
     runsc += 1;
   }
@@ -159,14 +160,8 @@ export function shortLongAgo(
     }
     const runs = Math.ceil(runcheck / v) + 1;
     for (let i = 0; i <= runs; i += 1) {
-      if (runcheck < v) {
-        break;
-      }
-      if (txt.has(k)) {
-        txt.set(k, txt.get(k) + 1);
-      } else {
-        txt.set(k, 1);
-      }
+      if (runcheck < v) break;
+      txt.has(k) ? txt.set(k, txt.get(k) + 1) : txt.set(k, 1);
       runcheck -= v;
     }
   }
@@ -174,9 +169,7 @@ export function shortLongAgo(
   let runsc = 0;
   let hitLowest = false;
   for (const [key, value] of txt) {
-    if (runsc >= limiter || hitLowest === true) {
-      break;
-    }
+    if (runsc >= limiter || hitLowest === true) break;
     if (lowestUnit === key) hitLowest = true;
     let cc: string = value > 1 ? `${key}` : key;
     txtret.push(`${value}${cc}`);
@@ -301,9 +294,8 @@ export function editOrReply(
   context: Command.Context,
   options: Command.EditOrReply | string = {}
 ) {
-  if (typeof options === "string") {
-    options = { content: options };
-  }
+  if (typeof options === "string") options = { content: options };
+
   // check if the message is not deleted and we can read history
   if (
     !context.message.deleted &&
@@ -376,27 +368,19 @@ export function padCodeBlockFromRows(
     const column: Array<string> = [];
 
     let max = 0;
-    for (const row of strings) {
-      if (i in row) {
-        max = Math.max(max, row[i]!.length);
-      }
-    }
-    for (const row of strings) {
-      if (i in row) {
-        column.push(padFunc.call(row[i], max, padding));
-      }
-    }
+    for (const row of strings)
+      if (i in row) max = Math.max(max, row[i]!.length);
+
+    for (const row of strings)
+      if (i in row) column.push(padFunc.call(row[i], max, padding));
     columns.push(column);
   }
 
   const rows: Array<string> = [];
   for (let i = 0; i < strings.length; i++) {
     const row: Array<string> = [];
-    for (const column of columns) {
-      if (i in column) {
-        row.push(column[i]!);
-      }
-    }
+    for (const column of columns) if (i in column) row.push(column[i]!);
+
     rows.push(row.join(join));
   }
   return rows;

@@ -247,9 +247,9 @@ export async function infoUser(context: Context, user: User) {
         );
         if (textPermissions.length) {
           description.push(
-            `${CustomEmojis.CHANNEL_THREAD} ${textPermissions.map((v) =>
-              capitalizeWords(v.toLowerCase())
-            )}`
+            `${CustomEmojis.CHANNEL_THREAD} ${textPermissions
+              .map((v) => Markup.codestring(capitalizeWords(v.toLowerCase())))
+              .join(", ")}`
           );
         }
 
@@ -258,9 +258,9 @@ export async function infoUser(context: Context, user: User) {
         );
         if (voicePermissions.length) {
           description.push(
-            `${CustomEmojis.CHANNEL_VOICE} ${voicePermissions.map((v) =>
-              capitalizeWords(v.toLowerCase())
-            )}`
+            `${CustomEmojis.CHANNEL_VOICE} ${voicePermissions
+              .map((v) => Markup.codestring(capitalizeWords(v.toLowerCase())))
+              .join(", ")}`
           );
         }
 
@@ -269,9 +269,9 @@ export async function infoUser(context: Context, user: User) {
         );
         if (staffPermissions.length) {
           description.push(
-            `${CustomEmojis.GUI_SETTINGS} ${staffPermissions.map((v) =>
-              capitalizeWords(v.toLowerCase())
-            )}`
+            `${CustomEmojis.GUI_SETTINGS} ${staffPermissions
+              .map((v) => Markup.codestring(capitalizeWords(v.toLowerCase())))
+              .join(", ")}`
           );
         }
       }

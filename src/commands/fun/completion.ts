@@ -39,7 +39,6 @@ export default class CompletionCommand extends BaseCommand {
     });
     let choices = completion.data.choices;
     const choice = choices[0]!;
-    console.log(choice);
     const embed = createBrandEmbed(Brand.OPENAI, context);
     embed.addField("Prompt", Markup.codeblock(args.input));
     embed.addField("Response", Markup.codeblock(choice.text));

@@ -22,6 +22,7 @@ export default class AbstractTimezoneCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "timezone",
+      aliases: ["tz"],
 
       label: "location",
       type: "string",
@@ -45,7 +46,6 @@ export default class AbstractTimezoneCommand extends BaseCommand {
       description.push(
         `**Current Time**: ${new Date(tz.datetime).toLocaleString()}`
       );
-      description.push("\n");
       description.push(
         `**Timezone**: ${tz.timezone_name} [${tz.timezone_abbreviation}]`
       );
@@ -53,7 +53,6 @@ export default class AbstractTimezoneCommand extends BaseCommand {
       description.push(
         `**GMT Offset**: GMT${tz.gmt_offset >= 0 ? "+" : "-"}${tz.gmt_offset}`
       );
-      description.push("\n");
       description.push(
         `**Absolute Location**: ${tz.latitude}, ${tz.longitude}`
       );

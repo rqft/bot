@@ -90,9 +90,7 @@ export async function findImage(
     return findImageUrlInMessages(
       (await context.channel?.fetchMessages({ limit: 100 })) ?? []
     );
-  console.log(query);
   const userTry = Parameters.user(query, context);
-  console.log(userTry);
   if (userTry) return userTry.avatarUrlFormat(type, { size: 1024 });
 
   const emojiTry = Parameters.emojiImage(query);
