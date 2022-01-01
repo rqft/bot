@@ -74,6 +74,15 @@ export namespace Parameters {
         .join("");
     return hex;
   }
+  export function url(value: string) {
+    let url: URL;
+    try {
+      url = new URL(value);
+    } catch {
+      return undefined;
+    }
+    return url;
+  }
 }
 export namespace DefaultParameters {
   export function user(context: Context) {

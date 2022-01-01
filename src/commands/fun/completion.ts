@@ -9,6 +9,7 @@ export interface CompletionArgs {
   engine: string;
   input: string;
   temperature: number;
+  limit: number;
 }
 export default class CompletionCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -22,6 +23,7 @@ export default class CompletionCommand extends BaseCommand {
       args: [
         { name: "engine", type: "string", default: "davinci-instruct-beta-v3" },
         { name: "temperature", type: "number", default: 0.5 },
+        { name: "limit", type: "number", default: 60 },
       ],
     });
   }
@@ -32,8 +34,8 @@ export default class CompletionCommand extends BaseCommand {
       prompt: args.input,
       temperature: args.temperature,
       bestOf: 3,
-      maxTokens: 100,
-      stop: ["\n\n"],
+      maxTokens: args.limit,
+      stop: ["\n"],
     });
     let choices = completion.data.choices;
     const choice = choices[0]!;
