@@ -2,18 +2,19 @@ import { Context } from "detritus-client/lib/command";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
 import { findImage } from "./findImage";
-const all = [client, ...altclients, selfclient]
-  .map((v) => v.users.toArray())
-  .flat(1);
+
 export namespace Parameters {
   export function user(value: string, _context: Context) {
-    const found = all.find((key) => {
-      return (
-        key.username.toLowerCase().includes(value) ||
-        key.toString().toLowerCase() === value ||
-        key.id === value.replace(/\D/g, "")
-      );
-    });
+    const found = [client, ...altclients, selfclient]
+      .map((v) => v.users.toArray())
+      .flat(1)
+      .find((key) => {
+        return (
+          key.username.toLowerCase().includes(value) ||
+          key.toString().toLowerCase() === value ||
+          key.id === value.replace(/\D/g, "")
+        );
+      });
     return found;
   }
   export function imageUrl(value: string, context: Context) {
@@ -82,6 +83,18 @@ export namespace Parameters {
       return undefined;
     }
     return url;
+  }
+  export function date(value: string, _context: Context) {
+    const date = new Date(value);
+    if (isNaN(date.getTime())) throw new Error("Invalid date");
+    return date;
+  }
+  export function phone(value: string, _context: Context) {
+    // phone number regex
+    const regex =
+      /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    if (!value.match(regex)) throw new Error("Invalid phone number");
+    return value;
   }
 }
 export namespace DefaultParameters {

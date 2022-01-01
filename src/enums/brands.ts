@@ -9,6 +9,8 @@ export enum Brand {
   ADVICE_SLIP = "adviceslip",
   PXL_API = "pxlapi",
   AFFIRMATIONS = "affirmations",
+  ABSTRACT = "abstract",
+  MERRIAM_WEBSTER = "merriamwebster",
 }
 export const BrandIcons: Record<Brand, string> = {
   [Brand.VYBOSE]: "https://rqft.space/assets/vybost.png",
@@ -20,6 +22,9 @@ export const BrandIcons: Record<Brand, string> = {
   [Brand.PXL_API]: "https://pxlapi.dev/images/logo-small-transparent.png",
   [Brand.AFFIRMATIONS]:
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/microsoft/74/thumbs-up-sign_1f44d.png",
+  [Brand.ABSTRACT]: "https://app.abstractapi.com/logo192.png",
+  [Brand.MERRIAM_WEBSTER]:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Merriam-Webster_logo.svg/300px-Merriam-Webster_logo.svg.png",
 };
 export const BrandNames: Record<Brand, string> = {
   [Brand.VYBOSE]: "Vybose",
@@ -30,6 +35,8 @@ export const BrandNames: Record<Brand, string> = {
   [Brand.ADVICE_SLIP]: "Advice Slip",
   [Brand.PXL_API]: "Pxl API",
   [Brand.AFFIRMATIONS]: "Affirmations",
+  [Brand.ABSTRACT]: "Abstract API",
+  [Brand.MERRIAM_WEBSTER]: "Merriam-Webster Dictionary",
 };
 export const BrandColors: Record<Brand, Color> = {
   [Brand.VYBOSE]: Color.VYBOSE,
@@ -40,4 +47,6 @@ export const BrandColors: Record<Brand, Color> = {
   [Brand.ADVICE_SLIP]: Color.PRESENCE_IDLE,
   [Brand.PXL_API]: Color.WHITE,
   [Brand.AFFIRMATIONS]: Color.HIGH,
+  [Brand.ABSTRACT]: Color.BLURPLE,
+  [Brand.MERRIAM_WEBSTER]: Color.LINK,
 };

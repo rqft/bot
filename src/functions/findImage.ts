@@ -1,5 +1,5 @@
 import { Collections, Structures } from "detritus-client";
-import { Context, ParsedArgs } from "detritus-client/lib/command";
+import { Context } from "detritus-client/lib/command";
 import { MessageEmbedTypes } from "detritus-client/lib/constants";
 import { Sticker } from "detritus-client/lib/structures";
 import { Parameters } from "./parameters";
@@ -83,21 +83,20 @@ export function getStickerUrl(sticker: Sticker) {
 }
 export async function findImage(
   context: Context,
-  _args: ParsedArgs,
+  query?: string,
   type: string = "png"
 ) {
-  const query: string | undefined = _args[context.command!.label];
-
   if (!query)
     return findImageUrlInMessages(
       (await context.channel?.fetchMessages({ limit: 100 })) ?? []
     );
-
+  console.log(query);
   const userTry = Parameters.user(query, context);
-  if (userTry) return userTry.avatarUrlFormat(type);
+  console.log(userTry);
+  if (userTry) return userTry.avatarUrlFormat(type, { size: 1024 });
 
   const emojiTry = Parameters.emojiImage(query);
   if (emojiTry) return emojiTry.url;
 
-  return query;
+  throw new Error("unable to find image");
 }
