@@ -134,7 +134,7 @@ export async function infoUser(context: Context, user: User) {
     if (user.presence) {
       description.push(getPresence(user));
       embed.setColor(
-        PresenceStatusColors[user.presence.status as PresenceStatuses]
+        PresenceStatusColors[user.presence.status as PresenceStatuses]!
       );
     }
     embed.addField("User Info", description.join("\n"));

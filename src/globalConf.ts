@@ -55,7 +55,7 @@ const globalConf = {
   ],
   modules: {
     commands: {
-      prefixes: ["$"] as string[],
+      prefixes: [";"] as string[],
       // prefixes: [""],
       confirmation: {
         emojis: {

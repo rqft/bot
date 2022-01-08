@@ -75,10 +75,10 @@ export default class HelpCommand extends BaseCommand {
     {
       const description: Array<string> = [];
       description.push(`**Name**: ${command.name}`);
-      if (command.aliases.length) {
+      if (command.aliases && command.aliases.length) {
         description.push(`**Aliases**: ${command.aliases.join(", ")}`);
       }
-      if (command.ratelimits.length) {
+      if (command.ratelimits && command.ratelimits.length) {
         description.push(`**Ratelimits**`);
         for (let ratelimit of command.ratelimits) {
           description.push(
