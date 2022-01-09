@@ -1,11 +1,13 @@
-import { CommandClient, ShardClient } from "detritus-client";
+import {
+  CommandClient,
+  InteractionCommandClient,
+  ShardClient,
+} from "detritus-client";
 import { Client as ClientRest } from "detritus-client-rest";
 import { SocketOptions } from "detritus-client-socket/lib/gateway";
-import { BaseClientCollectionOptions } from "detritus-client/lib/collections";
 import { AuthTypes } from "detritus-client/lib/constants";
 import { GatewayHandlerOptions } from "detritus-client/lib/gateway/handler";
 import { Message } from "detritus-client/lib/structures";
-import globalConf from "./globalConf";
 import { Secrets } from "./secrets";
 
 export enum Color {
@@ -60,51 +62,17 @@ export const Arguments = {
 };
 export const gateway: GatewayHandlerOptions & SocketOptions = {
   intents: "ALL",
-  disabledEvents: ["INTERACTION_CREATE"],
-  loadAllMembers: true,
 };
-function cache(
-  limit: number = 10000,
-  expire: number = 1000 * 60 * 60 * 24
-): BaseClientCollectionOptions {
-  return {
-    limit,
-    expire,
-    enabled: true,
-  };
-}
-export const client = new ShardClient(globalConf.token, {
+
+export const client = new ShardClient(Secrets.BOT_TOKEN, {
   gateway,
   isBot: true,
-  cache: {
-    applications: cache(10000),
-    channels: cache(10000),
-    guilds: cache(10000),
-    members: cache(10000),
-    connectedAccounts: cache(10000),
-    emojis: cache(10000),
-    interactions: cache(10000),
-    messages: cache(10000),
-    roles: cache(10000),
-    users: cache(10000),
-    notes: cache(10000),
-    presences: cache(10000),
-    relationships: cache(10000),
-    voiceStates: cache(10000),
-    sessions: cache(10000),
-    stageInstances: cache(10000),
-    stickers: cache(10000),
-    typings: cache(10000),
-    voiceCalls: cache(10000),
-    voiceConnections: cache(10000),
-  },
 });
 export const commands = new CommandClient(client, {
-  prefixes: globalConf.modules.commands.prefixes,
+  prefixes: ["$"],
   activateOnEdits: true,
   mentionsEnabled: true,
   ignoreMe: true,
-  shardCount: 2,
   gateway,
   useClusterClient: false,
   ratelimits: [
@@ -113,7 +81,17 @@ export const commands = new CommandClient(client, {
     { duration: 10000, limit: 35, type: "guild" },
   ],
 });
-export const restClient = new ClientRest(globalConf.token);
+export const interactions = new InteractionCommandClient(commands, {
+  gateway,
+  useClusterClient: false,
+  ratelimits: [
+    { duration: 1000, limit: 5, type: "user" },
+    { duration: 5000, limit: 20, type: "channel" },
+    { duration: 10000, limit: 35, type: "guild" },
+  ],
+  checkCommands: true,
+});
+export const restClient = new ClientRest(commands.client.token);
 export const selfclient = new ShardClient(Secrets.UserToken, {
   isBot: false,
   gateway,

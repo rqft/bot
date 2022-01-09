@@ -1,7 +1,6 @@
 import { Command } from "detritus-client";
 import {
   Attachment,
-  ChannelGuildText,
   Guild,
   Member,
   PresenceActivity,
@@ -19,8 +18,7 @@ import {
   UserFlagUnion,
   VoiceRegionString,
 } from "../enums/utils";
-import globalConf from "../globalConf";
-import { Chars, client } from "../globals";
+import { Chars, client, commands } from "../globals";
 import { IElement } from "../types";
 import { Markup } from "./markup";
 
@@ -48,7 +46,7 @@ export function generateUsage(command: Command.Command) {
       `${e.required ? "<" : "("}${e.name}: ${type}${e.required ? ">" : ")"}`;
     })
     .join(" ");
-  return `${globalConf.modules.commands.prefixes[0]}${command.name} ${flags}`;
+  return `${commands.prefixes.custom.toArray()[0]!}${command.name} ${flags}`;
 }
 export function removeCamelCase(s: string): string {
   return s
@@ -340,11 +338,12 @@ export async function storeImage(
   value: Buffer,
   filename: string
 ): Promise<Attachment> {
-  const storageChannel = client.channels.get(
-    globalConf.storageId
-  ) as ChannelGuildText;
+  const storageChannel = await client.rest.fetchChannel(
+    "842855906508275713",
+    true
+  );
   const storageMessage = await storageChannel.createMessage({
-    files: [{ key: "a", filename: `${filename}.gif`, value }],
+    files: [{ key: "a", filename: `${filename}`, value }],
   });
   return storageMessage.attachments.first()!;
 }
