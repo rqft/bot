@@ -8,7 +8,10 @@ import {
   ParsedArgs,
 } from "detritus-client/lib/command";
 import { Message } from "detritus-client/lib/structures";
-import { expandMs } from "../../functions/tools";
+import { Markup } from "detritus-client/lib/utils";
+import { Brand } from "../../enums/brands";
+import { createBrandEmbed } from "../../functions/embed";
+import { expandMs, generateUsage } from "../../functions/tools";
 export class BaseCommand extends Command {
   constructor(client: CommandClient, options: CommandOptions) {
     super(
@@ -29,6 +32,48 @@ export class BaseCommand extends Command {
   run(context: Context, _args: ParsedArgs = {}): Promise<void | Message> {
     return context.reply("❌ No functionality set for this command");
   }
+  onError(context: Context, _args: ParsedArgs = {}, error: Error) {
+    return context.reply(
+      `❌ Error while using command: ${error.message}\n${Markup.codeblock(
+        error.stack ?? "No Stack",
+        { language: "js" }
+      )}`
+    );
+  }
+  onRunError(context: Context, _args: ParsedArgs = {}, error: Error) {
+    return context.reply(
+      `❌ Error while running command: ${error.message}\n${Markup.codeblock(
+        error.stack ?? "No Stack",
+        { language: "js" }
+      )}`
+    );
+  }
+  onTypeError(
+    context: Context,
+    _args: ParsedArgs,
+    errors: { [key: string]: Error }
+  ) {
+    const embed = createBrandEmbed(Brand.VYBOSE, context, false);
+
+    const store: { [key: string]: string } = {};
+
+    const description: Array<string> = ["Invalid Arguments" + "\n"];
+    for (let key in errors) {
+      const message = errors[key]!.message;
+      if (message in store) {
+        description.push(`❌ **${key}**: Same error as **${store[message]}**`);
+      } else {
+        description.push(`❌ **${key}**: ${message}`);
+      }
+      store[message] = key;
+    }
+
+    embed.setDescription(description.join("\n"));
+
+    embed.addField(`Command Usage`, generateUsage(this));
+    return context.editOrReply({ embed });
+  }
+
   onRatelimit(
     context: Context,
     ratelimits: Array<CommandRatelimitInfo>,

@@ -39,14 +39,17 @@ export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
   });
 }
 export function generateUsage(command: Command.Command) {
-  const flags = ([command.arg, ...(command.args || [])] || [])
-    .map((e) => {
-      // ok im done.
-      const type = e.type instanceof Function ? e.type.name : String(e.type);
-      `${e.required ? "<" : "("}${e.name}: ${type}${e.required ? ">" : ")"}`;
-    })
-    .join(" ");
-  return `${commands.prefixes.custom.toArray()[0]!}${command.name} ${flags}`;
+  const args = command.argParser.args.map((arg) => {
+    const optional = optionalBrackets(arg.required);
+    const type = arg.type.toLocaleString();
+    const prefix = [...arg.prefixes.values()][0] || "-";
+
+    return `${optional.left}${prefix}${arg.name}: ${
+      arg.consume ? "..." : ""
+    }${type}${optional.right}`;
+  });
+
+  return `${commands.prefixes.custom.toArray()[0]!}${command.fullName} ${args}`;
 }
 export function removeCamelCase(s: string): string {
   return s

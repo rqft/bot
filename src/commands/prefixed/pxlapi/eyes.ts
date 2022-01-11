@@ -34,16 +34,16 @@ export default class PxlEyesCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "eyes",
-      type: [
+
+      label: "image",
+      type: Parameters.image,
+
+      args: [
         {
           name: "type",
           type: "string",
           choices: eyesChoices,
           default: "default",
-        },
-        {
-          name: "image",
-          type: Parameters.image,
         },
       ],
     });
