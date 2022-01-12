@@ -1,5 +1,10 @@
 import { Command } from "detritus-client";
 import {
+  ActivityTypes,
+  PresenceStatuses,
+  UserFlags,
+} from "detritus-client/lib/constants";
+import {
   Attachment,
   Guild,
   Member,
@@ -10,14 +15,7 @@ import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { profileBadgeMap } from "../enums/profileBadge";
 import { UserStatusMap } from "../enums/userStatus";
-import {
-  guildVoiceRegionMap,
-  PresenceStatus,
-  PresenceStatusUnion,
-  UserFlagArray,
-  UserFlagUnion,
-  VoiceRegionString,
-} from "../enums/utils";
+import { guildVoiceRegionMap, VoiceRegionString } from "../enums/utils";
 import { Chars, client, commands } from "../globals";
 import { IElement } from "../types";
 import { Markup } from "./markup";
@@ -182,36 +180,12 @@ export async function getProfileBadges(
 ): Promise<IElement[]> {
   const user =
     userResolvable instanceof Member ? userResolvable.user : userResolvable;
-  const flags: (UserFlagUnion | "NITRO_USER" | "SERVER_BOOSTER")[] =
-    bitfieldToArray<UserFlagUnion | "NITRO_USER" | "SERVER_BOOSTER">(
-      user.publicFlags ?? 0,
-      UserFlagArray
-    );
-  if (
-    user.avatar?.startsWith("a_") ||
-    (user.presence?.status &&
-      user.presence.activities.some(
-        // test if the user has a custom emoji in their status
-        (e) =>
-          e.type === 1 &&
-          e.emoji !== undefined &&
-          (e.emoji.animated || e.emoji.id !== null)
-      )) ||
-    client.guilds // test if the user boosts any server
-      .filter((e) => e.members.cache.has(user.id))
-      .some((e) => !!e.members.cache.get(user.id)?.premiumSinceUnix) ||
-    flags.includes("PARTNER") // test if the user is a discord partner
-  )
-    flags.push("NITRO_USER");
-  if (
-    client.guilds.some(
-      (e) =>
-        e.members.cache.has(user.id) &&
-        !!e.members.cache.get(user.id)?.premiumSinceUnix // loop thru all guilds and see if they boost any
-    )
-  )
-    flags.push("SERVER_BOOSTER");
-  return flags.map((e) => profileBadgeMap.get(e)!);
+  const flags = bitfieldToArray<keyof typeof UserFlags>(
+    user.publicFlags ?? 0,
+    Object.keys(UserFlags) as (keyof typeof UserFlags)[]
+  );
+
+  return flags.map((e) => profileBadgeMap.get(UserFlags[e])!);
 }
 export function formatTimestamp(unix: number | Date) {
   if (unix instanceof Date) unix = +unix;
@@ -227,13 +201,15 @@ export function getPresence(user: User, maxTextLength: number = 45) {
       item.createdAt ?? Date.now()
     )} ${formatTimestamp(item.createdAt ?? Date.now())}`;
   const pres = user.presence!;
-  var stat = `${UserStatusMap.get(pres.status as PresenceStatusUnion)?.icon} ${
-    UserStatusMap.get(pres.status as PresenceStatusUnion)?.text
-  }`;
+  var stat = `${
+    // @ts-ignore
+    UserStatusMap.get(PresenceStatuses[pres.status.toUpperCase()])?.icon
+    // @ts-ignore
+  } ${UserStatusMap.get(PresenceStatuses[pres.status.toUpperCase()])?.text}`;
   var custom = null;
   const statuses = [];
   for (const [_key, item] of pres.activities) {
-    if (item.type === PresenceStatus.CUSTOM_STATUS) {
+    if (item.type === ActivityTypes.CUSTOM_STATUS) {
       const e = item.emoji ?? CustomEmojis.GUI_RICH_PRESENCE;
       const text = item.state
         ? `${item.state.slice(0, maxTextLength)}${
@@ -242,7 +218,7 @@ export function getPresence(user: User, maxTextLength: number = 45) {
         : "";
       custom = `${e} ${text} (${item.name})${genTime(item)}`;
     }
-    if (item.type == PresenceStatus.PLAYING) {
+    if (item.type == ActivityTypes.PLAYING) {
       const text = item.details ? `${item.details} - ` : "";
       const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
@@ -252,7 +228,7 @@ export function getPresence(user: User, maxTextLength: number = 45) {
         } ${text}**${name}**${state}${genTime(item)}`
       );
     }
-    if (item.type == PresenceStatus.LISTENING) {
+    if (item.type == ActivityTypes.LISTENING) {
       const text = item.details ? `${item.details}` : "";
       const author = item.state ? ` by ${item.state}` : "";
       const track = text + author !== "" ? `${text}${author} - ` : "";
@@ -263,13 +239,13 @@ export function getPresence(user: User, maxTextLength: number = 45) {
         } ${track}**${name}**${genTime(item)}`
       );
     }
-    if (item.type == PresenceStatus.WATCHING) {
+    if (item.type == ActivityTypes.WATCHING) {
       const text = item.details ? `${item.details} - ` : "";
       const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;
       statuses.push(`${Emojis.TV} ${text}**${name}**${state}${genTime(item)}`);
     }
-    if (item.type == PresenceStatus.STREAMING) {
+    if (item.type == ActivityTypes.STREAMING) {
       const text = item.details ? `${item.details} - ` : "";
       const state = item.state ? `\n${Chars.TAB_SPACER} ${item.state}` : "";
       const name = item.name;

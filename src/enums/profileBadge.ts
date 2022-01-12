@@ -1,29 +1,10 @@
+import { UserFlags } from "detritus-client/lib/constants";
 import { IElement } from "../types";
 import { CustomEmojis } from "./customEmojis";
-import { UserFlagUnion } from "./utils";
 
-const profileBadgeMap = new Map<
-  UserFlagUnion | "NITRO_USER" | "SERVER_BOOSTER",
-  IElement
->([
+const profileBadgeMap = new Map<UserFlags, IElement>([
   [
-    "NITRO_USER",
-    {
-      icon: CustomEmojis.BADGE_NITRO,
-      text: "Nitro",
-      anchor: "nitro",
-    },
-  ],
-  [
-    "SERVER_BOOSTER",
-    {
-      icon: CustomEmojis.BADGE_SERVER_BOOSTER,
-      text: "Server Booster",
-      anchor: "nitro",
-    },
-  ],
-  [
-    "BUG_HUNTER_LEVEL_1",
+    UserFlags["BUG_HUNTER_LEVEL_1"],
     {
       icon: CustomEmojis.BADGE_BUG_HUNTER,
       text: "Bug Hunter Level I",
@@ -31,7 +12,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "BUG_HUNTER_LEVEL_2",
+    UserFlags["BUG_HUNTER_LEVEL_2"],
     {
       icon: CustomEmojis.BADGE_BUG_HUNTER_2,
       text: "Bug Hunter Level II",
@@ -39,7 +20,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "STAFF",
+    UserFlags["STAFF"],
     {
       icon: CustomEmojis.BADGE_STAFF,
       text: "Discord Employee",
@@ -47,7 +28,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "PREMIUM_EARLY_SUPPORTER",
+    UserFlags["PREMIUM_EARLY_SUPPORTER"],
     {
       icon: CustomEmojis.BADGE_EARLY_SUPPORTER,
       text: "Early Supporter",
@@ -55,7 +36,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "VERIFIED_DEVELOPER",
+    UserFlags["VERIFIED_DEVELOPER"],
     {
       icon: CustomEmojis.BADGE_BOT_DEVELOPER,
       text: "Early Verified Developer",
@@ -63,7 +44,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "HYPESQUAD_ONLINE_HOUSE_1",
+    UserFlags["HYPESQUAD_ONLINE_HOUSE_1"],
     {
       icon: CustomEmojis.BADGE_HYPESQUAD_BRAVERY,
       text: "HypeSquad Balance",
@@ -71,7 +52,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "HYPESQUAD_ONLINE_HOUSE_2",
+    UserFlags["HYPESQUAD_ONLINE_HOUSE_2"],
     {
       icon: CustomEmojis.BADGE_HYPESQUAD_BRILLIANCE,
       text: "HypeSquad Bravery",
@@ -79,7 +60,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "HYPESQUAD_ONLINE_HOUSE_3",
+    UserFlags["HYPESQUAD_ONLINE_HOUSE_3"],
     {
       icon: CustomEmojis.BADGE_HYPESQUAD_BALANCE,
       text: "HypeSquad Brilliance",
@@ -87,7 +68,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "HYPESQUAD",
+    UserFlags["HYPESQUAD"],
     {
       icon: CustomEmojis.BADGE_HYPESQUAD_EVENTS,
       text: "HypeSquad Events",
@@ -95,7 +76,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "PARTNER",
+    UserFlags["PARTNER"],
     {
       icon: CustomEmojis.BADGE_PARTNER,
       text: "Partnered Server Owner",
@@ -103,7 +84,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "SYSTEM",
+    UserFlags["SYSTEM"],
     {
       icon: CustomEmojis.BADGE_STAFF,
       text: "System",
@@ -111,7 +92,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "TEAM_USER",
+    UserFlags["TEAM_USER"],
     {
       icon: CustomEmojis.GUI_INVITE,
       text: "Team User",
@@ -119,7 +100,7 @@ const profileBadgeMap = new Map<
     },
   ],
   [
-    "VERIFIED_BOT",
+    UserFlags["VERIFIED_BOT"],
     {
       icon: CustomEmojis.BADGE_VERIFIED_BOT,
       text: "Verified Bot",

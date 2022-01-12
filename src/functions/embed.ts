@@ -50,7 +50,7 @@ export async function createImageEmbed(
   if (input.constructor == String) input = new URL(input);
   if (input instanceof URL) input = await (await fetch(input)).buffer();
 
-  const image = await storeImage(input as Buffer, name ?? "attachment");
+  const image = await storeImage(input as Buffer, name ?? "attachment.gif");
 
   const embed = createUserEmbed(context);
   embed.setColor(Color.EMBED);

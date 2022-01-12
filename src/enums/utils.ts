@@ -1,4 +1,5 @@
 import {
+  Permissions,
   PlatformTypes,
   PremiumGuildTiers,
   PresenceStatuses,
@@ -15,154 +16,6 @@ import { IElement } from "../types";
 import { CustomEmojis } from "./customEmojis";
 import { Emojis } from "./emojis";
 
-export type PresenceStatusUnion =
-  | "online"
-  | "idle"
-  | "dnd"
-  | "offline"
-  | "invisible";
-export const enum PresenceStatus {
-  PLAYING = 0,
-  STREAMING = 1,
-  LISTENING = 2,
-  WATCHING = 3,
-  CUSTOM_STATUS = 4,
-}
-export const IrrelevantPermissions = [
-  "CREATE_INSTANT_INVITE",
-  "ADD_REACTIONS",
-  "STREAM",
-  "VIEW_CHANNEL",
-  "SEND_MESSAGES",
-  "SEND_TTS_MESSAGES",
-  "EMBED_LINKS",
-  "ATTACH_FILES",
-  "READ_MESSAGE_HISTORY",
-  "USE_EXTERNAL_EMOJIS",
-  "CONNECT",
-  "SPEAK",
-  "USE_VOICE_ACTIVITY",
-  "CHANGE_NICKNAME",
-  "VIEW_GUILD_INSIGHTS",
-  "VIEW_AUDIT_LOG",
-  "PRIORITY_SPEAKER",
-  "USE_SLASH_COMMANDS",
-  "REQUEST_TO_SPEAK",
-  "USE_PUBLIC_THREADS",
-  "USE_PRIVATE_THREADS",
-];
-export const UserFlagArray: UserFlagUnion[] = [
-  "STAFF",
-  "PARTNER",
-  "HYPESQUAD",
-  "BUG_HUNTER_LEVEL_1",
-  "MFA_SMS",
-  "PREMIUM_PROMO_DISMISSED",
-  "HYPESQUAD_ONLINE_HOUSE_1",
-  "HYPESQUAD_ONLINE_HOUSE_2",
-  "HYPESQUAD_ONLINE_HOUSE_3",
-  "PREMIUM_EARLY_SUPPORTER",
-  "TEAM_USER",
-  "SYSTEM",
-  "HAS_UNREAD_URGENT_MESSAGES",
-  "BUG_HUNTER_LEVEL_2",
-  "VERIFIED_BOT",
-  "VERIFIED_DEVELOPER",
-];
-export type UserFlagUnion =
-  | "STAFF"
-  | "PARTNER"
-  | "HYPESQUAD"
-  | "BUG_HUNTER_LEVEL_1"
-  | "MFA_SMS"
-  | "PREMIUM_PROMO_DISMISSED"
-  | "HYPESQUAD_ONLINE_HOUSE_1"
-  | "HYPESQUAD_ONLINE_HOUSE_2"
-  | "HYPESQUAD_ONLINE_HOUSE_3"
-  | "PREMIUM_EARLY_SUPPORTER"
-  | "TEAM_USER"
-  | "SYSTEM"
-  | "HAS_UNREAD_URGENT_MESSAGES"
-  | "BUG_HUNTER_LEVEL_2"
-  | "VERIFIED_BOT"
-  | "VERIFIED_DEVELOPER";
-export type CustomPermissionString =
-  | "MANAGED"
-  | "SERVER_OWNER"
-  | "BLACKLISTED_USER"
-  | "BLACKLISTED_GUILD_OWNER"
-  | "GLOBAL_ADMIN"
-  | "SYSTEM"
-  | "NONE";
-export const PermissionString: (
-  | PermissionStringUnion
-  | CustomPermissionString
-)[] = [
-  "CREATE_INSTANT_INVITE",
-  "KICK_MEMBERS",
-  "BAN_MEMBERS",
-  "ADMINISTRATOR",
-  "MANAGE_CHANNELS",
-  "MANAGE_GUILD",
-  "ADD_REACTIONS",
-  "VIEW_AUDIT_LOG",
-  "PRIORITY_SPEAKER",
-  "STREAM",
-  "VIEW_CHANNEL",
-  "SEND_MESSAGES",
-  "SEND_TTS_MESSAGES",
-  "MANAGE_MESSAGES",
-  "EMBED_LINKS",
-  "ATTACH_FILES",
-  "READ_MESSAGE_HISTORY",
-  "MENTION_EVERYONE",
-  "USE_EXTERNAL_EMOJIS",
-  "VIEW_GUILD_ANALYTICS",
-  "CONNECT",
-  "SPEAK",
-  "MUTE_MEMBERS",
-  "DEAFEN_MEMBERS",
-  "MOVE_MEMBERS",
-  "USE_VAD",
-  "CHANGE_NICKNAME",
-  "CHANGE_NICKNAMES",
-  "MANAGE_ROLES",
-  "MANAGE_WEBHOOKS",
-  "MANAGE_EMOJIS",
-];
-export type PermissionStringUnion =
-  | "NONE"
-  | "CREATE_INSTANT_INVITE"
-  | "KICK_MEMBERS"
-  | "BAN_MEMBERS"
-  | "ADMINISTRATOR"
-  | "MANAGE_CHANNELS"
-  | "MANAGE_GUILD"
-  | "ADD_REACTIONS"
-  | "VIEW_AUDIT_LOG"
-  | "PRIORITY_SPEAKER"
-  | "STREAM"
-  | "VIEW_CHANNEL"
-  | "SEND_MESSAGES"
-  | "SEND_TTS_MESSAGES"
-  | "MANAGE_MESSAGES"
-  | "EMBED_LINKS"
-  | "ATTACH_FILES"
-  | "READ_MESSAGE_HISTORY"
-  | "MENTION_EVERYONE"
-  | "USE_EXTERNAL_EMOJIS"
-  | "VIEW_GUILD_ANALYTICS"
-  | "CONNECT"
-  | "SPEAK"
-  | "MUTE_MEMBERS"
-  | "DEAFEN_MEMBERS"
-  | "MOVE_MEMBERS"
-  | "USE_VAD"
-  | "CHANGE_NICKNAME"
-  | "CHANGE_NICKNAMES"
-  | "MANAGE_ROLES"
-  | "MANAGE_WEBHOOKS"
-  | "MANAGE_EMOJIS";
 export const ConnectionMap = new Map<PlatformTypes, IElement>([
   [
     PlatformTypes.BATTLENET,
@@ -511,3 +364,42 @@ guildVoiceRegionMap.set(VoiceRegionString.US_WEST, {
   text: "United States (West)",
 });
 export { VoiceRegionString, guildVoiceRegionMap };
+export const PermissionsText = Object.freeze({
+  [String(Permissions.ADD_REACTIONS)]: "Add Reactions",
+  [String(Permissions.ADMINISTRATOR)]: "Administrator",
+  [String(Permissions.ATTACH_FILES)]: "Attach Files",
+  [String(Permissions.BAN_MEMBERS)]: "Ban Members",
+  [String(Permissions.CHANGE_NICKNAME)]: "Change Nickname",
+  [String(Permissions.CHANGE_NICKNAMES)]: "Change Nicknames",
+  [String(Permissions.CONNECT)]: "Connect",
+  [String(Permissions.CREATE_INSTANT_INVITE)]: "Create Instant Invite",
+  [String(Permissions.DEAFEN_MEMBERS)]: "Deafen Members",
+  [String(Permissions.EMBED_LINKS)]: "Embed Links",
+  [String(Permissions.KICK_MEMBERS)]: "Kick Members",
+  [String(Permissions.MANAGE_CHANNELS)]: "Manage Channels",
+  [String(Permissions.MANAGE_EMOJIS)]: "Manage Emojis",
+  [String(Permissions.MANAGE_GUILD)]: "Manage Guild",
+  [String(Permissions.MANAGE_MESSAGES)]: "Manage Messages",
+  [String(Permissions.MANAGE_ROLES)]: "Manage Roles",
+  [String(Permissions.MANAGE_THREADS)]: "Manage Threads",
+  [String(Permissions.MANAGE_WEBHOOKS)]: "Manage Webhooks",
+  [String(Permissions.MENTION_EVERYONE)]: "Mention Everyone",
+  [String(Permissions.MOVE_MEMBERS)]: "Move Members",
+  [String(Permissions.MUTE_MEMBERS)]: "Mute Members",
+  [String(Permissions.NONE)]: "None",
+  [String(Permissions.PRIORITY_SPEAKER)]: "Priority Speaker",
+  [String(Permissions.READ_MESSAGE_HISTORY)]: "Read Message History",
+  [String(Permissions.REQUEST_TO_SPEAK)]: "Request To Speak",
+  [String(Permissions.SEND_MESSAGES)]: "Send Messages",
+  [String(Permissions.SEND_TTS_MESSAGES)]: "Text-To-Speech",
+  [String(Permissions.SPEAK)]: "Speak",
+  [String(Permissions.STREAM)]: "Go Live",
+  [String(Permissions.USE_APPLICATION_COMMANDS)]: "Use Application Commands",
+  [String(Permissions.USE_EXTERNAL_EMOJIS)]: "Use External Emojis",
+  [String(Permissions.USE_PRIVATE_THREADS)]: "Use Private Threads",
+  [String(Permissions.USE_PUBLIC_THREADS)]: "Use Public Threads",
+  [String(Permissions.USE_VAD)]: "Voice Auto Detect",
+  [String(Permissions.VIEW_AUDIT_LOG)]: "View Audit Logs",
+  [String(Permissions.VIEW_CHANNEL)]: "View Channel",
+  [String(Permissions.VIEW_GUILD_ANALYTICS)]: "View Guild Analytics",
+});

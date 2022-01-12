@@ -1,25 +1,25 @@
+import { GatewayPresenceStatuses } from "detritus-client-socket/lib/constants";
 import { IElement } from "../types";
 import { CustomEmojis } from "./customEmojis";
-import { PresenceStatusUnion } from "./utils";
 
-const UserStatusMap = new Map<PresenceStatusUnion, IElement>();
-UserStatusMap.set("dnd", {
+const UserStatusMap = new Map<GatewayPresenceStatuses, IElement>();
+UserStatusMap.set(GatewayPresenceStatuses["DND"], {
   icon: CustomEmojis.STATUS_DND,
   text: "Busy",
 });
-UserStatusMap.set("idle", {
+UserStatusMap.set(GatewayPresenceStatuses["IDLE"], {
   icon: CustomEmojis.STATUS_IDLE,
   text: "Idle",
 });
-UserStatusMap.set("offline", {
+UserStatusMap.set(GatewayPresenceStatuses["OFFLINE"], {
   icon: CustomEmojis.STATUS_OFFLINE,
   text: "Offline",
 });
-UserStatusMap.set("invisible", {
+UserStatusMap.set(GatewayPresenceStatuses["INVISIBLE"], {
   icon: CustomEmojis.STATUS_OFFLINE,
-  text: "Offline",
+  text: "Invisible",
 });
-UserStatusMap.set("online", {
+UserStatusMap.set(GatewayPresenceStatuses["ONLINE"], {
   icon: CustomEmojis.STATUS_ONLINE,
   text: "Online",
 });

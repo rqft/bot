@@ -20,6 +20,7 @@ export default class PxlAjitCommand extends BaseCommand {
     const imageAttach = await storeImage(args.image, "attachment.gif");
     const ajit = await pxl.ajit([imageAttach.url!]);
     const embed = await createImageEmbed(context, ajit);
+    console.log(embed.image);
 
     return await context.editOrReply({ embed });
   }

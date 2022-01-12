@@ -1,9 +1,46 @@
-import { Context } from "detritus-client/lib/command";
+import { Command, Context } from "detritus-client/lib/command";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
 import { findImage } from "./findImage";
 
 export namespace Parameters {
+  export function command(content: string, context: Context) {
+    if (content) {
+      const commands: Array<Command> = [];
+      const commandsWithPrefix: Array<Command> = [];
+
+      const insensitive = content.toLowerCase().replace(/\s\s+/g, " ");
+      const insensitiveAsPrefix = insensitive + " ";
+
+      for (let command of context.commandClient.commands) {
+        if (command.names.includes(insensitive)) {
+          commandsWithPrefix.push(command);
+          continue;
+        }
+        if (
+          command.names.some((name) => name.startsWith(insensitiveAsPrefix))
+        ) {
+          commandsWithPrefix.push(command);
+          continue;
+        }
+        if (command.names.some((name) => name.startsWith(insensitive))) {
+          commands.push(command);
+          continue;
+        }
+      }
+      return [
+        ...commandsWithPrefix.sort((x, y) => {
+          if (x.names.includes(insensitive)) {
+            return -1;
+          }
+          return x.name.localeCompare(y.name);
+        }),
+        ...commands.sort((x, y) => x.name.localeCompare(y.name)),
+      ];
+    }
+    return null;
+  }
+
   export function user(value: string, _context: Context) {
     const found = [client, ...altclients, selfclient]
       .map((v) => v.users.toArray())
