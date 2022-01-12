@@ -113,7 +113,7 @@ export default class GDProfileCommand extends BaseCommand {
     context.editOrReply({ embed });
   }
 }
-async function composeIconSet(profile: ProfileResult) {
+async function composeIconSet(profile: ProfileResult, size: number = 128) {
   const forms: IconForm[] = [
     IconForm.CUBE,
     IconForm.SHIP,
@@ -127,13 +127,13 @@ async function composeIconSet(profile: ProfileResult) {
   let gd = new GDBrowser();
   const icons: Array<ArrayBuffer> = await Promise.all(
     forms.map((form) => {
-      return gd.icon(profile.playerID, form);
+      return gd.icon(profile.playerID, form, size);
     })
   );
-  let composite = new Image(128 * forms.length, 128);
+  let composite = new Image(size * forms.length, size);
   icons.forEach(async (icon, index) => {
     let img = await Image.decode(Buffer.from(icon));
-    composite.composite(img, 128 * index, 0);
+    composite.composite(img, size * index, 0);
   });
   return Buffer.from(await composite.encode());
 }

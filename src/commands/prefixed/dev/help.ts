@@ -13,7 +13,8 @@ import {
 import { BaseCommand } from "../basecommand";
 
 export interface HelpArgs {
-  command?: Command.Command;
+  commands?: Array<Command.Command>;
+  page: number;
 }
 export default class HelpCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -21,15 +22,23 @@ export default class HelpCommand extends BaseCommand {
       name: "help",
       aliases: ["command", "commands", "cmds", "cmd", "h", "?"],
 
-      label: "command",
+      label: "commands",
       type: Parameters.command,
       required: false,
+
+      args: [
+        {
+          name: "page",
+          type: "number",
+          default: 0,
+        },
+      ],
     });
   }
   async run(context: Command.Context, args: HelpArgs) {
     const embed = createBrandEmbed(Brand.VYBOSE, context, true);
     embed.setTitle("Help Menu");
-    if (!args.command) {
+    if (!args.commands) {
       embed.setDescription(
         `**Command List**\n${Markup.codeblock(
           context.commandClient!.commands.map((value) => value.name).join(", ")
@@ -37,7 +46,12 @@ export default class HelpCommand extends BaseCommand {
       );
       return await context.editOrReply({ embed });
     }
-    const { command } = args;
+    const { commands } = args;
+    const command = commands[args.page];
+    if (!command) {
+      return await context.editOrReply("Page not found");
+    }
+
     {
       const description: Array<string> = [];
       description.push(`**Name**: ${command.name}`);

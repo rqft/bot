@@ -37,7 +37,8 @@ export function createBrandEmbed(
 export async function createImageEmbed(
   context: Context | InteractionContext,
   input: URL | string | Buffer | Attachment | ArrayBuffer,
-  name?: string
+  name?: string,
+  brand?: Brand
 ) {
   if (input instanceof ArrayBuffer) {
     let buf = Buffer.alloc(input.byteLength);
@@ -69,8 +70,10 @@ export async function createImageEmbed(
     footer.push(
       `Took ${simpleGetLongAgo(context.interaction.createdAtUnix)} to complete`
     );
-
-  embed.setFooter(footer.join(", "));
+  if (brand) {
+    footer.push(`Created by ${BrandNames[brand]}`);
+  }
+  embed.setFooter(footer.join(", "), brand ? BrandIcons[brand] : undefined);
 
   return embed;
 }

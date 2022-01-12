@@ -20,14 +20,17 @@ export enum Animals {
 }
 
 export async function someRandomApiAnimal(context: Context, animal: Animals) {
-  const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
-
   const sra = new SomeRandomAPI();
   const animals = await sra[animal]();
+  const embed = await createImageEmbed(
+    context,
+    animals.link,
+    animal,
+    Brand.SOME_RANDOM_API
+  );
 
   embed.setTitle(`${capitalizeWords(animal)} Image`);
   embed.setDescription(Markup.codeblock(animals.fact));
-  embed.setImage(animals.link);
 
   return await context.editOrReply({ embed });
 }
@@ -39,13 +42,16 @@ export enum Animus {
 }
 
 export async function someRandomApiAnimu(context: Context, animu: Animus) {
-  const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
-
   const sra = new SomeRandomAPI();
   const animus = await sra[animu]();
+  const embed = await createImageEmbed(
+    context,
+    animus.link,
+    animu,
+    Brand.SOME_RANDOM_API
+  );
 
   embed.setTitle(`${capitalizeWords(animu)} Anime GIF`);
-  embed.setImage(animus.link);
 
   return await context.editOrReply({ embed });
 }

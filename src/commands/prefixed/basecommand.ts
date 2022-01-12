@@ -18,7 +18,7 @@ export class BaseCommand extends Command {
       client,
       Object.assign(
         {
-          triggerTypingAfter: 1000,
+          triggerTypingAfter: 0,
           ratelimits: [
             { duration: 2500, limit: 3, type: "user" },
             { duration: 5000, limit: 10, type: "channel" },
@@ -29,6 +29,7 @@ export class BaseCommand extends Command {
       )
     );
   }
+
   run(context: Context, _args: ParsedArgs = {}): Promise<void | Message> {
     return context.reply("❌ No functionality set for this command");
   }
