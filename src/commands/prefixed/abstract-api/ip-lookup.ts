@@ -69,7 +69,7 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
     });
     const ip = await abs.getJSON<AbstractIP>(
       `/v1/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.COMPANY_ENRICHMENT,
+        api_key: Secrets.AbstractKeys.IP_GEOLOCATION,
         ip_address: args.ip,
       })}`
     );
