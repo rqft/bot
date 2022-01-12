@@ -1,4 +1,5 @@
 import { Command } from "detritus-client";
+import { ArgumentType } from "detritus-client/lib/command";
 import {
   ActivityTypes,
   PresenceStatuses,
@@ -37,17 +38,36 @@ export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
   });
 }
 export function generateUsage(command: Command.Command) {
-  const args = command.argParser.args.map((arg) => {
-    const optional = optionalBrackets(arg.required);
-    const type = arg.type.toLocaleString();
-    const prefix = [...arg.prefixes.values()][0] || "-";
-
-    return `${optional.left}${prefix}${arg.name}: ${
+  let str = [`${commands.prefixes.custom.toArray()[0]!}${command.fullName}`];
+  function type(type: ArgumentType) {
+    if (type instanceof Function) return capitalizeWords(type.name);
+    if (type instanceof Array) return type.map((type) => type.name).join(" | ");
+    return type.toLocaleString();
+  }
+  function buildArgString(arg: Command.Argument) {
+    const optional = optionalBrackets(command.arg.required);
+    const prefixes = [...arg.prefixes].filter(
+      (v) => !command.fullName.includes(v)
+    );
+    const prefix = prefixes.length ? `${prefixes[0] ?? "-"}` : "";
+    return `${optional.left}${prefix}${arg.label}: ${
       arg.consume ? "..." : ""
-    }${type}${optional.right}`;
-  });
+    }${type(arg.type)}${optional.right}`;
+  }
+  if (command.arg) {
+    str.push(buildArgString(command.arg));
+  }
+  if (
+    command.argParser &&
+    command.argParser.args &&
+    command.argParser.args.length
+  ) {
+    command.argParser.args.forEach((arg) => {
+      str.push(buildArgString(arg));
+    });
+  }
 
-  return `${commands.prefixes.custom.toArray()[0]!}${command.fullName} ${args}`;
+  return str.join(" ");
 }
 export function removeCamelCase(s: string): string {
   return s

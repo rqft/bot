@@ -25,5 +25,4 @@ commands.on("commandDelete", ({ reply }) => reply.delete());
     })
   );
   console.log(`ok done in ${simpleGetLongAgo(start)}`);
-  // console.log(commands.commands.map((v) => v.name));
 })();
