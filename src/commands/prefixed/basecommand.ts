@@ -11,7 +11,7 @@ import { Message } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
-import { expandMs, generateUsage } from "../../functions/tools";
+import { expandMs, generateUsage, removeSecrets } from "../../functions/tools";
 export class BaseCommand extends Command {
   constructor(client: CommandClient, options: CommandOptions) {
     super(
@@ -35,18 +35,22 @@ export class BaseCommand extends Command {
   }
   onError(context: Context, _args: ParsedArgs = {}, error: Error) {
     return context.reply(
-      `❌ Error while using command: ${error.message}\n${Markup.codeblock(
-        error.stack ?? "No Stack",
-        { language: "js" }
-      )}`
+      removeSecrets(
+        `❌ Error while using command: ${error.message}\n${Markup.codeblock(
+          error.stack ?? "No Stack",
+          { language: "js" }
+        )}`
+      )
     );
   }
   onRunError(context: Context, _args: ParsedArgs = {}, error: Error) {
     return context.reply(
-      `❌ Error while running command: ${error.message}\n${Markup.codeblock(
-        error.stack ?? "No Stack",
-        { language: "js" }
-      )}`
+      removeSecrets(
+        `❌ Error while running command: ${error.message}\n${Markup.codeblock(
+          error.stack ?? "No Stack",
+          { language: "js" }
+        )}`
+      )
     );
   }
   onTypeError(

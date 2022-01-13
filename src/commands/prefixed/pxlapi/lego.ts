@@ -1,5 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { storeImage } from "../../../functions/tools";
@@ -37,7 +38,12 @@ export default class PxlLegoCommand extends BaseCommand {
       scale: args.scale,
       groupSize: args.groupSize,
     });
-    const embed = await createImageEmbed(context, lego);
+    const embed = await createImageEmbed(
+      context,
+      lego,
+      undefined,
+      Brand.PXL_API
+    );
 
     return await context.editOrReply({ embed });
   }

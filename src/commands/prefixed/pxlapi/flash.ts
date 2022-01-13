@@ -1,5 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { storeImage } from "../../../functions/tools";
@@ -22,7 +23,8 @@ export default class PxlFlashCommand extends BaseCommand {
     const embed = await createImageEmbed(
       context,
       flash,
-      "SPOILER_attachment.gif"
+      "SPOILER_attachment.gif",
+      Brand.PXL_API
     );
 
     return await context.editOrReply({ embed });

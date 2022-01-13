@@ -1,5 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { storeImage } from "../../../functions/tools";
@@ -48,7 +49,12 @@ export default class PxlGlitchCommand extends BaseCommand {
       gif: { count: args.gifcount, delay: args.delay },
       iterations: args.iterations,
     });
-    const embed = await createImageEmbed(context, glitch);
+    const embed = await createImageEmbed(
+      context,
+      glitch,
+      undefined,
+      Brand.PXL_API
+    );
 
     return await context.editOrReply({ embed });
   }

@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
 import { SnapchatFilterType } from "pariah/dist";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { storeImage } from "../../../functions/tools";
@@ -41,7 +42,12 @@ export default class PxlSnapchatFilterCommand extends BaseCommand {
     const pxl = new PxlApi(Secrets.Key.pxlAPI);
     const imageAttach = await storeImage(args.image, "attachment.gif");
     const snapchat = await pxl.snapchat([imageAttach.url!], args.filter);
-    const embed = await createImageEmbed(context, snapchat);
+    const embed = await createImageEmbed(
+      context,
+      snapchat,
+      undefined,
+      Brand.PXL_API
+    );
 
     return await context.editOrReply({ embed });
   }
