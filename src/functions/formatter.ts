@@ -109,7 +109,12 @@ export async function someRandomApiCanvas(
   const imageAttach = await storeImage(image, "attachment.gif");
   const a = Object.assign({ avatar: imageAttach.url! }, args);
   const canvas = await sra.canvas(endpoint, a);
-  const embed = await createImageEmbed(context, canvas);
+  const embed = await createImageEmbed(
+    context,
+    canvas,
+    undefined,
+    Brand.SOME_RANDOM_API
+  );
   return embed;
 }
 export async function someRandomApiOverlay(

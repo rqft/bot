@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
 import { EyesType } from "pariah/dist";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { storeImage } from "../../../functions/tools";
@@ -52,7 +53,12 @@ export default class PxlEyesCommand extends BaseCommand {
     const pxl = new PxlApi(Secrets.Key.pxlAPI);
     const imageAttach = await storeImage(args.image, "attachment.gif");
     const eyes = await pxl.eyes([imageAttach.url!], args.type);
-    const embed = await createImageEmbed(context, eyes);
+    const embed = await createImageEmbed(
+      context,
+      eyes,
+      undefined,
+      Brand.PXL_API
+    );
 
     return await context.editOrReply({ embed });
   }

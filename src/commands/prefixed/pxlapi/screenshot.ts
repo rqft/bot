@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { Locales, LocalesText } from "detritus-client/lib/constants";
 import { PxlApi } from "pariah";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { Secrets } from "../../../secrets";
@@ -54,7 +55,12 @@ export default class PxlScreenshotCommand extends BaseCommand {
       locale: args.locale,
       theme: args.theme,
     });
-    const embed = await createImageEmbed(context, screenshot);
+    const embed = await createImageEmbed(
+      context,
+      screenshot,
+      undefined,
+      Brand.PXL_API
+    );
     embed.setDescription(`URL: ${args.url}`);
 
     return await context.editOrReply({ embed });

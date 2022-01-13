@@ -133,6 +133,9 @@ export namespace Parameters {
     if (!value.match(regex)) throw new Error("Invalid phone number");
     return value;
   }
+  export function email(value: string, _context: Context) {
+    // email regex
+  }
 }
 export namespace DefaultParameters {
   export function user(context: Context) {

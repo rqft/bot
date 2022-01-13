@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
 import { FlagType } from "pariah/dist";
+import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { storeImage } from "../../../functions/tools";
@@ -79,7 +80,12 @@ export default class PxlFlagCommand extends BaseCommand {
     const pxl = new PxlApi(Secrets.Key.pxlAPI);
     const imageAttach = await storeImage(args.image, "attachment.gif");
     const flag = await pxl.flag([imageAttach.url!], args.flag, args.opacity);
-    const embed = await createImageEmbed(context, flag);
+    const embed = await createImageEmbed(
+      context,
+      flag,
+      undefined,
+      Brand.PXL_API
+    );
 
     return await context.editOrReply({ embed });
   }

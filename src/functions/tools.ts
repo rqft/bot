@@ -18,6 +18,7 @@ import { profileBadgeMap } from "../enums/profileBadge";
 import { UserStatusMap } from "../enums/userStatus";
 import { guildVoiceRegionMap, VoiceRegionString } from "../enums/utils";
 import { Chars, client, commands } from "../globals";
+import { Secrets } from "../secrets";
 import { IElement } from "../types";
 import { Markup } from "./markup";
 
@@ -382,4 +383,16 @@ export function padCodeBlockFromRows(
     rows.push(row.join(join));
   }
   return rows;
+}
+export function removeSecrets(str: string) {
+  return replacer(
+    str,
+    [
+      ...Object.values(Secrets.Key),
+      ...Object.values(Secrets.AbstractKeys),
+      Secrets.BOT_TOKEN,
+      Secrets.UserToken,
+      ...Secrets.AltTokens,
+    ].map((v) => [v, "[KEY]"])
+  );
 }

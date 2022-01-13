@@ -23,7 +23,7 @@ export interface AbstractHoliday {
   date_day: string;
   week_day: string;
 }
-export default class AdviceSlipCommand extends BaseCommand {
+export default class AbstractHolidayCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "holiday",
@@ -36,7 +36,7 @@ export default class AdviceSlipCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractHolidayArgs) {
-    const abs = new Pariah({ baseUrl: "https://timezone.abstractapi.com/" });
+    const abs = new Pariah({ baseUrl: "https://holiday.abstractapi.com/" });
     const holi = await abs.getJSON<Array<AbstractHoliday>>(
       `/v1/${abs.toUrlParams({
         api_key: Secrets.AbstractKeys.HOLIDAYS,
