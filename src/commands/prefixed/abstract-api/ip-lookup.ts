@@ -9,12 +9,12 @@ export interface AbstractIPGeolocationArgs {
 }
 export interface AbstractIP {
   ip_address: `${number}.${number}.${number}.${number}`;
-  city: string;
-  city_geoname_id: number;
-  region: string;
-  region_iso_code: string;
-  region_geoname_id: number;
-  postal_code: string;
+  city?: string;
+  city_geoname_id?: number;
+  region?: string;
+  region_iso_code?: string;
+  region_geoname_id?: number;
+  postal_code?: string;
   country: string;
   country_code: string;
   country_geoname_id: number;
@@ -80,9 +80,12 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
     embed.setTitle(`Geolocation for ${ip.ip_address}`);
     {
       const description: Array<string> = [];
-      description.push(
-        `**Location**: ${ip.city}, ${ip.region}, ${ip.country} (Postal: ${ip.postal_code})`
-      );
+      const locators: Array<string> = [];
+      if (ip.city) locators.push(`${ip.city}`);
+      if (ip.region) locators.push(`${ip.region}`);
+      if (ip.country) locators.push(`${ip.country}`);
+      if (ip.postal_code) locators.push(`(${ip.postal_code})`);
+      description.push(`**Location**: ${locators.join(", ")}`);
       description.push(`**Continent**: ${ip.continent}`);
       description.push(
         `**Absolute Location**: (${ip.longitude}, ${ip.latitude})`
@@ -117,7 +120,7 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
       );
       embed.setDescription(description.join("\n"));
     }
-    embed.setImage(ip.flag.png);
+    embed.setThumbnail(ip.flag.png);
     return context.editOrReply({ embed });
   }
 }

@@ -27,7 +27,11 @@ export default class SRALyricsCommand extends BaseCommand {
     embed.setUrl(lyrics.links.genius);
     embed.setThumbnail(lyrics.thumbnail.genius);
 
-    embed.setDescription(Markup.codeblock(lyrics.lyrics, { limit: 1000 }));
+    embed.setDescription(
+      Markup.codeblock(lyrics.lyrics.replace(/\n{2,}/g, "\n"), {
+        language: "txt",
+      })
+    );
     return await context.editOrReply({ embed });
   }
 }
