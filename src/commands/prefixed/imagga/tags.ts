@@ -19,7 +19,7 @@ export default class ImaggaTagsCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: ImageUrlArgs) {
     const im = new Imagga(Secrets.Key.imaggaAuth);
-    const tags = await im.tags({ image_url: args.image, limit: 20 });
+    const tags = await im.tags({ image_url: args.image, limit: 20 }, "");
     if (tags.status.type === "error") throw new Error(tags.status.text);
 
     const embed = createBrandEmbed(Brand.IMAGGA, context);

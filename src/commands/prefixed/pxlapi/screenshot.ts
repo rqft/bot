@@ -1,5 +1,5 @@
 import { Command, CommandClient } from "detritus-client";
-import { Locales, LocalesText } from "detritus-client/lib/constants";
+import { Locales } from "detritus-client/lib/constants";
 import { PxlApi } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
@@ -41,7 +41,7 @@ export default class PxlScreenshotCommand extends BaseCommand {
           name: "locale",
           type: "string",
           default: "en-US",
-          choices: [...Object.keys(Locales), ...Object.entries(LocalesText)],
+          choices: [...Object.values(Locales)],
         },
       ],
     });
