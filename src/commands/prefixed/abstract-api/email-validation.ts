@@ -1,30 +1,32 @@
 import { Command, CommandClient } from "detritus-client";
-import { Markup } from "detritus-client/lib/utils";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
-import { capitalizeWords } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractEmailValidationArgs {
   email: string;
 }
 export interface AbstractEmail {
-  phone: string;
-  valid: boolean;
-  format: {
-    international: string;
-    local: string;
-  };
-  country: {
-    code: string;
-    name: string;
-    prefix: string;
-  };
-  location: string;
-  type: string;
-  carrier: string;
+  email: string;
+  autocorrect: string;
+  deliverability: "DELIVERABLE" | "UNKNOWN" | "UNDELIVERABLE";
+  quality_score: number;
+  is_valid_format: AbstractEmailBool;
+  is_free_email: AbstractEmailBool;
+  is_disposable_email: AbstractEmailBool;
+  is_role_email: AbstractEmailBool;
+  is_catchall_email: AbstractEmailBool;
+  is_mx_found: AbstractEmailBool;
+  is_smtp_valid: AbstractEmailBool;
+}
+export interface AbstractEmailBool {
+  value: boolean;
+  text: "TRUE" | "FALSE";
+}
+export function fixEmailBool(bool: AbstractEmailBool) {
+  return bool.value ? "Yes" : "No";
 }
 export default class AbstractEmailValidationCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -33,39 +35,59 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
       aliases: ["emailvalidation", "email"],
 
       label: "email",
-      type: Parameters.phone,
+      type: Parameters.email,
       required: true,
     });
   }
   async run(context: Command.Context, args: AbstractEmailValidationArgs) {
-    const abs = new Pariah({ baseUrl: "https://timezone.abstractapi.com/" });
-    const phone = await abs.getJSON<AbstractEmail>(
-      `/v1/current_time/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.PHONE_VALIDATION,
-        phone: args.phone,
+    const abs = new Pariah({
+      baseUrl: "https://emailvalidation.abstractapi.com/",
+    });
+
+    const email = await abs.getJSON<AbstractEmail>(
+      `/v1/${abs.toUrlParams({
+        api_key: Secrets.AbstractKeys.EMAIL_VALIDATION,
+        email: args.email,
       })}`
     );
-    if (!phone.valid) throw new Error("invalid phone number");
+    if (!email.email || email.deliverability === "UNDELIVERABLE")
+      throw new Error("no email found");
+
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
-    embed.setTitle(`Information for Phone Number`);
+    embed.setTitle(`Email Information for ${email.email}`);
     {
       const description: Array<string> = [];
-      description.push(`**Phone Number**: ${Markup.codestring(phone.phone)}`);
-      description.push(`**Formats**`);
+      description.push(`**Address:** \`${email.email}\``);
+      if (email.autocorrect !== "")
+        description.push(`**Autocorrect:** ${email.autocorrect}`);
+
       description.push(
-        `-> International: ${Markup.codestring(phone.format.international)}`
+        `**Deliverable:** ${
+          email.deliverability === "DELIVERABLE" ? "Yes" : "Unknown"
+        }`
       );
-      description.push(`-> Local: ${Markup.codestring(phone.format.local)}`);
-      if (phone.country.name)
-        description.push(
-          `**Country**: ${phone.country.name} (${phone.country.code})`
-        );
-      if (phone.location) description.push(`**Location**: ${phone.location}`);
-      if (phone.type)
-        description.push(`**Type**: ${capitalizeWords(phone.type)}`);
-      if (phone.carrier) description.push(`**Carrier**: ${phone.carrier}`);
+      description.push(`**Quality Score:** ${email.quality_score}`);
+
+      description.push(
+        `\n**Is Valid Format:** ${fixEmailBool(email.is_valid_format)}`
+      );
+      description.push(
+        `**Is Free Email:** ${fixEmailBool(email.is_free_email)}`
+      );
+      description.push(
+        `**Is Disposable Email:** ${fixEmailBool(email.is_disposable_email)}`
+      );
+      description.push(
+        `**Is Role Email:** ${fixEmailBool(email.is_role_email)}`
+      );
+      description.push(
+        `**Is Catchall Email:** ${fixEmailBool(email.is_catchall_email)}`
+      );
+      description.push(`**MX Found:** ${fixEmailBool(email.is_mx_found)}`);
+      description.push(`**SMTP Valid:** ${fixEmailBool(email.is_smtp_valid)}`);
       embed.setDescription(description.join("\n"));
     }
+
     return await context.editOrReply({ embed });
   }
 }

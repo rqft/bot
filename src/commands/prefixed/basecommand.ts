@@ -75,7 +75,7 @@ export class BaseCommand extends Command {
 
     embed.setDescription(description.join("\n"));
 
-    embed.addField(`Command Usage`, generateUsage(this));
+    embed.addField(`Command Usage`, Markup.codeblock(generateUsage(this)));
     return context.editOrReply({ embed });
   }
 
@@ -115,4 +115,7 @@ export class BaseCommand extends Command {
 }
 export interface ImageArgs {
   image: Buffer;
+}
+export interface ImageUrlArgs {
+  image: string;
 }

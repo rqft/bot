@@ -27,10 +27,7 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
       type: "string",
       required: true,
 
-      args: [
-        { name: "from", type: "string", default: "USD" },
-        { name: "to", type: "string", required: true },
-      ],
+      args: [{ name: "from", type: "string", default: "USD" }],
     });
   }
   async run(context: Command.Context, args: AbstractExchangeRateArgs) {
