@@ -22,13 +22,15 @@ export default class SRAYoutubeCommentCommand extends BaseCommand {
       name: "yt-comment",
       aliases: ["youtube-comment", "ytcomment", "ytc", "youtubecomment"],
 
-      type: [
+      label: "comment",
+      type: "string",
+      required: true,
+      args: [
         {
           name: "user",
           type: Parameters.user,
           default: DefaultParameters.user,
         },
-        { name: "comment", type: "string", required: true },
       ],
     });
   }

@@ -20,6 +20,7 @@ export default class ImaggaTextCommand extends BaseCommand {
   async run(context: Command.Context, args: ImageUrlArgs) {
     const im = new Imagga(Secrets.Key.imaggaAuth);
     const text = await im.text({ image_url: args.image });
+    console.log(args.image, text);
     if (text.status.type === "error") throw new Error(text.status.text);
     if (!text.result.text.length) throw new Error("No text found");
 

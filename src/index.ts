@@ -11,6 +11,7 @@ commands.on("commandDelete", ({ reply }) => reply.delete());
   const all = [client, selfclient, ...altclients];
   await Promise.all(
     all.map(async (value) => {
+      value;
       const s = Date.now();
       await value.run();
       console.log(
@@ -25,4 +26,8 @@ commands.on("commandDelete", ({ reply }) => reply.delete());
     })
   );
   console.log(`ok done in ${simpleGetLongAgo(start)}`);
+  console.log(
+    "loaded commands",
+    commands.commands.map((v) => v.name).join(", ")
+  );
 })();

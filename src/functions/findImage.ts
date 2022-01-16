@@ -90,6 +90,12 @@ export async function findImage(
     return findImageUrlInMessages(
       (await context.channel?.fetchMessages({ limit: 100 })) ?? []
     );
+
+  const urly =
+    /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(\:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
+
+  const urlTry = urly.test(query);
+  if (urlTry) return query;
   const userTry = Parameters.user(query, context);
   if (userTry) return userTry.avatarUrlFormat(type, { size: 1024 });
 

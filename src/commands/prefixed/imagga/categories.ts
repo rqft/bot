@@ -19,7 +19,10 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: ImageUrlArgs) {
     const im = new Imagga(Secrets.Key.imaggaAuth);
-    const categories = await im.categories({ image_url: args.image }, "");
+    const categories = await im.categories(
+      { image_url: args.image },
+      "personal_photos"
+    );
     if (categories.status.type === "error")
       throw new Error(categories.status.text);
 

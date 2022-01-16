@@ -28,7 +28,7 @@ export default class ImaggaTagsCommand extends BaseCommand {
       Markup.codeblock(
         padCodeBlockFromRows([
           ["Tag", "Confidence"],
-          ...tags.result.tag.map((v) => [v.tag.en, v.confidence.toFixed(3)]),
+          ...tags.result.tags.map((v) => [v.tag.en, v.confidence.toFixed(3)]),
         ]).join("\n")
       )
     );

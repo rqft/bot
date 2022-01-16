@@ -56,17 +56,17 @@ export default class PxlFlagCommand extends BaseCommand {
       name: "flag",
       type: [
         {
-          name: "flag",
-          type: "string",
-          choices: flagChoices,
-          default: "default",
-        },
-        {
           name: "image",
           type: Parameters.image,
         },
       ],
       args: [
+        {
+          name: "flag",
+          type: "string",
+          choices: flagChoices,
+          default: "default",
+        },
         {
           name: "opacity",
           type: "number",

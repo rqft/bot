@@ -7,7 +7,7 @@ import { Client as ClientRest } from "detritus-client-rest";
 import { SocketOptions } from "detritus-client-socket/lib/gateway";
 import { AuthTypes } from "detritus-client/lib/constants";
 import { GatewayHandlerOptions } from "detritus-client/lib/gateway/handler";
-import { Message } from "detritus-client/lib/structures";
+import { Paginator as Pagey, PaginatorReactions } from "detritus-pagination";
 import { Secrets } from "./secrets";
 
 export enum Color {
@@ -62,6 +62,7 @@ export const Arguments = {
 };
 export const gateway: GatewayHandlerOptions & SocketOptions = {
   intents: "ALL",
+  loadAllMembers: true,
 };
 
 export const client = new ShardClient(Secrets.BOT_TOKEN, {
@@ -80,6 +81,12 @@ export const commands = new CommandClient(client, {
     { duration: 5000, limit: 20, type: "channel" },
     { duration: 10000, limit: 35, type: "guild" },
   ],
+  cache: {
+    members: true,
+    users: true,
+    guilds: true,
+    channels: true,
+  },
 });
 export const interactions = new InteractionCommandClient(commands, {
   gateway,
@@ -135,12 +142,15 @@ export namespace Regex {
   export const VALID_URL =
     /^(?:(?:(?:https?):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
 }
-export class CustomError {
-  message: string;
-  constructor(s: string) {
-    this.message = s;
-  }
-}
-export const wolframAlphaFullResultsCache = new Map<string, any>();
-export const wolframAlphaShortResponseCache = new Map<string, any>();
-export const trackedMessages = new Map<string, Message>();
+export const Paginator = new Pagey(client, {
+  maxTime: 30000,
+  pageLoop: true,
+  pageNumber: true,
+});
+export const reactions: PaginatorReactions = {
+  firstPage: "⏮",
+  previousPage: "⏪",
+  nextPage: "⏩",
+  lastPage: "⏭",
+  stop: "❌",
+};

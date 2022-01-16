@@ -1,5 +1,4 @@
 import { Context } from "detritus-client/lib/command";
-import { InteractionContext } from "detritus-client/lib/interaction";
 import { Attachment } from "detritus-client/lib/structures";
 import { Embed } from "detritus-client/lib/utils";
 import fetch from "node-fetch";
@@ -7,10 +6,7 @@ import { Brand, BrandColors, BrandIcons, BrandNames } from "../enums/brands";
 import { Color } from "../globals";
 import { capitalizeWords, simpleGetLongAgo, storeImage } from "./tools";
 
-export function createUserEmbed(
-  context: Context | InteractionContext,
-  embed: Embed = new Embed()
-) {
+export function createUserEmbed(context: Context, embed: Embed = new Embed()) {
   return embed.setAuthor(
     context.user.toString(),
     context.user.avatarUrlFormat(null, { size: 1024 }),
@@ -19,23 +15,23 @@ export function createUserEmbed(
 }
 export function createBrandEmbed(
   brand: Brand,
-  context: Context | InteractionContext,
+  context: Context,
   named: boolean = true,
   embed: Embed = new Embed()
 ) {
   return createUserEmbed(context, embed)
     .setFooter(
-      `${BrandNames[brand]} ${
+      `${BrandNames[brand]}${
         brand === Brand.VYBOSE && named && context.command
-          ? capitalizeWords(context.command.name)
+          ? " " + capitalizeWords(context.command.name)
           : ""
-      }`,
+      }, Done in ${simpleGetLongAgo(context.message.createdAtUnix)}`,
       BrandIcons[brand]
     )
     .setColor(BrandColors[brand]);
 }
 export async function createImageEmbed(
-  context: Context | InteractionContext,
+  context: Context,
   input: URL | string | Buffer | Attachment | ArrayBuffer,
   name?: string,
   brand?: Brand
@@ -62,14 +58,10 @@ export async function createImageEmbed(
   if (image.size) {
     footer.push(`${image.width}x${image.height} (${formatBytes(image.size)})`);
   }
-  if (context instanceof Context)
-    footer.push(
-      `Took ${simpleGetLongAgo(context.message.createdAtUnix)} to complete`
-    );
-  else
-    footer.push(
-      `Took ${simpleGetLongAgo(context.interaction.createdAtUnix)} to complete`
-    );
+
+  footer.push(
+    `Took ${simpleGetLongAgo(context.message.createdAtUnix)} to complete`
+  );
   if (brand) {
     footer.push(`Created by ${BrandNames[brand]}`);
   }

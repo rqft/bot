@@ -45,7 +45,8 @@ export default class AbstractPhoneValidationCommand extends BaseCommand {
         phone: args.phone,
       })}`
     );
-    if (!phone.valid) throw new Error("invalid phone number");
+    console.log(args.phone, phone);
+    if (!phone.phone) throw new Error("invalid phone number");
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Information for Phone Number`);
     {

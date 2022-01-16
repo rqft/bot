@@ -7,22 +7,19 @@ import { Parameters } from "../../../../functions/parameters";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAItsSoStupidArgs extends ImageArgs {
-  comment: string;
+  text: string;
 }
 
 export default class SRAItsSoStupidCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "its-so-stupid",
-      aliases: ["itssostupid", "stupid"],
+      aliases: ["itssostupid", "stupid", "iss"],
 
-      type: [
-        {
-          name: "image",
-          type: Parameters.image,
-        },
-        { name: "comment", type: "string", required: true },
-      ],
+      label: "image",
+      type: Parameters.image,
+
+      args: [{ name: "text", type: "string", required: true }],
     });
   }
   async run(context: Command.Context, args: SRAItsSoStupidArgs) {
@@ -30,7 +27,7 @@ export default class SRAItsSoStupidCommand extends BaseCommand {
       context,
       args.image,
       Canvas.ITS_SO_STUPID,
-      { dog: args.comment }
+      { dog: args.text }
     );
     return await context.editOrReply({ embed });
   }

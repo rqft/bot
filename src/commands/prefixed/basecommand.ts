@@ -34,7 +34,7 @@ export class BaseCommand extends Command {
     return context.reply("❌ No functionality set for this command");
   }
   onError(context: Context, _args: ParsedArgs = {}, error: Error) {
-    return context.reply(
+    return context.editOrReply(
       removeSecrets(
         `❌ Error while using command: ${error.message}\n${Markup.codeblock(
           error.stack ?? "No Stack",
@@ -44,7 +44,7 @@ export class BaseCommand extends Command {
     );
   }
   onRunError(context: Context, _args: ParsedArgs = {}, error: Error) {
-    return context.reply(
+    return context.editOrReply(
       removeSecrets(
         `❌ Error while running command: ${error.message}\n${Markup.codeblock(
           error.stack ?? "No Stack",

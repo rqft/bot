@@ -1,5 +1,4 @@
 import { Context } from "detritus-client/lib/command";
-import { InteractionContext } from "detritus-client/lib/interaction";
 import { User } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
 import { SomeRandomAPI } from "pariah";
@@ -55,10 +54,7 @@ export async function someRandomApiAnimu(context: Context, animu: Animus) {
 
   return await context.editOrReply({ embed });
 }
-export async function infoUser(
-  context: Context | InteractionContext,
-  user: User
-) {
+export async function infoUser(context: Context, user: User) {
   const embed = createBrandEmbed(Brand.VYBOSE, context);
 
   embed.setTitle(user.toString()).setUrl(user.jumpLink);

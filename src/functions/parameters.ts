@@ -2,6 +2,7 @@ import { Command, Context } from "detritus-client/lib/command";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
 import { findImage } from "./findImage";
+import { storeImage } from "./tools";
 
 export namespace Parameters {
   export function command(content: string, context: Context) {
@@ -54,14 +55,19 @@ export namespace Parameters {
       });
     return found;
   }
-  export function imageUrl(value: string, context: Context) {
-    return findImage(context, value);
+  export async function imageUrl(value: string, context: Context) {
+    const img = await findImage(context, value);
+    if (!img) return undefined;
+    return await storeImage(
+      await (await fetch(img)).buffer(),
+      "attachment.gif"
+    );
   }
   export async function image(value: string, context: Context) {
     let url = await imageUrl(value, context);
     if (!url) throw new Error("Could not find any images");
 
-    const imageResponse = await fetch(url);
+    const imageResponse = await fetch(url.url!);
     if (!imageResponse.ok)
       throw new Error(
         `Error ${imageResponse.status}: ${imageResponse.statusText}`
@@ -114,11 +120,9 @@ export namespace Parameters {
   }
   export function url(value: string) {
     let url: URL;
-    try {
-      url = new URL(value);
-    } catch {
-      return undefined;
-    }
+
+    url = new URL(value);
+
     return url;
   }
   export function date(value: string, _context: Context) {

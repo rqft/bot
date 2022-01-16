@@ -21,13 +21,15 @@ export default class SRATweetCommand extends BaseCommand {
     super(client, {
       name: "tweet",
 
-      type: [
+      label: "comment",
+      type: "string",
+      required: true,
+      args: [
         {
           name: "user",
           type: Parameters.user,
           default: DefaultParameters.user,
         },
-        { name: "comment", type: "string", required: true },
       ],
     });
   }
