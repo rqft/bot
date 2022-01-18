@@ -58,6 +58,8 @@ export async function infoUser(context: Context, user: User) {
   const embed = createBrandEmbed(Brand.VYBOSE, context);
 
   embed.setTitle(user.toString()).setUrl(user.jumpLink);
+  if (user) {
+  }
 
   return embed;
 }

@@ -14,6 +14,7 @@ commands.on("commandDelete", ({ reply }) => reply.delete());
       value;
       const s = Date.now();
       await value.run();
+
       console.log(
         replacer(messages.client.logged_in, [
           ["{TIME}", simpleGetLongAgo(s)],

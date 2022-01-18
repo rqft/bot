@@ -1,6 +1,9 @@
 import { Command, Context } from "detritus-client/lib/command";
+import { decode, Frame, GIF, Image as OldImage } from "imagescript";
+import { Animation, Image } from "imagescript/v2";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
+import { Converter } from "./converter";
 import { findImage } from "./findImage";
 import { storeImage } from "./tools";
 
@@ -42,7 +45,7 @@ export namespace Parameters {
     return null;
   }
 
-  export function user(value: string, _context: Context) {
+  export async function user(value: string, _context: Context) {
     const found = [client, ...altclients, selfclient]
       .map((v) => v.users.toArray())
       .flat(1)
@@ -53,6 +56,14 @@ export namespace Parameters {
           key.id === value.replace(/\D/g, "")
         );
       });
+    if (!found) {
+      try {
+        const fetchy = await client.rest.fetchUser(value.replace(/\D/g, ""));
+        if (fetchy) {
+          return fetchy;
+        }
+      } catch (e) {}
+    }
     return found;
   }
   export async function imageUrl(value: string, context: Context) {
@@ -74,6 +85,31 @@ export namespace Parameters {
       );
 
     return imageResponse.buffer();
+  }
+  export namespace ImageScript {
+    export async function animation(
+      value: string,
+      context: Context
+    ): Promise<Animation> {
+      const img = await image(value, context);
+      let gif = await decode(img);
+      if (gif instanceof OldImage) {
+        gif = new GIF([Frame.from(gif)]);
+      }
+      return Converter.ImageScript.Animation.v1v2(gif);
+    }
+
+    export async function frame(
+      value: string,
+      context: Context
+    ): Promise<Image> {
+      const img = await image(value, context);
+      const gif = await decode(img);
+      if (gif instanceof OldImage) {
+        return Converter.ImageScript.Image.v1v2(gif);
+      }
+      return Converter.ImageScript.Image.v1v2(gif[0]!);
+    }
   }
 
   export function emojiImage(query: string) {

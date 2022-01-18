@@ -14,6 +14,7 @@ export default class UserCommand extends BaseCommand {
       priority: 4587,
       type: Parameters.user,
       default: DefaultParameters.user,
+      required: true,
     });
   }
   async run(context: Command.Context, args: UserArgs) {

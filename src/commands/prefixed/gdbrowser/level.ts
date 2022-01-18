@@ -84,8 +84,12 @@ export default class GDLevelCommand extends BaseCommand {
         description.push(`${level.cp} Creator Points (toward creator)`);
       if (level.diamonds) description.push(`${level.diamonds} Diamonds`);
       if (level.orbs) description.push(`${level.orbs} Orbs`);
-      embed.addField("Rewards", description.join("\n"));
+      embed.addField(
+        "Rewards",
+        description.length ? description.join("\n") : "None"
+      );
     }
+    console.log(embed.fields?.toArray());
     await context.editOrReply({ embed });
   }
 }

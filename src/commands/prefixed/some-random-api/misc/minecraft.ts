@@ -42,10 +42,12 @@ export default class SRAMinecraftCommand extends BaseCommand {
       const value: Array<string> = [];
       for (const k in MinotarForm) {
         value.push(
-          `[${MinotarStrings[k as MinotarForm]}](${minotar(
+          // @ts-ignore
+          `[${MinotarStrings[MinotarForm[k]]}](${minotar(
             uuid,
             1024,
-            k as MinotarForm
+            // @ts-ignore
+            MinotarForm[k]
           )})`
         );
       }

@@ -84,7 +84,7 @@ export function getStickerUrl(sticker: Sticker) {
 export async function findImage(
   context: Context,
   query?: string,
-  type: string = "png"
+  type: string = "gif"
 ) {
   if (!query)
     return findImageUrlInMessages(
@@ -96,7 +96,7 @@ export async function findImage(
 
   const urlTry = urly.test(query);
   if (urlTry) return query;
-  const userTry = Parameters.user(query, context);
+  const userTry = await Parameters.user(query, context);
   if (userTry) return userTry.avatarUrlFormat(type, { size: 1024 });
 
   const emojiTry = Parameters.emojiImage(query);
