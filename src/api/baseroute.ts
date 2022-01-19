@@ -1,12 +1,26 @@
 import express from "express";
-import { Routy } from "./routy";
+import { Pariah } from "pariah";
+import { verifyUrl } from "./importer";
+import { HTTPContentTypeEnum, Routy } from "./routy";
 
 export const app = express();
 export const router = new Routy();
 
-router.add("/tilt", "get", (_req, res) => {
-  res.contentType("application/json");
-  res.send({ context: _req.url, response: "hi" });
+router.add("/tilt", "get", (req, res) => {
+  const verif = verifyUrl(req);
+  if (!verif) {
+    res
+      .contentType(HTTPContentTypeEnum.JSON)
+      .status(400)
+      .send({
+        context: Routy.toContext(req),
+        response: { error: "Missing URL parameter" },
+      })
+      .end();
+    return;
+  }
+  new Pariah({ baseUrl: verif.hostname });
+
   res.end();
 });
 

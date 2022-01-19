@@ -36,4 +36,5 @@ app.listen(8080, () => {
     "loaded commands",
     commands.commands.map((v) => v.name).join(", ")
   );
-})();
+});
+// ();
