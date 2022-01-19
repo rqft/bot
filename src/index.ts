@@ -3,7 +3,7 @@ import { replacer, simpleGetLongAgo } from "./functions/tools";
 import { altclients, client, commands, selfclient } from "./globals";
 import { messages } from "./messages";
 
-// commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
+commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 commands.on("commandDelete", ({ reply }) => reply.delete());
 
 app.listen(8080, () => {
