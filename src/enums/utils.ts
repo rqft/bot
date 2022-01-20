@@ -30,7 +30,7 @@ export const ConnectionMap = new Map<PlatformTypes, IElement>([
     {
       icon: CustomEmojis.GUI_MEMBERS,
       text: "Contacts",
-      anchor: "https://example.com/",
+      anchor: "https://contact.com/",
     },
   ],
   [
@@ -78,7 +78,7 @@ export const ConnectionMap = new Map<PlatformTypes, IElement>([
     {
       icon: CustomEmojis.GUI_ADD_FILE,
       text: "Samsung",
-      anchor: "https://example.com/",
+      anchor: "https://samsung.com/",
     },
   ],
   [
@@ -364,7 +364,7 @@ guildVoiceRegionMap.set(VoiceRegionString.US_WEST, {
   text: "United States (West)",
 });
 export { VoiceRegionString, guildVoiceRegionMap };
-export const PermissionsText = Object.freeze({
+export const PermissionsText = {
   [String(Permissions.ADD_REACTIONS)]: "Add Reactions",
   [String(Permissions.ADMINISTRATOR)]: "Administrator",
   [String(Permissions.ATTACH_FILES)]: "Attach Files",
@@ -402,4 +402,4 @@ export const PermissionsText = Object.freeze({
   [String(Permissions.VIEW_AUDIT_LOG)]: "View Audit Logs",
   [String(Permissions.VIEW_CHANNEL)]: "View Channel",
   [String(Permissions.VIEW_GUILD_ANALYTICS)]: "View Guild Analytics",
-});
+};

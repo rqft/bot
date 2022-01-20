@@ -9,7 +9,7 @@ import {
 } from "detritus-client/lib/command";
 import { Message } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
-import { Animation, Image } from "imagescript/v2";
+import { GIF, Image } from "imagescript";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
 import { expandMs, generateUsage, removeSecrets } from "../../functions/tools";
@@ -122,7 +122,7 @@ export interface ImageUrlArgs {
   image: string;
 }
 export interface ImageScriptAnimationArgs {
-  animation: Animation;
+  animation: GIF;
 }
 export interface ImageScriptFrameArgs {
   image: Image;

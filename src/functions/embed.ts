@@ -1,4 +1,5 @@
 import { Context } from "detritus-client/lib/command";
+import { InteractionContext } from "detritus-client/lib/interaction";
 import { Attachment } from "detritus-client/lib/structures";
 import { Embed } from "detritus-client/lib/utils";
 import fetch from "node-fetch";
@@ -6,7 +7,10 @@ import { Brand, BrandColors, BrandIcons, BrandNames } from "../enums/brands";
 import { Color } from "../globals";
 import { capitalizeWords, simpleGetLongAgo, storeImage } from "./tools";
 
-export function createUserEmbed(context: Context, embed: Embed = new Embed()) {
+export function createUserEmbed(
+  context: Context | InteractionContext,
+  embed: Embed = new Embed()
+) {
   return embed.setAuthor(
     context.user.toString(),
     context.user.avatarUrlFormat(null, { size: 1024 }),
@@ -15,7 +19,7 @@ export function createUserEmbed(context: Context, embed: Embed = new Embed()) {
 }
 export function createBrandEmbed(
   brand: Brand,
-  context: Context,
+  context: Context | InteractionContext,
   named: boolean = true,
   embed: Embed = new Embed()
 ) {
@@ -25,13 +29,16 @@ export function createBrandEmbed(
         brand === Brand.VYBOSE && named && context.command
           ? " " + capitalizeWords(context.command.name)
           : ""
-      }, Done in ${simpleGetLongAgo(context.message.createdAtUnix)}`,
+      }, Done in ${simpleGetLongAgo(
+        (context instanceof Context ? context.message : context.interaction)
+          .createdAtUnix
+      )}`,
       BrandIcons[brand]
     )
     .setColor(BrandColors[brand]);
 }
 export async function createImageEmbed(
-  context: Context,
+  context: Context | InteractionContext,
   input: URL | string | Buffer | Attachment | ArrayBuffer,
   name?: string,
   brand?: Brand
@@ -60,7 +67,10 @@ export async function createImageEmbed(
   }
 
   footer.push(
-    `Took ${simpleGetLongAgo(context.message.createdAtUnix)} to complete`
+    `Took ${simpleGetLongAgo(
+      (context instanceof Context ? context.message : context.interaction)
+        .createdAtUnix
+    )} to complete`
   );
   if (brand) {
     footer.push(`Created by ${BrandNames[brand]}`);
@@ -71,7 +81,7 @@ export async function createImageEmbed(
 }
 function formatBytes(size: string | number) {
   const i = Number(size);
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   if (i === 0) return "0 Bytes";
   const n = Math.floor(Math.log(i) / Math.log(1024));
   return `${(i / Math.pow(1024, n)).toFixed(n >= 2 ? 2 : 0)} ${sizes[n]}`;

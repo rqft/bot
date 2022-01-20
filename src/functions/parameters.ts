@@ -1,9 +1,7 @@
 import { Command, Context } from "detritus-client/lib/command";
-import { decode, Frame, GIF, Image as OldImage } from "imagescript";
-import { Animation, Image } from "imagescript/v2";
+import { decode, Frame, GIF, Image } from "imagescript";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
-import { Converter } from "./converter";
 import { findImage } from "./findImage";
 import { storeImage } from "./tools";
 
@@ -90,13 +88,13 @@ export namespace Parameters {
     export async function animation(
       value: string,
       context: Context
-    ): Promise<Animation> {
+    ): Promise<GIF> {
       const img = await image(value, context);
       let gif = await decode(img);
-      if (gif instanceof OldImage) {
+      if (gif instanceof Image) {
         gif = new GIF([Frame.from(gif)]);
       }
-      return Converter.ImageScript.Animation.v1v2(gif);
+      return gif;
     }
 
     export async function frame(
@@ -105,10 +103,10 @@ export namespace Parameters {
     ): Promise<Image> {
       const img = await image(value, context);
       const gif = await decode(img);
-      if (gif instanceof OldImage) {
-        return Converter.ImageScript.Image.v1v2(gif);
+      if (gif instanceof Image) {
+        return gif;
       }
-      return Converter.ImageScript.Image.v1v2(gif[0]!);
+      return gif[0]!;
     }
   }
 

@@ -1,7 +1,7 @@
+import chalk from "chalk";
 import { app } from "./api/baseroute";
 import { replacer, simpleGetLongAgo } from "./functions/tools";
 import { altclients, client, commands, selfclient } from "./globals";
-import { messages } from "./messages";
 
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 commands.on("commandDelete", ({ reply }) => reply.delete());
@@ -21,13 +21,20 @@ app.listen(8080, () => {
       await value.run();
 
       console.log(
-        replacer(messages.client.logged_in, [
-          ["{TIME}", simpleGetLongAgo(s)],
-          ["{USER}", value.user?.toString()],
-          ["{GUILDS}", value.guilds.size],
-          ["{MEMBERS}", value.users.size],
-          ["{SHARDS}", value.shardCount],
-        ])
+        replacer(
+          `✅ Took ${chalk.yellow(`{TIME}`)} to log in as ${chalk.red(
+            "{USER}"
+          )} (uploading ${chalk.green("{GUILDS} guilds")} and ${chalk.blue(
+            "{MEMBERS} members"
+          )}) with a ${chalk.redBright("shard count of {SHARDS}")}`,
+          [
+            ["{TIME}", simpleGetLongAgo(s)],
+            ["{USER}", value.user?.toString()],
+            ["{GUILDS}", value.guilds.size],
+            ["{MEMBERS}", value.users.size],
+            ["{SHARDS}", value.shardCount],
+          ]
+        )
       );
     })
   );
@@ -36,5 +43,4 @@ app.listen(8080, () => {
     "loaded commands",
     commands.commands.map((v) => v.name).join(", ")
   );
-});
-// ();
+})();

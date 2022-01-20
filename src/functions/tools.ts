@@ -343,7 +343,7 @@ export async function storeImage(
     true
   );
   const storageMessage = await storageChannel.createMessage({
-    files: [{ key: "a", filename: `${filename}`, value }],
+    files: [{ key: Date.now().toString(), filename: `${filename}`, value }],
   });
   return storageMessage.attachments.first()!;
 }
