@@ -6,14 +6,20 @@ import {
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { User } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
-import { SomeRandomAPI } from "pariah";
+import { Imagga, SomeRandomAPI } from "pariah";
 import { Brand } from "../enums/brands";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { ConnectionMap, PermissionsText } from "../enums/utils";
 import { createBrandEmbed, createImageEmbed } from "../functions/embed";
-import { selfclient } from "../globals";
-import { bitfieldToArray, capitalizeWords, storeImage } from "./tools";
+import { altclients, client, selfclient } from "../globals";
+import { Secrets } from "../secrets";
+import {
+  bitfieldToArray,
+  capitalizeWords,
+  padCodeBlockFromRows,
+  storeImage,
+} from "./tools";
 
 export enum Animals {
   BIRD = "bird",
@@ -289,6 +295,70 @@ export async function infoUser(
   }
 
   return embed;
+}
+export async function imageOcr(
+  context: Context | InteractionContext,
+  url: string
+) {
+  const im = new Imagga(Secrets.Key.imaggaAuth);
+  const text = await im.text({ image_url: url });
+  if (text.status.type === "error") throw new Error(text.status.text);
+  if (!text.result.text.length) throw new Error("No text found");
+
+  const embed = createBrandEmbed(Brand.IMAGGA, context);
+  embed.setThumbnail(url);
+
+  text.result.text.forEach((v, i) => {
+    embed.addField(
+      `Text ${i + 1}`,
+      `Located At: (${v.coordinates.xmin}, ${v.coordinates.ymin})\nSize: ${
+        v.coordinates.width
+      }x${v.coordinates.height}\n${Markup.codeblock(v.data)}`
+    );
+  });
+
+  return embed;
+}
+export async function imageTags(
+  context: Context | InteractionContext,
+  url: string
+) {
+  const im = new Imagga(Secrets.Key.imaggaAuth);
+
+  const tags = await im.tags({ image_url: url, limit: 20 }, "");
+  if (tags.status.type === "error") throw new Error(tags.status.text);
+
+  const embed = createBrandEmbed(Brand.IMAGGA, context);
+  embed.setThumbnail(url);
+  embed.setDescription(
+    Markup.codeblock(
+      padCodeBlockFromRows([
+        ["Tag", "Confidence"],
+        ...tags.result.tags.map((v) => [v.tag.en, v.confidence.toFixed(3)]),
+      ]).join("\n")
+    )
+  );
+
+  return embed;
+}
+export async function textPing() {
+  function emojiFromPing(ping: number) {
+    if (ping > 5000) return "❌";
+    if (ping > 1000) return "💤"; // zzz
+    if (ping > 500) return "⚠️";
+    return "✅";
+  }
+
+  const pings: Array<string> = [];
+  for (let resty of [client, selfclient, ...altclients]) {
+    const ping = await resty.ping();
+    pings.push(
+      `${emojiFromPing(ping.rest)} ${resty.user!.tag} (rest: ${
+        ping.rest
+      }ms, gateway: ${ping.gateway}ms)`
+    );
+  }
+  return pings.join("\n");
 }
 export enum Overlays {
   GAY = "/gay",

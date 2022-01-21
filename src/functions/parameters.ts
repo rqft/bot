@@ -1,5 +1,6 @@
 import { Command, Context } from "detritus-client/lib/command";
 import { DiscordRegexNames } from "detritus-client/lib/constants";
+import { InteractionContext } from "detritus-client/lib/interaction";
 import { regex } from "detritus-client/lib/utils";
 import { decode, Frame, GIF, Image } from "imagescript";
 import fetch from "node-fetch";
@@ -53,7 +54,10 @@ export namespace Parameters {
     return value;
   }
 
-  export async function user(value: string, _context: Context) {
+  export async function user(
+    value: string,
+    _context: Context | InteractionContext
+  ) {
     const found = [client, ...altclients, selfclient]
       .map((v) => v.users.toArray())
       .flat(1)
@@ -75,7 +79,7 @@ export namespace Parameters {
     return found;
   }
   export function imageUrl(as: string = "gif") {
-    return async (value: string, context: Context) => {
+    return async (value: string, context: Context | InteractionContext) => {
       const img = await findImage(context, value, as);
 
       return img;
