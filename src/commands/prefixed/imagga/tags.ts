@@ -14,11 +14,13 @@ export default class ImaggaTagsCommand extends BaseCommand {
       name: "tags",
 
       label: "image",
-      type: Parameters.imageUrl,
+      type: Parameters.imageUrl("png"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {
+    console.log(args.image);
     const im = new Imagga(Secrets.Key.imaggaAuth);
+
     const tags = await im.tags({ image_url: args.image, limit: 20 }, "");
     if (tags.status.type === "error") throw new Error(tags.status.text);
 

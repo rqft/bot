@@ -2,10 +2,9 @@ import { Context } from "detritus-client/lib/command";
 import {
   MarkupTimestampStyles,
   Permissions,
-  PERMISSIONS_ALL_TEXT,
 } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
-import { Member, User } from "detritus-client/lib/structures";
+import { User } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
 import { SomeRandomAPI } from "pariah";
 import { Brand } from "../enums/brands";
@@ -73,12 +72,6 @@ export async function infoUser(
   embed.setTitle(user.tag);
 
   const profile = await selfclient.rest.fetchUserProfile(user.id);
-  let member: Member | null = null;
-  if (context.guild) {
-    try {
-      member = await context.guild.fetchMember(user.id);
-    } catch (e) {}
-  }
 
   {
     let avatar: string;
@@ -92,19 +85,37 @@ export async function infoUser(
 
   if (profile) {
     const description: Array<string> = [];
-    if (profile.connectedAccounts.size) {
-      description.push(
-        `${Emojis.LINK} **Connected Accounts:** ${profile.connectedAccounts
-          .map((connection) => {
-            const badge = ConnectionMap.get(connection.type);
-            if (!badge) return "";
-            return `[${badge.icon}](${badge.anchor}${connection.id})`;
-          })
-          .join("")}`
-      );
+    if (profile.connectedAccounts.size > 0) {
+      if (profile.connectedAccounts.size > 10) {
+        description.push(
+          `${Emojis.LINK} **Connected Accounts:** ${Array.from(
+            new Set(
+              profile.connectedAccounts.map((connection) => {
+                const badge = ConnectionMap.get(connection.type);
+                if (!badge) return "";
+                return badge.icon;
+              })
+            )
+          ).join("")}`
+        );
+      } else {
+        description.push(
+          `${Emojis.LINK} **Connected Accounts:** ${profile.connectedAccounts
+            .map((connection) => {
+              const badge = ConnectionMap.get(connection.type);
+              if (!badge) return "";
+              return `[${badge.icon}](${badge.anchor}${connection.name})`;
+            })
+            .join("")}`
+        );
+      }
     }
     if (profile.user.bio)
-      description.push(`${Emojis.MEMO} **Bio:** ${profile.user.bio}`);
+      description.push(
+        `${Emojis.MEMO} **Bio:** ${Markup.codeblock(
+          Markup.escape.codeblock(profile.user.bio)
+        )}`
+      );
     if (profile.premiumSince)
       description.push(
         `${CustomEmojis.BADGE_NITRO} **Premium Since:** ${Markup.timestamp(
@@ -126,11 +137,16 @@ export async function infoUser(
 
   {
     const description: Array<string> = [];
-    description.push(`${Emojis.GEAR} **ID:** ${user.id}`);
+    description.push(`${Emojis.GEAR} **ID:** \`${user.id}\``);
     description.push(
       `${Emojis.LINK} **Profile**: ${user.tag} (${user.mention})`
     );
-    description.push(`${Emojis.CALENDAR} **Created:** ${user.createdAt}`);
+    description.push(
+      `${Emojis.CALENDAR} **Created:** ${Markup.timestamp(
+        user.createdAt,
+        MarkupTimestampStyles.BOTH_SHORT
+      )}`
+    );
 
     {
       let tags: Array<string> = [];
@@ -141,9 +157,10 @@ export async function infoUser(
       }
       if (user.isWebhook) tags.push("Webhook");
       if (user.isClientOwner) tags.push("Client Owner");
-      description.push(
-        `${CustomEmojis.CHANNEL_STORE} **Tags:** ${tags.join(", ")}`
-      );
+      if (tags.length)
+        description.push(
+          `${CustomEmojis.CHANNEL_STORE} **Tags:** ${tags.join(", ")}`
+        );
     }
 
     embed.addField("User Info", description.join("\n"));
@@ -171,7 +188,8 @@ export async function infoUser(
     "USE_PUBLIC_THREADS",
     "USE_PRIVATE_THREADS",
   ];
-  if (member !== null) {
+  let member = context.guild ? context.guild.members.get(user.id) : undefined;
+  if (member) {
     const description: Array<string> = [];
     description.push(
       `${Emojis.CALENDAR} **Joined:** ${Markup.timestamp(
@@ -206,7 +224,9 @@ export async function infoUser(
     }
 
     if (member.roles.size > 0) {
-      description.push(`${Emojis.SHIELD} **Roles** (${member.roles.length})`);
+      description.push(
+        `\n${Emojis.SHIELD} **Role Count** (${member.roles.length})`
+      );
       if (member.roles.size < 20) {
         description.push(
           `${Emojis.SHIELD} **Roles:** ${member.roles.map((v) => v?.mention)}`
@@ -230,33 +250,42 @@ export async function infoUser(
           );
         else
           description.push(
-            `${Emojis.SHIELD} **Key Roles** (${keyroles.length})`
+            `${Emojis.SHIELD} **Key Role Count** (${keyroles.length})`
           );
       }
     }
 
+    if (member.voiceState) {
+      const state = member.voiceState;
+      const staty: Array<CustomEmojis> = [];
+      if (state.isSpeaking) staty.push(CustomEmojis.STATUS_ONLINE);
+      else staty.push(CustomEmojis.STATUS_OFFLINE);
+
+      if (state.deaf || state.selfDeaf) staty.push(CustomEmojis.GUI_DEAFENED);
+      if (state.mute || state.selfMute) staty.push(CustomEmojis.GUI_MUTED);
+      if (state.selfStream) staty.push(CustomEmojis.GUI_STREAM);
+      if (state.selfVideo) staty.push(CustomEmojis.GUI_VIDEO);
+
+      description.push(
+        `\n${Emojis.MICROPHONE} **Voice Status** ${staty.join(" ")}`
+      );
+    }
     {
       const permissions = bitfieldToArray<keyof typeof Permissions>(
         member.permissions,
-        Object.keys(Permissions) as Array<keyof typeof Permissions>
-      );
+        Object.keys(Permissions).slice(1) as Array<keyof typeof Permissions>
+      ).filter((v) => !irrelevantPermissions.includes(v));
 
       if (permissions.length > 0) {
         description.push(
-          `${Emojis.GEAR} **Permissions** (${permissions.length})`
+          `\n${Emojis.GEAR} **Permissions**: ${permissions
+            .map((v) => PermissionsText[Permissions[v].toString()])
+            .join(", ")}`
         );
-        const text = permissions
-          .filter((v) => Object.keys(PERMISSIONS_ALL_TEXT).includes(v))
-          .map((v) => Permissions[v]);
-        if (text.length) {
-          description.push(
-            `${Emojis.GEAR} **Text Permissions:** ${text
-              .map((v) => PermissionsText[v.toString()])
-              .join(", ")}`
-          );
-        }
       }
     }
+
+    embed.addField("Member Info", description.join("\n"));
   }
 
   return embed;

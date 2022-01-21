@@ -14,7 +14,6 @@ export default class TiltCommand extends BaseCommand {
 
       label: "animation",
       type: Parameters.ImageScript.animation,
-      required: true,
 
       args: [{ name: "amount", type: "number", default: 12, required: true }],
     });
@@ -22,7 +21,8 @@ export default class TiltCommand extends BaseCommand {
   async run(context: Command.Context, args: TiltArgs) {
     let { animation } = args;
     for (let f of [...animation])
-      for (let i = args.amount; i >= 0; i--) f.composite(f.clone().rotate(i));
+      for (let i = args.amount; i >= 0; i--)
+        f.composite(f.clone().opacity(0.07).rotate(i, false));
 
     const embed = await createImageEmbed(
       context,

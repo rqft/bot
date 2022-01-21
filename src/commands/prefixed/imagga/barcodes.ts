@@ -14,7 +14,7 @@ export default class ImaggaBarcodesCommand extends BaseCommand {
       aliases: ["barcode", "bc"],
 
       label: "image",
-      type: Parameters.imageUrl,
+      type: Parameters.imageUrl("png"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

@@ -14,7 +14,7 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
       name: "categories",
 
       label: "image",
-      type: Parameters.imageUrl,
+      type: Parameters.imageUrl("png"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

@@ -1,10 +1,123 @@
 import chalk from "chalk";
+import {
+  ApplicationCommandOptionTypes,
+  ApplicationCommandTypes,
+} from "detritus-client/lib/constants";
 import { app } from "./api/baseroute";
-import { replacer, simpleGetLongAgo } from "./functions/tools";
-import { altclients, client, commands, selfclient } from "./globals";
+import { capitalizeWords, replacer, simpleGetLongAgo } from "./functions/tools";
+import {
+  altclients,
+  client,
+  commands,
+  interactions,
+  selfclient,
+} from "./globals";
 
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 commands.on("commandDelete", ({ reply }) => reply.delete());
+
+interactions.clear();
+interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
+
+enum Tones {
+  SERIOUS = "/srs",
+  SARCASTIC = "/s",
+  JOKING = "/j",
+  HALF_JOKING = "/hj",
+  PLATONIC = "/p",
+  ROMANTIC = "/r",
+  LYRICS = "/ly",
+  TEASING = "/t",
+  NOT_MAD = "/nm",
+  NEGATIVE_CONNOTATION = "/nc",
+  POSITIVE_CONNOTATION = "/pc",
+  LIGHT_HEARTED = "/lh",
+  NOBODY_HERE = "/nbh",
+  METAPHORICALLY = "/m",
+  LITERALLY = "/li",
+  RHETORICAL = "/rt",
+  GENUINE_QUESTION = "/gen",
+  HYPERBOLE = "/hyp",
+  COPY_PASTA = "/c",
+  SEXUAL_INTENT = "/x",
+  NON_SEXUAL_INTENT = "/nx",
+  THREAT = "/th",
+  CLICKBAIT = "/cb",
+  FAKE = "/f",
+  GENIUNE = "/g",
+}
+interface TonyArgs {
+  content: string;
+  tone1: Tones;
+  tone2?: Tones;
+  tone3?: Tones;
+  tone4?: Tones;
+  tone5?: Tones;
+  tone6?: Tones;
+  tone7?: Tones;
+  tone8?: Tones;
+  tone9?: Tones;
+  tone10?: Tones;
+}
+
+interactions.add(
+  {
+    name: "tony",
+    description: "Add tones",
+    options: [
+      {
+        name: "content",
+        type: ApplicationCommandOptionTypes.STRING,
+        required: true,
+        description: "What you want to say",
+      },
+      ...[...Array(10).keys()].map((v, i) => ({
+        name: `tone${v + 1}`,
+        type: ApplicationCommandOptionTypes.STRING,
+        choices: Object.entries(Tones).map(([k, v]) => ({
+          name: capitalizeWords(k.toLowerCase()),
+          value: v,
+        })),
+        required: i === 0,
+        description: "What tone to use",
+      })),
+    ],
+    type: ApplicationCommandTypes.CHAT_INPUT,
+    guildIds: ["816362327678779392"],
+  },
+  async (context, args) => {
+    const {
+      content,
+      tone1,
+      tone2,
+      tone3,
+      tone4,
+      tone5,
+      tone6,
+      tone7,
+      tone8,
+      tone9,
+      tone10,
+    } = args as TonyArgs;
+    const tones = [
+      tone1,
+      tone2,
+      tone3,
+      tone4,
+      tone5,
+      tone6,
+      tone7,
+      tone8,
+      tone9,
+      tone10,
+    ].filter((v) => v);
+    const tone = tones.length > 0 ? tones.join(" ") : "";
+    const tony = `${content} ${tone}`;
+    const reply = context.editOrRespond(tony);
+
+    return reply;
+  }
+);
 
 app.listen(8080, () => {
   console.log(`[LISTEN] Listening on port 8080`);
@@ -13,7 +126,9 @@ app.listen(8080, () => {
 (async function run() {
   const start = Date.now();
   await commands.run();
+  await interactions.run();
   const all = [client, selfclient, ...altclients];
+
   await Promise.all(
     all.map(async (value) => {
       value;
@@ -42,5 +157,21 @@ app.listen(8080, () => {
   console.log(
     "loaded commands",
     commands.commands.map((v) => v.name).join(", ")
+  );
+  console.log(
+    "loaded interactions",
+    interactions.commands
+      .map(
+        (v) =>
+          `${
+            [
+              "Unknown",
+              "Slash",
+              "Context Menu (User)",
+              "Context Menu (Message)",
+            ][v.type]
+          } > ${v.name}`
+      )
+      .join(", ")
   );
 })();

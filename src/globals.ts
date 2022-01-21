@@ -97,6 +97,7 @@ export const interactions = new InteractionCommandClient(commands, {
     { duration: 10000, limit: 35, type: "guild" },
   ],
   checkCommands: true,
+  strictCommandCheck: true,
 });
 export const restClient = new ClientRest(commands.client.token);
 export const selfclient = new ShardClient(Secrets.UserToken, {

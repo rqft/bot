@@ -15,7 +15,7 @@ export default class ImaggaColorsCommand extends BaseCommand {
       name: "colors",
 
       label: "image",
-      type: Parameters.imageUrl,
+      type: Parameters.imageUrl("png"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

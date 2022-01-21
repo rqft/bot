@@ -1,9 +1,10 @@
 import { Command, Context } from "detritus-client/lib/command";
+import { DiscordRegexNames } from "detritus-client/lib/constants";
+import { regex } from "detritus-client/lib/utils";
 import { decode, Frame, GIF, Image } from "imagescript";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
 import { findImage } from "./findImage";
-import { storeImage } from "./tools";
 
 export namespace Parameters {
   export function command(content: string, context: Context) {
@@ -42,6 +43,15 @@ export namespace Parameters {
     }
     return null;
   }
+  export function codeblock(value: string): string {
+    const { matches } = regex(DiscordRegexNames.TEXT_CODEBLOCK, value) as {
+      matches: Array<{ text: string }>;
+    };
+    if (matches.length) {
+      return matches[0]!.text;
+    }
+    return value;
+  }
 
   export async function user(value: string, _context: Context) {
     const found = [client, ...altclients, selfclient]
@@ -64,32 +74,34 @@ export namespace Parameters {
     }
     return found;
   }
-  export async function imageUrl(value: string, context: Context) {
-    const img = await findImage(context, value);
-    if (!img) return undefined;
-    return await storeImage(
-      await (await fetch(img)).buffer(),
-      "attachment.gif"
-    );
+  export function imageUrl(as: string = "gif") {
+    return async (value: string, context: Context) => {
+      const img = await findImage(context, value, as);
+
+      return img;
+    };
   }
-  export async function image(value: string, context: Context) {
-    let url = await imageUrl(value, context);
-    if (!url) throw new Error("Could not find any images");
+  export function image(as: string = "gif") {
+    return async (value: string, context: Context) => {
+      let url = await imageUrl(as)(value, context);
+      console.log(url);
+      if (!url) throw new Error("Could not find any images");
 
-    const imageResponse = await fetch(url.url!);
-    if (!imageResponse.ok)
-      throw new Error(
-        `Error ${imageResponse.status}: ${imageResponse.statusText}`
-      );
+      const imageResponse = await fetch(url);
+      if (!imageResponse.ok)
+        throw new Error(
+          `Error ${imageResponse.status}: ${imageResponse.statusText}`
+        );
 
-    return imageResponse.buffer();
+      return imageResponse.buffer();
+    };
   }
   export namespace ImageScript {
     export async function animation(
       value: string,
       context: Context
     ): Promise<GIF> {
-      const img = await image(value, context);
+      const img = await image("gif")(value, context);
       let gif = await decode(img);
       if (gif instanceof Image) {
         gif = new GIF([Frame.from(gif)]);
@@ -101,7 +113,7 @@ export namespace Parameters {
       value: string,
       context: Context
     ): Promise<Image> {
-      const img = await image(value, context);
+      const img = await image("png")(value, context);
       const gif = await decode(img);
       if (gif instanceof Image) {
         return gif;

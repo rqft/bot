@@ -29,9 +29,11 @@ export function capitalizeWords(s: string): string {
     .replace(REMOVE_REGEX, " ")
     .replace(CAPITALIZE_REGEX, (e) => e.toUpperCase());
 }
-export function bitfieldToArray<T>(bitfield: number | bigint, array: T[]): T[];
-export function bitfieldToArray(bitfield: number | bigint, array: any[]): any[];
-export function bitfieldToArray(bitfield: number | bigint, array: any[]) {
+
+export function bitfieldToArray<T = unknown>(
+  bitfield: number | bigint,
+  array: T[]
+) {
   bitfield = BigInt(bitfield);
   return array.filter((_, i) => {
     const current = BigInt(1 << i);

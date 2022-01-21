@@ -69,18 +69,18 @@ export class List<T> {
   public slice(start?: number, end?: number) {
     return List.from(this._array.slice(start, end));
   }
-  public filter(callbackfn: CallbackFn<T>, thisArg?: any): List<T> {
+  public filter(callbackfn: CallbackFn<T>, thisArg?: T): List<T> {
     return List.from<T>(
       this._array.filter((v, i, l) => callbackfn(v, i, List.from(l)), thisArg)
     );
   }
-  public find(predicate: CallbackFn<T, boolean>, thisArg?: any) {
+  public find(predicate: CallbackFn<T, boolean>, thisArg?: T) {
     return this._array.find(
       (v, i, l) => predicate(v, i, List.from(l)),
       thisArg
     );
   }
-  public findIndexes(predicate: CallbackFn<T, boolean>, thisArg?: any) {
+  public findIndexes(predicate: CallbackFn<T, boolean>, thisArg?: T) {
     return this.indexesOf(this.find(predicate, thisArg)!);
   }
   public forEach(callbackfn: CallbackFn<T>) {
@@ -138,10 +138,10 @@ export class List<T> {
   public deleteFirst() {
     return this.delete(this.firstIndex!);
   }
-  public isAll(value: any, exact = true) {
+  public isAll(value: T, exact = true) {
     return this.every((value2) => (exact ? value2 === value : value2 == value));
   }
-  public isOne(value: any, exact = true) {
+  public isOne(value: T, exact = true) {
     return this.some((value2) => (exact ? value2 === value : value2 == value));
   }
   public some(cb: CallbackFn<T, boolean>) {

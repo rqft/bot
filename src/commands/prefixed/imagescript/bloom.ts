@@ -17,7 +17,6 @@ export default class BloomCommand extends BaseCommand {
 
       label: "animation",
       type: Parameters.ImageScript.animation,
-      required: true,
 
       args: [
         { name: "brightness", type: "number", default: 1.5, required: true },

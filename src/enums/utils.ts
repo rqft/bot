@@ -364,6 +364,7 @@ guildVoiceRegionMap.set(VoiceRegionString.US_WEST, {
   text: "United States (West)",
 });
 export { VoiceRegionString, guildVoiceRegionMap };
+
 export const PermissionsText = {
   [String(Permissions.ADD_REACTIONS)]: "Add Reactions",
   [String(Permissions.ADMINISTRATOR)]: "Administrator",

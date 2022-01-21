@@ -14,7 +14,7 @@ export default class ImaggaTextCommand extends BaseCommand {
       aliases: ["ocr"],
 
       label: "image",
-      type: Parameters.imageUrl,
+      type: Parameters.imageUrl("png"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

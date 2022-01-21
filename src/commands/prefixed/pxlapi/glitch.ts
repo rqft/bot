@@ -42,8 +42,10 @@ export default class PxlGlitchCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: PxlGlitchArgs) {
     const pxl = new PxlApi(Secrets.Key.pxlAPI);
+    console.log(args.image);
+
     const imageAttach = await storeImage(args.image, "attachment.gif");
-    console.log(imageAttach);
+
     const glitch = await pxl.glitch([imageAttach.url!], {
       amount: args.amount,
       gif: { count: args.gifcount, delay: args.delay },
