@@ -6,13 +6,14 @@ import {
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { User } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
-import { SomeRandomAPI } from "pariah";
+import { Imagga, SomeRandomAPI } from "pariah";
 import { Brand } from "../enums/brands";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { ConnectionMap, PermissionsText } from "../enums/utils";
 import { createBrandEmbed, createImageEmbed } from "../functions/embed";
 import { selfclient } from "../globals";
+import { Secrets } from "../secrets";
 import { bitfieldToArray, capitalizeWords, storeImage } from "./tools";
 
 export enum Animals {
@@ -287,6 +288,29 @@ export async function infoUser(
 
     embed.addField("Member Info", description.join("\n"));
   }
+
+  return embed;
+}
+export async function imageOcr(
+  context: Context | InteractionContext,
+  url: string
+) {
+  const im = new Imagga(Secrets.Key.imaggaAuth);
+  const text = await im.text({ image_url: url });
+  if (text.status.type === "error") throw new Error(text.status.text);
+  if (!text.result.text.length) throw new Error("No text found");
+
+  const embed = createBrandEmbed(Brand.IMAGGA, context);
+  embed.setThumbnail(url);
+
+  text.result.text.forEach((v, i) => {
+    embed.addField(
+      `Text ${i + 1}`,
+      `Located At: (${v.coordinates.xmin}, ${v.coordinates.ymin})\nSize: ${
+        v.coordinates.width
+      }x${v.coordinates.height}\n${Markup.codeblock(v.data)}`
+    );
+  });
 
   return embed;
 }

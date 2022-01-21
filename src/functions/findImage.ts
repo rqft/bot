@@ -1,6 +1,7 @@
 import { Collections, Structures } from "detritus-client";
 import { Context } from "detritus-client/lib/command";
 import { MessageEmbedTypes } from "detritus-client/lib/constants";
+import { InteractionContext } from "detritus-client/lib/interaction";
 import { Sticker } from "detritus-client/lib/structures";
 import { Parameters } from "./parameters";
 export const TRUSTED_URLS = Object.freeze([
@@ -82,7 +83,7 @@ export function getStickerUrl(sticker: Sticker) {
   return `https://distok.top/stickers/${sticker.packId}/${sticker.id}.gif`;
 }
 export async function findImage(
-  context: Context,
+  context: Context | InteractionContext,
   query?: string,
   type: string = "gif"
 ) {

@@ -1,5 +1,11 @@
 import { Interaction, Structures } from "detritus-client";
-import { ApplicationCommandTypes } from "detritus-client/lib/constants";
+import {
+  ApplicationCommandOptionTypes,
+  ApplicationCommandTypes,
+  MessageFlags,
+} from "detritus-client/lib/constants";
+import { Markup } from "detritus-client/lib/utils";
+import { Parameters } from "../../functions/parameters";
 
 export class BaseInteractionCommand<
   ParsedArgsFinished = Interaction.ParsedArgs
@@ -65,5 +71,68 @@ export class BaseContextMenuUserCommand extends BaseInteractionCommand<ContextMe
 
   constructor(data: Interaction.InteractionCommandOptions = {}) {
     super(data);
+  }
+}
+export class BaseInteractionCommandOption<
+  ParsedArgsFinished = Interaction.ParsedArgs
+> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
+  error = "Slash Command";
+  type = ApplicationCommandOptionTypes.SUB_COMMAND;
+
+  onCancelRun(
+    context: Interaction.InteractionContext,
+    _args: Record<string, any>
+  ) {
+    const command = Markup.codestring(context.name);
+    return context.editOrRespond({
+      content: `⚠ ${this.error} \`${command}\` error strangely, give me a report.`,
+      flags: MessageFlags.EPHEMERAL,
+    });
+  }
+}
+export class BaseInteractionImageCommandOption<
+  ParsedArgsFinished = Interaction.ParsedArgs
+> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
+  constructor(
+    data: Interaction.InteractionCommandOptionOptions = {},
+    as: string = "png"
+  ) {
+    super({
+      ...data,
+      options: [
+        ...(data.options || []),
+        {
+          name: "image",
+          description: "Some Image",
+          label: "url",
+          default: Parameters.imageUrl(as),
+          value: Parameters.imageUrl(as),
+        },
+      ],
+    });
+  }
+
+  onBeforeRun(
+    context: Interaction.InteractionContext,
+    args: { url?: null | string }
+  ) {
+    if (args.url) {
+      context.metadata = Object.assign({}, context.metadata, {
+        contentUrl: args.url,
+      });
+    }
+    return !!args.url;
+  }
+
+  onCancelRun(
+    context: Interaction.InteractionContext,
+    args: { url?: null | string }
+  ) {
+    if (args.url === undefined) {
+      return context.editOrRespond("cant find anything");
+    } else if (args.url === null) {
+      return context.editOrRespond("no image");
+    }
+    return super.onCancelRun!(context, args);
   }
 }
