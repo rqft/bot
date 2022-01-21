@@ -12,12 +12,12 @@ export class BaseInteractionCommand<
         Interaction.InteractionCommandOptions
       >(
         {
-          guildIds: [
-            "816362327678779392",
-            "760130247580057650",
-            "759174794968301569",
-          ],
-          //   global: true,
+          //   guildIds: [
+          //     "816362327678779392",
+          //     "760130247580057650",
+          //     "759174794968301569",
+          //   ],
+          global: true,
         },
         data
       )

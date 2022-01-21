@@ -1,5 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
+import { ScriptTarget, transpile } from "typescript";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
@@ -26,11 +27,13 @@ export default class EvalCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: EvalArgs) {
-    let language = "js";
+    let language = "ts";
     let message: any;
     let errored: boolean = false;
     try {
-      message = await Promise.resolve(eval(args.code));
+      message = await Promise.resolve(
+        eval(transpile(args.code, { target: ScriptTarget.ES2021 }))
+      );
 
       if (typeof message === "object") {
         message = JSON.stringify(message, null, args.jsonspacing);
@@ -45,7 +48,9 @@ export default class EvalCommand extends BaseCommand {
     if (errored) {
       embed.setColor(Color.PRESENCE_BUSY);
     }
-    embed.setDescription(
+    embed.addField("Input", Markup.codeblock(args.code, { language: "ts" }));
+    embed.addField(
+      "Output",
       Markup.codeblock(message, { language, mentions: false })
     );
     return await context.editOrReply({ embed });

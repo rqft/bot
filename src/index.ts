@@ -3,7 +3,6 @@ import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
 } from "detritus-client/lib/constants";
-import { app } from "./api/baseroute";
 import { capitalizeWords, replacer, simpleGetLongAgo } from "./functions/tools";
 import {
   altclients,
@@ -119,10 +118,6 @@ interactions.add(
   }
 );
 
-app.listen(8080, () => {
-  console.log(`[LISTEN] Listening on port 8080`);
-});
-
 (async function run() {
   const start = Date.now();
   await commands.run();
@@ -137,7 +132,7 @@ app.listen(8080, () => {
 
       console.log(
         replacer(
-          `✅ Took ${chalk.yellow(`{TIME}`)} to log in as ${chalk.red(
+          `✅ Took ${chalk.yellow(`{TIME}`)} to deploy ${chalk.red(
             "{USER}"
           )} (uploading ${chalk.green("{GUILDS} guilds")} and ${chalk.blue(
             "{MEMBERS} members"
@@ -155,23 +150,28 @@ app.listen(8080, () => {
   );
   console.log(`ok done in ${simpleGetLongAgo(start)}`);
   console.log(
-    "loaded commands",
-    commands.commands.map((v) => v.name).join(", ")
+    "\nloaded commands:\n" + commands.commands.map((v) => v.name).join(", ")
   );
   console.log(
-    "loaded interactions",
-    interactions.commands
-      .map(
-        (v) =>
-          `${
-            [
-              "Unknown",
-              "Slash",
-              "Context Menu (User)",
-              "Context Menu (Message)",
-            ][v.type]
-          } > ${v.name}`
-      )
-      .join(", ")
+    "\nloaded interactions:\n" +
+      interactions.commands
+        .map(
+          (v) =>
+            `${
+              [
+                "Unknown",
+                "Slash",
+                "Context Menu (User)",
+                "Context Menu (Message)",
+              ][v.type]
+            } > ${v.name}`
+        )
+        .join("\n")
+  );
+  console.log(
+    `\ndeployed to ${client.guilds.size} guilds\n` +
+      client.guilds
+        .map((v) => `[${v.unavailable ? "U" : "A"}] ${v.name} (${v.id})`)
+        .join("\n")
   );
 })();
