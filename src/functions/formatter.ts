@@ -12,9 +12,14 @@ import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
 import { ConnectionMap, PermissionsText } from "../enums/utils";
 import { createBrandEmbed, createImageEmbed } from "../functions/embed";
-import { selfclient } from "../globals";
+import { altclients, client, selfclient } from "../globals";
 import { Secrets } from "../secrets";
-import { bitfieldToArray, capitalizeWords, storeImage } from "./tools";
+import {
+  bitfieldToArray,
+  capitalizeWords,
+  padCodeBlockFromRows,
+  storeImage,
+} from "./tools";
 
 export enum Animals {
   BIRD = "bird",
@@ -313,6 +318,47 @@ export async function imageOcr(
   });
 
   return embed;
+}
+export async function imageTags(
+  context: Context | InteractionContext,
+  url: string
+) {
+  const im = new Imagga(Secrets.Key.imaggaAuth);
+
+  const tags = await im.tags({ image_url: url, limit: 20 }, "");
+  if (tags.status.type === "error") throw new Error(tags.status.text);
+
+  const embed = createBrandEmbed(Brand.IMAGGA, context);
+  embed.setThumbnail(url);
+  embed.setDescription(
+    Markup.codeblock(
+      padCodeBlockFromRows([
+        ["Tag", "Confidence"],
+        ...tags.result.tags.map((v) => [v.tag.en, v.confidence.toFixed(3)]),
+      ]).join("\n")
+    )
+  );
+
+  return embed;
+}
+export async function textPing() {
+  function emojiFromPing(ping: number) {
+    if (ping > 5000) return "❌";
+    if (ping > 1000) return "💤"; // zzz
+    if (ping > 500) return "⚠️";
+    return "✅";
+  }
+
+  const pings: Array<string> = [];
+  for (let resty of [client, selfclient, ...altclients]) {
+    const ping = await resty.ping();
+    pings.push(
+      `${emojiFromPing(ping.rest)} ${resty.user!.tag} (rest: ${
+        ping.rest
+      }ms, gateway: ${ping.gateway}ms)`
+    );
+  }
+  return pings.join("\n");
 }
 export enum Overlays {
   GAY = "/gay",
