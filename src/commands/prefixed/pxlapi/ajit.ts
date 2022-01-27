@@ -13,7 +13,7 @@ export default class PxlAjitCommand extends BaseCommand {
       name: "ajit",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

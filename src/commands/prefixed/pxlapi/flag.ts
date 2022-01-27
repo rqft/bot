@@ -57,7 +57,7 @@ export default class PxlFlagCommand extends BaseCommand {
       type: [
         {
           name: "image",
-          type: Parameters.image,
+          type: Parameters.image(),
         },
       ],
       args: [

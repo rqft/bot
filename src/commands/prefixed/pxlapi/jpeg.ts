@@ -15,7 +15,7 @@ export default class PxlJpegCommand extends BaseCommand {
       name: "jpeg",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         {

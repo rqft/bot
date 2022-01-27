@@ -33,7 +33,7 @@ export default class PxlSnapchatFilterCommand extends BaseCommand {
         },
         {
           name: "image",
-          type: Parameters.image,
+          type: Parameters.image(),
         },
       ],
     });

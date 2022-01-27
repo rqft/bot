@@ -37,7 +37,7 @@ export default class PxlEyesCommand extends BaseCommand {
       name: "eyes",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         {

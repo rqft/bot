@@ -17,7 +17,7 @@ export default class PxlEmojiMosaicCommand extends BaseCommand {
       aliases: ["emojimosaic", "emosaic"],
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         {

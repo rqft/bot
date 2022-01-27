@@ -17,7 +17,7 @@ export default class SRAJailOverlayCommand extends BaseCommand {
       name: "jail",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

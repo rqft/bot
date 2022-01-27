@@ -23,16 +23,17 @@ export function createBrandEmbed(
   named: boolean = true,
   embed: Embed = new Embed()
 ) {
+  let t = simpleGetLongAgo(
+    (context instanceof Context ? context.message : context.interaction)
+      .createdAtUnix
+  );
   return createUserEmbed(context, embed)
     .setFooter(
       `${BrandNames[brand]}${
         brand === Brand.VYBOSE && named && context.command
           ? " " + capitalizeWords(context.command.name)
           : ""
-      }, Done in ${simpleGetLongAgo(
-        (context instanceof Context ? context.message : context.interaction)
-          .createdAtUnix
-      )}`,
+      }, Done ${t ? `in ${t}` : "Insantly"}`,
       BrandIcons[brand]
     )
     .setColor(BrandColors[brand]);

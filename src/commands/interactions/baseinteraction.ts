@@ -6,6 +6,7 @@ import {
 } from "detritus-client/lib/constants";
 import { Markup } from "detritus-client/lib/utils";
 import { Parameters } from "../../functions/parameters";
+import { config } from "../../globalConf";
 
 export class BaseInteractionCommand<
   ParsedArgsFinished = Interaction.ParsedArgs
@@ -18,12 +19,8 @@ export class BaseInteractionCommand<
         Interaction.InteractionCommandOptions
       >(
         {
-          //   guildIds: [
-          //     "816362327678779392",
-          //     "760130247580057650",
-          //     "759174794968301569",
-          //   ],
-          global: true,
+          guildIds: config.client.interactions.guildIds || [],
+          global: config.client.interactions.global,
         },
         data
       )
@@ -73,6 +70,7 @@ export class BaseContextMenuUserCommand extends BaseInteractionCommand<ContextMe
     super(data);
   }
 }
+
 export class BaseInteractionCommandOption<
   ParsedArgsFinished = Interaction.ParsedArgs
 > extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
@@ -90,23 +88,21 @@ export class BaseInteractionCommandOption<
     });
   }
 }
+
 export class BaseInteractionImageCommandOption<
   ParsedArgsFinished = Interaction.ParsedArgs
-> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-  constructor(
-    data: Interaction.InteractionCommandOptionOptions = {},
-    as: string = "png"
-  ) {
+> extends BaseInteractionCommandOption<ParsedArgsFinished> {
+  constructor(data: Interaction.InteractionCommandOptionOptions = {}) {
     super({
       ...data,
       options: [
         ...(data.options || []),
         {
           name: "image",
-          description: "Some Image",
+          description: "Emoji/Image URL/User",
           label: "url",
-          default: Parameters.imageUrl(as),
-          value: Parameters.imageUrl(as),
+          default: Parameters.imageUrl("png"),
+          value: Parameters.imageUrl("png"),
         },
       ],
     });
@@ -129,10 +125,28 @@ export class BaseInteractionImageCommandOption<
     args: { url?: null | string }
   ) {
     if (args.url === undefined) {
-      return context.editOrRespond("cant find anything");
+      return context.editOrRespond("no images found");
     } else if (args.url === null) {
-      return context.editOrRespond("no image");
+      return context.editOrRespond("invalid url (?)");
     }
-    return super.onCancelRun!(context, args);
+    return super.onCancelRun(context, args);
+  }
+}
+
+export class BaseInteractionCommandOptionGroup<
+  ParsedArgsFinished = Interaction.ParsedArgs
+> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
+  error = "Slash Command";
+  type = ApplicationCommandOptionTypes.SUB_COMMAND_GROUP;
+
+  onCancelRun(
+    context: Interaction.InteractionContext,
+    _args: Record<string, any>
+  ) {
+    const command = Markup.codestring(context.name);
+    return context.editOrRespond({
+      content: `something really stupid happened with ${command}`,
+      flags: MessageFlags.EPHEMERAL,
+    });
   }
 }

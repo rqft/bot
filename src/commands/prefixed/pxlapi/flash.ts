@@ -13,7 +13,7 @@ export default class PxlFlashCommand extends BaseCommand {
       name: "flash",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

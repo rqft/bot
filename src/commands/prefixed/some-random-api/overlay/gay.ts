@@ -17,7 +17,7 @@ export default class SRAGayOverlayCommand extends BaseCommand {
       name: "gay",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

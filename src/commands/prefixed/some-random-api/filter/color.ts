@@ -13,7 +13,7 @@ export default class SRAColorFilterCommand extends BaseCommand {
       name: "color",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [{ name: "color", type: Parameters.color, required: true }],
     });

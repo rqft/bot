@@ -17,6 +17,7 @@ import { Emojis } from "../enums/emojis";
 import { profileBadgeMap } from "../enums/profileBadge";
 import { UserStatusMap } from "../enums/userStatus";
 import { guildVoiceRegionMap, VoiceRegionString } from "../enums/utils";
+import { config } from "../globalConf";
 import { Chars, client, commands } from "../globals";
 import { Secrets } from "../secrets";
 import { IElement } from "../types";
@@ -345,7 +346,9 @@ export async function storeImage(
     true
   );
   const storageMessage = await storageChannel.createMessage({
-    files: [{ key: Date.now().toString(), filename: `${filename}`, value }],
+    content: Date.now().toString(),
+
+    files: [{ filename, value }],
   });
   return storageMessage.attachments.first()!;
 }
@@ -431,4 +434,38 @@ export function removeSecrets(str: string) {
       ...Secrets.AltTokens,
     ].map((v) => [v, "[KEY]"])
   );
+}
+export enum VyboseGuildFlags {
+  AVAILABLE = "[A]",
+  UNAVAILABLE = "[U]",
+  OWNED = "[O]",
+  NOT_OWNED = "[N]",
+  MARKED = "[M]",
+  NONE = "[ ]",
+}
+export function getVyboseGuildFlags(guild: Guild) {
+  let flags: Array<VyboseGuildFlags> = [VyboseGuildFlags.NONE];
+
+  if (guild.unavailable) flags.push(VyboseGuildFlags.UNAVAILABLE);
+  if (client.isOwner(guild.ownerId)) flags.push(VyboseGuildFlags.OWNED);
+  if (config.markers.guilds.includes(guild.id))
+    flags.push(VyboseGuildFlags.MARKED);
+
+  return flags;
+}
+export enum VyboseUserFlags {
+  BOT = "[B]",
+  SELF = "[S]",
+  OWNER = "[O]",
+  MARKED = "[M]",
+  NONE = "[ ]",
+}
+export function getVyboseUserFlags(user: User | Member) {
+  let flags: Array<VyboseUserFlags> = [VyboseUserFlags.NONE];
+  if (user.bot) flags.push(VyboseUserFlags.BOT);
+  if (user.id === client.user!.id) flags.push(VyboseUserFlags.SELF);
+  if (client.isOwner(user.id)) flags.push(VyboseUserFlags.OWNER);
+  if (config.markers.users.includes(user.id))
+    flags.push(VyboseUserFlags.MARKED);
+  return flags;
 }

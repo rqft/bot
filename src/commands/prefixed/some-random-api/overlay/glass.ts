@@ -17,7 +17,7 @@ export default class SRAGlassOverlayCommand extends BaseCommand {
       name: "glass",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

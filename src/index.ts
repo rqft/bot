@@ -3,7 +3,12 @@ import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
 } from "detritus-client/lib/constants";
-import { capitalizeWords, replacer, simpleGetLongAgo } from "./functions/tools";
+import {
+  capitalizeWords,
+  getVyboseGuildFlags,
+  replacer,
+  simpleGetLongAgo,
+} from "./functions/tools";
 import {
   altclients,
   client,
@@ -121,6 +126,7 @@ interactions.add(
 (async function run() {
   const start = Date.now();
   await commands.run();
+
   await interactions.run();
   const all = [client, selfclient, ...altclients];
 
@@ -171,7 +177,7 @@ interactions.add(
   console.log(
     `\ndeployed to ${client.guilds.size} guilds\n` +
       client.guilds
-        .map((v) => `[${v.unavailable ? "U" : "A"}] ${v.name} (${v.id})`)
+        .map((v) => `${getVyboseGuildFlags(v).join(" ")} ${v.name} (${v.id})`)
         .join("\n")
   );
 })();

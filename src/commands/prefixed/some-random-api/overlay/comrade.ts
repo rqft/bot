@@ -17,7 +17,7 @@ export default class SRAComradeOverlayCommand extends BaseCommand {
       name: "comrade",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

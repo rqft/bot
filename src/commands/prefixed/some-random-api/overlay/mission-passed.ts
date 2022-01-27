@@ -18,7 +18,7 @@ export default class SRAMissionPassedOverlayCommand extends BaseCommand {
       aliases: ["passed"],
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

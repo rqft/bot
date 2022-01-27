@@ -13,7 +13,7 @@ export default class SRABrightnessFilterCommand extends BaseCommand {
       name: "brightness",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         {

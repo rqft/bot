@@ -17,7 +17,7 @@ export default class SRAWastedOverlayCommand extends BaseCommand {
       name: "wasted",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

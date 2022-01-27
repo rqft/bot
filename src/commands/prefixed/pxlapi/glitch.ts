@@ -20,7 +20,7 @@ export default class PxlGlitchCommand extends BaseCommand {
       name: "glitch",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         { name: "iterations", type: "number", choices: one100, default: 10 },

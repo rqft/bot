@@ -17,7 +17,7 @@ export default class PxlLegoCommand extends BaseCommand {
       aliases: ["legoify"],
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         {

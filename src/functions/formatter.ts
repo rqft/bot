@@ -80,13 +80,7 @@ export async function infoUser(
   const profile = await selfclient.rest.fetchUserProfile(user.id);
 
   {
-    let avatar: string;
-    if (user.avatar) {
-      avatar = user.avatarUrlFormat(undefined, { size: 1024 });
-    } else {
-      avatar = user.defaultAvatarUrl;
-    }
-    embed.setThumbnail(avatar);
+    embed.setThumbnail(user.avatarUrl);
   }
 
   if (profile) {
@@ -300,13 +294,19 @@ export async function imageOcr(
   context: Context | InteractionContext,
   url: string
 ) {
-  const im = new Imagga(Secrets.Key.imaggaAuth);
-  const text = await im.text({ image_url: url });
-  if (text.status.type === "error") throw new Error(text.status.text);
-  if (!text.result.text.length) throw new Error("No text found");
-
   const embed = createBrandEmbed(Brand.IMAGGA, context);
   embed.setThumbnail(url);
+
+  const im = new Imagga(Secrets.Key.imaggaAuth);
+  const text = await im.text({ image_url: url });
+  if (text.status.type === "error") {
+    embed.setDescription(Markup.codeblock(text.status.text));
+    return embed;
+  }
+  if (!text.result.text.length) {
+    embed.setDescription(Markup.codeblock("No text detected"));
+    return embed;
+  }
 
   text.result.text.forEach((v, i) => {
     embed.addField(

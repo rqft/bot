@@ -17,7 +17,7 @@ export default class SRATriggeredOverlayCommand extends BaseCommand {
       name: "triggered",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

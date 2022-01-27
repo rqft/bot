@@ -13,7 +13,7 @@ export default class SRAThresholdFilterCommand extends BaseCommand {
       name: "threshold",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [
         {
