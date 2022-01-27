@@ -14,3 +14,4 @@ export const config = {
     guilds: [] as Array<string>,
   },
 };
+//
