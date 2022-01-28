@@ -9,6 +9,7 @@ import {
   replacer,
   simpleGetLongAgo,
 } from "./functions/tools";
+import { config } from "./globalConf";
 import {
   altclients,
   client,
@@ -149,7 +150,8 @@ interactions.add(
             ["{GUILDS}", value.guilds.size],
             ["{MEMBERS}", value.users.size],
             ["{SHARDS}", value.shardCount],
-          ]
+          ],
+          config.locale
         )
       );
     })
