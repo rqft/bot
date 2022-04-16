@@ -87,7 +87,7 @@ export namespace Tags {
     }
     export function user(property: keyof User): Script {
       return async function (context, arg, __, ___, tag) {
-        const user = (await Parameters.user(arg, context)) || context.user;
+        const user = (await Parameters.user(arg || context.user.id, context))!;
 
         let value = user[property];
         if (typeof value === "function") {

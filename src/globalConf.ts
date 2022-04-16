@@ -1,4 +1,4 @@
-import { messages } from "./messages";
+
 
 export const config = {
   client: {
@@ -15,6 +15,6 @@ export const config = {
     users: [] as Array<string>,
     guilds: [] as Array<string>,
   },
-  locale: "en" as keyof typeof messages,
+  
 };
 //
