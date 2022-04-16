@@ -21,7 +21,6 @@ import { UserStatusMap } from "../enums/userStatus";
 import { guildVoiceRegionMap, VoiceRegionString } from "../enums/utils";
 import { config } from "../globalConf";
 import { Chars, client, commands } from "../globals";
-import { messages } from "../messages";
 import { Secrets } from "../secrets";
 import { IElement } from "../types";
 import { Markup } from "./markup";
@@ -105,12 +104,7 @@ export const fillArrayWithBounds = (min: number, max: number) => {
 export const isConsecutive = (array: number[]) =>
   fillArrayWithBounds(min(array), max(array)).every((e) => !array.includes(e));
 [...Array(100).keys()].map((i) => i + (i + 1)).join(", ");
-export function replacer(
-  base: string,
-  replacers: [string, any][],
-  language: keyof typeof messages
-) {
-  base = messages[language][base] ?? base;
+export function replacer(base: string, replacers: [string, any][]) {
   for (const [key, value] of replacers) base = base.split(key).join(value);
   return base;
 }
