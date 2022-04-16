@@ -14,6 +14,7 @@ import { ConnectionMap, PermissionsText } from "../enums/utils";
 import { createBrandEmbed, createImageEmbed } from "../functions/embed";
 import { altclients, client, selfclient } from "../globals";
 import { Secrets } from "../secrets";
+import { Err } from "./error";
 import {
   bitfieldToArray,
   capitalizeWords,
@@ -326,7 +327,7 @@ export async function imageTags(
   const im = new Imagga(Secrets.Key.imaggaAuth);
 
   const tags = await im.tags({ image_url: url, limit: 20 }, "");
-  if (tags.status.type === "error") throw new Error(tags.status.text);
+  if (tags.status.type === "error") throw new Err(tags.status.text);
 
   const embed = createBrandEmbed(Brand.IMAGGA, context);
   embed.setThumbnail(url);

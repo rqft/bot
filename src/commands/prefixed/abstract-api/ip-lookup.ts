@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractIPGeolocationArgs {
@@ -73,9 +74,9 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
         ip_address: args.ip,
       })}`
     );
-    if (!ip.ip_address) throw new Error("No IP found");
+    if (!ip.ip_address) throw new Err("No IP found");
     if (!ip.latitude || !ip.longitude)
-      throw new Error("This IP is not geolocated");
+      throw new Err("This IP is not geolocated");
     let embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Geolocation for ${ip.ip_address}`);
     {

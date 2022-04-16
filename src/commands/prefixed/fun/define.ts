@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { capitalizeWords } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface DefineArgs {
@@ -42,7 +43,7 @@ export default class DefineCommand extends BaseCommand {
       `/api/v2/entries/en/${args.word}`
     );
     if ("title" in words || words.length === 0)
-      throw new Error("no definitions found");
+      throw new Err("no definitions found");
     const embed = createBrandEmbed(Brand.MERRIAM_WEBSTER, context);
     embed.setTitle(`Definitions for ${capitalizeWords(args.word)}`);
     {

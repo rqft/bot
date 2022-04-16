@@ -12,7 +12,7 @@ export default class SRABlurCommand extends BaseCommand {
       name: "blur",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

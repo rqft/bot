@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { ScriptTarget, transpile } from "typescript";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { Color } from "../../../globals";
 import { BaseCommand } from "../basecommand";
@@ -22,7 +23,9 @@ export default class EvalCommand extends BaseCommand {
       required: true,
       args: [{ default: 2, name: "jsonspacing", type: "number" }],
       onBefore: (context) => context.user.isClientOwner,
-      onCancel: (context) => context.editOrReply(`❌ no`),
+      onCancel: () => {
+        throw new Err("Not Authorized", { status: 403 });
+      },
       onError: (_context, _args, error) => console.error(error),
     });
   }
@@ -32,7 +35,7 @@ export default class EvalCommand extends BaseCommand {
     let errored: boolean = false;
     try {
       message = await Promise.resolve(
-        eval(transpile(args.code, { target: ScriptTarget.ES2021 }))
+        eval(transpile(args.code, { target: ScriptTarget.ES3 }))
       );
 
       if (typeof message === "object") {

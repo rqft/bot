@@ -20,8 +20,8 @@ import {
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 commands.on("commandDelete", ({ reply }) => reply.delete());
 
-interactions.clear();
 interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
+interactions.checkAndUploadCommands();
 
 enum Tones {
   SERIOUS = "/srs",
@@ -156,7 +156,11 @@ interactions.add(
   );
   console.log(`ok done in ${simpleGetLongAgo(start)}`);
   console.log(
-    "\nloaded commands:\n" + commands.commands.map((v) => v.name).join(", ")
+    "\nloaded commands:\n" +
+      commands.commands
+        .map((v) => v.name)
+        .sort()
+        .join(", ")
   );
   console.log(
     "\nloaded interactions:\n" +

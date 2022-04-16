@@ -4,6 +4,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractExchangeRateArgs {
@@ -41,7 +42,7 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
         target: args.to,
       })}`
     );
-    if (!rate.base || !rate.exchange_rates) throw new Error("no rates found");
+    if (!rate.base || !rate.exchange_rates) throw new Err("no rates found");
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setDescription(
       `Last updated: ${Markup.timestamp(

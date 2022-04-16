@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { Imagga } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { padCodeBlockFromRows } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
@@ -24,7 +25,7 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
       "personal_photos"
     );
     if (categories.status.type === "error")
-      throw new Error(categories.status.text);
+      throw new Err(categories.status.text);
 
     const embed = createBrandEmbed(Brand.IMAGGA, context);
     embed.setThumbnail(args.image);

@@ -3,6 +3,7 @@ import { Locales } from "detritus-client/lib/constants";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { BaseCommand } from "../basecommand";
 export interface TranslateArgs {
   text: string;
@@ -54,7 +55,7 @@ async function detectLanguage(translator: Pariah, text: string) {
   const detect = await translator.postJSON<Array<DetectedLanguage>>(
     `/detect?q=${text}`
   );
-  if (!detect.length) throw new Error("cant detect language");
+  if (!detect.length) throw new Err("cant detect language");
 
   return detect[0]!;
 }

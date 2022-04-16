@@ -5,6 +5,7 @@ import { regex } from "detritus-client/lib/utils";
 import { decode, Frame, GIF, Image } from "imagescript";
 import fetch from "node-fetch";
 import { altclients, client, Regex, selfclient } from "../globals";
+import { Err } from "./error";
 import { findImage } from "./findImage";
 
 export namespace Parameters {
@@ -53,6 +54,98 @@ export namespace Parameters {
     }
     return value;
   }
+  export interface StringOptions {
+    minimumLength?: number;
+    maximumLength?: number;
+  }
+  export function string(options: StringOptions = {}) {
+    return (value: string): string => {
+      if (
+        options.maximumLength !== undefined &&
+        options.minimumLength !== undefined
+      ) {
+        if (
+          value.length < options.minimumLength ||
+          options.maximumLength < value.length
+        ) {
+          throw new Err(
+            `Value must be between ${options.minimumLength} and ${options.maximumLength} characters`
+          );
+        }
+      } else if (options.maximumLength !== undefined) {
+        if (options.maximumLength < value.length) {
+          throw new Err(
+            `Value must be less than ${options.maximumLength} characters`
+          );
+        }
+      } else if (options.minimumLength !== undefined) {
+        if (value.length < options.minimumLength) {
+          throw new Err(
+            `Value must be more than ${options.minimumLength} characters`
+          );
+        }
+      }
+      return value;
+    };
+  }
+  export interface ListOptions<T> {
+    minimumLength?: number;
+    maximumLength?: number;
+    delimiter?: string;
+    transform?: (value: string) => T;
+  }
+  export function list<T>(options: ListOptions<T> = {}) {
+    return (value: string): Array<T> => {
+      const values: Array<any> = value.split(options.delimiter || " ");
+      if (
+        options.maximumLength !== undefined &&
+        values.length > options.maximumLength
+      ) {
+        throw new Err(
+          `Value must be less than ${options.maximumLength} values`
+        );
+      }
+      if (
+        options.minimumLength !== undefined &&
+        values.length < options.minimumLength
+      ) {
+        throw new Err(
+          `Value must be more than ${options.minimumLength} values`
+        );
+      }
+      if (options.transform) {
+        for (let value of values) {
+          value = options.transform(value);
+        }
+      }
+      return values;
+    };
+  }
+  export interface NumberOptions {
+    minimum?: number;
+    maximum?: number;
+    integer?: boolean;
+  }
+  export function number(options: NumberOptions = {}) {
+    return (value: string): number => {
+      const number = Number(value);
+      if (isNaN(number)) {
+        throw new Err("Value must be a number");
+      }
+      if (options.integer) {
+        if (number !== Math.floor(number)) {
+          throw new Err("Value must be an integer");
+        }
+      }
+      if (options.minimum !== undefined && number < options.minimum) {
+        throw new Err(`Value must be more than ${options.minimum}`);
+      }
+      if (options.maximum !== undefined && number > options.maximum) {
+        throw new Err(`Value must be less than ${options.maximum}`);
+      }
+      return number;
+    };
+  }
 
   export async function user(
     value: string,
@@ -78,22 +171,43 @@ export namespace Parameters {
     }
     return found;
   }
-  export function imageUrl(as: string = "gif") {
+  export async function channel(value: string, _context: Context) {
+    const found = [client, ...altclients, selfclient]
+      .map((v) => v.channels.toArray())
+      .flat(1)
+      .find((key) => {
+        return (
+          key.name.toLowerCase().includes(value) ||
+          key.toString().toLowerCase() === value ||
+          key.id === value.replace(/\D/g, "")
+        );
+      });
+    if (!found) {
+      try {
+        const fetchy = await client.rest.fetchChannel(value.replace(/\D/g, ""));
+        if (fetchy) {
+          return fetchy;
+        }
+      } catch (e) {}
+    }
+    return found;
+  }
+  export function imageUrl(as?: string) {
     return async (value: string, context: Context | InteractionContext) => {
       const img = await findImage(context, value, as);
 
       return img;
     };
   }
-  export function image(as: string = "gif") {
+  export function image(as?: string) {
     return async (value: string, context: Context) => {
       let url = await imageUrl(as)(value, context);
       console.log(url);
-      if (!url) throw new Error("Could not find any images");
+      if (!url) throw new Err("Could not find any images");
 
       const imageResponse = await fetch(url);
       if (!imageResponse.ok)
-        throw new Error(
+        throw new Err(
           `Error ${imageResponse.status}: ${imageResponse.statusText}`
         );
 
@@ -105,7 +219,8 @@ export namespace Parameters {
       value: string,
       context: Context
     ): Promise<GIF> {
-      const img = await image("gif")(value, context);
+      const img = await image()(value, context);
+      console.log(img);
       let gif = await decode(img);
       if (gif instanceof Image) {
         gif = new GIF([Frame.from(gif)]);
@@ -117,7 +232,7 @@ export namespace Parameters {
       value: string,
       context: Context
     ): Promise<Image> {
-      const img = await image("png")(value, context);
+      const img = await image()(value, context);
       const gif = await decode(img);
       if (gif instanceof Image) {
         return gif;
@@ -160,7 +275,7 @@ export namespace Parameters {
   }
   export function color(value: string) {
     let hex = value.replace(/\D/g, "");
-    if (![3, 6].some((v) => v === hex.length)) throw new Error("Invalid color");
+    if (![3, 6].some((v) => v === hex.length)) throw new Err("Invalid color");
     if (hex.length === 3)
       hex = hex
         .split("")
@@ -177,21 +292,21 @@ export namespace Parameters {
   }
   export function date(value: string, _context: Context) {
     const date = new Date(value);
-    if (isNaN(date.getTime())) throw new Error("Invalid date");
+    if (isNaN(date.getTime())) throw new Err("Invalid date");
     return date;
   }
   export function phone(value: string, _context: Context) {
     // phone number regex
     const regex =
       /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
-    if (!value.match(regex)) throw new Error("Invalid phone number");
+    if (!value.match(regex)) throw new Err("Invalid phone number");
     return value;
   }
   export function email(value: string, _context: Context) {
     // email regex
     const regex =
       /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-    if (!value.match(regex)) throw new Error("Invalid email");
+    if (!value.match(regex)) throw new Err("Invalid email");
     return value;
   }
 }

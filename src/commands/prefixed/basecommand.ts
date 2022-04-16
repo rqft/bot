@@ -12,6 +12,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { GIF, Image } from "imagescript";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
+import { Err } from "../../functions/error";
 import { expandMs, generateUsage, removeSecrets } from "../../functions/tools";
 
 export class BaseCommand extends Command {
@@ -32,33 +33,25 @@ export class BaseCommand extends Command {
     );
   }
 
-  run(context: Context, _args: ParsedArgs = {}): Promise<void | Message> {
+  run(
+    context: Context,
+    _args: ParsedArgs = {}
+  ): Promise<void | Message | null> {
     return context.reply("❌ No functionality set for this command");
   }
-  onError(context: Context, _args: ParsedArgs = {}, error: Error) {
-    return context.editOrReply(
-      removeSecrets(
-        `❌ Error while using command: ${error.message}\n${Markup.codeblock(
-          error.stack ?? "No Stack",
-          { language: "js" }
-        )}`
-      )
-    );
+  onError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
+    console.log(error);
+
+    return context.editOrReply(removeSecrets(Err.from(error).toThrown()));
   }
-  onRunError(context: Context, _args: ParsedArgs = {}, error: Error) {
-    return context.editOrReply(
-      removeSecrets(
-        `❌ Error while running command: ${error.message}\n${Markup.codeblock(
-          error.stack ?? "No Stack",
-          { language: "js" }
-        )}`
-      )
-    );
+  onRunError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
+    console.log(error);
+    return context.editOrReply(removeSecrets(Err.from(error).toThrown()));
   }
   onTypeError(
     context: Context,
     _args: ParsedArgs,
-    errors: { [key: string]: Error }
+    errors: { [key: string]: Err }
   ) {
     const embed = createBrandEmbed(Brand.VYBOSE, context, false);
 

@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { capitalizeWords } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
@@ -46,7 +47,7 @@ export default class AbstractPhoneValidationCommand extends BaseCommand {
       })}`
     );
     console.log(args.phone, phone);
-    if (!phone.phone) throw new Error("invalid phone number");
+    if (!phone.phone) throw new Err("invalid phone number");
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Information for Phone Number`);
     {

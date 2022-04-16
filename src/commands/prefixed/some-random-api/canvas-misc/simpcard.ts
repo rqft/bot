@@ -17,7 +17,7 @@ export default class SRASimpCardCommand extends BaseCommand {
       name: "simpcard",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image("png"),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

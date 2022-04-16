@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractCompanyEnrichmentArgs {
@@ -38,7 +39,7 @@ export default class AbstractCompanyEnrichmentCommand extends BaseCommand {
         domain: args.domain,
       })}`
     );
-    if (!company.domain) throw new Error("no results found");
+    if (!company.domain) throw new Err("no results found");
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Company Enrichment for ${company.domain}`);
     {

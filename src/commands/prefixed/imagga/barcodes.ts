@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { Imagga } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ImageUrlArgs } from "../basecommand";
@@ -20,8 +21,8 @@ export default class ImaggaBarcodesCommand extends BaseCommand {
   async run(context: Command.Context, args: ImageUrlArgs) {
     const im = new Imagga(Secrets.Key.imaggaAuth);
     const text = await im.barcodes({ image_url: args.image });
-    if (text.status.type === "error") throw new Error(text.status.text);
-    if (!text.result.barcodes.length) throw new Error("No text found");
+    if (text.status.type === "error") throw new Err(text.status.text);
+    if (!text.result.barcodes.length) throw new Err("No text found");
 
     const embed = createBrandEmbed(Brand.IMAGGA, context);
     embed.setThumbnail(args.image);

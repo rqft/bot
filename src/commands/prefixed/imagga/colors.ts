@@ -4,6 +4,7 @@ import { Imagga } from "pariah";
 import { Color } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { padCodeBlockFromRows } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
@@ -21,7 +22,7 @@ export default class ImaggaColorsCommand extends BaseCommand {
   async run(context: Command.Context, args: ImageUrlArgs) {
     const im = new Imagga(Secrets.Key.imaggaAuth);
     const colors = await im.colors({ image_url: args.image });
-    if (colors.status.type === "error") throw new Error(colors.status.text);
+    if (colors.status.type === "error") throw new Err(colors.status.text);
 
     const embed = createBrandEmbed(Brand.IMAGGA, context);
     embed.setThumbnail(args.image);

@@ -10,6 +10,7 @@ import {
   Guild,
   User,
 } from "detritus-client/lib/structures";
+import { Err } from "../functions/error";
 import { replacer, simpleGetLongAgo } from "../functions/tools";
 import { Color } from "../globals";
 import { IElement } from "../types";
@@ -220,7 +221,7 @@ export function makeSystemMessage(
   available_objects: PartialAvailableObjects
 ) {
   if (Object.keys(available_objects).length > 1)
-    throw new Error(`availableObjects must have at least one item`);
+    throw new Err(`availableObjects must have at least one item`);
   return replacer(system_message, [
     [
       "{USER}",

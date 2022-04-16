@@ -7,7 +7,7 @@ import { Client as ClientRest } from "detritus-client-rest";
 import { SocketOptions } from "detritus-client-socket/lib/gateway";
 import { AuthTypes } from "detritus-client/lib/constants";
 import { GatewayHandlerOptions } from "detritus-client/lib/gateway/handler";
-import { Paginator as Pagey, PaginatorReactions } from "detritus-pagination";
+import { Wilson } from "wilson-kv";
 import { Secrets } from "./secrets";
 
 export enum Color {
@@ -53,13 +53,6 @@ export enum SpecialIDs {
   CLYDE = "1",
   COMMUNITY_UPDATES = "798610321925210122",
 }
-export const Arguments = {
-  ImageResolvable: {
-    name: "image",
-    required: true,
-    type: "ImageResolvable",
-  },
-};
 export const gateway: GatewayHandlerOptions & SocketOptions = {
   intents: "ALL",
   loadAllMembers: true,
@@ -143,15 +136,6 @@ export namespace Regex {
   export const VALID_URL =
     /^(?:(?:(?:https?):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
 }
-export const Paginator = new Pagey(client, {
-  maxTime: 30000,
-  pageLoop: true,
-  pageNumber: true,
-});
-export const reactions: PaginatorReactions = {
-  firstPage: "⏮",
-  previousPage: "⏪",
-  nextPage: "⏩",
-  lastPage: "⏭",
-  stop: "❌",
-};
+export namespace KV {
+  export const tags = new Wilson(`../../../kv/tags`);
+}

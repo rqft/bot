@@ -17,7 +17,7 @@ export default class SRAHornyCommand extends BaseCommand {
       name: "horny",
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {
@@ -25,7 +25,7 @@ export default class SRAHornyCommand extends BaseCommand {
       context,
       args.image,
       Canvas.HORNY,
-      args
+      {}
     );
     return await context.editOrReply({ embed });
   }

@@ -18,7 +18,7 @@ export default class SRALoliceCommand extends BaseCommand {
       aliases: ["lolipolice", "loli-police"],
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {
@@ -26,7 +26,7 @@ export default class SRALoliceCommand extends BaseCommand {
       context,
       args.image,
       Canvas.LOLI_POLICE,
-      args
+      {}
     );
     return await context.editOrReply({ embed });
   }

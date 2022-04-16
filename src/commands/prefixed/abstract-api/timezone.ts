@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractTimezoneArgs {
@@ -37,7 +38,7 @@ export default class AbstractTimezoneCommand extends BaseCommand {
         location: args.location,
       })}`
     );
-    if (!tz.requested_location) throw new Error("no results found");
+    if (!tz.requested_location) throw new Err("no results found");
 
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Timezone for ${tz.requested_location}`);

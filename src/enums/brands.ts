@@ -14,10 +14,10 @@ export enum Brand {
   IMAGGA = "imagga",
 }
 export const BrandIcons: Record<Brand, string> = {
-  [Brand.VYBOSE]: "https://rqft.space/assets/vybost.png",
-  [Brand.OPENAI]: "https://rqft.space/assets/openai.png",
-  [Brand.GRAPHICS_MAGICK]: "https://rqft.space/assets/gm.png",
-  [Brand.GD_BROWSER]: "https://rqft.space/assets/gdbrowser.png",
+  [Brand.VYBOSE]: "https://rqft.space/i/image/vybost.png",
+  [Brand.OPENAI]: "https://rqft.space/i/image/openai.png",
+  [Brand.GRAPHICS_MAGICK]: "https://rqft.space/i/image/gm.png",
+  [Brand.GD_BROWSER]: "https://rqft.space/i/image/gdbrowser.png",
   [Brand.SOME_RANDOM_API]: "https://i.some-random-api.ml/logo.png",
   [Brand.ADVICE_SLIP]: "https://hotemoji.com/images/emoji/7/1dxbc3d1souos7.png",
   [Brand.PXL_API]: "https://pxlapi.dev/images/logo-small-transparent.png",

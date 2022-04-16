@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
@@ -51,7 +52,7 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
       })}`
     );
     if (!email.email || email.deliverability === "UNDELIVERABLE")
-      throw new Error("no email found");
+      throw new Err("no email found");
 
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Email Information for ${email.email}`);

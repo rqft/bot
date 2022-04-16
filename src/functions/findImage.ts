@@ -3,6 +3,7 @@ import { Context } from "detritus-client/lib/command";
 import { MessageEmbedTypes } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { Sticker } from "detritus-client/lib/structures";
+import { Err } from "./error";
 import { Parameters } from "./parameters";
 export const TRUSTED_URLS = Object.freeze([
   "cdn.discordapp.com",
@@ -85,7 +86,7 @@ export function getStickerUrl(sticker: Sticker) {
 export async function findImage(
   context: Context | InteractionContext,
   query?: string,
-  type: string = "gif"
+  type?: string
 ) {
   if (!query)
     return findImageUrlInMessages(
@@ -98,5 +99,5 @@ export async function findImage(
   const emojiTry = Parameters.emojiImage(query);
   if (emojiTry) return emojiTry.url;
 
-  throw new Error("unable to find image");
+  throw new Err("unable to find image");
 }

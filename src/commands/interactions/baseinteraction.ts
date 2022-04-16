@@ -83,7 +83,7 @@ export class BaseInteractionCommandOption<
   ) {
     const command = Markup.codestring(context.name);
     return context.editOrRespond({
-      content: `⚠ ${this.error} \`${command}\` error strangely, give me a report.`,
+      content: `⚠ ${this.error} \`${command}\` errored`,
       flags: MessageFlags.EPHEMERAL,
     });
   }

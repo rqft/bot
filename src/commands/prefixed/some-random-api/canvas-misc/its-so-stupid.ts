@@ -17,7 +17,7 @@ export default class SRAItsSoStupidCommand extends BaseCommand {
       aliases: ["itssostupid", "stupid", "iss"],
 
       label: "image",
-      type: Parameters.image,
+      type: Parameters.image(),
 
       args: [{ name: "text", type: "string", required: true }],
     });
