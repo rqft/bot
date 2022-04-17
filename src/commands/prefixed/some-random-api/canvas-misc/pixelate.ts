@@ -5,6 +5,7 @@ import {
   someRandomApiCanvasMisc,
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAPixelateArgs {
@@ -27,6 +28,6 @@ export default class SRAPixelateCommand extends BaseCommand {
       Canvas.PIXELATE,
       {}
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

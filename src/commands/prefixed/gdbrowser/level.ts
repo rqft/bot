@@ -2,9 +2,10 @@
 import { Command, CommandClient } from "detritus-client";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { GDBrowser } from "../../../functions/gdbrowser";
 import { Markup } from "../../../functions/markup";
-import { simpleGetLongAgo } from "../../../functions/tools";
+import { editOrReply, simpleGetLongAgo } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface GDLevelArgs {
   levelId: string;
@@ -23,7 +24,7 @@ export default class GDLevelCommand extends BaseCommand {
     let gd = new GDBrowser();
     let level = await gd.levels(args.levelId, false);
     if (level === -1) {
-      return context.editOrReply("that isnt a level");
+      throw new Err("Level not found", { status: 404 });
     }
     let embed = createBrandEmbed(Brand.GD_BROWSER, context);
     embed.setTitle(`${level.name} by ${level.author} (${level.id})`);
@@ -90,6 +91,6 @@ export default class GDLevelCommand extends BaseCommand {
       );
     }
     console.log(embed.fields?.toArray());
-    await context.editOrReply({ embed });
+    await editOrReply(context, { embed });
   }
 }

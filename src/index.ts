@@ -14,6 +14,7 @@ import {
   client,
   commands,
   interactions,
+  KV,
   selfclient,
 } from "./globals";
 
@@ -184,4 +185,5 @@ interactions.add(
         .map((v) => `${getVyboseGuildFlags(v).join(" ")} ${v.name} (${v.id})`)
         .join("\n")
   );
+  console.log(KV.tags.path());
 })();

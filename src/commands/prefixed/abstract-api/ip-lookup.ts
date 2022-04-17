@@ -3,6 +3,7 @@ import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractIPGeolocationArgs {
@@ -122,6 +123,6 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
       embed.setDescription(description.join("\n"));
     }
     embed.setThumbnail(ip.flag.png);
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }

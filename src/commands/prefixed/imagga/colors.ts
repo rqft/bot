@@ -6,7 +6,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
-import { padCodeBlockFromRows } from "../../../functions/tools";
+import { editOrReply, padCodeBlockFromRows } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ImageUrlArgs } from "../basecommand";
 
@@ -34,7 +34,7 @@ export default class ImaggaColorsCommand extends BaseCommand {
       "Foreground Colors",
       Markup.codeblock(colorsTable(colors.result.colors.foreground_colors))
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }
 function colorsTable(colors: Array<Color>): string {

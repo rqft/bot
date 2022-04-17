@@ -4,6 +4,7 @@ import { SomeRandomAPI } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand } from "../../basecommand";
 export interface SRAPokedexArgs {
   pokemon: string;
@@ -27,17 +28,14 @@ export default class SRAPokedexCommand extends BaseCommand {
       const description: Array<string> = [];
 
       description.push(Markup.italics(pokemon.description));
-      description.push("\n");
 
       description.push(`**Type:** ${pokemon.type}`);
       description.push(`**Height:** ${pokemon.height}`);
       description.push(`**Weight:** ${pokemon.weight}`);
-      description.push("\n");
 
       description.push(`**Species:** ${pokemon.species.join(", ")}`);
 
       description.push(`**Generation:** ${pokemon.generation}`);
-      description.push("\n");
       // family
       {
         description.push(`**Family**`);
@@ -57,15 +55,12 @@ export default class SRAPokedexCommand extends BaseCommand {
           );
         });
       }
-      description.push("\n");
 
       // gender probabilities
       description.push(`**Gender Probabilities: ${pokemon.gender.join(", ")}`);
-      description.push("\n");
 
       // abilities
       description.push(`**Abilities**: ${pokemon.abilities.join(", ")}`);
-      description.push("\n");
 
       // stats
       {
@@ -81,6 +76,6 @@ export default class SRAPokedexCommand extends BaseCommand {
 
       embed.setDescription(description.join("\n"));
     }
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }

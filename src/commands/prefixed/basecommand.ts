@@ -13,7 +13,12 @@ import { GIF, Image } from "imagescript";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
 import { Err } from "../../functions/error";
-import { expandMs, generateUsage, removeSecrets } from "../../functions/tools";
+import {
+  editOrReply,
+  expandMs,
+  generateUsage,
+  removeSecrets,
+} from "../../functions/tools";
 
 export class BaseCommand extends Command {
   constructor(client: CommandClient, options: CommandOptions) {
@@ -42,11 +47,11 @@ export class BaseCommand extends Command {
   onError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
     console.log(error);
 
-    return context.editOrReply(removeSecrets(Err.from(error).toThrown()));
+    return editOrReply(context, removeSecrets(Err.from(error).toThrown()));
   }
   onRunError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
     console.log(error);
-    return context.editOrReply(removeSecrets(Err.from(error).toThrown()));
+    return editOrReply(context, removeSecrets(Err.from(error).toThrown()));
   }
   onTypeError(
     context: Context,
@@ -71,7 +76,7 @@ export class BaseCommand extends Command {
     embed.setDescription(description.join("\n"));
 
     embed.addField(`Command Usage`, Markup.codeblock(generateUsage(this)));
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 
   onRatelimit(

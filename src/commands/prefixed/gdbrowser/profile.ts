@@ -4,6 +4,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { Image } from "imagescript";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import {
   GDBrowser,
   IconForm,
@@ -12,7 +13,7 @@ import {
   ProfileModeratorString,
   ProfileResult,
 } from "../../../functions/gdbrowser";
-import { storeImage } from "../../../functions/tools";
+import { editOrReply, storeImage } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface GDProfileArgs {
   userId: string;
@@ -31,7 +32,7 @@ export default class GDProfileCommand extends BaseCommand {
     let gd = new GDBrowser();
     let profile = await gd.profiles(args.userId);
     if (profile === -1) {
-      return context.editOrReply("that isnt a user");
+      throw new Err("User not found", { status: 404 });
     }
     let embed = createBrandEmbed(Brand.GD_BROWSER, context);
     embed.setTitle(`${profile.username}'s Profile`);
@@ -110,7 +111,7 @@ export default class GDProfileCommand extends BaseCommand {
       `icons_${profile.playerID}.png`
     );
     embed.setImage(iconSetUrl.url!);
-    context.editOrReply({ embed });
+    editOrReply(context, { embed });
   }
 }
 async function composeIconSet(profile: ProfileResult, size: number = 128) {

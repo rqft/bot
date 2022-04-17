@@ -4,6 +4,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractEmailValidationArgs {
@@ -51,8 +52,9 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
         email: args.email,
       })}`
     );
-    if (!email.email || email.deliverability === "UNDELIVERABLE")
-      throw new Err("no email found");
+    if (!email.email || email.deliverability === "UNDELIVERABLE") {
+      throw new Err("No email found", { status: 404 });
+    }
 
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Email Information for ${email.email}`);
@@ -89,6 +91,6 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
       embed.setDescription(description.join("\n"));
     }
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

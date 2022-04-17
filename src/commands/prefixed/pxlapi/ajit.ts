@@ -3,7 +3,7 @@ import { PxlApi } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
-import { storeImage } from "../../../functions/tools";
+import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ImageArgs } from "../basecommand";
 
@@ -28,6 +28,6 @@ export default class PxlAjitCommand extends BaseCommand {
     );
     console.log(embed.image);
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

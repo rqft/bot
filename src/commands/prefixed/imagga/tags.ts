@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { imageTags } from "../../../functions/formatter";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand, ImageUrlArgs } from "../basecommand";
 
 export default class ImaggaTagsCommand extends BaseCommand {
@@ -14,6 +15,6 @@ export default class ImaggaTagsCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: ImageUrlArgs) {
     const embed = await imageTags(context, args.image);
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

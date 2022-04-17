@@ -2,8 +2,9 @@ import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
 import { GDBrowser } from "../../../functions/gdbrowser";
-import { padCodeBlockFromRows } from "../../../functions/tools";
+import { editOrReply, padCodeBlockFromRows } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface GDLeaderboardArgs {
   count: number;
@@ -40,7 +41,7 @@ export default class GDLeaderboardCommand extends BaseCommand {
     const gd = new GDBrowser();
     let leaderboard = await gd.leaderboard(args.count, options);
     if (leaderboard === -1) {
-      return context.editOrReply("No leaderboard found");
+      throw new Err("Leaderboard not found", { status: 404 });
     }
     leaderboard = leaderboard.slice(0, args.count);
     const embed = createBrandEmbed(Brand.GD_BROWSER, context);
@@ -61,6 +62,6 @@ export default class GDLeaderboardCommand extends BaseCommand {
     );
 
     embed.setThumbnail("https://gdbrowser.com/assets/leaderboard.png");
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

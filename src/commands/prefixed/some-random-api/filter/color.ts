@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { Filters, someRandomApiFilter } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAColorFilterArgs extends ImageArgs {
@@ -25,6 +26,6 @@ export default class SRAColorFilterCommand extends BaseCommand {
       Filters.COLOR,
       args
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

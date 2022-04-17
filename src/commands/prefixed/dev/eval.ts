@@ -5,9 +5,9 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { Color } from "../../../globals";
 import { BaseCommand } from "../basecommand";
-
 export interface EvalArgs {
   code: string;
   jsonspacing: number;
@@ -54,8 +54,8 @@ export default class EvalCommand extends BaseCommand {
     embed.addField("Input", Markup.codeblock(args.code, { language: "ts" }));
     embed.addField(
       "Output",
-      Markup.codeblock(message, { language, mentions: false })
+      Markup.codeblock(message || "undefined", { language, mentions: false })
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

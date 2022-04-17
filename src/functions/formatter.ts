@@ -18,10 +18,10 @@ import { Err } from "./error";
 import {
   bitfieldToArray,
   capitalizeWords,
+  editOrReply,
   padCodeBlockFromRows,
   storeImage,
 } from "./tools";
-
 export enum Animals {
   BIRD = "bird",
   CAT = "cat",
@@ -47,7 +47,7 @@ export async function someRandomApiAnimal(context: Context, animal: Animals) {
   embed.setTitle(`${capitalizeWords(animal)} Image`);
   embed.setDescription(Markup.codeblock(animals.fact));
 
-  return await context.editOrReply({ embed });
+  return await editOrReply(context, { embed });
 }
 
 export enum Animus {
@@ -68,12 +68,15 @@ export async function someRandomApiAnimu(context: Context, animu: Animus) {
 
   embed.setTitle(`${capitalizeWords(animu)} Anime GIF`);
 
-  return await context.editOrReply({ embed });
+  return await editOrReply(context, { embed });
 }
 export async function infoUser(
   context: Context | InteractionContext,
   user: User
 ) {
+  if (!user) {
+    throw new Err("User not found", { status: 404 });
+  }
   const embed = createBrandEmbed(Brand.VYBOSE, context);
 
   embed.setTitle(user.tag);
@@ -405,6 +408,7 @@ export async function someRandomApiCanvas(
   const imageAttach = await storeImage(image, "attachment.gif");
   const a = Object.assign({ avatar: imageAttach.url! }, args);
   const canvas = await sra.canvas(endpoint, a);
+  console.log(canvas);
   const embed = await createImageEmbed(
     context,
     canvas,

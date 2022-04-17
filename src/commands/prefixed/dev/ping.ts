@@ -1,5 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { textPing } from "../../../functions/formatter";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 
 export default class PingCommand extends BaseCommand {
@@ -9,8 +10,8 @@ export default class PingCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, _args: {}) {
-    await context.editOrReply(`ok pinging`);
+    await editOrReply(context, `ok pinging`);
 
-    await context.editOrReply(await textPing());
+    await editOrReply(context, await textPing());
   }
 }

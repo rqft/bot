@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Tags } from "../../../functions/tags";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 
 export default class TagExecCommand extends BaseCommand {
@@ -35,16 +36,12 @@ export default class TagExecCommand extends BaseCommand {
     );
 
     embed.addField(
-      "Available Scripts",
-      Markup.codeblock(Object.values(Tags.Names).flat().join(", "))
-    );
-    embed.addField(
       "Usage",
       `${Markup.bold("Script")} ${Markup.codestring(
         `${Tags.Symbols.START}name${Tags.Symbols.FUNCTION}args${Tags.Symbols.ARGUMENT}other${Tags.Symbols.END}`
       )}`
     );
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

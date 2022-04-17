@@ -4,6 +4,7 @@ import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface TranslateArgs {
   text: string;
@@ -44,7 +45,7 @@ export default class TranslateCommand extends BaseCommand {
 
     embed.setTitle(`Translation from ${args.from} to ${args.to}`);
 
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }
 export interface DetectedLanguage {

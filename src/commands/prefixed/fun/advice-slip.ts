@@ -4,6 +4,8 @@ import { AdviceSlip } from "pariah";
 import { Slip } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Err } from "../../../functions/error";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface AdviceSlipArgs {
   slip?: number;
@@ -23,11 +25,13 @@ export default class AdviceSlipCommand extends BaseCommand {
     if (args.slip) {
       slip = await as.slip(args.slip);
     }
-    if (!slip) return await context.editOrReply("❌ Invalid Slip ID");
+    if (!slip) {
+      throw new Err("Invalid Slip ID", { status: 400 });
+    }
     const embed = createBrandEmbed(Brand.ADVICE_SLIP, context);
     embed.setDescription(
       `Slip ID: ${slip.slip.id}\n${Markup.codeblock(slip.slip.advice)}`
     );
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }

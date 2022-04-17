@@ -4,6 +4,7 @@ import {
   someRandomApiCanvasMisc,
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export default class SRABlurCommand extends BaseCommand {
@@ -22,6 +23,6 @@ export default class SRABlurCommand extends BaseCommand {
       Canvas.BLUR,
       {}
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

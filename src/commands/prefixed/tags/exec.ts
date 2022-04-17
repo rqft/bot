@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { Parameters } from "../../../functions/parameters";
 import { Tags } from "../../../functions/tags";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface TagExecArgs {
   script: string;
@@ -34,6 +35,7 @@ export default class TagExecCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: TagExecArgs) {
     const value = await Tags.exec(context, args.script, args.args);
-    return await context.editOrReply({ content: value.text, allowedMentions: {} });
+    return await editOrReply(context, value.text);
+    editOrReply(context);
   }
 }

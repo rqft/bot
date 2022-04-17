@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { Tags } from "../../../functions/tags";
+import { editOrReply } from "../../../functions/tools";
 import { KV } from "../../../globals";
 import { BaseCommand } from "../basecommand";
 
@@ -42,7 +43,7 @@ export default class TagGetCommand extends BaseCommand {
     }
     const output = await Tags.exec(context, String(value), args.args);
 
-    return await context.editOrReply({
+    return await editOrReply(context, {
       content: output.text,
       allowedMentions: {},
       attachments: output.files,

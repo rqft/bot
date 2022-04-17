@@ -5,6 +5,7 @@ import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractExchangeRateArgs {
@@ -55,6 +56,6 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
       if (!v) continue;
       embed.addField(`${k}`, `1 ${rate.base} -> ${v} ${k}`, true);
     }
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }

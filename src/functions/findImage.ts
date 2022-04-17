@@ -5,12 +5,12 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { Sticker } from "detritus-client/lib/structures";
 import { Err } from "./error";
 import { Parameters } from "./parameters";
-export const TRUSTED_URLS = Object.freeze([
+export const TRUSTED_URLS = [
   "cdn.discordapp.com",
   "images-ext-1.discordapp.net",
   "images-ext-2.discordapp.net",
   "media.discordapp.net",
-]);
+];
 export function findImageUrlInAttachment(
   attachment: Structures.Attachment
 ): null | string {
@@ -36,18 +36,32 @@ export function findImageUrlInEmbed(
     if (embed.url) return embed.url;
     return null;
   }
-  const { image } = embed;
-  if (image && image.proxyUrl && (image.height || image.width))
+  const { image, thumbnail } = embed;
+  if (image && image.proxyUrl && (image.height || image.width)) {
     if (image.url) {
       const url = new URL(image.url);
-      if (TRUSTED_URLS.includes(url.host)) return image.url;
-    } else return image.proxyUrl;
-  const { thumbnail } = embed;
-  if (thumbnail && thumbnail.proxyUrl && (thumbnail.height || thumbnail.width))
+      if (TRUSTED_URLS.includes(url.host)) {
+        return image.url;
+      }
+    } else {
+      return image.proxyUrl;
+    }
+  }
+
+  if (
+    thumbnail &&
+    thumbnail.proxyUrl &&
+    (thumbnail.height || thumbnail.width)
+  ) {
     if (thumbnail.url) {
       const url = new URL(thumbnail.url);
-      if (TRUSTED_URLS.includes(url.host)) return thumbnail.url;
-    } else return thumbnail.proxyUrl;
+      if (TRUSTED_URLS.includes(url.host)) {
+        return thumbnail.url;
+      }
+    } else {
+      return thumbnail.proxyUrl;
+    }
+  }
   return null;
 }
 

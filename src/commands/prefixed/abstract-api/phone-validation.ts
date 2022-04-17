@@ -5,7 +5,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
-import { capitalizeWords } from "../../../functions/tools";
+import { capitalizeWords, editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractPhoneValidationArgs {
@@ -68,6 +68,6 @@ export default class AbstractPhoneValidationCommand extends BaseCommand {
       if (phone.carrier) description.push(`**Carrier**: ${phone.carrier}`);
       embed.setDescription(description.join("\n"));
     }
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { imageOcr } from "../../../functions/formatter";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand, ImageUrlArgs } from "../basecommand";
 
 export default class ImaggaTextCommand extends BaseCommand {
@@ -16,6 +17,6 @@ export default class ImaggaTextCommand extends BaseCommand {
   async run(context: Command.Context, args: ImageUrlArgs) {
     const embed = await imageOcr(context, args.image);
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

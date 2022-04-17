@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { createUserEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { KV } from "../../../globals";
 import { BaseCommand } from "../basecommand";
 export interface TagSetArgs {
@@ -35,6 +36,6 @@ export default class TagSetCommand extends BaseCommand {
     KV.tags.put(args.key, args.value);
     embed.addField("Current Value", String(args.value));
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

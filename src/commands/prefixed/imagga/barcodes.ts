@@ -5,6 +5,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ImageUrlArgs } from "../basecommand";
 
@@ -36,6 +37,6 @@ export default class ImaggaBarcodesCommand extends BaseCommand {
       );
     });
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

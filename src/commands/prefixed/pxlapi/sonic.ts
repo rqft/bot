@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { PxlApi } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface PxlSonicArgs {
@@ -28,6 +29,6 @@ export default class PxlSonicCommand extends BaseCommand {
       Brand.PXL_API
     );
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

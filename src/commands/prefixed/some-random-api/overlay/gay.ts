@@ -5,6 +5,7 @@ import {
   someRandomApiOverlay,
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAGayOverlayArgs {
@@ -22,6 +23,6 @@ export default class SRAGayOverlayCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: ImageArgs) {
     const embed = await someRandomApiOverlay(context, args.image, Overlays.GAY);
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

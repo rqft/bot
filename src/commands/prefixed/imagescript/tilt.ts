@@ -3,6 +3,7 @@ import { Brand } from "../../../enums/brands";
 import { Converter } from "../../../functions/converter";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand, ImageScriptAnimationArgs } from "../basecommand";
 export interface TiltArgs extends ImageScriptAnimationArgs {
   amount: number;
@@ -30,6 +31,6 @@ export default class TiltCommand extends BaseCommand {
       undefined,
       Brand.VYBOSE
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

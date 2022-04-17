@@ -1,11 +1,13 @@
 import { Command, CommandClient } from "detritus-client";
-import {
-  Canvas,
-  someRandomApiCanvasMisc,
-} from "../../../../functions/formatter";
+import { SomeRandomAPI } from "pariah";
+import { Brand } from "../../../../enums/brands";
+import { createImageEmbed } from "../../../../functions/embed";
 import { Parameters } from "../../../../functions/parameters";
-import { BaseCommand, ImageArgs } from "../../basecommand";
-
+import { editOrReply } from "../../../../functions/tools";
+import { BaseCommand } from "../../basecommand";
+export interface SRAColorViewerArgs {
+  color: number;
+}
 export default class SRAColorViewerCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
@@ -17,13 +19,15 @@ export default class SRAColorViewerCommand extends BaseCommand {
       required: true,
     });
   }
-  async run(context: Command.Context, args: ImageArgs) {
-    const embed = await someRandomApiCanvasMisc(
+  async run(context: Command.Context, args: SRAColorViewerArgs) {
+    const sra = new SomeRandomAPI();
+    const color = await sra.colorViewer(args.color);
+    const embed = await createImageEmbed(
       context,
-      Buffer.from([]),
-      Canvas.COLOR_VIEWER,
-      args
+      color,
+      undefined,
+      Brand.SOME_RANDOM_API
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

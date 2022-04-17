@@ -3,6 +3,7 @@ import { Context } from "detritus-client/lib/command";
 import { SomeRandomAPI } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand } from "../../basecommand";
 
 export interface SRAMinecraftArgs {
@@ -53,7 +54,7 @@ export default class SRAMinecraftCommand extends BaseCommand {
       }
       embed.addField("Image URLs", value.join(" | "));
     }
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }
 enum MinotarForm {

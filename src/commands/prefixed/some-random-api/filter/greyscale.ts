@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { Filters, someRandomApiFilter } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export default class SRAGreyscaleFilterCommand extends BaseCommand {
@@ -19,6 +20,6 @@ export default class SRAGreyscaleFilterCommand extends BaseCommand {
       Filters.GREYSCALE,
       {}
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

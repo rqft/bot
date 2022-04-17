@@ -4,6 +4,7 @@ import { SomeRandomAPI } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand } from "../../basecommand";
 export interface SRABase64EncodeArgs {
   text: string;
@@ -26,6 +27,6 @@ export default class SRABase64EncodeCommand extends BaseCommand {
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
     embed.setTitle("Base64 Encoding");
     embed.setDescription(Markup.codeblock(base64));
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

@@ -7,6 +7,7 @@ import { Parameters } from "../../../functions/parameters";
 import {
   bitfieldToArray,
   capitalizeWords,
+  editOrReply,
   expandMs,
   generateUsage,
 } from "../../../functions/tools";
@@ -44,12 +45,12 @@ export default class HelpCommand extends BaseCommand {
           context.commandClient!.commands.map((value) => value.name).join(", ")
         )}`
       );
-      return await context.editOrReply({ embed });
+      return await editOrReply(context, { embed });
     }
     const { commands } = args;
     const command = commands[args.page];
     if (!command) {
-      return await context.editOrReply("Page not found");
+      return await editOrReply(context, "Page not found");
     }
 
     {
@@ -85,6 +86,6 @@ export default class HelpCommand extends BaseCommand {
       embed.setDescription(description.join("\n"));
     }
     embed.addField("Usage", Markup.codeblock(generateUsage(command)));
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

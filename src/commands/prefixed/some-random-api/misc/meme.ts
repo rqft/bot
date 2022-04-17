@@ -3,6 +3,7 @@ import { SomeRandomAPI } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand } from "../../basecommand";
 export default class SRAMemeCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -18,6 +19,6 @@ export default class SRAMemeCommand extends BaseCommand {
     embed.setDescription(`${category} meme`);
     embed.addField("Caption", Markup.codeblock(caption, { limit: 1000 }));
     embed.setImage(image);
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

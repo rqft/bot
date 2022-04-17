@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { PxlApi } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface PxlWebSearchArgs {
@@ -71,6 +72,6 @@ export default class PxlWebSearchCommand extends BaseCommand {
       if (images.length) embed.addField("Images", description.join(", "));
     }
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

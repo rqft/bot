@@ -3,7 +3,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
-import { escapeRegExp } from "../../../functions/tools";
+import { editOrReply, escapeRegExp } from "../../../functions/tools";
 import { KV } from "../../../globals";
 import { BaseCommand } from "../basecommand";
 export interface TagListArgs {
@@ -43,6 +43,6 @@ export default class TagListCommand extends BaseCommand {
     }
     embed.setDescription(list.join(", "));
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import OpenAI from "openai-api";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface CompletionArgs {
@@ -43,6 +44,6 @@ export default class CompletionCommand extends BaseCommand {
     embed.addField("Prompt", Markup.codeblock(args.input));
     embed.addField("Response", Markup.codeblock(choice.text));
 
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }

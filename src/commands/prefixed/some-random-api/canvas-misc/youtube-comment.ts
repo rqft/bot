@@ -9,6 +9,7 @@ import {
   DefaultParameters,
   Parameters,
 } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand } from "../../basecommand";
 
 export interface SRAYoutubeCommentArgs {
@@ -41,6 +42,6 @@ export default class SRAYoutubeCommentCommand extends BaseCommand {
       Canvas.FAKE_YOUTUBE_COMMENT,
       { username: args.user.username, comment: args.comment }
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

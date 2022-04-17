@@ -3,6 +3,7 @@ import { Pariah } from "pariah/dist";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface AbstractTimezoneArgs {
@@ -59,6 +60,6 @@ export default class AbstractTimezoneCommand extends BaseCommand {
       );
       embed.setDescription(description.join("\n"));
     }
-    return context.editOrReply({ embed });
+    return editOrReply(context, { embed });
   }
 }

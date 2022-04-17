@@ -54,14 +54,12 @@ export async function createImageEmbed(
   }
   if (input.constructor == String) input = new URL(input);
   if (input instanceof URL) input = await (await fetch(input)).buffer();
-
-  const image = await storeImage(input as Buffer, name ?? "attachment.gif");
+  const image = await storeImage(input as Buffer, name ?? "attachment.webp");
 
   const embed = createUserEmbed(context);
   embed.setColor(Color.EMBED);
 
   embed.setImage(image.url!);
-
   let footer = [image.filename];
   if (image.size) {
     footer.push(`${image.width}x${image.height} (${formatBytes(image.size)})`);

@@ -1,6 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { Filters, someRandomApiFilter } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAThresholdFilterArgs extends ImageArgs {
@@ -13,7 +14,7 @@ export default class SRAThresholdFilterCommand extends BaseCommand {
       name: "threshold",
 
       label: "image",
-      type: Parameters.image(),
+      type: Parameters.image("png"),
 
       args: [
         {
@@ -33,6 +34,6 @@ export default class SRAThresholdFilterCommand extends BaseCommand {
       args
     );
     embed.setDescription(`Threshold: ${args.threshold}`);
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

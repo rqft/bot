@@ -4,6 +4,7 @@ import { PxlApi } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand } from "../basecommand";
 export interface PxlScreenshotArgs {
@@ -63,6 +64,6 @@ export default class PxlScreenshotCommand extends BaseCommand {
     );
     embed.setDescription(`URL: ${args.url}`);
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

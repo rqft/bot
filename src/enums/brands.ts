@@ -12,6 +12,7 @@ export enum Brand {
   ABSTRACT = "abstract",
   MERRIAM_WEBSTER = "merriamwebster",
   IMAGGA = "imagga",
+  IMAGESCRIPT = "imagescript",
 }
 export const BrandIcons: Record<Brand, string> = {
   [Brand.VYBOSE]: "https://rqft.space/i/image/vybost.png",
@@ -27,6 +28,8 @@ export const BrandIcons: Record<Brand, string> = {
   [Brand.MERRIAM_WEBSTER]:
     "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Merriam-Webster_logo.svg/300px-Merriam-Webster_logo.svg.png",
   [Brand.IMAGGA]: "https://docs.imagga.com/static/images/logo_white.png",
+  [Brand.IMAGESCRIPT]:
+    "https://avatars.githubusercontent.com/u/96443452?s=200&v=4",
 };
 export const BrandNames: Record<Brand, string> = {
   [Brand.VYBOSE]: "Vybose",
@@ -40,6 +43,7 @@ export const BrandNames: Record<Brand, string> = {
   [Brand.ABSTRACT]: "Abstract API",
   [Brand.MERRIAM_WEBSTER]: "Merriam-Webster Dictionary",
   [Brand.IMAGGA]: "Imagga",
+  [Brand.IMAGESCRIPT]: "ImageScript",
 };
 export const BrandColors: Record<Brand, Color> = {
   [Brand.VYBOSE]: Color.VYBOSE,
@@ -53,4 +57,5 @@ export const BrandColors: Record<Brand, Color> = {
   [Brand.ABSTRACT]: Color.BLURPLE,
   [Brand.MERRIAM_WEBSTER]: Color.LINK,
   [Brand.IMAGGA]: Color.HOUSE_BALANCE,
+  [Brand.IMAGESCRIPT]: Color.WHITE,
 };

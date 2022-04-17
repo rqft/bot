@@ -9,11 +9,13 @@ import {
   DefaultParameters,
   Parameters,
 } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand } from "../../basecommand";
 
 export interface SRATweetArgs {
   user: User;
   comment: string;
+  displayname: string;
 }
 
 export default class SRATweetCommand extends BaseCommand {
@@ -30,6 +32,12 @@ export default class SRATweetCommand extends BaseCommand {
           type: Parameters.user,
           default: DefaultParameters.user,
         },
+        {
+          name: "displayname",
+          aliases: ["name"],
+          type: String,
+          default: "",
+        },
       ],
     });
   }
@@ -40,10 +48,10 @@ export default class SRATweetCommand extends BaseCommand {
       Canvas.FAKE_TWEET,
       {
         username: args.user.username,
-        displayname: args.user.username,
+        displayname: args.displayname || args.user.username,
         comment: args.comment,
       }
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

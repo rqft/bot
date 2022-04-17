@@ -1,4 +1,4 @@
-export const enum CustomEmojis {
+export enum CustomEmojis {
   // Channels
   CHANNEL_VOICE = "<:IconChannel_Voice:798624234732781580>",
   CHANNEL_NEWS = "<:IconChannel_News:798624238793261109>",

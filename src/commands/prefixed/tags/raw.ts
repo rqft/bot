@@ -3,6 +3,7 @@ import { Markup } from "detritus-client/lib/utils";
 import { createUserEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { KV } from "../../../globals";
 import { BaseCommand } from "../basecommand";
 export interface TagRawArgs {
@@ -31,6 +32,6 @@ export default class TagRawCommand extends BaseCommand {
 
     embed.setDescription(Markup.codeblock(String(value), { language: "json" }));
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

@@ -5,6 +5,7 @@ import {
   someRandomApiOverlay,
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAMissionPassedOverlayArgs {
@@ -27,6 +28,6 @@ export default class SRAMissionPassedOverlayCommand extends BaseCommand {
       args.image,
       Overlays.MISSION_PASSED
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

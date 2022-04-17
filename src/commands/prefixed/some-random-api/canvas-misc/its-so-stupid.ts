@@ -4,6 +4,7 @@ import {
   someRandomApiCanvasMisc,
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
+import { editOrReply } from "../../../../functions/tools";
 import { BaseCommand, ImageArgs } from "../../basecommand";
 
 export interface SRAItsSoStupidArgs extends ImageArgs {
@@ -29,6 +30,6 @@ export default class SRAItsSoStupidCommand extends BaseCommand {
       Canvas.ITS_SO_STUPID,
       { dog: args.text }
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

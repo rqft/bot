@@ -2,6 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { User } from "detritus-client/lib/structures";
 import { infoUser } from "../../../functions/formatter";
 import { DefaultParameters, Parameters } from "../../../functions/parameters";
+import { editOrReply } from "../../../functions/tools";
 import { BaseCommand } from "../basecommand";
 export interface UserArgs {
   user: User;
@@ -21,6 +22,6 @@ export default class UserCommand extends BaseCommand {
     const { user } = args;
     const embed = await infoUser(context, user);
 
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }

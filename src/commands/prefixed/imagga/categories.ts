@@ -5,7 +5,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
-import { padCodeBlockFromRows } from "../../../functions/tools";
+import { editOrReply, padCodeBlockFromRows } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ImageUrlArgs } from "../basecommand";
 
@@ -39,6 +39,6 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
         ]).join("\n")
       )
     );
-    return await context.editOrReply({ embed });
+    return await editOrReply(context, { embed });
   }
 }
