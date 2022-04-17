@@ -1,6 +1,5 @@
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
-import { ScriptTarget, transpile } from "typescript";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
@@ -34,9 +33,7 @@ export default class EvalCommand extends BaseCommand {
     let message: any;
     let errored: boolean = false;
     try {
-      message = await Promise.resolve(
-        eval(transpile(args.code, { target: ScriptTarget.ES3 }))
-      );
+      message = await Promise.resolve(eval(args.code));
 
       if (typeof message === "object") {
         message = JSON.stringify(message, null, args.jsonspacing);

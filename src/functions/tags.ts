@@ -234,6 +234,7 @@ export namespace Tags {
     STRING_TO_UPPER_CASE = "STRING_TO_UPPER_CASE",
 
     ARGS_COUNT = "ARGS_COUNT",
+    ARGS = "ARGS",
     RANDOM_PICK = "PICK",
   }
   export const Names: Record<Keys, Array<string>> = {
@@ -331,6 +332,7 @@ export namespace Tags {
     [Keys.STRING_REVERSE]: ["string.reverse", "reverse"],
 
     [Keys.ARGS_COUNT]: ["args.count"],
+    [Keys.ARGS]: ["args"],
     [Keys.RANDOM_PICK]: ["random.pick", "pick"],
   };
 
@@ -587,6 +589,10 @@ export namespace Tags {
     },
     [Keys.ARGS_COUNT]: async function (_, __, ___, args, tag) {
       tag.text += args.length;
+      return true;
+    },
+    [Keys.ARGS]: async function (_, __, ___, args, tag) {
+      tag.text += args.join(" ");
       return true;
     },
     [Keys.RANDOM_PICK]: async function (_, __, passed, ____, tag) {

@@ -4,7 +4,7 @@ import { SomeRandomAPI } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Err } from "../../../../functions/error";
-import { editOrReply } from "../../../../functions/tools";
+import { Paginator } from "../../../../functions/paginator";
 import { BaseCommand } from "../../basecommand";
 export interface SRALyricsArgs {
   title: string;
@@ -29,11 +29,21 @@ export default class SRALyricsCommand extends BaseCommand {
     embed.setUrl(lyrics.links.genius);
     embed.setThumbnail(lyrics.thumbnail.genius);
 
-    embed.setDescription(
-      Markup.codeblock(lyrics.lyrics.replace(/\n{2,}/g, "\n"), {
-        language: "txt",
-      })
-    );
-    return await editOrReply(context, { embed });
+    const pages = lyrics.lyrics.match(/.{1,500}/g) || [];
+    console.log(pages);
+    const paginator = new Paginator(context, {
+      pageLimit: pages.length,
+      onPage: (page) => {
+        console.log(page);
+        embed.setDescription(
+          Markup.codeblock(pages[page - 1]!.replace(/\n{2,}/g, "\n"), {
+            language: "txt",
+          })
+        );
+        return embed;
+      },
+    });
+
+    return await paginator.start();
   }
 }

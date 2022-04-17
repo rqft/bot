@@ -138,4 +138,5 @@ export namespace Regex {
 }
 export namespace KV {
   export const tags = new Wilson(`kv/tags`);
+  export const colors = new Wilson(`kv/colors`);
 }
