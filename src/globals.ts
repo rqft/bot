@@ -63,7 +63,7 @@ export const client = new ShardClient(Secrets.BOT_TOKEN, {
   isBot: true,
 });
 export const commands = new CommandClient(client, {
-  prefixes: ["$"],
+  prefixes: ["%"],
   activateOnEdits: true,
   mentionsEnabled: true,
   ignoreMe: true,

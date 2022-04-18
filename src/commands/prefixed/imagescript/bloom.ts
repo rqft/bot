@@ -6,7 +6,7 @@ import { Converter } from "../../../functions/converter";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
-import { BaseCommand, ImageScriptAnimationArgs } from "../basecommand";
+import { BaseCommand, ImageMetadata, ImageScriptAnimationArgs } from "../basecommand";
 export interface BloomArgs extends ImageScriptAnimationArgs {
   brightness: number;
 }
@@ -21,6 +21,7 @@ export default class BloomCommand extends BaseCommand {
       args: [
         { name: "brightness", type: "number", default: 1.5, required: true },
       ],
+      metadata: ImageMetadata("Adds a bright/blurry effect to the image", "<animation: Image> ?<-brightness: number>")
     });
   }
   async run(context: Command.Context, args: BloomArgs) {

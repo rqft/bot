@@ -5,7 +5,7 @@ import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Paginator } from "../../../functions/paginator";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface PxlImageSearchArgs {
   query: string;
   page: number;
@@ -21,6 +21,7 @@ export default class PxlImageSearchCommand extends BaseCommand {
       required: true,
 
       args: [{ name: "page", type: "number", default: 1, required: false }],
+      metadata: ToolsMetadata("Search for images", "<query: string>", ["plants"])
     });
   }
   async run(context: Command.Context, args: PxlImageSearchArgs) {

@@ -1,6 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, FunMetadata } from "../basecommand";
 export interface ScrambleArgs {
   input: string;
 }
@@ -12,6 +12,7 @@ export default class ScrambleCommand extends BaseCommand {
       type: "string",
       required: true,
       consume: true,
+      metadata: FunMetadata("Scrambles the words around in some text", "<...input: string>", ["hello world", "i am going to the park"])
     });
   }
   async run(context: Command.Context, args: ScrambleArgs) {

@@ -4,7 +4,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { capitalizeWords, editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, FunMetadata } from "../basecommand";
 export interface DefineArgs {
   word: string;
 }
@@ -35,6 +35,7 @@ export default class DefineCommand extends BaseCommand {
       label: "word",
       type: "string",
       required: true,
+      metadata: FunMetadata("Gets the dictionary definition of a word", "<word: string>", ["oranges"])
     });
   }
   async run(context: Command.Context, args: DefineArgs) {

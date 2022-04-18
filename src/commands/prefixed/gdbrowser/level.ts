@@ -6,7 +6,7 @@ import { Err } from "../../../functions/error";
 import { GDBrowser } from "../../../functions/gdbrowser";
 import { Markup } from "../../../functions/markup";
 import { editOrReply, simpleGetLongAgo } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface GDLevelArgs {
   levelId: string;
 }
@@ -18,6 +18,7 @@ export default class GDLevelCommand extends BaseCommand {
       label: "levelId",
       required: true,
       type: "string",
+      metadata: ToolsMetadata("Gets a Geometry Dash level data", "<levelId: string>")
     });
   }
   async run(context: Command.Context, args: GDLevelArgs) {

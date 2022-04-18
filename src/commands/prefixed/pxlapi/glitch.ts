@@ -5,7 +5,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 const one100 = [...Array(100 - 1).keys()].map((v) => v + 1);
 export interface PxlGlitchArgs extends ImageArgs {
@@ -38,6 +38,7 @@ export default class PxlGlitchCommand extends BaseCommand {
           default: 100,
         },
       ],
+      metadata: ImageMetadata("Adds a glitch effect to an image", "")
     });
   }
   async run(context: Command.Context, args: PxlGlitchArgs) {

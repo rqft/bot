@@ -5,7 +5,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 export interface PxlLegoArgs extends ImageArgs {
   groupSize: number;
   scale: boolean;
@@ -29,6 +29,7 @@ export default class PxlLegoCommand extends BaseCommand {
         },
         { name: "scale", type: "bool", default: false, required: false },
       ],
+      metadata: ImageMetadata("Legoify an image", "<image: Image> ?<-[groupSize|size|amount]: Range(6,100)>")
     });
   }
   async run(context: Command.Context, args: PxlLegoArgs) {

@@ -5,7 +5,7 @@ import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { GDBrowser } from "../../../functions/gdbrowser";
 import { editOrReply, padCodeBlockFromRows } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface GDLeaderboardArgs {
   count: number;
   type: "creator" | "accuracy" | "none";
@@ -26,6 +26,7 @@ export default class GDLeaderboardCommand extends BaseCommand {
           default: "none",
         },
       ],
+      metadata: ToolsMetadata("Gets Geometry Dash Leaderboards", "<count: number=100> ?<-type: creator|accuracy|none=none>", ["10", "10 -type creator"])
     });
   }
   async run(context: Command.Context, args: GDLeaderboardArgs) {

@@ -6,7 +6,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 export const eyesChoices: Array<EyesType> = [
   "big",
@@ -47,6 +47,7 @@ export default class PxlEyesCommand extends BaseCommand {
           default: "default",
         },
       ],
+      metadata: ImageMetadata("Apply eyes on top of some image", "<image: Image> ?<-type: EyesType>")
     });
   }
   async run(context: Command.Context, args: PxlEyesArgs) {

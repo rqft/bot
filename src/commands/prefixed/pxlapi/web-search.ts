@@ -5,7 +5,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface PxlWebSearchArgs {
   query: string;
 }
@@ -18,6 +18,7 @@ export default class PxlWebSearchCommand extends BaseCommand {
       label: "query",
       type: "string",
       required: true,
+      metadata: ToolsMetadata("Search DuckDuckGo", "<query: string>", ["plants"])
     });
   }
   async run(context: Command.Context, args: PxlWebSearchArgs) {

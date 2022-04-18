@@ -5,7 +5,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 export default class PxlAjitCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -14,6 +14,7 @@ export default class PxlAjitCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image(),
+      metadata: ImageMetadata("i dont know what this does lol", "<image: Image>")
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

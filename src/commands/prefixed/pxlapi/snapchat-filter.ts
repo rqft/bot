@@ -6,7 +6,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 export const snapchatFilters: Array<SnapchatFilterType> = [
   "dog",
@@ -36,6 +36,11 @@ export default class PxlSnapchatFilterCommand extends BaseCommand {
           type: Parameters.image(),
         },
       ],
+      metadata: ImageMetadata(
+        "Apply a snapchat filter onto an image",
+        "<filter: dog|dog2|dog3|pig|flowers|clown|random> <image: Image>",
+        ["dog insyri", "random insyri#7314"]
+      ),
     });
   }
   async run(context: Command.Context, args: PxlSnapchatFilterArgs) {

@@ -4,7 +4,7 @@ import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, FunMetadata } from "../basecommand";
 export interface PxlThonkifyArgs {
   text: string;
 }
@@ -16,6 +16,7 @@ export default class PxlThonkifyCommand extends BaseCommand {
       label: "text",
       type: "string",
       required: true,
+      metadata: FunMetadata("Makes text out of thinking emojis", "<text: string>", ["hello"])
     });
   }
   async run(context: Command.Context, args: PxlThonkifyArgs) {
