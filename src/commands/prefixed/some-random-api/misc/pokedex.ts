@@ -5,7 +5,7 @@ import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 export interface SRAPokedexArgs {
   pokemon: string;
 }
@@ -16,6 +16,11 @@ export default class SRAPokedexCommand extends BaseCommand {
       label: "pokemon",
       type: "string",
       required: true,
+      metadata: ToolsMetadata(
+        "Get information about a pokemon",
+        "<pokemon: string>",
+        ["bulbasaur", "ivysaur"]
+      ),
     });
   }
   async run(context: Context, args: SRAPokedexArgs) {

@@ -4,13 +4,19 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Tags } from "../../../functions/tags";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 
 export default class TagExecCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "tag help",
       aliases: ["t help"],
+      metadata: {
+        description: "Get help with tags",
+        type: CommandTypes.TOOLS,
+        usage: "",
+        examples: [],
+      },
     });
   }
   async run(context: Command.Context) {

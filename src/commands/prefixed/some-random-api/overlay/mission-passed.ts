@@ -6,7 +6,7 @@ import {
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRAMissionPassedOverlayArgs {
   user: User;
@@ -20,6 +20,7 @@ export default class SRAMissionPassedOverlayCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image(),
+      metadata: ImageMetadata("Mission Passed Overlay"),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

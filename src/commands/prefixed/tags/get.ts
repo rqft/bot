@@ -4,7 +4,7 @@ import { Parameters } from "../../../functions/parameters";
 import { Tags } from "../../../functions/tags";
 import { editOrReply } from "../../../functions/tools";
 import { KV } from "../../../globals";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 
 export interface TagGetArgs {
   key: string;
@@ -34,6 +34,12 @@ export default class TagGetCommand extends BaseCommand {
           default: [],
         },
       ],
+      metadata: {
+        description: "Get a tags value",
+        type: CommandTypes.TOOLS,
+        usage: "<key: string> ?<-args: Array<string>>",
+        examples: ["key", "key -args arg1 arg2"],
+      },
     });
   }
   async run(context: Command.Context, args: TagGetArgs) {

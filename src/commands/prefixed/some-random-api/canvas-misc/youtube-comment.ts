@@ -10,7 +10,7 @@ import {
   Parameters,
 } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 
 export interface SRAYoutubeCommentArgs {
   user: User;
@@ -33,6 +33,11 @@ export default class SRAYoutubeCommentCommand extends BaseCommand {
           default: DefaultParameters.user,
         },
       ],
+      metadata: ToolsMetadata(
+        "Create a fake youtube comment",
+        "<comment: string> ?<-user: User>",
+        ["I love walking", "I love walking -user insyri"]
+      ),
     });
   }
   async run(context: Command.Context, args: SRAYoutubeCommentArgs) {

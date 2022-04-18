@@ -118,5 +118,14 @@ export class Colors {
     member.addRole(role.id);
     return this;
   }
-  async current(member: Member) {}
+  async current(member: Member) {
+    if (member.guildId !== this.guild.id) {
+      return;
+    }
+    const role = member.roles.find((v) => this.roles.includes(v!.id));
+    if (!role) {
+      return;
+    }
+    return role;
+  }
 }

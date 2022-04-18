@@ -3,7 +3,7 @@ import { createUserEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { KV } from "../../../globals";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 export interface TagSetArgs {
   key: string;
   value: string;
@@ -12,7 +12,15 @@ export default class TagSetCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "tag set",
-      aliases: ["t set"],
+      aliases: [
+        "t set",
+        "tag add",
+        "t add",
+        "tag create",
+        "t create",
+        "tag edit",
+        "t edit",
+      ],
       type: [
         {
           name: "key",
@@ -24,11 +32,17 @@ export default class TagSetCommand extends BaseCommand {
           consume: true,
         },
       ],
+      metadata: {
+        description: "Set a tag",
+        type: CommandTypes.TOOLS,
+        usage: "<key: string> ...<value: string>",
+        examples: ["key value", "user (user.id:(args))"],
+      },
     });
   }
   async run(context: Command.Context, args: TagSetArgs) {
     const embed = createUserEmbed(context);
-    embed.setTitle("Set Tag");
+    embed.setTitle(`Set Tag "${args.key}"`);
     const old = KV.tags.get(args.key);
     if (old) {
       embed.addField("Previous Value", String(old));

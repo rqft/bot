@@ -5,12 +5,13 @@ import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 
 export default class SRAJokeCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "joke",
+      metadata: ToolsMetadata("Get a joke"),
     });
   }
   async run(context: Context, _args: {}) {

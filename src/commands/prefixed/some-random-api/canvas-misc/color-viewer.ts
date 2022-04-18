@@ -4,7 +4,7 @@ import { Brand } from "../../../../enums/brands";
 import { createImageEmbed } from "../../../../functions/embed";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ImageMetadata } from "../../basecommand";
 export interface SRAColorViewerArgs {
   color: number;
 }
@@ -17,6 +17,7 @@ export default class SRAColorViewerCommand extends BaseCommand {
       label: "color",
       type: Parameters.color,
       required: true,
+      metadata: ImageMetadata("Inspects a color", "<color: Color>", ["1e1e1e"]),
     });
   }
   async run(context: Command.Context, args: SRAColorViewerArgs) {

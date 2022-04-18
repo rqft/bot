@@ -6,7 +6,7 @@ import {
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRALoliceArgs {
   user: User;
@@ -20,6 +20,7 @@ export default class SRALoliceCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image(),
+      metadata: ImageMetadata("Creates a Loli Police image", "<image: Image>"),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

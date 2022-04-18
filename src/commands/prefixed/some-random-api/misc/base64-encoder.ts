@@ -5,20 +5,21 @@ import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 export interface SRABase64EncodeArgs {
   text: string;
 }
 export default class SRABase64EncodeCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "encode",
-      // subcommand
-      prefix: "base64 ",
+      name: "base64 encode",
 
       label: "text",
       type: "string",
       required: true,
+      metadata: ToolsMetadata("Encode text to base64", "<text: string>", [
+        "hello world",
+      ]),
     });
   }
   async run(context: Context, args: SRABase64EncodeArgs) {

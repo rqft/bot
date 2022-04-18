@@ -4,7 +4,7 @@ import { SomeRandomAPI } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 
 export interface SRAMinecraftArgs {
   username: string;
@@ -17,6 +17,11 @@ export default class SRAMinecraftCommand extends BaseCommand {
       label: "username",
       type: "string",
       required: true,
+      metadata: ToolsMetadata(
+        "Get information about a Minecraft user",
+        "<username: string>",
+        ["HighArcs", "trueharu__"]
+      ),
     });
   }
   async run(context: Context, args: SRAMinecraftArgs) {

@@ -6,7 +6,7 @@ import {
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRASimpCardArgs {
   user: User;
@@ -19,6 +19,10 @@ export default class SRASimpCardCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image("png"),
+      metadata: ImageMetadata(
+        "Create a 'license to simp' card",
+        "<image: Image>"
+      ),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

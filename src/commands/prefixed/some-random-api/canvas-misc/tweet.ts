@@ -10,7 +10,7 @@ import {
   Parameters,
 } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 
 export interface SRATweetArgs {
   user: User;
@@ -39,6 +39,15 @@ export default class SRATweetCommand extends BaseCommand {
           default: "",
         },
       ],
+      metadata: ToolsMetadata(
+        "Create a fake Tweet",
+        "<comment: string> ?<-user: User> ?<-name: string>",
+        [
+          "I love walking",
+          "I love walking -user insyri",
+          "I love walking -user thowoee -name Tehi",
+        ]
+      ),
     });
   }
   async run(context: Command.Context, args: SRATweetArgs) {

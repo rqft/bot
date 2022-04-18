@@ -2,7 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Filters, someRandomApiFilter } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRAColorFilterArgs extends ImageArgs {
   color: number;
@@ -17,6 +17,7 @@ export default class SRAColorFilterCommand extends BaseCommand {
       type: Parameters.image(),
 
       args: [{ name: "color", type: Parameters.color, required: true }],
+      metadata: ImageMetadata("Color Filter", "<image: Image> <-color: Color>"),
     });
   }
   async run(context: Command.Context, args: SRAColorFilterArgs) {

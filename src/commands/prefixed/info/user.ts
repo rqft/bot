@@ -3,7 +3,7 @@ import { User } from "detritus-client/lib/structures";
 import { infoUser } from "../../../functions/formatter";
 import { DefaultParameters, Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface UserArgs {
   user: User;
 }
@@ -16,6 +16,11 @@ export default class UserCommand extends BaseCommand {
       type: Parameters.user,
       default: DefaultParameters.user,
       required: true,
+      metadata: UtilityMetadata("Get user info", "<user: User>", [
+        "insyri",
+        "insyri#7314",
+        "533757461706964993",
+      ]),
     });
   }
   async run(context: Command.Context, args: UserArgs) {

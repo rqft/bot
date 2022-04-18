@@ -2,7 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { imageOcr } from "../../../functions/formatter";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand, ImageUrlArgs } from "../basecommand";
+import { BaseCommand, ImageUrlArgs, ToolsMetadata } from "../basecommand";
 
 export default class ImaggaTextCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -12,6 +12,7 @@ export default class ImaggaTextCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.imageUrl("png"),
+      metadata: ToolsMetadata("Read text from an image", "<image: Image>"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

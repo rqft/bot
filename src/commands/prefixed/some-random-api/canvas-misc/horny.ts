@@ -6,7 +6,7 @@ import {
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRAHornyArgs {
   user: User;
@@ -19,6 +19,10 @@ export default class SRAHornyCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image(),
+      metadata: ImageMetadata(
+        "Creates a 'license to be horny' card",
+        "<image: Image>"
+      ),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

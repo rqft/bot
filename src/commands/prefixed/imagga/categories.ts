@@ -7,7 +7,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, padCodeBlockFromRows } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageUrlArgs } from "../basecommand";
+import { BaseCommand, ImageUrlArgs, ToolsMetadata } from "../basecommand";
 
 export default class ImaggaCategoriesCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -16,6 +16,7 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.imageUrl("png"),
+      metadata: ToolsMetadata("Get categories of an image", "<image: Image>"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

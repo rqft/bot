@@ -7,7 +7,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageUrlArgs } from "../basecommand";
+import { BaseCommand, ImageUrlArgs, ToolsMetadata } from "../basecommand";
 
 export default class ImaggaBarcodesCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -17,6 +17,7 @@ export default class ImaggaBarcodesCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.imageUrl("png"),
+      metadata: ToolsMetadata("Read barcodes from an image", "<image: Image>"),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

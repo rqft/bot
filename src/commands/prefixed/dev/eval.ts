@@ -1,11 +1,8 @@
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
-import { Brand } from "../../../enums/brands";
-import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
-import { Color } from "../../../globals";
 import { BaseCommand } from "../basecommand";
 export interface EvalArgs {
   code: string;
@@ -29,30 +26,23 @@ export default class EvalCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: EvalArgs) {
+    const { code } = args;
     let language = "ts";
     let message: any;
-    let errored: boolean = false;
     try {
-      message = await Promise.resolve(eval(args.code));
-
+      message = await Promise.resolve(eval(code));
       if (typeof message === "object") {
         message = JSON.stringify(message, null, args.jsonspacing);
         language = "json";
       }
-    } catch (error: any) {
-      message = error ? error.stack || error.message : error;
-      errored = true;
+    } catch (err) {
+      message = err instanceof Error ? err.stack || err.message : err;
     }
+    message = String(message);
 
-    const embed = createBrandEmbed(Brand.VYBOSE, context, true);
-    if (errored) {
-      embed.setColor(Color.PRESENCE_BUSY);
-    }
-    embed.addField("Input", Markup.codeblock(args.code, { language: "ts" }));
-    embed.addField(
-      "Output",
-      Markup.codeblock(message || "undefined", { language, mentions: false })
+    return await editOrReply(
+      context,
+      Markup.codeblock(message, { language, mentions: false })
     );
-    return await editOrReply(context, { embed });
   }
 }

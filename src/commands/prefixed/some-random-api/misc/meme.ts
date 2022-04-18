@@ -4,11 +4,12 @@ import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 export default class SRAMemeCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "meme",
+      metadata: ToolsMetadata("Get a meme"),
     });
   }
   async run(context: Command.Context, _args: {}) {

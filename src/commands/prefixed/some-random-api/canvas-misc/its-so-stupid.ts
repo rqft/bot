@@ -5,7 +5,7 @@ import {
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRAItsSoStupidArgs extends ImageArgs {
   text: string;
@@ -17,10 +17,17 @@ export default class SRAItsSoStupidCommand extends BaseCommand {
       name: "its-so-stupid",
       aliases: ["itssostupid", "stupid", "iss"],
 
-      label: "image",
-      type: Parameters.image(),
-
-      args: [{ name: "text", type: "string", required: true }],
+      type: [
+        { name: "image", type: Parameters.image("png") },
+        {
+          name: "text",
+          type: Parameters.string({ minimumLength: 1, maximumLength: 1000 }),
+        },
+      ],
+      metadata: ImageMetadata(
+        "It's so stupid",
+        "<image: Image> <text: string>"
+      ),
     });
   }
   async run(context: Command.Context, args: SRAItsSoStupidArgs) {

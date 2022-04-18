@@ -1,11 +1,12 @@
 import { Command, CommandClient } from "detritus-client";
+import { Markup } from "detritus-client/lib/utils";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, escapeRegExp } from "../../../functions/tools";
 import { KV } from "../../../globals";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 export interface TagListArgs {
   search?: string;
 }
@@ -21,6 +22,12 @@ export default class TagListCommand extends BaseCommand {
           required: false,
         },
       ],
+      metadata: {
+        description: "List all tags",
+        type: CommandTypes.TOOLS,
+        usage: "?<search: Fuzzy<string>>",
+        examples: ["", "walking", "an"],
+      },
     });
   }
   async run(context: Command.Context, args: TagListArgs) {
@@ -41,7 +48,7 @@ export default class TagListCommand extends BaseCommand {
     if (!list.length) {
       throw new Err("No tags matched the search", { status: 400 });
     }
-    embed.setDescription(list.join(", "));
+    embed.setDescription(list.map((v) => Markup.escape.all(v)).join(", "));
 
     return await editOrReply(context, { embed });
   }

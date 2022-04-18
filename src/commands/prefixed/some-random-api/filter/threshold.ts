@@ -2,7 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Filters, someRandomApiFilter } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRAThresholdFilterArgs extends ImageArgs {
   threshold: number;
@@ -24,6 +24,10 @@ export default class SRAThresholdFilterCommand extends BaseCommand {
           default: 2,
         },
       ],
+      metadata: ImageMetadata(
+        "Creates a threshold filter",
+        "<image: Image> ?<-[threshold|amount|scale]: number>"
+      ),
     });
   }
   async run(context: Command.Context, args: SRAThresholdFilterArgs) {

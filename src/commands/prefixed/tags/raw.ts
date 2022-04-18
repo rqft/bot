@@ -5,7 +5,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { KV } from "../../../globals";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 export interface TagRawArgs {
   key: string;
 }
@@ -20,6 +20,12 @@ export default class TagRawCommand extends BaseCommand {
           type: Parameters.string({ minimumLength: 1, maximumLength: 1000 }),
         },
       ],
+      metadata: {
+        description: "Get a tags raw value",
+        type: CommandTypes.TOOLS,
+        usage: "<key: string>",
+        examples: ["key"],
+      },
     });
   }
   async run(context: Command.Context, args: TagRawArgs) {

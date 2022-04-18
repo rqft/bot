@@ -2,7 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Filters, someRandomApiFilter } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRABrightnessFilterArgs extends ImageArgs {
   brightness: number;
@@ -24,6 +24,10 @@ export default class SRABrightnessFilterCommand extends BaseCommand {
           default: 2,
         },
       ],
+      metadata: ImageMetadata(
+        "Creates a brightness filter",
+        "<image: Image> ?<-[brightness|amount|scale]: number>"
+      ),
     });
   }
   async run(context: Command.Context, args: SRABrightnessFilterArgs) {

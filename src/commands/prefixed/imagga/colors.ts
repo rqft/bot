@@ -8,7 +8,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, padCodeBlockFromRows } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageUrlArgs } from "../basecommand";
+import { BaseCommand, ImageUrlArgs, ToolsMetadata } from "../basecommand";
 
 export default class ImaggaColorsCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -17,6 +17,10 @@ export default class ImaggaColorsCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.imageUrl("png"),
+      metadata: ToolsMetadata(
+        "Get predominant colors from an image",
+        "<image: Image>"
+      ),
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {

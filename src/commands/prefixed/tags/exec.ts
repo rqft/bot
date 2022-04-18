@@ -2,7 +2,7 @@ import { Command, CommandClient } from "detritus-client";
 import { Parameters } from "../../../functions/parameters";
 import { Tags } from "../../../functions/tags";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 export interface TagExecArgs {
   script: string;
   args: Array<string>;
@@ -31,11 +31,16 @@ export default class TagExecCommand extends BaseCommand {
           default: [],
         },
       ],
+      metadata: {
+        description: "Execute a tag script",
+        type: CommandTypes.TOOLS,
+        usage: "<script: string> ?<-args: Array<string>>",
+        examples: ["(user)", "(user:(args)) -args insyri"],
+      },
     });
   }
   async run(context: Command.Context, args: TagExecArgs) {
     const value = await Tags.exec(context, args.script, args.args);
     return await editOrReply(context, value.text);
-    editOrReply(context);
   }
 }

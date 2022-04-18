@@ -7,12 +7,18 @@ import {
   getDuplicates,
 } from "../../../functions/tools";
 import { KV } from "../../../globals";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, CommandTypes } from "../basecommand";
 export default class TagStatsCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "tag stats",
       aliases: ["t stats"],
+      metadata: {
+        usage: "",
+        description: "Shows stats about the tags database",
+        type: CommandTypes.TOOLS,
+        examples: [],
+      },
     });
   }
   async run(context: Command.Context) {

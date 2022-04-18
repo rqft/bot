@@ -5,7 +5,7 @@ import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Err } from "../../../../functions/error";
 import { Paginator } from "../../../../functions/paginator";
-import { BaseCommand } from "../../basecommand";
+import { BaseCommand, ToolsMetadata } from "../../basecommand";
 export interface SRALyricsArgs {
   title: string;
 }
@@ -16,6 +16,10 @@ export default class SRALyricsCommand extends BaseCommand {
       label: "title",
       type: "string",
       required: true,
+      metadata: ToolsMetadata("Get lyrics for a song", "<title: string>", [
+        "killshot eminem",
+        "nf lost",
+      ]),
     });
   }
   async run(context: Command.Context, args: SRALyricsArgs) {
@@ -29,7 +33,7 @@ export default class SRALyricsCommand extends BaseCommand {
     embed.setUrl(lyrics.links.genius);
     embed.setThumbnail(lyrics.thumbnail.genius);
 
-    const pages = lyrics.lyrics.match(/.{1,500}/g) || [];
+    const pages = lyrics.lyrics.match(/.{1,1000}/g) || [];
     console.log(pages);
     const paginator = new Paginator(context, {
       pageLimit: pages.length,

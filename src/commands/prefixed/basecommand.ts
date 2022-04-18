@@ -13,15 +13,27 @@ import { GIF, Image } from "imagescript";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
 import { Err } from "../../functions/error";
-import {
-  editOrReply,
-  expandMs,
-  generateUsage,
-  removeSecrets,
-} from "../../functions/tools";
-
+import { editOrReply, expandMs, removeSecrets } from "../../functions/tools";
+export enum CommandTypes {
+  IMAGE = "image",
+  FUN = "fun",
+  UTILITY = "utility",
+  TOOLS = "tools",
+  BASIC = "basic",
+}
+export interface CommandMetadata {
+  usage: string;
+  examples: Array<string>;
+  nsfw?: boolean;
+  type?: CommandTypes;
+  description: string;
+}
+export interface CommandOptionsExtra extends CommandOptions {
+  metadata: CommandMetadata;
+}
 export class BaseCommand extends Command {
-  constructor(client: CommandClient, options: CommandOptions) {
+  public metadata: CommandMetadata;
+  constructor(client: CommandClient, options: CommandOptionsExtra) {
     super(
       client,
       Object.assign(
@@ -36,13 +48,23 @@ export class BaseCommand extends Command {
         options
       )
     );
+    this.metadata = Object.assign<CommandMetadata, CommandMetadata>(
+      {
+        usage: "",
+        examples: [],
+        nsfw: false,
+        type: CommandTypes.BASIC,
+        description: "",
+      },
+      options.metadata
+    );
   }
 
   run(
     context: Context,
     _args: ParsedArgs = {}
   ): Promise<void | Message | null> {
-    return context.reply("❌ No functionality set for this command");
+    throw new Err("Command not implemented", { status: 501 });
   }
   onError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
     console.log(error);
@@ -56,11 +78,11 @@ export class BaseCommand extends Command {
   onTypeError(
     context: Context,
     _args: ParsedArgs,
-    errors: { [key: string]: Err }
+    errors: Record<string, Error>
   ) {
     const embed = createBrandEmbed(Brand.VYBOSE, context, false);
 
-    const store: { [key: string]: string } = {};
+    const store: Record<string, string> = {};
 
     const description: Array<string> = ["Invalid Arguments" + "\n"];
     for (let key in errors) {
@@ -75,7 +97,7 @@ export class BaseCommand extends Command {
 
     embed.setDescription(description.join("\n"));
 
-    embed.addField(`Command Usage`, Markup.codeblock(generateUsage(this)));
+    embed.addField(`Command Usage`, Markup.codeblock(this.metadata.usage));
     return editOrReply(context, { embed });
   }
 
@@ -124,4 +146,45 @@ export interface ImageScriptAnimationArgs {
 }
 export interface ImageScriptFrameArgs {
   image: Image;
+}
+export function Metadata(
+  type: CommandTypes,
+  description: string,
+  usage: string,
+  examples: Array<string>
+): CommandMetadata {
+  return {
+    type,
+    description,
+    usage,
+    examples,
+  };
+}
+export function ImageMetadata(
+  description: string,
+  usage: string = "<image: Image>",
+  examples: Array<string> = ["", "insyri", "533757461706964993"]
+) {
+  return Metadata(CommandTypes.IMAGE, description, usage, examples);
+}
+export function ToolsMetadata(
+  description: string,
+  usage: string = "",
+  examples: Array<string> = []
+) {
+  return Metadata(CommandTypes.TOOLS, description, usage, examples);
+}
+export function FunMetadata(
+  description: string,
+  usage: string = "",
+  examples: Array<string> = []
+) {
+  return Metadata(CommandTypes.FUN, description, usage, examples);
+}
+export function UtilityMetadata(
+  description: string,
+  usage: string = "",
+  examples: Array<string> = []
+) {
+  return Metadata(CommandTypes.UTILITY, description, usage, examples);
 }

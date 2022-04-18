@@ -146,7 +146,7 @@ interactions.add(
           )}) with a ${chalk.redBright("shard count of {SHARDS}")}`,
           [
             ["{TIME}", simpleGetLongAgo(s)],
-            ["{USER}", value.user?.toString()],
+            ["{USER}", value.user?.toString() + " (" + value.user?.id + ")"],
             ["{GUILDS}", value.guilds.size],
             ["{MEMBERS}", value.users.size],
             ["{SHARDS}", value.shardCount],

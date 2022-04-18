@@ -6,7 +6,7 @@ import {
 } from "../../../../functions/formatter";
 import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ImageArgs } from "../../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../../basecommand";
 
 export interface SRAPixelateArgs {
   user: User;
@@ -19,6 +19,7 @@ export default class SRAPixelateCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image("png"),
+      metadata: ImageMetadata("Pixelate an image", "<image: Image>"),
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

@@ -236,6 +236,7 @@ export namespace Tags {
     ARGS_COUNT = "ARGS_COUNT",
     ARGS = "ARGS",
     RANDOM_PICK = "PICK",
+    STRING = "STRING",
   }
   export const Names: Record<Keys, Array<string>> = {
     [Keys.TEST]: ["test"],
@@ -334,6 +335,7 @@ export namespace Tags {
     [Keys.ARGS_COUNT]: ["args.count"],
     [Keys.ARGS]: ["args"],
     [Keys.RANDOM_PICK]: ["random.pick", "pick"],
+    [Keys.STRING]: ["string"],
   };
 
   export const Scripts: Record<Keys, Script> = {
@@ -602,6 +604,7 @@ export namespace Tags {
       tag.text += passed[Math.floor(Math.random() * passed.length)];
       return true;
     },
+    [Keys.STRING]: Helpers.call(String, String),
   };
 
   export async function exec(
