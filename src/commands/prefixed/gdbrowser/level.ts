@@ -18,11 +18,15 @@ export default class GDLevelCommand extends BaseCommand {
       label: "levelId",
       required: true,
       type: "string",
+<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get information of a GD level",
         "<levelId: string>",
         ["66894497"]
       ),
+=======
+      metadata: ToolsMetadata("Gets a Geometry Dash level data", "<levelId: string>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: GDLevelArgs) {

@@ -30,11 +30,15 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
       required: true,
 
       args: [{ name: "from", type: "string", default: "USD" }],
+<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get an exchange rate between currencies",
         "<to: Currency> <-from: Currency=USD>",
         ["US -from EUR", "EUR -to USD"]
       ),
+=======
+      metadata: ToolsMetadata("Get the exchange rate from one currency to another", "<to: Currency> ?<from: Currency=USD>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: AbstractExchangeRateArgs) {

@@ -28,11 +28,15 @@ export default class AbstractCompanyEnrichmentCommand extends BaseCommand {
       label: "domain",
       type: "string",
       required: true,
+<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get Company Enrichment data for a domain",
         "<domain: URL>",
         ["google.com", "https://discard.cc/"]
       ),
+=======
+      metadata: ToolsMetadata("Gets Company Enrichment data for a domain", "<domain: string>", ["google.com"])
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: AbstractCompanyEnrichmentArgs) {

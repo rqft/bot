@@ -14,10 +14,14 @@ export default class PxlFlashCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image(),
+<<<<<<< HEAD
       metadata: ImageMetadata(
         "Makes an image super flashy (warning!!)",
         "<image: Image>"
       ),
+=======
+      metadata: ImageMetadata("Creates a flashy (warning!) image")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

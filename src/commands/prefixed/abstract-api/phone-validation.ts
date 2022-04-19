@@ -37,9 +37,15 @@ export default class AbstractPhoneValidationCommand extends BaseCommand {
       type: Parameters.phone,
       required: true,
       metadata: ToolsMetadata(
+<<<<<<< HEAD
         "Get information about a phone number",
         "<phone: Phone>",
         ["+1-555-555-5555"]
+=======
+        "Gets metadata of a phone number",
+        "<phone: Phone>",
+        ["(210) 789-3601"]
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
       ),
     });
   }

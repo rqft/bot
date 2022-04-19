@@ -46,6 +46,7 @@ export default class PxlScreenshotCommand extends BaseCommand {
         },
       ],
       metadata: ToolsMetadata(
+<<<<<<< HEAD
         "Screenshot a webpage",
         "<url: URL> ?<-browser: chromium|firefox> ?<-fullpage: boolean=false> ?<-theme: light|dark=dark> ?<-locale: Locales=en-US>",
         [
@@ -53,6 +54,11 @@ export default class PxlScreenshotCommand extends BaseCommand {
           "https://thowoee.me/",
           "https://thowoee.me/ -browser firefox",
         ]
+=======
+        "Screenshots a Web Page",
+        "<url: string> ?<-browser: chromium|firefox> ?<-fullpage: boolean> ?<-theme: light|dark> ?<-locale: Locale>",
+        ["https://rqft.space/", "https://thowoee.me/"]
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
       ),
     });
   }

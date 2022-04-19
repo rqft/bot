@@ -45,11 +45,15 @@ export default class PxlEyesCommand extends BaseCommand {
           default: "default",
         },
       ],
+<<<<<<< HEAD
       metadata: ImageMetadata(
         "Put funny eyes on an image",
         "<image: Image> <type: EyesType=default>",
         ["insyri#7314 big", "thowoee random"]
       ),
+=======
+      metadata: ImageMetadata("Apply eyes on top of some image", "<image: Image> ?<-type: EyesType>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: PxlEyesArgs) {

@@ -38,10 +38,14 @@ export default class PxlGlitchCommand extends BaseCommand {
           default: 100,
         },
       ],
+<<<<<<< HEAD
       metadata: ImageMetadata(
         "Glitch an image",
         "<image: Image> <-iterations: Range(1,100)=10> <-amount: Range(1,100)=5> <-gifcount: Range(1,30)=10> <-delay: Range(1,1000)=100>"
       ),
+=======
+      metadata: ImageMetadata("Adds a glitch effect to an image", "")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: PxlGlitchArgs) {

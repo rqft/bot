@@ -18,7 +18,11 @@ export default class PxlWebSearchCommand extends BaseCommand {
       label: "query",
       type: "string",
       required: true,
+<<<<<<< HEAD
       metadata: ToolsMetadata("Search the web", "?<query: string>"),
+=======
+      metadata: ToolsMetadata("Search DuckDuckGo", "<query: string>", ["plants"])
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: PxlWebSearchArgs) {

@@ -26,10 +26,14 @@ export default class GDLeaderboardCommand extends BaseCommand {
           default: "none",
         },
       ],
+<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get a GD leaderboard",
         "<count: number=100> <-type: creator|accuracy|none=none>"
       ),
+=======
+      metadata: ToolsMetadata("Gets Geometry Dash Leaderboards", "<count: number=100> ?<-type: creator|accuracy|none=none>", ["10", "10 -type creator"])
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: GDLeaderboardArgs) {

@@ -19,7 +19,12 @@ export default class PxlImageSearchCommand extends BaseCommand {
       type: "string",
       required: true,
 
+<<<<<<< HEAD
       metadata: ToolsMetadata("Search for images", "<query: string>"),
+=======
+      args: [{ name: "page", type: "number", default: 1, required: false }],
+      metadata: ToolsMetadata("Search for images", "<query: string>", ["plants"])
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: PxlImageSearchArgs) {

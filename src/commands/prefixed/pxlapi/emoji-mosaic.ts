@@ -30,8 +30,13 @@ export default class PxlEmojiMosaicCommand extends BaseCommand {
         { name: "scale", type: "bool", default: false, required: false },
       ],
       metadata: ImageMetadata(
+<<<<<<< HEAD
         "Creates an emoji mosaic from an image",
         "<image: Image> <-[groupSize|size|amount]: Range(6,100)=6> ?<-scale: boolean=false>"
+=======
+        "Makes a mosaic of the image out of emojis",
+        "<image: Image> ?<[groupSize|size|amount]: Range(6,100)> ?<-scale: boolean>"
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
       ),
     });
   }

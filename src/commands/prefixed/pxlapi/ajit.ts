@@ -14,10 +14,14 @@ export default class PxlAjitCommand extends BaseCommand {
 
       label: "image",
       type: Parameters.image(),
+<<<<<<< HEAD
       metadata: ImageMetadata(
         "Overlays Ajit Pai snacking on some popcorn",
         "<image: Image>"
       ),
+=======
+      metadata: ImageMetadata("i dont know what this does lol", "<image: Image>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: ImageArgs) {

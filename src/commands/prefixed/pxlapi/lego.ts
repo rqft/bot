@@ -29,10 +29,14 @@ export default class PxlLegoCommand extends BaseCommand {
         },
         { name: "scale", type: "bool", default: false, required: false },
       ],
+<<<<<<< HEAD
       metadata: ImageMetadata(
         "Legoify an image",
         "<image: Image> <-[groupSize|size|amount]: Range(6,100)=6> ?<-scale: boolean=false>"
       ),
+=======
+      metadata: ImageMetadata("Legoify an image", "<image: Image> ?<-[groupSize|size|amount]: Range(6,100)>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: PxlLegoArgs) {

@@ -5,7 +5,7 @@ import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface EvalArgs {
-  code: string;
+  code: { text: string };
   jsonspacing: number;
 }
 
@@ -23,14 +23,19 @@ export default class EvalCommand extends BaseCommand {
         throw new Err("Not Authorized", { status: 403 });
       },
       onError: (_context, _args, error) => console.error(error),
+<<<<<<< HEAD
       metadata: UtilityMetadata("Evaluate code", "<code>", [
         "1 + 1",
         "context.client.token",
       ]),
+=======
+      metadata: UtilityMetadata("run code"),
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: EvalArgs) {
-    const { code } = args;
+    const { code: match } = args;
+    const { text: code } = match;
     let language = "ts";
     let message: any;
     try {

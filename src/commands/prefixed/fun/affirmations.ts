@@ -10,7 +10,11 @@ export default class AdviceSlipCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "affirmations",
+<<<<<<< HEAD
       metadata: FunMetadata("Get affirmations"),
+=======
+      metadata: FunMetadata("pulls some random ass affirmation")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, _args: {}) {

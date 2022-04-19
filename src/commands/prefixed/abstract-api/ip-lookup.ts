@@ -63,11 +63,15 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
       label: "ip",
       type: "string",
       required: true,
+<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get geolocation information for an IP",
         "<ip: string>",
         ["127.0.0.1", "8.8.8.8"]
       ),
+=======
+      metadata: ToolsMetadata("Gets geolocation of an IP Address", "<ip: string>", ["1.1.1.1"])
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: AbstractIPGeolocationArgs) {

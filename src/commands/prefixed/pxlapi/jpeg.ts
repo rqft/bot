@@ -25,10 +25,14 @@ export default class PxlJpegCommand extends BaseCommand {
           default: 1,
         },
       ],
+<<<<<<< HEAD
       metadata: ImageMetadata(
         "Worsen the quality of an Image",
         "<image: Image> <-quality: Range(1,100)=1>"
       ),
+=======
+      metadata: ImageMetadata("Worsens the quality of an image", "<image: Image> ?<-quality: Range(1,100)>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: PxlJpegArgs) {

@@ -29,10 +29,14 @@ export default class AbstractTimezoneCommand extends BaseCommand {
       label: "location",
       type: "string",
       required: true,
+<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get timezone for a location",
         "<location: string>"
       ),
+=======
+      metadata: ToolsMetadata("Gets info of a timezone", "<location: Timezone>")
+>>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: AbstractTimezoneArgs) {

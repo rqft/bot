@@ -5,6 +5,7 @@ import {
 } from "detritus-client";
 import { Client as ClientRest } from "detritus-client-rest";
 import { SocketOptions } from "detritus-client-socket/lib/gateway";
+import { Context } from "detritus-client/lib/command";
 import { AuthTypes } from "detritus-client/lib/constants";
 import { GatewayHandlerOptions } from "detritus-client/lib/gateway/handler";
 import { Wilson } from "wilson-kv";
@@ -63,7 +64,18 @@ export const client = new ShardClient(Secrets.BOT_TOKEN, {
   isBot: true,
 });
 export const commands = new CommandClient(client, {
-  prefixes: ["$"],
+  prefixes: [">"],
+  onPrefixCheck(context: Context) {
+    if (context.guildId) {
+      if (KV.prefixes.has(context.guildId)) {
+        return (
+          KV.prefixes.get<Array<string>>(context.guildId) ||
+          KV.prefixes.get<Array<string>>("global")!
+        );
+      }
+    }
+    return KV.prefixes.get<Array<string>>("global")!
+  },
   activateOnEdits: true,
   mentionsEnabled: true,
   ignoreMe: true,
@@ -139,4 +151,5 @@ export namespace Regex {
 export namespace KV {
   export const tags = new Wilson(`kv/tags`);
   export const colors = new Wilson(`kv/colors`);
+  export const prefixes = new Wilson(`kv/prefixes`);
 }
