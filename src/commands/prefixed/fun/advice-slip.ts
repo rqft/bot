@@ -17,12 +17,7 @@ export default class AdviceSlipCommand extends BaseCommand {
       aliases: ["advice", "slip", "adviceslip"],
 
       args: [{ name: "slip", type: "string", required: false }],
-<<<<<<< HEAD
       metadata: FunMetadata("Get an advice slip", "<-slip: string=random>", [
-=======
-      metadata: FunMetadata("Gives you an advice slip", "?<-slip: number>", [
-        "",
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
         "-slip 10",
       ]),
     });

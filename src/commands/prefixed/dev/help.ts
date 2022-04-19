@@ -10,11 +10,7 @@ import {
   editOrReply,
   expandMs,
 } from "../../../functions/tools";
-<<<<<<< HEAD
 import { BaseCommand, UtilityMetadata } from "../basecommand";
-=======
-import { BaseCommand, ToolsMetadata } from "../basecommand";
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
 
 export interface HelpArgs {
   commands?: Array<Command.Command>;
@@ -37,14 +33,7 @@ export default class HelpCommand extends BaseCommand {
           default: 0,
         },
       ],
-<<<<<<< HEAD
       metadata: UtilityMetadata("Get help menu", "?<commands: string>"),
-=======
-      metadata: ToolsMetadata(
-        "Get the help menu of a command",
-        "<command: Command>"
-      ),
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: HelpArgs) {
@@ -100,26 +89,16 @@ export default class HelpCommand extends BaseCommand {
       "Usage",
       Markup.codeblock(command.name + " " + command.metadata.usage)
     );
-<<<<<<< HEAD
-    embed.addField(
-      "Examples",
-      Markup.codeblock(
-        command.metadata.examples
-          .map((v: string) => `${command.name} ${v}`)
-          .join("\n")
-      )
-    );
-=======
-    if (command.metadata.examples.length)
+    if (command.metadata.examples.length) {
       embed.addField(
         "Examples",
         Markup.codeblock(
           command.metadata.examples
-            .map((v: string) => command.name + " " + v)
+            .map((v: string) => `${command.name} ${v}`)
             .join("\n")
         )
       );
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
+    }
     return await editOrReply(context, { embed });
   }
 }

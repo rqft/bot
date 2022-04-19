@@ -75,13 +75,8 @@ export default class PxlFlagCommand extends BaseCommand {
         },
       ],
       metadata: ImageMetadata(
-<<<<<<< HEAD
         "Puts an overlay of a flag on an image",
         "<image: Image> <-flag: Flag=default> <-opacity: Range(64,192)=128>"
-=======
-        "Overlays a flag on top of an image",
-        "<image: Image> ?<-flag: Flag> ?<-opacity: Range(64,192)>"
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
       ),
     });
   }

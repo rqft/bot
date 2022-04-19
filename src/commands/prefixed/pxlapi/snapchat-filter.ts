@@ -37,15 +37,9 @@ export default class PxlSnapchatFilterCommand extends BaseCommand {
         },
       ],
       metadata: ImageMetadata(
-<<<<<<< HEAD
         "Add a Snapchat filter",
         "<filter: string> <image: Image>",
         ["dog", "random insyri#7314"]
-=======
-        "Apply a snapchat filter onto an image",
-        "<filter: dog|dog2|dog3|pig|flowers|clown|random> <image: Image>",
-        ["dog insyri", "random insyri#7314"]
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
       ),
     });
   }

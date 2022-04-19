@@ -35,14 +35,10 @@ export default class AbstractHolidayCommand extends BaseCommand {
       required: true,
 
       args: [{ name: "country", type: "string", default: "US" }],
-<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Get information about a holiday",
         "<date: Date> ?<-country: Country=US>"
       ),
-=======
-      metadata: ToolsMetadata("Gets holidays on a certain day", "<date: Date> <-country: Country=US>")
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: AbstractHolidayArgs) {

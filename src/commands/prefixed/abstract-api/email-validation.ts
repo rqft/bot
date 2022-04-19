@@ -39,15 +39,11 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
       label: "email",
       type: Parameters.email,
       required: true,
-<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Gets information about an email address",
         "<email: Email>",
         ["a@rqft.space", "contact@discard.cc"]
       ),
-=======
-      metadata: ToolsMetadata("Validates an email address and returns some information on it", "<email: Email>", ["a@rqft.space", "contact@discard.cc"])
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: AbstractEmailValidationArgs) {

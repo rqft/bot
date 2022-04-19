@@ -26,15 +26,11 @@ export default class GDProfileCommand extends BaseCommand {
       label: "userId",
       required: true,
       type: "string",
-<<<<<<< HEAD
       metadata: ToolsMetadata(
         "Gets a user's Geometry Dash profile",
         "<userId: string>",
         ["HighArcs", "Michigun (<3)"]
       ),
-=======
-      metadata: ToolsMetadata("Gets Geometry Dash profile data", "<userId: string>", ["jacher", "HighArcs"])
->>>>>>> 71105518172e247128e81161bdf8e2d73b9355fb
     });
   }
   async run(context: Command.Context, args: GDProfileArgs) {
