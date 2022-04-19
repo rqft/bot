@@ -6,7 +6,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractEmailValidationArgs {
   email: string;
 }
@@ -39,6 +39,7 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
       label: "email",
       type: Parameters.email,
       required: true,
+      metadata: ToolsMetadata("Validates an email address and returns some information on it", "<email: Email>", ["a@rqft.space", "contact@discard.cc"])
     });
   }
   async run(context: Command.Context, args: AbstractEmailValidationArgs) {

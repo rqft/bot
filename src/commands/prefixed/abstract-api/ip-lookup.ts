@@ -5,7 +5,7 @@ import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractIPGeolocationArgs {
   ip: string;
 }
@@ -63,6 +63,7 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
       label: "ip",
       type: "string",
       required: true,
+      metadata: ToolsMetadata("Gets geolocation of an IP Address", "<ip: string>", ["1.1.1.1"])
     });
   }
   async run(context: Command.Context, args: AbstractIPGeolocationArgs) {

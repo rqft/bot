@@ -5,7 +5,7 @@ import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractCompanyEnrichmentArgs {
   domain: string;
 }
@@ -28,6 +28,7 @@ export default class AbstractCompanyEnrichmentCommand extends BaseCommand {
       label: "domain",
       type: "string",
       required: true,
+      metadata: ToolsMetadata("Gets Company Enrichment data for a domain", "<domain: string>", ["google.com"])
     });
   }
   async run(context: Command.Context, args: AbstractCompanyEnrichmentArgs) {

@@ -3,9 +3,9 @@ import { Markup } from "detritus-client/lib/utils";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface EvalArgs {
-  code: string;
+  code: { text: string };
   jsonspacing: number;
 }
 
@@ -23,10 +23,12 @@ export default class EvalCommand extends BaseCommand {
         throw new Err("Not Authorized", { status: 403 });
       },
       onError: (_context, _args, error) => console.error(error),
+      metadata: UtilityMetadata("run code"),
     });
   }
   async run(context: Command.Context, args: EvalArgs) {
-    const { code } = args;
+    const { code: match } = args;
+    const { text: code } = match;
     let language = "ts";
     let message: any;
     try {

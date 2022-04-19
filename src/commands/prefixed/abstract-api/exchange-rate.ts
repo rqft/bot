@@ -7,7 +7,7 @@ import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractExchangeRateArgs {
   from: string;
   to: string;
@@ -30,6 +30,7 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
       required: true,
 
       args: [{ name: "from", type: "string", default: "USD" }],
+      metadata: ToolsMetadata("Get the exchange rate from one currency to another", "<to: Currency> ?<from: Currency=USD>")
     });
   }
   async run(context: Command.Context, args: AbstractExchangeRateArgs) {
