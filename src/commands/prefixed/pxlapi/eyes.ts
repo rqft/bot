@@ -6,7 +6,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 export const eyesChoices: Array<EyesType> = [
   "big",
@@ -36,10 +36,8 @@ export default class PxlEyesCommand extends BaseCommand {
     super(client, {
       name: "eyes",
 
-      label: "image",
-      type: Parameters.image(),
-
-      args: [
+      type: [
+        { name: "image", type: Parameters.image() },
         {
           name: "type",
           type: "string",
@@ -47,6 +45,11 @@ export default class PxlEyesCommand extends BaseCommand {
           default: "default",
         },
       ],
+      metadata: ImageMetadata(
+        "Put funny eyes on an image",
+        "<image: Image> <type: EyesType=default>",
+        ["insyri#7314 big", "thowoee random"]
+      ),
     });
   }
   async run(context: Command.Context, args: PxlEyesArgs) {

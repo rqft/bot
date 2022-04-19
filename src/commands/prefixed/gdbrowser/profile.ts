@@ -14,7 +14,7 @@ import {
   ProfileResult,
 } from "../../../functions/gdbrowser";
 import { editOrReply, storeImage } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface GDProfileArgs {
   userId: string;
 }
@@ -26,6 +26,11 @@ export default class GDProfileCommand extends BaseCommand {
       label: "userId",
       required: true,
       type: "string",
+      metadata: ToolsMetadata(
+        "Gets a user's Geometry Dash profile",
+        "<userId: string>",
+        ["HighArcs", "Michigun (<3)"]
+      ),
     });
   }
   async run(context: Command.Context, args: GDProfileArgs) {

@@ -6,7 +6,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 export const flagChoices: Array<FlagType> = [
   "asexual",
@@ -74,6 +74,10 @@ export default class PxlFlagCommand extends BaseCommand {
           choices: [...Array(192 - 64 + 1).keys()].map((v) => v + 64),
         },
       ],
+      metadata: ImageMetadata(
+        "Puts an overlay of a flag on an image",
+        "<image: Image> <-flag: Flag=default> <-opacity: Range(64,192)=128>"
+      ),
     });
   }
   async run(context: Command.Context, args: PxlFlagArgs) {

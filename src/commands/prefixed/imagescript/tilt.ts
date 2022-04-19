@@ -4,7 +4,11 @@ import { Converter } from "../../../functions/converter";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand, ImageScriptAnimationArgs } from "../basecommand";
+import {
+  BaseCommand,
+  ImageMetadata,
+  ImageScriptAnimationArgs,
+} from "../basecommand";
 export interface TiltArgs extends ImageScriptAnimationArgs {
   amount: number;
 }
@@ -17,6 +21,11 @@ export default class TiltCommand extends BaseCommand {
       type: Parameters.ImageScript.animation,
 
       args: [{ name: "amount", type: "number", default: 12, required: true }],
+      metadata: ImageMetadata(
+        "Applies a tilt-blur effect on an image",
+        "<image: Image> <-amount: number=12>",
+        ["insyri#7314", "insyri#7314 -amount 8"]
+      ),
     });
   }
   async run(context: Command.Context, args: TiltArgs) {

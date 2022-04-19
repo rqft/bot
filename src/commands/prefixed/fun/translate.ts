@@ -5,7 +5,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface TranslateArgs {
   text: string;
   from?: string;
@@ -35,6 +35,10 @@ export default class TranslateCommand extends BaseCommand {
           choices: Object.values(Locales),
         },
       ],
+      metadata: UtilityMetadata(
+        "Translate text",
+        "<text: string> ?<-from: Locales=en> ?<-to: Locales=en>"
+      ),
     });
   }
   async run(context: Command.Context, args: TranslateArgs) {

@@ -5,7 +5,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 export interface PxlJpegArgs extends ImageArgs {
   quality: number;
 }
@@ -25,6 +25,10 @@ export default class PxlJpegCommand extends BaseCommand {
           default: 1,
         },
       ],
+      metadata: ImageMetadata(
+        "Worsen the quality of an Image",
+        "<image: Image> <-quality: Range(1,100)=1>"
+      ),
     });
   }
   async run(context: Command.Context, args: PxlJpegArgs) {

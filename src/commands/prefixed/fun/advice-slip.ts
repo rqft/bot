@@ -6,7 +6,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { editOrReply } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, FunMetadata } from "../basecommand";
 export interface AdviceSlipArgs {
   slip?: number;
 }
@@ -17,6 +17,9 @@ export default class AdviceSlipCommand extends BaseCommand {
       aliases: ["advice", "slip", "adviceslip"],
 
       args: [{ name: "slip", type: "string", required: false }],
+      metadata: FunMetadata("Get an advice slip", "<-slip: string=random>", [
+        "-slip 10",
+      ]),
     });
   }
   async run(context: Command.Context, args: AdviceSlipArgs) {

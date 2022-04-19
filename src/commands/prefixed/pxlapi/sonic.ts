@@ -4,7 +4,7 @@ import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ImageMetadata } from "../basecommand";
 export interface PxlSonicArgs {
   text: string;
 }
@@ -16,6 +16,9 @@ export default class PxlSonicCommand extends BaseCommand {
       label: "text",
       type: "string",
       required: true,
+      metadata: ImageMetadata("Make sonic say stuff", "<text: string>", [
+        "i hate plants",
+      ]),
     });
   }
   async run(context: Command.Context, args: PxlSonicArgs) {

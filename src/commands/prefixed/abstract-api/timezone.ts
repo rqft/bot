@@ -5,7 +5,7 @@ import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractTimezoneArgs {
   location: string;
 }
@@ -29,6 +29,10 @@ export default class AbstractTimezoneCommand extends BaseCommand {
       label: "location",
       type: "string",
       required: true,
+      metadata: ToolsMetadata(
+        "Get timezone for a location",
+        "<location: string>"
+      ),
     });
   }
   async run(context: Command.Context, args: AbstractTimezoneArgs) {

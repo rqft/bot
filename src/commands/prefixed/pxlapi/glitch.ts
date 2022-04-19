@@ -5,7 +5,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand, ImageArgs } from "../basecommand";
+import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
 const one100 = [...Array(100 - 1).keys()].map((v) => v + 1);
 export interface PxlGlitchArgs extends ImageArgs {
@@ -38,6 +38,10 @@ export default class PxlGlitchCommand extends BaseCommand {
           default: 100,
         },
       ],
+      metadata: ImageMetadata(
+        "Glitch an image",
+        "<image: Image> <-iterations: Range(1,100)=10> <-amount: Range(1,100)=5> <-gifcount: Range(1,30)=10> <-delay: Range(1,1000)=100>"
+      ),
     });
   }
   async run(context: Command.Context, args: PxlGlitchArgs) {

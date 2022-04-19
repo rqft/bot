@@ -5,7 +5,7 @@ import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface CompletionArgs {
   engine: string;
   input: string;
@@ -26,6 +26,10 @@ export default class CompletionCommand extends BaseCommand {
         { name: "temperature", type: "number", default: 0.5 },
         { name: "limit", type: "number", default: 60 },
       ],
+      metadata: UtilityMetadata(
+        "Run an OpenAI Completion",
+        "<input: string> ?<-engine: string=davinci-instruct-beta-v3> ?<-temperature: number=0.5> ?<-limit: number=60>"
+      ),
     });
   }
   async run(context: Command.Context, args: CompletionArgs) {

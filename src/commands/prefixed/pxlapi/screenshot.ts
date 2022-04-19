@@ -6,7 +6,7 @@ import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface PxlScreenshotArgs {
   url: URL;
   browser: "chromium" | "firefox";
@@ -45,6 +45,15 @@ export default class PxlScreenshotCommand extends BaseCommand {
           choices: [...Object.values(Locales)],
         },
       ],
+      metadata: ToolsMetadata(
+        "Screenshot a webpage",
+        "<url: URL> ?<-browser: chromium|firefox> ?<-fullpage: boolean=false> ?<-theme: light|dark=dark> ?<-locale: Locales=en-US>",
+        [
+          "rqft.space",
+          "https://thowoee.me/",
+          "https://thowoee.me/ -browser firefox",
+        ]
+      ),
     });
   }
   async run(context: Command.Context, args: PxlScreenshotArgs) {

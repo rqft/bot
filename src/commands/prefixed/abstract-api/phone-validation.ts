@@ -7,7 +7,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { capitalizeWords, editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractPhoneValidationArgs {
   phone: string;
 }
@@ -36,6 +36,11 @@ export default class AbstractPhoneValidationCommand extends BaseCommand {
       label: "phone",
       type: Parameters.phone,
       required: true,
+      metadata: ToolsMetadata(
+        "Get information about a phone number",
+        "<phone: Phone>",
+        ["+1-555-555-5555"]
+      ),
     });
   }
   async run(context: Command.Context, args: AbstractPhoneValidationArgs) {

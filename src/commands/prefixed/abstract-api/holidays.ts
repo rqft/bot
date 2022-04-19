@@ -6,7 +6,7 @@ import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface AbstractHolidayArgs {
   date: Date;
   country: string;
@@ -35,6 +35,10 @@ export default class AbstractHolidayCommand extends BaseCommand {
       required: true,
 
       args: [{ name: "country", type: "string", default: "US" }],
+      metadata: ToolsMetadata(
+        "Get information about a holiday",
+        "<date: Date> ?<-country: Country=US>"
+      ),
     });
   }
   async run(context: Command.Context, args: AbstractHolidayArgs) {

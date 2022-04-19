@@ -61,7 +61,7 @@ export class BaseCommand extends Command {
   }
 
   run(
-    context: Context,
+    _context: Context,
     _args: ParsedArgs = {}
   ): Promise<void | Message | null> {
     throw new Err("Command not implemented", { status: 501 });

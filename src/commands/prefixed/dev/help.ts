@@ -9,9 +9,8 @@ import {
   capitalizeWords,
   editOrReply,
   expandMs,
-  generateUsage,
 } from "../../../functions/tools";
-import { BaseCommand } from "../basecommand";
+import { BaseCommand, UtilityMetadata } from "../basecommand";
 
 export interface HelpArgs {
   commands?: Array<Command.Command>;
@@ -34,6 +33,7 @@ export default class HelpCommand extends BaseCommand {
           default: 0,
         },
       ],
+      metadata: UtilityMetadata("Get help menu", "?<commands: string>"),
     });
   }
   async run(context: Command.Context, args: HelpArgs) {
@@ -85,7 +85,18 @@ export default class HelpCommand extends BaseCommand {
       }
       embed.setDescription(description.join("\n"));
     }
-    embed.addField("Usage", Markup.codeblock(generateUsage(command)));
+    embed.addField(
+      "Usage",
+      Markup.codeblock(command.name + " " + command.metadata.usage)
+    );
+    embed.addField(
+      "Examples",
+      Markup.codeblock(
+        command.metadata.examples
+          .map((v: string) => `${command.name} ${v}`)
+          .join("\n")
+      )
+    );
     return await editOrReply(context, { embed });
   }
 }
