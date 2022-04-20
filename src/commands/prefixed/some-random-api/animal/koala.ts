@@ -9,7 +9,7 @@ export default class SRAKoalaCommand extends BaseCommand {
       metadata: FunMetadata("Sends a koala image"),
     });
   }
-  async run(context: Command.Context, _args: {}) {
+  async run(context: Command.Context, _args: never) {
     return someRandomApiAnimal(context, Animals.KOALA);
   }
 }

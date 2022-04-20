@@ -19,7 +19,7 @@ export enum CommandTypes {
   FUN = "fun",
   UTILITY = "utility",
   TOOLS = "tools",
-  BASIC = "basic",
+  OTHER = "other",
 }
 export interface CommandMetadata {
   usage: string;
@@ -53,7 +53,7 @@ export class BaseCommand extends Command {
         usage: "",
         examples: [],
         nsfw: false,
-        type: CommandTypes.BASIC,
+        type: CommandTypes.OTHER,
         description: "",
       },
       options.metadata
@@ -85,7 +85,7 @@ export class BaseCommand extends Command {
     const store: Record<string, string> = {};
 
     const description: Array<string> = ["Invalid Arguments" + "\n"];
-    for (let key in errors) {
+    for (const key in errors) {
       const message = errors[key]!.message;
       if (message in store) {
         description.push(`❌ **${key}**: Same error as **${store[message]}**`);
@@ -97,7 +97,7 @@ export class BaseCommand extends Command {
 
     embed.setDescription(description.join("\n"));
 
-    embed.addField(`Command Usage`, Markup.codeblock(this.metadata.usage));
+    embed.addField("Command Usage", Markup.codeblock(this.metadata.usage));
     return editOrReply(context, { embed });
   }
 
@@ -108,7 +108,7 @@ export class BaseCommand extends Command {
   ) {
     const messages: Array<string> = [];
     for (const { ratelimit, remaining } of ratelimits) {
-      let noun: string = "You are";
+      let noun = "You are";
       switch (ratelimit.type) {
         case "channel":
           noun = "This channel is";
@@ -162,28 +162,28 @@ export function Metadata(
 }
 export function ImageMetadata(
   description: string,
-  usage: string = "<image: Image>",
+  usage = "<image: Image>",
   examples: Array<string> = ["", "insyri", "533757461706964993"]
 ) {
   return Metadata(CommandTypes.IMAGE, description, usage, examples);
 }
 export function ToolsMetadata(
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ) {
   return Metadata(CommandTypes.TOOLS, description, usage, examples);
 }
 export function FunMetadata(
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ) {
   return Metadata(CommandTypes.FUN, description, usage, examples);
 }
 export function UtilityMetadata(
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ) {
   return Metadata(CommandTypes.UTILITY, description, usage, examples);

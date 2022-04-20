@@ -33,7 +33,7 @@ export class Colors {
       throw new Err(`Color ${name} already exists`, { status: 409 });
     }
     if (!this.can()) {
-      throw new Err(`Cannot manage colors`, { status: 403 });
+      throw new Err("Cannot manage colors", { status: 403 });
     }
     const role = await this.guild.createRole({
       name,
@@ -78,7 +78,7 @@ export class Colors {
       return;
     }
     if (!this.can()) {
-      throw new Err(`Cannot manage colors`, { status: 403 });
+      throw new Err("Cannot manage colors", { status: 403 });
     }
     member.addRole(role.id);
     return this;
@@ -92,7 +92,7 @@ export class Colors {
       return;
     }
     if (!this.can()) {
-      throw new Err(`Cannot manage colors`, { status: 403 });
+      throw new Err("Cannot manage colors", { status: 403 });
     }
     member.removeRole(role.id);
     return this;
@@ -106,7 +106,7 @@ export class Colors {
       return;
     }
     if (!this.can()) {
-      throw new Err(`Cannot manage colors`, { status: 403 });
+      throw new Err("Cannot manage colors", { status: 403 });
     }
     if (member.roles.has(role.id)) {
       throw new Err("Member already has this color", { status: 409 });

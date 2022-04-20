@@ -56,8 +56,8 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
         MarkupTimestampStyles.BOTH_LONG
       )}`
     );
-    for (let k in rate.exchange_rates) {
-      let v = rate.exchange_rates[k];
+    for (const k in rate.exchange_rates) {
+      const v = rate.exchange_rates[k];
       if (!v) continue;
       embed.addField(`${k}`, `1 ${rate.base} -> ${v} ${k}`, true);
     }

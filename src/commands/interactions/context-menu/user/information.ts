@@ -9,6 +9,7 @@ export default class InformationCommand extends BaseContextMenuUserCommand {
   name = "User Information";
 
   async run(context: InteractionContext, args: ContextMenuUserArgs) {
+    console.log("recieved");
     const embed = await infoUser(context, args.member || args.user);
 
     return await context.editOrRespond({

@@ -1,20 +1,15 @@
 import { Command, CommandClient } from "detritus-client";
-import { Permissions } from "detritus-client/lib/constants";
 import { Markup } from "detritus-client/lib/utils";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
+import { Paginator } from "../../../functions/paginator";
 import { Parameters } from "../../../functions/parameters";
-import {
-  bitfieldToArray,
-  capitalizeWords,
-  editOrReply,
-  expandMs,
-} from "../../../functions/tools";
-import { BaseCommand, UtilityMetadata } from "../basecommand";
+import { capitalizeWords } from "../../../functions/tools";
+import { commands } from "../../../globals";
+import { BaseCommand, CommandTypes, UtilityMetadata } from "../basecommand";
 
 export interface HelpArgs {
   commands?: Array<Command.Command>;
-  page: number;
 }
 export default class HelpCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -26,13 +21,6 @@ export default class HelpCommand extends BaseCommand {
       type: Parameters.command,
       required: false,
 
-      args: [
-        {
-          name: "page",
-          type: "number",
-          default: 0,
-        },
-      ],
       metadata: UtilityMetadata("Get help menu", "?<commands: string>"),
     });
   }
@@ -40,65 +28,35 @@ export default class HelpCommand extends BaseCommand {
     const embed = createBrandEmbed(Brand.VYBOSE, context, true);
     embed.setTitle("Help Menu");
     if (!args.commands) {
-      embed.setDescription(
-        `**Command List**\n${Markup.codeblock(
-          context.commandClient!.commands.map((value) => value.name).join(", ")
-        )}`
-      );
-      return await editOrReply(context, { embed });
-    }
-    const { commands } = args;
-    const command = commands[args.page];
-    if (!command) {
-      return await editOrReply(context, "Page not found");
-    }
-
-    {
-      const description: Array<string> = [];
-      description.push(`**Name**: ${command.name}`);
-      if (command.aliases && command.aliases.length) {
-        description.push(`**Aliases**: ${command.aliases.join(", ")}`);
-      }
-      if (command.ratelimits && command.ratelimits.length) {
-        description.push(`**Ratelimits**`);
-        for (let ratelimit of command.ratelimits) {
-          description.push(
-            `-> **${capitalizeWords(String(ratelimit.type))}**: ${
-              ratelimit.limit
-            } per ${expandMs(ratelimit.duration)}`
-          );
+      const list = commands.commands;
+      const map = new Map<CommandTypes, Array<Command.Command>>();
+      for (const command of list) {
+        const type = command.metadata.type;
+        if (!map.has(type)) {
+          map.set(type, []);
         }
+        map.get(type)!.push(command);
       }
-      if (command.permissions) {
-        const permissions = command.permissions
-          .map((v) => bitfieldToArray(v, Object.keys(Permissions)))
-          .flat(1);
-        description.push(`**Needed Permissions**: ${permissions.join(", ")}`);
-      }
-      if (command.permissionsClient) {
-        const permissions = command.permissionsClient
-          .map((v) => bitfieldToArray(v, Object.keys(Permissions)))
-          .flat(1);
-        description.push(
-          `**Needed Bot Permissions**: ${permissions.join(", ")}`
-        );
-      }
-      embed.setDescription(description.join("\n"));
+      const pages = Array.from(map.keys());
+      const paginator = new Paginator(context, {
+        pageLimit: pages.length,
+        onPage(page: number) {
+          const type = pages[page - 1]!;
+          const commands = map.get(type) || [];
+          const embed = createBrandEmbed(Brand.VYBOSE, context, true);
+          embed.setTitle(capitalizeWords(type) + " Commands");
+          if (!commands.length) {
+            embed.setDescription(`No ${capitalizeWords(type)} commands found`);
+          } else {
+            embed.setDescription(
+              Markup.codeblock(commands.map((v) => v.fullName).join(", "))
+            );
+          }
+          return embed;
+        },
+      });
+
+      return await paginator.start();
     }
-    embed.addField(
-      "Usage",
-      Markup.codeblock(command.name + " " + command.metadata.usage)
-    );
-    if (command.metadata.examples.length) {
-      embed.addField(
-        "Examples",
-        Markup.codeblock(
-          command.metadata.examples
-            .map((v: string) => `${command.name} ${v}`)
-            .join("\n")
-        )
-      );
-    }
-    return await editOrReply(context, { embed });
   }
 }

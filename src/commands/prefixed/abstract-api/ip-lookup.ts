@@ -83,7 +83,7 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
     if (!ip.ip_address) throw new Err("No IP found");
     if (!ip.latitude || !ip.longitude)
       throw new Err("This IP is not geolocated");
-    let embed = createBrandEmbed(Brand.ABSTRACT, context);
+    const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Geolocation for ${ip.ip_address}`);
     {
       const description: Array<string> = [];

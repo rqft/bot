@@ -39,7 +39,7 @@ export async function someRandomApiAnimal(context: Context, animal: Animals) {
   const animals = await sra[animal]();
   const embed = await createImageEmbed(
     context,
-    animals.link,
+    animals.image,
     animal,
     Brand.SOME_RANDOM_API
   );

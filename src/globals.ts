@@ -74,7 +74,7 @@ export const commands = new CommandClient(client, {
         );
       }
     }
-    return KV.prefixes.get<Array<string>>("global")!
+    return KV.prefixes.get<Array<string>>("global")!;
   },
   activateOnEdits: true,
   mentionsEnabled: true,
@@ -149,7 +149,7 @@ export namespace Regex {
     /^(?:(?:(?:https?):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
 }
 export namespace KV {
-  export const tags = new Wilson(`kv/tags`);
-  export const colors = new Wilson(`kv/colors`);
-  export const prefixes = new Wilson(`kv/prefixes`);
+  export const tags = new Wilson("kv/tags");
+  export const colors = new Wilson("kv/colors");
+  export const prefixes = new Wilson("kv/prefixes");
 }
