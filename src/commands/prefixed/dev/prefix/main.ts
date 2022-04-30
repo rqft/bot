@@ -10,6 +10,7 @@ export default class PrefixesCommand extends BaseCommand {
     super(client, {
       name: "prefix",
       metadata: UtilityMetadata("Gets this server's prefixes"),
+      priority: -1,
     });
   }
   async run(context: Context, _args: never) {

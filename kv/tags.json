@@ -40,5 +40,9 @@
   "undefined": "❌ `Error (404): Tag 'undefined' does exist`",
   "add": "✅ Tag (args) has been successfully created",
   "remove": "✅ Deleted tag `(args)`",
-  "hello\\u0020i\\u0020am\\u0020in\\u0020the\\u0020json\\u0020file": "stfu"
+  "hello\\u0020i\\u0020am\\u0020in\\u0020the\\u0020json\\u0020file": "stfu",
+  "foo": "(user:tess) bar",
+  "ip": "https://evan.lol/trace/ip.png?(args)",
+  "http": "https://http.cat/(if:(args),=, ,404,(args))",
+  "jacher": "https://i.jacher.io/cat.gif"
 }

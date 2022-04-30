@@ -1,10 +1,11 @@
 import { CommandClient } from "detritus-client";
 import { Context } from "detritus-client/lib/command";
-import { SomeRandomAPI } from "pariah";
+import { SomeRandomApi } from "pariah/dist/lib";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
+import { Err } from "../../../../functions/error";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ToolsMetadata } from "../../basecommand";
+import { BaseCommand, FunMetadata } from "../../basecommand";
 
 export interface SRAMinecraftArgs {
   username: string;
@@ -17,7 +18,7 @@ export default class SRAMinecraftCommand extends BaseCommand {
       label: "username",
       type: "string",
       required: true,
-      metadata: ToolsMetadata(
+      metadata: FunMetadata(
         "Get information about a Minecraft user",
         "<username: string>",
         ["HighArcs", "trueharu__"]
@@ -25,8 +26,11 @@ export default class SRAMinecraftCommand extends BaseCommand {
     });
   }
   async run(context: Context, args: SRAMinecraftArgs) {
-    const { username, uuid, name_history } =
-      await new SomeRandomAPI().minecraft(args.username);
+    const result = await new SomeRandomApi.API().minecraft(args.username);
+    if ("error" in result) {
+      throw new Err(result.error);
+    }
+    const { username, uuid, name_history } = result;
 
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
     embed.setTitle("Minecraft Info");

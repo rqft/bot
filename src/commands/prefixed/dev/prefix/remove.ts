@@ -11,6 +11,7 @@ export default class RemovePrefixCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "prefix remove",
+      aliases: ["prefix delete"],
       type: [{ name: "prefix", type: "string", required: true }],
       metadata: UtilityMetadata(
         "Removes a prefix for the server",

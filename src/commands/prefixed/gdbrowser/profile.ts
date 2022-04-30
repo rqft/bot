@@ -21,7 +21,7 @@ export interface GDProfileArgs {
 export default class GDProfileCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "gprofile",
+      name: "gdprofile",
 
       label: "userId",
       required: true,

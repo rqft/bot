@@ -1,6 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
-import { Affirmations } from "pariah/dist";
+import { Pariah } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { editOrReply } from "../../../functions/tools";
@@ -14,8 +14,8 @@ export default class AdviceSlipCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, _args: {}) {
-    const as = new Affirmations();
-    const affirmations = await as.run();
+    const as = new Pariah(new URL("https://www.affirmations.dev/"));
+    const affirmations = await as.get.json<{ affirmation: string }>("/");
     const embed = createBrandEmbed(Brand.AFFIRMATIONS, context);
     embed.setDescription(Markup.codeblock(affirmations.affirmation));
     return editOrReply(context, { embed });

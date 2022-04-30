@@ -36,13 +36,11 @@ export default class AbstractTimezoneCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractTimezoneArgs) {
-    const abs = new Pariah({ baseUrl: "https://timezone.abstractapi.com/" });
-    const tz = await abs.getJSON<AbstractTimezone>(
-      `/v1/current_time/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.TIMEZONE,
-        location: args.location,
-      })}`
-    );
+    const abs = new Pariah(new URL("https://timezone.abstractapi.com/"));
+    const tz = await abs.get.json<AbstractTimezone>(`/v1/current_time/`, {
+      api_key: Secrets.AbstractKeys.TIMEZONE,
+      location: args.location,
+    });
     if (!tz.requested_location) throw new Err("no results found");
 
     const embed = createBrandEmbed(Brand.ABSTRACT, context);

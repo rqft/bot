@@ -19,7 +19,7 @@ export default class SRABlooFilterCommand extends BaseCommand {
     const embed = await someRandomApiFilter(
       context,
       args.image,
-      Filters.BLOO,
+      Filters.BLUE,
       {}
     );
     return await editOrReply(context, { embed });

@@ -5,12 +5,9 @@ import {
   Canvas,
   someRandomApiCanvasMisc,
 } from "../../../../functions/formatter";
-import {
-  DefaultParameters,
-  Parameters,
-} from "../../../../functions/parameters";
+import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ToolsMetadata } from "../../basecommand";
+import { BaseCommand, FunMetadata } from "../../basecommand";
 
 export interface SRATweetArgs {
   user: User;
@@ -30,7 +27,7 @@ export default class SRATweetCommand extends BaseCommand {
         {
           name: "user",
           type: Parameters.user,
-          default: DefaultParameters.user,
+          default: Parameters.Default.user,
         },
         {
           name: "displayname",
@@ -39,7 +36,7 @@ export default class SRATweetCommand extends BaseCommand {
           default: "",
         },
       ],
-      metadata: ToolsMetadata(
+      metadata: FunMetadata(
         "Create a fake Tweet",
         "<comment: string> ?<-user: User> ?<-name: string>",
         [

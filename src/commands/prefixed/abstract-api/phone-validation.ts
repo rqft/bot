@@ -44,15 +44,12 @@ export default class AbstractPhoneValidationCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractPhoneValidationArgs) {
-    const abs = new Pariah({ baseUrl: "https://timezone.abstractapi.com/" });
-    const phone = await abs.getJSON<AbstractPhone>(
-      `/v1/current_time/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.PHONE_VALIDATION,
-        phone: args.phone,
-      })}`
-    );
-    console.log(args.phone, phone);
-    if (!phone.phone) throw new Err("invalid phone number");
+    const abs = new Pariah(new URL("https://phonevalidation.abstractapi.com/"));
+    const phone = await abs.get.json<AbstractPhone>(`/v1/`, {
+      api_key: Secrets.AbstractKeys.PHONE_VALIDATION,
+      phone: args.phone,
+    });
+    if (!phone.phone) throw new Err("Invalid phone number");
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Information for Phone Number`);
     {

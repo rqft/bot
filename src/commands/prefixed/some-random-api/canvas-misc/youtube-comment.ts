@@ -5,12 +5,9 @@ import {
   Canvas,
   someRandomApiCanvasMisc,
 } from "../../../../functions/formatter";
-import {
-  DefaultParameters,
-  Parameters,
-} from "../../../../functions/parameters";
+import { Parameters } from "../../../../functions/parameters";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ToolsMetadata } from "../../basecommand";
+import { BaseCommand, FunMetadata } from "../../basecommand";
 
 export interface SRAYoutubeCommentArgs {
   user: User;
@@ -30,10 +27,10 @@ export default class SRAYoutubeCommentCommand extends BaseCommand {
         {
           name: "user",
           type: Parameters.user,
-          default: DefaultParameters.user,
+          default: Parameters.Default.user,
         },
       ],
-      metadata: ToolsMetadata(
+      metadata: FunMetadata(
         "Create a fake youtube comment",
         "<comment: string> ?<-user: User>",
         ["I love walking", "I love walking -user insyri"]

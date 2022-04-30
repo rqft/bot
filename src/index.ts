@@ -1,84 +1,55 @@
-import chalk from "chalk";
 import {
-  getVyboseGuildFlags,
-  replacer,
-  simpleGetLongAgo,
-} from "./functions/tools";
-import {
-  altclients,
-  client,
-  commands,
-  interactions,
-  KV,
-  selfclient,
-} from "./globals";
+  GatewayActivityTypes,
+  GatewayPresenceStatuses,
+} from "detritus-client-socket/lib/constants";
+import {} from "pariah";
+import { Logger } from "./functions/logger";
+import { altclients, client, commands, selfclient } from "./globals";
 
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
-commands.on("commandDelete", ({ reply }) => reply.delete());
 
-interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
+// interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
 
 (async function run() {
-  const start = Date.now();
   await commands.run();
+  const logger = new Logger(commands);
 
-  await interactions.checkAndUploadCommands();
-  await interactions.run();
+  // await interactions.run();
   const all = [client, selfclient, ...altclients];
+  console.log("");
+  for (const client of all) {
+    const logger = new Logger(client);
+    await client.run();
+    logger.attach();
+  }
 
-  await Promise.all(
-    all.map(async (value) => {
-      value;
-      const s = Date.now();
-      await value.run();
+  logger.log(
+    "Commands > Load",
+    ["yellow", "bold"],
+    `Loaded ${commands.commands.length} commands`
+  );
 
-      console.log(
-        replacer(
-          `✅ Took ${chalk.yellow("{TIME}")} to deploy ${chalk.red(
-            "{USER}"
-          )} (uploading ${chalk.green("{GUILDS} guilds")} and ${chalk.blue(
-            "{MEMBERS} members"
-          )}) with a ${chalk.redBright("shard count of {SHARDS}")}`,
-          [
-            ["{TIME}", simpleGetLongAgo(s)],
-            ["{USER}", value.user?.toString() + " (" + value.user?.id + ")"],
-            ["{GUILDS}", value.guilds.size],
-            ["{MEMBERS}", value.users.size],
-            ["{SHARDS}", value.shardCount],
-          ]
-        )
-      );
-    })
-  );
-  console.log(`ok done in ${simpleGetLongAgo(start)}`);
-  console.log(
-    "\nloaded commands:\n" +
-      commands.commands
-        .map((v) => v.name)
-        .sort()
-        .join(", ")
-  );
-  console.log(
-    "\nloaded interactions:\n" +
-      interactions.commands
-        .map(
-          (v) =>
-            `${
-              [
-                "Unknown",
-                "Slash",
-                "Context Menu (User)",
-                "Context Menu (Message)",
-              ][v.type]
-            } > ${v.name}`
-        )
-        .join("\n")
-  );
-  console.log(
-    `\ndeployed to ${client.guilds.size} guilds\n` +
-      client.guilds
-        .map((v) => `${getVyboseGuildFlags(v).join(" ")} ${v.name} (${v.id})`)
-        .join("\n")
-  );
-  console.log(KV.tags.path());
+  selfclient.gateway.setPresence({
+    activities: [
+      {
+        name: "Custom Status",
+        type: GatewayActivityTypes.CUSTOM_STATUS,
+        state:
+          "jeez, its a breeze, breaking records every week, now we poppin' try to stop me, bodies droppin' no one sees | rqft.space",
+        emoji: {
+          id: "822230299618312245",
+          animated: false,
+          name: "femboy",
+        },
+      },
+      {
+        name: "sovv",
+        type: GatewayActivityTypes.LISTENING,
+        applicationId: "760143615124439040",
+      },
+    ],
+    status: GatewayPresenceStatuses.DND,
+    afk: false,
+    since: 0,
+  });
 })();

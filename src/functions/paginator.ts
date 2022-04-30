@@ -13,7 +13,7 @@ export const MAX_PAGE = Number.MAX_SAFE_INTEGER;
 export const MIN_PAGE = 1;
 
 export enum PageButtonNames {
-  CUSTOM = "custom",
+  // CUSTOM = "custom",
   NEXT = "next",
   NEXT_DOUBLE = "nextDouble",
   PREVIOUS = "previous",
@@ -28,7 +28,7 @@ export interface PageButton {
 }
 
 export const PageButtons: Record<PageButtonNames, PageButton> = Object.freeze({
-  [PageButtonNames.CUSTOM]: { label: "?" },
+  // [PageButtonNames.CUSTOM]: { label: "?" },
   [PageButtonNames.NEXT]: { label: ">" },
   [PageButtonNames.NEXT_DOUBLE]: {
     label: ">>",
@@ -189,7 +189,6 @@ export class Paginator {
       return components;
     }
 
-    /*
     if (this.isLarge) {
       components.createButton({
         customId: PageButtonNames.PREVIOUS_DOUBLE,
@@ -197,7 +196,6 @@ export class Paginator {
         ...this.buttons[PageButtonNames.PREVIOUS_DOUBLE],
       });
     }
-    */
 
     components.createButton({
       customId: PageButtonNames.PREVIOUS,
@@ -210,7 +208,6 @@ export class Paginator {
       ...this.buttons[PageButtonNames.NEXT],
     });
 
-    /*
     if (this.isLarge) {
       components.createButton({
         customId: PageButtonNames.NEXT_DOUBLE,
@@ -218,18 +215,10 @@ export class Paginator {
         ...this.buttons[PageButtonNames.NEXT_DOUBLE],
       });
     }
-    */
 
     components.createButton({
       customId: PageButtonNames.SHUFFLE,
       ...this.buttons[PageButtonNames.SHUFFLE],
-    });
-    components.createButton({
-      customId: PageButtonNames.CUSTOM,
-      style: this.custom.isActive
-        ? MessageComponentButtonStyles.DANGER
-        : MessageComponentButtonStyles.PRIMARY,
-      ...this.buttons[PageButtonNames.CUSTOM],
     });
     components.createButton({
       customId: PageButtonNames.STOP,
@@ -269,7 +258,7 @@ export class Paginator {
   }
 
   get isLarge(): boolean {
-    return false; //this.pageSkipAmount < this.pageLimit;
+    return this.pageLimit > this.pageSkipAmount;
   }
 
   get message(): null | Message {
@@ -438,25 +427,6 @@ export class Paginator {
 
     try {
       switch (context.customId) {
-        case PageButtonNames.CUSTOM:
-          {
-            if (this.custom.isActive) {
-              await this.clearCustomMessage(context);
-            } else {
-              await this.clearCustomMessage();
-
-              this.custom.isActive = true;
-              await this.updateButtons(context);
-              this.custom.message = await context.createMessage({
-                content: "What page would you like to go?",
-                flags: this.isEphemeral ? MessageFlags.EPHEMERAL : undefined,
-              });
-              this.custom.timeout.start(this.custom.expire, async () => {
-                await this.clearCustomMessage();
-              });
-            }
-          }
-          break;
         case PageButtonNames.NEXT:
           {
             await this.setPage(this.page + 1, context);

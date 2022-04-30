@@ -1,7 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
-import { Imagga } from "pariah";
-import { Color } from "pariah/dist";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
@@ -24,8 +23,8 @@ export default class ImaggaColorsCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {
-    const im = new Imagga(Secrets.Key.imaggaAuth);
-    const colors = await im.colors({ image_url: args.image });
+    const im = new APIs.Imagga.API(Secrets.Key.imaggaAuth);
+    const colors = await im.colors(args.image, {});
     if (colors.status.type === "error") throw new Err(colors.status.text);
 
     const embed = createBrandEmbed(Brand.IMAGGA, context);
@@ -41,7 +40,7 @@ export default class ImaggaColorsCommand extends BaseCommand {
     return await editOrReply(context, { embed });
   }
 }
-function colorsTable(colors: Array<Color>): string {
+function colorsTable(colors: Array<APIs.Imagga.Color>): string {
   return padCodeBlockFromRows([
     ["Color", "Percentage"],
     ...colors.map((v) => [

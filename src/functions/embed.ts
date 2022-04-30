@@ -2,10 +2,11 @@ import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { Attachment } from "detritus-client/lib/structures";
 import { Embed } from "detritus-client/lib/utils";
+import { decode, GIF } from "imagescript";
 import fetch from "node-fetch";
 import { Brand, BrandColors, BrandIcons, BrandNames } from "../enums/brands";
 import { Color } from "../globals";
-import { capitalizeWords, simpleGetLongAgo, storeImage } from "./tools";
+import { capitalizeWords, storeImage } from "./tools";
 
 export function createUserEmbed(
   context: Context | InteractionContext,
@@ -23,17 +24,13 @@ export function createBrandEmbed(
   named: boolean = true,
   embed: Embed = new Embed()
 ) {
-  let t = simpleGetLongAgo(
-    (context instanceof Context ? context.message : context.interaction)
-      .createdAtUnix
-  );
   return createUserEmbed(context, embed)
     .setFooter(
       `${BrandNames[brand]}${
         brand === Brand.VYBOSE && named && context.command
           ? " " + capitalizeWords(context.command.name)
           : ""
-      }, Done ${t ? `in ${t}` : "Insantly"}`,
+      }`,
       BrandIcons[brand]
     )
     .setColor(BrandColors[brand]);
@@ -61,16 +58,16 @@ export async function createImageEmbed(
 
   embed.setImage(image.url!);
   let footer = [image.filename];
+
+  const imagescript = decode(input as Buffer);
+  if (imagescript instanceof GIF) {
+    footer.push(`${imagescript.length} frames`);
+  }
+
   if (image.size) {
     footer.push(`${image.width}x${image.height} (${formatBytes(image.size)})`);
   }
 
-  footer.push(
-    `Took ${simpleGetLongAgo(
-      (context instanceof Context ? context.message : context.interaction)
-        .createdAtUnix
-    )} to complete`
-  );
   if (brand) {
     footer.push(`Created by ${BrandNames[brand]}`);
   }

@@ -1,9 +1,8 @@
 import { Command, CommandClient } from "detritus-client";
-import { Markup } from "detritus-client/lib/utils";
-import { PxlApi } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
-import { editOrReply } from "../../../functions/tools";
+import { Paginator } from "../../../functions/paginator";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface PxlWebSearchArgs {
@@ -13,7 +12,7 @@ export default class PxlWebSearchCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "web-search",
-      aliases: ["websearch"],
+      aliases: ["websearch", "search"],
 
       label: "query",
       type: "string",
@@ -22,57 +21,26 @@ export default class PxlWebSearchCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: PxlWebSearchArgs) {
-    const pxl = new PxlApi(Secrets.Key.pxlAPI);
+    const pxl = new APIs.PxlAPI.API(Secrets.Key.pxlAPI);
 
-    const webSearch = await pxl.webSearch(args.query);
-    const embed = createBrandEmbed(Brand.PXL_API, context);
-    {
-      const description: Array<string> = [];
-      const { results } = webSearch;
-      results.forEach((value, index) => {
-        if (index > 5) return;
-        description.push(
-          `${Markup.bold(`[${value.title}](${value.url})`)}\n${Markup.italics(
-            value.description,
-            {
-              limit: 200,
-            }
-          )}\n`
-        );
-      });
+    const webSearch = await pxl.webSearch(
+      args.query,
+      APIs.PxlAPI.SafeSearch.STRICT
+    );
+    const [result] = webSearch;
+    const { results } = result!;
+    const paginator = new Paginator(context, {
+      pageLimit: results.length,
+      async onPage(page: number) {
+        const embed = createBrandEmbed(Brand.PXL_API, context);
+        const { title, url, description } = results[page - 1]!;
+        embed.setTitle(title);
+        embed.setUrl(url);
+        embed.setDescription(description);
+        return embed;
+      },
+    });
 
-      embed.setDescription(description.join("\n"));
-    }
-
-    {
-      const description: Array<string> = [];
-      const { news } = webSearch;
-
-      news.forEach((value, index) => {
-        if (index > 5) return;
-        description.push(
-          `${Markup.bold(`[${value.title}](${value.url})`)}\n${Markup.italics(
-            value.description,
-            {
-              limit: 200,
-            }
-          )}\n`
-        );
-      });
-      if (description.length)
-        embed.addField("News Results", description.join("\n"));
-    }
-
-    {
-      const description: Array<string> = [];
-      const { images } = webSearch;
-      images.forEach((value, index) => {
-        if (index > 5) return;
-        description.push(`[${new URL(value).hostname}](${value})`);
-      });
-      if (images.length) embed.addField("Images", description.join(", "));
-    }
-
-    return await editOrReply(context, { embed });
+    return await paginator.start();
   }
 }

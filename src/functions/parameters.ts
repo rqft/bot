@@ -1,15 +1,25 @@
 import { Command, Context } from "detritus-client/lib/command";
 import { DiscordRegexNames } from "detritus-client/lib/constants";
-import { InteractionContext } from "detritus-client/lib/interaction";
+import {
+  InteractionAutoCompleteContext,
+  InteractionContext,
+} from "detritus-client/lib/interaction";
 import { regex } from "detritus-client/lib/utils";
 import { decode, Frame, GIF, Image } from "imagescript";
+import Jimp from "jimp";
 import fetch from "node-fetch";
-import { altclients, client, Regex, selfclient } from "../globals";
+import {
+  altclients,
+  client,
+  commands as cmd,
+  Regex,
+  selfclient,
+} from "../globals";
 import { Err } from "./error";
 import { findImage } from "./findImage";
 
 export namespace Parameters {
-  export function command(content: string, context: Context) {
+  export function command(content: string) {
     if (content) {
       const commands: Array<Command> = [];
       const commandsWithPrefix: Array<Command> = [];
@@ -17,7 +27,7 @@ export namespace Parameters {
       const insensitive = content.toLowerCase().replace(/\s\s+/g, " ");
       const insensitiveAsPrefix = insensitive + " ";
 
-      for (let command of context.commandClient.commands) {
+      for (let command of cmd.commands) {
         if (command.names.includes(insensitive)) {
           commandsWithPrefix.push(command);
           continue;
@@ -217,6 +227,12 @@ export namespace Parameters {
       return imageResponse.buffer();
     };
   }
+  export namespace PJimp {
+    export async function jimp(value: string, context: Context) {
+      const img = await image()(value, context);
+      return new Jimp(img);
+    }
+  }
   export namespace ImageScript {
     export async function animation(
       value: string,
@@ -237,10 +253,18 @@ export namespace Parameters {
     ): Promise<Image> {
       const img = await image()(value, context);
       const gif = await decode(img);
+      let payload;
       if (gif instanceof Image) {
-        return gif;
+        payload = gif;
+      } else {
+        payload = gif[0]!;
       }
-      return gif[0]!;
+
+      // if (payload.width > 256 || payload.height > 256) {
+      //   payload.resize(256, Image.RESIZE_AUTO);
+      // }
+
+      return payload;
     }
   }
 
@@ -287,6 +311,7 @@ export namespace Parameters {
     return hex;
   }
   export function url(value: string) {
+    if (!value.startsWith("http")) value = `http://${value}`;
     let url: URL;
 
     url = new URL(value);
@@ -312,9 +337,31 @@ export namespace Parameters {
     if (!value.match(regex)) throw new Err("Invalid email");
     return value;
   }
-}
-export namespace DefaultParameters {
-  export function user(context: Context) {
-    return context.user;
+  export namespace Interactions {
+    export async function command(value: string, context: InteractionContext) {
+      const cmds = context.interactionCommandClient.commands.filter((v) => {
+        return v.fullName.includes(value.toLowerCase().replace(/\s\s+/g, " "));
+      });
+      return cmds;
+    }
+    export namespace Autcomplete {
+      export async function command(context: InteractionAutoCompleteContext) {
+        const cmds = await Interactions.command(context.value, context as any);
+        const choices = cmds.map((v) => {
+          return {
+            name: v.fullName,
+            value: v.fullName,
+          };
+        });
+
+        return await context.respond({ choices });
+      }
+    }
+  }
+
+  export namespace Default {
+    export function user(context: Context) {
+      return context.user;
+    }
   }
 }

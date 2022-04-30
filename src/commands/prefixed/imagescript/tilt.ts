@@ -30,15 +30,19 @@ export default class TiltCommand extends BaseCommand {
   }
   async run(context: Command.Context, args: TiltArgs) {
     let { animation } = args;
-    for (let f of [...animation])
-      for (let i = args.amount; i >= 0; i--)
-        f.composite(f.clone().opacity(0.07).rotate(i, false));
-
+    for (let frame of Array.from(animation)) {
+      for (let degrees = args.amount; degrees >= 0; degrees--) {
+        const clone = frame.clone();
+        clone.opacity(0.07);
+        clone.rotate(degrees, false);
+        frame.composite(clone);
+      }
+    }
     const embed = await createImageEmbed(
       context,
       await Converter.ImageScript.Animation.toBuffer(animation),
       undefined,
-      Brand.VYBOSE
+      Brand.IMAGESCRIPT
     );
     return await editOrReply(context, { embed });
   }

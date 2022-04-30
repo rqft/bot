@@ -14,8 +14,8 @@ export namespace Converter {
       }
     }
     export namespace Animation {
-      export async function toBuffer(from: ISGif) {
-        return Buffer.from((await from.encode()).buffer);
+      export async function toBuffer(from: ISGif, quality?: number) {
+        return Buffer.from((await from.encode(quality)).buffer);
       }
     }
     export const GIF = Animation;

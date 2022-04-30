@@ -18,7 +18,7 @@ export default class SRABlurpleFilterCommand extends BaseCommand {
     const embed = await someRandomApiFilter(
       context,
       args.image,
-      Filters.BLURPLE2,
+      Filters.BLURPLE_NEW,
       {}
     );
     return await editOrReply(context, { embed });

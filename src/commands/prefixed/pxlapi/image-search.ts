@@ -1,5 +1,5 @@
 import { Command, CommandClient } from "detritus-client";
-import { PxlApi } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
@@ -23,11 +23,15 @@ export default class PxlImageSearchCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: PxlImageSearchArgs) {
-    const pxl = new PxlApi(Secrets.Key.pxlAPI);
+    const pxl = new APIs.PxlAPI.API(Secrets.Key.pxlAPI);
 
-    const results = await pxl.imageSearch(args.query, "moderate", true);
+    const results = await pxl.imageSearch(
+      args.query,
+      APIs.PxlAPI.SafeSearch.STRICT,
+      true
+    );
     if (!results.length) {
-      throw new Err("no results found");
+      throw new Err("No results found");
     }
 
     const paginator = new Paginator(context, {

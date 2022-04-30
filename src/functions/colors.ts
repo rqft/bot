@@ -8,9 +8,11 @@ export class Colors {
   public guild: Guild;
   public kv: Wilson = KV.colors;
   public member: Member;
-  constructor(guild: Guild, member: Member) {
+  private ignoreMember: boolean;
+  constructor(guild: Guild, member: Member, ignoreMember: boolean = false) {
     this.guild = guild;
     this.member = member;
+    this.ignoreMember = ignoreMember;
   }
   exec(io: IO<Array<string>>) {
     return this.kv.exec((data) => {
@@ -25,7 +27,7 @@ export class Colors {
     return (
       this.guild.me &&
       this.guild.me.can(Permissions.MANAGE_ROLES) &&
-      this.member.can(Permissions.MANAGE_ROLES)
+      (this.ignoreMember || this.member.can(Permissions.MANAGE_ROLES))
     );
   }
   async create(name: string, color: number) {

@@ -13,7 +13,7 @@ export interface GDLevelArgs {
 export default class GDLevelCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "glevel",
+      name: "gdlevel",
 
       label: "levelId",
       required: true,

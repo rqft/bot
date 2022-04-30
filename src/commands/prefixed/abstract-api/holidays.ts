@@ -42,17 +42,14 @@ export default class AbstractHolidayCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractHolidayArgs) {
-    const abs = new Pariah({ baseUrl: "https://holiday.abstractapi.com/" });
-    const holi = await abs.getJSON<Array<AbstractHoliday>>(
-      `/v1/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.HOLIDAYS,
-        country: args.country,
-        year: new Date().getFullYear(),
-        month: args.date.getMonth() + 1,
-        day: args.date.getDate(),
-      })}`
-    );
-    console.log(holi);
+    const abs = new Pariah(new URL("https://holiday.abstractapi.com/"));
+    const holi = await abs.get.json<Array<AbstractHoliday>>(`/v1/`, {
+      api_key: Secrets.AbstractKeys.HOLIDAYS,
+      country: args.country,
+      year: new Date().getFullYear(),
+      month: args.date.getMonth() + 1,
+      day: args.date.getDate(),
+    });
     if (!holi.length) throw new Err("No holidays found", { status: 404 });
 
     const embed = createBrandEmbed(Brand.ABSTRACT, context);

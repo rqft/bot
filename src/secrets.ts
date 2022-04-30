@@ -12,6 +12,7 @@ export const Secrets = {
     imaggaAuth: env.IMAGGA_API_KEY!,
     pylon: env.PYLON_API_KEY!,
     openAI: env.OPENAI_API_KEY!,
+    huggingFace: env.HUGGING_FACE_API_KEY!,
   },
   AbstractKeys: {
     HOLIDAYS: env.ABSTRACT_HOLIDAYS_KEY!,

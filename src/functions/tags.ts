@@ -87,6 +87,7 @@ export namespace Tags {
     }
     export function user(property: keyof User): Script {
       return async function (context, arg, __, ___, tag) {
+        tag.variables[Private.NETWORK_REQUESTS]++;
         const user = (await Parameters.user(arg || context.user.id, context))!;
 
         let value = user[property];
@@ -100,6 +101,7 @@ export namespace Tags {
     }
     export function channel(property: keyof Channel): Script {
       return async function (context, arg, __, ___, tag) {
+        tag.variables[Private.NETWORK_REQUESTS]++;
         const channel =
           (await Parameters.channel(arg, context)) || context.channel;
         if (!channel) {
@@ -117,6 +119,7 @@ export namespace Tags {
     }
     export function guild(property: keyof Guild): Script {
       return async function (context, _, __, ___, tag) {
+        tag.variables[Private.NETWORK_REQUESTS]++;
         const guild = context.guild;
         if (!guild) {
           return false;

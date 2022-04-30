@@ -10,14 +10,14 @@ export interface AbstractCompanyEnrichmentArgs {
   domain: string;
 }
 export interface AbstractCompany {
-  name: string;
+  name: string | null;
   domain: string;
-  year_founded: number;
-  industry: string;
-  employees_count: number;
-  locality: string;
-  country: string;
-  linkedin_url?: string;
+  year_founded: number | null;
+  industry: string | null;
+  employees_count: number | null;
+  locality: string | null;
+  country: string | null;
+  linkedin_url?: string | null;
 }
 export default class AbstractCompanyEnrichmentCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -36,27 +36,29 @@ export default class AbstractCompanyEnrichmentCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractCompanyEnrichmentArgs) {
-    const abs = new Pariah({
-      baseUrl: "https://companyenrichment.abstractapi.com/",
-    });
-    const company = await abs.getJSON<AbstractCompany>(
-      `/v1/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.COMPANY_ENRICHMENT,
-        domain: args.domain,
-      })}`
+    const abs = new Pariah(
+      new URL("https://companyenrichment.abstractapi.com/")
     );
+    const company = await abs.get.json<AbstractCompany>(`/v1/`, {
+      api_key: Secrets.AbstractKeys.COMPANY_ENRICHMENT,
+      domain: args.domain,
+    });
     if (!company.domain) throw new Err("No results found", { status: 404 });
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setTitle(`Company Enrichment for ${company.domain}`);
     {
       const description: Array<string> = [];
-      description.push(`**Name**: ${company.name}`);
+      if (company.name) description.push(`**Name**: ${company.name}`);
       description.push(`**Domain**: ${company.domain}`);
-      description.push(`**Year Founded**: ${company.year_founded}`);
-      description.push(`\n**Industry**: ${company.industry}`);
-      description.push(`**Employee Count**: ${company.employees_count}`);
-      description.push(`\n**Locality**: ${company.locality}`);
-      description.push(`**Country**: ${company.country}`);
+      if (company.year_founded)
+        description.push(`**Year Founded**: ${company.year_founded}`);
+      if (company.industry)
+        description.push(`\n**Industry**: ${company.industry}`);
+      if (company.employees_count)
+        description.push(`**Employee Count**: ${company.employees_count}`);
+      if (company.locality)
+        description.push(`\n**Locality**: ${company.locality}`);
+      if (company.country) description.push(`**Country**: ${company.country}`);
       if (company.linkedin_url) {
         description.push(
           `\n**LinkedIn URL**: [${company.name}](https://${company.linkedin_url})`

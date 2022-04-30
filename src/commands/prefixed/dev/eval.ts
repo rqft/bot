@@ -3,12 +3,12 @@ import { Markup } from "detritus-client/lib/utils";
 import { Err } from "../../../functions/error";
 import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
+import {} from "../../../globals";
 import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface EvalArgs {
   code: { text: string };
   jsonspacing: number;
 }
-
 export default class EvalCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {

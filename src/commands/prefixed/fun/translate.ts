@@ -42,7 +42,7 @@ export default class TranslateCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: TranslateArgs) {
-    const tr = new Pariah({ baseUrl: "https://translate.mentality.rip/" });
+    const tr = new Pariah(new URL("https://translate.mentality.rip/"));
     if (!args.from) args.from = (await detectLanguage(tr, args.text)).language;
 
     const embed = createBrandEmbed(Brand.VYBOSE, context, true);
@@ -57,10 +57,11 @@ export interface DetectedLanguage {
   language: string;
 }
 async function detectLanguage(translator: Pariah, text: string) {
-  const detect = await translator.postJSON<Array<DetectedLanguage>>(
+  const detect = await translator.post.json<Array<DetectedLanguage>>(
     `/detect?q=${text}`
   );
-  if (!detect.length) throw new Err("cant detect language");
+  if (!detect.length)
+    throw new Err("Can't detect language, specify one with `-from <language>`");
 
   return detect[0]!;
 }

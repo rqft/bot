@@ -452,10 +452,9 @@ export enum VyboseGuildFlags {
   OWNED = "[O]",
   NOT_OWNED = "[N]",
   MARKED = "[M]",
-  NONE = "[ ]",
 }
 export function getVyboseGuildFlags(guild: Guild) {
-  let flags: Array<VyboseGuildFlags> = [VyboseGuildFlags.NONE];
+  let flags: Array<VyboseGuildFlags> = [];
 
   if (guild.unavailable) flags.push(VyboseGuildFlags.UNAVAILABLE);
   if (client.isOwner(guild.ownerId)) flags.push(VyboseGuildFlags.OWNED);
@@ -469,10 +468,9 @@ export enum VyboseUserFlags {
   SELF = "[S]",
   OWNER = "[O]",
   MARKED = "[M]",
-  NONE = "[ ]",
 }
 export function getVyboseUserFlags(user: User | Member) {
-  let flags: Array<VyboseUserFlags> = [VyboseUserFlags.NONE];
+  let flags: Array<VyboseUserFlags> = [];
   if (user.bot) flags.push(VyboseUserFlags.BOT);
   if (user.id === client.user!.id) flags.push(VyboseUserFlags.SELF);
   if (client.isOwner(user.id)) flags.push(VyboseUserFlags.OWNER);
@@ -525,4 +523,26 @@ export function getDuplicates<T>(payload: Array<T>): Array<T> {
     set.add(item);
   }
   return duplicates;
+}
+export function isSnowflake(value: string): boolean {
+  if (16 <= value.length && value.length <= 21) {
+    return !!parseInt(value);
+  }
+  return false;
+}
+export function timeout<U extends Array<unknown>, R>(
+  ms: number,
+  callee: (...args: U) => Promise<R>,
+  ...args: U
+): Promise<R | "timed-out"> {
+  // Create a promise that rejects in <ms> milliseconds
+  let timeout = new Promise<"timed-out">((resolve, _reject) => {
+    let id = setTimeout(() => {
+      clearTimeout(id);
+      resolve("timed-out");
+    }, ms);
+  });
+
+  // Returns a race between our timeout and the passed in promise
+  return Promise.race([callee(...args), timeout]);
 }

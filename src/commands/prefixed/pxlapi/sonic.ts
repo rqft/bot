@@ -1,5 +1,5 @@
 import { Command, CommandClient } from "detritus-client";
-import { PxlApi } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { editOrReply } from "../../../functions/tools";
@@ -22,7 +22,7 @@ export default class PxlSonicCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: PxlSonicArgs) {
-    const pxl = new PxlApi(Secrets.Key.pxlAPI);
+    const pxl = new APIs.PxlAPI.API(Secrets.Key.pxlAPI);
 
     const sonic = await pxl.sonic(args.text);
     const embed = await createImageEmbed(

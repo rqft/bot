@@ -47,16 +47,12 @@ export default class AbstractEmailValidationCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractEmailValidationArgs) {
-    const abs = new Pariah({
-      baseUrl: "https://emailvalidation.abstractapi.com/",
-    });
+    const abs = new Pariah(new URL("https://emailvalidation.abstractapi.com/"));
 
-    const email = await abs.getJSON<AbstractEmail>(
-      `/v1/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.EMAIL_VALIDATION,
-        email: args.email,
-      })}`
-    );
+    const email = await abs.get.json<AbstractEmail>(`/v1/`, {
+      api_key: Secrets.AbstractKeys.EMAIL_VALIDATION,
+      email: args.email,
+    });
     if (!email.email || email.deliverability === "UNDELIVERABLE") {
       throw new Err("No email found", { status: 404 });
     }

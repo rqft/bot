@@ -10,6 +10,7 @@ import {
 import { Message } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
 import { GIF, Image } from "imagescript";
+import Jimp from "jimp";
 import { Brand } from "../../enums/brands";
 import { createBrandEmbed } from "../../functions/embed";
 import { Err } from "../../functions/error";
@@ -32,13 +33,14 @@ export interface CommandOptionsExtra extends CommandOptions {
   metadata: CommandMetadata;
 }
 export class BaseCommand extends Command {
+  public expensive: boolean = false;
   public metadata: CommandMetadata;
   constructor(client: CommandClient, options: CommandOptionsExtra) {
     super(
       client,
       Object.assign(
         {
-          triggerTypingAfter: 0,
+          triggerTypingAfter: 1000,
           ratelimits: [
             { duration: 2500, limit: 3, type: "user" },
             { duration: 5000, limit: 10, type: "channel" },
@@ -59,7 +61,14 @@ export class BaseCommand extends Command {
       options.metadata
     );
   }
-
+  async onBeforeRun(context: Context, _args: ParsedArgs) {
+    await editOrReply(
+      context,
+      "ok, processing" + (this.expensive ? " (this may take a while)" : "")
+    );
+    context.channel?.triggerTyping();
+    return true;
+  }
   run(
     _context: Context,
     _args: ParsedArgs = {}
@@ -146,6 +155,9 @@ export interface ImageScriptAnimationArgs {
 }
 export interface ImageScriptFrameArgs {
   image: Image;
+}
+export interface JimpArgs {
+  image: Jimp;
 }
 export function Metadata(
   type: CommandTypes,

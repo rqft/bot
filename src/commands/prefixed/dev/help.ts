@@ -9,7 +9,7 @@ import { commands } from "../../../globals";
 import { BaseCommand, CommandTypes, UtilityMetadata } from "../basecommand";
 
 export interface HelpArgs {
-  commands?: Array<Command.Command>;
+  commands?: Array<BaseCommand>;
 }
 export default class HelpCommand extends BaseCommand {
   constructor(client: CommandClient) {
@@ -58,5 +58,50 @@ export default class HelpCommand extends BaseCommand {
 
       return await paginator.start();
     }
+
+    const paginator = new Paginator(context, {
+      pageLimit: args.commands.length,
+      onPage(page: number) {
+        const command = args.commands![page - 1]!;
+        const embed = createBrandEmbed(Brand.VYBOSE, context, true);
+        embed.setTitle(command.fullName);
+        {
+          const description: Array<string> = [];
+          if (command.metadata.description) {
+            description.push(command.metadata.description);
+          }
+
+          if (command.metadata.nsfw) {
+            description.push(`${Markup.bold("Nsfw")}: Yes`);
+          }
+
+          if (command.metadata.type) {
+            description.push(
+              `${Markup.bold("Type")}: ${Markup.codestring(
+                command.metadata.type
+              )}`
+            );
+          }
+
+          embed.setDescription(description.join("\n"));
+        }
+
+        embed.addField("Usage", Markup.codeblock(command.metadata.usage));
+
+        if (command.metadata.examples.length) {
+          embed.addField(
+            "Examples",
+            Markup.codeblock(
+              command.metadata.examples
+                .map((value) => command.fullName + " " + value)
+                .join("\n")
+            )
+          );
+        }
+        return embed;
+      },
+    });
+
+    return await paginator.start();
   }
 }

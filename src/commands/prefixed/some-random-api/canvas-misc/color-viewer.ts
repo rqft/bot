@@ -1,5 +1,5 @@
 import { Command, CommandClient } from "detritus-client";
-import { SomeRandomAPI } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createImageEmbed } from "../../../../functions/embed";
 import { Parameters } from "../../../../functions/parameters";
@@ -21,7 +21,7 @@ export default class SRAColorViewerCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: SRAColorViewerArgs) {
-    const sra = new SomeRandomAPI();
+    const sra = new APIs.SomeRandomApi.API();
     const color = await sra.colorViewer(args.color);
     const embed = await createImageEmbed(
       context,

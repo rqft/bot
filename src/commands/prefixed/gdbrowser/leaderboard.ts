@@ -13,7 +13,7 @@ export interface GDLeaderboardArgs {
 export default class GDLeaderboardCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "gleaderboard",
+      name: "gdleaderboard",
       label: "count",
       type: "number",
       default: 100,

@@ -1,20 +1,20 @@
 import { Command, CommandClient } from "detritus-client";
-import { SomeRandomAPI } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ToolsMetadata } from "../../basecommand";
+import { BaseCommand, FunMetadata } from "../../basecommand";
 export default class SRAMemeCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "meme",
-      metadata: ToolsMetadata("Get a meme"),
+      metadata: FunMetadata("Get a meme"),
     });
   }
   async run(context: Command.Context, _args: {}) {
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
-    const sra = new SomeRandomAPI();
+    const sra = new APIs.SomeRandomApi.API();
     const { caption, image, category } = await sra.meme();
 
     embed.setDescription(`${category} meme`);

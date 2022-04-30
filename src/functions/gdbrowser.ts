@@ -149,13 +149,10 @@ export interface LeaderboardResult {
     glow: boolean;
   };
 }
-
-export class GDBrowser {
-  public raw: Pariah;
+export const Url = new URL("https://gdbrowser.com/");
+export class GDBrowser extends Pariah {
   constructor() {
-    this.raw = new Pariah({
-      baseUrl: "https://gdbrowser.com",
-    });
+    super(Url);
   }
   public async levels(
     levelId: string,
@@ -168,19 +165,26 @@ export class GDBrowser {
     download: false
   ): Promise<(LevelResult & Partial<LevelSpecialResult>) | -1>;
   public async levels(levelId: string, download = false) {
-    return this.raw.getJSON<
+    return this.get.json<
       | (LevelResult & Partial<LevelSpecialResult>)
       | (LevelResult & LevelDownloadedResult & Partial<LevelSpecialResult>)
       | -1
-    >("/api/level/" + levelId + this.raw.toUrlParams({ download }));
+    >("/api/level/:levelId", {
+      ":levelId": levelId,
+      download: download ? "true" : "false",
+    });
   }
   public async profiles(user: string) {
-    return this.raw.getJSON<ProfileResult | -1>("/api/profile/" + user);
+    return this.get.json<ProfileResult | -1>("/api/profile/:user", {
+      ":user": user,
+    });
   }
   public async icon(user: string, form: IconForm = IconForm.CUBE, size = 128) {
-    return this.raw.getArrayBuffer(
-      "/icon/" + user + this.raw.toUrlParams({ form, size })
-    );
+    return this.get.arrayBuffer("/icon/:user", {
+      ":user": user,
+      form,
+      size,
+    });
   }
   public async leaderboard(
     count = 100,
@@ -189,8 +193,11 @@ export class GDBrowser {
       accuracy: false,
     }
   ) {
-    return this.raw.getJSON<LeaderboardResult[] | -1>(
-      "/api/leaderboard/" + this.raw.toUrlParams({ count, ...type })
-    );
+    return this.get.json<LeaderboardResult[] | -1>("/api/leaderboard/", {
+      count,
+      type: `${type.creator ? "creator" : ""}${
+        type.accuracy ? "accuracy" : ""
+      }`,
+    });
   }
 }

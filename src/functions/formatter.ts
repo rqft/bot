@@ -6,7 +6,7 @@ import {
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { User } from "detritus-client/lib/structures";
 import { Markup } from "detritus-client/lib/utils";
-import { Imagga, SomeRandomAPI } from "pariah";
+import { Imagga, SomeRandomApi } from "pariah/dist/lib";
 import { Brand } from "../enums/brands";
 import { CustomEmojis } from "../enums/customEmojis";
 import { Emojis } from "../enums/emojis";
@@ -22,21 +22,13 @@ import {
   padCodeBlockFromRows,
   storeImage,
 } from "./tools";
-export enum Animals {
-  BIRD = "bird",
-  CAT = "cat",
-  DOG = "dog",
-  FOX = "fox",
-  KANGAROO = "kangaroo",
-  RED_PANDA = "redPanda",
-  KOALA = "koala",
-  PANDA = "panda",
-  RACCOON = "raccoon",
-}
 
-export async function someRandomApiAnimal(context: Context, animal: Animals) {
-  const sra = new SomeRandomAPI();
-  const animals = await sra[animal]();
+export async function someRandomApiAnimal(
+  context: Context,
+  animal: SomeRandomApi.Animals
+) {
+  const sra = new SomeRandomApi.API();
+  const animals = await sra.animal(animal);
   const embed = await createImageEmbed(
     context,
     animals.image,
@@ -50,15 +42,12 @@ export async function someRandomApiAnimal(context: Context, animal: Animals) {
   return await editOrReply(context, { embed });
 }
 
-export enum Animus {
-  WINK = "wink",
-  PAT = "pat",
-  HUG = "hug",
-}
-
-export async function someRandomApiAnimu(context: Context, animu: Animus) {
-  const sra = new SomeRandomAPI();
-  const animus = await sra[animu]();
+export async function someRandomApiAnimu(
+  context: Context,
+  animu: SomeRandomApi.Animes
+) {
+  const sra = new SomeRandomApi.API();
+  const animus = await sra.anime(animu);
   const embed = await createImageEmbed(
     context,
     animus.link,
@@ -298,11 +287,16 @@ export async function imageOcr(
   context: Context | InteractionContext,
   url: string
 ) {
+  if (context) {
+    throw new Err("The Imagga /text endpoint is currently unavailable. :(", {
+      status: 500,
+    });
+  }
   const embed = createBrandEmbed(Brand.IMAGGA, context);
   embed.setThumbnail(url);
 
-  const im = new Imagga(Secrets.Key.imaggaAuth);
-  const text = await im.text({ image_url: url });
+  const im = new Imagga.API(Secrets.Key.imaggaAuth);
+  const text = await im.readText(url);
   if (text.status.type === "error") {
     embed.setDescription(Markup.codeblock(text.status.text));
     return embed;
@@ -327,9 +321,9 @@ export async function imageTags(
   context: Context | InteractionContext,
   url: string
 ) {
-  const im = new Imagga(Secrets.Key.imaggaAuth);
+  const im = new Imagga.API(Secrets.Key.imaggaAuth);
 
-  const tags = await im.tags({ image_url: url, limit: 20 }, "");
+  const tags = await im.tags(url, { limit: 10 });
   if (tags.status.type === "error") throw new Err(tags.status.text);
 
   const embed = createBrandEmbed(Brand.IMAGGA, context);
@@ -364,51 +358,15 @@ export async function textPing() {
   }
   return pings.join("\n");
 }
-export enum Overlays {
-  GAY = "/gay",
-  GLASS = "/glass",
-  WASTED = "/wasted",
-  MISSION_PASSED = "/passed",
-  JAIL = "/jail",
-  COMRADE = "/comrade",
-  TRIGGERED = "/triggered",
-}
-export enum Filters {
-  GREYSCALE = "/greyscale",
-  INVERT = "/invert",
-  INVERT_GREYSCALE = "/invertgreyscale",
-  BRIGHTNESS = "/brightness",
-  THRESHOLD = "/threshold",
-  SEPIA = "/sepia",
-  RED = "/red",
-  GREEN = "/green",
-  BLOO = "/blue",
-  BLURPLE = "/blurple",
-  BLURPLE2 = "/blurple2",
-  COLOR = "/color",
-}
-export enum Canvas {
-  PIXELATE = "/pixelate",
-  BLUR = "/blur",
-  FAKE_YOUTUBE_COMMENT = "/youtube-comment",
-  FAKE_TWEET = "/tweet",
-  ITS_SO_STUPID = "/its-so-stupid",
-  SIMPCARD = "/simpcard",
-  HORNY = "/horny",
-  LOLI_POLICE = "/lolice",
-  COLOR_VIEWER = "/colorviewer",
-}
 export async function someRandomApiCanvas(
   context: Context,
   image: Buffer,
-  endpoint: Overlays | Filters | Canvas,
+  endpoint: SomeRandomApi.Canvas,
   args: object
 ) {
-  const sra = new SomeRandomAPI();
+  const sra = new SomeRandomApi.API();
   const imageAttach = await storeImage(image, "attachment.gif");
-  const a = Object.assign({ avatar: imageAttach.url! }, args);
-  const canvas = await sra.canvas(endpoint, a);
-  console.log(canvas);
+  const canvas = await sra.canvas(endpoint, imageAttach.url!, args);
   const embed = await createImageEmbed(
     context,
     canvas,
@@ -420,14 +378,14 @@ export async function someRandomApiCanvas(
 export async function someRandomApiOverlay(
   context: Context,
   image: Buffer,
-  endpoint: Overlays
+  endpoint: SomeRandomApi.CanvasOverlay
 ) {
   return await someRandomApiCanvas(context, image, endpoint, {});
 }
 export async function someRandomApiFilter(
   context: Context,
   image: Buffer,
-  endpoint: Filters,
+  endpoint: SomeRandomApi.CanvasFilter,
   args: object
 ) {
   return await someRandomApiCanvas(context, image, endpoint, args);
@@ -435,8 +393,12 @@ export async function someRandomApiFilter(
 export async function someRandomApiCanvasMisc(
   context: Context,
   image: Buffer,
-  endpoint: Canvas,
+  endpoint: SomeRandomApi.CanvasMisc,
   args: object
 ) {
   return await someRandomApiCanvas(context, image, endpoint, args);
 }
+export const Overlays = SomeRandomApi.CanvasOverlay;
+export const Filters = SomeRandomApi.CanvasFilter;
+export const Canvas = SomeRandomApi.CanvasMisc;
+export const Animals = SomeRandomApi.Animals;

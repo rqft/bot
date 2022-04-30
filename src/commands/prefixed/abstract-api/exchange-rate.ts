@@ -38,16 +38,12 @@ export default class AbstractExchangeRateCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractExchangeRateArgs) {
-    const abs = new Pariah({
-      baseUrl: "https://exchange-rates.abstractapi.com/",
+    const abs = new Pariah(new URL("https://exchange-rates.abstractapi.com/"));
+    const rate = await abs.get.json<AbstractExchangeRate>(`/v1/live/`, {
+      api_key: Secrets.AbstractKeys.EXCHANGE_RATES,
+      base: args.from,
+      target: args.to,
     });
-    const rate = await abs.getJSON<AbstractExchangeRate>(
-      `/v1/live/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.EXCHANGE_RATES,
-        base: args.from,
-        target: args.to,
-      })}`
-    );
     if (!rate.base || !rate.exchange_rates) throw new Err("no rates found");
     const embed = createBrandEmbed(Brand.ABSTRACT, context);
     embed.setDescription(

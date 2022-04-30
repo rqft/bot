@@ -1,6 +1,5 @@
 import { Command, CommandClient } from "detritus-client";
-import { PxlApi } from "pariah";
-import { FlagType } from "pariah/dist";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
@@ -8,46 +7,8 @@ import { editOrReply, storeImage } from "../../../functions/tools";
 import { Secrets } from "../../../secrets";
 import { BaseCommand, ImageArgs, ImageMetadata } from "../basecommand";
 
-export const flagChoices: Array<FlagType> = [
-  "asexual",
-  "aromantic",
-  "bisexual",
-  "pansexual",
-  "gay",
-  "lesbian",
-  "trans",
-  "nonbinary",
-  "genderfluid",
-  "genderqueer",
-  "polysexual",
-  "austria",
-  "belgium",
-  "botswana",
-  "bulgaria",
-  "ivory",
-  "estonia",
-  "france",
-  "gabon",
-  "gambia",
-  "germany",
-  "guinea",
-  "hungary",
-  "indonesia",
-  "ireland",
-  "italy",
-  "luxembourg",
-  "monaco",
-  "nigeria",
-  "poland",
-  "russia",
-  "romania",
-  "sierraleone",
-  "thailand",
-  "ukraine",
-  "yemen",
-];
 export interface PxlFlagArgs extends ImageArgs {
-  flag: FlagType;
+  flag: APIs.PxlAPI.Flags;
   opacity: number;
 }
 export default class PxlFlagCommand extends BaseCommand {
@@ -64,7 +25,7 @@ export default class PxlFlagCommand extends BaseCommand {
         {
           name: "flag",
           type: "string",
-          choices: flagChoices,
+          choices: Object.values(APIs.PxlAPI.Flags),
           default: "default",
         },
         {
@@ -81,7 +42,7 @@ export default class PxlFlagCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: PxlFlagArgs) {
-    const pxl = new PxlApi(Secrets.Key.pxlAPI);
+    const pxl = new APIs.PxlAPI.API(Secrets.Key.pxlAPI);
     const imageAttach = await storeImage(args.image, "attachment.gif");
     const flag = await pxl.flag([imageAttach.url!], args.flag, args.opacity);
     const embed = await createImageEmbed(

@@ -107,11 +107,24 @@ export async function findImage(
       (await context.channel?.fetchMessages({ limit: 100 })) ?? []
     );
 
+  try {
+    let copy = query;
+    if (!copy.startsWith("http")) copy = `http://${copy}`;
+    const urlTry = new URL(copy);
+    if (urlTry.host) {
+      if (TRUSTED_URLS.includes(urlTry.host)) {
+        return copy;
+      }
+    }
+  } catch (e) {}
+
   const userTry = await Parameters.user(query, context);
   if (userTry) return userTry.avatarUrlFormat(type, { size: 1024 });
 
   const emojiTry = Parameters.emojiImage(query);
-  if (emojiTry) return emojiTry.url;
+  if (emojiTry) {
+    return emojiTry.url;
+  }
 
-  throw new Err("unable to find image");
+  throw new Err("Unable to find image", { status: 404 });
 }

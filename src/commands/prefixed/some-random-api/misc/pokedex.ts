@@ -1,11 +1,12 @@
 import { CommandClient } from "detritus-client";
 import { Context } from "detritus-client/lib/command";
-import { SomeRandomAPI } from "pariah";
+import { SomeRandomApi } from "pariah/dist/lib";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
+import { Err } from "../../../../functions/error";
 import { Markup } from "../../../../functions/markup";
 import { editOrReply } from "../../../../functions/tools";
-import { BaseCommand, ToolsMetadata } from "../../basecommand";
+import { BaseCommand, FunMetadata } from "../../basecommand";
 export interface SRAPokedexArgs {
   pokemon: string;
 }
@@ -16,7 +17,7 @@ export default class SRAPokedexCommand extends BaseCommand {
       label: "pokemon",
       type: "string",
       required: true,
-      metadata: ToolsMetadata(
+      metadata: FunMetadata(
         "Get information about a pokemon",
         "<pokemon: string>",
         ["bulbasaur", "ivysaur"]
@@ -24,7 +25,10 @@ export default class SRAPokedexCommand extends BaseCommand {
     });
   }
   async run(context: Context, args: SRAPokedexArgs) {
-    const pokemon = await new SomeRandomAPI().pokedex(args.pokemon);
+    const pokemon = await new SomeRandomApi.API().pokemon(args.pokemon);
+    if ("error" in pokemon) {
+      throw new Err(pokemon.error);
+    }
 
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
     embed.setTitle(`${pokemon.name} (${pokemon.id})`);

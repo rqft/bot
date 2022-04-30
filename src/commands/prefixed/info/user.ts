@@ -1,7 +1,7 @@
 import { Command, CommandClient } from "detritus-client";
 import { User } from "detritus-client/lib/structures";
 import { infoUser } from "../../../functions/formatter";
-import { DefaultParameters, Parameters } from "../../../functions/parameters";
+import { Parameters } from "../../../functions/parameters";
 import { editOrReply } from "../../../functions/tools";
 import { BaseCommand, UtilityMetadata } from "../basecommand";
 export interface UserArgs {
@@ -14,7 +14,7 @@ export default class UserCommand extends BaseCommand {
       name: "user",
       priority: 4587,
       type: Parameters.user,
-      default: DefaultParameters.user,
+      default: Parameters.Default.user,
       required: true,
       metadata: UtilityMetadata("Get user info", "<user: User>", [
         "insyri",

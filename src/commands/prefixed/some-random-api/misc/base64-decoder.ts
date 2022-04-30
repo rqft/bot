@@ -1,6 +1,6 @@
 import { CommandClient } from "detritus-client";
 import { Context } from "detritus-client/lib/command";
-import { SomeRandomAPI } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../../enums/brands";
 import { createBrandEmbed } from "../../../../functions/embed";
 import { Markup } from "../../../../functions/markup";
@@ -23,7 +23,7 @@ export default class SRABase64DecodeCommand extends BaseCommand {
     });
   }
   async run(context: Context, args: SRABase64DecodeArgs) {
-    const { text } = await new SomeRandomAPI().base64Decode(args.text);
+    const { text } = await new APIs.SomeRandomApi.API().base64Decode(args.text);
 
     const embed = createBrandEmbed(Brand.SOME_RANDOM_API, context);
     embed.setTitle("Base64 Decoding");

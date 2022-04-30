@@ -45,12 +45,14 @@
     "nodemon": "^2.0.14",
     "object-sizeof": "^1.6.1",
     "openai-api": "^1.2.6",
-    "pariah": "^2.3.0",
+    "pariah": "^2.5.7",
     "sequelize": "^6.5.0",
     "sqlite3": "^5.0.2",
+    "ts-results": "^3.3.0",
     "tsd-jsdoc": "^2.5.0"
   },
   "dependencies": {
+    "detritus-client-socket": "^0.8.4-beta.2",
     "dotenv": "^16.0.0",
     "jimp": "^0.16.1",
     "lodash.isequal": "^4.5.0",

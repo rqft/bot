@@ -1,6 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { Markup } from "detritus-client/lib/utils";
-import { Imagga } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createBrandEmbed } from "../../../functions/embed";
 import { Err } from "../../../functions/error";
@@ -20,13 +20,11 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: ImageUrlArgs) {
-    const im = new Imagga(Secrets.Key.imaggaAuth);
-    const categories = await im.categories(
-      { image_url: args.image },
-      "personal_photos"
-    );
-    if (categories.status.type === "error")
+    const im = new APIs.Imagga.API(Secrets.Key.imaggaAuth);
+    const categories = await im.categories(args.image, "personal_photos");
+    if (categories.status.type === "error") {
       throw new Err(categories.status.text);
+    }
 
     const embed = createBrandEmbed(Brand.IMAGGA, context);
     embed.setThumbnail(args.image);

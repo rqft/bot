@@ -6,7 +6,7 @@ import {
 } from "../../baseinteraction";
 
 export default class UserInformationCommand extends BaseContextMenuMessageCommand {
-  name = "User Information";
+  name = "User Information (Message)";
 
   async run(context: InteractionContext, args: ContextMenuMessageArgs) {
     const embed = await infoUser(context, args.message.author);

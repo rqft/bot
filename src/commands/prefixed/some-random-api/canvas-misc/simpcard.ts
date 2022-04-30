@@ -29,7 +29,7 @@ export default class SRASimpCardCommand extends BaseCommand {
     const embed = await someRandomApiCanvasMisc(
       context,
       args.image,
-      Canvas.SIMPCARD,
+      Canvas.SIMP_CARD,
       args
     );
     return await editOrReply(context, { embed });

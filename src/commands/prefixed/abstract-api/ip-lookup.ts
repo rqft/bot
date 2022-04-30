@@ -71,15 +71,11 @@ export default class AbstractIPGeolocationCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: AbstractIPGeolocationArgs) {
-    const abs = new Pariah({
-      baseUrl: "https://ipgeolocation.abstractapi.com/",
+    const abs = new Pariah(new URL("https://ipgeolocation.abstractapi.com/"));
+    const ip = await abs.get.json<AbstractIP>(`/v1/`, {
+      api_key: Secrets.AbstractKeys.IP_GEOLOCATION,
+      ip_address: args.ip,
     });
-    const ip = await abs.getJSON<AbstractIP>(
-      `/v1/${abs.toUrlParams({
-        api_key: Secrets.AbstractKeys.IP_GEOLOCATION,
-        ip_address: args.ip,
-      })}`
-    );
     if (!ip.ip_address) throw new Err("No IP found");
     if (!ip.latitude || !ip.longitude)
       throw new Err("This IP is not geolocated");

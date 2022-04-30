@@ -1,6 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { Locales } from "detritus-client/lib/constants";
-import { PxlApi } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { createImageEmbed } from "../../../functions/embed";
 import { Parameters } from "../../../functions/parameters";
@@ -9,9 +9,9 @@ import { Secrets } from "../../../secrets";
 import { BaseCommand, ToolsMetadata } from "../basecommand";
 export interface PxlScreenshotArgs {
   url: URL;
-  browser: "chromium" | "firefox";
+  browser: APIs.PxlAPI.ScreenshotBrowser;
   fullpage: boolean;
-  theme: "light" | "dark";
+  theme: APIs.PxlAPI.ScreenshotTheme;
   locale: Locales;
 }
 export default class PxlScreenshotCommand extends BaseCommand {
@@ -57,11 +57,11 @@ export default class PxlScreenshotCommand extends BaseCommand {
     });
   }
   async run(context: Command.Context, args: PxlScreenshotArgs) {
-    const pxl = new PxlApi(Secrets.Key.pxlAPI);
+    const pxl = new APIs.PxlAPI.API(Secrets.Key.pxlAPI);
 
     const screenshot = await pxl.screenshot(args.url.toString(), {
       browser: args.browser,
-      fullpage: args.fullpage,
+      fullPage: args.fullpage,
       locale: args.locale,
       theme: args.theme,
     });

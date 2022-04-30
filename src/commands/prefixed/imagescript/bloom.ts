@@ -1,6 +1,6 @@
 import { Command, CommandClient } from "detritus-client";
 import { Image } from "imagescript";
-import { SomeRandomAPI } from "pariah";
+import { APIs } from "pariah";
 import { Brand } from "../../../enums/brands";
 import { Converter } from "../../../functions/converter";
 import { createImageEmbed } from "../../../functions/embed";
@@ -40,7 +40,7 @@ export default class BloomCommand extends BaseCommand {
 
       // fuck this
       {
-        const sra = new SomeRandomAPI();
+        const sra = new APIs.SomeRandomApi.API();
         const buf = await split2.encode(undefined);
         const attach = await storeImage(
           Converter.Data.ArrayBuffer.toBuffer(buf),
@@ -59,7 +59,7 @@ export default class BloomCommand extends BaseCommand {
       context,
       await Converter.ImageScript.Animation.toBuffer(animation),
       undefined,
-      Brand.VYBOSE
+      Brand.IMAGESCRIPT
     );
     return await editOrReply(context, { embed });
   }
