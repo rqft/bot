@@ -2,7 +2,7 @@
   "0": "@everyone",
   "99": "99",
   "a": "b",
-  "walking": "good",
+  "walking": "best",
   "hello": "world 👋🏿",
   "gn": "<a:bnzy:934668987969708082>",
   "u": null,
@@ -32,9 +32,8 @@
   "‫ ‫ ‫ ‫ ‫ ‫ ‫ ‫ ​ \"": "hello",
   "bibi": "﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽",
   "zero-width-spaec": "​  (\\u200b)",
-  "m": "go pirate games terms of agreement is not found any way",
+  "m": "a",
   "\\u005c": "(args) ← stupid",
-  "zws": "(string:\\u200b)",
   "❤️❤️💀💀": "tetst",
   "rules": "\"channelId\": 815052409285902336,\n  \"components\": [],\n  \"content\": \"__**Rules:**__\\n```\\n1. Use your common sense\\n2. Abide by Discord Terms of Service and Guidelines\\n3. Use English only\\n4. Keep the server SFW\\n5. Be nice\\n6. Don’t post stuff that crashes Discord\\n7. No dating\\n8. DO NOT google ass syst without safe searching\\n9. DO NOT leave after joining or you are dumb\\n10. buy the merch https://www.redbubble.com/shop/ap/91304922\\n```\\n\\n__**Notes:**__\\n```\\n1. You can use bots in general if they relate to the conversation, just don’t spam them\\n```\\n\\ndiscord.gg/JBvJbBEDpA\",\n  \"embeds\": [],\n  \"flags\": 0,\n  \"id\": 948741475410272298,\n  \"mentionEveryone\": false,\n  \"mentionRoles\": [],\n  \"mentions\": [],\n  \"pinned\": false",
   "undefined": "❌ `Error (404): Tag 'undefined' does exist`",
@@ -44,5 +43,10 @@
   "foo": "(user:tess) bar",
   "ip": "https://evan.lol/trace/ip.png?(args)",
   "http": "https://http.cat/(if:(args),=, ,404,(args))",
-  "jacher": "https://i.jacher.io/cat.gif"
+  "jacher": "https://i.jacher.io/cat.gif",
+  "marcrock": "22",
+  "abc": "(user.id:tess)",
+  "pat": "https://pfpet.herokuapp.com/d/(user.id:(args)).gif",
+  "rav": "cute",
+  "juni": "https://juniper-plushes.herokuapp.com/random"
 }

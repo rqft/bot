@@ -3,7 +3,7 @@ config();
 const env = process.env;
 
 export const Secrets = {
-  BOT_TOKEN: env.TOKEN!,
+  Token: env.TOKEN!,
   AltTokens: [],
   UserToken: env.USER_TOKEN!,
   Key: {
@@ -23,4 +23,6 @@ export const Secrets = {
     EMAIL_VALIDATION: env.ABSTRACT_EMAIL_VALIDATION_KEY!,
     EXCHANGE_RATES: env.ABSTRACT_EXCHANGE_RATES_KEY!,
   },
+  InteractionGuilds: env.INTERACTION_GUILDS!.split(","),
+  DefaultPrefix: env.DEFAULT_PREFIX!,
 };

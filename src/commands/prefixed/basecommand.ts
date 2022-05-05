@@ -1,4 +1,4 @@
-import { CommandClient } from "detritus-client/lib";
+import { CommandClient } from "detritus-client";
 import {
   Command,
   CommandOptions,
@@ -6,197 +6,149 @@ import {
   CommandRatelimitMetadata,
   Context,
   ParsedArgs,
+  ParsedErrors,
 } from "detritus-client/lib/command";
-import { Message } from "detritus-client/lib/structures";
-import { Markup } from "detritus-client/lib/utils";
-import { GIF, Image } from "imagescript";
-import Jimp from "jimp";
-import { Brand } from "../../enums/brands";
-import { createBrandEmbed } from "../../functions/embed";
-import { Err } from "../../functions/error";
-import { editOrReply, expandMs, removeSecrets } from "../../functions/tools";
-export enum CommandTypes {
-  IMAGE = "image",
-  FUN = "fun",
-  UTILITY = "utility",
-  TOOLS = "tools",
-  OTHER = "other",
-}
-export interface CommandMetadata {
-  usage: string;
-  examples: Array<string>;
-  nsfw?: boolean;
-  type?: CommandTypes;
-  description: string;
-}
+import { CommandRatelimitTypes } from "detritus-client/lib/constants";
+import { CommandMetadata } from "../../tools/command-metadata";
+import { Err } from "../../tools/error";
+import { Markdown } from "../../tools/markdown";
+import { editOrReply, permissionsErrorList } from "../../tools/tools";
+
 export interface CommandOptionsExtra extends CommandOptions {
   metadata: CommandMetadata;
 }
-export class BaseCommand extends Command {
-  public expensive: boolean = false;
+
+export const DefaultOptions: Partial<CommandOptionsExtra> = {
+  triggerTypingAfter: 1000,
+  ratelimits: [
+    { duration: 2500, limit: 3, type: CommandRatelimitTypes.USER },
+    { duration: 5000, limit: 10, type: CommandRatelimitTypes.CHANNEL },
+    { duration: 10000, limit: 20, type: CommandRatelimitTypes.GUILD },
+  ],
+};
+export class BaseCommand<T = ParsedArgs> extends Command<T> {
+  readonly createdAtUnix: number = Date.now();
+  readonly createdAt: Date = new Date(this.createdAtUnix);
+  protected expensive: boolean = false;
   public metadata: CommandMetadata;
   constructor(client: CommandClient, options: CommandOptionsExtra) {
-    super(
-      client,
-      Object.assign(
-        {
-          triggerTypingAfter: 1000,
-          ratelimits: [
-            { duration: 2500, limit: 3, type: "user" },
-            { duration: 5000, limit: 10, type: "channel" },
-            { duration: 10000, limit: 20, type: "guild" },
-          ],
-        },
-        options
-      )
-    );
-    this.metadata = Object.assign<CommandMetadata, CommandMetadata>(
-      {
-        usage: "",
-        examples: [],
-        nsfw: false,
-        type: CommandTypes.OTHER,
-        description: "",
-      },
-      options.metadata
-    );
+    super(client, Object.assign(DefaultOptions, options));
+    this.metadata = options.metadata;
   }
-  async onBeforeRun(context: Context, _args: ParsedArgs) {
+
+  private get commandUsage() {
+    const metadata = this.metadata;
+    if (typeof metadata.usage === "string") {
+      return `${this.fullName} ${metadata.usage}`.trim();
+    }
+    return this.fullName;
+  }
+
+  async onBeforeRun(context: Context, _args: unknown) {
     await editOrReply(
       context,
       "ok, processing" + (this.expensive ? " (this may take a while)" : "")
     );
-    context.channel?.triggerTyping();
     return true;
   }
-  run(
-    _context: Context,
-    _args: ParsedArgs = {}
-  ): Promise<void | Message | null> {
-    throw new Err("Command not implemented", { status: 501 });
-  }
-  onError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
-    console.log(error);
 
-    return editOrReply(context, removeSecrets(Err.from(error).toThrown()));
+  async onCancelRun(context: Context, _args: unknown) {
+    return await editOrReply(
+      context,
+      Markdown.Format.codeblock(this.commandUsage).toString()
+    );
   }
-  onRunError(context: Context, _args: ParsedArgs = {}, error: Err | Error) {
-    console.log(error);
-    return editOrReply(context, removeSecrets(Err.from(error).toThrown()));
+
+  async onPermissionsFail(context: Context, failed: Array<bigint>) {
+    const permissions = permissionsErrorList(failed);
+
+    return await editOrReply(
+      context,
+      `hey you need ${permissions.join(", ")} to run this`
+    );
   }
-  onTypeError(
+
+  async onPermissionsFailClient(context: Context, failed: Array<bigint>) {
+    const permissions = permissionsErrorList(failed);
+
+    return await editOrReply(
+      context,
+      `hey i need ${permissions.join(", ")} to run this`
+    );
+  }
+
+  async onRatelimit(
     context: Context,
-    _args: ParsedArgs,
-    errors: Record<string, Error>
+    ratelimits: Array<CommandRatelimitInfo>,
+    _metadata: CommandRatelimitMetadata
   ) {
-    const embed = createBrandEmbed(Brand.VYBOSE, context, false);
+    if (!context.canReply) {
+      return;
+    }
+
+    let replied: boolean = false;
+
+    for (const { item, ratelimit, remaining } of ratelimits) {
+      if (remaining < 1000 || replied || item.replied) {
+        // skip replying
+        item.replied = true;
+        continue;
+      }
+
+      replied = item.replied = true;
+
+      let noun: string = "you funny people are";
+      switch (ratelimit.type) {
+        case CommandRatelimitTypes.CHANNEL: {
+          noun = "this channel is";
+          break;
+        }
+
+        case CommandRatelimitTypes.GUILD: {
+          noun = "this server is";
+          break;
+        }
+
+        case CommandRatelimitTypes.USER: {
+          noun = "you are";
+          break;
+        }
+      }
+
+      let content: string = `${noun} going really fast please slow down :( (wait ${Markdown.toTimeString(
+        remaining,
+        undefined,
+        false
+      )})`;
+
+      return await editOrReply(context, content);
+    }
+  }
+
+  async onRunError(context: Context, _args: T, error: Error | Err) {
+    return await editOrReply(context, Err.from(error).toThrown());
+  }
+
+  async onTypeError(context: Context, _args: T, errors: ParsedErrors) {
+    const description: Array<string> = [
+      "hey u have some wrong inputs, might want to fix them :D",
+      "\n",
+    ];
 
     const store: Record<string, string> = {};
-
-    const description: Array<string> = ["Invalid Arguments" + "\n"];
     for (const key in errors) {
-      const message = errors[key]!.message;
+      const value = errors[key];
+      const message = value.message;
+
       if (message in store) {
-        description.push(`❌ **${key}**: Same error as **${store[message]}**`);
+        description.push(`${key}: same as ${store[message]}`);
       } else {
-        description.push(`❌ **${key}**: ${message}`);
+        description.push(`${key}: ${message}`);
       }
+
       store[message] = key;
     }
 
-    embed.setDescription(description.join("\n"));
-
-    embed.addField("Command Usage", Markup.codeblock(this.metadata.usage));
-    return editOrReply(context, { embed });
+    return await editOrReply(context, description.join("\n"));
   }
-
-  onRatelimit(
-    context: Context,
-    ratelimits: Array<CommandRatelimitInfo>,
-    metadata: CommandRatelimitMetadata
-  ) {
-    const messages: Array<string> = [];
-    for (const { ratelimit, remaining } of ratelimits) {
-      let noun = "You are";
-      switch (ratelimit.type) {
-        case "channel":
-          noun = "This channel is";
-          break;
-        case "guild":
-          noun = "This guild is";
-          break;
-        case "user":
-          noun = "You are";
-          break;
-      }
-      let content: string;
-      if (metadata.global) {
-        content = `${noun} using commands too fast, wait ${expandMs(
-          remaining
-        )}`;
-      } else {
-        content = `${noun} using ${this.fullName} too fast, wait ${expandMs(
-          remaining
-        )}`;
-      }
-      messages.push(`❌ ${content}`);
-    }
-    if (messages.length) return context.reply(messages.join("\n"));
-  }
-}
-export interface ImageArgs {
-  image: Buffer;
-}
-export interface ImageUrlArgs {
-  image: string;
-}
-export interface ImageScriptAnimationArgs {
-  animation: GIF;
-}
-export interface ImageScriptFrameArgs {
-  image: Image;
-}
-export interface JimpArgs {
-  image: Jimp;
-}
-export function Metadata(
-  type: CommandTypes,
-  description: string,
-  usage: string,
-  examples: Array<string>
-): CommandMetadata {
-  return {
-    type,
-    description,
-    usage,
-    examples,
-  };
-}
-export function ImageMetadata(
-  description: string,
-  usage = "<image: Image>",
-  examples: Array<string> = ["", "insyri", "533757461706964993"]
-) {
-  return Metadata(CommandTypes.IMAGE, description, usage, examples);
-}
-export function ToolsMetadata(
-  description: string,
-  usage = "",
-  examples: Array<string> = []
-) {
-  return Metadata(CommandTypes.TOOLS, description, usage, examples);
-}
-export function FunMetadata(
-  description: string,
-  usage = "",
-  examples: Array<string> = []
-) {
-  return Metadata(CommandTypes.FUN, description, usage, examples);
-}
-export function UtilityMetadata(
-  description: string,
-  usage = "",
-  examples: Array<string> = []
-) {
-  return Metadata(CommandTypes.UTILITY, description, usage, examples);
 }

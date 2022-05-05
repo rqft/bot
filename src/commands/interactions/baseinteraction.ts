@@ -1,152 +1,66 @@
-import { Interaction, Structures } from "detritus-client";
 import {
-  ApplicationCommandOptionTypes,
-  ApplicationCommandTypes,
+  InteractionCallbackTypes,
   MessageFlags,
 } from "detritus-client/lib/constants";
-import { Markup } from "detritus-client/lib/utils";
-import { Parameters } from "../../functions/parameters";
-import { config } from "../../globalConf";
+import {
+  InteractionCommand,
+  InteractionContext,
+  ParsedArgs,
+} from "detritus-client/lib/interaction";
+import { BaseSet } from "detritus-utils";
+import { Secrets } from "../../secrets";
+import { Err } from "../../tools/error";
+import { permissionsErrorList } from "../../tools/tools";
 
-export class BaseInteractionCommand<
-  ParsedArgsFinished = Interaction.ParsedArgs
-> extends Interaction.InteractionCommand<ParsedArgsFinished> {
+export class BaseInteraction<T = ParsedArgs> extends InteractionCommand<T> {
   error = "Command";
-  constructor(data: Interaction.InteractionCommandOptions) {
-    super(
-      Object.assign<
-        Interaction.InteractionCommandOptions,
-        Interaction.InteractionCommandOptions
-      >(
-        {
-          guildIds: config.client.interactions.guildIds || [],
-          global: config.client.interactions.global,
-        },
-        data
-      )
+  guildIds = new BaseSet(Secrets.InteractionGuilds);
+  global = this.guildIds.length > 0;
+
+  onLoadingTrigger(context: InteractionContext) {
+    if (context.responded) {
+      return;
+    }
+
+    if (this.triggerLoadingAsEphemeral) {
+      return context.respond(
+        InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        { flags: MessageFlags.EPHEMERAL }
+      );
+    }
+
+    return context.respond(
+      InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
     );
   }
-}
 
-export class BaseSlashCommand<
-  ParsedArgsFinished = Interaction.ParsedArgs
-> extends BaseInteractionCommand<ParsedArgsFinished> {
-  error = "Slash Command";
-  type = ApplicationCommandTypes.CHAT_INPUT;
-
-  triggerLoadingAfter = 1000;
-}
-export interface ContextMenuMessageArgs {
-  message: Structures.Message;
-}
-
-export class BaseContextMenuMessageCommand extends BaseInteractionCommand<ContextMenuMessageArgs> {
-  error = "Message Context Menu";
-  type = ApplicationCommandTypes.MESSAGE;
-
-  global = true;
-  permissionsIgnoreClientOwner = true;
-  triggerLoadingAfter = 1000;
-  triggerLoadingAsEphemeral = true;
-
-  constructor(data: Interaction.InteractionCommandOptions = {}) {
-    super(data);
+  onDmBlocked(context: InteractionContext) {
+    return context.editOrRespond(
+      "hey you cant use this command in a dm !! go to a server instead :)"
+    );
   }
-}
-export interface ContextMenuUserArgs {
-  member?: Structures.Member;
-  user: Structures.User;
-}
 
-export class BaseContextMenuUserCommand extends BaseInteractionCommand<ContextMenuUserArgs> {
-  error = "User Context Menu";
-  type = ApplicationCommandTypes.USER;
-
-  global = true;
-  permissionsIgnoreClientOwner = true;
-  triggerLoadingAsEphemeral = true;
-
-  constructor(data: Interaction.InteractionCommandOptions = {}) {
-    super(data);
+  onCancelRun(context: InteractionContext) {
+    return context.editOrRespond("something happened :(");
   }
-}
 
-export class BaseInteractionCommandOption<
-  ParsedArgsFinished = Interaction.ParsedArgs
-> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-  error = "Slash Command";
-  type = ApplicationCommandOptionTypes.SUB_COMMAND;
-
-  onCancelRun(
-    context: Interaction.InteractionContext,
-    _args: Record<string, any>
-  ) {
-    const command = Markup.codestring(context.name);
+  onPermissionsFailClient(context: InteractionContext, failed: Array<bigint>) {
+    const permissions = permissionsErrorList(failed);
     return context.editOrRespond({
-      content: `⚠ ${this.error} \`${command}\` errored`,
+      content: `i need ${permissions.join(", ")} to run this`,
       flags: MessageFlags.EPHEMERAL,
     });
   }
-}
 
-export class BaseInteractionImageCommandOption<
-  ParsedArgsFinished = Interaction.ParsedArgs
-> extends BaseInteractionCommandOption<ParsedArgsFinished> {
-  constructor(data: Interaction.InteractionCommandOptionOptions = {}) {
-    super({
-      ...data,
-      options: [
-        ...(data.options || []),
-        {
-          name: "image",
-          description: "Emoji/Image URL/User",
-          label: "url",
-          default: Parameters.imageUrl("png"),
-          value: Parameters.imageUrl("png"),
-        },
-      ],
-    });
-  }
-
-  onBeforeRun(
-    context: Interaction.InteractionContext,
-    args: { url?: null | string }
-  ) {
-    if (args.url) {
-      context.metadata = Object.assign({}, context.metadata, {
-        contentUrl: args.url,
-      });
-    }
-    return !!args.url;
-  }
-
-  onCancelRun(
-    context: Interaction.InteractionContext,
-    args: { url?: null | string }
-  ) {
-    if (args.url === undefined) {
-      return context.editOrRespond("no images found");
-    } else if (args.url === null) {
-      return context.editOrRespond("invalid url (?)");
-    }
-    return super.onCancelRun(context, args);
-  }
-}
-
-export class BaseInteractionCommandOptionGroup<
-  ParsedArgsFinished = Interaction.ParsedArgs
-> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-  error = "Slash Command";
-  type = ApplicationCommandOptionTypes.SUB_COMMAND_GROUP;
-
-  onCancelRun(
-    context: Interaction.InteractionContext,
-    _args: Record<string, any>
-  ) {
-    const command = Markup.codestring(context.name);
+  onPermissionsFail(context: InteractionContext, failed: Array<bigint>) {
+    const permissions = permissionsErrorList(failed);
     return context.editOrRespond({
-      content: `something really stupid happened with ${command}`,
+      content: `you need ${permissions.join(", ")} to run this`,
       flags: MessageFlags.EPHEMERAL,
     });
+  }
+
+  onRunError(context: InteractionContext, _args: T, error: Error | Err) {
+    return context.editOrRespond(Err.from(error).toThrown());
   }
 }

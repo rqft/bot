@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "nodemon dist",
-    "build": "tsc",
-    "reload": "rmdir dist /s && tsc"
+    "sync backend": "npm i pariah",
+    "sync": "git pull && npm i && npm run sync backend"
   },
   "keywords": [],
   "author": "",
@@ -45,7 +45,7 @@
     "nodemon": "^2.0.14",
     "object-sizeof": "^1.6.1",
     "openai-api": "^1.2.6",
-    "pariah": "^2.5.7",
+    "pariah": "^2.6.2",
     "sequelize": "^6.5.0",
     "sqlite3": "^5.0.2",
     "ts-results": "^3.3.0",
