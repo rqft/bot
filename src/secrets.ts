@@ -23,6 +23,12 @@ export const Secrets = {
     EMAIL_VALIDATION: env.ABSTRACT_EMAIL_VALIDATION_KEY!,
     EXCHANGE_RATES: env.ABSTRACT_EXCHANGE_RATES_KEY!,
   },
-  InteractionGuilds: env.INTERACTION_GUILDS!.split(","),
+  InteractionGuilds: env.INTERACTION_GUILD_IDS!.split(","),
   DefaultPrefix: env.DEFAULT_PREFIX!,
+  ClearInteractions: env.CLEAR_INTERACTIONS === "true",
+  StorageChannelId: env.STORAGE_CHANNEL_ID!,
+  Host: env.HOST!,
+  ApiToken: env.API_TOKEN!,
+  Port: env.PORT!,
+  Mode: env.MODE!,
 };

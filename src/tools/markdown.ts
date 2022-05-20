@@ -247,7 +247,7 @@ export module Markdown {
     }
     let returned: Array<string> = [];
     for (const [key, value] of formatted) {
-      const unit = key + (value === 1 ? "" : "s");
+      const unit = String(key) + (value === 1 ? "" : "s");
       returned.push(`${value} ${unit}`);
     }
     if (limit !== undefined) {
@@ -403,7 +403,7 @@ export module Markdown {
   /**
    * Enumeration of names used in the Matching process
    */
-  enum DiscordRegexNames {
+  export enum DiscordRegexNames {
     EMOJI = "EMOJI",
     JUMP_CHANNEL = "JUMP_CHANNEL",
     JUMP_CHANNEL_MESSAGE = "JUMP_CHANNEL_MESSAGE",

@@ -10,12 +10,12 @@ import {
 import { BaseSet } from "detritus-utils";
 import { Secrets } from "../../secrets";
 import { Err } from "../../tools/error";
-import { permissionsErrorList } from "../../tools/tools";
+import { editOrReply, permissionsErrorList } from "../../tools/tools";
 
 export class BaseInteraction<T = ParsedArgs> extends InteractionCommand<T> {
   error = "Command";
   guildIds = new BaseSet(Secrets.InteractionGuilds);
-  global = this.guildIds.length > 0;
+  global = this.guildIds.length === 0;
 
   onLoadingTrigger(context: InteractionContext) {
     if (context.responded) {
@@ -41,7 +41,7 @@ export class BaseInteraction<T = ParsedArgs> extends InteractionCommand<T> {
   }
 
   onCancelRun(context: InteractionContext) {
-    return context.editOrRespond("something happened :(");
+    return context.editOrRespond("something bad happened :(");
   }
 
   onPermissionsFailClient(context: InteractionContext, failed: Array<bigint>) {
@@ -61,6 +61,9 @@ export class BaseInteraction<T = ParsedArgs> extends InteractionCommand<T> {
   }
 
   onRunError(context: InteractionContext, _args: T, error: Error | Err) {
-    return context.editOrRespond(Err.from(error).toThrown());
+    return editOrReply(context, {
+      content: Err.from(error).toThrown(),
+      flags: MessageFlags.EPHEMERAL,
+    });
   }
 }

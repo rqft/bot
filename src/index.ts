@@ -1,18 +1,34 @@
+import { Sarah } from "./api";
 import { client, commands, interactions, selfclient } from "./globals";
-
+import { Secrets } from "./secrets";
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
 
-commands.on("commandDelete", async (payload) => {
-  await payload.reply.delete();
-});
-
-commands.on("commandResponseDelete", async (payload) => {
-  await payload.context.message.delete();
+process.on("uncaughtException", (e) => {
+  console.error(e);
 });
 
 (async function run() {
+  Sarah.listen(Secrets.Port, () => {
+    console.log(`opened ${Secrets.Host}:${Secrets.Port}`);
+  });
   await commands.run();
+
+  if (Secrets.ClearInteractions) {
+    console.log(`clearing global`);
+    await interactions.rest.bulkOverwriteApplicationCommands(
+      interactions.client.applicationId,
+      []
+    );
+    for (const guildId of Secrets.InteractionGuilds) {
+      console.log(`clearing ${guildId}`);
+      await interactions.rest.bulkOverwriteApplicationGuildCommands(
+        interactions.client.applicationId,
+        guildId,
+        []
+      );
+    }
+  }
   await interactions.run();
 
   const all = [client, selfclient];

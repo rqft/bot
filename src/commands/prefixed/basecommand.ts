@@ -27,12 +27,12 @@ export const DefaultOptions: Partial<CommandOptionsExtra> = {
   ],
 };
 export class BaseCommand<T = ParsedArgs> extends Command<T> {
-  readonly createdAtUnix: number = Date.now();
-  readonly createdAt: Date = new Date(this.createdAtUnix);
+  protected use!: Date;
   protected expensive: boolean = false;
   public metadata: CommandMetadata;
   constructor(client: CommandClient, options: CommandOptionsExtra) {
-    super(client, Object.assign(DefaultOptions, options));
+    console.log("creating", options.name);
+    super(client, Object.assign({}, DefaultOptions, options));
     this.metadata = options.metadata;
   }
 
@@ -44,7 +44,18 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     return this.fullName;
   }
 
+  async onBefore(_context: Context) {
+    this.use = new Date();
+    console.log(
+      `recieved ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
+    );
+    return true;
+  }
+
   async onBeforeRun(context: Context, _args: unknown) {
+    console.log(
+      `processing ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
+    );
     await editOrReply(
       context,
       "ok, processing" + (this.expensive ? " (this may take a while)" : "")
@@ -53,6 +64,9 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
   }
 
   async onCancelRun(context: Context, _args: unknown) {
+    console.log(
+      `cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
+    );
     return await editOrReply(
       context,
       Markdown.Format.codeblock(this.commandUsage).toString()
@@ -126,13 +140,13 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
   }
 
   async onRunError(context: Context, _args: T, error: Error | Err) {
+    console.log(`error ${this.fullName}`, error);
     return await editOrReply(context, Err.from(error).toThrown());
   }
 
   async onTypeError(context: Context, _args: T, errors: ParsedErrors) {
     const description: Array<string> = [
-      "hey u have some wrong inputs, might want to fix them :D",
-      "\n",
+      "hey u have some wrong inputs, might want to fix them :D\n",
     ];
 
     const store: Record<string, string> = {};
