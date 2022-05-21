@@ -181,9 +181,10 @@ export namespace Formatter {
       if (!CanvasMethods.includes(args.method)) {
         throw new Err(`Canvas method "${args.method}" is not supported.`);
       }
-
+      args.target = args.target.replace(/\.(gif|webp)/i, '.png')
+      
       const data = await instance.canvas(args.method, args.target, args);
-
+      
       const embed = await Formatter.Embed.image(
         context,
         data,

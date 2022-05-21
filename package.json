@@ -42,7 +42,7 @@
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "node-fetch": "^2.5.0",
-    "nodemon": "^2.0.14",
+    "nodemon": "^2.0.16",
     "object-sizeof": "^1.6.1",
     "openai-api": "^1.2.6",
     "pariah": "^2.6.3",
