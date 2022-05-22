@@ -2,6 +2,7 @@ import { Request } from "express";
 import { Pariah } from "pariah";
 import { Entries } from "wilson-kv";
 import { Result } from "../api/models/result";
+import { MirrorMethods } from "../api/routes/image.flop";
 import { Secrets } from "../secrets";
 
 export module Jonathan {
@@ -65,6 +66,10 @@ export module Jonathan {
       return await this.get.json<Result<Array<Choice>>>(`/tags/search/:query`, {
         ":query": query,
       });
+    }
+
+    async imageMirror(url: string, method: MirrorMethods): Promise<Buffer> {
+      return await this.get.buffer("/image/mirror", { url, method });
     }
   }
 }

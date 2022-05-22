@@ -1,6 +1,7 @@
 export enum CommandType {
   IMAGE = "image",
   TOOLS = "tools",
+  FUN = "fun",
 }
 export interface CommandMetadata {
   category: CommandType;
@@ -36,4 +37,11 @@ export function ToolsMetadata(
   examples: Array<string> = []
 ) {
   return Metadata(CommandType.TOOLS, description, usage, examples);
+}
+export function FunMetadata(
+  description: string,
+  usage: string = "",
+  examples: Array<string> = []
+) {
+  return Metadata(CommandType.FUN, description, usage, examples);
 }

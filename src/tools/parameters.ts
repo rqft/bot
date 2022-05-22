@@ -386,7 +386,7 @@ export module Parameters {
         if (context instanceof Command.Context) {
           // check the message's attachments/stickers first
           {
-            const url = FindImage.findImageUrlInMessages([context.message]);
+            const url = FindImage.findImageUrlInMessages([context.message], as);
             if (url) {
               return url;
             }
@@ -402,7 +402,7 @@ export module Parameters {
                   messageReference.channelId,
                   messageReference.messageId
                 ));
-              const url = FindImage.findImageUrlInMessages([message]);
+              const url = FindImage.findImageUrlInMessages([message], as);
               if (url) {
                 return url;
               }
@@ -443,7 +443,7 @@ export module Parameters {
                     const message =
                       context.messages.get(messageId) ||
                       (await context.rest.fetchMessage(channelId, messageId));
-                    const url = FindImage.findImageUrlInMessages([message]);
+                    const url = FindImage.findImageUrlInMessages([message], as);
                     if (url) {
                       return url;
                     }
@@ -456,7 +456,7 @@ export module Parameters {
                 if (!context.message.embeds.length) {
                   await Timers.sleep(1000);
                 }
-                const url = FindImage.findImageUrlInMessages([context.message]);
+                const url = FindImage.findImageUrlInMessages([context.message], as);
                 return url || text;
               } else {
                 return text;
@@ -468,7 +468,7 @@ export module Parameters {
           if (value.includes("#") && !value.startsWith("#")) {
             const found = await Parameters.user(value, context);
             if (found) {
-              return found.avatarUrlFormat(null, { size: 1024 });
+              return found.avatarUrlFormat(as, { size: 1024 });
             }
             return null;
           }
@@ -507,7 +507,7 @@ export module Parameters {
             } else {
               user = await context.rest.fetchUser(userId);
             }
-            return user.avatarUrlFormat(null, { size: 1024 });
+            return user.avatarUrlFormat(as, { size: 1024 });
           }
 
           // it's <a:emoji:id>
@@ -517,9 +517,8 @@ export module Parameters {
             };
             if (matches.length) {
               const [match] = matches;
-              const { animated, id } = match!;
-              const format = animated ? "gif" : "png";
-              return Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format);
+              const { id } = match!;
+              return Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, as);
             }
           }
 
@@ -538,7 +537,7 @@ export module Parameters {
           {
             const found = await Parameters.user(value, context);
             if (found) {
-              return found.avatarUrlFormat(null, { size: 1024 });
+              return found.avatarUrlFormat(as, { size: 1024 });
             }
           }
         }

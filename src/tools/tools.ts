@@ -1,11 +1,14 @@
 import { Command, Interaction, Structures } from "detritus-client";
 import { Context, EditOrReply } from "detritus-client/lib/command";
-import { DiscordAbortCodes } from "detritus-client/lib/constants";
+import { DiscordAbortCodes, ImageFormats } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import {
   InteractionEditOrRespond,
   Message,
 } from "detritus-client/lib/structures";
+import { Animation, Frame, Image } from "imagescript/v2";
+import { Pariah } from "pariah";
+import { IO } from "wilson-kv";
 import {
   PermissionsText,
   UNICODE_EMOJI_REGEX,
@@ -553,4 +556,39 @@ export function groupArray<T>(data: Array<T>, size: number): Array<Array<T>> {
     grouped.push(data.slice(i, i + size));
   }
   return grouped;
+}
+
+export async function convert(
+  uri: string,
+  format: ImageFormats = ImageFormats.PNG
+): Promise<string> {
+  const instance = new Pariah(new URL(uri));
+  const data = await instance.get.arrayBuffer();
+  const buffer = Buffer.from(data);
+  const attachment = await store(buffer, "image." + format);
+  return attachment.url!;
+}
+
+export async function imagescriptOp(
+  data: Image | Animation,
+  callback: IO<Image>
+): Promise<typeof data> {
+  if (data instanceof Image) {
+    return callback(data);
+  }
+
+  for (let i = 0; i < data.frames.length; i++) {
+    const output = callback(data.frames[i]!.image);
+    data.frames[i] = new Frame(output.width, output.height, output);
+  }
+
+  return data;
+}
+
+export function toTitleCase(payload: string) {
+  return payload
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }

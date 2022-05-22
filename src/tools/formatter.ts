@@ -18,6 +18,7 @@ import {
 } from "detritus-client/lib/structures";
 import { Animation, load } from "imagescript/v2";
 import { APIs, Pariah } from "pariah";
+import { MirrorMethods } from "../api/routes/image.flop";
 import {
   BooleanText,
   Brand,
@@ -42,6 +43,7 @@ import { Paginator } from "./paginator";
 import { Tags } from "./tags";
 import {
   buildTimestampString,
+  convert,
   editOrReply,
   formatBytes,
   groupArray,
@@ -145,6 +147,25 @@ export namespace Formatter {
       return embed;
     }
   }
+  export interface ImageArgs {
+    target: string;
+  }
+  export namespace Image {
+    export const instance = new Jonathan.API(Secrets.ApiToken);
+    export interface MirrorArgs extends ImageArgs {
+      method: MirrorMethods
+    }
+    export async function mirror(
+      context: Context | InteractionContext,
+      args: MirrorArgs
+    ) {
+      const { target, method } = args;
+      const m = method || MirrorMethods.LEFT
+      const image = await instance.imageMirror(target, m);
+      const embed = await Embed.image(context, image, `mirror-${m.toLowerCase()}.png`);
+      return await editOrReply(context, { embed });
+    }
+  }
   export namespace SomeRandomApi {
     export const instance = new APIs.SomeRandomApi.API();
     export const BannedImageOps: Array<APIs.SomeRandomApi.Canvas> = [
@@ -153,6 +174,7 @@ export namespace Formatter {
       APIs.SomeRandomApi.CanvasMisc.FAKE_YOUTUBE_COMMENT,
       APIs.SomeRandomApi.CanvasMisc.HEX_TO_RGB,
       APIs.SomeRandomApi.CanvasFilter.COLOR,
+      APIs.SomeRandomApi.CanvasMisc.ITS_SO_STUPID,
     ];
 
     export const CanvasMethods = mergeArrays<APIs.SomeRandomApi.Canvas>(
@@ -161,9 +183,8 @@ export namespace Formatter {
       Object.values(APIs.SomeRandomApi.CanvasOverlay)
     ).filter((b) => !BannedImageOps.includes(b));
 
-    export interface CanvasArgs {
+    export interface CanvasArgs extends ImageArgs {
       method: APIs.SomeRandomApi.Canvas;
-      target: string;
       [key: string]: unknown;
     }
     export async function canvas(
@@ -181,10 +202,10 @@ export namespace Formatter {
       if (!CanvasMethods.includes(args.method)) {
         throw new Err(`Canvas method "${args.method}" is not supported.`);
       }
-      args.target = args.target.replace(/\.(gif|webp)/i, '.png')
-      
+      args.target = await convert(args.target);
+
       const data = await instance.canvas(args.method, args.target, args);
-      
+
       const embed = await Formatter.Embed.image(
         context,
         data,
@@ -598,6 +619,10 @@ export namespace Formatter {
           );
         }
 
+        if (channel.threads.size) {
+          description.push(Basic.field(CustomEmojis.CHANNEL_THREAD, "Threads", String(channel.threads.size)));
+        }
+
         embed.addField("Channel Info", description.join("\n"));
       }
 
@@ -697,7 +722,7 @@ export namespace Formatter {
               Basic.field(
                 CustomEmojis.GUI_MEMBERS,
                 "User Limit",
-                `${channel.voiceStates}/${channel.userLimit}`
+                `${channel.voiceStates.size}/${channel.userLimit}`
               )
             );
 
@@ -832,6 +857,9 @@ export namespace Formatter {
       context: Context | InteractionContext,
       args: GetTagArgs
     ) {
+      if (args.key === "") {
+        return await editOrReply(context, 'Missing required parameter "key"');
+      }
       const tag = await instance.tagGet(args.key);
       if (tag.status.state === "error") {
         throw new Err(tag.status.message, { status: tag.status.code });
@@ -921,7 +949,7 @@ export namespace Formatter {
       }
 
       return await editOrReply(context, {
-        files: [{ value: tags.data, filename: "data.json" }],
+        files: [{ value: JSON.stringify(tags.data, null, 2), filename: "data.json" }],
       });
     }
 
@@ -934,6 +962,22 @@ export namespace Formatter {
       }
 
       return await context.respond({ choices: tags.data });
+    }
+
+    interface ExecTagArgs {
+      script: string;
+      args: Array<string>
+    }
+    export async function exec(context: Context | InteractionContext, args: ExecTagArgs) {
+      const output = await Tags.exec(context, args.script, args.args);
+      if (!output.text) {
+        output.text = "\u200b";
+      }
+
+      return await editOrReply(context, {
+        content: output.text,
+        attachments: output.files,
+      });
     }
   }
   export interface CodeArgs {
@@ -972,5 +1016,33 @@ export namespace Formatter {
       context,
       Markdown.Format.codeblock(message, language).toString()
     );
+  }
+  export interface KwanziArgs {
+    text: string;
+  }
+  export async function kwanzi(
+    context: Context | InteractionContext,
+    args: KwanziArgs
+  ) {
+    const { text: payload } = args;
+    const list = Array.from(new Set(payload.toLowerCase().split(" ")));
+    const hit: Array<string> = [];
+    const output: Array<string> = [];
+
+    while (hit.length < list.length) {
+      const index = Math.floor(Math.random() * list.length);
+      const item = list[index]!;
+      output.push(item);
+      if (hit.includes(item)) {
+        continue;
+      }
+
+      hit.push(item);
+      if (Math.random() > 0.7) {
+        list.splice(index, 1);
+      }
+    }
+
+    return await editOrReply(context, output.join(" "));
   }
 }

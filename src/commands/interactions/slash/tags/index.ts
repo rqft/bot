@@ -1,5 +1,6 @@
 import { BaseSlashCommand } from "../baseslash";
 import { TagDeleteSlashSubCommand } from "./delete";
+import { TagExecSlashSubCommand } from "./exec";
 import { TagGetSlashSubCommand } from "./get";
 import { TagInspectSlashSubCommand } from "./inspect";
 import { TagListSlashSubCommand } from "./list";
@@ -15,6 +16,7 @@ export default class TagSlashCommandGroup extends BaseSlashCommand {
         new TagDeleteSlashSubCommand(),
         new TagListSlashSubCommand(),
         new TagInspectSlashSubCommand(),
+        new TagExecSlashSubCommand(),
       ],
     });
   }
