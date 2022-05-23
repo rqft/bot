@@ -71,5 +71,16 @@ export module Jonathan {
     async imageMirror(url: string, method: MirrorMethods): Promise<Buffer> {
       return await this.get.buffer("/image/mirror", { url, method });
     }
+
+    async imageSpin(url: string): Promise<Buffer> {
+      return await this.get.buffer("/image/spin", { url });
+    }
+
+    async imageColor(size: number, color: string): Promise<Buffer> {
+      return await this.get.buffer("/image/color/:size/:color", { 
+        ":size": size,
+        ":color": color,
+      });
+    }
   }
 }

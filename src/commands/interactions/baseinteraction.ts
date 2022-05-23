@@ -1,11 +1,11 @@
 import {
   InteractionCallbackTypes,
-  MessageFlags,
+  MessageFlags
 } from "detritus-client/lib/constants";
 import {
   InteractionCommand,
   InteractionContext,
-  ParsedArgs,
+  ParsedArgs
 } from "detritus-client/lib/interaction";
 import { BaseSet } from "detritus-utils";
 import { Secrets } from "../../secrets";
@@ -16,6 +16,11 @@ export class BaseInteraction<T = ParsedArgs> extends InteractionCommand<T> {
   error = "Command";
   guildIds = new BaseSet(Secrets.InteractionGuilds);
   global = this.guildIds.length === 0;
+
+  async onBeforeRun(context: InteractionContext) {
+    await editOrReply(context, 'ok, processing')
+    return true
+  }
 
   onLoadingTrigger(context: InteractionContext) {
     if (context.responded) {

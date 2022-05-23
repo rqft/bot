@@ -4,7 +4,7 @@ import { DiscordAbortCodes, ImageFormats } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import {
   InteractionEditOrRespond,
-  Message,
+  Message
 } from "detritus-client/lib/structures";
 import { Animation, Frame, Image } from "imagescript/v2";
 import { Pariah } from "pariah";
@@ -12,7 +12,7 @@ import { IO } from "wilson-kv";
 import {
   PermissionsText,
   UNICODE_EMOJI_REGEX,
-  VALID_URL_REGEX,
+  VALID_URL_REGEX
 } from "../constants";
 import { client } from "../globals";
 import { Secrets } from "../secrets";
@@ -591,4 +591,49 @@ export function toTitleCase(payload: string) {
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+export function padCodeBlockFromRows(
+  strings: Array<Array<string>>,
+  options: {
+    join?: string,
+    padding?: string,
+    padFunc?: (targetLength: number, padString?: string) => string,
+  } = {},
+): Array<string> {
+  const padding = (options.padding === undefined) ? ' ' : options.padding;
+  const padFunc = (options.padFunc === undefined) ? String.prototype.padStart : options.padFunc;
+  const join = (options.join === undefined) ? ' ' : options.join;
+
+  const columns: Array<Array<string>> = [];
+  const columnsAmount = strings.reduce((x, row) => Math.max(x, row.length), 0);
+
+  for (let i = 0; i < columnsAmount; i++) {
+    const column: Array<string> = [];
+
+    let max = 0;
+    for (const row of strings) {
+      if (i in row) {
+        max = Math.max(max, row[i]!.length);
+      }
+    }
+    for (const row of strings) {
+      if (i in row) {
+        column.push(padFunc.call(row[i], max, padding));
+      }
+    }
+    columns.push(column);
+  }
+
+  const rows: Array<string> = [];
+  for (let i = 0; i < strings.length; i++) {
+    const row: Array<string> = [];
+    for (const column of columns) {
+      if (i in column) {
+        row.push(column[i]!);
+      }
+    }
+    rows.push(row.join(join));
+  }
+  return rows;
 }
