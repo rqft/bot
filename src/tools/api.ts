@@ -77,9 +77,16 @@ export module Jonathan {
     }
 
     async imageColor(size: number, color: string): Promise<Buffer> {
-      return await this.get.buffer("/image/color/:size/:color", { 
+      return await this.get.buffer("/image/color/:size/:color", {
         ":size": size,
         ":color": color,
+      });
+    }
+
+    async imageResize(url: string, size: string): Promise<Buffer> {
+      return await this.get.buffer("/image/resize/:size", {
+        url,
+        ":size": size,
       });
     }
   }

@@ -4,19 +4,19 @@ import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
 import { BaseCommand } from "../basecommand";
 
-export default class InfoUserCommand extends BaseCommand {
+export default class InfoEmojiCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "info user",
-      metadata: ToolsMetadata("user info", "<user: User=self>"),
+      name: "info emoji",
+      metadata: ToolsMetadata("emoji info", "<emoji: Emoji>"),
       type: [
         {
-          name: "user",
-          type: Parameters.user,
+          name: "emoji",
+          type: Parameters.emojiUrl,
         },
       ],
     });
   }
 
-  run = Formatter.Info.user;
+  run = Formatter.Info.emoji;
 }

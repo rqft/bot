@@ -5,11 +5,11 @@ import {
   ChannelTypes,
   DiscordRegexNames,
   GuildExplicitContentFilterTypes,
-  ImageFormats,
+  ImageFormats
 } from "detritus-client/lib/constants";
 import {
   InteractionAutoCompleteContext,
-  InteractionContext,
+  InteractionContext
 } from "detritus-client/lib/interaction";
 import { regex } from "detritus-client/lib/utils";
 import { Timers } from "detritus-utils";
@@ -23,7 +23,7 @@ import {
   isSnowflake,
   onlyEmoji,
   toCodePointForTwemoji,
-  validateUrl,
+  validateUrl
 } from "./tools";
 
 export module Parameters {
@@ -94,16 +94,16 @@ export module Parameters {
     return value;
   }
 
-  export function url(value: string): string {
+  export function url(value: string): URL {
     if (value) {
       if (!/^https?:\/\//.test(value)) {
-        return `http://${value}`;
+        value = `http://${value}`;
       }
       if (!validateUrl(value)) {
         throw new Err("wasn't a valid url", { status: 400 });
       }
     }
-    return value;
+    return new URL(value);
   }
 
   export interface EmojiOptions {
@@ -134,13 +134,14 @@ export module Parameters {
     url: string;
     type: EmojiType;
     id?: string;
+    raw: string;
   }
   export function emojiUrl(value: string): EmojiUrl | null {
     value = value.toLowerCase().trim();
     if (UNICODE_EMOJI_REGEX.test(value)) {
       const points = toCodePointForTwemoji(value);
       const url = `https://cdn.notsobot.com/twemoji/512x512/${points}.png`;
-      return { url, type: EmojiType.TWEMOJI };
+      return { url, type: EmojiType.TWEMOJI, raw: points };
     }
 
     const matches = Markdown.Match.emoji(value);
@@ -150,12 +151,13 @@ export module Parameters {
 
     const emoji = matches.matches[0]!;
     return {
-      url: Endpoints.CDN.EMOJI(
+      url: Endpoints.Urls.CDN.slice(0,-1) + Endpoints.CDN.EMOJI(
         emoji.id,
         emoji.animated ? ImageFormats.GIF : ImageFormats.PNG
       ),
       type: EmojiType.CUSTOM,
       id: emoji.id,
+      raw: value,
     };
   }
   export async function user(
@@ -382,6 +384,7 @@ export module Parameters {
 
   export function imageUrl(as?: ImageFormats) {
     return async (value: string, context: Context | InteractionContext) => {
+      if (!value) { value = '^' }
       try {
         if (context instanceof Command.Context) {
           // check the message's attachments/stickers first
@@ -456,7 +459,10 @@ export module Parameters {
                 if (!context.message.embeds.length) {
                   await Timers.sleep(1000);
                 }
-                const url = FindImage.findImageUrlInMessages([context.message], as);
+                const url = FindImage.findImageUrlInMessages(
+                  [context.message],
+                  as
+                );
                 return url || text;
               } else {
                 return text;

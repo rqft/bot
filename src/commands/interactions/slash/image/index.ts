@@ -1,5 +1,7 @@
-import { ImageMirrorSlashSubCommand } from "./mirror";
 import { BaseSlashCommand } from "../baseslash";
+import { ImageColorSlashSubCommand } from "./color";
+import { ImageMirrorSlashSubCommand } from "./mirror";
+import { ImageResizeSlashSubCommand } from "./resize";
 import { ImageSpinSlashSubCommand } from "./spin";
 export default class ImageSlashCommandGroup extends BaseSlashCommand {
   name = "image";
@@ -9,6 +11,8 @@ export default class ImageSlashCommandGroup extends BaseSlashCommand {
       options: [
         new ImageMirrorSlashSubCommand(),
         new ImageSpinSlashSubCommand(),
+        new ImageColorSlashSubCommand(),
+        new ImageResizeSlashSubCommand(),
       ],
     });
   }

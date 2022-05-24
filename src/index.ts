@@ -1,11 +1,12 @@
 import { Sarah } from "./api";
 import { client, commands, interactions, selfclient } from "./globals";
 import { Secrets } from "./secrets";
+
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
 
 process.on("uncaughtException", (e) => {
-  console.error(e);
+  console.error(JSON.stringify(e, null, 2));
 });
 
 (async function run() {

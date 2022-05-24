@@ -4,7 +4,7 @@ import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
 import { BaseCommand } from "../basecommand";
 
-export default class ChannelCommand extends BaseCommand {
+export default class InfoChannelCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "info channel",

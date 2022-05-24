@@ -2,7 +2,7 @@ import {
   CommandClient,
   InteractionCommandClient,
   ShardClient,
-  ShardClientCacheOptions,
+  ShardClientCacheOptions
 } from "detritus-client";
 import { Wilson } from "wilson-kv";
 import { Secrets } from "./secrets";
@@ -33,7 +33,7 @@ const cache: ShardClientCacheOptions = {
 };
 
 export const client = new ShardClient(Secrets.Token, {
-  imageFormat: "gif",
+  // imageFormat: "gif",
   isBot: true,
   gateway: { loadAllMembers: true, intents: "ALL" },
   cache,

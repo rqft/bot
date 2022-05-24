@@ -13,6 +13,7 @@ export const Secrets = {
     Pylon: env.PYLON_API_KEY!,
     OpenAI: env.OPENAI_API_KEY!,
     HuggingFace: env.HUGGING_FACE_API_KEY!,
+    EmojiData: env.EMOJI_DATA_API_KEY!,
   },
   AbstractKeys: {
     Holidays: env.ABSTRACT_HOLIDAYS_KEY!,

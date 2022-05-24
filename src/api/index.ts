@@ -8,6 +8,7 @@ import { binaryDecode } from "./routes/binary.decode";
 import { binaryEncode } from "./routes/binary.encode";
 import { imageColor } from "./routes/image.color";
 import { imageFlop } from "./routes/image.flop";
+import { imageResize } from "./routes/image.resize";
 import { imageSpin } from "./routes/image.spin";
 import { origin } from "./routes/origin";
 import { tagDelete } from "./routes/tag.delete";
@@ -45,6 +46,7 @@ Sarah.get("/tags/search/:query", tagSearch);
 
 Sarah.get("/image/mirror", imageFlop)
 Sarah.get("/image/spin", imageSpin);
-Sarah.get("/image/color/:size/:color", imageColor)
+Sarah.get("/image/color/:size/:color", imageColor);
+Sarah.get('/image/resize/:size', imageResize)
 // Sarah.all('*', fallback);
 export { Sarah };
