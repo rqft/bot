@@ -1,6 +1,30 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.kwanzi = exports.code = void 0;
+exports.kwanzi = exports.exec = exports.code = void 0;
+const Process = __importStar(require("node:child_process"));
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
@@ -30,6 +54,22 @@ async function code(context, args) {
     return await (0, tools_1.editOrReply)(context, markdown_1.Markdown.Format.codeblock(message, language).toString());
 }
 exports.code = code;
+async function exec(context, args) {
+    if (!context.client.isOwner(context.userId)) {
+        throw new error_1.Err("no", { status: 403 });
+    }
+    const text = args.code;
+    let message = "";
+    try {
+        const data = Process.execSync(text);
+        message = data.toString('utf-8');
+    }
+    catch (error) {
+        message = error.message;
+    }
+    return await (0, tools_1.editOrReply)(context, markdown_1.Markdown.Format.codeblock(message).toString());
+}
+exports.exec = exec;
 async function kwanzi(context, args) {
     const { text: payload } = args;
     const list = Array.from(new Set(payload.toLowerCase().split(" ")));

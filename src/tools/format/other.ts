@@ -1,9 +1,9 @@
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
+import * as Process from "node:child_process";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
-
 export interface CodeArgs {
   code: Markdown.TextCodeblockMatch;
   "json-spacing": number;
@@ -40,6 +40,27 @@ export async function code(
     context,
     Markdown.Format.codeblock(message, language).toString()
   );
+}
+export interface ExecArgs {
+  code: string;
+}
+export async function exec(
+  context: Context | InteractionContext,
+  args: ExecArgs
+) {
+  if (!context.client.isOwner(context.userId)) {
+    throw new Err("no", { status: 403 });
+  }
+  const text = args.code;
+  let message = "";
+  try {
+    const data = Process.execSync(text);
+    message = data.toString('utf-8');
+  } catch (error) {
+    message = (error as Error).message;
+  }
+
+  return await editOrReply(context, Markdown.Format.codeblock(message).toString());
 }
 export interface KwanziArgs {
   text: string;

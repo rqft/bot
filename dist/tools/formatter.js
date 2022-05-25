@@ -34,7 +34,7 @@ const info_guild_1 = require("./format/info.guild");
 const info_image_1 = require("./format/info.image");
 const info_role_1 = require("./format/info.role");
 const info_user_1 = require("./format/info.user");
-const other_1 = require("./format/other");
+const Other = __importStar(require("./format/other"));
 const Pxl = __importStar(require("./format/pxl"));
 const SomeRandomApi = __importStar(require("./format/some-random-api"));
 const Tag = __importStar(require("./format/tag"));
@@ -54,6 +54,5 @@ exports.Formatter = {
         role: info_role_1.role,
         guild: info_guild_1.guild,
     },
-    code: other_1.code,
-    kwanzi: other_1.kwanzi,
+    ...Other
 };

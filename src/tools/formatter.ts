@@ -8,7 +8,7 @@ import { guild } from "./format/info.guild";
 import { image } from "./format/info.image";
 import { role } from "./format/info.role";
 import { user } from "./format/info.user";
-import { code, kwanzi } from "./format/other";
+import * as Other from "./format/other";
 import * as Pxl from "./format/pxl";
 import * as SomeRandomApi from './format/some-random-api';
 import * as Tag from "./format/tag";
@@ -31,6 +31,5 @@ export const Formatter = {
     role,
     guild,
   },
-  code,
-  kwanzi,
+  ...Other
 };
