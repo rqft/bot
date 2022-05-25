@@ -5,11 +5,11 @@ import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
 import { BaseCommand } from "../basecommand";
 
-export default class ImageResizeCommand extends BaseCommand {
+export default class ImageRotateCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "image resize",
-      metadata: ImageMetadata("make small", "<target: Image> ?<size: string>"),
+      name: "image rotate",
+      metadata: ImageMetadata("turn", "<target: Image> ?<degrees: number>"),
       type: [
         {
           name: "target",
@@ -17,13 +17,13 @@ export default class ImageResizeCommand extends BaseCommand {
           required: true,
         },
         {
-            name: "size",
-            type: "string",
-            required: false,
+            name: "degrees",
+            type: "number",
+            required: true,
           },
       ],
     });
   }
 
-  run = Formatter.Image.resize;
+  run = Formatter.Image.rotate;
 }

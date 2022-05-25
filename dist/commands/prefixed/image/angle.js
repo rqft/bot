@@ -5,11 +5,11 @@ const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const parameters_1 = require("../../../tools/parameters");
 const basecommand_1 = require("../basecommand");
-class ImageResizeCommand extends basecommand_1.BaseCommand {
+class ImageRotateCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
-            name: "image resize",
-            metadata: (0, command_metadata_1.ImageMetadata)("make small", "<target: Image> ?<size: string>"),
+            name: "image rotate",
+            metadata: (0, command_metadata_1.ImageMetadata)("turn", "<target: Image> ?<degrees: number>"),
             type: [
                 {
                     name: "target",
@@ -17,13 +17,13 @@ class ImageResizeCommand extends basecommand_1.BaseCommand {
                     required: true,
                 },
                 {
-                    name: "size",
-                    type: "string",
-                    required: false,
+                    name: "degrees",
+                    type: "number",
+                    required: true,
                 },
             ],
         });
     }
-    run = formatter_1.Formatter.Image.resize;
+    run = formatter_1.Formatter.Image.rotate;
 }
-exports.default = ImageResizeCommand;
+exports.default = ImageRotateCommand;

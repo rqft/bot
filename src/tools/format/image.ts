@@ -80,5 +80,7 @@ export async function rotate(
   const image = await instance.imageRotate(target, degrees);
 
   const embed = await Embed.image(context, image, "rotate.png");
+  embed.setDescription(`Angle: ${degrees} degree(s)`)
+
   return await editOrReply(context, { embed });
 }
