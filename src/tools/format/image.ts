@@ -67,3 +67,18 @@ export async function resize(
   const embed = await Embed.image(context, image, "resize.png");
   return await editOrReply(context, { embed });
 }
+export interface RotateArgs extends ImageArgs {
+  degrees: number;
+}
+export async function rotate(
+  context: Context | InteractionContext,
+  args: RotateArgs
+) {
+  let { target, degrees } = args;
+  degrees %= 360;
+
+  const image = await instance.imageRotate(target, degrees);
+
+  const embed = await Embed.image(context, image, "rotate.png");
+  return await editOrReply(context, { embed });
+}

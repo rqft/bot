@@ -327,6 +327,11 @@ export module Parameters {
     return Default.defaultRole(context);
   }
 
+  export interface GuildOptions {
+    invite?: boolean;
+    self?: boolean;
+  }
+
   export const QuotesAll = {
     '"': '"',
     "'": "'",

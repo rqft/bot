@@ -57,7 +57,16 @@ export function user(
     }
 
     if (input instanceof URL) {
-      input = await new Pariah(input).arrayBuffer("/");
+      input = await new Pariah(input).buffer("/");
+    }
+
+    const decoder = new TextDecoder();
+    const txt = decoder.decode(input);
+    if (txt.match(/^\w+$/g)) {
+      switch (txt) {
+        case "NO_FACES_DETECTED": { throw new Err("No faces detected"); }
+        default: { throw new Err(txt); }
+      }
     }
 
     const image = await store(input as Buffer, name);

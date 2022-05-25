@@ -75,4 +75,4 @@ tsconfig.tsbuildinfo
 .yarn/install-state.gz
 .pnp.*
 # Ignore built ts files
-dist/**/*
+# dist/**/* # fuck you u stay

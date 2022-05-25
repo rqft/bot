@@ -2,7 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import { stop } from "../models/error";
 import { decodeImage } from "../tools";
-export async function imageResize(
+export async function imageRotate(
   req: express.Request,
   res: express.Response
 ): Promise<void> {
@@ -18,6 +18,8 @@ export async function imageResize(
     const request = await fetch(url);
     const data = await request.buffer();
     let editor = await decodeImage(data);
+
+    editor.rotate(deg)
 
     let u8: Uint8Array = await editor.encode();
 

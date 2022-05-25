@@ -1,12 +1,12 @@
-
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { editOrReply } from "../tools";
 import * as Embed from './embed';
+
 export async function guild(context: Context | InteractionContext) {
     const { guild } = context;
     if (!guild) {
-      return await editOrReply(context, "cant use this in dm");
+        throw new Error('Need to be in a guild');
     }
 
     const embed = Embed.user(context);
@@ -25,5 +25,10 @@ export async function guild(context: Context | InteractionContext) {
         embed.setDescription(guild.description);
       }
     }
+
+    {
+
+    }
+
     return await editOrReply(context, { embed });
   }

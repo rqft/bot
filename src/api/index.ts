@@ -10,6 +10,7 @@ import { imageColor } from "./routes/image.color";
 import { imageFlop } from "./routes/image.flop";
 import { imageResize } from "./routes/image.resize";
 import { imageSpin } from "./routes/image.spin";
+import { imageRotate } from "./routes/image.rotate";
 import { origin } from "./routes/origin";
 import { tagDelete } from "./routes/tag.delete";
 import { tagGet } from "./routes/tag.get";
@@ -47,6 +48,7 @@ Sarah.get("/tags/search/:query", tagSearch);
 Sarah.get("/image/mirror", imageFlop)
 Sarah.get("/image/spin", imageSpin);
 Sarah.get("/image/color/:size/:color", imageColor);
-Sarah.get('/image/resize/:size', imageResize)
+Sarah.get('/image/resize/:size', imageResize);
+Sarah.get('/image/rotate/:deg', imageRotate)
 // Sarah.all('*', fallback);
 export { Sarah };

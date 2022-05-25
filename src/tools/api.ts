@@ -89,5 +89,12 @@ export module Jonathan {
         ":size": size,
       });
     }
+
+    async imageRotate(url: string, angle: number): Promise<Buffer> {
+      return await this.get.buffer("/image/rotate/:angle", {
+        url,
+        ":angle": angle,
+      });
+    }
   }
 }
