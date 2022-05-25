@@ -9,8 +9,9 @@
   },
   "scripts": {
     "start": "nodemon dist",
-    "sync backend": "npm i pariah",
-    "sync": "git pull && npm i && npm run sync backend"
+    "sync-backend": "npm i pariah",
+    "sync": "git pull && npm i && npm run sync-backend",
+    "fall": "killall -u clancy node"
   },
   "keywords": [],
   "author": "Clancy",
