@@ -4,7 +4,7 @@ import { Context } from "detritus-client/lib/command";
 import {
   InteractionCallbackTypes,
   MessageComponentButtonStyles,
-  MessageFlags,
+  MessageFlags
 } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { Member, Message, User } from "detritus-client/lib/structures";
@@ -233,17 +233,17 @@ export class Paginator {
     }
     */
 
-    components.createButton({
-      customId: PageButtonNames.SHUFFLE,
-      ...this.buttons[PageButtonNames.SHUFFLE],
-    });
-    components.createButton({
-      customId: PageButtonNames.CUSTOM,
-      style: this.custom.isActive
-        ? MessageComponentButtonStyles.DANGER
-        : MessageComponentButtonStyles.PRIMARY,
-      ...this.buttons[PageButtonNames.CUSTOM],
-    });
+    // components.createButton({
+    //   customId: PageButtonNames.SHUFFLE,
+    //   ...this.buttons[PageButtonNames.SHUFFLE],
+    // });
+    // components.createButton({
+    //   customId: PageButtonNames.CUSTOM,
+    //   style: this.custom.isActive
+    //     ? MessageComponentButtonStyles.DANGER
+    //     : MessageComponentButtonStyles.PRIMARY,
+    //   ...this.buttons[PageButtonNames.CUSTOM],
+    // });
     components.createButton({
       customId: PageButtonNames.STOP,
       style: MessageComponentButtonStyles.DANGER,

@@ -6,7 +6,7 @@ import {
   CommandRatelimitMetadata,
   Context,
   ParsedArgs,
-  ParsedErrors,
+  ParsedErrors
 } from "detritus-client/lib/command";
 import { CommandRatelimitTypes } from "detritus-client/lib/constants";
 import { CommandMetadata } from "../../tools/command-metadata";
@@ -152,7 +152,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     const store: Record<string, string> = {};
     for (const key in errors) {
       const value = errors[key];
-      const message = value.message;
+      let message = value.message;
 
       if (message in store) {
         description.push(`${key}: same as ${store[message]}`);

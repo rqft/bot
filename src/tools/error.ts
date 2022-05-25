@@ -35,7 +35,7 @@ export class Err<T = string, M = any> {
   }
 
   public toString(): string {
-    return `Error (${this.status}): ${this.message}`;
+    return `${this.message}`;
   }
   public toThrown(): string {
     return `${ErrorEmojis[this.level]} ${Markdown.Format.codestring(

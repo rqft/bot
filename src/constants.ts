@@ -3,7 +3,7 @@ import {
   ChannelVideoQualityModes,
   Permissions,
   StagePrivacyLevels,
-  UserFlags,
+  UserFlags
 } from "detritus-client/lib/constants";
 import { CustomEmojis, Emojis } from "./tools/emojis";
 
@@ -116,15 +116,23 @@ export enum Colours {
 
 export enum Brand {
   VYBOSE = "vybose",
+  IMAGGA = "imagga",
+  PXL = 'pxl-api'
 }
 export const BrandNames: Record<Brand, string> = {
   [Brand.VYBOSE]: "Vybose",
+  [Brand.IMAGGA]: "Imagga",
+  [Brand.PXL]: "PXL API"
 };
 export const BrandColours: Record<Brand, Colours> = {
-  [Brand.VYBOSE]: Colours.BRAND_GREEN,
+  [Brand.VYBOSE]: Colours.PURPLE,
+  [Brand.IMAGGA]: Colours.AQUA,
+  [Brand.PXL]: Colours.WHITE
 };
 export const BrandIcons: Record<Brand, URL> = {
   [Brand.VYBOSE]: new URL("https://rqft.space/i/image/vybost.png"),
+  [Brand.IMAGGA]: new URL("https://www.programmableweb.com/sites/default/files/imagga_logo_small_500x288px.png"),
+  [Brand.PXL]: new URL("https://pxlapi.dev/images/logo-small-transparent.png")
 };
 export const IrrelevantPermissions: Array<bigint> = [
   Permissions.NONE,

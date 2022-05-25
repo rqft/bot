@@ -5,11 +5,11 @@ import {
   ChannelTypes,
   DiscordRegexNames,
   GuildExplicitContentFilterTypes,
-  ImageFormats,
+  ImageFormats
 } from "detritus-client/lib/constants";
 import {
   InteractionAutoCompleteContext,
-  InteractionContext,
+  InteractionContext
 } from "detritus-client/lib/interaction";
 import { regex } from "detritus-client/lib/utils";
 import { Timers } from "detritus-utils";
@@ -23,7 +23,7 @@ import {
   isSnowflake,
   onlyEmoji,
   toCodePointForTwemoji,
-  validateUrl,
+  validateUrl
 } from "./tools";
 
 export module Parameters {
@@ -94,16 +94,16 @@ export module Parameters {
     return value;
   }
 
-  export function url(value: string): string {
+  export function url(value: string): URL {
     if (value) {
       if (!/^https?:\/\//.test(value)) {
-        return `http://${value}`;
+        value = `http://${value}`;
       }
       if (!validateUrl(value)) {
         throw new Err("wasn't a valid url", { status: 400 });
       }
     }
-    return value;
+    return new URL(value);
   }
 
   export interface EmojiOptions {
@@ -134,13 +134,14 @@ export module Parameters {
     url: string;
     type: EmojiType;
     id?: string;
+    raw: string;
   }
   export function emojiUrl(value: string): EmojiUrl | null {
     value = value.toLowerCase().trim();
     if (UNICODE_EMOJI_REGEX.test(value)) {
       const points = toCodePointForTwemoji(value);
       const url = `https://cdn.notsobot.com/twemoji/512x512/${points}.png`;
-      return { url, type: EmojiType.TWEMOJI };
+      return { url, type: EmojiType.TWEMOJI, raw: points };
     }
 
     const matches = Markdown.Match.emoji(value);
@@ -150,12 +151,13 @@ export module Parameters {
 
     const emoji = matches.matches[0]!;
     return {
-      url: Endpoints.CDN.EMOJI(
+      url: Endpoints.Urls.CDN.slice(0,-1) + Endpoints.CDN.EMOJI(
         emoji.id,
         emoji.animated ? ImageFormats.GIF : ImageFormats.PNG
       ),
       type: EmojiType.CUSTOM,
       id: emoji.id,
+      raw: value,
     };
   }
   export async function user(
@@ -325,6 +327,11 @@ export module Parameters {
     return Default.defaultRole(context);
   }
 
+  export interface GuildOptions {
+    invite?: boolean;
+    self?: boolean;
+  }
+
   export const QuotesAll = {
     '"': '"',
     "'": "'",
@@ -382,11 +389,12 @@ export module Parameters {
 
   export function imageUrl(as?: ImageFormats) {
     return async (value: string, context: Context | InteractionContext) => {
+      if (!value) { value = '^' }
       try {
         if (context instanceof Command.Context) {
           // check the message's attachments/stickers first
           {
-            const url = FindImage.findImageUrlInMessages([context.message]);
+            const url = FindImage.findImageUrlInMessages([context.message], as);
             if (url) {
               return url;
             }
@@ -402,7 +410,7 @@ export module Parameters {
                   messageReference.channelId,
                   messageReference.messageId
                 ));
-              const url = FindImage.findImageUrlInMessages([message]);
+              const url = FindImage.findImageUrlInMessages([message], as);
               if (url) {
                 return url;
               }
@@ -443,7 +451,7 @@ export module Parameters {
                     const message =
                       context.messages.get(messageId) ||
                       (await context.rest.fetchMessage(channelId, messageId));
-                    const url = FindImage.findImageUrlInMessages([message]);
+                    const url = FindImage.findImageUrlInMessages([message], as);
                     if (url) {
                       return url;
                     }
@@ -456,7 +464,10 @@ export module Parameters {
                 if (!context.message.embeds.length) {
                   await Timers.sleep(1000);
                 }
-                const url = FindImage.findImageUrlInMessages([context.message]);
+                const url = FindImage.findImageUrlInMessages(
+                  [context.message],
+                  as
+                );
                 return url || text;
               } else {
                 return text;
@@ -468,7 +479,7 @@ export module Parameters {
           if (value.includes("#") && !value.startsWith("#")) {
             const found = await Parameters.user(value, context);
             if (found) {
-              return found.avatarUrlFormat(null, { size: 1024 });
+              return found.avatarUrlFormat(as, { size: 1024 });
             }
             return null;
           }
@@ -507,7 +518,7 @@ export module Parameters {
             } else {
               user = await context.rest.fetchUser(userId);
             }
-            return user.avatarUrlFormat(null, { size: 1024 });
+            return user.avatarUrlFormat(as, { size: 1024 });
           }
 
           // it's <a:emoji:id>
@@ -517,9 +528,8 @@ export module Parameters {
             };
             if (matches.length) {
               const [match] = matches;
-              const { animated, id } = match!;
-              const format = animated ? "gif" : "png";
-              return Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format);
+              const { id } = match!;
+              return Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, as);
             }
           }
 
@@ -538,7 +548,7 @@ export module Parameters {
           {
             const found = await Parameters.user(value, context);
             if (found) {
-              return found.avatarUrlFormat(null, { size: 1024 });
+              return found.avatarUrlFormat(as, { size: 1024 });
             }
           }
         }

@@ -1,3 +1,5 @@
+import { decode, GIF, Image } from "imagescript";
+
 export enum ConversionMethods {
   ENCODE = "encode",
   DECODE = "decode",
@@ -23,4 +25,11 @@ export function binary(data: string, method: ConversionMethods) {
         .map((c) => String.fromCharCode(parseInt(c, 2)))
         .join("");
   }
+}
+export async function decodeImage(data: Buffer | Uint8Array): Promise<Image> {
+  const output = await decode(data, true);
+  if (output instanceof GIF) {
+    return output.at(0) as unknown as Image;
+  }
+  return output
 }

@@ -1,15 +1,18 @@
 import { Command, Interaction, Structures } from "detritus-client";
 import { Context, EditOrReply } from "detritus-client/lib/command";
-import { DiscordAbortCodes } from "detritus-client/lib/constants";
+import { DiscordAbortCodes, ImageFormats } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import {
   InteractionEditOrRespond,
-  Message,
+  Message
 } from "detritus-client/lib/structures";
+import { Animation, Frame, Image } from "imagescript/v2";
+import { Pariah } from "pariah";
+import { IO } from "wilson-kv";
 import {
   PermissionsText,
   UNICODE_EMOJI_REGEX,
-  VALID_URL_REGEX,
+  VALID_URL_REGEX
 } from "../constants";
 import { client } from "../globals";
 import { Secrets } from "../secrets";
@@ -553,4 +556,84 @@ export function groupArray<T>(data: Array<T>, size: number): Array<Array<T>> {
     grouped.push(data.slice(i, i + size));
   }
   return grouped;
+}
+
+export async function convert(
+  uri: string,
+  format: ImageFormats = ImageFormats.PNG
+): Promise<string> {
+  const instance = new Pariah(new URL(uri));
+  const data = await instance.get.arrayBuffer();
+  const buffer = Buffer.from(data);
+  const attachment = await store(buffer, "image." + format);
+  return attachment.url!;
+}
+
+export async function imagescriptOp(
+  data: Image | Animation,
+  callback: IO<Image>
+): Promise<typeof data> {
+  if (data instanceof Image) {
+    return callback(data);
+  }
+
+  for (let i = 0; i < data.frames.length; i++) {
+    const output = callback(data.frames[i]!.image);
+    data.frames[i] = new Frame(output.width, output.height, output);
+  }
+
+  return data;
+}
+
+export function toTitleCase(payload: string) {
+  return payload
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export function padCodeBlockFromRows(
+  strings: Array<Array<string>>,
+  options: {
+    join?: string,
+    padding?: string,
+    padFunc?: (targetLength: number, padString?: string) => string,
+  } = {},
+): Array<string> {
+  const padding = (options.padding === undefined) ? ' ' : options.padding;
+  const padFunc = (options.padFunc === undefined) ? String.prototype.padStart : options.padFunc;
+  const join = (options.join === undefined) ? ' ' : options.join;
+
+  const columns: Array<Array<string>> = [];
+  const columnsAmount = strings.reduce((x, row) => Math.max(x, row.length), 0);
+
+  for (let i = 0; i < columnsAmount; i++) {
+    const column: Array<string> = [];
+
+    let max = 0;
+    for (const row of strings) {
+      if (i in row) {
+        max = Math.max(max, row[i]!.length);
+      }
+    }
+    for (const row of strings) {
+      if (i in row) {
+        column.push(padFunc.call(row[i], max, padding));
+      }
+    }
+    columns.push(column);
+  }
+
+  const rows: Array<string> = [];
+  for (let i = 0; i < strings.length; i++) {
+    const row: Array<string> = [];
+    for (const column of columns) {
+      if (i in column) {
+        row.push(column[i]!);
+      }
+    }
+    rows.push(row.join(join));
+  }
+  return rows;
 }
