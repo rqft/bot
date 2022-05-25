@@ -13,6 +13,6 @@ export default class PingCommand extends BaseCommand {
   }
 
   async run(context: Context) {
-    return editOrReply(context, "ok");
+    return editOrReply(context, `${Date.now() - (context.message.editedAtUnix || context.message.createdAtUnix)}`);
   }
 }
