@@ -24,12 +24,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.guild = void 0;
+const constants_1 = require("../../constants");
+const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
+const Basic = __importStar(require("./basic"));
 const Embed = __importStar(require("./embed"));
 async function guild(context) {
     const { guild } = context;
     if (!guild) {
-        throw new Error('Need to be in a guild');
+        throw new Error("Need to be in a guild");
     }
     const embed = Embed.user(context);
     {
@@ -45,6 +48,28 @@ async function guild(context) {
         }
     }
     {
+        const description = [];
+        description.push(Basic.field("<:IconGui_RichPresence:798624241351655514>", "ID", markdown_1.Markdown.Format.codestring(guild.id)));
+        if (guild.owner) {
+            description.push(Basic.field("<:IconGui_OwnerCrown:799657143719952415>", "Owner", `${markdown_1.Markdown.Format.link(guild.owner.tag, guild.owner.jumpLink)} (${guild.owner.mention})`));
+        }
+        if (guild.region) {
+            description.push(Basic.field("<:IconChannel_Voice:798624234732781580>", "Voice Region", constants_1.VoiceRegionsText[guild.region] || guild.region));
+        }
+        const GuildPublicStatesText = {
+            [String(true)]: "Public",
+            [String(false)]: "Private",
+        };
+        description.push(Basic.field("<:IconGui_Discovery:836649540051664936>", "Server Type", GuildPublicStatesText[String(guild.isPublic)]));
+        if (description.length) {
+            embed.addField("Information", description.join("\n"));
+        }
+    }
+    {
+        const description = [];
+        if (guild.channels.length) {
+            description.push(Basic.field("<:IconChannel_Text:798624246905569323>", "Text Channels", markdown_1.Markdown.Format.codestring(guild.channels.size.toLocaleString())));
+        }
     }
     return await (0, tools_1.editOrReply)(context, { embed });
 }

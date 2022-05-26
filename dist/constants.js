@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = void 0;
+exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const emojis_1 = require("./tools/emojis");
 exports.PermissionsText = Object.freeze({
@@ -182,4 +182,41 @@ exports.VideoQualityModesText = {
 exports.StagePrivacyLevelsText = {
     [constants_1.StagePrivacyLevels.PUBLIC]: "Public",
     [constants_1.StagePrivacyLevels.GUILD_ONLY]: "Server Only",
+};
+var GuildVoiceRegion;
+(function (GuildVoiceRegion) {
+    GuildVoiceRegion["BRAZIL"] = "brazil";
+    GuildVoiceRegion["EU_CENTRAL"] = "eu-central";
+    GuildVoiceRegion["EU_WEST"] = "eu-west";
+    GuildVoiceRegion["EUROPE"] = "europe";
+    GuildVoiceRegion["HONGKONG"] = "hongkong";
+    GuildVoiceRegion["INDIA"] = "india";
+    GuildVoiceRegion["JAPAN"] = "japan";
+    GuildVoiceRegion["RUSSIA"] = "russia";
+    GuildVoiceRegion["SINGAPORE"] = "singapore";
+    GuildVoiceRegion["SOUTHAFRICA"] = "southafrica";
+    GuildVoiceRegion["SYDNEY"] = "sydney";
+    GuildVoiceRegion["SOUTH_KOREA"] = "south-korea";
+    GuildVoiceRegion["US_CENTRAL"] = "us-central";
+    GuildVoiceRegion["US_EAST"] = "us-east";
+    GuildVoiceRegion["US_SOUTH"] = "us-south";
+    GuildVoiceRegion["US_WEST"] = "us-west";
+})(GuildVoiceRegion = exports.GuildVoiceRegion || (exports.GuildVoiceRegion = {}));
+exports.VoiceRegionsText = {
+    [GuildVoiceRegion.BRAZIL]: "Brazil",
+    [GuildVoiceRegion.EU_CENTRAL]: "Central Europe",
+    [GuildVoiceRegion.EU_WEST]: "Western Europe",
+    [GuildVoiceRegion.EUROPE]: "Europe",
+    [GuildVoiceRegion.HONGKONG]: "Hong Kong",
+    [GuildVoiceRegion.INDIA]: "India",
+    [GuildVoiceRegion.JAPAN]: "Japan",
+    [GuildVoiceRegion.RUSSIA]: "Russia",
+    [GuildVoiceRegion.SINGAPORE]: "Singapore",
+    [GuildVoiceRegion.SOUTHAFRICA]: "South Africa",
+    [GuildVoiceRegion.SYDNEY]: "Sydney",
+    [GuildVoiceRegion.SOUTH_KOREA]: "South Korea",
+    [GuildVoiceRegion.US_CENTRAL]: "Central United States",
+    [GuildVoiceRegion.US_EAST]: "Eastern United States",
+    [GuildVoiceRegion.US_SOUTH]: "Southern United States",
+    [GuildVoiceRegion.US_WEST]: "Western United States",
 };
