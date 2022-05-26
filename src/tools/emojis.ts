@@ -12,7 +12,7 @@ export enum Emojis {
   MICROPHONE = "🎙",
   LOCK = "🔒",
   WARNING = "⚠",
-  TRIANGULAR_FLAG_ON_POST = "🚩"
+  TRIANGULAR_FLAG_ON_POST = "🚩",
 }
 export const enum CustomEmojis {
   // Channels
@@ -67,6 +67,11 @@ export const enum CustomEmojis {
   GUI_LIBRARY = "<:IconGui_Library:839138926240858162>",
   GUI_UP_ARROW = "<:IconGui_UpArrow:842751875496935454>",
   GUI_DOWN_ARROW = "<:IconGui_DownArrow:842751875099131954>",
+  GUI_STICKER = "<:IconGui_Sticker:979381227293401088>",
+  GUI_DELETE = "<:IconGui_Delete:890068525408981002>",
+  GUI_HUB = "<:IconGui_Hub:979402098947010580>",
+  TAG_BOT_LEFT = "<:IconTag_Bot1:889780363524710441>",
+  TAG_BOT_RIGHT = "<:IconTag_Bot2:889780363424063498>",
   // Profile Badges
   BADGE_NITRO = "<:IconBadge_Nitro:798624232472051792>",
   BADGE_PARTNER = "<:IconBadge_Partner:798624238939406416>",

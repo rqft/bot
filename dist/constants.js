@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = void 0;
+exports.GuildFeaturesEmojis = exports.GuildFeaturesText = exports.GuildFeature = exports.GuildPublicStatesText = exports.GuildMfaLevelsText = exports.GuildExplicitContentFiltersText = exports.GuildVerificationLevelsText = exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const emojis_1 = require("./tools/emojis");
 exports.PermissionsText = Object.freeze({
@@ -100,17 +100,17 @@ var Brand;
 exports.BrandNames = {
     [Brand.VYBOSE]: "Vybose",
     [Brand.IMAGGA]: "Imagga",
-    [Brand.PXL]: "PXL API"
+    [Brand.PXL]: "PXL API",
 };
 exports.BrandColours = {
     [Brand.VYBOSE]: Colours.PURPLE,
     [Brand.IMAGGA]: Colours.AQUA,
-    [Brand.PXL]: Colours.WHITE
+    [Brand.PXL]: Colours.WHITE,
 };
 exports.BrandIcons = {
     [Brand.VYBOSE]: new URL("https://rqft.space/i/image/vybost.png"),
     [Brand.IMAGGA]: new URL("https://www.programmableweb.com/sites/default/files/imagga_logo_small_500x288px.png"),
-    [Brand.PXL]: new URL("https://pxlapi.dev/images/logo-small-transparent.png")
+    [Brand.PXL]: new URL("https://pxlapi.dev/images/logo-small-transparent.png"),
 };
 exports.IrrelevantPermissions = [
     constants_1.Permissions.NONE,
@@ -201,6 +201,7 @@ var GuildVoiceRegion;
     GuildVoiceRegion["US_EAST"] = "us-east";
     GuildVoiceRegion["US_SOUTH"] = "us-south";
     GuildVoiceRegion["US_WEST"] = "us-west";
+    GuildVoiceRegion["DEPRECATED"] = "deprecated";
 })(GuildVoiceRegion = exports.GuildVoiceRegion || (exports.GuildVoiceRegion = {}));
 exports.VoiceRegionsText = {
     [GuildVoiceRegion.BRAZIL]: "Brazil",
@@ -219,4 +220,137 @@ exports.VoiceRegionsText = {
     [GuildVoiceRegion.US_EAST]: "Eastern United States",
     [GuildVoiceRegion.US_SOUTH]: "Southern United States",
     [GuildVoiceRegion.US_WEST]: "Western United States",
+    [GuildVoiceRegion.DEPRECATED]: "Deprecated",
+};
+exports.GuildVerificationLevelsText = {
+    [constants_1.VerificationLevels.NONE]: "None",
+    [constants_1.VerificationLevels.LOW]: "Low",
+    [constants_1.VerificationLevels.MEDIUM]: "Medium",
+    [constants_1.VerificationLevels.HIGH]: "High",
+    [constants_1.VerificationLevels.VERY_HIGH]: "Very High",
+};
+exports.GuildExplicitContentFiltersText = {
+    [constants_1.GuildExplicitContentFilterTypes.DISABLED]: "Disabled",
+    [constants_1.GuildExplicitContentFilterTypes.MEMBERS_WITHOUT_ROLES]: "Members Without Roles",
+    [constants_1.GuildExplicitContentFilterTypes.ALL_MEMBERS]: "All Members",
+};
+exports.GuildMfaLevelsText = {
+    [constants_1.MfaLevels.NONE]: "None",
+    [constants_1.MfaLevels.ELEVATED]: "Elevated",
+};
+exports.GuildPublicStatesText = {
+    [String(true)]: "Public",
+    [String(false)]: "Private",
+};
+var GuildFeature;
+(function (GuildFeature) {
+    GuildFeature["INVITE_SPLASH"] = "INVITE_SPLASH";
+    GuildFeature["VIP_REGIONS"] = "VIP_REGIONS";
+    GuildFeature["VANITY_URL"] = "VANITY_URL";
+    GuildFeature["VERIFIED"] = "VERIFIED";
+    GuildFeature["PARTNERED"] = "PARTNERED";
+    GuildFeature["PUBLIC"] = "PUBLIC";
+    GuildFeature["COMMERCE"] = "COMMERCE";
+    GuildFeature["NEWS"] = "NEWS";
+    GuildFeature["DISCOVERABLE"] = "DISCOVERABLE";
+    GuildFeature["FEATURABLE"] = "FEATURABLE";
+    GuildFeature["ANIMATED_ICON"] = "ANIMATED_ICON";
+    GuildFeature["BANNER"] = "BANNER";
+    GuildFeature["PUBLIC_DISABLED"] = "PUBLIC_DISABLED";
+    GuildFeature["WELCOME_SCREEN_ENABLED"] = "WELCOME_SCREEN_ENABLED";
+    GuildFeature["MEMBER_VERIFICATION_GATE_ENABLED"] = "MEMBER_VERIFICATION_GATE_ENABLED";
+    GuildFeature["ENABLED_DISCOVERABLE_BEFORE"] = "ENABLED_DISCOVERABLE_BEFORE";
+    GuildFeature["COMMUNITY"] = "COMMUNITY";
+    GuildFeature["PREVIEW_ENABLED"] = "PREVIEW_ENABLED";
+    GuildFeature["MEMBER_LIST_DISABLED"] = "MEMBER_LIST_DISABLED";
+    GuildFeature["MORE_EMOJI"] = "MORE_EMOJI";
+    GuildFeature["RELAY_ENABLED"] = "RELAY_ENABLED";
+    GuildFeature["DISCOVERABLE_DISABLED"] = "DISCOVERABLE_DISABLED";
+    GuildFeature["MONETIZATION_ENABLED"] = "MONETIZATION_ENABLED";
+    GuildFeature["TICKETED_EVENTS_ENABLED"] = "TICKETED_EVENTS_ENABLED";
+    GuildFeature["PRIVATE_THREADS"] = "PRIVATE_THREADS";
+    GuildFeature["SEVEN_DAY_THREAD_ARCHIVE"] = "SEVEN_DAY_THREAD_ARCHIVE";
+    GuildFeature["THREE_DAY_THREAD_ARCHIVE"] = "THREE_DAY_THREAD_ARCHIVE";
+    GuildFeature["THREADS_ENABLED"] = "THREADS_ENABLED";
+    GuildFeature["ROLE_ICONS"] = "ROLE_ICONS";
+    GuildFeature["NEW_THREAD_PERMISSIONS"] = "NEW_THREAD_PERMISSIONS";
+    GuildFeature["THREADS_ENABLED_TESTING"] = "THREADS_ENABLED_TESTING";
+    GuildFeature["HUB"] = "HUB";
+    GuildFeature["ANIMATED_BANNER"] = "ANIMATED_BANNER";
+    GuildFeature["HAS_DIRECTORY_ENTRY"] = "HAS_DIRECTORY_ENTRY";
+    GuildFeature["MEMBER_PROFILES"] = "MEMBER_PROFILES";
+})(GuildFeature = exports.GuildFeature || (exports.GuildFeature = {}));
+exports.GuildFeaturesText = {
+    [GuildFeature.INVITE_SPLASH]: "Invite Splash",
+    [GuildFeature.VIP_REGIONS]: "VIP Voice Regions",
+    [GuildFeature.VANITY_URL]: "Vanity URL",
+    [GuildFeature.VERIFIED]: "Verified",
+    [GuildFeature.PARTNERED]: "Partnered",
+    [GuildFeature.PUBLIC]: "Public",
+    [GuildFeature.COMMERCE]: "Commerce",
+    [GuildFeature.NEWS]: "News",
+    [GuildFeature.DISCOVERABLE]: "Discoverable",
+    [GuildFeature.FEATURABLE]: "Featurable",
+    [GuildFeature.ANIMATED_ICON]: "Animated Icon",
+    [GuildFeature.BANNER]: "Banner",
+    [GuildFeature.PUBLIC_DISABLED]: "Public Disabled",
+    [GuildFeature.WELCOME_SCREEN_ENABLED]: "Welcome Screen Enabled",
+    [GuildFeature.MEMBER_VERIFICATION_GATE_ENABLED]: "Member Verification Gate Enabled",
+    [GuildFeature.ENABLED_DISCOVERABLE_BEFORE]: "Enabled Discoverable Before",
+    [GuildFeature.COMMUNITY]: "Community",
+    [GuildFeature.PREVIEW_ENABLED]: "Preview Enabled",
+    [GuildFeature.MEMBER_LIST_DISABLED]: "Member List Disabled",
+    [GuildFeature.MORE_EMOJI]: "More Emoji",
+    [GuildFeature.RELAY_ENABLED]: "Relay Enabled",
+    [GuildFeature.DISCOVERABLE_DISABLED]: "Discoverable Disabled",
+    [GuildFeature.MONETIZATION_ENABLED]: "Monetization Enabled",
+    [GuildFeature.TICKETED_EVENTS_ENABLED]: "Ticketed Events Enabled",
+    [GuildFeature.PRIVATE_THREADS]: "Private Threads",
+    [GuildFeature.SEVEN_DAY_THREAD_ARCHIVE]: "Seven Day Thread Archive",
+    [GuildFeature.THREE_DAY_THREAD_ARCHIVE]: "Three Day Thread Archive",
+    [GuildFeature.THREADS_ENABLED]: "Threads Enabled",
+    [GuildFeature.ROLE_ICONS]: "Role Icons",
+    [GuildFeature.NEW_THREAD_PERMISSIONS]: "New Thread Permissions",
+    [GuildFeature.THREADS_ENABLED_TESTING]: "Threads Enabled Testing",
+    [GuildFeature.HUB]: "Hub",
+    [GuildFeature.ANIMATED_BANNER]: "Animated Banner",
+    [GuildFeature.HAS_DIRECTORY_ENTRY]: "Has Directory Entry",
+    [GuildFeature.MEMBER_PROFILES]: "Member Profiles"
+};
+exports.GuildFeaturesEmojis = {
+    [GuildFeature.INVITE_SPLASH]: "<:IconGui_Friends:839138904945983528>",
+    [GuildFeature.VIP_REGIONS]: "<:IconChannel_Voice:798624234732781580>",
+    [GuildFeature.VANITY_URL]: "<:IconGui_Friends:839138904945983528>",
+    [GuildFeature.VERIFIED]: "<:IconBadge_Verified:801248680476016671>",
+    [GuildFeature.PARTNERED]: "<:IconBadge_Partner:798624238939406416>",
+    [GuildFeature.PUBLIC]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.COMMERCE]: "<:IconChannel_Str:798624234745757727>",
+    [GuildFeature.NEWS]: "<:IconChannel_News:798624238793261109>",
+    [GuildFeature.DISCOVERABLE]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.FEATURABLE]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.ANIMATED_ICON]: "<:IconGui_GIF:799642414431207496>",
+    [GuildFeature.BANNER]: "<:IconGui_AddFile:799643046614007838>",
+    [GuildFeature.PUBLIC_DISABLED]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.WELCOME_SCREEN_ENABLED]: "<:IconGui_JoinArrow:836387209225306162>",
+    [GuildFeature.MEMBER_VERIFICATION_GATE_ENABLED]: "<:IconGui_JoinArrow:836387209225306162>",
+    [GuildFeature.ENABLED_DISCOVERABLE_BEFORE]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.COMMUNITY]: "<:IconGui_Friends:839138904945983528>",
+    [GuildFeature.PREVIEW_ENABLED]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.MEMBER_LIST_DISABLED]: "<:IconGui_Members:798624241868079104>",
+    [GuildFeature.MORE_EMOJI]: "<:IconGui_Emoji:837055568338223165>",
+    [GuildFeature.RELAY_ENABLED]: "<:IconGui_AddFile:799643046614007838>",
+    [GuildFeature.DISCOVERABLE_DISABLED]: "<:IconGui_Discovery:836649540051664936>",
+    [GuildFeature.MONETIZATION_ENABLED]: "<:IconChannel_Str:798624234745757727>",
+    [GuildFeature.TICKETED_EVENTS_ENABLED]: "<:IconChannel_Str:798624234745757727>",
+    [GuildFeature.PRIVATE_THREADS]: "<:IconChannel_ThreadNew:836610449201037413>",
+    [GuildFeature.SEVEN_DAY_THREAD_ARCHIVE]: "<:IconChannel_ThreadNew:836610449201037413>",
+    [GuildFeature.THREE_DAY_THREAD_ARCHIVE]: "<:IconChannel_ThreadNew:836610449201037413>",
+    [GuildFeature.THREADS_ENABLED]: "<:IconChannel_ThreadNew:836610449201037413>",
+    [GuildFeature.ROLE_ICONS]: "<:IconGui_Role:816328284245196840>",
+    [GuildFeature.NEW_THREAD_PERMISSIONS]: "<:IconGui_AddFile:799643046614007838>",
+    [GuildFeature.THREADS_ENABLED_TESTING]: "<:IconChannel_ThreadNew:836610449201037413>",
+    [GuildFeature.HUB]: "<:IconGui_Hub:979402098947010580>",
+    [GuildFeature.ANIMATED_BANNER]: "<:IconGui_GIF:799642414431207496>",
+    [GuildFeature.HAS_DIRECTORY_ENTRY]: "<:IconChannel_Category:798624247122493450>",
+    [GuildFeature.MEMBER_PROFILES]: "<:IconGui_Members:798624241868079104>"
 };

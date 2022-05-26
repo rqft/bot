@@ -1,9 +1,11 @@
 import {
   ChannelTypes,
   ChannelVideoQualityModes,
+  GuildExplicitContentFilterTypes, MfaLevels,
   Permissions,
   StagePrivacyLevels,
-  UserFlags
+  UserFlags,
+  VerificationLevels
 } from "detritus-client/lib/constants";
 import { CustomEmojis, Emojis } from "./tools/emojis";
 
@@ -117,22 +119,24 @@ export enum Colours {
 export enum Brand {
   VYBOSE = "vybose",
   IMAGGA = "imagga",
-  PXL = 'pxl-api'
+  PXL = "pxl-api",
 }
 export const BrandNames: Record<Brand, string> = {
   [Brand.VYBOSE]: "Vybose",
   [Brand.IMAGGA]: "Imagga",
-  [Brand.PXL]: "PXL API"
+  [Brand.PXL]: "PXL API",
 };
 export const BrandColours: Record<Brand, Colours> = {
   [Brand.VYBOSE]: Colours.PURPLE,
   [Brand.IMAGGA]: Colours.AQUA,
-  [Brand.PXL]: Colours.WHITE
+  [Brand.PXL]: Colours.WHITE,
 };
 export const BrandIcons: Record<Brand, URL> = {
   [Brand.VYBOSE]: new URL("https://rqft.space/i/image/vybost.png"),
-  [Brand.IMAGGA]: new URL("https://www.programmableweb.com/sites/default/files/imagga_logo_small_500x288px.png"),
-  [Brand.PXL]: new URL("https://pxlapi.dev/images/logo-small-transparent.png")
+  [Brand.IMAGGA]: new URL(
+    "https://www.programmableweb.com/sites/default/files/imagga_logo_small_500x288px.png"
+  ),
+  [Brand.PXL]: new URL("https://pxlapi.dev/images/logo-small-transparent.png"),
 };
 export const IrrelevantPermissions: Array<bigint> = [
   Permissions.NONE,
@@ -223,6 +227,7 @@ export enum GuildVoiceRegion {
   US_EAST = "us-east",
   US_SOUTH = "us-south",
   US_WEST = "us-west",
+  DEPRECATED = "deprecated",
 }
 export const VoiceRegionsText: Record<GuildVoiceRegion, string> = {
   [GuildVoiceRegion.BRAZIL]: "Brazil",
@@ -241,4 +246,144 @@ export const VoiceRegionsText: Record<GuildVoiceRegion, string> = {
   [GuildVoiceRegion.US_EAST]: "Eastern United States",
   [GuildVoiceRegion.US_SOUTH]: "Southern United States",
   [GuildVoiceRegion.US_WEST]: "Western United States",
+  [GuildVoiceRegion.DEPRECATED]: "Deprecated",
+};
+export const GuildVerificationLevelsText: Record<VerificationLevels, string> = {
+  [VerificationLevels.NONE]: "None",
+  [VerificationLevels.LOW]: "Low",
+  [VerificationLevels.MEDIUM]: "Medium",
+  [VerificationLevels.HIGH]: "High",
+  [VerificationLevels.VERY_HIGH]: "Very High",
+};
+export const GuildExplicitContentFiltersText: Record<
+  GuildExplicitContentFilterTypes,
+  string
+> = {
+  [GuildExplicitContentFilterTypes.DISABLED]: "Disabled",
+  [GuildExplicitContentFilterTypes.MEMBERS_WITHOUT_ROLES]:
+    "Members Without Roles",
+  [GuildExplicitContentFilterTypes.ALL_MEMBERS]: "All Members",
+};
+
+export const GuildMfaLevelsText: Record<MfaLevels, string> = {
+  [MfaLevels.NONE]: "None",
+  [MfaLevels.ELEVATED]: "Elevated",
+};
+
+export const GuildPublicStatesText: Record<string, string> = {
+  [String(true)]: "Public",
+  [String(false)]: "Private",
+};
+
+export enum GuildFeature { 
+  INVITE_SPLASH = "INVITE_SPLASH", 
+  VIP_REGIONS = "VIP_REGIONS", 
+  VANITY_URL = "VANITY_URL", 
+  VERIFIED = "VERIFIED", 
+  PARTNERED = "PARTNERED", 
+  PUBLIC = "PUBLIC", 
+  COMMERCE = "COMMERCE", 
+  NEWS = "NEWS", 
+  DISCOVERABLE = "DISCOVERABLE", 
+  FEATURABLE = "FEATURABLE", 
+  ANIMATED_ICON = "ANIMATED_ICON", 
+  BANNER = "BANNER", 
+  PUBLIC_DISABLED = "PUBLIC_DISABLED", 
+  WELCOME_SCREEN_ENABLED = "WELCOME_SCREEN_ENABLED", 
+  MEMBER_VERIFICATION_GATE_ENABLED = "MEMBER_VERIFICATION_GATE_ENABLED", 
+  ENABLED_DISCOVERABLE_BEFORE = "ENABLED_DISCOVERABLE_BEFORE", 
+  COMMUNITY = "COMMUNITY", 
+  PREVIEW_ENABLED = "PREVIEW_ENABLED", 
+  MEMBER_LIST_DISABLED = "MEMBER_LIST_DISABLED", 
+  MORE_EMOJI = "MORE_EMOJI", 
+  RELAY_ENABLED = "RELAY_ENABLED", 
+  DISCOVERABLE_DISABLED = "DISCOVERABLE_DISABLED", 
+  MONETIZATION_ENABLED = "MONETIZATION_ENABLED", 
+  TICKETED_EVENTS_ENABLED = "TICKETED_EVENTS_ENABLED", 
+  PRIVATE_THREADS = "PRIVATE_THREADS", 
+  SEVEN_DAY_THREAD_ARCHIVE = "SEVEN_DAY_THREAD_ARCHIVE", 
+  THREE_DAY_THREAD_ARCHIVE = "THREE_DAY_THREAD_ARCHIVE", 
+  THREADS_ENABLED = "THREADS_ENABLED", 
+  ROLE_ICONS = "ROLE_ICONS", 
+  NEW_THREAD_PERMISSIONS = "NEW_THREAD_PERMISSIONS", 
+  THREADS_ENABLED_TESTING = "THREADS_ENABLED_TESTING", 
+  HUB = "HUB", 
+  ANIMATED_BANNER = "ANIMATED_BANNER", 
+  HAS_DIRECTORY_ENTRY = "HAS_DIRECTORY_ENTRY", 
+  MEMBER_PROFILES = "MEMBER_PROFILES"
+}
+export const GuildFeaturesText: Record<GuildFeature, string> = {
+  [GuildFeature.INVITE_SPLASH]: "Invite Splash",
+  [GuildFeature.VIP_REGIONS]: "VIP Voice Regions",
+  [GuildFeature.VANITY_URL]: "Vanity URL",
+  [GuildFeature.VERIFIED]: "Verified",
+  [GuildFeature.PARTNERED]: "Partnered",
+  [GuildFeature.PUBLIC]: "Public",
+  [GuildFeature.COMMERCE]: "Commerce",
+  [GuildFeature.NEWS]: "News",
+  [GuildFeature.DISCOVERABLE]: "Discoverable",
+  [GuildFeature.FEATURABLE]: "Featurable",
+  [GuildFeature.ANIMATED_ICON]: "Animated Icon",
+  [GuildFeature.BANNER]: "Banner",
+  [GuildFeature.PUBLIC_DISABLED]: "Public Disabled",
+  [GuildFeature.WELCOME_SCREEN_ENABLED]: "Welcome Screen Enabled",
+  [GuildFeature.MEMBER_VERIFICATION_GATE_ENABLED]: "Member Verification Gate Enabled",
+  [GuildFeature.ENABLED_DISCOVERABLE_BEFORE]: "Enabled Discoverable Before",
+  [GuildFeature.COMMUNITY]: "Community",
+  [GuildFeature.PREVIEW_ENABLED]: "Preview Enabled",
+  [GuildFeature.MEMBER_LIST_DISABLED]: "Member List Disabled",
+  [GuildFeature.MORE_EMOJI]: "More Emoji",
+  [GuildFeature.RELAY_ENABLED]: "Relay Enabled",
+  [GuildFeature.DISCOVERABLE_DISABLED]: "Discoverable Disabled",
+  [GuildFeature.MONETIZATION_ENABLED]: "Monetization Enabled",
+  [GuildFeature.TICKETED_EVENTS_ENABLED]: "Ticketed Events Enabled",
+  [GuildFeature.PRIVATE_THREADS]: "Private Threads",
+  [GuildFeature.SEVEN_DAY_THREAD_ARCHIVE]: "Seven Day Thread Archive",
+  [GuildFeature.THREE_DAY_THREAD_ARCHIVE]: "Three Day Thread Archive",
+  [GuildFeature.THREADS_ENABLED]: "Threads Enabled",
+  [GuildFeature.ROLE_ICONS]: "Role Icons",
+  [GuildFeature.NEW_THREAD_PERMISSIONS]: "New Thread Permissions",
+  [GuildFeature.THREADS_ENABLED_TESTING]: "Threads Enabled Testing",
+  [GuildFeature.HUB]: "Hub",
+  [GuildFeature.ANIMATED_BANNER]: "Animated Banner",
+  [GuildFeature.HAS_DIRECTORY_ENTRY]: "Has Directory Entry",
+  [GuildFeature.MEMBER_PROFILES]: "Member Profiles"
+}
+
+export const GuildFeaturesEmojis: Record<GuildFeature, CustomEmojis> = {
+  [GuildFeature.INVITE_SPLASH]: CustomEmojis.GUI_FRIENDS,
+  [GuildFeature.VIP_REGIONS]: CustomEmojis.CHANNEL_VOICE,
+  [GuildFeature.VANITY_URL]: CustomEmojis.GUI_FRIENDS,
+  [GuildFeature.VERIFIED]: CustomEmojis.BADGE_VERIFIED,
+  [GuildFeature.PARTNERED]: CustomEmojis.BADGE_PARTNER,
+  [GuildFeature.PUBLIC]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.COMMERCE]: CustomEmojis.CHANNEL_STORE,
+  [GuildFeature.NEWS]: CustomEmojis.CHANNEL_NEWS,
+  [GuildFeature.DISCOVERABLE]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.FEATURABLE]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.ANIMATED_ICON]: CustomEmojis.GUI_GIF,
+  [GuildFeature.BANNER]: CustomEmojis.GUI_ADD_FILE,
+  [GuildFeature.PUBLIC_DISABLED]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.WELCOME_SCREEN_ENABLED]: CustomEmojis.GUI_JOIN_ARROW,
+  [GuildFeature.MEMBER_VERIFICATION_GATE_ENABLED]: CustomEmojis.GUI_JOIN_ARROW,
+  [GuildFeature.ENABLED_DISCOVERABLE_BEFORE]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.COMMUNITY]: CustomEmojis.GUI_FRIENDS,
+  [GuildFeature.PREVIEW_ENABLED]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.MEMBER_LIST_DISABLED]: CustomEmojis.GUI_MEMBERS,
+  [GuildFeature.MORE_EMOJI]: CustomEmojis.GUI_EMOJI,
+  [GuildFeature.RELAY_ENABLED]: CustomEmojis.GUI_ADD_FILE,
+  [GuildFeature.DISCOVERABLE_DISABLED]: CustomEmojis.GUI_DISCOVERY,
+  [GuildFeature.MONETIZATION_ENABLED]: CustomEmojis.CHANNEL_STORE,
+  [GuildFeature.TICKETED_EVENTS_ENABLED]: CustomEmojis.CHANNEL_STORE,
+  [GuildFeature.PRIVATE_THREADS]: CustomEmojis.CHANNEL_THREAD_NEW,
+  [GuildFeature.SEVEN_DAY_THREAD_ARCHIVE]: CustomEmojis.CHANNEL_THREAD_NEW,
+  [GuildFeature.THREE_DAY_THREAD_ARCHIVE]: CustomEmojis.CHANNEL_THREAD_NEW,
+  [GuildFeature.THREADS_ENABLED]: CustomEmojis.CHANNEL_THREAD_NEW,
+  [GuildFeature.ROLE_ICONS]: CustomEmojis.GUI_ROLE,
+  [GuildFeature.NEW_THREAD_PERMISSIONS]: CustomEmojis.GUI_ADD_FILE,
+  [GuildFeature.THREADS_ENABLED_TESTING]: CustomEmojis.CHANNEL_THREAD_NEW,
+  [GuildFeature.HUB]: CustomEmojis.GUI_HUB,
+  [GuildFeature.ANIMATED_BANNER]: CustomEmojis.GUI_GIF,
+  [GuildFeature.HAS_DIRECTORY_ENTRY]: CustomEmojis.CHANNEL_CATEGORY,
+  [GuildFeature.MEMBER_PROFILES]: CustomEmojis.GUI_MEMBERS
 }
