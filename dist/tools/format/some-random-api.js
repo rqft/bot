@@ -54,8 +54,8 @@ exports.AnimalMethods = Object.values(pariah_1.APIs.SomeRandomApi.Animals);
 async function animal(context, args) {
     const data = await exports.instance.animal(args.animal);
     let embed = Embed.user(context);
-    if (data.image) {
-        embed = await Embed.image(context, data.image, `${args.animal}.png`);
+    if (data.link) {
+        embed = await Embed.image(context, data.link, `${args.animal}.png`);
     }
     if (data.fact) {
         embed.setDescription(data.fact);

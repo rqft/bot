@@ -1,6 +1,5 @@
 import { Request } from "express";
-import { Pariah } from "pariah";
-import { Data } from "pariah/dist/data";
+import { Data, Pariah } from "pariah";
 import { Entries } from "wilson-kv";
 import { Result } from "../api/models/result";
 import { MirrorMethods } from "../api/routes/image.flop";

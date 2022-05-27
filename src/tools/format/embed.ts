@@ -4,7 +4,6 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { Attachment } from "detritus-client/lib/structures";
 import { Animation, load } from "imagescript/v2";
 import { Pariah } from "pariah";
-import { Data } from "pariah/dist/data";
 import { Brand, BrandColours, BrandIcons, BrandNames, Colours } from "../../constants";
 import { Err } from "../error";
 import { formatBytes, store } from "../tools";
@@ -36,13 +35,10 @@ export function brand(
 }
 export async function image(
   context: Context | InteractionContext,
-  input: URL | string | Buffer | Attachment | ArrayBuffer | Data<string | Buffer | Attachment | ArrayBuffer>,
+  input: URL | string | Buffer | Attachment | ArrayBuffer,
   name: string,
   ubrand?: Brand
 ) {
-  if (input instanceof Data) {
-    input = input.payload;
-  }
 
   if (input instanceof ArrayBuffer) {
     const buf = Buffer.alloc(input.byteLength);
@@ -62,11 +58,12 @@ export async function image(
   }
 
   if (input instanceof URL) {
-    input = await new Pariah(input).buffer("/");
+    input = (await new Pariah(input).buffer("/")).payload;
   }
 
+
   const decoder = new TextDecoder();
-  const txt = decoder.decode(input as BufferSource);
+  const txt = decoder.decode(input);
   if (txt.match(/^\w+$/g)) {
     switch (txt) {
       case "NO_FACES_DETECTED": { throw new Err("No faces detected"); }

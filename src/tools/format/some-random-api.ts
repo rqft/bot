@@ -63,8 +63,8 @@ export async function animal(
   const data = await instance.animal(args.animal);
   let embed = Embed.user(context);
 
-  if (data.image) {
-    embed = await Embed.image(context, data.image, `${args.animal}.png`);
+  if (data.link) {
+    embed = await Embed.image(context, data.link, `${args.animal}.png`);
   }
 
   if (data.fact) {
