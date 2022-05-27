@@ -7,6 +7,7 @@ const constants_1 = require("detritus-client/lib/constants");
 const interaction_1 = require("detritus-client/lib/interaction");
 const v2_1 = require("imagescript/v2");
 const pariah_1 = require("pariah");
+const data_1 = require("pariah/dist/data");
 const constants_2 = require("../constants");
 const globals_1 = require("../globals");
 const secrets_1 = require("../secrets");
@@ -352,6 +353,9 @@ function onlyEmoji(emoji) {
 }
 exports.onlyEmoji = onlyEmoji;
 async function store(value, filename) {
+    if (value instanceof data_1.Data) {
+        value = value.payload;
+    }
     let e = false;
     let storageChannel = await globals_1.client.rest
         .fetchChannel(secrets_1.Secrets.StorageChannelId)
@@ -428,7 +432,7 @@ exports.groupArray = groupArray;
 async function convert(uri, format = constants_1.ImageFormats.PNG) {
     const instance = new pariah_1.Pariah(new URL(uri));
     const data = await instance.get.arrayBuffer();
-    const buffer = Buffer.from(data);
+    const buffer = Buffer.from(data.payload);
     const attachment = await store(buffer, "image." + format);
     return attachment.url;
 }

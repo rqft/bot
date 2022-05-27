@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -23,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.animal = exports.ImageOnlyAnimals = exports.AnimalMethods = exports.canvas = exports.CanvasMethods = exports.BannedImageOps = exports.instance = void 0;
+exports.animal = exports.AnimalMethods = exports.canvas = exports.CanvasMethods = exports.BannedImageOps = exports.instance = void 0;
 const pariah_1 = require("pariah");
 const error_1 = require("../error");
 const tools_1 = require("../tools");
@@ -49,25 +45,19 @@ async function canvas(context, args) {
         throw new error_1.Err(`Canvas method "${args.method}" is not supported.`);
     }
     args.target = await (0, tools_1.convert)(args.target);
-    const data = await exports.instance.canvas(args.method, args.target, args);
+    const { payload: data } = await exports.instance.canvas(args.method, args.target, args);
     const embed = await Embed.image(context, data, `${args.method}.png`);
     return await (0, tools_1.editOrReply)(context, { embed });
 }
 exports.canvas = canvas;
 exports.AnimalMethods = Object.values(pariah_1.APIs.SomeRandomApi.Animals);
-exports.ImageOnlyAnimals = [
-    pariah_1.APIs.SomeRandomApi.Animals.WHALE,
-    pariah_1.APIs.SomeRandomApi.Animals.PIKACHU,
-];
 async function animal(context, args) {
-    const onlyImage = exports.ImageOnlyAnimals.includes(args.animal);
-    const data = onlyImage
-        ? await exports.instance.get.json("/img/:animal", {
-            ":animal": args.animal,
-        })
-        : await exports.instance.animal(args.animal);
-    const embed = await Embed.image(context, data.image, `${args.animal}.png`);
-    if ("fact" in data) {
+    const data = await exports.instance.animal(args.animal);
+    let embed = Embed.user(context);
+    if (data.link) {
+        embed = await Embed.image(context, data.link, `${args.animal}.png`);
+    }
+    if (data.fact) {
         embed.setDescription(data.fact);
     }
     return await (0, tools_1.editOrReply)(context, { embed });

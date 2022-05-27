@@ -39,7 +39,7 @@ async function image(context, input, name, ubrand) {
         input = new URL(input);
     }
     if (input instanceof URL) {
-        input = await new pariah_1.Pariah(input).buffer("/");
+        input = (await new pariah_1.Pariah(input).buffer("/")).payload;
     }
     const decoder = new TextDecoder();
     const txt = decoder.decode(input);

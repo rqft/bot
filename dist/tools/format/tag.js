@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -37,7 +33,7 @@ async function get(context, args) {
     if (args.key === "") {
         return await (0, tools_1.editOrReply)(context, 'Missing required parameter "key"');
     }
-    const tag = await exports.instance.tagGet(args.key);
+    const { payload: tag } = await exports.instance.tagGet(args.key);
     if (tag.status.state === "error") {
         throw new error_1.Err(tag.status.message, { status: tag.status.code });
     }
@@ -52,11 +48,11 @@ async function get(context, args) {
 }
 exports.get = get;
 async function post(context, args) {
-    const original = await exports.instance.tagGet(args.key);
+    const { payload: original } = await exports.instance.tagGet(args.key);
     if (original.status.state === "ok" && original.data === args.value) {
         throw new error_1.Err("tag already has that value");
     }
-    const tag = await exports.instance.tagPost(args.key, args.value);
+    const { payload: tag } = await exports.instance.tagPost(args.key, args.value);
     if (tag.status.state === "error") {
         throw new error_1.Err(tag.status.message, { status: tag.status.code });
     }
@@ -69,7 +65,7 @@ async function post(context, args) {
 }
 exports.post = post;
 async function remove(context, args) {
-    const tag = await exports.instance.tagDelete(args.key);
+    const { payload: tag } = await exports.instance.tagDelete(args.key);
     if (tag.status.state === "error") {
         throw new error_1.Err(tag.status.message, { status: tag.status.code });
     }
@@ -77,7 +73,7 @@ async function remove(context, args) {
 }
 exports.remove = remove;
 async function list(context) {
-    const tags = await exports.instance.tagList();
+    const { payload: tags } = await exports.instance.tagList();
     if (tags.status.state === "error") {
         throw new error_1.Err(tags.status.message, { status: tags.status.code });
     }
@@ -96,7 +92,7 @@ async function list(context) {
 }
 exports.list = list;
 async function inspect(context) {
-    const tags = await exports.instance.tagInspect();
+    const { payload: tags } = await exports.instance.tagInspect();
     if (tags.status.state === "error") {
         throw new error_1.Err(tags.status.message, { status: tags.status.code });
     }
@@ -108,7 +104,7 @@ async function inspect(context) {
 }
 exports.inspect = inspect;
 async function search(context) {
-    const tags = await exports.instance.tagSearch(context.value);
+    const { payload: tags } = await exports.instance.tagSearch(context.value);
     if (tags.status.state === "error") {
         return await context.respond({ content: ":(" });
     }

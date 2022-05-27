@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -33,28 +29,28 @@ exports.instance = new api_1.Jonathan.API(secrets_1.Secrets.ApiToken);
 async function mirror(context, args) {
     const { target, method } = args;
     const m = method || image_flop_1.MirrorMethods.LEFT;
-    const image = await exports.instance.imageMirror(target, m);
+    const { payload: image } = await exports.instance.imageMirror(target, m);
     const embed = await Embed.image(context, image, `mirror-${m.toLowerCase()}.png`);
     return await (0, tools_1.editOrReply)(context, { embed });
 }
 exports.mirror = mirror;
 async function spin(context, args) {
     const { target } = args;
-    const image = await exports.instance.imageSpin(target);
+    const { payload: image } = await exports.instance.imageSpin(target);
     const embed = await Embed.image(context, image, "spin.gif");
     return await (0, tools_1.editOrReply)(context, { embed });
 }
 exports.spin = spin;
 async function color(context, args) {
     const { color, size } = args;
-    const image = await exports.instance.imageColor(size, color);
+    const { payload: image } = await exports.instance.imageColor(size, color);
     const embed = await Embed.image(context, image, "color.png");
     return await (0, tools_1.editOrReply)(context, { embed });
 }
 exports.color = color;
 async function resize(context, args) {
     const { target, size } = args;
-    const image = await exports.instance.imageResize(target, size);
+    const { payload: image } = await exports.instance.imageResize(target, size);
     const embed = await Embed.image(context, image, "resize.png");
     return await (0, tools_1.editOrReply)(context, { embed });
 }
@@ -62,7 +58,7 @@ exports.resize = resize;
 async function rotate(context, args) {
     let { target, degrees } = args;
     degrees %= 360;
-    const image = await exports.instance.imageRotate(target, degrees);
+    const { payload: image } = await exports.instance.imageRotate(target, degrees);
     const embed = await Embed.image(context, image, "rotate.png");
     embed.setDescription(`Angle: ${degrees} degree(s)`);
     return await (0, tools_1.editOrReply)(context, { embed });

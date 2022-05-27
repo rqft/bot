@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
-const parameters_1 = require("../../../tools/parameters");
 const basecommand_1 = require("../basecommand");
 class EvalCommand extends basecommand_1.BaseCommand {
     constructor(client) {
@@ -12,8 +11,9 @@ class EvalCommand extends basecommand_1.BaseCommand {
             type: [
                 {
                     name: "code",
-                    type: parameters_1.Parameters.codeblock,
+                    type: "string",
                     required: true,
+                    consume: true,
                 },
             ],
         });

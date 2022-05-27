@@ -41,7 +41,7 @@ var EmojiData;
         }
         async searchBy(key, value) {
             const payload = await this.listAll();
-            return payload.find((emoji) => emoji[key] === value);
+            return payload.payload.find((emoji) => emoji[key] === value);
         }
     }
     EmojiData.API = API;

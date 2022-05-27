@@ -18,7 +18,7 @@ export async function mirror(
   const { target, method } = args;
   const m = method || MirrorMethods.LEFT;
 
-  const image = await instance.imageMirror(target, m);
+  const { payload: image } = await instance.imageMirror(target, m);
 
   const embed = await Embed.image(
     context,
@@ -33,7 +33,7 @@ export async function spin(
 ) {
   const { target } = args;
 
-  const image = await instance.imageSpin(target);
+  const { payload: image } = await instance.imageSpin(target);
 
   const embed = await Embed.image(context, image, "spin.gif");
   return await editOrReply(context, { embed });
@@ -48,7 +48,7 @@ export async function color(
 ) {
   const { color, size } = args;
 
-  const image = await instance.imageColor(size, color);
+  const { payload: image } = await instance.imageColor(size, color);
 
   const embed = await Embed.image(context, image, "color.png");
   return await editOrReply(context, { embed });
@@ -62,7 +62,7 @@ export async function resize(
 ) {
   const { target, size } = args;
 
-  const image = await instance.imageResize(target, size);
+  const { payload: image } = await instance.imageResize(target, size);
 
   const embed = await Embed.image(context, image, "resize.png");
   return await editOrReply(context, { embed });
@@ -77,7 +77,7 @@ export async function rotate(
   let { target, degrees } = args;
   degrees %= 360;
 
-  const image = await instance.imageRotate(target, degrees);
+  const { payload: image } = await instance.imageRotate(target, degrees);
 
   const embed = await Embed.image(context, image, "rotate.png");
   embed.setDescription(`Angle: ${degrees} degree(s)`)
