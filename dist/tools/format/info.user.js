@@ -128,9 +128,7 @@ async function user(context, args) {
                     else {
                         state.push("<:IconGui_Undeafened:798624241892982864>");
                     }
-                    if (voiceState.mute ||
-                        voiceState.selfMute ||
-                        voiceState.suppress) {
+                    if (voiceState.mute || voiceState.selfMute || voiceState.suppress) {
                         state.push("<:IconGui_Muted:798624247089463356>");
                     }
                     else {

@@ -4,9 +4,10 @@ import { APIs } from "pariah";
 import { Err } from "../error";
 import { convert, editOrReply, mergeArrays } from "../tools";
 import { Basic } from "./basic";
-import { Embed } from './embed';
+import { Embed } from "./embed";
 
-export module SomeRandomApi {export const instance = new APIs.SomeRandomApi.API();
+export module SomeRandomApi {
+  export const instance = new APIs.SomeRandomApi.API();
   export const BannedImageOps: Array<APIs.SomeRandomApi.Canvas> = [
     APIs.SomeRandomApi.CanvasMisc.COLOR_VIEWER,
     APIs.SomeRandomApi.CanvasMisc.FAKE_TWEET,
@@ -15,13 +16,13 @@ export module SomeRandomApi {export const instance = new APIs.SomeRandomApi.API(
     APIs.SomeRandomApi.CanvasFilter.COLOR,
     APIs.SomeRandomApi.CanvasMisc.ITS_SO_STUPID,
   ];
-  
+
   export const CanvasMethods = mergeArrays<APIs.SomeRandomApi.Canvas>(
     Object.values(APIs.SomeRandomApi.CanvasFilter),
     Object.values(APIs.SomeRandomApi.CanvasMisc),
     Object.values(APIs.SomeRandomApi.CanvasOverlay)
   ).filter((b) => !BannedImageOps.includes(b));
-  
+
   export interface CanvasArgs extends Basic.ImageArgs {
     method: APIs.SomeRandomApi.Canvas;
     [key: string]: unknown;
@@ -33,27 +34,27 @@ export module SomeRandomApi {export const instance = new APIs.SomeRandomApi.API(
     if (!args.target) {
       throw new Err("Can't find any images");
     }
-  
+
     if (!args.method) {
       throw new Err("No canvas method specified");
     }
-  
+
     if (!CanvasMethods.includes(args.method)) {
       throw new Err(`Canvas method "${args.method}" is not supported.`);
     }
     args.target = await convert(args.target);
-  
-    const { payload: data } = await instance.canvas(args.method, args.target, args);
-  
-    const embed = await Embed.image(
-      context,
-      data,
-      `${args.method}.png`
+
+    const { payload: data } = await instance.canvas(
+      args.method,
+      args.target,
+      args
     );
+
+    const embed = await Embed.image(context, data, `${args.method}.png`);
     return await editOrReply(context, { embed });
   }
   export const AnimalMethods = Object.values(APIs.SomeRandomApi.Animals);
-  
+
   export interface AnimalArgs {
     animal: APIs.SomeRandomApi.Animals;
   }
@@ -63,14 +64,15 @@ export module SomeRandomApi {export const instance = new APIs.SomeRandomApi.API(
   ) {
     const data = await instance.animal(args.animal);
     let embed = Embed.user(context);
-  
+
     if (data.link) {
       embed = await Embed.image(context, data.link, `${args.animal}.png`);
     }
-  
+
     if (data.fact) {
       embed.setDescription(data.fact);
     }
-  
+
     return await editOrReply(context, { embed });
-  }}
+  }
+}

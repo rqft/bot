@@ -12,7 +12,7 @@ const embed_1 = require("./embed");
 async function image(context, args) {
     const req = await (0, node_fetch_1.default)(args.target);
     const data = await req.buffer();
-    const attachment = await (0, tools_1.store)(data, 'image.gif');
+    const attachment = await (0, tools_1.store)(data, "image.gif");
     const embed = embed_1.Embed.user(context);
     embed.setThumbnail(args.target);
     {

@@ -4,85 +4,83 @@ import fetch from "node-fetch";
 import { CustomEmojis } from "../emojis";
 import { Markdown } from "../markdown";
 import { editOrReply, formatBytes, store } from "../tools";
-import { Basic } from './basic';
-import { Embed } from './embed';
+import { Basic } from "./basic";
+import { Embed } from "./embed";
 export async function image(
-    context: Context | InteractionContext,
-    args: Basic.ImageArgs
-  ) {
-    const req = await fetch(args.target);
-    const data = await req.buffer();
+  context: Context | InteractionContext,
+  args: Basic.ImageArgs
+) {
+  const req = await fetch(args.target);
+  const data = await req.buffer();
 
-    const attachment = await store(data, 'image.gif');
+  const attachment = await store(data, "image.gif");
 
-    const embed = Embed.user(context);
+  const embed = Embed.user(context);
 
-    // embed.setTitle(attachment.filename);
-    embed.setThumbnail(args.target);
+  // embed.setTitle(attachment.filename);
+  embed.setThumbnail(args.target);
 
-    // attachment info
-    {
-      const description: Array<string> = [];
+  // attachment info
+  {
+    const description: Array<string> = [];
 
+    description.push(
+      Basic.field(
+        CustomEmojis.GUI_RICH_PRESENCE,
+        "Attachment ID",
+        Markdown.Format.codestring(attachment.id)
+      )
+    );
+
+    description.push(
+      Basic.field(
+        CustomEmojis.CHANNEL_CATEGORY,
+        "Class Type",
+        Markdown.Format.codestring(attachment.classType)
+      )
+    );
+    if (attachment.mimetype) {
       description.push(
         Basic.field(
-          CustomEmojis.GUI_RICH_PRESENCE,
-          "Attachment ID",
-          Markdown.Format.codestring(attachment.id)
+          CustomEmojis.BLANK,
+          "-> Mime Type",
+          Markdown.Format.codestring(attachment.mimetype)
         )
       );
-
-      description.push(
-        Basic.field(
-          CustomEmojis.CHANNEL_CATEGORY,
-          "Class Type",
-          Markdown.Format.codestring(attachment.classType)
-        )
-      );
-      if (attachment.mimetype) {
-        description.push(
-          Basic.field(
-            CustomEmojis.BLANK,
-            "-> Mime Type",
-            Markdown.Format.codestring(attachment.mimetype)
-          )
-        );
-      }
-
-      if (attachment.contentType) {
-        description.push(
-          Basic.field(
-            CustomEmojis.BLANK,
-            "-> Content-Type",
-            Markdown.Format.codestring(attachment.contentType)
-          )
-        );
-      }
-
-      if (attachment.size) {
-        description.push(
-          Basic.field(
-            CustomEmojis.GUI_NAME_EDITED,
-            "Size",
-            Markdown.Format.codestring(
-              `${attachment.width}x${attachment.height}`
-            )
-          )
-        );
-
-        description.push(
-          Basic.field(
-            CustomEmojis.BLANK,
-            "-> File Size",
-            Markdown.Format.codestring(formatBytes(attachment.size))
-          )
-        );
-
-        if (description.length) {
-          embed.addField("Attachment Info", description.join("\n"), true);
-        }
-      }
     }
 
-    return await editOrReply(context, { embed });
+    if (attachment.contentType) {
+      description.push(
+        Basic.field(
+          CustomEmojis.BLANK,
+          "-> Content-Type",
+          Markdown.Format.codestring(attachment.contentType)
+        )
+      );
+    }
+
+    if (attachment.size) {
+      description.push(
+        Basic.field(
+          CustomEmojis.GUI_NAME_EDITED,
+          "Size",
+          Markdown.Format.codestring(`${attachment.width}x${attachment.height}`)
+        )
+      );
+
+      description.push(
+        Basic.field(
+          CustomEmojis.BLANK,
+          "-> File Size",
+          Markdown.Format.codestring(formatBytes(attachment.size))
+        )
+      );
+
+      if (description.length) {
+        embed.addField("Attachment Info", description.join("\n"), true);
+      }
+    }
   }
+
+  return await editOrReply(context, { embed });
+}

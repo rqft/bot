@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants";
 import { Formatter } from "../../../../tools/formatter";
+import { Parameters } from "../../../../tools/parameters";
 import { BaseSlashSubCommand } from "../baseslash";
 
 export class EmojiSlashSubCommand extends BaseSlashSubCommand {
@@ -13,6 +14,7 @@ export class EmojiSlashSubCommand extends BaseSlashSubCommand {
           description: "what",
           type: ApplicationCommandOptionTypes.STRING,
           required: true,
+          value: Parameters.emojiUrl,
         },
       ],
     });

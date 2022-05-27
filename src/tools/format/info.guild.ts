@@ -1,20 +1,20 @@
 import { Context } from "detritus-client/lib/command";
 import {
-    ChannelTypes,
-    VerificationLevels
+  ChannelTypes,
+  VerificationLevels,
 } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import {
-    ChannelTypesText,
-    GuildExplicitContentFiltersText,
-    GuildFeature,
-    GuildFeaturesEmojis,
-    GuildFeaturesText,
-    GuildMfaLevelsText,
-    GuildPublicStatesText,
-    GuildVerificationLevelsText,
-    GuildVoiceRegion,
-    VoiceRegionsText
+  ChannelTypesText,
+  GuildExplicitContentFiltersText,
+  GuildFeature,
+  GuildFeaturesEmojis,
+  GuildFeaturesText,
+  GuildMfaLevelsText,
+  GuildPublicStatesText,
+  GuildVerificationLevelsText,
+  GuildVoiceRegion,
+  VoiceRegionsText,
 } from "../../constants";
 import { CustomEmojis } from "../emojis";
 import { Markdown } from "../markdown";
