@@ -5,10 +5,9 @@ import { PermissionsText } from "../../constants";
 import { CustomEmojis, Emojis } from "../emojis";
 import { Markdown } from "../markdown";
 import { buildTimestampString, editOrReply, store } from "../tools";
-import * as Basic from "./basic";
-import { permissionsList } from "./basic";
-import * as Embed from "./embed";
-import * as Image from "./image";
+import { Basic } from "./basic";
+import { Embed } from "./embed";
+import { Image } from "./image";
 export interface RoleArgs {
   role: Role;
 }
@@ -167,7 +166,7 @@ export async function role(
   }
 
   {
-    const permissions = permissionsList(role);
+    const permissions = Basic.permissionsList(role);
     if (permissions.length) {
       embed.addField(
         "Permissions",

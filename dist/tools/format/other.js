@@ -23,11 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.kwanzi = exports.exec = exports.code = void 0;
+exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
 const Process = __importStar(require("node:child_process"));
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
+const embed_1 = require("./embed");
 async function code(context, args) {
     if (!context.client.isOwner(context.userId)) {
         throw new error_1.Err("no", { status: 403 });
@@ -90,3 +91,8 @@ async function kwanzi(context, args) {
     return await (0, tools_1.editOrReply)(context, output.join(" "));
 }
 exports.kwanzi = kwanzi;
+async function stats(context) {
+    const embed = embed_1.Embed.user(context);
+    embed;
+}
+exports.stats = stats;

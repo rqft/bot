@@ -1,7 +1,7 @@
-import * as Basic from "./format/basic";
-import * as Embed from "./format/embed";
-import * as Image from "./format/image";
-import * as Imagga from './format/imagga';
+import { Basic } from "./format/basic";
+import { Embed } from "./format/embed";
+import { Image } from "./format/image";
+import { Imagga } from "./format/imagga";
 import { channel } from "./format/info.channel";
 import { emoji } from "./format/info.emoji";
 import { guild } from "./format/info.guild";
@@ -9,11 +9,9 @@ import { image } from "./format/info.image";
 import { role } from "./format/info.role";
 import { user } from "./format/info.user";
 import * as Other from "./format/other";
-import * as Pxl from "./format/pxl";
-import * as SomeRandomApi from './format/some-random-api';
-import * as Tag from "./format/tag";
-
-
+import { Pxl } from "./format/pxl";
+import { SomeRandomApi } from "./format/some-random-api";
+import { Tag } from "./format/tag";
 
 export const Formatter = {
   Basic,
@@ -31,5 +29,5 @@ export const Formatter = {
     role,
     guild,
   },
-  ...Other
+  ...Other,
 };

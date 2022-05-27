@@ -4,6 +4,7 @@ import * as Process from "node:child_process";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
+import { Embed } from "./embed";
 export interface CodeArgs {
   code: string;
   "json-spacing": number;
@@ -30,8 +31,8 @@ export async function code(
       error instanceof Error
         ? error.stack || error.message
         : error instanceof Err
-          ? error.toString()
-          : error;
+        ? error.toString()
+        : error;
   }
 
   message = String(message);
@@ -92,4 +93,9 @@ export async function kwanzi(
   }
 
   return await editOrReply(context, output.join(" "));
+}
+
+export async function stats(context: Context | InteractionContext) {
+  const embed = Embed.user(context);
+  embed;
 }

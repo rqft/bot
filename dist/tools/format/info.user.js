@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.user = void 0;
 const constants_1 = require("detritus-client/lib/constants");
@@ -30,10 +7,10 @@ const globals_1 = require("../../globals");
 const emojis_1 = require("../emojis");
 const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
-const Basic = __importStar(require("./basic"));
-const Embed = __importStar(require("./embed"));
+const basic_1 = require("./basic");
+const embed_1 = require("./embed");
 async function user(context, args) {
-    const embed = Embed.user(context);
+    const embed = embed_1.Embed.user(context);
     const { user } = args;
     embed.setTitle(user.tag);
     const profile = await globals_1.selfclient.rest.fetchUserProfile(user.id);
@@ -41,13 +18,13 @@ async function user(context, args) {
     if (profile) {
         const description = [];
         if (profile.user.bio) {
-            description.push(Basic.field(emojis_1.Emojis.MEMO, "Bio", markdown_1.Markdown.Format.codeblock(profile.user.bio)));
+            description.push(basic_1.Basic.field(emojis_1.Emojis.MEMO, "Bio", markdown_1.Markdown.Format.codeblock(profile.user.bio)));
         }
         if (profile.premiumSinceUnix) {
-            description.push(Basic.field(emojis_1.Emojis.STAR, "Has had nitro since", (0, tools_1.buildTimestampString)(profile.premiumSinceUnix)));
+            description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has had nitro since", (0, tools_1.buildTimestampString)(profile.premiumSinceUnix)));
         }
         if (profile.premiumGuildSinceUnix) {
-            description.push(Basic.field(emojis_1.Emojis.STAR, "Has boosted a server since", (0, tools_1.buildTimestampString)(profile.premiumGuildSinceUnix)));
+            description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has boosted a server since", (0, tools_1.buildTimestampString)(profile.premiumGuildSinceUnix)));
         }
         if (description.length) {
             embed.addField("User Profile", description.join("\n"));
@@ -55,9 +32,9 @@ async function user(context, args) {
     }
     {
         const description = [];
-        description.push(Basic.field(emojis_1.Emojis.GEAR, "ID", markdown_1.Markdown.Format.codestring(user.id)));
-        description.push(Basic.field(emojis_1.Emojis.LINK, "Profile", `${markdown_1.Markdown.Format.link(user.tag, user.jumpLink)} (${user.mention})`));
-        description.push(Basic.field(emojis_1.Emojis.CALENDAR, "Created At", (0, tools_1.buildTimestampString)(user.createdAtUnix)));
+        description.push(basic_1.Basic.field(emojis_1.Emojis.GEAR, "ID", markdown_1.Markdown.Format.codestring(user.id)));
+        description.push(basic_1.Basic.field(emojis_1.Emojis.LINK, "Profile", `${markdown_1.Markdown.Format.link(user.tag, user.jumpLink)} (${user.mention})`));
+        description.push(basic_1.Basic.field(emojis_1.Emojis.CALENDAR, "Created At", (0, tools_1.buildTimestampString)(user.createdAtUnix)));
         {
             const tags = [];
             if (user.isSystem) {
@@ -77,7 +54,7 @@ async function user(context, args) {
             }
             if (tags.length) {
                 "\n" +
-                    description.push(Basic.field("<:IconChannel_Str:798624234745757727>", "Tags", tags.join(", ")));
+                    description.push(basic_1.Basic.field("<:IconChannel_Str:798624234745757727>", "Tags", tags.join(", ")));
             }
         }
         const flags = [];
@@ -90,7 +67,7 @@ async function user(context, args) {
             }
         }
         if (flags.length) {
-            description.push(Basic.field(emojis_1.Emojis.NOTEPAD_SPIRAL, "Badges", flags.join("")));
+            description.push(basic_1.Basic.field(emojis_1.Emojis.NOTEPAD_SPIRAL, "Badges", flags.join("")));
         }
         if (description.length) {
             embed.addField("User Info", description.join("\n"));
@@ -101,22 +78,22 @@ async function user(context, args) {
         if (member) {
             const description = [];
             if (member.nick) {
-                description.push(Basic.field(emojis_1.Emojis.PENCIL, "Nickname", member.nick));
+                description.push(basic_1.Basic.field(emojis_1.Emojis.PENCIL, "Nickname", member.nick));
             }
             if (member.joinedAtUnix) {
-                description.push(Basic.field(emojis_1.Emojis.CALENDAR, "Joined At", (0, tools_1.buildTimestampString)(member.joinedAtUnix)));
+                description.push(basic_1.Basic.field(emojis_1.Emojis.CALENDAR, "Joined At", (0, tools_1.buildTimestampString)(member.joinedAtUnix)));
             }
             if (member.isBoosting) {
                 const subscriptions = await context.guild?.fetchPremiumSubscriptions();
                 const fromUser = subscriptions.filter((subscription) => subscription.user.id === user.id);
-                description.push(Basic.field(emojis_1.Emojis.STAR, "Boosting Since", `${markdown_1.Markdown.Format.timestamp(member.premiumSince)} (${fromUser.length} ${fromUser.length === 1 ? "boost" : "boosts"})`));
+                description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Boosting Since", `${markdown_1.Markdown.Format.timestamp(member.premiumSince)} (${fromUser.length} ${fromUser.length === 1 ? "boost" : "boosts"})`));
             }
             if (member.roles.size) {
                 description.push("\n" +
-                    Basic.field("<:IconGui_Role:816328284245196840>", "Role Count", String(member.roles.size)));
+                    basic_1.Basic.field("<:IconGui_Role:816328284245196840>", "Role Count", String(member.roles.size)));
                 if (member.roles.size > 0) {
                     if (member.roles.size <= 20) {
-                        description.push(Basic.field("<:IconGui_Role:816328284245196840>", "Roles", member.roles.map((role) => role.mention).join(", ")));
+                        description.push(basic_1.Basic.field("<:IconGui_Role:816328284245196840>", "Roles", member.roles.map((role) => role.mention).join(", ")));
                     }
                     else {
                         const keyRoles = [];
@@ -129,10 +106,10 @@ async function user(context, args) {
                             keyRoles.push(role);
                         }
                         if (keyRoles.length <= 20) {
-                            description.push(Basic.field("<:IconGui_Role:816328284245196840>", "Key Roles", keyRoles.map((role) => role.mention).join(", ")));
+                            description.push(basic_1.Basic.field("<:IconGui_Role:816328284245196840>", "Key Roles", keyRoles.map((role) => role.mention).join(", ")));
                         }
                         else {
-                            description.push(Basic.field("<:IconGui_Role:816328284245196840>", "Key Role Count", String(keyRoles.length)));
+                            description.push(basic_1.Basic.field("<:IconGui_Role:816328284245196840>", "Key Role Count", String(keyRoles.length)));
                         }
                     }
                 }
@@ -170,14 +147,14 @@ async function user(context, args) {
                     }
                     if (state.length) {
                         description.push("\n" +
-                            Basic.field(emojis_1.Emojis.MICROPHONE, "Voice State", state.join(" ")));
+                            basic_1.Basic.field(emojis_1.Emojis.MICROPHONE, "Voice State", state.join(" ")));
                     }
                 }
                 {
-                    const permissions = Basic.permissionsList(member);
+                    const permissions = basic_1.Basic.permissionsList(member);
                     if (permissions.length) {
                         description.push("\n" +
-                            Basic.field(emojis_1.Emojis.LOCK, "Permissions", permissions
+                            basic_1.Basic.field(emojis_1.Emojis.LOCK, "Permissions", permissions
                                 .map((permission) => constants_2.PermissionsText[String(permission)])
                                 .join(", ")));
                     }

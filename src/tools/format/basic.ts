@@ -4,17 +4,18 @@ import { IrrelevantPermissions, PermissionsText } from "../../constants";
 import { CustomEmojis } from "../emojis";
 import { Markdown } from "../markdown";
 
-export function field(
-  emoji: CustomEmojis | string,
-  name: string | Markdown.Format,
-  value: string | Markdown.Format
-): string {
-  return `${emoji} ${Markdown.Format.bold(name.toString())}: ${value}`;
-}
-export interface ImageArgs {
-  target: string;
-}
-export interface TargetWithPermissions {
+export module Basic {
+  export function field(
+    emoji: CustomEmojis | string,
+    name: string | Markdown.Format,
+    value: string | Markdown.Format
+  ): string {
+    return `${emoji} ${Markdown.Format.bold(name.toString())}: ${value}`;
+  }
+  export interface ImageArgs {
+    target: string;
+  }
+  export interface TargetWithPermissions {
     can: Member["can"];
   }
 
@@ -33,3 +34,4 @@ export interface TargetWithPermissions {
     }
     return permissions;
   }
+}

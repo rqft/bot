@@ -7,8 +7,8 @@ import { selfclient } from "../../globals";
 import { CustomEmojis, Emojis } from "../emojis";
 import { Markdown } from "../markdown";
 import { buildTimestampString, editOrReply } from "../tools";
-import * as Basic from "./basic";
-import * as Embed from './embed';
+import { Basic } from "./basic";
+import { Embed } from './embed';
 export interface UserArgs {
     user: User | Member;
   }

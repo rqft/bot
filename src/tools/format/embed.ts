@@ -9,7 +9,8 @@ import { Err } from "../error";
 import { formatBytes, store } from "../tools";
 
 
-export function user(
+export module Embed {
+  export function user(
   context: Context | InteractionContext,
   embed: Utils.Embed = new Utils.Embed()
 ) {
@@ -104,4 +105,5 @@ export function card(
   embed.setColor(Colours.EMBED);
   embed.setDescription(text);
   return embed;
+}
 }

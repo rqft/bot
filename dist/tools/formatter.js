@@ -24,10 +24,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Formatter = void 0;
-const Basic = __importStar(require("./format/basic"));
-const Embed = __importStar(require("./format/embed"));
-const Image = __importStar(require("./format/image"));
-const Imagga = __importStar(require("./format/imagga"));
+const basic_1 = require("./format/basic");
+const embed_1 = require("./format/embed");
+const image_1 = require("./format/image");
+const imagga_1 = require("./format/imagga");
 const info_channel_1 = require("./format/info.channel");
 const info_emoji_1 = require("./format/info.emoji");
 const info_guild_1 = require("./format/info.guild");
@@ -35,17 +35,17 @@ const info_image_1 = require("./format/info.image");
 const info_role_1 = require("./format/info.role");
 const info_user_1 = require("./format/info.user");
 const Other = __importStar(require("./format/other"));
-const Pxl = __importStar(require("./format/pxl"));
-const SomeRandomApi = __importStar(require("./format/some-random-api"));
-const Tag = __importStar(require("./format/tag"));
+const pxl_1 = require("./format/pxl");
+const some_random_api_1 = require("./format/some-random-api");
+const tag_1 = require("./format/tag");
 exports.Formatter = {
-    Basic,
-    Embed,
-    Pxl,
-    Image,
-    Tag,
-    Imagga,
-    SomeRandomApi,
+    Basic: basic_1.Basic,
+    Embed: embed_1.Embed,
+    Pxl: pxl_1.Pxl,
+    Image: image_1.Image,
+    Tag: tag_1.Tag,
+    Imagga: imagga_1.Imagga,
+    SomeRandomApi: some_random_api_1.SomeRandomApi,
     Info: {
         channel: info_channel_1.channel,
         user: info_user_1.user,
@@ -54,5 +54,5 @@ exports.Formatter = {
         role: info_role_1.role,
         guild: info_guild_1.guild,
     },
-    ...Other
+    ...Other,
 };

@@ -4,12 +4,11 @@ import fetch from "node-fetch";
 import { CustomEmojis } from "../emojis";
 import { Markdown } from "../markdown";
 import { editOrReply, formatBytes, store } from "../tools";
-import * as Basic from './basic';
-import { ImageArgs } from "./basic";
-import * as Embed from './embed';
+import { Basic } from './basic';
+import { Embed } from './embed';
 export async function image(
     context: Context | InteractionContext,
-    args: ImageArgs
+    args: Basic.ImageArgs
   ) {
     const req = await fetch(args.target);
     const data = await req.buffer();

@@ -8,8 +8,8 @@ import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { Parameters } from "../parameters";
 import { buildTimestampString, editOrReply } from "../tools";
-import * as Basic from './basic';
-import * as Embed from './embed';
+import { Basic } from './basic';
+import { Embed } from './embed';
 export interface EmojiArgs {
     emoji: Parameters.EmojiUrl;
   }

@@ -6,8 +6,8 @@ import { BooleanText, ChannelTypesText, StagePrivacyLevelsText, VideoQualityMode
 import { CustomEmojis, Emojis } from "../emojis";
 import { Markdown } from "../markdown";
 import { buildTimestampString, editOrReply, formatBytes } from "../tools";
-import * as Basic from "./basic";
-import * as Embed from './embed';
+import { Basic } from "./basic";
+import { Embed } from './embed';
 export interface ChannelArgs {
     channel: Channel;
   }
