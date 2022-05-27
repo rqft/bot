@@ -5,6 +5,7 @@ const detritus_client_1 = require("detritus-client");
 const structures_1 = require("detritus-client/lib/structures");
 const v2_1 = require("imagescript/v2");
 const pariah_1 = require("pariah");
+const data_1 = require("pariah/dist/data");
 const constants_1 = require("../../constants");
 const error_1 = require("../error");
 const tools_1 = require("../tools");
@@ -24,6 +25,9 @@ function brand(context, brand, embed = new detritus_client_1.Utils.Embed()) {
 }
 exports.brand = brand;
 async function image(context, input, name, ubrand) {
+    if (input instanceof data_1.Data) {
+        input = input.payload;
+    }
     if (input instanceof ArrayBuffer) {
         const buf = Buffer.alloc(input.byteLength);
         const view = new Uint8Array(input);

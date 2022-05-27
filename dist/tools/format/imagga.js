@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -35,7 +31,7 @@ const Embed = __importStar(require("./embed"));
 const instance = new pariah_1.APIs.Imagga.API(secrets_1.Secrets.Key.ImaggaAuth);
 async function tags(context, args) {
     const { target } = args;
-    const { result, status } = await instance.tags(target);
+    const { payload: { result, status } } = await instance.tags(target);
     if (status.type === "error") {
         throw new error_1.Err(status.text);
     }
@@ -57,7 +53,7 @@ function colorsTable(colors) {
 }
 async function colors(context, args) {
     const { target } = args;
-    const { result, status } = await instance.colors(target, {});
+    const { payload: { result, status } } = await instance.colors(target, {});
     if (status.type === "error") {
         throw new error_1.Err(status.text);
     }
@@ -85,7 +81,7 @@ async function colors(context, args) {
 exports.colors = colors;
 async function categories(context, args) {
     const { target } = args;
-    const { result, status } = await instance.categories(target, "general_v3");
+    const { payload: { result, status } } = await instance.categories(target, "general_v3");
     if (status.type === "error") {
         throw new error_1.Err(status.text);
     }
@@ -103,7 +99,7 @@ async function categories(context, args) {
 exports.categories = categories;
 async function readText(context, args) {
     const { target } = args;
-    const { result, status } = await instance.readText(target);
+    const { payload: { result, status } } = await instance.readText(target);
     if (status.type === "error") {
         throw new error_1.Err(status.text);
     }

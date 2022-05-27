@@ -8,6 +8,7 @@ import {
 } from "detritus-client/lib/structures";
 import { Animation, Frame, Image } from "imagescript/v2";
 import { Pariah } from "pariah";
+import { Data } from "pariah/dist/data";
 import { IO } from "wilson-kv";
 import {
   PermissionsText,
@@ -462,7 +463,10 @@ export function validateUnicodeEmojis(emoji: string): boolean {
 export function onlyEmoji(emoji: string): Array<string> | false {
   return validateUnicodeEmojis(emoji) && emoji.match(UNICODE_EMOJI_REGEX)!;
 }
-export async function store(value: Buffer, filename: string) {
+export async function store(value: Buffer | Data<Buffer>, filename: string) {
+  if (value instanceof Data) {
+    value = value.payload;
+  }
   let e = false;
   let storageChannel = await client.rest
     .fetchChannel(Secrets.StorageChannelId)
@@ -564,7 +568,7 @@ export async function convert(
 ): Promise<string> {
   const instance = new Pariah(new URL(uri));
   const data = await instance.get.arrayBuffer();
-  const buffer = Buffer.from(data);
+  const buffer = Buffer.from(data.payload);
   const attachment = await store(buffer, "image." + format);
   return attachment.url!;
 }

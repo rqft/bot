@@ -5,7 +5,7 @@ import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
 export interface CodeArgs {
-  code: Markdown.TextCodeblockMatch;
+  code: string;
   "json-spacing": number;
 }
 export async function code(
@@ -15,8 +15,8 @@ export async function code(
   if (!context.client.isOwner(context.userId)) {
     throw new Err("no", { status: 403 });
   }
-  const text = args.code.text;
-  let language = args.code.language || "ts";
+  const text = args.code;
+  let language = "ts";
   let message: any;
   try {
     message = await Promise.resolve(eval(text));
@@ -30,8 +30,8 @@ export async function code(
       error instanceof Error
         ? error.stack || error.message
         : error instanceof Err
-        ? error.toString()
-        : error;
+          ? error.toString()
+          : error;
   }
 
   message = String(message);

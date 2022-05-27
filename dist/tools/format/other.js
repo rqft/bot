@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -32,8 +28,8 @@ async function code(context, args) {
     if (!context.client.isOwner(context.userId)) {
         throw new error_1.Err("no", { status: 403 });
     }
-    const text = args.code.text;
-    let language = args.code.language || "ts";
+    const text = args.code;
+    let language = "ts";
     let message;
     try {
         message = await Promise.resolve(eval(text));

@@ -34,7 +34,7 @@ exports.binary = binary;
 async function decodeImage(data) {
     const output = await (0, imagescript_1.decode)(data, true);
     if (output instanceof imagescript_1.GIF) {
-        return output.at(0);
+        return output[0];
     }
     return output;
 }

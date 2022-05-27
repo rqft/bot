@@ -1,7 +1,6 @@
 import { CommandClient } from "detritus-client";
 import { ToolsMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
-import { Parameters } from "../../../tools/parameters";
 import { BaseCommand } from "../basecommand";
 
 export default class EvalCommand extends BaseCommand {
@@ -15,8 +14,9 @@ export default class EvalCommand extends BaseCommand {
       type: [
         {
           name: "code",
-          type: Parameters.codeblock,
+          type: "string",
           required: true,
+          consume: true,
         },
       ],
     });

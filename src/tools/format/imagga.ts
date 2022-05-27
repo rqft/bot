@@ -17,7 +17,7 @@ export async function tags(
 ) {
   const { target } = args;
 
-  const { result, status } = await instance.tags(target);
+  const { payload: { result, status } } = await instance.tags(target);
   if (status.type === "error") {
     throw new Err(status.text);
   }
@@ -54,7 +54,7 @@ export async function colors(
 ) {
   const { target } = args;
 
-  const { result, status } = await instance.colors(target, {});
+  const { payload: { result, status } } = await instance.colors(target, {});
   if (status.type === "error") {
     throw new Err(status.text);
   }
@@ -110,7 +110,7 @@ export async function categories(
 ) {
   const { target } = args;
 
-  const { result, status } = await instance.categories(target, "general_v3");
+  const { payload: { result, status } } = await instance.categories(target, "general_v3");
   if (status.type === "error") {
     throw new Err(status.text);
   }
@@ -138,7 +138,7 @@ export async function readText(
 ) {
   const { target } = args;
 
-  const { result, status } = await instance.readText(target);
+  const { payload: { result, status } } = await instance.readText(target);
   if (status.type === "error") {
     throw new Err(status.text);
   }
@@ -161,7 +161,7 @@ export async function readText(
       embed.addField(
         `Location: (${coordinates.xmin}, ${coordinates.ymin})`,
         `Size: ${width}x${height}\n` +
-          Markdown.Format.codeblock(data).toString()
+        Markdown.Format.codeblock(data).toString()
       );
       return embed;
     },

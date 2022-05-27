@@ -29,7 +29,7 @@ export function binary(data: string, method: ConversionMethods) {
 export async function decodeImage(data: Buffer | Uint8Array): Promise<Image> {
   const output = await decode(data, true);
   if (output instanceof GIF) {
-    return output.at(0) as unknown as Image;
+    return output[0] as unknown as Image;
   }
   return output
 }
