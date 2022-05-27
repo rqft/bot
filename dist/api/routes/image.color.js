@@ -16,8 +16,6 @@ async function imageColor(req, res) {
     else if (!height) {
         height = width;
     }
-    res.setHeader("x-width", width);
-    res.setHeader("x-height", height);
     let color = req.params.color;
     if (color) {
         if (color.startsWith("#")) {
@@ -45,7 +43,6 @@ async function imageColor(req, res) {
                 (0, error_1.stop)(res, 400, "Invalid hex code");
             }
         }
-        res.setHeader("x-color", color);
         const int = parseInt(color, 16);
         const editor = new imagescript_1.Image(Number(width), Number(height)).fill(int);
         let u8 = await editor.encode();

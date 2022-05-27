@@ -62,7 +62,7 @@ async function exec(context, args) {
     let message = "";
     try {
         const data = Process.execSync(text);
-        message = data.toString('utf-8');
+        message = data.toString("utf-8");
     }
     catch (error) {
         message = error.message;

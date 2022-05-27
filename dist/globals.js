@@ -47,4 +47,6 @@ var KV;
 (function (KV) {
     KV.prefixes = new wilson_kv_1.Wilson("kv/prefixes");
     KV.tags = new wilson_kv_1.Wilson("kv/tags");
+    KV.colors = new wilson_kv_1.Wilson("kv/colors");
+    KV.mutes = new wilson_kv_1.Wilson("kv/mutes");
 })(KV = exports.KV || (exports.KV = {}));

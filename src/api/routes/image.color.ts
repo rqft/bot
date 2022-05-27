@@ -15,8 +15,6 @@ export async function imageColor(
   } else if (!height) {
     height = width!;
   }
-  res.setHeader("x-width", width!);
-  res.setHeader("x-height", height!);
   let color = req.params.color as string;
   if (color) {
     if (color.startsWith("#")) {
@@ -45,7 +43,6 @@ export async function imageColor(
       }
     }
 
-    res.setHeader("x-color", color);
 
     const int = parseInt(color, 16);
     const editor = new Image(Number(width), Number(height)).fill(int);

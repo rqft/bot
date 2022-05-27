@@ -55,12 +55,15 @@ export async function exec(
   let message = "";
   try {
     const data = Process.execSync(text);
-    message = data.toString('utf-8');
+    message = data.toString("utf-8");
   } catch (error) {
     message = (error as Error).message;
   }
 
-  return await editOrReply(context, Markdown.Format.codeblock(message).toString());
+  return await editOrReply(
+    context,
+    Markdown.Format.codeblock(message).toString()
+  );
 }
 export interface KwanziArgs {
   text: string;
