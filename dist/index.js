@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_rpc_1 = require("discord-rpc");
+const constants_1 = require("detritus-client-socket/lib/constants");
 const api_1 = require("./api");
 const globals_1 = require("./globals");
 const secrets_1 = require("./secrets");
@@ -25,20 +25,7 @@ globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories:
         await client.run();
         console.log(`ok connected with ${client.user?.tag}`);
     }
-    const rpc = new discord_rpc_1.Client({ transport: "ipc" });
-    rpc.on("ready", () => {
-        rpc.setActivity({
-            buttons: [
-                {
-                    label: "Add Bot",
-                    url: "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=0&scope=bot%20applications.commands",
-                },
-            ],
-            largeImageKey: "clancy",
-            largeImageText: "Clancy",
-        }, process.pid);
-    });
-    rpc.login({
-        clientId: "798591530850844713",
+    globals_1.selfclient.gateway.setPresence({
+        activities: [{ name: "sovv", type: constants_1.GatewayActivityTypes.LISTENING }],
     });
 })();
