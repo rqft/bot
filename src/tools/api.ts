@@ -6,7 +6,7 @@ import { MirrorMethods } from "../api/routes/image.flop";
 import { Secrets } from "../secrets";
 
 export module Jonathan {
-  export const Uri = new URL(`${Secrets.Host}:${Secrets.Port}`);
+  export const Uri = new URL(Secrets.Host);
   export interface Choice {
     name: string;
     value: string;
@@ -68,7 +68,10 @@ export module Jonathan {
       });
     }
 
-    async imageMirror(url: string, method: MirrorMethods): Promise<Data<Buffer>> {
+    async imageMirror(
+      url: string,
+      method: MirrorMethods
+    ): Promise<Data<Buffer>> {
       return await this.get.buffer("/image/mirror", { url, method });
     }
 

@@ -1,16 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_rpc_1 = require("discord-rpc");
 const api_1 = require("./api");
 const globals_1 = require("./globals");
 const secrets_1 = require("./secrets");
 globals_1.commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
-process.on("uncaughtException", (e) => {
-    console.error(JSON.stringify(e, null, 2));
-});
 (async function run() {
-    api_1.Sarah.listen(secrets_1.Secrets.Port, () => {
-        console.log(`opened ${secrets_1.Secrets.Host}:${secrets_1.Secrets.Port}`);
+    api_1.Sarah.listen(3000, () => {
+        console.log(`opened ${secrets_1.Secrets.Host}`);
     });
     await globals_1.commands.run();
     if (secrets_1.Secrets.ClearInteractions) {
@@ -27,4 +25,20 @@ process.on("uncaughtException", (e) => {
         await client.run();
         console.log(`ok connected with ${client.user?.tag}`);
     }
+    const rpc = new discord_rpc_1.Client({ transport: "ipc" });
+    rpc.on("ready", () => {
+        rpc.setActivity({
+            buttons: [
+                {
+                    label: "Add Bot",
+                    url: "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=0&scope=bot%20applications.commands",
+                },
+            ],
+            largeImageKey: "clancy",
+            largeImageText: "Clancy",
+        }, process.pid);
+    });
+    rpc.login({
+        clientId: "798591530850844713",
+    });
 })();

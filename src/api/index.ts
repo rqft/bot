@@ -1,4 +1,3 @@
-import { Secrets } from "../secrets";
 import { auth } from "./auth";
 import { NeedsNoAuth, Sarah } from "./globals";
 import { authorized } from "./routes/authorized";
@@ -9,8 +8,8 @@ import { binaryEncode } from "./routes/binary.encode";
 import { imageColor } from "./routes/image.color";
 import { imageFlop } from "./routes/image.flop";
 import { imageResize } from "./routes/image.resize";
-import { imageSpin } from "./routes/image.spin";
 import { imageRotate } from "./routes/image.rotate";
+import { imageSpin } from "./routes/image.spin";
 import { origin } from "./routes/origin";
 import { tagDelete } from "./routes/tag.delete";
 import { tagGet } from "./routes/tag.get";
@@ -22,7 +21,7 @@ import { tagSearch } from "./routes/tag.search";
 // middleware
 Sarah.use((req, res, next) => {
   res.contentType("application/json");
-  if (NeedsNoAuth.includes(req.path) || Secrets.Mode === "dev") {
+  if (NeedsNoAuth.includes(req.path)) {
     next();
     return;
   }
@@ -45,10 +44,10 @@ Sarah.post("/tags/:key", tagPost);
 Sarah.delete("/tags/:key", tagDelete);
 Sarah.get("/tags/search/:query", tagSearch);
 
-Sarah.get("/image/mirror", imageFlop)
+Sarah.get("/image/mirror", imageFlop);
 Sarah.get("/image/spin", imageSpin);
 Sarah.get("/image/color/:size/:color", imageColor);
-Sarah.get('/image/resize/:size', imageResize);
-Sarah.get('/image/rotate/:deg', imageRotate)
+Sarah.get("/image/resize/:size", imageResize);
+Sarah.get("/image/rotate/:deg", imageRotate);
 // Sarah.all('*', fallback);
 export { Sarah };

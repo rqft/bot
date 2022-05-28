@@ -30,8 +30,6 @@ exports.Secrets = {
     DefaultPrefix: env.DEFAULT_PREFIX,
     ClearInteractions: env.CLEAR_INTERACTIONS === "true",
     StorageChannelId: env.STORAGE_CHANNEL_ID,
-    Host: env.HOST,
+    Host: env.MODE === "dev" ? "http://localhost:3000" : env.HOST,
     ApiToken: env.API_TOKEN,
-    Port: env.PORT,
-    Mode: env.MODE,
 };

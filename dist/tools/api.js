@@ -5,7 +5,7 @@ const pariah_1 = require("pariah");
 const secrets_1 = require("../secrets");
 var Jonathan;
 (function (Jonathan) {
-    Jonathan.Uri = new URL(`${secrets_1.Secrets.Host}:${secrets_1.Secrets.Port}`);
+    Jonathan.Uri = new URL(secrets_1.Secrets.Host);
     class API extends pariah_1.Pariah {
         token;
         constructor(token) {

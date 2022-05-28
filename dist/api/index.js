@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sarah = void 0;
-const secrets_1 = require("../secrets");
 const auth_1 = require("./auth");
 const globals_1 = require("./globals");
 Object.defineProperty(exports, "Sarah", { enumerable: true, get: function () { return globals_1.Sarah; } });
@@ -13,8 +12,8 @@ const binary_encode_1 = require("./routes/binary.encode");
 const image_color_1 = require("./routes/image.color");
 const image_flop_1 = require("./routes/image.flop");
 const image_resize_1 = require("./routes/image.resize");
-const image_spin_1 = require("./routes/image.spin");
 const image_rotate_1 = require("./routes/image.rotate");
+const image_spin_1 = require("./routes/image.spin");
 const origin_1 = require("./routes/origin");
 const tag_delete_1 = require("./routes/tag.delete");
 const tag_get_1 = require("./routes/tag.get");
@@ -24,7 +23,7 @@ const tag_post_1 = require("./routes/tag.post");
 const tag_search_1 = require("./routes/tag.search");
 globals_1.Sarah.use((req, res, next) => {
     res.contentType("application/json");
-    if (globals_1.NeedsNoAuth.includes(req.path) || secrets_1.Secrets.Mode === "dev") {
+    if (globals_1.NeedsNoAuth.includes(req.path)) {
         next();
         return;
     }
@@ -45,5 +44,5 @@ globals_1.Sarah.get("/tags/search/:query", tag_search_1.tagSearch);
 globals_1.Sarah.get("/image/mirror", image_flop_1.imageFlop);
 globals_1.Sarah.get("/image/spin", image_spin_1.imageSpin);
 globals_1.Sarah.get("/image/color/:size/:color", image_color_1.imageColor);
-globals_1.Sarah.get('/image/resize/:size', image_resize_1.imageResize);
-globals_1.Sarah.get('/image/rotate/:deg', image_rotate_1.imageRotate);
+globals_1.Sarah.get("/image/resize/:size", image_resize_1.imageResize);
+globals_1.Sarah.get("/image/rotate/:deg", image_rotate_1.imageRotate);
