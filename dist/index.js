@@ -25,16 +25,21 @@ globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories:
         await client.run();
         console.log(`ok connected with ${client.user?.tag}`);
     }
-    const rpc = new discord_rpc_1.Client({ transport: "ipc" });
-    rpc.on("ready", async () => {
-        await rpc.clearActivity();
-        await rpc.setActivity({
-            buttons: [
-                { label: "Add Bot", url: "https://bot.clancy.lol/" },
-                { label: "Website", url: "https://clancy.lol/" },
-            ],
-            largeImageKey: "duncan",
+    try {
+        const rpc = new discord_rpc_1.Client({ transport: "ipc" });
+        rpc.on("ready", async () => {
+            await rpc.clearActivity();
+            await rpc.setActivity({
+                buttons: [
+                    { label: "Add Bot", url: "https://bot.clancy.lol/" },
+                    { label: "Website", url: "https://clancy.lol/" },
+                ],
+                largeImageKey: "duncan",
+            });
         });
-    });
-    rpc.login({ clientId: "798591530850844713" });
+        rpc.login({ clientId: "798591530850844713" });
+    }
+    catch {
+        void 0;
+    }
 })();

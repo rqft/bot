@@ -38,20 +38,23 @@ interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
     await client.run();
     console.log(`ok connected with ${client.user?.tag}`);
   }
+  try {
+    const rpc = new Client({ transport: "ipc" });
 
-  const rpc = new Client({ transport: "ipc" });
+    rpc.on("ready", async () => {
+      await rpc.clearActivity();
 
-  rpc.on("ready", async () => {
-    await rpc.clearActivity();
-
-    await rpc.setActivity({
-      buttons: [
-        { label: "Add Bot", url: "https://bot.clancy.lol/" },
-        { label: "Website", url: "https://clancy.lol/" },
-      ],
-      largeImageKey: "duncan",
+      await rpc.setActivity({
+        buttons: [
+          { label: "Add Bot", url: "https://bot.clancy.lol/" },
+          { label: "Website", url: "https://clancy.lol/" },
+        ],
+        largeImageKey: "duncan",
+      });
     });
-  });
 
-  rpc.login({ clientId: "798591530850844713" });
+    rpc.login({ clientId: "798591530850844713" });
+  } catch {
+    void 0;
+  }
 })();
