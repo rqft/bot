@@ -38,8 +38,9 @@ globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories:
             });
         });
         rpc.login({ clientId: "798591530850844713" });
+        console.log("connect");
     }
-    catch {
-        void 0;
+    catch (e) {
+        console.error(e);
     }
 })();
