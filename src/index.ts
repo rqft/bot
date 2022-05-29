@@ -1,4 +1,3 @@
-import { Client } from "discord-rpc";
 import { Sarah } from "./api";
 import { client, commands, interactions, selfclient } from "./globals";
 import { Secrets } from "./secrets";
