@@ -1,4 +1,4 @@
-import { GatewayActivityTypes } from "detritus-client-socket/lib/constants";
+import { Client } from "discord-rpc";
 import { Sarah } from "./api";
 import { client, commands, interactions, selfclient } from "./globals";
 import { Secrets } from "./secrets";
@@ -17,7 +17,7 @@ interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
   await commands.run();
 
   if (Secrets.ClearInteractions) {
-    console.log(`clearing global`);
+    console.log("clearing global");
     await interactions.rest.bulkOverwriteApplicationCommands(
       interactions.client.applicationId,
       []
@@ -39,28 +39,19 @@ interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
     console.log(`ok connected with ${client.user?.tag}`);
   }
 
-  selfclient.gateway.setPresence({
-    activities: [{ name: "sovv", type: GatewayActivityTypes.LISTENING }],
+  const rpc = new Client({ transport: "ipc" });
+
+  rpc.on("ready", async () => {
+    await rpc.clearActivity();
+
+    await rpc.setActivity({
+      buttons: [
+        { label: "Add Bot", url: "https://bot.clancy.lol/" },
+        { label: "Website", url: "https://clancy.lol/" },
+      ],
+      largeImageKey: "duncan",
+    });
   });
 
-  // const rpc = new Client({ transport: "ipc" });
-  // rpc.on("ready", () => {
-  //   rpc.setActivity(
-  //     {
-  //       buttons: [
-  //         {
-  //           label: "Add Bot",
-  //           url: "https://discord.com/api/oauth2/authorize?client_id=760143615124439040&permissions=0&scope=bot%20applications.commands",
-  //         },
-  //       ],
-  //       largeImageKey: "clancy",
-  //       largeImageText: "Clancy",
-  //     },
-  //     process.pid
-  //   );
-  // });
-  // rpc.login({
-  //   clientId: "798591530850844713",
-  //   // scopes: ["activities.write"],
-  // });
+  rpc.login({ clientId: "798591530850844713" });
 })();

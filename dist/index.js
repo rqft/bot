@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const constants_1 = require("detritus-client-socket/lib/constants");
+const discord_rpc_1 = require("discord-rpc");
 const api_1 = require("./api");
 const globals_1 = require("./globals");
 const secrets_1 = require("./secrets");
@@ -12,7 +12,7 @@ globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories:
     });
     await globals_1.commands.run();
     if (secrets_1.Secrets.ClearInteractions) {
-        console.log(`clearing global`);
+        console.log("clearing global");
         await globals_1.interactions.rest.bulkOverwriteApplicationCommands(globals_1.interactions.client.applicationId, []);
         for (const guildId of secrets_1.Secrets.InteractionGuilds) {
             console.log(`clearing ${guildId}`);
@@ -25,7 +25,16 @@ globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories:
         await client.run();
         console.log(`ok connected with ${client.user?.tag}`);
     }
-    globals_1.selfclient.gateway.setPresence({
-        activities: [{ name: "sovv", type: constants_1.GatewayActivityTypes.LISTENING }],
+    const rpc = new discord_rpc_1.Client({ transport: "ipc" });
+    rpc.on("ready", async () => {
+        await rpc.clearActivity();
+        await rpc.setActivity({
+            buttons: [
+                { label: "Add Bot", url: "https://bot.clancy.lol/" },
+                { label: "Website", url: "https://clancy.lol/" },
+            ],
+            largeImageKey: "duncan",
+        });
     });
+    rpc.login({ clientId: "798591530850844713" });
 })();
