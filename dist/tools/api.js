@@ -9,7 +9,7 @@ var Jonathan;
     class API extends pariah_1.Pariah {
         token;
         constructor(token) {
-            super(Jonathan.Uri, { headers: { Authorization: `Application ${token}` } });
+            super(Jonathan.Uri, { headers: { Authorization: token } });
             this.token = token;
         }
         async authorized() {
@@ -46,7 +46,7 @@ var Jonathan;
             return await this.get.json("/tags/inspect");
         }
         async tagSearch(query) {
-            return await this.get.json(`/tags/search/:query`, {
+            return await this.get.json("/tags/search/:query", {
                 ":query": query,
             });
         }

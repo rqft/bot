@@ -14,7 +14,7 @@ export module Jonathan {
   export class API extends Pariah {
     public readonly token: string;
     constructor(token: string) {
-      super(Uri, { headers: { Authorization: `Application ${token}` } });
+      super(Uri, { headers: { Authorization: token } });
       this.token = token;
     }
 
@@ -63,7 +63,7 @@ export module Jonathan {
     }
 
     async tagSearch(query?: string): Promise<Data<Result<Array<Choice>>>> {
-      return await this.get.json<Result<Array<Choice>>>(`/tags/search/:query`, {
+      return await this.get.json<Result<Array<Choice>>>("/tags/search/:query", {
         ":query": query,
       });
     }

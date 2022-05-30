@@ -19,6 +19,8 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-esline/no-namespace": "off"
+    "@typescript-esline/no-namespace": "off",
+    "@typescript-eslint/prefer-namespace-keyword": "off",
+    "@typescript-eslint/no-namespace": "off"
   }
 }

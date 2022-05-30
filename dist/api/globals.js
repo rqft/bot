@@ -9,6 +9,7 @@ const wilson_kv_1 = require("wilson-kv");
 exports.Sarah = (0, express_1.default)();
 exports.Authorized = [
     { username: "admin", password: "admin" },
+    { username: "insyri", password: "abcd" },
 ];
 exports.NeedsNoAuth = ["/authorized"];
 exports.TagsKV = new wilson_kv_1.Wilson("kv/tags");
