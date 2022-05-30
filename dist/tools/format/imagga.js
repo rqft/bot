@@ -34,6 +34,7 @@ var Imagga;
             x.percent.toPrecision(4) + "%",
         ]), { join: " | " }).join("\n");
     }
+    Imagga.colorsTable = colorsTable;
     async function colors(context, args) {
         const { target } = args;
         const { payload: { result, status }, } = await instance.colors(target, {});

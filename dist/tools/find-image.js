@@ -70,25 +70,25 @@ var FindImage;
     FindImage.findImageUrlInEmbed = findImageUrlInEmbed;
     function findImageUrlInMessage(message, url, as) {
         if (url) {
-            for (let [, embed] of message.embeds) {
+            for (const [, embed] of message.embeds) {
                 if (embed.url === url) {
                     return findImageUrlInEmbed(embed, undefined, as);
                 }
             }
         }
-        for (let [, attachment] of message.attachments) {
+        for (const [, attachment] of message.attachments) {
             const url = findImageUrlInAttachment(attachment, as);
             if (url) {
                 return url;
             }
         }
-        for (let [, embed] of message.embeds) {
+        for (const [, embed] of message.embeds) {
             const url = findImageUrlInEmbed(embed, undefined, as);
             if (url) {
                 return url;
             }
         }
-        for (let [, sticker] of message.stickerItems) {
+        for (const [, sticker] of message.stickerItems) {
             return sticker.assetUrl;
         }
         return null;
@@ -106,19 +106,19 @@ var FindImage;
     FindImage.findImageUrlInMessages = findImageUrlInMessages;
     function findImageUrlsInMessage(message, as) {
         const urls = new Set();
-        for (let [, attachment] of message.attachments) {
+        for (const [, attachment] of message.attachments) {
             const url = findImageUrlInAttachment(attachment, as);
             if (url) {
                 urls.add(url);
             }
         }
-        for (let [, embed] of message.embeds) {
+        for (const [, embed] of message.embeds) {
             const url = findImageUrlInEmbed(embed, undefined, as);
             if (url) {
                 urls.add(url);
             }
         }
-        for (let [, sticker] of message.stickerItems) {
+        for (const [, sticker] of message.stickerItems) {
             urls.add(sticker.assetUrl);
         }
         return urls.size ? Array.from(urls) : [];
@@ -128,7 +128,7 @@ var FindImage;
         const urls = new Set();
         for (const message of messages.values()) {
             const urlsFound = findImageUrlsInMessage(message, as);
-            for (let url of urlsFound) {
+            for (const url of urlsFound) {
                 urls.add(url);
             }
         }
@@ -214,26 +214,26 @@ var FindImage;
     function findMediaUrlInMessage(message, url, options) {
         const findImage = !options || options.image || options.image === undefined;
         if (url) {
-            for (let [, embed] of message.embeds) {
+            for (const [, embed] of message.embeds) {
                 if (embed.url === url) {
                     return findMediaUrlInEmbed(embed, false, options);
                 }
             }
         }
-        for (let [, attachment] of message.attachments) {
+        for (const [, attachment] of message.attachments) {
             const url = findMediaUrlInAttachment(attachment, options);
             if (url) {
                 return url;
             }
         }
-        for (let [, embed] of message.embeds) {
+        for (const [, embed] of message.embeds) {
             const url = findMediaUrlInEmbed(embed, false, options);
             if (url) {
                 return url;
             }
         }
         if (findImage) {
-            for (let [, sticker] of message.stickerItems) {
+            for (const [, sticker] of message.stickerItems) {
                 return sticker.assetUrl;
             }
         }
@@ -253,20 +253,20 @@ var FindImage;
     function findMediaUrlsInMessage(message, options) {
         const findImage = !options || options.image || options.image === undefined;
         const urls = new Set();
-        for (let [, attachment] of message.attachments) {
+        for (const [, attachment] of message.attachments) {
             const url = findMediaUrlInAttachment(attachment, options);
             if (url) {
                 urls.add(url);
             }
         }
-        for (let [, embed] of message.embeds) {
+        for (const [, embed] of message.embeds) {
             const url = findMediaUrlInEmbed(embed, false, options);
             if (url) {
                 urls.add(url);
             }
         }
         if (findImage) {
-            for (let [, sticker] of message.stickerItems) {
+            for (const [, sticker] of message.stickerItems) {
                 urls.add(sticker.assetUrl);
             }
         }
@@ -277,7 +277,7 @@ var FindImage;
         const urls = new Set();
         for (const message of messages.values()) {
             const urlsFound = findMediaUrlsInMessage(message, options);
-            for (let url of urlsFound) {
+            for (const url of urlsFound) {
                 urls.add(url);
             }
         }

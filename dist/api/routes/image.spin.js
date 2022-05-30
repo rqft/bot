@@ -14,10 +14,10 @@ async function imageSpin(req, res) {
     if (url) {
         const request = await (0, node_fetch_1.default)(url);
         const data = await request.buffer();
-        let editor = await (0, tools_1.decodeImage)(data);
+        const editor = await (0, tools_1.decodeImage)(data);
         editor.resize(exports.MAX_IMAGE_SIZE, exports.MAX_IMAGE_SIZE);
         editor.cropCircle();
-        let composite = [];
+        const composite = [];
         for (let i = 0; i < 360; i += 15) {
             const frame = editor.clone();
             frame.rotate(i, false);

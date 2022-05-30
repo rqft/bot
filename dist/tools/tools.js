@@ -156,7 +156,7 @@ async function findMemberByChunk(context, username, discriminator) {
     if (channel) {
         const { messages } = channel;
         if (messages) {
-            for (let [, message] of messages) {
+            for (const [, message] of messages) {
                 {
                     const members = [message.member, message.author].filter((v) => v);
                     const found = findMemberByUsername(members, username, discriminator);
@@ -357,7 +357,7 @@ async function store(value, filename) {
         value = value.payload;
     }
     let e = false;
-    let storageChannel = await globals_1.client.rest
+    const storageChannel = await globals_1.client.rest
         .fetchChannel(secrets_1.Secrets.StorageChannelId)
         .catch(() => {
         e = true;
@@ -457,9 +457,9 @@ function toTitleCase(payload) {
 }
 exports.toTitleCase = toTitleCase;
 function padCodeBlockFromRows(strings, options = {}) {
-    const padding = (options.padding === undefined) ? ' ' : options.padding;
-    const padFunc = (options.padFunc === undefined) ? String.prototype.padStart : options.padFunc;
-    const join = (options.join === undefined) ? ' ' : options.join;
+    const padding = options.padding === undefined ? " " : options.padding;
+    const padFunc = options.padFunc === undefined ? String.prototype.padStart : options.padFunc;
+    const join = options.join === undefined ? " " : options.join;
     const columns = [];
     const columnsAmount = strings.reduce((x, row) => Math.max(x, row.length), 0);
     for (let i = 0; i < columnsAmount; i++) {

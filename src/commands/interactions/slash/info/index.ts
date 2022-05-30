@@ -1,6 +1,7 @@
 import { BaseSlashCommand } from "../baseslash";
 import { ChannelSlashSubCommand } from "./channel";
 import { EmojiSlashSubCommand } from "./emoji";
+import { GuildSlashSubCommand } from "./guild";
 import { ImageSlashSubCommand } from "./image";
 import { RoleSlashSubCommand } from "./role";
 import { UserSlashSubCommand } from "./user";
@@ -15,6 +16,7 @@ export default class InfoSlashCommandGroup extends BaseSlashCommand {
         new EmojiSlashSubCommand(),
         new ImageSlashSubCommand(),
         new RoleSlashSubCommand(),
+        new GuildSlashSubCommand(),
       ],
     });
   }

@@ -17,7 +17,7 @@ async function imageResize(req, res) {
     if (url) {
         const request = await (0, node_fetch_1.default)(url);
         const data = await request.buffer();
-        let editor = await (0, tools_1.decodeImage)(data);
+        const editor = await (0, tools_1.decodeImage)(data);
         switch (true) {
             case /^\d+x\d+$/.test(size): {
                 const [width, height] = size.split("x").map(Number);
@@ -43,7 +43,7 @@ async function imageResize(req, res) {
                 return;
             }
         }
-        let u8 = await editor.encode();
+        const u8 = await editor.encode();
         const sent = Buffer.from(u8);
         res.setHeader("Content-Type", "image/png");
         res.send(sent);

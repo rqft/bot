@@ -11,7 +11,8 @@ class PingCommand extends basecommand_1.BaseCommand {
         });
     }
     async run(context) {
-        return (0, tools_1.editOrReply)(context, `${Date.now() - (context.message.editedAtUnix || context.message.createdAtUnix)}`);
+        return (0, tools_1.editOrReply)(context, `${Date.now() -
+            (context.message.editedAtUnix || context.message.createdAtUnix)}`);
     }
 }
 exports.default = PingCommand;

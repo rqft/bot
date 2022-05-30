@@ -89,6 +89,8 @@ async function kwanzi(context, args) {
 exports.kwanzi = kwanzi;
 async function stats(context) {
     const embed = embed_1.Embed.user(context);
-    embed;
+    if (embed) {
+        void 0;
+    }
 }
 exports.stats = stats;

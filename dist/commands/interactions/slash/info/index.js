@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const baseslash_1 = require("../baseslash");
 const channel_1 = require("./channel");
 const emoji_1 = require("./emoji");
+const guild_1 = require("./guild");
 const image_1 = require("./image");
 const role_1 = require("./role");
 const user_1 = require("./user");
@@ -17,6 +18,7 @@ class InfoSlashCommandGroup extends baseslash_1.BaseSlashCommand {
                 new emoji_1.EmojiSlashSubCommand(),
                 new image_1.ImageSlashSubCommand(),
                 new role_1.RoleSlashSubCommand(),
+                new guild_1.GuildSlashSubCommand(),
             ],
         });
     }

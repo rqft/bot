@@ -121,7 +121,8 @@ var Parameters;
         }
         const emoji = matches.matches[0];
         return {
-            url: detritus_client_rest_1.Endpoints.Urls.CDN.slice(0, -1) + detritus_client_rest_1.Endpoints.CDN.EMOJI(emoji.id, emoji.animated ? constants_1.ImageFormats.GIF : constants_1.ImageFormats.PNG),
+            url: detritus_client_rest_1.Endpoints.Urls.CDN.slice(0, -1) +
+                detritus_client_rest_1.Endpoints.CDN.EMOJI(emoji.id, emoji.animated ? constants_1.ImageFormats.GIF : constants_1.ImageFormats.PNG),
             type: EmojiType.CUSTOM,
             id: emoji.id,
             raw: value,
@@ -196,12 +197,12 @@ var Parameters;
                         channels = guild.channels.toArray();
                     }
                     channels = channels.sort((x, y) => (x.position || 0) - (y.position || 0));
-                    for (let channel of channels) {
+                    for (const channel of channels) {
                         if (channel.name.toLowerCase().startsWith(value)) {
                             return channel;
                         }
                     }
-                    for (let channel of channels) {
+                    for (const channel of channels) {
                         if (channel.name.toLowerCase().includes(value)) {
                             return channel;
                         }
@@ -217,7 +218,7 @@ var Parameters;
         return (value, context) => {
             if (value) {
                 const channels = [];
-                for (let arg of stringArguments(value)) {
+                for (const arg of stringArguments(value)) {
                     const found = findChannel(arg, context);
                     if (found) {
                         channels.push(found);
@@ -250,12 +251,12 @@ var Parameters;
                     }
                 }
                 value = value.toLowerCase();
-                for (let [, role] of guild.roles) {
+                for (const [, role] of guild.roles) {
                     if (role.name.toLowerCase().startsWith(value)) {
                         return role;
                     }
                 }
-                for (let [, role] of guild.roles) {
+                for (const [, role] of guild.roles) {
                     if (role.name.toLowerCase().includes(value)) {
                         return role;
                     }
@@ -293,7 +294,7 @@ var Parameters;
             let result = value.slice(0, 1);
             value = value.slice(1);
             if (Parameters.Quotes.START.includes(result)) {
-                let index = value.indexOf(Parameters.QuotesAll[result], 1);
+                const index = value.indexOf(Parameters.QuotesAll[result], 1);
                 if (index !== -1) {
                     result = value.slice(0, index);
                     value = value.slice(index + 1).trim();
@@ -301,7 +302,7 @@ var Parameters;
                     continue;
                 }
             }
-            let index = value.indexOf(" ");
+            const index = value.indexOf(" ");
             if (index === -1) {
                 result += value.slice(0, value.length);
                 value = "";
@@ -318,7 +319,7 @@ var Parameters;
     function imageUrl(as) {
         return async (value, context) => {
             if (!value) {
-                value = '^';
+                value = "^";
             }
             try {
                 if (context instanceof detritus_client_1.Command.Context) {
@@ -416,7 +417,7 @@ var Parameters;
                     {
                         const emojis = (0, tools_1.onlyEmoji)(value);
                         if (emojis && emojis.length) {
-                            for (let emoji of emojis) {
+                            for (const emoji of emojis) {
                                 const codepoint = (0, tools_1.toCodePointForTwemoji)(emoji);
                                 return endpoints_1.VyboseEndpoints.CUSTOM.TWEMOJI_SVG(codepoint);
                             }

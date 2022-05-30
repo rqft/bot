@@ -60,6 +60,7 @@ var Markdown;
     function EscapeBasic(raw, key) {
         return raw.replace(Regexes[key], Replacements[key]);
     }
+    Markdown.EscapeBasic = EscapeBasic;
     Markdown.Escape = Object.keys(Markdown.Strings).reduce((p, v) => Object.assign(p, { [v]: (raw) => EscapeBasic(raw, v) }), {});
     const FrozenTimestampStyles = {
         [TimestampStyles.BOTH_LONG]: "{day}, {month} {date}, {year} {hour}:{minute} {meridian}",
@@ -108,14 +109,17 @@ var Markdown;
             year: date.getFullYear().toString(),
         };
     }
+    Markdown.formatDate = formatDate;
     function multiplyLarge(...nums) {
         return nums.map(BigInt).reduce((p, v) => (p *= v), 1n);
     }
+    Markdown.multiplyLarge = multiplyLarge;
     function bigintAbs(int) {
         if (int < 0)
             return -int;
         return int;
     }
+    Markdown.bigintAbs = bigintAbs;
     const TimestampUnits = {
         myriad: multiplyLarge(10, 10, 10, 10, 12, 4, 7, 24, 60, 1000),
         millenium: multiplyLarge(10, 10, 10, 12, 4, 7, 24, 60, 1000),
@@ -318,8 +322,8 @@ var Markdown;
     })(DiscordRegexNames = Markdown.DiscordRegexNames || (Markdown.DiscordRegexNames = {}));
     Markdown.DiscordRegex = {
         [DiscordRegexNames.EMOJI]: /<a?:(\w+):(\d+)>/g,
-        [DiscordRegexNames.JUMP_CHANNEL]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(\@me|\d+)\/(\d+)$/g,
-        [DiscordRegexNames.JUMP_CHANNEL_MESSAGE]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(\@me|\d+)\/(\d+)\/(\d+)$/g,
+        [DiscordRegexNames.JUMP_CHANNEL]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)$/g,
+        [DiscordRegexNames.JUMP_CHANNEL_MESSAGE]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)\/(\d+)$/g,
         [DiscordRegexNames.MENTION_CHANNEL]: /<#(\d+)>/g,
         [DiscordRegexNames.MENTION_ROLE]: /<@&(\d+)>/g,
         [DiscordRegexNames.MENTION_USER]: /<@(!?)(\d+)>/g,

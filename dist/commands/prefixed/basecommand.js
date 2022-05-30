@@ -30,17 +30,17 @@ class BaseCommand extends command_1.Command {
         }
         return this.fullName;
     }
-    async onBefore(_context) {
+    async onBefore() {
         this.use = new Date();
         console.log(`recieved ${this.fullName} in ${Date.now() - this.use.getTime()}ms`);
         return true;
     }
-    async onBeforeRun(context, _args) {
+    async onBeforeRun(context) {
         console.log(`processing ${this.fullName} in ${Date.now() - this.use.getTime()}ms`);
         await (0, tools_1.editOrReply)(context, "ok, processing" + (this.expensive ? " (this may take a while)" : ""));
         return true;
     }
-    async onCancelRun(context, _args) {
+    async onCancelRun(context) {
         console.log(`cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`);
         return await (0, tools_1.editOrReply)(context, markdown_1.Markdown.Format.codeblock(this.commandUsage).toString());
     }
@@ -52,7 +52,7 @@ class BaseCommand extends command_1.Command {
         const permissions = (0, tools_1.permissionsErrorList)(failed);
         return await (0, tools_1.editOrReply)(context, `hey i need ${permissions.join(", ")} to run this`);
     }
-    async onRatelimit(context, ratelimits, _metadata) {
+    async onRatelimit(context, ratelimits) {
         if (!context.canReply) {
             return;
         }
@@ -78,7 +78,7 @@ class BaseCommand extends command_1.Command {
                     break;
                 }
             }
-            let content = `${noun} going really fast please slow down :( (wait ${markdown_1.Markdown.toTimeString(remaining, undefined, false)})`;
+            const content = `${noun} going really fast please slow down :( (wait ${markdown_1.Markdown.toTimeString(remaining, undefined, false)})`;
             return await (0, tools_1.editOrReply)(context, content);
         }
     }
@@ -93,7 +93,7 @@ class BaseCommand extends command_1.Command {
         const store = {};
         for (const key in errors) {
             const value = errors[key];
-            let message = value.message;
+            const message = value.message;
             if (message in store) {
                 description.push(`${key}: same as ${store[message]}`);
             }

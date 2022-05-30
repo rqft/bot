@@ -53,8 +53,7 @@ async function user(context, args) {
                 tags.push("Client Owner");
             }
             if (tags.length) {
-                "\n" +
-                    description.push(basic_1.Basic.field("<:IconChannel_Str:798624234745757727>", "Tags", tags.join(", ")));
+                description.push(basic_1.Basic.field("\n" + "<:IconChannel_Str:798624234745757727>", "Tags", tags.join(", ")));
             }
         }
         const flags = [];

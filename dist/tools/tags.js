@@ -24,9 +24,81 @@ var Tags;
         Limits[Limits["VARIABLES"] = 100] = "VARIABLES";
     })(Limits = Tags.Limits || (Tags.Limits = {}));
     Tags.PRIVATE_VARIABLE_PREFIX = "__";
-    Tags.SCRIPT_REGEX = new RegExp(`\\${Tags.Symbols.START}((?:(?!\\${Tags.Symbols.FUNCTION})(?:.|\s))*)${Tags.Symbols.FUNCTION}([\\s\\S]+)\\${Tags.Symbols.START}`);
+    Tags.SCRIPT_REGEX = new RegExp(`\\${Tags.Symbols.START}((?:(?!\\${Tags.Symbols.FUNCTION})(?:.|\\s))*)${Tags.Symbols.FUNCTION}([\\s\\S]+)\\${Tags.Symbols.START}`);
     Tags.REGEX_ARGUMENT_SPLITTER = new RegExp(`(?!\\\\)[${Tags.Symbols.ARGUMENT}]`, "g");
     Tags.REGEX_ARGUMENT_SPLITTER_ESCAPE_REPLACEMENT = new RegExp(`\\\\\\${Tags.Symbols.ARGUMENT}`, "g");
+    function parse(script) {
+        let scriptName;
+        let arg;
+        script = script.slice(1, script.length - 1).trim();
+        const firstSplitter = script.indexOf(Tags.Symbols.FUNCTION);
+        if (firstSplitter === -1) {
+            scriptName = script.toLowerCase();
+            arg = "";
+        }
+        else {
+            scriptName = script.slice(0, firstSplitter);
+            arg = script.slice(firstSplitter + 1);
+        }
+        return [scriptName.toLowerCase(), arg];
+    }
+    Tags.parse = parse;
+    function split(value) {
+        let depth = 0;
+        let position = 0;
+        let text = "";
+        const args = [];
+        while (position < value.length) {
+            if (depth === 0 && !text) {
+                const next = value.indexOf(Tags.Symbols.START, position);
+                if (next === -1) {
+                    for (let x of value.slice(position).split(Tags.REGEX_ARGUMENT_SPLITTER)) {
+                        x = x.replace(Tags.REGEX_ARGUMENT_SPLITTER_ESCAPE_REPLACEMENT, Tags.Symbols.ARGUMENT);
+                        args.push(x);
+                    }
+                    position = value.length;
+                    continue;
+                }
+            }
+            const result = value.slice(position, ++position);
+            text += result;
+            switch (result) {
+                case Tags.Symbols.ARGUMENT: {
+                    if (depth <= 0) {
+                        args.push(text.slice(0, -1));
+                        text = "";
+                    }
+                    break;
+                }
+                case Tags.Symbols.IGNORE: {
+                    const next = value.slice(position, position + 1);
+                    if (next === Tags.Symbols.START) {
+                        depth--;
+                    }
+                    else if (next === Tags.Symbols.END) {
+                        depth++;
+                    }
+                    else if (next === Tags.Symbols.ARGUMENT) {
+                        position++;
+                    }
+                    break;
+                }
+                case Tags.Symbols.START: {
+                    depth++;
+                    break;
+                }
+                case Tags.Symbols.END: {
+                    depth--;
+                    break;
+                }
+            }
+        }
+        if (text) {
+            args.push(text);
+        }
+        return args;
+    }
+    Tags.split = split;
     let Private;
     (function (Private) {
         Private["FILE_SIZE"] = "__fileSize";
@@ -54,7 +126,7 @@ var Tags;
             return async function (context, arg, __, ___, tag) {
                 tag.variables[Private.NETWORK_REQUESTS]++;
                 const user = (await parameters_1.Parameters.user(arg || context.user.id, context));
-                let value = user[property];
+                const value = user[property];
                 if (typeof value === "function") {
                     return false;
                 }
@@ -70,7 +142,7 @@ var Tags;
                 if (!channel) {
                     return false;
                 }
-                let value = channel[property];
+                const value = channel[property];
                 if (typeof value === "function") {
                     return false;
                 }
@@ -86,7 +158,7 @@ var Tags;
                 if (!guild) {
                     return false;
                 }
-                let value = guild[property];
+                const value = guild[property];
                 if (typeof value === "function") {
                     return false;
                 }
@@ -553,7 +625,7 @@ var Tags;
             if (Limits.NETWORK_REQUESTS <= tag.variables[Private.NETWORK_REQUESTS]) {
                 throw new Error(`429: Too Many Requests (Max ${Limits.NETWORK_REQUESTS} Requests)`);
             }
-            let result = script.slice(position, ++position);
+            const result = script.slice(position, ++position);
             scriptBuffer += result;
             switch (result) {
                 case Tags.Symbols.IGNORE: {
@@ -576,10 +648,10 @@ var Tags;
                         let [name, arg] = parse(scriptBuffer);
                         const parsed = await exec(context, arg, args, tag.variables);
                         arg = parsed.text;
-                        for (let file of parsed.files) {
+                        for (const file of parsed.files) {
                             tag.files.push(file);
                         }
-                        for (let value of Object.values(Keys)) {
+                        for (const value of Object.values(Keys)) {
                             if (Tags.Names[value].includes(name)) {
                                 const valid = await Tags.Scripts[value](context, arg, split(arg), args, tag);
                                 if (!valid) {
@@ -601,76 +673,4 @@ var Tags;
         return tag;
     }
     Tags.exec = exec;
-    function parse(script) {
-        let scriptName;
-        let arg;
-        script = script.slice(1, script.length - 1).trim();
-        const firstSplitter = script.indexOf(Tags.Symbols.FUNCTION);
-        if (firstSplitter === -1) {
-            scriptName = script.toLowerCase();
-            arg = "";
-        }
-        else {
-            scriptName = script.slice(0, firstSplitter);
-            arg = script.slice(firstSplitter + 1);
-        }
-        return [scriptName.toLowerCase(), arg];
-    }
-    Tags.parse = parse;
-    function split(value) {
-        let depth = 0;
-        let position = 0;
-        let text = "";
-        const args = [];
-        while (position < value.length) {
-            if (depth === 0 && !text) {
-                const next = value.indexOf(Tags.Symbols.START, position);
-                if (next === -1) {
-                    for (let x of value.slice(position).split(Tags.REGEX_ARGUMENT_SPLITTER)) {
-                        x = x.replace(Tags.REGEX_ARGUMENT_SPLITTER_ESCAPE_REPLACEMENT, Tags.Symbols.ARGUMENT);
-                        args.push(x);
-                    }
-                    position = value.length;
-                    continue;
-                }
-            }
-            let result = value.slice(position, ++position);
-            text += result;
-            switch (result) {
-                case Tags.Symbols.ARGUMENT: {
-                    if (depth <= 0) {
-                        args.push(text.slice(0, -1));
-                        text = "";
-                    }
-                    break;
-                }
-                case Tags.Symbols.IGNORE: {
-                    const next = value.slice(position, position + 1);
-                    if (next === Tags.Symbols.START) {
-                        depth--;
-                    }
-                    else if (next === Tags.Symbols.END) {
-                        depth++;
-                    }
-                    else if (next === Tags.Symbols.ARGUMENT) {
-                        position++;
-                    }
-                    break;
-                }
-                case Tags.Symbols.START: {
-                    depth++;
-                    break;
-                }
-                case Tags.Symbols.END: {
-                    depth--;
-                    break;
-                }
-            }
-        }
-        if (text) {
-            args.push(text);
-        }
-        return args;
-    }
-    Tags.split = split;
 })(Tags = exports.Tags || (exports.Tags = {}));

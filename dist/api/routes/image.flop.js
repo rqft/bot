@@ -20,7 +20,7 @@ async function imageFlop(req, res) {
         const data = await request.buffer();
         let editor = await (0, tools_1.decodeImage)(data);
         editor = mirror(editor, method);
-        let u8 = await editor.encode();
+        const u8 = await editor.encode();
         const sent = Buffer.from(u8);
         res.setHeader("Content-Type", "image/png");
         res.send(sent);

@@ -75,7 +75,7 @@ class Paginator {
         }
         this.pageSkipAmount = Math.max(2, options.pageSkipAmount || this.pageSkipAmount);
         if (Array.isArray(options.targets)) {
-            for (let target of options.targets) {
+            for (const target of options.targets) {
                 if (typeof target === "string") {
                     this.targets.push(target);
                 }
@@ -96,7 +96,7 @@ class Paginator {
             throw new Error("A userId must be specified in the targets array");
         }
         const buttons = Object.assign({}, exports.PageButtons, options.buttons);
-        for (let key in exports.PageButtons) {
+        for (const key in exports.PageButtons) {
             this.buttons[key] = buttons[key];
         }
         this.onError = options.onError;
@@ -236,7 +236,9 @@ class Paginator {
                         }
                         await this.custom.message.delete();
                     }
-                    catch (error) { }
+                    catch (error) {
+                        void 0;
+                    }
                 }
                 this.custom.message = null;
             }
@@ -406,7 +408,9 @@ class Paginator {
                                 try {
                                     await message.delete();
                                 }
-                                catch (error) { }
+                                catch (error) {
+                                    void 0;
+                                }
                             }
                         }
                     }
@@ -415,7 +419,9 @@ class Paginator {
                     return;
                 }
             }
-            this.ratelimitTimeout.start(this.ratelimit, () => { });
+            this.ratelimitTimeout.start(this.ratelimit, () => {
+                void 0;
+            });
         }
         catch (error) {
             if (typeof this.onError === "function") {
@@ -435,7 +441,9 @@ class Paginator {
                 try {
                     await message.delete();
                 }
-                catch (error) { }
+                catch (error) {
+                    void 0;
+                }
             }
         }
     }
@@ -468,7 +476,9 @@ class Paginator {
                             await this.message.delete();
                         }
                     }
-                    catch (error) { }
+                    catch (error) {
+                        void 0;
+                    }
                 }
             }
             else if (clearButtons) {
@@ -494,7 +504,9 @@ class Paginator {
                             await this.message.edit({ components: [] });
                         }
                     }
-                    catch (error) { }
+                    catch (error) {
+                        void 0;
+                    }
                 }
             }
             await this.clearCustomMessage();
