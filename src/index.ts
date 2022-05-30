@@ -5,9 +5,9 @@ import { Secrets } from "./secrets";
 commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
 
-// process.on("uncaughtException", (e) => {
-//   console.error(JSON.stringify(e, null, 2));
-// });
+process.on("uncaughtException", (e) => {
+  console.error(JSON.stringify(e, null, 2));
+});
 
 (async function run() {
   Sarah.listen(3000, () => {

@@ -5,6 +5,9 @@ const globals_1 = require("./globals");
 const secrets_1 = require("./secrets");
 globals_1.commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
 globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
+process.on("uncaughtException", (e) => {
+    console.error(JSON.stringify(e, null, 2));
+});
 (async function run() {
     api_1.Sarah.listen(3000, () => {
         console.log(`opened ${secrets_1.Secrets.Host}`);
