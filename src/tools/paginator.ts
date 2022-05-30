@@ -4,7 +4,7 @@ import { Context } from "detritus-client/lib/command";
 import {
   InteractionCallbackTypes,
   MessageComponentButtonStyles,
-  MessageFlags
+  MessageFlags,
 } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { Member, Message, User } from "detritus-client/lib/structures";
@@ -51,8 +51,8 @@ export const PageButtons: Record<PageButtonNames, PageButton> = {
 
 export type Page = Embed;
 
-export type OnError = (error: Error, paginator: Paginator) => any;
-export type OnExpire = (paginator: Paginator) => any;
+export type OnError = (error: Error, paginator: Paginator) => unknown;
+export type OnExpire = (paginator: Paginator) => unknown;
 export type OnPage = (page: number) => Page | Promise<Page>;
 export type OnPageNumber = (content: string) => Promise<number> | number;
 
@@ -103,11 +103,11 @@ export class Paginator {
   expires: number = 1 * (60 * 1000);
   page: number = MIN_PAGE;
   pageLimit: number = MAX_PAGE;
-  pageSkipAmount: number = 10;
+  pageSkipAmount = 10;
   pages?: Array<Page>;
-  ratelimit: number = 250;
+  ratelimit = 250;
   ratelimitTimeout = new Timeout();
-  stopped: boolean = false;
+  stopped = false;
   targets: Array<string> = [];
 
   onError?: OnError;
@@ -147,7 +147,7 @@ export class Paginator {
     );
 
     if (Array.isArray(options.targets)) {
-      for (let target of options.targets) {
+      for (const target of options.targets) {
         if (typeof target === "string") {
           this.targets.push(target);
         } else {
@@ -171,7 +171,8 @@ export class Paginator {
       PageButtons,
       options.buttons
     );
-    for (let key in PageButtons) {
+    for (const key in PageButtons) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this.buttons as any)[key] = (buttons as any)[key];
     }
 
@@ -192,7 +193,7 @@ export class Paginator {
     });
   }
 
-  get components() {
+  get components(): Components {
     const components = new Components({
       timeout: this.expires,
       onTimeout: this.onStop.bind(this),
@@ -339,12 +340,12 @@ export class Paginator {
     return this.targets.includes(userId) || this.context.client.isOwner(userId);
   }
 
-  reset() {
+  reset(): void {
     this.custom.timeout.stop();
     this.ratelimitTimeout.stop();
   }
 
-  stop(clearButtons: boolean = true, context?: ComponentContext) {
+  stop(clearButtons = true, context?: ComponentContext): Promise<void> {
     return this.onStop(null, clearButtons, context);
   }
 
@@ -360,7 +361,9 @@ export class Paginator {
               await this.custom.message.delete();
             }
             await this.custom.message.delete();
-          } catch (error) {}
+          } catch (error) {
+            void 0;
+          }
         }
         this.custom.message = null;
       }
@@ -531,7 +534,9 @@ export class Paginator {
               if (!message.deleted && message.canDelete) {
                 try {
                   await message.delete();
-                } catch (error) {}
+                } catch (error) {
+                  void 0;
+                }
               }
             }
           }
@@ -541,7 +546,9 @@ export class Paginator {
         }
       }
 
-      this.ratelimitTimeout.start(this.ratelimit, () => {});
+      this.ratelimitTimeout.start(this.ratelimit, () => {
+        void 0;
+      });
     } catch (error) {
       if (typeof this.onError === "function") {
         await Promise.resolve(this.onError(error as Error, this));
@@ -560,17 +567,19 @@ export class Paginator {
       if (message.canDelete) {
         try {
           await message.delete();
-        } catch (error) {}
+        } catch (error) {
+          void 0;
+        }
       }
     }
   }
 
   async onStop(
-    error?: any,
-    clearButtons: boolean = true,
+    error?: Error | null,
+    clearButtons = true,
     context?: ComponentContext,
     deleteMessage?: boolean
-  ) {
+  ): Promise<void> {
     this.reset();
     if (!this.stopped) {
       this.stopped = true;
@@ -597,7 +606,9 @@ export class Paginator {
             } else {
               await this.message.delete();
             }
-          } catch (error) {}
+          } catch (error) {
+            void 0;
+          }
         }
       } else if (clearButtons) {
         if (context) {
@@ -621,7 +632,9 @@ export class Paginator {
             } else {
               await this.message.edit({ components: [] });
             }
-          } catch (error) {}
+          } catch (error) {
+            void 0;
+          }
         }
       }
       await this.clearCustomMessage();
@@ -633,7 +646,7 @@ export class Paginator {
     }
   }
 
-  async start() {
+  async start(): Promise<Structures.Message | null> {
     if (
       typeof this.onPage !== "function" &&
       !(this.pages && this.pages.length)

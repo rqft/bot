@@ -1,5 +1,6 @@
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
+import { Message } from "detritus-client/lib/structures";
 import * as Process from "node:child_process";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
@@ -12,13 +13,13 @@ export interface CodeArgs {
 export async function code(
   context: Context | InteractionContext,
   args: CodeArgs
-) {
+): Promise<Message | null> {
   if (!context.client.isOwner(context.userId)) {
     throw new Err("no", { status: 403 });
   }
   const text = args.code;
   let language = "ts";
-  let message: any;
+  let message: string;
   try {
     message = await Promise.resolve(eval(text));
 
@@ -32,7 +33,7 @@ export async function code(
         ? error.stack || error.message
         : error instanceof Err
         ? error.toString()
-        : error;
+        : (error as string);
   }
 
   message = String(message);
@@ -48,7 +49,7 @@ export interface ExecArgs {
 export async function exec(
   context: Context | InteractionContext,
   args: ExecArgs
-) {
+): Promise<Message | null> {
   if (!context.client.isOwner(context.userId)) {
     throw new Err("no", { status: 403 });
   }
@@ -72,7 +73,7 @@ export interface KwanziArgs {
 export async function kwanzi(
   context: Context | InteractionContext,
   args: KwanziArgs
-) {
+): Promise<Message | null> {
   const { text: payload } = args;
   const list = Array.from(new Set(payload.toLowerCase().split(" ")));
   const hit: Array<string> = [];
@@ -95,7 +96,11 @@ export async function kwanzi(
   return await editOrReply(context, output.join(" "));
 }
 
-export async function stats(context: Context | InteractionContext) {
+export async function stats(
+  context: Context | InteractionContext
+): Promise<void> {
   const embed = Embed.user(context);
-  embed;
+  if (embed) {
+    void 0;
+  }
 }

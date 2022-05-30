@@ -5,11 +5,11 @@ import {
   ChannelTypes,
   DiscordRegexNames,
   GuildExplicitContentFilterTypes,
-  ImageFormats
+  ImageFormats,
 } from "detritus-client/lib/constants";
 import {
   InteractionAutoCompleteContext,
-  InteractionContext
+  InteractionContext,
 } from "detritus-client/lib/interaction";
 import { regex } from "detritus-client/lib/utils";
 import { Timers } from "detritus-utils";
@@ -23,12 +23,12 @@ import {
   isSnowflake,
   onlyEmoji,
   toCodePointForTwemoji,
-  validateUrl
+  validateUrl,
 } from "./tools";
 
 export module Parameters {
   export function array<T>(use: (value: string) => T) {
-    return function (value: string) {
+    return function (value: string): Array<T> {
       return value
         .split("|")
         .map((x) => x.trim())
@@ -151,10 +151,12 @@ export module Parameters {
 
     const emoji = matches.matches[0]!;
     return {
-      url: Endpoints.Urls.CDN.slice(0,-1) + Endpoints.CDN.EMOJI(
-        emoji.id,
-        emoji.animated ? ImageFormats.GIF : ImageFormats.PNG
-      ),
+      url:
+        Endpoints.Urls.CDN.slice(0, -1) +
+        Endpoints.CDN.EMOJI(
+          emoji.id,
+          emoji.animated ? ImageFormats.GIF : ImageFormats.PNG
+        ),
       type: EmojiType.CUSTOM,
       id: emoji.id,
       raw: value,
@@ -163,7 +165,7 @@ export module Parameters {
   export async function user(
     value: string,
     _context: Context | InteractionContext
-  ) {
+  ): Promise<Structures.User | undefined> {
     if (!value) {
       return Parameters.Default.author(_context);
     }
@@ -194,7 +196,12 @@ export module Parameters {
     types?: Array<ChannelTypes>;
   }
 
-  export function channel(options: ChannelOptions = {}) {
+  export function channel(
+    options: ChannelOptions = {}
+  ): (
+    value: string,
+    context: Command.Context | Interaction.InteractionContext
+  ) => Structures.Channel | null {
     options = Object.assign({ inGuild: true }, options);
     return (
       value: string,
@@ -250,12 +257,12 @@ export module Parameters {
           channels = channels.sort(
             (x, y) => (x.position || 0) - (y.position || 0)
           );
-          for (let channel of channels) {
+          for (const channel of channels) {
             if (channel.name.toLowerCase().startsWith(value)) {
               return channel;
             }
           }
-          for (let channel of channels) {
+          for (const channel of channels) {
             if (channel.name.toLowerCase().includes(value)) {
               return channel;
             }
@@ -266,7 +273,12 @@ export module Parameters {
     };
   }
 
-  export function channels(options: ChannelOptions = {}) {
+  export function channels(
+    options: ChannelOptions = {}
+  ): (
+    value: string,
+    context: Command.Context | Interaction.InteractionContext
+  ) => Array<Structures.Channel> {
     const findChannel = channel(options);
     return (
       value: string,
@@ -274,7 +286,7 @@ export module Parameters {
     ): Array<Structures.Channel> => {
       if (value) {
         const channels: Array<Structures.Channel> = [];
-        for (let arg of stringArguments(value)) {
+        for (const arg of stringArguments(value)) {
           const found = findChannel(arg, context);
           if (found) {
             channels.push(found);
@@ -312,12 +324,12 @@ export module Parameters {
           }
         }
         value = value.toLowerCase();
-        for (let [, role] of guild.roles) {
+        for (const [, role] of guild.roles) {
           if (role.name.toLowerCase().startsWith(value)) {
             return role;
           }
         }
-        for (let [, role] of guild.roles) {
+        for (const [, role] of guild.roles) {
           if (role.name.toLowerCase().includes(value)) {
             return role;
           }
@@ -356,7 +368,7 @@ export module Parameters {
     START: Object.keys(QuotesAll),
   };
 
-  export function stringArguments(value: string) {
+  export function stringArguments(value: string): Array<string> {
     const results: Array<string> = [];
     while (value.length) {
       let result = value.slice(0, 1);
@@ -365,7 +377,10 @@ export module Parameters {
       // check to see if this word starts with any of the quote starts
       // if yes, then continue onto the next word
       if (Quotes.START.includes(result)) {
-        let index = value.indexOf((QuotesAll as any)[result], 1);
+        const index = value.indexOf(
+          (QuotesAll as Record<string, string>)[result]!,
+          1
+        );
         if (index !== -1) {
           result = value.slice(0, index);
           value = value.slice(index + 1).trim();
@@ -374,7 +389,7 @@ export module Parameters {
         }
       }
       // check for the next space, if not then we consume the whole thing
-      let index = value.indexOf(" ");
+      const index = value.indexOf(" ");
       if (index === -1) {
         result += value.slice(0, value.length);
         value = "";
@@ -388,8 +403,13 @@ export module Parameters {
   }
 
   export function imageUrl(as?: ImageFormats) {
-    return async (value: string, context: Context | InteractionContext) => {
-      if (!value) { value = '^' }
+    return async (
+      value: string,
+      context: Context | InteractionContext
+    ): Promise<string | null> => {
+      if (!value) {
+        value = "^";
+      }
       try {
         if (context instanceof Command.Context) {
           // check the message's attachments/stickers first
@@ -537,7 +557,7 @@ export module Parameters {
           {
             const emojis = onlyEmoji(value);
             if (emojis && emojis.length) {
-              for (let emoji of emojis) {
+              for (const emoji of emojis) {
                 const codepoint = toCodePointForTwemoji(emoji);
                 return VyboseEndpoints.CUSTOM.TWEMOJI_SVG(codepoint);
               }
@@ -561,7 +581,9 @@ export module Parameters {
 
   export module Default {
     export function imageUrl(as?: ImageFormats) {
-      return async (context: Context | InteractionContext) => {
+      return async (
+        context: Context | InteractionContext
+      ): Promise<string | null> => {
         if (!context.channel) {
           return null;
         }
@@ -576,7 +598,7 @@ export module Parameters {
 
     export function applications(
       context: Command.Context | Interaction.InteractionContext
-    ) {
+    ): Array<Structures.Application> {
       return context.applications.toArray();
     }
 
@@ -625,7 +647,7 @@ export module Parameters {
 
     export function noEmbed(
       context: Command.Context | Interaction.InteractionContext
-    ): Boolean {
+    ): boolean {
       if (context.channel) {
         return !context.channel.canEmbedLinks;
       }
@@ -634,7 +656,7 @@ export module Parameters {
 
     export function safe(
       context: Command.Context | Interaction.InteractionContext
-    ): Boolean {
+    ): boolean {
       const { channel } = context;
       if (channel) {
         if (channel.isDm) {
@@ -668,7 +690,9 @@ export module Parameters {
 
   export module Autocomplete {
     export function choices<T>(items: Array<T>) {
-      return async (context: InteractionAutoCompleteContext) => {
+      return async (
+        context: InteractionAutoCompleteContext
+      ): Promise<unknown> => {
         let choices = items;
         if (context.value) {
           const value = context.value.toLowerCase();

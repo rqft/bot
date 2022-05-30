@@ -7,7 +7,7 @@ export async function imageRotate(
   res: express.Response
 ): Promise<void> {
   const url = req.query.url as string;
-  let deg = Number.parseInt(req.params.deg || "0");
+  const deg = Number.parseInt(req.params.deg || "0");
 
   if (Number.isNaN(deg)) {
     stop(res, 400, "No angle provided");
@@ -17,11 +17,11 @@ export async function imageRotate(
   if (url) {
     const request = await fetch(url);
     const data = await request.buffer();
-    let editor = await decodeImage(data);
+    const editor = await decodeImage(data);
 
     editor.rotate(deg)
 
-    let u8: Uint8Array = await editor.encode();
+    const u8: Uint8Array = await editor.encode();
 
     const sent = Buffer.from(u8);
     res.setHeader("Content-Type", "image/png");

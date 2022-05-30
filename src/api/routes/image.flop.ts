@@ -21,7 +21,7 @@ export async function imageFlop(
 
     editor = mirror(editor, method);
 
-    let u8: Uint8Array = await editor.encode();
+    const u8: Uint8Array = await editor.encode();
 
     const sent = Buffer.from(u8);
     res.setHeader("Content-Type", "image/png");

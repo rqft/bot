@@ -12,7 +12,13 @@ export default class PingCommand extends BaseCommand {
     });
   }
 
-  async run(context: Context) {
-    return editOrReply(context, `${Date.now() - (context.message.editedAtUnix || context.message.createdAtUnix)}`);
+  async run(context: Context): Promise<unknown> {
+    return editOrReply(
+      context,
+      `${
+        Date.now() -
+        (context.message.editedAtUnix || context.message.createdAtUnix)
+      }`
+    );
   }
 }

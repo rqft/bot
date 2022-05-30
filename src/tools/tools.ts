@@ -4,7 +4,7 @@ import { DiscordAbortCodes, ImageFormats } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import {
   InteractionEditOrRespond,
-  Message
+  Message,
 } from "detritus-client/lib/structures";
 import { Animation, Frame, Image } from "imagescript/v2";
 import { Pariah } from "pariah";
@@ -13,7 +13,7 @@ import { IO } from "wilson-kv";
 import {
   PermissionsText,
   UNICODE_EMOJI_REGEX,
-  VALID_URL_REGEX
+  VALID_URL_REGEX,
 } from "../constants";
 import { client } from "../globals";
 import { Secrets } from "../secrets";
@@ -56,7 +56,7 @@ export function editOrReply(
   });
 }
 
-export function permissionsErrorList(failed: Array<bigint>) {
+export function permissionsErrorList(failed: Array<bigint>): Array<string> {
   const permissions: Array<string> = [];
   for (const permission of failed) {
     const key = String(permission);
@@ -69,7 +69,7 @@ export function permissionsErrorList(failed: Array<bigint>) {
   return permissions.map((v) => v.toLowerCase());
 }
 
-export function isSnowflake(data: string) {
+export function isSnowflake(data: string): boolean {
   return /^\d{16,21}$/.test(data);
 }
 export function validateUrl(value: string): boolean {
@@ -93,7 +93,7 @@ export function toCardinalNumber(number: number): string {
 export async function fetchMemberOrUserById(
   context: Context | InteractionContext,
   userId: string,
-  memberOnly: boolean = false
+  memberOnly = false
 ): Promise<Structures.Member | Structures.User> {
   if (context.user.id === userId) {
     if (memberOnly) {
@@ -141,6 +141,7 @@ export async function fetchMemberOrUserById(
     // UNKNOWN_MEMBER == userId exists
     // UNKNOWN_USER == userId doesn't exist
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     switch ((error as any).code) {
       case DiscordAbortCodes.UNKNOWN_MEMBER: {
         if (memberOnly) {
@@ -190,7 +191,7 @@ export async function findMemberByChunk(
   if (channel) {
     const { messages } = channel;
     if (messages) {
-      for (let [, message] of messages) {
+      for (const [, message] of messages) {
         {
           const members = [message.member, message.author].filter((v) => v);
           const found = findMemberByUsername(members, username, discriminator);
@@ -302,7 +303,7 @@ export async function findMemberByChunk(
 export async function findMemberByChunkText(
   context: Command.Context | Interaction.InteractionContext,
   text: string
-) {
+): Promise<Structures.User | Structures.Member | null> {
   const [username, discriminator] = splitTextToDiscordHandle(text);
   return await findMemberByChunk(context, username, discriminator);
 }
@@ -358,7 +359,7 @@ export interface FindMemberByUsernameCache {
 export async function findMembersByChunkText(
   context: Command.Context | Interaction.InteractionContext,
   text: string
-) {
+): Promise<Array<Structures.User | Structures.Member | null>> {
   const [username, discriminator] = splitTextToDiscordHandle(text);
   return await findMembersByChunk(context, username, discriminator);
 }
@@ -427,12 +428,12 @@ export function splitTextToDiscordHandle(
 }
 export function toCodePoint(
   unicodeSurrogates: string,
-  separator: string = "-"
+  separator = "-"
 ): string {
   const r: Array<string> = [];
-  let c: number = 0;
-  let p: number = 0;
-  let i: number = 0;
+  let c = 0;
+  let p = 0;
+  let i = 0;
 
   while (i < unicodeSurrogates.length) {
     c = unicodeSurrogates.charCodeAt(i++);
@@ -463,12 +464,15 @@ export function validateUnicodeEmojis(emoji: string): boolean {
 export function onlyEmoji(emoji: string): Array<string> | false {
   return validateUnicodeEmojis(emoji) && emoji.match(UNICODE_EMOJI_REGEX)!;
 }
-export async function store(value: Buffer | Data<Buffer>, filename: string) {
+export async function store(
+  value: Buffer | Data<Buffer>,
+  filename: string
+): Promise<Structures.Attachment> {
   if (value instanceof Data) {
     value = value.payload;
   }
   let e = false;
-  let storageChannel = await client.rest
+  const storageChannel = await client.rest
     .fetchChannel(Secrets.StorageChannelId)
     .catch(() => {
       e = true;
@@ -506,9 +510,9 @@ export const SIByteUnits = [
 export function formatBytes(
   bytes: number,
   decimals = 2,
-  noBiBytes: boolean = true,
-  short: boolean = false
-) {
+  noBiBytes = true,
+  short = false
+): string {
   if (bytes === 0) return short ? "0B" : "0 Bytes";
 
   const delimiter = noBiBytes ? 1000 : 1024;
@@ -589,7 +593,7 @@ export async function imagescriptOp(
   return data;
 }
 
-export function toTitleCase(payload: string) {
+export function toTitleCase(payload: string): string {
   return payload
     .toLowerCase()
     .split(" ")
@@ -600,14 +604,15 @@ export function toTitleCase(payload: string) {
 export function padCodeBlockFromRows(
   strings: Array<Array<string>>,
   options: {
-    join?: string,
-    padding?: string,
-    padFunc?: (targetLength: number, padString?: string) => string,
-  } = {},
+    join?: string;
+    padding?: string;
+    padFunc?: (targetLength: number, padString?: string) => string;
+  } = {}
 ): Array<string> {
-  const padding = (options.padding === undefined) ? ' ' : options.padding;
-  const padFunc = (options.padFunc === undefined) ? String.prototype.padStart : options.padFunc;
-  const join = (options.join === undefined) ? ' ' : options.join;
+  const padding = options.padding === undefined ? " " : options.padding;
+  const padFunc =
+    options.padFunc === undefined ? String.prototype.padStart : options.padFunc;
+  const join = options.join === undefined ? " " : options.join;
 
   const columns: Array<Array<string>> = [];
   const columnsAmount = strings.reduce((x, row) => Math.max(x, row.length), 0);

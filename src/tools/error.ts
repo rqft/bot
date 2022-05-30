@@ -18,7 +18,7 @@ export interface ErrorOptions<T> {
   statusText?: string;
   metadata?: T;
 }
-export class Err<T = string, M = any> {
+export class Err<T = string, M = unknown> {
   public options: ErrorOptions<M>;
   public level: ErrorLevels;
   public status: number;
@@ -43,7 +43,7 @@ export class Err<T = string, M = any> {
     ).toString()}`;
   }
 
-  static from(payload: Error | Err) {
+  static from(payload: Error | Err): Err {
     if (payload instanceof Err) {
       return payload;
     }

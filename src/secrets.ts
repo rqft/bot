@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { config } from "dotenv";
 config();
 const env = process.env;

@@ -12,11 +12,11 @@ export async function imageSpin(
   if (url) {
     const request = await fetch(url);
     const data = await request.buffer();
-    let editor = await decodeImage(data);
+    const editor = await decodeImage(data);
     editor.resize(MAX_IMAGE_SIZE, MAX_IMAGE_SIZE);
     editor.cropCircle();
 
-    let composite: Array<Frame> = [];
+    const composite: Array<Frame> = [];
     for (let i = 0; i < 360; i += 15) {
       const frame = editor.clone();
       frame.rotate(i, false);

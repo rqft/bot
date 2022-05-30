@@ -31,7 +31,7 @@ export namespace Tags {
   export const PRIVATE_VARIABLE_PREFIX = "__";
 
   export const SCRIPT_REGEX = new RegExp(
-    `\\${Symbols.START}((?:(?!\\${Symbols.FUNCTION})(?:.|\s))*)${Symbols.FUNCTION}([\\s\\S]+)\\${Symbols.START}`
+    `\\${Symbols.START}((?:(?!\\${Symbols.FUNCTION})(?:.|\\s))*)${Symbols.FUNCTION}([\\s\\S]+)\\${Symbols.START}`
   );
 
   export const REGEX_ARGUMENT_SPLITTER = new RegExp(
@@ -42,6 +42,83 @@ export namespace Tags {
     `\\\\\\${Symbols.ARGUMENT}`,
     "g"
   );
+
+  export function parse(script: string): [string, string] {
+    let scriptName: string;
+    let arg: string;
+
+    script = script.slice(1, script.length - 1).trim();
+
+    const firstSplitter = script.indexOf(Symbols.FUNCTION);
+    if (firstSplitter === -1) {
+      scriptName = script.toLowerCase();
+      arg = "";
+    } else {
+      scriptName = script.slice(0, firstSplitter);
+      arg = script.slice(firstSplitter + 1);
+    }
+
+    return [scriptName.toLowerCase(), arg];
+  }
+  export function split(value: string): Array<string> {
+    let depth = 0;
+    let position = 0;
+    let text = "";
+
+    const args: Array<string> = [];
+    while (position < value.length) {
+      if (depth === 0 && !text) {
+        const next = value.indexOf(Symbols.START, position);
+        if (next === -1) {
+          for (let x of value.slice(position).split(REGEX_ARGUMENT_SPLITTER)) {
+            x = x.replace(
+              REGEX_ARGUMENT_SPLITTER_ESCAPE_REPLACEMENT,
+              Symbols.ARGUMENT
+            );
+            args.push(x);
+          }
+          position = value.length;
+          continue;
+        }
+      }
+
+      const result = value.slice(position, ++position);
+      text += result;
+      switch (result) {
+        case Symbols.ARGUMENT: {
+          if (depth <= 0) {
+            args.push(text.slice(0, -1));
+            text = "";
+          }
+          break;
+        }
+        case Symbols.IGNORE: {
+          const next = value.slice(position, position + 1);
+          if (next === Symbols.START) {
+            depth--;
+          } else if (next === Symbols.END) {
+            depth++;
+          } else if (next === Symbols.ARGUMENT) {
+            position++;
+          }
+          break;
+        }
+        case Symbols.START: {
+          depth++;
+          break;
+        }
+        case Symbols.END: {
+          depth--;
+          break;
+        }
+      }
+    }
+
+    if (text) {
+      args.push(text);
+    }
+    return args;
+  }
 
   export enum Private {
     FILE_SIZE = "__fileSize",
@@ -69,6 +146,7 @@ export namespace Tags {
     args: Array<string>,
     tag: Result
   ) => Promise<boolean> | boolean;
+
   export namespace Helpers {
     export function constant<T>(value: T): Script {
       return function (_, __, ___, ____, tag) {
@@ -91,7 +169,7 @@ export namespace Tags {
         tag.variables[Private.NETWORK_REQUESTS]++;
         const user = (await Parameters.user(arg || context.user.id, context))!;
 
-        let value = user[property];
+        const value = user[property];
         if (typeof value === "function") {
           return false;
         }
@@ -108,7 +186,7 @@ export namespace Tags {
           return false;
         }
 
-        let value = channel[property];
+        const value = channel[property];
         if (typeof value === "function") {
           return false;
         }
@@ -125,7 +203,7 @@ export namespace Tags {
           return false;
         }
 
-        let value = guild[property];
+        const value = guild[property];
         if (typeof value === "function") {
           return false;
         }
@@ -615,7 +693,7 @@ export namespace Tags {
     script: string,
     args: Array<string>,
     variables: Variables = Object.create(null)
-  ) {
+  ): Promise<Result> {
     let isFirstParse = true;
     if (Private.ITERATIONS_REMAINING in variables) {
       isFirstParse = false;
@@ -660,7 +738,7 @@ export namespace Tags {
         );
       }
 
-      let result = script.slice(position, ++position);
+      const result = script.slice(position, ++position);
       scriptBuffer += result;
 
       switch (result) {
@@ -686,11 +764,11 @@ export namespace Tags {
 
             const parsed = await exec(context, arg, args, tag.variables);
             arg = parsed.text;
-            for (let file of parsed.files) {
+            for (const file of parsed.files) {
               tag.files.push(file);
             }
 
-            for (let value of Object.values(Keys)) {
+            for (const value of Object.values(Keys)) {
               if (Names[value].includes(name)) {
                 const valid = await Scripts[value](
                   context,
@@ -718,81 +796,5 @@ export namespace Tags {
       tag.text = tag.text.replace(/\u200b/g, "\n");
     }
     return tag;
-  }
-  export function parse(script: string): [string, string] {
-    let scriptName: string;
-    let arg: string;
-
-    script = script.slice(1, script.length - 1).trim();
-
-    const firstSplitter = script.indexOf(Symbols.FUNCTION);
-    if (firstSplitter === -1) {
-      scriptName = script.toLowerCase();
-      arg = "";
-    } else {
-      scriptName = script.slice(0, firstSplitter);
-      arg = script.slice(firstSplitter + 1);
-    }
-
-    return [scriptName.toLowerCase(), arg];
-  }
-  export function split(value: string): Array<string> {
-    let depth = 0;
-    let position = 0;
-    let text = "";
-
-    const args: Array<string> = [];
-    while (position < value.length) {
-      if (depth === 0 && !text) {
-        const next = value.indexOf(Symbols.START, position);
-        if (next === -1) {
-          for (let x of value.slice(position).split(REGEX_ARGUMENT_SPLITTER)) {
-            x = x.replace(
-              REGEX_ARGUMENT_SPLITTER_ESCAPE_REPLACEMENT,
-              Symbols.ARGUMENT
-            );
-            args.push(x);
-          }
-          position = value.length;
-          continue;
-        }
-      }
-
-      let result = value.slice(position, ++position);
-      text += result;
-      switch (result) {
-        case Symbols.ARGUMENT: {
-          if (depth <= 0) {
-            args.push(text.slice(0, -1));
-            text = "";
-          }
-          break;
-        }
-        case Symbols.IGNORE: {
-          const next = value.slice(position, position + 1);
-          if (next === Symbols.START) {
-            depth--;
-          } else if (next === Symbols.END) {
-            depth++;
-          } else if (next === Symbols.ARGUMENT) {
-            position++;
-          }
-          break;
-        }
-        case Symbols.START: {
-          depth++;
-          break;
-        }
-        case Symbols.END: {
-          depth--;
-          break;
-        }
-      }
-    }
-
-    if (text) {
-      args.push(text);
-    }
-    return args;
   }
 }

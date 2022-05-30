@@ -1,7 +1,7 @@
 import { Context } from "detritus-client/lib/command";
 import { UserFlags } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
-import { Member, Role, User } from "detritus-client/lib/structures";
+import { Member, Message, Role, User } from "detritus-client/lib/structures";
 import {
   IrrelevantPermissions,
   PermissionsText,
@@ -19,7 +19,7 @@ export interface UserArgs {
 export async function user(
   context: Context | InteractionContext,
   args: UserArgs
-) {
+): Promise<Message | null> {
   const embed = Embed.user(context);
   const { user } = args;
 
@@ -108,10 +108,13 @@ export async function user(
       }
 
       if (tags.length) {
-        "\n" +
-          description.push(
-            Basic.field(CustomEmojis.CHANNEL_STORE, "Tags", tags.join(", "))
-          );
+        description.push(
+          Basic.field(
+            "\n" + CustomEmojis.CHANNEL_STORE,
+            "Tags",
+            tags.join(", ")
+          )
+        );
       }
     }
 

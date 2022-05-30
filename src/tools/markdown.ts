@@ -80,7 +80,7 @@ export module Markdown {
   /**
    * Utility to escape some Discord Markup Identifier
    */
-  function EscapeBasic(raw: string, key: keyof typeof Strings) {
+  export function EscapeBasic(raw: string, key: keyof typeof Strings): string {
     return raw.replace(Regexes[key]!, Replacements[key]!);
   }
   /**
@@ -158,7 +158,7 @@ export module Markdown {
    * Converts a Date object to a Timestamp object
    */
 
-  function formatDate(date: Date): Timestamp {
+  export function formatDate(date: Date): Timestamp {
     return {
       relative: toTimeString(date.getTime(), TimestampUnits),
       raw: date.getTime(),
@@ -178,7 +178,7 @@ export module Markdown {
    * Collectively multiplies bigints together
    */
 
-  function multiplyLarge(...nums: Array<number | bigint>): bigint {
+  export function multiplyLarge(...nums: Array<number | bigint>): bigint {
     return nums.map(BigInt).reduce((p, v) => (p *= v), 1n);
   }
 
@@ -186,7 +186,7 @@ export module Markdown {
    * Get the absolute value of a bigint
    */
 
-  function bigintAbs(int: bigint) {
+  export function bigintAbs(int: bigint): bigint {
     if (int < 0) return -int;
     return int;
   }
@@ -221,14 +221,14 @@ export module Markdown {
     units = TimestampUnits,
     isFromNow = false,
     limit?: number
-  ) {
+  ): string {
     if (typeof unix === "number") unix = BigInt(unix);
 
     if (isFromNow) unix = bigintAbs(unix - BigInt(Date.now()));
     if (unix === 0n) return "0 milliseconds";
 
     const formatted: Map<T, number> = new Map();
-    const unitList: ObjectEntries<T, bigint> = Object.entries(units) as any;
+    const unitList = Object.entries(units) as ObjectEntries<T, bigint>;
     let run = unix;
 
     for (const [unit, value] of unitList) {
@@ -258,7 +258,7 @@ export module Markdown {
   /**
    * Freezes a UNIX timestamp into some time string based on the Timestamp Style
    */
-  export function freezeUnix(unix: number, style: TimestampStyles) {
+  export function freezeUnix(unix: number, style: TimestampStyles): string {
     const date = new Date(unix);
     const timestamp = formatDate(date);
     let ret = FrozenTimestampStyles[style];
@@ -338,41 +338,41 @@ export module Markdown {
    * Formats strings into their Markup Variants
    */
   export class Format extends FormatInner {
-    static bold(text: string) {
+    static bold(text: string): FormatInner {
       return new this(text).bold();
     }
-    static build(text: string, key: keyof typeof Strings) {
+    static build(text: string, key: keyof typeof Strings): FormatInner {
       return new this(text).build(key, text);
     }
-    static codeblock(text: string, language?: string) {
+    static codeblock(text: string, language?: string): FormatInner {
       return new this(text).codeblock(language);
     }
-    static codestring(text: string) {
+    static codestring(text: string): FormatInner {
       return new this(text).codestring();
     }
-    static codestringSingle(text: string) {
+    static codestringSingle(text: string): FormatInner {
       return new this(text).codestringSingle();
     }
-    static codestringDouble(text: string) {
+    static codestringDouble(text: string): FormatInner {
       return new this(text).codestringDouble();
     }
-    static italics(text: string) {
+    static italics(text: string): FormatInner {
       return new this(text).italics();
     }
-    static spoiler(text: string) {
+    static spoiler(text: string): FormatInner {
       return new this(text).spoiler();
     }
-    static strike(text: string) {
+    static strike(text: string): FormatInner {
       return new this(text).strike();
     }
-    static underline(text: string) {
+    static underline(text: string): FormatInner {
       return new this(text).underline();
     }
     static timestamp(
       unix: number | Date | string,
       format: TimestampStyles = TimestampStyles.BOTH_SHORT,
       isSeconds = false
-    ) {
+    ): FormatInner {
       if (typeof unix === "string") unix = Number(unix);
       if (unix instanceof Date) unix = unix.getTime();
 
@@ -386,7 +386,7 @@ export module Markdown {
       unix: number | Date | string,
       format: TimestampStyles = TimestampStyles.BOTH_SHORT,
       isSeconds = false
-    ) {
+    ): FormatInner {
       if (typeof unix === "string") unix = Number(unix);
       if (unix instanceof Date) unix = unix.getTime();
 
@@ -395,7 +395,7 @@ export module Markdown {
       }
       return new this(freezeUnix(unix, format));
     }
-    static link(text: string, url: string | URL) {
+    static link(text: string, url: string | URL): FormatInner {
       if (url instanceof URL) url = url.href;
       return new this(`[${text}](${url})`);
     }
@@ -428,9 +428,9 @@ export module Markdown {
   export const DiscordRegex = {
     [DiscordRegexNames.EMOJI]: /<a?:(\w+):(\d+)>/g,
     [DiscordRegexNames.JUMP_CHANNEL]:
-      /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(\@me|\d+)\/(\d+)$/g,
+      /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)$/g,
     [DiscordRegexNames.JUMP_CHANNEL_MESSAGE]:
-      /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(\@me|\d+)\/(\d+)\/(\d+)$/g,
+      /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)\/(\d+)$/g,
     [DiscordRegexNames.MENTION_CHANNEL]: /<#(\d+)>/g,
     [DiscordRegexNames.MENTION_ROLE]: /<@&(\d+)>/g,
     [DiscordRegexNames.MENTION_USER]: /<@(!?)(\d+)>/g,
@@ -703,52 +703,60 @@ export module Markdown {
     }
   }
   export class Match extends MatchInner {
-    static bold(raw: string) {
+    static bold(raw: string): DiscordRegexPayload<TextBoldMatch> {
       return new this(raw).bold();
     }
-    static codeblock(raw: string) {
+    static codeblock(raw: string): DiscordRegexPayload<TextCodeblockMatch> {
       return new this(raw).codeblock();
     }
-    static codestring(raw: string) {
+    static codestring(raw: string): DiscordRegexPayload<TextCodestringMatch> {
       return new this(raw).codestring();
     }
-    static emoji(raw: string) {
+    static emoji(raw: string): DiscordRegexPayload<EmojiMatch> {
       return new this(raw).emoji();
     }
-    static italics(raw: string) {
+    static italics(raw: string): DiscordRegexPayload<TextItalicsMatch> {
       return new this(raw).italics();
     }
-    static jumpChannel(raw: string) {
+    static jumpChannel(raw: string): DiscordRegexPayload<JumpChannelMatch> {
       return new this(raw).jumpChannel();
     }
-    static jumpChannelMessage(raw: string) {
+    static jumpChannelMessage(
+      raw: string
+    ): DiscordRegexPayload<JumpChannelMessageMatch> {
       return new this(raw).jumpChannelMessage();
     }
-    static match(raw: string, what: DiscordRegexNames, onlyFirst = false) {
+    static match(
+      raw: string,
+      what: DiscordRegexNames,
+      onlyFirst = false
+    ): DiscordRegexPayload<DiscordRegexMatch> {
       return new this(raw).match(what, onlyFirst);
     }
-    static mentionChannel(raw: string) {
+    static mentionChannel(
+      raw: string
+    ): DiscordRegexPayload<MentionChannelMatch> {
       return new this(raw).mentionChannel();
     }
-    static mentionRole(raw: string) {
+    static mentionRole(raw: string): DiscordRegexPayload<MentionRoleMatch> {
       return new this(raw).mentionRole();
     }
-    static mentionUser(raw: string) {
+    static mentionUser(raw: string): DiscordRegexPayload<MentionUserMatch> {
       return new this(raw).mentionUser();
     }
-    static snowflake(raw: string) {
+    static snowflake(raw: string): DiscordRegexPayload<TextSnowflakeMatch> {
       return new this(raw).snowflake();
     }
-    static spoiler(raw: string) {
+    static spoiler(raw: string): DiscordRegexPayload<TextSpoilerMatch> {
       return new this(raw).spoiler();
     }
-    static strike(raw: string) {
+    static strike(raw: string): DiscordRegexPayload<TextStrikeMatch> {
       return new this(raw).strike();
     }
-    static underline(raw: string) {
+    static underline(raw: string): DiscordRegexPayload<TextUnderlineMatch> {
       return new this(raw).underline();
     }
-    static url(raw: string) {
+    static url(raw: string): DiscordRegexPayload<TextUrlMatch> {
       return new this(raw).url();
     }
   }

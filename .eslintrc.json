@@ -6,21 +6,21 @@
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 12,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "windows"],
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-esline/no-namespace": "off",
+    "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/prefer-namespace-keyword": "off",
-    "@typescript-eslint/no-namespace": "off"
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "no-magic-numbers": "off",
+    "no-unused-expressions": "error",
+    "prefer-const": "off"
   }
 }

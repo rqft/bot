@@ -1,5 +1,6 @@
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
+import { Message } from "detritus-client/lib/structures";
 import { APIs } from "pariah";
 import { Brand } from "../../constants";
 import { Secrets } from "../../secrets";
@@ -16,7 +17,7 @@ export module Imagga {
   export async function tags(
     context: Context | InteractionContext,
     args: Basic.ImageArgs
-  ) {
+  ): Promise<Message | null> {
     const { target } = args;
 
     const {
@@ -42,7 +43,7 @@ export module Imagga {
     return await editOrReply(context, { embed });
   }
 
-  function colorsTable(colors: Array<APIs.Imagga.Color>) {
+  export function colorsTable(colors: Array<APIs.Imagga.Color>): string {
     return padCodeBlockFromRows(
       colors.map((x) => [
         `${x.closest_palette_color} (${x.html_code})`,
@@ -55,7 +56,7 @@ export module Imagga {
   export async function colors(
     context: Context | InteractionContext,
     args: Basic.ImageArgs
-  ) {
+  ): Promise<Message | null> {
     const { target } = args;
 
     const {
@@ -116,7 +117,7 @@ export module Imagga {
   export async function categories(
     context: Context | InteractionContext,
     args: Basic.ImageArgs
-  ) {
+  ): Promise<Message | null> {
     const { target } = args;
 
     const {
@@ -146,7 +147,7 @@ export module Imagga {
   export async function readText(
     context: Context | InteractionContext,
     args: Basic.ImageArgs
-  ) {
+  ): Promise<Message | null> {
     const { target } = args;
 
     const {

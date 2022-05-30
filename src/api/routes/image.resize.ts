@@ -16,7 +16,7 @@ export async function imageResize(
   if (url) {
     const request = await fetch(url);
     const data = await request.buffer();
-    let editor = await decodeImage(data);
+    const editor = await decodeImage(data);
 
     switch (true) {
       case /^\d+x\d+$/.test(size): {
@@ -44,7 +44,7 @@ export async function imageResize(
       }
     }
 
-    let u8: Uint8Array = await editor.encode();
+    const u8: Uint8Array = await editor.encode();
 
     const sent = Buffer.from(u8);
     res.setHeader("Content-Type", "image/png");

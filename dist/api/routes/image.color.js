@@ -4,8 +4,8 @@ exports.imageColor = void 0;
 const imagescript_1 = require("imagescript/");
 const error_1 = require("../models/error");
 async function imageColor(req, res) {
-    let [width, height] = req.params
-        .size.split("x")
+    let [width, height] = (req.params.size || "512x512")
+        .split("x")
         .map((x) => Number.parseInt(x));
     if (!width && !height) {
         (0, error_1.stop)(res, 400, "Invalid image size");
@@ -45,7 +45,7 @@ async function imageColor(req, res) {
         }
         const int = parseInt(color, 16);
         const editor = new imagescript_1.Image(Number(width), Number(height)).fill(int);
-        let u8 = await editor.encode();
+        const u8 = await editor.encode();
         const sent = Buffer.from(u8);
         res.setHeader("Content-Type", "image/png");
         res.send(sent);

@@ -14,7 +14,7 @@ export interface CommandMetadata {
 export function Metadata(
   type: CommandType,
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ): CommandMetadata {
   return {
@@ -26,21 +26,21 @@ export function Metadata(
 }
 export function ImageMetadata(
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ) {
   return Metadata(CommandType.IMAGE, description, usage, examples);
 }
 export function ToolsMetadata(
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ) {
   return Metadata(CommandType.TOOLS, description, usage, examples);
 }
 export function FunMetadata(
   description: string,
-  usage: string = "",
+  usage = "",
   examples: Array<string> = []
 ) {
   return Metadata(CommandType.FUN, description, usage, examples);

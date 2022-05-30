@@ -3,10 +3,9 @@ import {
   Command,
   CommandOptions,
   CommandRatelimitInfo,
-  CommandRatelimitMetadata,
   Context,
   ParsedArgs,
-  ParsedErrors
+  ParsedErrors,
 } from "detritus-client/lib/command";
 import { CommandRatelimitTypes } from "detritus-client/lib/constants";
 import { CommandMetadata } from "../../tools/command-metadata";
@@ -28,7 +27,7 @@ export const DefaultOptions: Partial<CommandOptionsExtra> = {
 };
 export class BaseCommand<T = ParsedArgs> extends Command<T> {
   protected use!: Date;
-  protected expensive: boolean = false;
+  protected expensive = false;
   public metadata: CommandMetadata;
   constructor(client: CommandClient, options: CommandOptionsExtra) {
     console.log("creating", options.name);
@@ -44,7 +43,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     return this.fullName;
   }
 
-  async onBefore(_context: Context) {
+  async onBefore(): Promise<boolean> {
     this.use = new Date();
     console.log(
       `recieved ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
@@ -52,7 +51,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     return true;
   }
 
-  async onBeforeRun(context: Context, _args: unknown) {
+  async onBeforeRun(context: Context): Promise<boolean> {
     console.log(
       `processing ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
     );
@@ -63,7 +62,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     return true;
   }
 
-  async onCancelRun(context: Context, _args: unknown) {
+  async onCancelRun(context: Context): Promise<unknown> {
     console.log(
       `cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
     );
@@ -73,7 +72,10 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     );
   }
 
-  async onPermissionsFail(context: Context, failed: Array<bigint>) {
+  async onPermissionsFail(
+    context: Context,
+    failed: Array<bigint>
+  ): Promise<unknown> {
     const permissions = permissionsErrorList(failed);
 
     return await editOrReply(
@@ -82,7 +84,10 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     );
   }
 
-  async onPermissionsFailClient(context: Context, failed: Array<bigint>) {
+  async onPermissionsFailClient(
+    context: Context,
+    failed: Array<bigint>
+  ): Promise<unknown> {
     const permissions = permissionsErrorList(failed);
 
     return await editOrReply(
@@ -93,14 +98,13 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
 
   async onRatelimit(
     context: Context,
-    ratelimits: Array<CommandRatelimitInfo>,
-    _metadata: CommandRatelimitMetadata
-  ) {
+    ratelimits: Array<CommandRatelimitInfo>
+  ): Promise<unknown> {
     if (!context.canReply) {
       return;
     }
 
-    let replied: boolean = false;
+    let replied = false;
 
     for (const { item, ratelimit, remaining } of ratelimits) {
       if (remaining < 1000 || replied || item.replied) {
@@ -111,7 +115,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
 
       replied = item.replied = true;
 
-      let noun: string = "you funny people are";
+      let noun = "you funny people are";
       switch (ratelimit.type) {
         case CommandRatelimitTypes.CHANNEL: {
           noun = "this channel is";
@@ -129,7 +133,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
         }
       }
 
-      let content: string = `${noun} going really fast please slow down :( (wait ${Markdown.toTimeString(
+      const content = `${noun} going really fast please slow down :( (wait ${Markdown.toTimeString(
         remaining,
         undefined,
         false
@@ -139,12 +143,20 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     }
   }
 
-  async onRunError(context: Context, _args: T, error: Error | Err) {
+  async onRunError(
+    context: Context,
+    _args: T,
+    error: Error | Err
+  ): Promise<unknown> {
     console.log(`error ${this.fullName}`, error);
     return await editOrReply(context, Err.from(error).toThrown());
   }
 
-  async onTypeError(context: Context, _args: T, errors: ParsedErrors) {
+  async onTypeError(
+    context: Context,
+    _args: T,
+    errors: ParsedErrors
+  ): Promise<unknown> {
     const description: Array<string> = [
       "hey u have some wrong inputs, might want to fix them :D\n",
     ];
@@ -152,7 +164,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     const store: Record<string, string> = {};
     for (const key in errors) {
       const value = errors[key];
-      let message = value.message;
+      const message = value.message;
 
       if (message in store) {
         description.push(`${key}: same as ${store[message]}`);

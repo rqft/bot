@@ -5,8 +5,8 @@ export async function imageColor(
   req: express.Request,
   res: express.Response
 ): Promise<void> {
-  let [width, height] = req.params
-    .size!.split("x")
+  let [width, height] = (req.params.size || "512x512")
+    .split("x")
     .map((x) => Number.parseInt(x));
   if (!width && !height) {
     stop(res, 400, "Invalid image size");
@@ -43,11 +43,10 @@ export async function imageColor(
       }
     }
 
-
     const int = parseInt(color, 16);
     const editor = new Image(Number(width), Number(height)).fill(int);
 
-    let u8: Uint8Array = await editor.encode();
+    const u8: Uint8Array = await editor.encode();
 
     const sent = Buffer.from(u8);
     res.setHeader("Content-Type", "image/png");
