@@ -9,6 +9,7 @@ const base64_decode_1 = require("./routes/base64.decode");
 const base64_encode_1 = require("./routes/base64.encode");
 const binary_decode_1 = require("./routes/binary.decode");
 const binary_encode_1 = require("./routes/binary.encode");
+const endpoints_1 = require("./routes/endpoints");
 const image_color_1 = require("./routes/image.color");
 const image_flop_1 = require("./routes/image.flop");
 const image_resize_1 = require("./routes/image.resize");
@@ -31,6 +32,7 @@ globals_1.Sarah.use((req, res, next) => {
 });
 globals_1.Sarah.get("/authorized", authorized_1.authorized);
 globals_1.Sarah.get("/origin", origin_1.origin);
+globals_1.Sarah.get("/endpoints", endpoints_1.endpoints);
 globals_1.Sarah.get("/base64/encode", base64_encode_1.base64Encode);
 globals_1.Sarah.get("/base64/decode", base64_decode_1.base64Decode);
 globals_1.Sarah.get("/binary/encode", binary_encode_1.binaryEncode);

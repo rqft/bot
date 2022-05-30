@@ -5,6 +5,7 @@ import { base64Decode } from "./routes/base64.decode";
 import { base64Encode } from "./routes/base64.encode";
 import { binaryDecode } from "./routes/binary.decode";
 import { binaryEncode } from "./routes/binary.encode";
+import { endpoints } from "./routes/endpoints";
 import { imageColor } from "./routes/image.color";
 import { imageFlop } from "./routes/image.flop";
 import { imageResize } from "./routes/image.resize";
@@ -32,11 +33,15 @@ Sarah.use((req, res, next) => {
 // routes
 Sarah.get("/authorized", authorized);
 Sarah.get("/origin", origin);
+Sarah.get("/endpoints", endpoints);
+
+// tools
 Sarah.get("/base64/encode", base64Encode);
 Sarah.get("/base64/decode", base64Decode);
 Sarah.get("/binary/encode", binaryEncode);
 Sarah.get("/binary/decode", binaryDecode);
 
+// tags
 Sarah.get("/tags/list", tagList);
 Sarah.get("/tags/inspect", tagInspect);
 Sarah.get("/tags/:key", tagGet);
@@ -44,10 +49,12 @@ Sarah.post("/tags/:key", tagPost);
 Sarah.delete("/tags/:key", tagDelete);
 Sarah.get("/tags/search/:query", tagSearch);
 
+// image manip
 Sarah.get("/image/mirror", imageFlop);
 Sarah.get("/image/spin", imageSpin);
 Sarah.get("/image/color/:size/:color", imageColor);
 Sarah.get("/image/resize/:size", imageResize);
 Sarah.get("/image/rotate/:deg", imageRotate);
+
 // Sarah.all('*', fallback);
 export { Sarah };

@@ -11,5 +11,5 @@ exports.Authorized = [
     { username: "admin", password: "admin" },
     { username: "insyri", password: "abcd" },
 ];
-exports.NeedsNoAuth = ["/authorized"];
+exports.NeedsNoAuth = ["/authorized", "/endpoints"];
 exports.TagsKV = new wilson_kv_1.Wilson("kv/tags");
