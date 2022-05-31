@@ -199,12 +199,12 @@ export async function guild(
       );
     }
 
-    if (guild.members.size) {
+    if (guild.memberCount) {
       description.push(
         Basic.field(
           CustomEmojis.GUI_MEMBERS,
           "Members",
-          guild.members.size.toLocaleString()
+          guild.memberCount.toLocaleString()
         )
       );
     }

@@ -25,44 +25,49 @@ export async function user(
 
   embed.setTitle(user.tag);
 
-  const profile = await selfclient.rest.fetchUserProfile(user.id);
-  embed.setThumbnail(profile.user.avatarUrl);
+  embed.setThumbnail(user.avatarUrl || user.defaultAvatarUrl);
 
-  if (profile) {
-    const description: Array<string> = [];
+  try {
+    const profile = await selfclient.rest.fetchUserProfile(user.id);
 
-    if (profile.user.bio) {
-      description.push(
-        Basic.field(
-          Emojis.MEMO,
-          "Bio",
-          Markdown.Format.codeblock(profile.user.bio)
-        )
-      );
-    }
+    if (profile) {
+      const description: Array<string> = [];
 
-    if (profile.premiumSinceUnix) {
-      description.push(
-        Basic.field(
-          Emojis.STAR,
-          "Has had nitro since",
-          buildTimestampString(profile.premiumSinceUnix)
-        )
-      );
-    }
+      if (profile.user.bio) {
+        description.push(
+          Basic.field(
+            Emojis.MEMO,
+            "Bio",
+            Markdown.Format.codeblock(profile.user.bio)
+          )
+        );
+      }
 
-    if (profile.premiumGuildSinceUnix) {
-      description.push(
-        Basic.field(
-          Emojis.STAR,
-          "Has boosted a server since",
-          buildTimestampString(profile.premiumGuildSinceUnix)
-        )
-      );
+      if (profile.premiumSinceUnix) {
+        description.push(
+          Basic.field(
+            Emojis.STAR,
+            "Has had nitro since",
+            buildTimestampString(profile.premiumSinceUnix)
+          )
+        );
+      }
+
+      if (profile.premiumGuildSinceUnix) {
+        description.push(
+          Basic.field(
+            Emojis.STAR,
+            "Has boosted a server since",
+            buildTimestampString(profile.premiumGuildSinceUnix)
+          )
+        );
+      }
+      if (description.length) {
+        embed.addField("User Profile", description.join("\n"));
+      }
     }
-    if (description.length) {
-      embed.addField("User Profile", description.join("\n"));
-    }
+  } catch {
+    void 0;
   }
 
   {

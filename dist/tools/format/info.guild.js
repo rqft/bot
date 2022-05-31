@@ -78,8 +78,8 @@ async function guild(context, args) {
         if (guild.roles.size) {
             description.push(basic_1.Basic.field("\n" + "<:IconGui_Role:816328284245196840>", "Roles", guild.roles.size.toLocaleString()));
         }
-        if (guild.members.size) {
-            description.push(basic_1.Basic.field("<:IconGui_Members:798624241868079104>", "Members", guild.members.size.toLocaleString()));
+        if (guild.memberCount) {
+            description.push(basic_1.Basic.field("<:IconGui_Members:798624241868079104>", "Members", guild.memberCount.toLocaleString()));
         }
         if (guild.premiumSubscriptionCount) {
             description.push(basic_1.Basic.field("<:IconBadge_Nitro:798624232472051792>", "Boosts", guild.premiumSubscriptionCount.toLocaleString()));

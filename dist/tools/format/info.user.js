@@ -13,22 +13,27 @@ async function user(context, args) {
     const embed = embed_1.Embed.user(context);
     const { user } = args;
     embed.setTitle(user.tag);
-    const profile = await globals_1.selfclient.rest.fetchUserProfile(user.id);
-    embed.setThumbnail(profile.user.avatarUrl);
-    if (profile) {
-        const description = [];
-        if (profile.user.bio) {
-            description.push(basic_1.Basic.field(emojis_1.Emojis.MEMO, "Bio", markdown_1.Markdown.Format.codeblock(profile.user.bio)));
+    embed.setThumbnail(user.avatarUrl || user.defaultAvatarUrl);
+    try {
+        const profile = await globals_1.selfclient.rest.fetchUserProfile(user.id);
+        if (profile) {
+            const description = [];
+            if (profile.user.bio) {
+                description.push(basic_1.Basic.field(emojis_1.Emojis.MEMO, "Bio", markdown_1.Markdown.Format.codeblock(profile.user.bio)));
+            }
+            if (profile.premiumSinceUnix) {
+                description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has had nitro since", (0, tools_1.buildTimestampString)(profile.premiumSinceUnix)));
+            }
+            if (profile.premiumGuildSinceUnix) {
+                description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has boosted a server since", (0, tools_1.buildTimestampString)(profile.premiumGuildSinceUnix)));
+            }
+            if (description.length) {
+                embed.addField("User Profile", description.join("\n"));
+            }
         }
-        if (profile.premiumSinceUnix) {
-            description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has had nitro since", (0, tools_1.buildTimestampString)(profile.premiumSinceUnix)));
-        }
-        if (profile.premiumGuildSinceUnix) {
-            description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has boosted a server since", (0, tools_1.buildTimestampString)(profile.premiumGuildSinceUnix)));
-        }
-        if (description.length) {
-            embed.addField("User Profile", description.join("\n"));
-        }
+    }
+    catch {
+        void 0;
     }
     {
         const description = [];
