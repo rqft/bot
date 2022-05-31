@@ -7,8 +7,8 @@ const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
 const basic_1 = require("./basic");
 const embed_1 = require("./embed");
-async function guild(context) {
-    const { guild } = context;
+async function guild(context, args) {
+    const { guild } = args;
     if (!guild) {
         throw new Error("Need to be in a guild");
     }

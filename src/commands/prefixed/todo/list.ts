@@ -4,22 +4,21 @@ import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
 import { BaseCommand } from "../basecommand";
 
-export default class InfoGuildCommand extends BaseCommand {
+export default class TodoGetCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "info guild",
-      aliases: ["info server"],
-      metadata: ToolsMetadata("guild info"),
+      name: "todo list",
+      metadata: ToolsMetadata("get todo", "?<-user: User>"),
 
-      type: [
+      args: [
         {
-          name: "guild",
-          type: Parameters.guild,
-          default: Parameters.Default.guild,
+          name: "user",
+          type: Parameters.user,
+          default: Parameters.Default.author,
         },
       ],
     });
   }
 
-  run = Formatter.Info.guild;
+  run = Formatter.Todo.list;
 }

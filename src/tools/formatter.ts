@@ -12,6 +12,7 @@ import * as Other from "./format/other";
 import { Pxl } from "./format/pxl";
 import { SomeRandomApi } from "./format/some-random-api";
 import { Tag } from "./format/tag";
+import { Todo } from "./format/todo";
 
 export const Formatter = {
   Basic,
@@ -21,6 +22,7 @@ export const Formatter = {
   Tag,
   Imagga,
   SomeRandomApi,
+  Todo,
   Info: {
     channel,
     user,

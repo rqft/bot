@@ -34,6 +34,7 @@ const Other = __importStar(require("./format/other"));
 const pxl_1 = require("./format/pxl");
 const some_random_api_1 = require("./format/some-random-api");
 const tag_1 = require("./format/tag");
+const todo_1 = require("./format/todo");
 exports.Formatter = {
     Basic: basic_1.Basic,
     Embed: embed_1.Embed,
@@ -42,6 +43,7 @@ exports.Formatter = {
     Tag: tag_1.Tag,
     Imagga: imagga_1.Imagga,
     SomeRandomApi: some_random_api_1.SomeRandomApi,
+    Todo: todo_1.Todo,
     Info: {
         channel: info_channel_1.channel,
         user: info_user_1.user,

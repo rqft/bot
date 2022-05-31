@@ -266,6 +266,44 @@ var Parameters;
         return Default.defaultRole(context);
     }
     Parameters.role = role;
+    async function guild(value, context) {
+        if (!value) {
+            return Parameters.Default.guild(context);
+        }
+        if ((0, tools_1.isSnowflake)(value)) {
+            const guild = globals_1.client.guilds.get(value) || globals_1.selfclient.guilds.get(value);
+            if (guild) {
+                return guild;
+            }
+            else {
+                try {
+                    return globals_1.client.rest.fetchGuild(value, {}, true);
+                }
+                catch {
+                    try {
+                        return globals_1.selfclient.rest.fetchGuild(value, {}, true);
+                    }
+                    catch {
+                        return null;
+                    }
+                }
+            }
+        }
+        const guilds = globals_1.selfclient.guilds.clone();
+        globals_1.client.guilds.forEach((value, key) => {
+            guilds.set(key, value);
+        });
+        for (const [, guild] of guilds) {
+            if (guild.name.toLowerCase().startsWith(value)) {
+                return guild;
+            }
+            else if (guild.name.toLowerCase().includes(value)) {
+                return guild;
+            }
+        }
+        return null;
+    }
+    Parameters.guild = guild;
     Parameters.QuotesAll = {
         '"': '"',
         "'": "'",
@@ -547,5 +585,23 @@ var Parameters;
             };
         }
         Autocomplete.choices = choices;
+        async function guilds(context) {
+            const guilds = globals_1.selfclient.guilds.clone();
+            context.client.guilds.forEach((v, k) => guilds.set(k, v));
+            return await context.respond({
+                choices: guilds
+                    .filter((guild) => {
+                    return (guild.name.toLowerCase().startsWith(context.value) ||
+                        guild.name.toLowerCase().includes(context.value) ||
+                        guild.id.includes(context.value));
+                })
+                    .map((guild) => ({
+                    name: `${guild.name} (${guild.id})`,
+                    value: guild.id,
+                }))
+                    .slice(0, 25),
+            });
+        }
+        Autocomplete.guilds = guilds;
     })(Autocomplete = Parameters.Autocomplete || (Parameters.Autocomplete = {}));
 })(Parameters = exports.Parameters || (exports.Parameters = {}));

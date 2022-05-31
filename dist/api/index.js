@@ -22,7 +22,14 @@ const tag_inspect_1 = require("./routes/tag.inspect");
 const tag_list_1 = require("./routes/tag.list");
 const tag_post_1 = require("./routes/tag.post");
 const tag_search_1 = require("./routes/tag.search");
+const todo_delete_1 = require("./routes/todo.delete");
+const todo_get_1 = require("./routes/todo.get");
+const todo_list_1 = require("./routes/todo.list");
+const todo_post_1 = require("./routes/todo.post");
+const todo_put_1 = require("./routes/todo.put");
+const todo_search_1 = require("./routes/todo.search");
 globals_1.Sarah.use((req, res, next) => {
+    console.log(req.params);
     res.contentType("application/json");
     if (globals_1.NeedsNoAuth.includes(req.path)) {
         next();
@@ -48,3 +55,9 @@ globals_1.Sarah.get("/image/spin", image_spin_1.imageSpin);
 globals_1.Sarah.get("/image/color/:size/:color", image_color_1.imageColor);
 globals_1.Sarah.get("/image/resize/:size", image_resize_1.imageResize);
 globals_1.Sarah.get("/image/rotate/:deg", image_rotate_1.imageRotate);
+globals_1.Sarah.get("/todos/:userId", todo_list_1.todoList);
+globals_1.Sarah.get("/todos/:userId/:id", todo_get_1.todoGet);
+globals_1.Sarah.post("/todos/:userId", todo_post_1.todoPost);
+globals_1.Sarah.delete("/todos/:userId/:id", todo_delete_1.todoDelete);
+globals_1.Sarah.put("/todos/:userId/:id", todo_put_1.todoPut);
+globals_1.Sarah.get("/todos/search/:userId/:query", todo_search_1.todoSearch);

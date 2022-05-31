@@ -4,6 +4,7 @@ import {
   VerificationLevels,
 } from "detritus-client/lib/constants";
 import { InteractionContext } from "detritus-client/lib/interaction";
+import { Guild, Message } from "detritus-client/lib/structures";
 import {
   ChannelTypesText,
   GuildExplicitContentFiltersText,
@@ -22,8 +23,16 @@ import { editOrReply } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
-export async function guild(context: Context | InteractionContext) {
-  const { guild } = context;
+export interface GuildArgs {
+  guild: Guild | null;
+}
+
+export async function guild(
+  context: Context | InteractionContext,
+  args: GuildArgs
+): Promise<Message | null> {
+  const { guild } = args;
+
   if (!guild) {
     throw new Error("Need to be in a guild");
   }

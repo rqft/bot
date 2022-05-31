@@ -50,6 +50,42 @@ var Jonathan;
                 ":query": query,
             });
         }
+        async todoGet(userId, id) {
+            return await this.get.json("/todos/:userId/:id", {
+                ":userId": userId,
+                ":id": id,
+            });
+        }
+        async todoPost(userId, data) {
+            return await this.post.json("/todos/:userId", {
+                ":userId": userId,
+                data,
+            });
+        }
+        async todoDelete(userId, id) {
+            return await this.delete.json("/todos/:userId/:id", {
+                ":userId": userId,
+                ":id": id,
+            });
+        }
+        async todoList(userId) {
+            return await this.get.json("/todos/:userId", {
+                ":userId": userId,
+            });
+        }
+        async todoPut(userId, id, data) {
+            return await this.put.json("/todos/:userId/:id", {
+                ":userId": userId,
+                ":id": id,
+                data,
+            });
+        }
+        async todoSearch(userId, query) {
+            return await this.get.json("/todos/search/:userId/:query", {
+                ":userId": userId,
+                ":query": query,
+            });
+        }
         async imageMirror(url, method) {
             return await this.get.buffer("/image/mirror", { url, method });
         }

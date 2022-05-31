@@ -68,6 +68,54 @@ export module Jonathan {
       });
     }
 
+    async todoGet(userId: string, id: string) {
+      return await this.get.json<Result<string>>("/todos/:userId/:id", {
+        ":userId": userId,
+        ":id": id,
+      });
+    }
+
+    async todoPost(userId: string, data: string) {
+      return await this.post.json<Result<true>>("/todos/:userId", {
+        ":userId": userId,
+        data,
+      });
+    }
+
+    async todoDelete(userId: string, id: string) {
+      return await this.delete.json<Result<true>>("/todos/:userId/:id", {
+        ":userId": userId,
+        ":id": id,
+      });
+    }
+
+    async todoList(userId: string) {
+      return await this.get.json<Result<Array<string>>>("/todos/:userId", {
+        ":userId": userId,
+      });
+    }
+
+    async todoPut(userId: string, id: string, data: string) {
+      return await this.put.json<Result<true>>("/todos/:userId/:id", {
+        ":userId": userId,
+        ":id": id,
+        data,
+      });
+    }
+
+    async todoSearch(
+      userId: string,
+      query: string
+    ): Promise<Data<Result<Array<Choice>>>> {
+      return await this.get.json<Result<Array<Choice>>>(
+        "/todos/search/:userId/:query",
+        {
+          ":userId": userId,
+          ":query": query,
+        }
+      );
+    }
+
     async imageMirror(
       url: string,
       method: MirrorMethods

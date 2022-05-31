@@ -339,9 +339,46 @@ export module Parameters {
     return Default.defaultRole(context);
   }
 
-  export interface GuildOptions {
-    invite?: boolean;
-    self?: boolean;
+  export async function guild(
+    value: string,
+    context: Context | InteractionContext
+  ): Promise<Structures.Guild | null> {
+    if (!value) {
+      return Parameters.Default.guild(context);
+    }
+    if (isSnowflake(value)) {
+      const guild = client.guilds.get(value) || selfclient.guilds.get(value);
+      if (guild) {
+        return guild;
+      } else {
+        try {
+          return client.rest.fetchGuild(value, {}, true);
+        } catch {
+          try {
+            return selfclient.rest.fetchGuild(value, {}, true);
+          } catch {
+            return null;
+          }
+        }
+      }
+    }
+
+    const guilds = selfclient.guilds.clone();
+
+    // add actual guilds the bot is in
+    client.guilds.forEach((value, key) => {
+      guilds.set(key, value);
+    });
+
+    for (const [, guild] of guilds) {
+      if (guild.name.toLowerCase().startsWith(value)) {
+        return guild;
+      } else if (guild.name.toLowerCase().includes(value)) {
+        return guild;
+      }
+    }
+
+    return null;
   }
 
   export const QuotesAll = {
@@ -706,6 +743,29 @@ export module Parameters {
             .map((choice) => ({ name: String(choice), value: String(choice) })),
         });
       };
+    }
+
+    export async function guilds(
+      context: InteractionAutoCompleteContext
+    ): Promise<unknown> {
+      const guilds = selfclient.guilds.clone();
+      context.client.guilds.forEach((v, k) => guilds.set(k, v));
+
+      return await context.respond({
+        choices: guilds
+          .filter((guild) => {
+            return (
+              guild.name.toLowerCase().startsWith(context.value) ||
+              guild.name.toLowerCase().includes(context.value) ||
+              guild.id.includes(context.value)
+            );
+          })
+          .map((guild) => ({
+            name: `${guild.name} (${guild.id})`,
+            value: guild.id,
+          }))
+          .slice(0, 25),
+      });
     }
   }
 }

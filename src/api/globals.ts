@@ -8,3 +8,4 @@ export const Authorized: Array<User> = [
 ];
 export const NeedsNoAuth: Array<string> = ["/authorized", "/endpoints"];
 export const TagsKV = new Wilson("kv/tags");
+export const TodoKV = new Wilson("kv/todo");

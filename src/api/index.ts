@@ -18,9 +18,17 @@ import { tagInspect } from "./routes/tag.inspect";
 import { tagList } from "./routes/tag.list";
 import { tagPost } from "./routes/tag.post";
 import { tagSearch } from "./routes/tag.search";
+import { todoDelete } from "./routes/todo.delete";
+import { todoGet } from "./routes/todo.get";
+import { todoList } from "./routes/todo.list";
+import { todoPost } from "./routes/todo.post";
+import { todoPut } from "./routes/todo.put";
+import { todoSearch } from "./routes/todo.search";
 
 // middleware
 Sarah.use((req, res, next) => {
+  console.log(req.params);
+
   res.contentType("application/json");
   if (NeedsNoAuth.includes(req.path)) {
     next();
@@ -55,6 +63,14 @@ Sarah.get("/image/spin", imageSpin);
 Sarah.get("/image/color/:size/:color", imageColor);
 Sarah.get("/image/resize/:size", imageResize);
 Sarah.get("/image/rotate/:deg", imageRotate);
+
+// todos
+Sarah.get("/todos/:userId", todoList);
+Sarah.get("/todos/:userId/:id", todoGet);
+Sarah.post("/todos/:userId", todoPost);
+Sarah.delete("/todos/:userId/:id", todoDelete);
+Sarah.put("/todos/:userId/:id", todoPut);
+Sarah.get("/todos/search/:userId/:query", todoSearch);
 
 // Sarah.all('*', fallback);
 export { Sarah };
