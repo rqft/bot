@@ -10,6 +10,7 @@ exports.Sarah = (0, express_1.default)();
 exports.Authorized = [
     { username: "admin", password: "admin" },
     { username: "insyri", password: "abcd" },
+    { username: "sern", password: "sern" },
 ];
 exports.NeedsNoAuth = ["/authorized", "/endpoints"];
 exports.TagsKV = new wilson_kv_1.Wilson("kv/tags");

@@ -5,6 +5,7 @@ export const Sarah = express();
 export const Authorized: Array<User> = [
   { username: "admin", password: "admin" },
   { username: "insyri", password: "abcd" },
+  { username: "sern", password: "sern" },
 ];
 export const NeedsNoAuth: Array<string> = ["/authorized", "/endpoints"];
 export const TagsKV = new Wilson("kv/tags");

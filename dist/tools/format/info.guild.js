@@ -107,11 +107,15 @@ async function guild(context, args) {
         }
     }
     {
-        const featuresText = guild.features
-            .map((feature) => `${constants_2.GuildFeaturesEmojis[feature] || "<:blank:835277151031787541>"} ${markdown_1.Markdown.Format.codestring(constants_2.GuildFeaturesText[feature] || feature)}`)
-            .join("\n");
+        const featuresText = guild.features.map((feature) => `${constants_2.GuildFeaturesEmojis[feature] || "<:blank:835277151031787541>"} ${markdown_1.Markdown.Format.codestring(constants_2.GuildFeaturesText[feature] || feature)}`);
         if (featuresText.length) {
-            embed.addField("Features", featuresText, false);
+            if (featuresText.join("\n").length > 1024) {
+                const text = guild.features.map((feature) => markdown_1.Markdown.Format.codestring(constants_2.GuildFeaturesText[feature] || feature));
+                embed.addField("Features", text.join("\n"), false);
+            }
+            else {
+                embed.addField("Features", featuresText.join("\n"), false);
+            }
         }
     }
     return await (0, tools_1.editOrReply)(context, { embed });

@@ -751,20 +751,24 @@ export module Parameters {
       const guilds = selfclient.guilds.clone();
       context.client.guilds.forEach((v, k) => guilds.set(k, v));
 
+      const choices = guilds
+        .filter((guild) => {
+          return (
+            guild.name.toLowerCase().startsWith(context.value) ||
+            guild.name.toLowerCase().includes(context.value) ||
+            guild.id.includes(context.value)
+          );
+        })
+        .map((guild) => ({
+          name: `${guild.name} (${guild.id})`,
+          value: guild.id,
+        }))
+        .slice(0, 25);
+
+      // console.log(choices);
+
       return await context.respond({
-        choices: guilds
-          .filter((guild) => {
-            return (
-              guild.name.toLowerCase().startsWith(context.value) ||
-              guild.name.toLowerCase().includes(context.value) ||
-              guild.id.includes(context.value)
-            );
-          })
-          .map((guild) => ({
-            name: `${guild.name} (${guild.id})`,
-            value: guild.id,
-          }))
-          .slice(0, 25),
+        choices,
       });
     }
   }

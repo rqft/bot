@@ -83,8 +83,8 @@ class BaseCommand extends command_1.Command {
         }
     }
     async onRunError(context, _args, error) {
-        console.log(`error ${this.fullName}`, error);
-        return await (0, tools_1.editOrReply)(context, error_1.Err.from(error).toThrown());
+        await (0, tools_1.editOrReply)(context, error_1.Err.from(error).toThrown());
+        throw error;
     }
     async onTypeError(context, _args, errors) {
         const description = [

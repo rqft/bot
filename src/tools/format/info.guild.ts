@@ -285,18 +285,26 @@ export async function guild(
   }
 
   {
-    const featuresText = guild.features
-      .map(
-        (feature) =>
-          `${
-            GuildFeaturesEmojis[feature as GuildFeature] || CustomEmojis.BLANK
-          } ${Markdown.Format.codestring(
-            GuildFeaturesText[feature as GuildFeature] || feature
-          )}`
-      )
-      .join("\n");
+    const featuresText = guild.features.map(
+      (feature) =>
+        `${
+          GuildFeaturesEmojis[feature as GuildFeature] || CustomEmojis.BLANK
+        } ${Markdown.Format.codestring(
+          GuildFeaturesText[feature as GuildFeature] || feature
+        )}`
+    );
     if (featuresText.length) {
-      embed.addField("Features", featuresText, false);
+      if (featuresText.join("\n").length > 1024) {
+        const text = guild.features.map((feature) =>
+          Markdown.Format.codestring(
+            GuildFeaturesText[feature as GuildFeature] || feature
+          )
+        );
+
+        embed.addField("Features", text.join("\n"), false);
+      } else {
+        embed.addField("Features", featuresText.join("\n"), false);
+      }
     }
   }
 

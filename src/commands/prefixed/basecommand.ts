@@ -147,9 +147,9 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     context: Context,
     _args: T,
     error: Error | Err
-  ): Promise<unknown> {
-    console.log(`error ${this.fullName}`, error);
-    return await editOrReply(context, Err.from(error).toThrown());
+  ): Promise<void> {
+    await editOrReply(context, Err.from(error).toThrown());
+    throw error;
   }
 
   async onTypeError(
