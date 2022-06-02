@@ -152,6 +152,11 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     throw error;
   }
 
+  async onError(context: Context, _args: T, error: Error | Err): Promise<void> {
+    await editOrReply(context, Err.from(error).toThrown());
+    throw error;
+  }
+
   async onTypeError(
     context: Context,
     _args: T,

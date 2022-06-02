@@ -86,6 +86,10 @@ class BaseCommand extends command_1.Command {
         await (0, tools_1.editOrReply)(context, error_1.Err.from(error).toThrown());
         throw error;
     }
+    async onError(context, _args, error) {
+        await (0, tools_1.editOrReply)(context, error_1.Err.from(error).toThrown());
+        throw error;
+    }
     async onTypeError(context, _args, errors) {
         const description = [
             "hey u have some wrong inputs, might want to fix them :D\n",

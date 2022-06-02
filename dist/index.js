@@ -7,6 +7,7 @@ globals_1.commands.addMultipleIn("/commands/prefixed", { subdirectories: true })
 globals_1.interactions.addMultipleIn("/commands/interactions", { subdirectories: true });
 process.on("uncaughtException", (e) => {
     console.error(JSON.stringify(e, null, 2));
+    console.error(e);
 });
 (async function run() {
     api_1.Sarah.listen(3000, () => {

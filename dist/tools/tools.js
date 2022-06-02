@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
+exports.splitToFields = exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
 const detritus_client_1 = require("detritus-client");
 const command_1 = require("detritus-client/lib/command");
 const constants_1 = require("detritus-client/lib/constants");
@@ -490,3 +490,28 @@ function padCodeBlockFromRows(strings, options = {}) {
     return rows;
 }
 exports.padCodeBlockFromRows = padCodeBlockFromRows;
+function splitToFields(data, name, maxLength = 1024, splitBy = "\n") {
+    const fields = [];
+    const split = data.split(splitBy);
+    let current = "";
+    for (const part of split) {
+        if (current.length + part.length + splitBy.length > maxLength) {
+            fields.push({
+                name,
+                value: current,
+                inline: true,
+            });
+            current = "";
+        }
+        current += part + splitBy;
+    }
+    if (current.length > 0) {
+        fields.push({
+            name,
+            value: current,
+            inline: true,
+        });
+    }
+    return fields;
+}
+exports.splitToFields = splitToFields;
