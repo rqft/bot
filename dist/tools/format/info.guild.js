@@ -3,14 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.guild = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const constants_2 = require("../../constants");
+const error_1 = require("../error");
 const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
 const basic_1 = require("./basic");
 const embed_1 = require("./embed");
 async function guild(context, args) {
-    const { guild } = args;
+    const guild = args.guild || context.guild;
     if (!guild) {
-        throw new Error("Need to be in a guild");
+        throw new error_1.Err("Need to be in a server", { status: 403 });
     }
     const embed = embed_1.Embed.user(context);
     {

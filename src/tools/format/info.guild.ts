@@ -18,6 +18,7 @@ import {
   VoiceRegionsText,
 } from "../../constants";
 import { CustomEmojis } from "../emojis";
+import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
 import { Basic } from "./basic";
@@ -31,10 +32,10 @@ export async function guild(
   context: Context | InteractionContext,
   args: GuildArgs
 ): Promise<Message | null> {
-  const { guild } = args;
+  const guild = args.guild || context.guild;
 
   if (!guild) {
-    throw new Error("Need to be in a guild");
+    throw new Err("Need to be in a server", { status: 403 });
   }
 
   const embed = Embed.user(context);
