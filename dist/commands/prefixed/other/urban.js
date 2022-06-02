@@ -8,7 +8,7 @@ class UrbanCommand extends basecommand_1.BaseCommand {
         super(client, {
             name: "urban",
             metadata: (0, command_metadata_1.FunMetadata)("the funny dictionary", "<word: string>"),
-            type: [{ name: "word", type: "string", consume: true }],
+            type: [{ name: "word", type: "string", consume: true, required: true }],
         });
     }
     run = formatter_1.Formatter.urban;

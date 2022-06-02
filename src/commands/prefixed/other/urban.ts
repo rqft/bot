@@ -8,7 +8,7 @@ export default class UrbanCommand extends BaseCommand {
     super(client, {
       name: "urban",
       metadata: FunMetadata("the funny dictionary", "<word: string>"),
-      type: [{ name: "word", type: "string", consume: true }],
+      type: [{ name: "word", type: "string", consume: true, required: true }],
     });
   }
 

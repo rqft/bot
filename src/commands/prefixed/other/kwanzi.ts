@@ -8,11 +8,9 @@ export default class KwanziCommand extends BaseCommand {
     super(client, {
       name: "kwanzi",
       metadata: FunMetadata("spams suggestions", "<text: string>"),
-      type: [
-          { name: "text", type: "string", consume: true },
-      ]
+      type: [{ name: "text", type: "string", consume: true, required: true }],
     });
   }
 
-    run = Formatter.kwanzi
+  run = Formatter.kwanzi;
 }
