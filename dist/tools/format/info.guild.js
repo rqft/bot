@@ -111,7 +111,7 @@ async function guild(context, args) {
         if (featuresText.length) {
             if (featuresText.join("\n").length > 1024) {
                 const text = guild.features.map((feature) => markdown_1.Markdown.Format.codestring(constants_2.GuildFeaturesText[feature] || feature));
-                embed.addField("Features", text.join("\n"), false);
+                embed.addField("Features", text.join(", "), false);
             }
             else {
                 embed.addField("Features", featuresText.join("\n"), false);

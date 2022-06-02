@@ -279,6 +279,12 @@ var GuildFeature;
     GuildFeature["ANIMATED_BANNER"] = "ANIMATED_BANNER";
     GuildFeature["HAS_DIRECTORY_ENTRY"] = "HAS_DIRECTORY_ENTRY";
     GuildFeature["MEMBER_PROFILES"] = "MEMBER_PROFILES";
+    GuildFeature["AUTO_MODERATION"] = "AUTO_MODERATION";
+    GuildFeature["BOT_DEVELOPER_EARLY_ACCESS"] = "BOT_DEVELOPER_EARLY_ACCESS";
+    GuildFeature["GUILD_HOME_TEST"] = "GUILD_HOME_TEST";
+    GuildFeature["HAD_EARLY_ACTIVITIES_ACCESS"] = "HAD_EARLY_ACTIVITIES_ACCESS";
+    GuildFeature["EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT"] = "EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT";
+    GuildFeature["INTERNAL_EMPLOYEE_ONLY"] = "INTERNAL_EMPLOYEE_ONLY";
 })(GuildFeature = exports.GuildFeature || (exports.GuildFeature = {}));
 exports.GuildFeaturesText = {
     [GuildFeature.INVITE_SPLASH]: "Invite Splash",
@@ -315,7 +321,13 @@ exports.GuildFeaturesText = {
     [GuildFeature.HUB]: "Hub",
     [GuildFeature.ANIMATED_BANNER]: "Animated Banner",
     [GuildFeature.HAS_DIRECTORY_ENTRY]: "Has Directory Entry",
-    [GuildFeature.MEMBER_PROFILES]: "Member Profiles"
+    [GuildFeature.MEMBER_PROFILES]: "Member Profiles",
+    [GuildFeature.AUTO_MODERATION]: "Auto Moderation",
+    [GuildFeature.BOT_DEVELOPER_EARLY_ACCESS]: "Bot Developer Early Access",
+    [GuildFeature.GUILD_HOME_TEST]: "Guild Home Test",
+    [GuildFeature.HAD_EARLY_ACTIVITIES_ACCESS]: "Had Early Activities Access",
+    [GuildFeature.EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT]: "Exposed to Activities WTP Experiment",
+    [GuildFeature.INTERNAL_EMPLOYEE_ONLY]: "Internal Employee Only",
 };
 exports.GuildFeaturesEmojis = {
     [GuildFeature.INVITE_SPLASH]: "<:IconGui_Friends:839138904945983528>",
@@ -352,5 +364,11 @@ exports.GuildFeaturesEmojis = {
     [GuildFeature.HUB]: "<:IconGui_Hub:979402098947010580>",
     [GuildFeature.ANIMATED_BANNER]: "<:IconGui_GIF:799642414431207496>",
     [GuildFeature.HAS_DIRECTORY_ENTRY]: "<:IconChannel_Category:798624247122493450>",
-    [GuildFeature.MEMBER_PROFILES]: "<:IconGui_Members:798624241868079104>"
+    [GuildFeature.MEMBER_PROFILES]: "<:IconGui_Members:798624241868079104>",
+    [GuildFeature.AUTO_MODERATION]: "<:IconBadge_CertifiedModerator:889779348943536148>",
+    [GuildFeature.BOT_DEVELOPER_EARLY_ACCESS]: "<:IconBadge_BotDeveloper:798624232443478037>",
+    [GuildFeature.GUILD_HOME_TEST]: "<:IconGui_Mention:836610404406525973>",
+    [GuildFeature.HAD_EARLY_ACTIVITIES_ACCESS]: "<:IconGui_Settings:798624241402511420>",
+    [GuildFeature.EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT]: "<:IconGui_Settings:798624241402511420>",
+    [GuildFeature.INTERNAL_EMPLOYEE_ONLY]: "<:IconBadge_Staff:798624241595318272>",
 };

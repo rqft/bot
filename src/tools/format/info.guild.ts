@@ -301,7 +301,7 @@ export async function guild(
           )
         );
 
-        embed.addField("Features", text.join("\n"), false);
+        embed.addField("Features", text.join(", "), false);
       } else {
         embed.addField("Features", featuresText.join("\n"), false);
       }
