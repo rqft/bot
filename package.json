@@ -39,7 +39,7 @@
     "node": "^17.3.0",
     "node-fetch": "^2.5.0",
     "nodemon": "^2.0.16",
-    "pariah": "^2.7.4",
+    "pariah": "^2.8.0",
     "typescript": "^4.4.2",
     "wilson-kv": "^1.0.4"
   },

@@ -146,7 +146,7 @@ export async function define(
         for (const phonetic of item.phonetics) {
           description.push(
             `[${phonetic.text || item.word}](${
-              phonetic.audio || phonetic.sourceUrl || "https://"
+              phonetic.audio || phonetic.sourceUrl
             })`
           );
         }
@@ -271,4 +271,14 @@ function fixUrbanLinks(data: string) {
         g1
       )})`
   );
+}
+
+export async function ping(
+  context: Context | InteractionContext
+): Promise<Message | null> {
+  const ts =
+    "message" in context
+      ? context.message.createdAtUnix || context.message.editedAtUnix
+      : context.interaction.createdAtUnix;
+  return await editOrReply(context, `${Date.now() - ts}ms`);
 }

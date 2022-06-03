@@ -1,7 +1,6 @@
 import { CommandClient } from "detritus-client";
-import { Context } from "detritus-client/lib/command";
 import { ToolsMetadata } from "../../tools/command-metadata";
-import { editOrReply } from "../../tools/tools";
+import { Formatter } from "../../tools/formatter";
 import { BaseCommand } from "./basecommand";
 
 export default class PingCommand extends BaseCommand {
@@ -12,13 +11,5 @@ export default class PingCommand extends BaseCommand {
     });
   }
 
-  async run(context: Context): Promise<unknown> {
-    return editOrReply(
-      context,
-      `${
-        Date.now() -
-        (context.message.editedAtUnix || context.message.createdAtUnix)
-      }`
-    );
-  }
+  run = Formatter.ping;
 }

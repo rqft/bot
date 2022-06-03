@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -19,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.urban = exports.UrbanInstance = exports.definitions = exports.define = exports.DictionaryInstance = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
+exports.ping = exports.urban = exports.UrbanInstance = exports.definitions = exports.define = exports.DictionaryInstance = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
 const Process = __importStar(require("node:child_process"));
 const pariah_1 = require("pariah");
 const error_1 = require("../error");
@@ -115,7 +119,7 @@ async function define(context, args) {
             {
                 const description = [];
                 for (const phonetic of item.phonetics) {
-                    description.push(`[${phonetic.text || item.word}](${phonetic.audio || phonetic.sourceUrl || "https://"})`);
+                    description.push(`[${phonetic.text || item.word}](${phonetic.audio || phonetic.sourceUrl})`);
                 }
                 embed.addField("Phonetics", description.join(", "));
             }
@@ -193,3 +197,10 @@ exports.urban = urban;
 function fixUrbanLinks(data) {
     return data.replace(/\[(.+?)\]/g, (_, g1) => `[${g1}](https://www.urbandictionary.com/define.php?term=${encodeURIComponent(g1)})`);
 }
+async function ping(context) {
+    const ts = "message" in context
+        ? context.message.createdAtUnix || context.message.editedAtUnix
+        : context.interaction.createdAtUnix;
+    return await (0, tools_1.editOrReply)(context, `${Date.now() - ts}ms`);
+}
+exports.ping = ping;

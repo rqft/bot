@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Todo = void 0;
+const pariah_1 = require("pariah");
 const secrets_1 = require("../../secrets");
-const api_1 = require("../api");
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
 var Todo;
 (function (Todo) {
-    Todo.instance = new api_1.Jonathan.API(secrets_1.Secrets.ApiToken);
+    Todo.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
     async function get(context, args) {
         const { payload: todo } = await Todo.instance.todoGet(args.user.id || context.userId, String(args.id));
         if (todo.status.state === "error") {

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Image = void 0;
+const pariah_1 = require("pariah");
 const image_flop_1 = require("../../api/routes/image.flop");
 const secrets_1 = require("../../secrets");
-const api_1 = require("../api");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Image;
 (function (Image) {
-    Image.instance = new api_1.Jonathan.API(secrets_1.Secrets.ApiToken);
+    Image.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
     async function mirror(context, args) {
         const { target, method } = args;
         const m = method || image_flop_1.MirrorMethods.LEFT;

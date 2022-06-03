@@ -1,10 +1,10 @@
 import { Context } from "detritus-client/lib/command";
 import {
   InteractionAutoCompleteContext,
-  InteractionContext
+  InteractionContext,
 } from "detritus-client/lib/interaction";
+import { APIs } from "pariah";
 import { Secrets } from "../../secrets";
-import { Jonathan } from "../api";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { Paginator } from "../paginator";
@@ -13,7 +13,7 @@ import { editOrReply, groupArray } from "../tools";
 import { Embed } from "./embed";
 
 export module Tag {
-  export const instance = new Jonathan.API(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
 
   export interface GetTagArgs {
     key: string;

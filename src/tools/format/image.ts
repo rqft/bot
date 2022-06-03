@@ -1,14 +1,14 @@
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
+import { APIs } from "pariah";
 import { MirrorMethods } from "../../api/routes/image.flop";
 import { Secrets } from "../../secrets";
-import { Jonathan } from "../api";
 import { editOrReply } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
 export module Image {
-  export const instance = new Jonathan.API(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
   export interface MirrorArgs extends Basic.ImageArgs {
     method: MirrorMethods;
   }

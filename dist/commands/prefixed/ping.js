@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const command_metadata_1 = require("../../tools/command-metadata");
-const tools_1 = require("../../tools/tools");
+const formatter_1 = require("../../tools/formatter");
 const basecommand_1 = require("./basecommand");
 class PingCommand extends basecommand_1.BaseCommand {
     constructor(client) {
@@ -10,9 +10,6 @@ class PingCommand extends basecommand_1.BaseCommand {
             metadata: (0, command_metadata_1.ToolsMetadata)("pingy ping"),
         });
     }
-    async run(context) {
-        return (0, tools_1.editOrReply)(context, `${Date.now() -
-            (context.message.editedAtUnix || context.message.createdAtUnix)}`);
-    }
+    run = formatter_1.Formatter.ping;
 }
 exports.default = PingCommand;
