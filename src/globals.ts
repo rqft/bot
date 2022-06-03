@@ -2,9 +2,8 @@ import {
   CommandClient,
   InteractionCommandClient,
   ShardClient,
-  ShardClientCacheOptions
+  ShardClientCacheOptions,
 } from "detritus-client";
-import { Wilson } from "wilson-kv";
 import { Secrets } from "./secrets";
 
 const cache: ShardClientCacheOptions = {
@@ -52,10 +51,3 @@ export const interactions = new InteractionCommandClient(client, {
   checkCommands: true,
   strictCommandCheck: true,
 });
-
-export namespace KV {
-  export const prefixes = new Wilson("kv/prefixes");
-  export const tags = new Wilson("kv/tags");
-  export const colors = new Wilson("kv/colors");
-  export const mutes = new Wilson("kv/mutes");
-}

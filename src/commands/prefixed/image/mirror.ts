@@ -1,6 +1,6 @@
 import { CommandClient } from "detritus-client";
 import { ImageFormats } from "detritus-client/lib/constants";
-import { MirrorMethods } from "../../../api/routes/image.flop";
+import { APIs } from "pariah";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
@@ -23,9 +23,9 @@ export default class ImageMirrorCommand extends BaseCommand {
         {
           name: "method",
           type: "string",
-          default: MirrorMethods.LEFT,
-          choices: Object.values(MirrorMethods),
-          required: false
+          default: APIs.Jonathan.MirrorMethods.LEFT,
+          choices: Object.values(APIs.Jonathan.MirrorMethods),
+          required: false,
         },
       ],
     });

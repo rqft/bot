@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KV = exports.interactions = exports.commands = exports.selfclient = exports.client = void 0;
+exports.interactions = exports.commands = exports.selfclient = exports.client = void 0;
 const detritus_client_1 = require("detritus-client");
-const wilson_kv_1 = require("wilson-kv");
 const secrets_1 = require("./secrets");
 const cache = {
     users: true,
@@ -43,10 +42,3 @@ exports.interactions = new detritus_client_1.InteractionCommandClient(exports.cl
     checkCommands: true,
     strictCommandCheck: true,
 });
-var KV;
-(function (KV) {
-    KV.prefixes = new wilson_kv_1.Wilson("kv/prefixes");
-    KV.tags = new wilson_kv_1.Wilson("kv/tags");
-    KV.colors = new wilson_kv_1.Wilson("kv/colors");
-    KV.mutes = new wilson_kv_1.Wilson("kv/mutes");
-})(KV = exports.KV || (exports.KV = {}));

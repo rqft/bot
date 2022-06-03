@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Image = void 0;
 const pariah_1 = require("pariah");
-const image_flop_1 = require("../../api/routes/image.flop");
 const secrets_1 = require("../../secrets");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
@@ -11,7 +10,7 @@ var Image;
     Image.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
     async function mirror(context, args) {
         const { target, method } = args;
-        const m = method || image_flop_1.MirrorMethods.LEFT;
+        const m = method || pariah_1.APIs.Jonathan.MirrorMethods.LEFT;
         const { payload: image } = await Image.instance.imageMirror(target, m);
         const embed = await embed_1.Embed.image(context, image, `mirror-${m.toLowerCase()}.png`);
         return await (0, tools_1.editOrReply)(context, { embed });

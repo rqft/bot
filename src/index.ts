@@ -1,4 +1,3 @@
-import { Sarah } from "./api";
 import { client, commands, interactions, selfclient } from "./globals";
 import { Secrets } from "./secrets";
 
@@ -11,9 +10,6 @@ process.on("uncaughtException", (e) => {
 });
 
 (async function run() {
-  Sarah.listen(3000, () => {
-    console.log(`opened ${Secrets.Host}`);
-  });
   await commands.run();
 
   if (Secrets.ClearInteractions) {

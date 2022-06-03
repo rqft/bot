@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageMirrorSlashSubCommand = void 0;
 const constants_1 = require("detritus-client/lib/constants");
-const image_flop_1 = require("../../../../api/routes/image.flop");
+const pariah_1 = require("pariah");
 const formatter_1 = require("../../../../tools/formatter");
 const parameters_1 = require("../../../../tools/parameters");
 const tools_1 = require("../../../../tools/tools");
@@ -26,7 +26,7 @@ class ImageMirrorSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     description: "what way to start from",
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
                     required: false,
-                    choices: Object.entries(image_flop_1.MirrorMethods).map(([name, value]) => ({
+                    choices: Object.entries(pariah_1.APIs.Jonathan.MirrorMethods).map(([name, value]) => ({
                         name: (0, tools_1.toTitleCase)(name),
                         value,
                     })),

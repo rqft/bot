@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const api_1 = require("./api");
 const globals_1 = require("./globals");
 const secrets_1 = require("./secrets");
 globals_1.commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
@@ -10,9 +9,6 @@ process.on("uncaughtException", (e) => {
     console.error(e);
 });
 (async function run() {
-    api_1.Sarah.listen(3000, () => {
-        console.log(`opened ${secrets_1.Secrets.Host}`);
-    });
     await globals_1.commands.run();
     if (secrets_1.Secrets.ClearInteractions) {
         console.log("clearing global");

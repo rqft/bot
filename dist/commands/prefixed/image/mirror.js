@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = require("detritus-client/lib/constants");
-const image_flop_1 = require("../../../api/routes/image.flop");
+const pariah_1 = require("pariah");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const parameters_1 = require("../../../tools/parameters");
@@ -22,9 +22,9 @@ class ImageMirrorCommand extends basecommand_1.BaseCommand {
                 {
                     name: "method",
                     type: "string",
-                    default: image_flop_1.MirrorMethods.LEFT,
-                    choices: Object.values(image_flop_1.MirrorMethods),
-                    required: false
+                    default: pariah_1.APIs.Jonathan.MirrorMethods.LEFT,
+                    choices: Object.values(pariah_1.APIs.Jonathan.MirrorMethods),
+                    required: false,
                 },
             ],
         });

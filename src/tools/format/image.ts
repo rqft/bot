@@ -1,7 +1,7 @@
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
-import { MirrorMethods } from "../../api/routes/image.flop";
+
 import { Secrets } from "../../secrets";
 import { editOrReply } from "../tools";
 import { Basic } from "./basic";
@@ -10,14 +10,14 @@ import { Embed } from "./embed";
 export module Image {
   export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
   export interface MirrorArgs extends Basic.ImageArgs {
-    method: MirrorMethods;
+    method: APIs.Jonathan.MirrorMethods;
   }
   export async function mirror(
     context: Context | InteractionContext,
     args: MirrorArgs
   ) {
     const { target, method } = args;
-    const m = method || MirrorMethods.LEFT;
+    const m = method || APIs.Jonathan.MirrorMethods.LEFT;
 
     const { payload: image } = await instance.imageMirror(target, m);
 

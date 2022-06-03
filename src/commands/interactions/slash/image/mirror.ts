@@ -2,7 +2,7 @@ import {
   ApplicationCommandOptionTypes,
   ImageFormats,
 } from "detritus-client/lib/constants";
-import { MirrorMethods } from "../../../../api/routes/image.flop";
+import { APIs } from "pariah";
 import { Formatter } from "../../../../tools/formatter";
 import { Parameters } from "../../../../tools/parameters";
 import { toTitleCase } from "../../../../tools/tools";
@@ -27,10 +27,12 @@ export class ImageMirrorSlashSubCommand extends BaseSlashSubCommand {
           description: "what way to start from",
           type: ApplicationCommandOptionTypes.STRING,
           required: false,
-          choices: Object.entries(MirrorMethods).map(([name, value]) => ({
-            name: toTitleCase(name),
-            value,
-          })),
+          choices: Object.entries(APIs.Jonathan.MirrorMethods).map(
+            ([name, value]) => ({
+              name: toTitleCase(name),
+              value,
+            })
+          ),
         },
       ],
     });
