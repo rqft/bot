@@ -3,7 +3,7 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
 import { Secrets } from "../../secrets";
-import { editOrReply } from "../tools";
+import { editOrReply, fileExtensionFromUrl } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
@@ -83,6 +83,17 @@ export module Image {
     const embed = await Embed.image(context, image, "rotate.png");
     embed.setDescription(`Angle: ${degrees} degree(s)`);
 
+    return await editOrReply(context, { embed });
+  }
+
+  export async function url(
+    context: Context | InteractionContext,
+    args: Basic.ImageArgs
+  ) {
+    const name = fileExtensionFromUrl(args.target) || "unknown.gif";
+    const embed = await Embed.image(context, args.target, name);
+
+    embed.setDescription(`URL: [${name}](${args.target}`);
     return await editOrReply(context, { embed });
   }
 }

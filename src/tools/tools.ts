@@ -681,3 +681,11 @@ export function splitToFields(
   }
   return parts;
 }
+
+export function fileExtensionFromUrl(url: string | URL) {
+  try {
+    return new URL(url).pathname.split("/").pop();
+  } catch {
+    return null;
+  }
+}

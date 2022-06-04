@@ -46,4 +46,11 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.rotate = rotate;
+    async function url(context, args) {
+        const name = (0, tools_1.fileExtensionFromUrl)(args.target) || "unknown.gif";
+        const embed = await embed_1.Embed.image(context, args.target, name);
+        embed.setDescription(`URL: [${name}](${args.target}`);
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.url = url;
 })(Image = exports.Image || (exports.Image = {}));

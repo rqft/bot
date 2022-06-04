@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.splitToFields = exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
+exports.fileExtensionFromUrl = exports.splitToFields = exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
 const detritus_client_1 = require("detritus-client");
 const command_1 = require("detritus-client/lib/command");
 const constants_1 = require("detritus-client/lib/constants");
@@ -521,3 +521,12 @@ function splitToFields(text, amount, character = "\n") {
     return parts;
 }
 exports.splitToFields = splitToFields;
+function fileExtensionFromUrl(url) {
+    try {
+        return new URL(url).pathname.split("/").pop();
+    }
+    catch {
+        return null;
+    }
+}
+exports.fileExtensionFromUrl = fileExtensionFromUrl;
