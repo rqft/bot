@@ -130,9 +130,9 @@ async function define(context, args) {
                         definition +
                         (example ? " " + markdown_1.Markdown.Format.italics(example) : ""));
                 }
-                const fields = (0, tools_1.splitToFields)(description.join("\n"), "Definitions", 512);
+                const fields = (0, tools_1.splitToFields)(description.join("\n"), 512, "\n");
                 for (const field of fields) {
-                    embed.addField(field.name, field.value, true);
+                    embed.addField("Definitions", field, true);
                 }
             }
             return embed;

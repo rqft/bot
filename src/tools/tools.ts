@@ -648,37 +648,36 @@ export function padCodeBlockFromRows(
 }
 
 export function splitToFields(
-  data: string,
-  name: string,
-  maxLength = 1024,
-  splitBy = "\n"
-) {
-  const fields: Array<{ name: typeof name; value: string; inline: true }> = [];
+  text: string,
+  amount: number,
+  character = "\n"
+): Array<string> {
+  const parts: Array<string> = [];
 
-  const split = data.split(splitBy);
-
-  let current = "";
-
-  for (const part of split) {
-    if (current.length + part.length + splitBy.length > maxLength) {
-      fields.push({
-        name,
-        value: current,
-        inline: true,
-      });
-      current = "";
+  if (character) {
+    const split = text.split(character);
+    if (split.length === 1) {
+      return split;
     }
-
-    current += part + splitBy;
+    while (split.length) {
+      let newText = "";
+      while (newText.length < amount && split.length) {
+        const part = split.shift()!;
+        if (part) {
+          if (amount < newText.length + part.length + 2) {
+            split.unshift(part);
+            break;
+          }
+          newText += part + "\n";
+        }
+      }
+      parts.push(newText);
+    }
+  } else {
+    while (text.length) {
+      parts.push(text.slice(0, amount));
+      text = text.slice(amount);
+    }
   }
-
-  if (current.length > 0) {
-    fields.push({
-      name,
-      value: current,
-      inline: true,
-    });
-  }
-
-  return fields;
+  return parts;
 }

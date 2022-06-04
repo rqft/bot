@@ -490,28 +490,34 @@ function padCodeBlockFromRows(strings, options = {}) {
     return rows;
 }
 exports.padCodeBlockFromRows = padCodeBlockFromRows;
-function splitToFields(data, name, maxLength = 1024, splitBy = "\n") {
-    const fields = [];
-    const split = data.split(splitBy);
-    let current = "";
-    for (const part of split) {
-        if (current.length + part.length + splitBy.length > maxLength) {
-            fields.push({
-                name,
-                value: current,
-                inline: true,
-            });
-            current = "";
+function splitToFields(text, amount, character = "\n") {
+    const parts = [];
+    if (character) {
+        const split = text.split(character);
+        if (split.length === 1) {
+            return split;
         }
-        current += part + splitBy;
+        while (split.length) {
+            let newText = "";
+            while (newText.length < amount && split.length) {
+                const part = split.shift();
+                if (part) {
+                    if (amount < newText.length + part.length + 2) {
+                        split.unshift(part);
+                        break;
+                    }
+                    newText += part + "\n";
+                }
+            }
+            parts.push(newText);
+        }
     }
-    if (current.length > 0) {
-        fields.push({
-            name,
-            value: current,
-            inline: true,
-        });
+    else {
+        while (text.length) {
+            parts.push(text.slice(0, amount));
+            text = text.slice(amount);
+        }
     }
-    return fields;
+    return parts;
 }
 exports.splitToFields = splitToFields;

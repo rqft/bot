@@ -23,6 +23,7 @@ export async function code(
   if (!context.client.isOwner(context.userId)) {
     throw new Err("no", { status: 403 });
   }
+
   const text = args.code;
   let language = "ts";
   let message: string;
@@ -167,14 +168,10 @@ export async function define(
           );
         }
 
-        const fields = splitToFields(
-          description.join("\n"),
-          "Definitions",
-          512
-        );
+        const fields = splitToFields(description.join("\n"), 512, "\n");
 
         for (const field of fields) {
-          embed.addField(field.name, field.value, true);
+          embed.addField("Definitions", field, true);
         }
       }
 
