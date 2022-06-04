@@ -4,6 +4,7 @@ import { ImageMirrorSlashSubCommand } from "./mirror";
 import { ImageResizeSlashSubCommand } from "./resize";
 import { ImageRotateSlashSubCommand } from "./rotate";
 import { ImageSpinSlashSubCommand } from "./spin";
+import { ImageUrlSlashSubCommand } from "./url";
 export default class ImageSlashCommandGroup extends BaseSlashCommand {
   name = "image";
   description = "adobe photoshop";
@@ -14,7 +15,8 @@ export default class ImageSlashCommandGroup extends BaseSlashCommand {
         new ImageSpinSlashSubCommand(),
         new ImageColorSlashSubCommand(),
         new ImageResizeSlashSubCommand(),
-        new ImageRotateSlashSubCommand()
+        new ImageRotateSlashSubCommand(),
+        new ImageUrlSlashSubCommand(),
       ],
     });
   }

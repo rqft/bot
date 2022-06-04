@@ -6,6 +6,7 @@ const mirror_1 = require("./mirror");
 const resize_1 = require("./resize");
 const rotate_1 = require("./rotate");
 const spin_1 = require("./spin");
+const url_1 = require("./url");
 class ImageSlashCommandGroup extends baseslash_1.BaseSlashCommand {
     name = "image";
     description = "adobe photoshop";
@@ -16,7 +17,8 @@ class ImageSlashCommandGroup extends baseslash_1.BaseSlashCommand {
                 new spin_1.ImageSpinSlashSubCommand(),
                 new color_1.ImageColorSlashSubCommand(),
                 new resize_1.ImageResizeSlashSubCommand(),
-                new rotate_1.ImageRotateSlashSubCommand()
+                new rotate_1.ImageRotateSlashSubCommand(),
+                new url_1.ImageUrlSlashSubCommand(),
             ],
         });
     }

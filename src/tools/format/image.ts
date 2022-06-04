@@ -93,7 +93,7 @@ export module Image {
     const name = fileExtensionFromUrl(args.target) || "unknown.gif";
     const embed = await Embed.image(context, args.target, name);
 
-    embed.setDescription(`URL: [${name}](${args.target}`);
+    embed.setDescription(`URL: [${name}](${args.target})`);
     return await editOrReply(context, { embed });
   }
 }
