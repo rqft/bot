@@ -3,7 +3,7 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
 import { Secrets } from "../../secrets";
-import { editOrReply, fileExtensionFromUrl } from "../tools";
+import { editOrReply, extensionFromFileName, fileNameFromUrl } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
@@ -90,8 +90,12 @@ export module Image {
     context: Context | InteractionContext,
     args: Basic.ImageArgs
   ) {
-    const name = fileExtensionFromUrl(args.target) || "unknown.gif";
-    const embed = await Embed.image(context, args.target, name);
+    const name = fileNameFromUrl(args.target) || "unknown.gif";
+    const embed = await Embed.image(
+      context,
+      args.target,
+      "url." + extensionFromFileName(name)
+    );
 
     embed.setDescription(`URL: [${name}](${args.target})`);
     return await editOrReply(context, { embed });

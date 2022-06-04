@@ -682,10 +682,26 @@ export function splitToFields(
   return parts;
 }
 
-export function fileExtensionFromUrl(url: string | URL) {
+export function fileNameFromUrl(url: string | URL) {
   try {
     return new URL(url).pathname.split("/").pop();
   } catch {
     return null;
   }
+}
+
+export function extensionFromFileName(fileName: string) {
+  const split = fileName.split(".");
+  if (split.length === 1) {
+    return "";
+  }
+  return split.pop()!;
+}
+
+export function fileExtensionFromUrl(url: string | URL) {
+  const fileName = fileNameFromUrl(url);
+  if (!fileName) {
+    return null;
+  }
+  return extensionFromFileName(fileName);
 }

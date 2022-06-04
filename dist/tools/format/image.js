@@ -47,8 +47,8 @@ var Image;
     }
     Image.rotate = rotate;
     async function url(context, args) {
-        const name = (0, tools_1.fileExtensionFromUrl)(args.target) || "unknown.gif";
-        const embed = await embed_1.Embed.image(context, args.target, name);
+        const name = (0, tools_1.fileNameFromUrl)(args.target) || "unknown.gif";
+        const embed = await embed_1.Embed.image(context, args.target, "url." + (0, tools_1.extensionFromFileName)(name));
         embed.setDescription(`URL: [${name}](${args.target})`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }

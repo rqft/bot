@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fileExtensionFromUrl = exports.splitToFields = exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
+exports.fileExtensionFromUrl = exports.extensionFromFileName = exports.fileNameFromUrl = exports.splitToFields = exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
 const detritus_client_1 = require("detritus-client");
 const command_1 = require("detritus-client/lib/command");
 const constants_1 = require("detritus-client/lib/constants");
@@ -521,12 +521,28 @@ function splitToFields(text, amount, character = "\n") {
     return parts;
 }
 exports.splitToFields = splitToFields;
-function fileExtensionFromUrl(url) {
+function fileNameFromUrl(url) {
     try {
         return new URL(url).pathname.split("/").pop();
     }
     catch {
         return null;
     }
+}
+exports.fileNameFromUrl = fileNameFromUrl;
+function extensionFromFileName(fileName) {
+    const split = fileName.split(".");
+    if (split.length === 1) {
+        return "";
+    }
+    return split.pop();
+}
+exports.extensionFromFileName = extensionFromFileName;
+function fileExtensionFromUrl(url) {
+    const fileName = fileNameFromUrl(url);
+    if (!fileName) {
+        return null;
+    }
+    return extensionFromFileName(fileName);
 }
 exports.fileExtensionFromUrl = fileExtensionFromUrl;
