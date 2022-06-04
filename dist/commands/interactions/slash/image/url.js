@@ -7,7 +7,7 @@ const parameters_1 = require("../../../../tools/parameters");
 const baseslash_1 = require("../baseslash");
 class ImageUrlSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
     name = "url";
-    description = "Slant.";
+    description = "u can just use devtools idiot";
     constructor() {
         super({
             options: [

@@ -8,7 +8,7 @@ import { BaseSlashSubCommand } from "../baseslash";
 
 export class ImageUrlSlashSubCommand extends BaseSlashSubCommand {
   name = "url";
-  description = "Slant.";
+  description = "u can just use devtools idiot";
   constructor() {
     super({
       options: [
