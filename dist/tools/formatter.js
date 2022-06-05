@@ -36,6 +36,7 @@ const info_role_1 = require("./format/info.role");
 const info_user_1 = require("./format/info.user");
 const Other = __importStar(require("./format/other"));
 const pxl_1 = require("./format/pxl");
+const search_1 = require("./format/search");
 const some_random_api_1 = require("./format/some-random-api");
 const tag_1 = require("./format/tag");
 const todo_1 = require("./format/todo");
@@ -48,6 +49,7 @@ exports.Formatter = {
     Imagga: imagga_1.Imagga,
     SomeRandomApi: some_random_api_1.SomeRandomApi,
     Todo: todo_1.Todo,
+    Search: search_1.Search,
     Info: {
         channel: info_channel_1.channel,
         user: info_user_1.user,

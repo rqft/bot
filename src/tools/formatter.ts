@@ -10,6 +10,7 @@ import { role } from "./format/info.role";
 import { user } from "./format/info.user";
 import * as Other from "./format/other";
 import { Pxl } from "./format/pxl";
+import { Search } from "./format/search";
 import { SomeRandomApi } from "./format/some-random-api";
 import { Tag } from "./format/tag";
 import { Todo } from "./format/todo";
@@ -23,6 +24,7 @@ export const Formatter = {
   Imagga,
   SomeRandomApi,
   Todo,
+  Search,
   Info: {
     channel,
     user,

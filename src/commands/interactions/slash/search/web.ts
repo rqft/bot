@@ -1,8 +1,8 @@
 import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants";
-import { Formatter } from "../../../../../tools/formatter";
-import { BaseSlashSubCommand } from "../../baseslash";
+import { Formatter } from "../../../../tools/formatter";
+import { BaseSlashSubCommand } from "../baseslash";
 
-export class PxlSearchWebSlashSubCommand extends BaseSlashSubCommand {
+export class SearchWebSlashSubCommand extends BaseSlashSubCommand {
   name = "web";
   description = "look at html";
   constructor() {
@@ -10,12 +10,13 @@ export class PxlSearchWebSlashSubCommand extends BaseSlashSubCommand {
       options: [
         {
           name: "query",
-          description: "ok google",
+          description: "what to search for",
           type: ApplicationCommandOptionTypes.STRING,
           required: true,
         },
       ],
     });
   }
-  run = Formatter.Pxl.webSearch;
+
+  run = Formatter.Search.web;
 }

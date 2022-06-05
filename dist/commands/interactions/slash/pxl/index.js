@@ -9,7 +9,6 @@ const glitch_1 = require("./glitch");
 const jpeg_1 = require("./jpeg");
 const lego_1 = require("./lego");
 const screenshot_1 = require("./screenshot");
-const search_1 = require("./search");
 const snapchat_1 = require("./snapchat");
 const sonic_1 = require("./sonic");
 const thonkify_1 = require("./thonkify");
@@ -27,7 +26,6 @@ class PxlSlashCommandGroup extends baseslash_1.BaseSlashCommand {
                 new jpeg_1.PxlJpegSlashSubCommand(),
                 new lego_1.PxlLegoSlashSubCommand(),
                 new snapchat_1.PxlSnapchatSlashSubCommand(),
-                new search_1.PxlSearchSlashCommandGroup(),
                 new screenshot_1.PxlScreenshotSlashSubCommand(),
                 new sonic_1.PxlSonicSlashSubCommand(),
                 new thonkify_1.PxlThonkifySlashSubCommand(),

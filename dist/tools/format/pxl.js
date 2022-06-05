@@ -4,8 +4,6 @@ exports.Pxl = void 0;
 const pariah_1 = require("pariah");
 const constants_1 = require("../../constants");
 const secrets_1 = require("../../secrets");
-const markdown_1 = require("../markdown");
-const paginator_1 = require("../paginator");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Pxl;
@@ -49,21 +47,6 @@ var Pxl;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Pxl.glitch = glitch;
-    async function imageSearch(context, args) {
-        const { query } = args;
-        const { payload: data } = await Pxl.instance.imageSearch(query, pariah_1.APIs.PxlAPI.SafeSearch.STRICT, true);
-        const paginator = new paginator_1.Paginator(context, {
-            pageLimit: data.length,
-            onPage: async (page) => {
-                const image = data[page - 1];
-                const embed = await embed_1.Embed.image(context, image.url, "image-search.png", constants_1.Brand.PXL);
-                embed.setDescription(markdown_1.Markdown.Format.link(image.title, image.location).toString());
-                return embed;
-            },
-        });
-        return await paginator.start();
-    }
-    Pxl.imageSearch = imageSearch;
     async function jpeg(context, args) {
         const { target, quality } = args;
         const { payload: image } = await Pxl.instance.jpeg([target], quality);
@@ -112,27 +95,4 @@ var Pxl;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Pxl.thonkify = thonkify;
-    async function webSearch(context, args) {
-        const { query } = args;
-        const { payload: data } = await Pxl.instance.webSearch(query, pariah_1.APIs.PxlAPI.SafeSearch.STRICT);
-        const paginator = new paginator_1.Paginator(context, {
-            pageLimit: data.results.length,
-            onPage: async (page) => {
-                const result = data.results[page - 1];
-                const embed = embed_1.Embed.brand(context, constants_1.Brand.PXL);
-                embed.setDescription(result.description);
-                embed.setTitle(result.title);
-                embed.setUrl(result.url);
-                if (data.relatedQueries.length) {
-                    embed.addField("Related Queries", data.relatedQueries.map((x) => `\`${x}\``).join(", "));
-                }
-                if (data.images[page - 1]) {
-                    embed.setThumbnail(data.images[page - 1]);
-                }
-                return embed;
-            },
-        });
-        return await paginator.start();
-    }
-    Pxl.webSearch = webSearch;
 })(Pxl = exports.Pxl || (exports.Pxl = {}));

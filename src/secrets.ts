@@ -16,6 +16,9 @@ export const Secrets = {
     OpenAI: env.OPENAI_API_KEY!,
     HuggingFace: env.HUGGING_FACE_API_KEY!,
     EmojiData: env.EMOJI_DATA_API_KEY!,
+    Google: {
+      YouTubeData: env.GOOGLE_YOUTUBE_DATA_API_KEY!,
+    },
   },
   AbstractKeys: {
     Holidays: env.ABSTRACT_HOLIDAYS_KEY!,

@@ -7,7 +7,7 @@ import { PxlGlitchSlashSubCommand } from "./glitch";
 import { PxlJpegSlashSubCommand } from "./jpeg";
 import { PxlLegoSlashSubCommand } from "./lego";
 import { PxlScreenshotSlashSubCommand } from "./screenshot";
-import { PxlSearchSlashCommandGroup } from "./search";
+
 import { PxlSnapchatSlashSubCommand } from "./snapchat";
 import { PxlSonicSlashSubCommand } from "./sonic";
 import { PxlThonkifySlashSubCommand } from "./thonkify";
@@ -25,7 +25,6 @@ export default class PxlSlashCommandGroup extends BaseSlashCommand {
         new PxlJpegSlashSubCommand(),
         new PxlLegoSlashSubCommand(),
         new PxlSnapchatSlashSubCommand(),
-        new PxlSearchSlashCommandGroup(),
         new PxlScreenshotSlashSubCommand(),
         new PxlSonicSlashSubCommand(),
         new PxlThonkifySlashSubCommand(),

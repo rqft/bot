@@ -1,23 +1,26 @@
 import { CommandClient } from "detritus-client";
-import { ImageMetadata } from "../../../tools/command-metadata";
+
+import { ToolsMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
+
 import { BaseCommand } from "../basecommand";
 
-export default class PxlImageSearchCommand extends BaseCommand {
+export default class SearchYoutubeCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "pxl search image",
-      metadata: ImageMetadata("why not just google it lol", "<query: string>"),
+      name: "search youtube",
+      aliases: ["search yt"],
+      metadata: ToolsMetadata("look at mp4", "<query: string>"),
       type: [
         {
           name: "query",
           type: "string",
+          consume: true,
           required: true,
-          consume: true
         },
       ],
     });
   }
 
-  run = Formatter.Pxl.imageSearch;
+  run = Formatter.Search.youtube;
 }

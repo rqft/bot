@@ -3,8 +3,6 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 import { Brand } from "../../constants";
 import { Secrets } from "../../secrets";
-import { Markdown } from "../markdown";
-import { Paginator } from "../paginator";
 import { editOrReply } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
@@ -111,39 +109,6 @@ export module Pxl {
     return await editOrReply(context, { embed });
   }
 
-  export interface ImageSearchArgs {
-    query: string;
-  }
-  export async function imageSearch(
-    context: Context | InteractionContext,
-    args: ImageSearchArgs
-  ) {
-    const { query } = args;
-    const { payload: data } = await instance.imageSearch(
-      query,
-      APIs.PxlAPI.SafeSearch.STRICT,
-      true
-    );
-
-    const paginator = new Paginator(context, {
-      pageLimit: data.length,
-      onPage: async (page) => {
-        const image = data[page - 1]!;
-        const embed = await Embed.image(
-          context,
-          image.url,
-          "image-search.png",
-          Brand.PXL
-        );
-        embed.setDescription(
-          Markdown.Format.link(image.title, image.location).toString()
-        );
-        return embed;
-      },
-    });
-
-    return await paginator.start();
-  }
   export interface JpegArgs extends Basic.ImageArgs {
     quality?: number;
   }
@@ -244,42 +209,5 @@ export module Pxl {
     const embed = await Embed.image(context, image, "thonkify.png", Brand.PXL);
 
     return await editOrReply(context, { embed });
-  }
-  export async function webSearch(
-    context: Context | InteractionContext,
-    args: ImageSearchArgs
-  ) {
-    const { query } = args;
-
-    const { payload: data } = await instance.webSearch(
-      query,
-      APIs.PxlAPI.SafeSearch.STRICT
-    );
-    const paginator = new Paginator(context, {
-      pageLimit: data.results.length,
-      onPage: async (page) => {
-        const result = data.results[page - 1]!;
-        const embed = Embed.brand(context, Brand.PXL);
-
-        embed.setDescription(result.description);
-        embed.setTitle(result.title);
-        embed.setUrl(result.url);
-
-        if (data.relatedQueries.length) {
-          embed.addField(
-            "Related Queries",
-            data.relatedQueries.map((x) => `\`${x}\``).join(", ")
-          );
-        }
-
-        if (data.images[page - 1]) {
-          embed.setThumbnail(data.images[page - 1]!);
-        }
-
-        return embed;
-      },
-    });
-
-    return await paginator.start();
   }
 }
