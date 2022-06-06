@@ -23,12 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ping = exports.urban = exports.UrbanInstance = exports.definitions = exports.define = exports.DictionaryInstance = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
+exports.ping = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
 const Process = __importStar(require("node:child_process"));
-const pariah_1 = require("pariah");
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
-const paginator_1 = require("../paginator");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 async function code(context, args) {
@@ -100,103 +98,6 @@ async function stats(context) {
     }
 }
 exports.stats = stats;
-exports.DictionaryInstance = new pariah_1.APIs.Dictionary.API(2, "en");
-async function define(context, args) {
-    const { word } = args;
-    const { payload, status } = await exports.DictionaryInstance.entries(word);
-    if ("title" in payload) {
-        throw new error_1.Err(payload.title, { status });
-    }
-    const pages = payload
-        .map((x) => x.meanings.map((y) => ({ ...x, meaning: y })))
-        .flat();
-    const paginator = new paginator_1.Paginator(context, {
-        pageLimit: pages.length,
-        onPage(page) {
-            const item = pages[page - 1];
-            const embed = embed_1.Embed.user(context);
-            embed.setTitle(item.word);
-            {
-                const description = [];
-                for (const phonetic of item.phonetics) {
-                    description.push(`[${phonetic.text || item.word}](${phonetic.audio || phonetic.sourceUrl})`);
-                }
-                embed.addField("Phonetics", description.join(", "));
-            }
-            {
-                const description = [];
-                for (const { definition, example } of item.meaning.definitions) {
-                    description.push(" - " +
-                        definition +
-                        (example ? " " + markdown_1.Markdown.Format.italics(example) : ""));
-                }
-                const fields = (0, tools_1.splitToFields)(description.join("\n"), 512, "\n");
-                for (const field of fields) {
-                    embed.addField("Definitions", field, true);
-                }
-            }
-            return embed;
-        },
-    });
-    return await paginator.start();
-}
-exports.define = define;
-async function definitions(context) {
-    const req = new pariah_1.Requester(new URL("https://www.merriam-webster.com/lapi/v1/"));
-    if (!context.value) {
-        const results = (await req.json("/mwol-mp/get-lookups-data-homepage")).payload.data
-            .words;
-        return await context.respond({
-            choices: [
-                {
-                    name: "Type or pick one of the words below",
-                    value: "...",
-                },
-                ...results
-                    .slice(0, 24)
-                    .map((x) => ({ name: (0, tools_1.toTitleCase)(x), value: x })),
-            ],
-        });
-    }
-    const words = new Set((await req.json(`/mwol-search/autocomplete`, {
-        search: context.value,
-    })).payload.docs
-        .filter((x) => x.ref === "owl-combined")
-        .map((x) => x.word)
-        .slice(0, 25));
-    return await context.respond({
-        choices: Array.from(words).map((x) => ({ name: (0, tools_1.toTitleCase)(x), value: x })),
-    });
-}
-exports.definitions = definitions;
-exports.UrbanInstance = new pariah_1.APIs.Urban.API();
-async function urban(context, args) {
-    const { word } = args;
-    const { payload } = await exports.UrbanInstance.define(word);
-    if (!payload.list.length) {
-        throw new error_1.Err("No results found", { status: 404 });
-    }
-    const paginator = new paginator_1.Paginator(context, {
-        pageLimit: payload.list.length,
-        onPage(page) {
-            const item = payload.list[page - 1];
-            const embed = embed_1.Embed.user(context);
-            embed.setTitle(item.word);
-            embed.setDescription(fixUrbanLinks(item.definition));
-            embed.setUrl(item.permalink);
-            embed.addField("Example", fixUrbanLinks(item.example));
-            embed.setTimestamp(item.written_on);
-            embed.addField("Upvotes", item.thumbs_up.toLocaleString(), true);
-            embed.addField("Downvotes", item.thumbs_down.toLocaleString(), true);
-            return embed;
-        },
-    });
-    return await paginator.start();
-}
-exports.urban = urban;
-function fixUrbanLinks(data) {
-    return data.replace(/\[(.+?)\]/g, (_, g1) => `[${g1}](https://www.urbandictionary.com/define.php?term=${encodeURIComponent(g1)})`);
-}
 async function ping(context) {
     const ts = "message" in context
         ? context.message.createdAtUnix || context.message.editedAtUnix

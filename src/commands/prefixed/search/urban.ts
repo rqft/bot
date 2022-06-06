@@ -3,7 +3,7 @@ import { FunMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { BaseCommand } from "../basecommand";
 
-export default class UrbanCommand extends BaseCommand {
+export default class SearchUrbanCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "urban",
@@ -12,5 +12,5 @@ export default class UrbanCommand extends BaseCommand {
     });
   }
 
-  run = Formatter.urban;
+  run = Formatter.Search.urban;
 }

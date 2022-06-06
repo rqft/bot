@@ -1,5 +1,7 @@
 import { BaseSlashCommand } from "../baseslash";
+import { SearchDictionarySlashSubCommand } from "./dictionary";
 import { SearchImageSlashSubCommand } from "./image";
+import { SearchUrbanSlashSubCommand } from "./urban";
 import { SearchWebSlashSubCommand } from "./web";
 import { SearchYoutubeSlashSubCommand } from "./youtube";
 
@@ -12,6 +14,8 @@ export default class SearchSlashCommandGroup extends BaseSlashCommand {
         new SearchImageSlashSubCommand(),
         new SearchWebSlashSubCommand(),
         new SearchYoutubeSlashSubCommand(),
+        new SearchDictionarySlashSubCommand(),
+        new SearchUrbanSlashSubCommand(),
       ],
     });
   }

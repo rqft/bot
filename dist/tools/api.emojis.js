@@ -41,6 +41,7 @@ var EmojiData;
         }
         async searchBy(key, value) {
             const payload = await this.listAll();
+            console.log(payload);
             return payload.payload.find((emoji) => emoji[key] === value);
         }
     }

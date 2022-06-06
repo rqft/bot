@@ -58,8 +58,12 @@ export module EmojiData {
       });
     }
 
-    public async searchBy<K extends keyof Emoji>(key: K, value: Emoji[K]): Promise<Emoji | undefined> {
+    public async searchBy<K extends keyof Emoji>(
+      key: K,
+      value: Emoji[K]
+    ): Promise<Emoji | undefined> {
       const payload = await this.listAll();
+      console.log(payload);
       return payload.payload.find((emoji: Emoji) => emoji[key] === value);
     }
   }
