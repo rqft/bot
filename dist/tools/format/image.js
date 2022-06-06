@@ -3,11 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Image = void 0;
 const pariah_1 = require("pariah");
 const secrets_1 = require("../../secrets");
+const api_1 = require("../api");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Image;
 (function (Image) {
-    Image.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
+    Image.instance = new api_1.Sarah(secrets_1.Secrets.ApiToken);
     async function mirror(context, args) {
         const { target, method } = args;
         const m = method || pariah_1.APIs.Jonathan.MirrorMethods.LEFT;
@@ -53,4 +54,11 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.url = url;
+    async function tint(context, args) {
+        const { target, color, opacity } = args;
+        const { payload: image } = await Image.instance.imageTint(target, color, (opacity || 50) / 100);
+        const embed = await embed_1.Embed.image(context, image, "tint.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.tint = tint;
 })(Image = exports.Image || (exports.Image = {}));

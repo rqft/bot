@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YoutubeSearch = void 0;
+exports.Sarah = exports.YoutubeSearch = void 0;
 const pariah_1 = require("pariah");
 var YoutubeSearch;
 (function (YoutubeSearch) {
@@ -22,3 +22,7 @@ var YoutubeSearch;
     }
     YoutubeSearch.API = API;
 })(YoutubeSearch = exports.YoutubeSearch || (exports.YoutubeSearch = {}));
+class Sarah extends pariah_1.APIs.Jonathan.API {
+    url = new URL("http://localhost:3000");
+}
+exports.Sarah = Sarah;

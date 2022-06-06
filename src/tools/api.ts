@@ -1,4 +1,4 @@
-import { Pariah } from "pariah";
+import { APIs, Pariah } from "pariah";
 
 export module YoutubeSearch {
   export const Url = new URL("https://youtube.googleapis.com/youtube/v3");
@@ -68,4 +68,8 @@ export module YoutubeSearch {
       });
     }
   }
+}
+
+export class Sarah extends APIs.Jonathan.API {
+  url = new URL("http://localhost:3000");
 }

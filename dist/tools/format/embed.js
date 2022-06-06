@@ -62,7 +62,16 @@ var Embed;
         const embed = brand(context, ubrand);
         embed.setColor(constants_1.Colours.EMBED);
         const footer = [image.filename];
-        const imagescript = (0, v2_1.load)(input);
+        let imagescript = null;
+        try {
+            imagescript = (0, v2_1.load)(input);
+        }
+        catch {
+            throw new error_1.Err("Failed to load image");
+        }
+        if (imagescript === null) {
+            throw new error_1.Err("Failed to load image");
+        }
         if (imagescript instanceof v2_1.Animation) {
             footer.push(`${imagescript.frames.length} frames`);
         }

@@ -3,12 +3,13 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
 import { Secrets } from "../../secrets";
+import { Sarah } from "../api";
 import { editOrReply, extensionFromFileName, fileNameFromUrl } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
 export module Image {
-  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
+  export const instance = new Sarah(Secrets.ApiToken);
   export interface MirrorArgs extends Basic.ImageArgs {
     method: APIs.Jonathan.MirrorMethods;
   }
@@ -98,6 +99,28 @@ export module Image {
     );
 
     embed.setDescription(`URL: [${name}](${args.target})`);
+    return await editOrReply(context, { embed });
+  }
+
+  export interface TintArgs extends Basic.ImageArgs {
+    color: string;
+    opacity?: number;
+  }
+
+  export async function tint(
+    context: Context | InteractionContext,
+    args: TintArgs
+  ) {
+    const { target, color, opacity } = args;
+
+    const { payload: image } = await instance.imageTint(
+      target,
+      color,
+      (opacity || 50) / 100
+    );
+
+    const embed = await Embed.image(context, image, "tint.png");
+
     return await editOrReply(context, { embed });
   }
 }
