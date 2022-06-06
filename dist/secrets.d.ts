@@ -10,6 +10,9 @@ export declare const Secrets: {
         OpenAI: string;
         HuggingFace: string;
         EmojiData: string;
+        Google: {
+            YouTubeData: string;
+        };
     };
     AbstractKeys: {
         Holidays: string;

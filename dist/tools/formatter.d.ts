@@ -10,6 +10,7 @@ import { role } from "./format/info.role";
 import { user } from "./format/info.user";
 import * as Other from "./format/other";
 import { Pxl } from "./format/pxl";
+import { Search } from "./format/search";
 import { SomeRandomApi } from "./format/some-random-api";
 import { Tag } from "./format/tag";
 import { Todo } from "./format/todo";
@@ -18,12 +19,7 @@ export declare const Formatter: {
     exec(context: import("detritus-client/lib/command").Context | import("detritus-client/lib/interaction").InteractionContext, args: Other.ExecArgs): Promise<import("detritus-client/lib/structures").Message | null>;
     kwanzi(context: import("detritus-client/lib/command").Context | import("detritus-client/lib/interaction").InteractionContext, args: Other.KwanziArgs): Promise<import("detritus-client/lib/structures").Message | null>;
     stats(context: import("detritus-client/lib/command").Context | import("detritus-client/lib/interaction").InteractionContext): Promise<void>;
-    define(context: import("detritus-client/lib/command").Context | import("detritus-client/lib/interaction").InteractionContext, args: Other.DefineArgs): Promise<import("detritus-client/lib/structures").Message | null>;
-    definitions(context: import("detritus-client/lib/interaction").InteractionAutoCompleteContext): Promise<unknown>;
-    urban(context: import("detritus-client/lib/command").Context | import("detritus-client/lib/interaction").InteractionContext, args: Other.DefineArgs): Promise<import("detritus-client/lib/structures").Message | null>;
     ping(context: import("detritus-client/lib/command").Context | import("detritus-client/lib/interaction").InteractionContext): Promise<import("detritus-client/lib/structures").Message | null>;
-    DictionaryInstance: import("pariah/dist/lib").Dictionary.API;
-    UrbanInstance: import("pariah/dist/lib").Urban.API;
     Basic: typeof Basic;
     Embed: typeof Embed;
     Pxl: typeof Pxl;
@@ -32,6 +28,7 @@ export declare const Formatter: {
     Imagga: typeof Imagga;
     SomeRandomApi: typeof SomeRandomApi;
     Todo: typeof Todo;
+    Search: typeof Search;
     Info: {
         channel: typeof channel;
         user: typeof user;

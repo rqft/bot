@@ -45,8 +45,7 @@ export declare function padCodeBlockFromRows(strings: Array<Array<string>>, opti
     padding?: string;
     padFunc?: (targetLength: number, padString?: string) => string;
 }): Array<string>;
-export declare function splitToFields(data: string, name: string, maxLength?: number, splitBy?: string): {
-    name: typeof name;
-    value: string;
-    inline: true;
-}[];
+export declare function splitToFields(text: string, amount: number, character?: string): Array<string>;
+export declare function fileNameFromUrl(url: string | URL): string | null | undefined;
+export declare function extensionFromFileName(fileName: string): string;
+export declare function fileExtensionFromUrl(url: string | URL): string | null;

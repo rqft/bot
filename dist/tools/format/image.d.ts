@@ -22,4 +22,5 @@ export declare module Image {
         degrees: number;
     }
     function rotate(context: Context | InteractionContext, args: RotateArgs): Promise<import("detritus-client/lib/structures").Message | null>;
+    function url(context: Context | InteractionContext, args: Basic.ImageArgs): Promise<import("detritus-client/lib/structures").Message | null>;
 }

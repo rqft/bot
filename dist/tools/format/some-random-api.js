@@ -34,16 +34,18 @@ var SomeRandomApi;
     }
     SomeRandomApi.canvas = canvas;
     SomeRandomApi.AnimalMethods = Object.values(pariah_1.APIs.SomeRandomApi.Animals);
-    async function animal(context, args) {
-        const data = await SomeRandomApi.instance.animal(args.animal);
-        let embed = embed_1.Embed.user(context);
-        if (data.link) {
-            embed = await embed_1.Embed.image(context, data.link, `${args.animal}.png`);
-        }
-        if (data.fact) {
-            embed.setDescription(data.fact);
-        }
-        return await (0, tools_1.editOrReply)(context, { embed });
+    function animal(animal) {
+        return async (context) => {
+            const data = await SomeRandomApi.instance.animal(animal);
+            let embed = embed_1.Embed.user(context);
+            if (data.link) {
+                embed = await embed_1.Embed.image(context, data.link, `${animal}.png`);
+            }
+            if (data.fact) {
+                embed.setDescription(data.fact);
+            }
+            return await (0, tools_1.editOrReply)(context, { embed });
+        };
     }
     SomeRandomApi.animal = animal;
 })(SomeRandomApi = exports.SomeRandomApi || (exports.SomeRandomApi = {}));

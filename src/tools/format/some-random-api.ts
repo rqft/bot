@@ -55,24 +55,20 @@ export module SomeRandomApi {
   }
   export const AnimalMethods = Object.values(APIs.SomeRandomApi.Animals);
 
-  export interface AnimalArgs {
-    animal: APIs.SomeRandomApi.Animals;
-  }
-  export async function animal(
-    context: Context | InteractionContext,
-    args: AnimalArgs
-  ) {
-    const data = await instance.animal(args.animal);
-    let embed = Embed.user(context);
+  export function animal(animal: APIs.SomeRandomApi.Animals) {
+    return async (context: Context | InteractionContext) => {
+      const data = await instance.animal(animal);
+      let embed = Embed.user(context);
 
-    if (data.link) {
-      embed = await Embed.image(context, data.link, `${args.animal}.png`);
-    }
+      if (data.link) {
+        embed = await Embed.image(context, data.link, `${animal}.png`);
+      }
 
-    if (data.fact) {
-      embed.setDescription(data.fact);
-    }
+      if (data.fact) {
+        embed.setDescription(data.fact);
+      }
 
-    return await editOrReply(context, { embed });
+      return await editOrReply(context, { embed });
+    };
   }
 }

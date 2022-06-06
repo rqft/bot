@@ -12,8 +12,5 @@ export declare module SomeRandomApi {
     }
     function canvas(context: Context | InteractionContext, args: CanvasArgs): Promise<import("detritus-client/lib/structures").Message | null>;
     const AnimalMethods: APIs.SomeRandomApi.Animals[];
-    interface AnimalArgs {
-        animal: APIs.SomeRandomApi.Animals;
-    }
-    function animal(context: Context | InteractionContext, args: AnimalArgs): Promise<import("detritus-client/lib/structures").Message | null>;
+    function animal(animal: APIs.SomeRandomApi.Animals): (context: Context | InteractionContext) => Promise<import("detritus-client/lib/structures").Message | null>;
 }

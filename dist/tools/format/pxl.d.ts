@@ -26,10 +26,6 @@ export declare module Pxl {
         "gif-delay"?: number;
     }
     function glitch(context: Context | InteractionContext, args: GlitchArgs): Promise<import("detritus-client/lib/structures").Message | null>;
-    interface ImageSearchArgs {
-        query: string;
-    }
-    function imageSearch(context: Context | InteractionContext, args: ImageSearchArgs): Promise<import("detritus-client/lib/structures").Message | null>;
     interface JpegArgs extends Basic.ImageArgs {
         quality?: number;
     }
@@ -52,5 +48,4 @@ export declare module Pxl {
     }
     function sonic(context: Context | InteractionContext, args: TextArgs): Promise<import("detritus-client/lib/structures").Message | null>;
     function thonkify(context: Context | InteractionContext, args: TextArgs): Promise<import("detritus-client/lib/structures").Message | null>;
-    function webSearch(context: Context | InteractionContext, args: ImageSearchArgs): Promise<import("detritus-client/lib/structures").Message | null>;
 }

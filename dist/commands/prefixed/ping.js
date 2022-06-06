@@ -7,7 +7,7 @@ class PingCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "ping",
-            metadata: (0, command_metadata_1.ToolsMetadata)("pingy ping"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("pong"),
         });
     }
     run = formatter_1.Formatter.ping;
