@@ -9,7 +9,12 @@ class ImageResizeCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "image resize",
-            metadata: (0, command_metadata_1.ImageMetadata)("make small", "<target: Image> ?<size: string>"),
+            metadata: (0, command_metadata_1.ImageMetadata)("make small", "<target: Image> ?<size: string>", [
+                "@insyri#7314 256x256",
+                "insyri 256x",
+                "insyri 2",
+                "533757461706964993 x256",
+            ]),
             type: [
                 {
                     name: "target",

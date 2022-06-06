@@ -23,11 +23,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ping = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
+exports.invite = exports.helpAutocomplete = exports.help = exports.ping = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
 const Process = __importStar(require("node:child_process"));
+const basecommand_1 = require("../../commands/prefixed/basecommand");
+const globals_1 = require("../../globals");
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
+const paginator_1 = require("../paginator");
 const tools_1 = require("../tools");
+const basic_1 = require("./basic");
 const embed_1 = require("./embed");
 async function code(context, args) {
     if (!context.client.isOwner(context.userId)) {
@@ -105,3 +109,101 @@ async function ping(context) {
     return await (0, tools_1.editOrReply)(context, `${Date.now() - ts}ms`);
 }
 exports.ping = ping;
+async function help(context, args) {
+    const { query } = args;
+    if (context.commandClient) {
+        let commands = context.commandClient.commands;
+        if (query) {
+            commands = commands.filter((command) => {
+                return command.names.some((name) => {
+                    return (name.toLowerCase().startsWith(query.toLowerCase()) ||
+                        name.toLowerCase().includes(query.toLowerCase()));
+                });
+            });
+        }
+        if (!commands.length) {
+            throw new error_1.Err("No commands found", { status: 404 });
+        }
+        const paginator = new paginator_1.Paginator(context, {
+            pageLimit: commands.length,
+            onPage(page) {
+                const command = commands[page - 1];
+                const embed = embed_1.Embed.user(context);
+                if (command instanceof basecommand_1.BaseCommand) {
+                    embed.setTitle(command.name);
+                    if (command.aliases.length) {
+                        embed.addField("Aliases", command.aliases.join(", "));
+                    }
+                    if (command.metadata) {
+                        if (command.metadata.description) {
+                            embed.setDescription(markdown_1.Markdown.Format.italics(command.metadata.description).toString());
+                        }
+                        {
+                            const description = [];
+                            description.push(basic_1.Basic.field("<:IconChannel_Category:798624247122493450>", "Category", command.metadata.category));
+                            description.push(basic_1.Basic.field("<:IconChannel_TextNSFW:798624234628579399>", "NSFW", command.metadata.nsfw ? "Yes" : "No"));
+                            embed.addField("Information", description.join("\n"));
+                        }
+                        if (command.metadata.usage) {
+                            const description = [];
+                            description.push(markdown_1.Markdown.Format.codeblock(command.fullName + " " + command.metadata.usage).toString());
+                            if (command.metadata.examples) {
+                                if (command.metadata.examples.length) {
+                                    description.push(markdown_1.Markdown.Format.codeblock(command.metadata.examples
+                                        .map((example) => {
+                                        return command.fullName + " " + example;
+                                    })
+                                        .join("\n")).toString());
+                                }
+                            }
+                            embed.addField("Usage", description.join("\n"));
+                        }
+                    }
+                }
+                return embed;
+            },
+        });
+        return await paginator.start();
+    }
+    throw new error_1.Err("Context does not have a CommandClient attached", {
+        status: 500,
+    });
+}
+exports.help = help;
+async function helpAutocomplete(context) {
+    const query = context.value;
+    const cmds = globals_1.commands.commands;
+    if (query) {
+        const filtered = cmds.filter((command) => {
+            return command.names.some((name) => {
+                return (name.toLowerCase().startsWith(query.toLowerCase()) ||
+                    name.toLowerCase().includes(query.toLowerCase()));
+            });
+        });
+        return await context.respond({
+            choices: filtered
+                .map((command) => {
+                return {
+                    name: command.name,
+                    value: command.name,
+                };
+            })
+                .slice(0, 25),
+        });
+    }
+    return await context.respond({
+        choices: cmds
+            .map((command) => {
+            return {
+                name: command.name,
+                value: command.name,
+            };
+        })
+            .slice(0, 25),
+    });
+}
+exports.helpAutocomplete = helpAutocomplete;
+async function invite(context) {
+    return await (0, tools_1.editOrReply)(context, `<https://bot.clancy.lol/>`);
+}
+exports.invite = invite;

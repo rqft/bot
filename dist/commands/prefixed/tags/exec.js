@@ -9,7 +9,7 @@ class TagExecCommand extends basecommand_1.BaseCommand {
         super(client, {
             name: "tag exec",
             aliases: ["t exec", "tag eval", "t eval", "tag test", "t test"],
-            metadata: (0, command_metadata_1.ToolsMetadata)("exec tag script", "<script: string> ?<-args: Array<string>>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("exec tag script", "<script: string> ?<-args: Array<string>>", ["(user:tess)", "(arg:0) -args hi"]),
             type: [
                 {
                     name: "script",

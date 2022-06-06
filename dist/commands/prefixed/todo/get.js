@@ -10,7 +10,7 @@ class TodoGetCommand extends basecommand_1.BaseCommand {
             name: "todo",
             aliases: ["todo get"],
             priority: -1,
-            metadata: (0, command_metadata_1.ToolsMetadata)("get todo", "<id: number> ?<-user: User>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("get todo", "<id: number> ?<-user: User>", ["1"]),
             type: [
                 {
                     name: "id",

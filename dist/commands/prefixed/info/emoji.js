@@ -8,7 +8,11 @@ class InfoEmojiCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "info emoji",
-            metadata: (0, command_metadata_1.ToolsMetadata)("emoji info", "<emoji: Emoji>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("emoji info", "<emoji: Emoji>", [
+                "🍰",
+                ":goodbye:",
+                "969606376340992060",
+            ]),
             type: [
                 {
                     name: "emoji",

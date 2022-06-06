@@ -7,7 +7,7 @@ class ImageMirrorCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "image color",
-            metadata: (0, command_metadata_1.ImageMetadata)("view funny colours", "<target: Image>"),
+            metadata: (0, command_metadata_1.ImageMetadata)("view funny colours", "<target: Image> <size: Size=512x512>", ["f8f", "ffff88", "ffffff88 -size 256x256", "fff8 -size 128x128"]),
             type: [
                 {
                     name: "color",

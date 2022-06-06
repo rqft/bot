@@ -9,7 +9,10 @@ export default class InfoGuildCommand extends BaseCommand {
     super(client, {
       name: "info guild",
       aliases: ["info server"],
-      metadata: ToolsMetadata("guild info"),
+      metadata: ToolsMetadata("guild info", "<guild: Guild=here>", [
+        "walking",
+        "248981745502781440",
+      ]),
 
       type: [
         {

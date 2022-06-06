@@ -8,7 +8,11 @@ export default class InfoEmojiCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "info emoji",
-      metadata: ToolsMetadata("emoji info", "<emoji: Emoji>"),
+      metadata: ToolsMetadata("emoji info", "<emoji: Emoji>", [
+        "🍰",
+        ":goodbye:",
+        "969606376340992060",
+      ]),
       type: [
         {
           name: "emoji",

@@ -11,7 +11,8 @@ export default class ImageSpinCommand extends BaseCommand {
       name: "image spin",
       metadata: ImageMetadata(
         "you spin me right round baby right round like a record baby right round round round",
-        "<target: Image>"
+        "<target: Image>",
+        ["@insyri#7314", "insyri", "533757461706964993"]
       ),
       type: [
         {

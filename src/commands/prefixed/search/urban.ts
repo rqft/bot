@@ -7,7 +7,9 @@ export default class SearchUrbanCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "urban",
-      metadata: FunMetadata("the funny dictionary", "<word: string>"),
+      metadata: FunMetadata("the funny dictionary", "<word: string>", [
+        "clancy",
+      ]),
       type: [{ name: "word", type: "string", consume: true, required: true }],
     });
   }

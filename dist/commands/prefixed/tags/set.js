@@ -28,7 +28,9 @@ class TagSetCommand extends basecommand_1.BaseCommand {
                     consume: true,
                 },
             ],
-            metadata: (0, command_metadata_1.ToolsMetadata)("set a tag", "<key: string> <value: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("set a tag", "<key: string> <value: string>", [
+                "jonathan cool bot",
+            ]),
         });
     }
     run = formatter_1.Formatter.Tag.post;

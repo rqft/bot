@@ -8,7 +8,12 @@ export default class InfoChannelCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "info channel",
-      metadata: ToolsMetadata("channel info", "<channel: Channel=here>"),
+      metadata: ToolsMetadata("channel info", "<channel: Channel=here>", [
+        "general",
+        "248981745502781440",
+        "<#248981745502781440>",
+        "https://discord.com/channels/248981745502781440",
+      ]),
       type: [
         {
           name: "channel",

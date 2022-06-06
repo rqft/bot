@@ -10,7 +10,11 @@ export default class ImageMirrorCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image mirror",
-      metadata: ImageMetadata("mirror an image on itself", "<target: Image>"),
+      metadata: ImageMetadata(
+        "mirror an image on itself",
+        "<target: Image> <method: MirrorMethod=left>",
+        ["insyri left", "@insyri#7314 right", "533757461706964993 top"]
+      ),
       type: [
         {
           name: "target",

@@ -28,7 +28,9 @@ export default class TagSetCommand extends BaseCommand {
           consume: true,
         },
       ],
-      metadata: ToolsMetadata("set a tag", "<key: string> <value: string>"),
+      metadata: ToolsMetadata("set a tag", "<key: string> <value: string>", [
+        "jonathan cool bot",
+      ]),
     });
   }
 

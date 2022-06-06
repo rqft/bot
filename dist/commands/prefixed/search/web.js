@@ -7,7 +7,9 @@ class SearchWebCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "search web",
-            metadata: (0, command_metadata_1.ToolsMetadata)("look at html", "<query: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("look at html", "<query: string>", [
+                "what is a monkey",
+            ]),
             type: [
                 {
                     name: "query",

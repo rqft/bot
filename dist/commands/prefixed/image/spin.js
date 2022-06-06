@@ -9,7 +9,7 @@ class ImageSpinCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "image spin",
-            metadata: (0, command_metadata_1.ImageMetadata)("you spin me right round baby right round like a record baby right round round round", "<target: Image>"),
+            metadata: (0, command_metadata_1.ImageMetadata)("you spin me right round baby right round like a record baby right round round round", "<target: Image>", ["@insyri#7314", "insyri", "533757461706964993"]),
             type: [
                 {
                     name: "target",

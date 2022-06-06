@@ -8,7 +8,11 @@ export default class InfoRoleCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "info role",
-      metadata: ToolsMetadata("role info", "<role: Role>"),
+      metadata: ToolsMetadata("role info", "<role: Role>", [
+        "everyone",
+        "828443402806493224",
+        "@tehi",
+      ]),
       type: [
         {
           name: "role",

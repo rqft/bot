@@ -16,7 +16,12 @@ function Metadata(type, description, usage = "", examples = []) {
     };
 }
 exports.Metadata = Metadata;
-function ImageMetadata(description, usage = "", examples = []) {
+function ImageMetadata(description, usage = "", examples = [
+    "insyri",
+    "insyri#7314",
+    "533757461706964993",
+    "https://cdn.clancy.lol/turkey.png",
+]) {
     return Metadata(CommandType.IMAGE, description, usage, examples);
 }
 exports.ImageMetadata = ImageMetadata;

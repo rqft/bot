@@ -7,14 +7,14 @@ export default class ExecCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "exec",
-      metadata: ToolsMetadata(
-        "run shell",
-        "<code: string>"
-      ),
+      metadata: ToolsMetadata("run shell", "<code: string>", [
+        "ls",
+        "killall node",
+      ]),
       type: [
         {
           name: "code",
-          type: 'string',
+          type: "string",
           required: true,
         },
       ],

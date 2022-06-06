@@ -9,7 +9,7 @@ class PxlScreenshotCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "pxl screenshot",
-            metadata: (0, command_metadata_1.ImageMetadata)("Windows + Shift + S", "<query: string> <-browser: Browser=chromium> <-full-page: boolean=true> ?<-locale: string> <-theme: string=light>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("Windows + Shift + S", "<query: string> <-browser: Browser=chromium> <-full-page: boolean=true> ?<-locale: string> <-theme: string=light>", ["https://discord.com/", "https://clancy.lol/"]),
             type: [
                 {
                     name: "url",
@@ -27,19 +27,19 @@ class PxlScreenshotCommand extends basecommand_1.BaseCommand {
                 {
                     name: "full-page",
                     type: "bool",
-                    default: true
+                    default: true,
                 },
                 {
-                    name: 'locale',
-                    type: 'string',
+                    name: "locale",
+                    type: "string",
                     required: false,
                 },
                 {
-                    name: 'theme',
-                    type: 'string',
+                    name: "theme",
+                    type: "string",
                     choices: Object.values(pariah_1.APIs.PxlAPI.ScreenshotTheme),
                     required: false,
-                }
+                },
             ],
         });
     }

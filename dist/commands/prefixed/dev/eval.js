@@ -7,7 +7,7 @@ class EvalCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "eval",
-            metadata: (0, command_metadata_1.ToolsMetadata)("run code", "<code: string | Codeblock> <-json-spacing: number=2>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("run code", "<code: string | Codeblock> <-json-spacing: number=2>", ["1", "context.client.token", "while (true) {}"]),
             type: [
                 {
                     name: "code",

@@ -9,7 +9,9 @@ export default class SearchWebCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "search web",
-      metadata: ToolsMetadata("look at html", "<query: string>"),
+      metadata: ToolsMetadata("look at html", "<query: string>", [
+        "what is a monkey",
+      ]),
       type: [
         {
           name: "query",

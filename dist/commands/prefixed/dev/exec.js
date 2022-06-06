@@ -7,11 +7,14 @@ class ExecCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "exec",
-            metadata: (0, command_metadata_1.ToolsMetadata)("run shell", "<code: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("run shell", "<code: string>", [
+                "ls",
+                "killall node",
+            ]),
             type: [
                 {
                     name: "code",
-                    type: 'string',
+                    type: "string",
                     required: true,
                 },
             ],

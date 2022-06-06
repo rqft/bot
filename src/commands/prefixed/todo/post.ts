@@ -8,7 +8,9 @@ export default class TodoPostCommand extends BaseCommand {
     super(client, {
       name: "todo post",
       aliases: ["todo add"],
-      metadata: ToolsMetadata("add todo", "<data: string>"),
+      metadata: ToolsMetadata("add todo", "<data: string>", [
+        "take tehi to the store",
+      ]),
       type: [
         {
           name: "data",

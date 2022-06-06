@@ -10,7 +10,7 @@ export default class TodoGetCommand extends BaseCommand {
       name: "todo",
       aliases: ["todo get"],
       priority: -1,
-      metadata: ToolsMetadata("get todo", "<id: number> ?<-user: User>"),
+      metadata: ToolsMetadata("get todo", "<id: number> ?<-user: User>", ["1"]),
       type: [
         {
           name: "id",

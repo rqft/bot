@@ -8,7 +8,11 @@ class InfoRoleCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "info role",
-            metadata: (0, command_metadata_1.ToolsMetadata)("role info", "<role: Role>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("role info", "<role: Role>", [
+                "everyone",
+                "828443402806493224",
+                "@tehi",
+            ]),
             type: [
                 {
                     name: "role",

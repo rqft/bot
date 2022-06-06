@@ -10,7 +10,7 @@ class TagGetCommand extends basecommand_1.BaseCommand {
             name: "tag",
             aliases: ["t", "tag get", "t get"],
             priority: -1,
-            metadata: (0, command_metadata_1.ToolsMetadata)("get tag", "<get: string> ?<-args: Array<string>>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("get tag", "<get: string> ?<-args: Array<string>>", ["jonathan", "user -args hi"]),
             type: [
                 {
                     name: "key",

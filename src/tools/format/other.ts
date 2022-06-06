@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context } from "detritus-client/lib/command";
-import { InteractionContext } from "detritus-client/lib/interaction";
+import {
+  InteractionAutoCompleteContext,
+  InteractionContext,
+} from "detritus-client/lib/interaction";
 import { Message } from "detritus-client/lib/structures";
 import * as Process from "node:child_process";
+import { BaseCommand } from "../../commands/prefixed/basecommand";
+import { commands } from "../../globals";
+import { CustomEmojis } from "../emojis";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
+import { Paginator } from "../paginator";
 import { editOrReply } from "../tools";
+import { Basic } from "./basic";
 import { Embed } from "./embed";
 export interface CodeArgs {
   code: string;
@@ -115,4 +123,157 @@ export async function ping(
       ? context.message.createdAtUnix || context.message.editedAtUnix
       : context.interaction.createdAtUnix;
   return await editOrReply(context, `${Date.now() - ts}ms`);
+}
+
+export interface HelpArgs {
+  query?: string;
+}
+
+export async function help(
+  context: Context | InteractionContext,
+  args: HelpArgs
+): Promise<Message | null> {
+  const { query } = args;
+
+  if (context.commandClient) {
+    let commands = context.commandClient.commands;
+    if (query) {
+      commands = commands.filter((command) => {
+        return command.names.some((name) => {
+          return (
+            name.toLowerCase().startsWith(query.toLowerCase()) ||
+            name.toLowerCase().includes(query.toLowerCase())
+          );
+        });
+      });
+    }
+
+    if (!commands.length) {
+      throw new Err("No commands found", { status: 404 });
+    }
+
+    const paginator = new Paginator(context, {
+      pageLimit: commands.length,
+      onPage(page: number) {
+        const command = commands[page - 1]!;
+        const embed = Embed.user(context);
+
+        if (command instanceof BaseCommand) {
+          embed.setTitle(command.name);
+          if (command.aliases.length) {
+            embed.addField("Aliases", command.aliases.join(", "));
+          }
+
+          if (command.metadata) {
+            if (command.metadata.description) {
+              embed.setDescription(
+                Markdown.Format.italics(command.metadata.description).toString()
+              );
+            }
+
+            {
+              const description: Array<string> = [];
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.CHANNEL_CATEGORY,
+                  "Category",
+                  command.metadata.category
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.CHANNEL_TEXT_NSFW,
+                  "NSFW",
+                  command.metadata.nsfw ? "Yes" : "No"
+                )
+              );
+
+              embed.addField("Information", description.join("\n"));
+            }
+
+            if (command.metadata.usage) {
+              const description: Array<string> = [];
+
+              description.push(
+                Markdown.Format.codeblock(
+                  command.fullName + " " + command.metadata.usage
+                ).toString()
+              );
+
+              if (command.metadata.examples) {
+                if (command.metadata.examples.length) {
+                  description.push(
+                    Markdown.Format.codeblock(
+                      command.metadata.examples
+                        .map((example) => {
+                          return command.fullName + " " + example;
+                        })
+                        .join("\n")
+                    ).toString()
+                  );
+                }
+              }
+
+              embed.addField("Usage", description.join("\n"));
+            }
+          }
+        }
+
+        return embed;
+      },
+    });
+
+    return await paginator.start();
+  }
+
+  throw new Err("Context does not have a CommandClient attached", {
+    status: 500,
+  });
+}
+
+export async function helpAutocomplete(
+  context: InteractionAutoCompleteContext
+) {
+  const query = context.value;
+  const cmds = commands.commands;
+  if (query) {
+    const filtered = cmds.filter((command) => {
+      return command.names.some((name) => {
+        return (
+          name.toLowerCase().startsWith(query.toLowerCase()) ||
+          name.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+    });
+
+    return await context.respond({
+      choices: filtered
+        .map((command) => {
+          return {
+            name: command.name,
+            value: command.name,
+          };
+        })
+        .slice(0, 25),
+    });
+  }
+
+  return await context.respond({
+    choices: cmds
+      .map((command) => {
+        return {
+          name: command.name,
+          value: command.name,
+        };
+      })
+      .slice(0, 25),
+  });
+}
+
+export async function invite(
+  context: Context | InteractionContext
+): Promise<Message | null> {
+  return await editOrReply(context, `<https://bot.clancy.lol/>`);
 }

@@ -8,7 +8,9 @@ class InfoImageCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "info image",
-            metadata: (0, command_metadata_1.ToolsMetadata)("emoji image", "<target: Image>"),
+            metadata: Object.assign((0, command_metadata_1.ImageMetadata)("look at image data", "<target: Image>"), {
+                category: command_metadata_1.CommandType.TOOLS,
+            }),
             type: [
                 {
                     name: "target",

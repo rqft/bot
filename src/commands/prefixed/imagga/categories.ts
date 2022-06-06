@@ -9,10 +9,7 @@ export default class ImaggaCategoriesCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "imagga categories",
-      metadata: ImageMetadata(
-        "what is this image",
-        "<target: Image>"
-      ),
+      metadata: ImageMetadata("what is this image", "<target: Image>"),
       type: [
         {
           name: "target",

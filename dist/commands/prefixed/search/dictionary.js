@@ -8,7 +8,7 @@ class SearchDictionaryCommand extends basecommand_1.BaseCommand {
         super(client, {
             name: "search dictionary",
             aliases: ["search dict", "search merriam"],
-            metadata: (0, command_metadata_1.FunMetadata)("merriam", "<word: string>"),
+            metadata: (0, command_metadata_1.FunMetadata)("merriam", "<word: string>", ["hello", "monkey"]),
             type: [{ name: "word", type: "string", consume: true }],
         });
     }

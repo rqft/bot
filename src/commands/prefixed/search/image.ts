@@ -9,7 +9,10 @@ export default class SearchImageCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "search image",
-      metadata: ToolsMetadata("look at png", "<query: string>"),
+      metadata: ToolsMetadata("look at png", "<query: string>", [
+        "plants",
+        "money",
+      ]),
       type: [
         {
           name: "query",

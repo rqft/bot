@@ -11,7 +11,8 @@ export default class TagExecCommand extends BaseCommand {
       aliases: ["t exec", "tag eval", "t eval", "tag test", "t test"],
       metadata: ToolsMetadata(
         "exec tag script",
-        "<script: string> ?<-args: Array<string>>"
+        "<script: string> ?<-args: Array<string>>",
+        ["(user:tess)", "(arg:0) -args hi"]
       ),
       type: [
         {

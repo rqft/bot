@@ -8,7 +8,9 @@ class TodoPutCommand extends basecommand_1.BaseCommand {
         super(client, {
             name: "todo put",
             aliases: ["todo edit"],
-            metadata: (0, command_metadata_1.ToolsMetadata)("add todo", "<id: number> <data: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("add todo", "<id: number> <data: string>", [
+                "1 take hatta* to the store",
+            ]),
             type: [
                 {
                     name: "id",

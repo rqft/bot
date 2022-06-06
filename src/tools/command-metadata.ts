@@ -27,7 +27,12 @@ export function Metadata(
 export function ImageMetadata(
   description: string,
   usage = "",
-  examples: Array<string> = []
+  examples: Array<string> = [
+    "insyri",
+    "insyri#7314",
+    "533757461706964993",
+    "https://cdn.clancy.lol/turkey.png",
+  ]
 ) {
   return Metadata(CommandType.IMAGE, description, usage, examples);
 }

@@ -7,7 +7,9 @@ class SearchUrbanCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "urban",
-            metadata: (0, command_metadata_1.FunMetadata)("the funny dictionary", "<word: string>"),
+            metadata: (0, command_metadata_1.FunMetadata)("the funny dictionary", "<word: string>", [
+                "clancy",
+            ]),
             type: [{ name: "word", type: "string", consume: true, required: true }],
         });
     }

@@ -8,7 +8,7 @@ class TagDeleteCommand extends basecommand_1.BaseCommand {
         super(client, {
             name: "tag delete",
             aliases: ["t delete", "tag remove", "t remove"],
-            metadata: (0, command_metadata_1.ToolsMetadata)("delete tag", "<key: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("delete tag", "<key: string>", ["jonathan"]),
             type: [
                 {
                     name: "key",

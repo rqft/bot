@@ -8,7 +8,10 @@ class SearchYoutubeCommand extends basecommand_1.BaseCommand {
         super(client, {
             name: "search youtube",
             aliases: ["search yt"],
-            metadata: (0, command_metadata_1.ToolsMetadata)("look at mp4", "<query: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("look at mp4", "<query: string>", [
+                "how to setup notsobot",
+                "jawbreaker haru",
+            ]),
             type: [
                 {
                     name: "query",

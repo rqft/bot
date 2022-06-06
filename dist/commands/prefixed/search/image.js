@@ -7,7 +7,10 @@ class SearchImageCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "search image",
-            metadata: (0, command_metadata_1.ToolsMetadata)("look at png", "<query: string>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("look at png", "<query: string>", [
+                "plants",
+                "money",
+            ]),
             type: [
                 {
                     name: "query",

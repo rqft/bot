@@ -63,7 +63,6 @@ export module EmojiData {
       value: Emoji[K]
     ): Promise<Emoji | undefined> {
       const payload = await this.listAll();
-      console.log(payload);
       return payload.payload.find((emoji: Emoji) => emoji[key] === value);
     }
   }

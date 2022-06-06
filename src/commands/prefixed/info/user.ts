@@ -8,7 +8,11 @@ export default class InfoUserCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "info user",
-      metadata: ToolsMetadata("user info", "<user: User=self>"),
+      metadata: ToolsMetadata("user info", "<user: User=self>", [
+        "@insyri#7314",
+        "insyri",
+        "533757461706964993",
+      ]),
       type: [
         {
           name: "user",

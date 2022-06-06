@@ -8,7 +8,11 @@ class InfoUserCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "info user",
-            metadata: (0, command_metadata_1.ToolsMetadata)("user info", "<user: User=self>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("user info", "<user: User=self>", [
+                "@insyri#7314",
+                "insyri",
+                "533757461706964993",
+            ]),
             type: [
                 {
                     name: "user",

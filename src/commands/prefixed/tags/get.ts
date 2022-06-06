@@ -12,7 +12,8 @@ export default class TagGetCommand extends BaseCommand {
       priority: -1,
       metadata: ToolsMetadata(
         "get tag",
-        "<get: string> ?<-args: Array<string>>"
+        "<get: string> ?<-args: Array<string>>",
+        ["jonathan", "user -args hi"]
       ),
       type: [
         {

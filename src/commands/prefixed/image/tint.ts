@@ -9,7 +9,16 @@ export default class ImageTintCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image tint",
-      metadata: ImageMetadata("view funny colours", "<target: Image>"),
+      metadata: ImageMetadata(
+        "make people have the funny colours",
+        "<target: Image> <color: Color> ?<-[opacity|o]: 0-100=50>",
+        [
+          "@insyri#7314 f8f",
+          "insyri f8f",
+          "insyri f8f 50",
+          "533757461706964993 f8f 25",
+        ]
+      ),
       type: [
         {
           name: "target",

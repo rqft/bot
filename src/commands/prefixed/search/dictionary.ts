@@ -8,7 +8,7 @@ export default class SearchDictionaryCommand extends BaseCommand {
     super(client, {
       name: "search dictionary",
       aliases: ["search dict", "search merriam"],
-      metadata: FunMetadata("merriam", "<word: string>"),
+      metadata: FunMetadata("merriam", "<word: string>", ["hello", "monkey"]),
       type: [{ name: "word", type: "string", consume: true }],
     });
   }

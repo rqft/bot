@@ -8,7 +8,9 @@ export default class TodoGetCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "todo list",
-      metadata: ToolsMetadata("get todo", "?<-user: User>"),
+      metadata: ToolsMetadata("get todo", "?<-user: User>", [
+        "-user @insyri#7314",
+      ]),
 
       args: [
         {

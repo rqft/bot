@@ -9,7 +9,11 @@ class ImageRotateCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "image rotate",
-            metadata: (0, command_metadata_1.ImageMetadata)("turn", "<target: Image> ?<degrees: number>"),
+            metadata: (0, command_metadata_1.ImageMetadata)("turn", "<target: Image> <degrees: number>", [
+                "@insyri#7314 90",
+                "insyri 45",
+                "533757461706964993 120",
+            ]),
             type: [
                 {
                     name: "target",

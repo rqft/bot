@@ -9,7 +9,8 @@ export default class EvalCommand extends BaseCommand {
       name: "eval",
       metadata: ToolsMetadata(
         "run code",
-        "<code: string | Codeblock> <-json-spacing: number=2>"
+        "<code: string | Codeblock> <-json-spacing: number=2>",
+        ["1", "context.client.token", "while (true) {}"]
       ),
       type: [
         {

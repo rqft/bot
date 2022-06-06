@@ -8,7 +8,12 @@ class InfoChannelCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "info channel",
-            metadata: (0, command_metadata_1.ToolsMetadata)("channel info", "<channel: Channel=here>"),
+            metadata: (0, command_metadata_1.ToolsMetadata)("channel info", "<channel: Channel=here>", [
+                "general",
+                "248981745502781440",
+                "<#248981745502781440>",
+                "https://discord.com/channels/248981745502781440",
+            ]),
             type: [
                 {
                     name: "channel",
