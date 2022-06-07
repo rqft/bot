@@ -22,13 +22,13 @@ class ImageTiltCommand extends basecommand_1.BaseCommand {
                     required: true,
                 },
                 {
-                    name: "size",
-                    type: "string",
+                    name: "amount",
+                    type: parameters_1.Parameters.number({ min: 0, max: 90 }),
                     required: false,
                 },
             ],
         });
     }
-    run = formatter_1.Formatter.Image.resize;
+    run = formatter_1.Formatter.Image.tilt;
 }
 exports.default = ImageTiltCommand;

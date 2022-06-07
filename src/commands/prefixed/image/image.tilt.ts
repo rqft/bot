@@ -26,13 +26,13 @@ export default class ImageTiltCommand extends BaseCommand {
           required: true,
         },
         {
-          name: "size",
-          type: "string",
+          name: "amount",
+          type: Parameters.number({ min: 0, max: 90 }),
           required: false,
         },
       ],
     });
   }
 
-  run = Formatter.Image.resize;
+  run = Formatter.Image.tilt;
 }

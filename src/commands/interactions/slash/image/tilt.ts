@@ -24,10 +24,10 @@ export class ImageTiltSlashSubCommand extends BaseSlashSubCommand {
           name: "amount",
           description: "how much",
           type: ApplicationCommandOptionTypes.INTEGER,
-          required: true,
+          required: false,
         },
       ],
     });
   }
-  run = Formatter.Image.rotate;
+  run = Formatter.Image.tilt;
 }
