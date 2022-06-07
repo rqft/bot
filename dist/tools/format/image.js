@@ -68,4 +68,41 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.tint = tint;
+    async function averageColor(context, args) {
+        const { target } = args;
+        const { payload: { data: color }, } = await Image.instance.imageAverageColor(target);
+        const { payload: image } = await Image.instance.imageColor(512, color.toString(16));
+        const embed = await embed_1.Embed.image(context, image, "color.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.averageColor = averageColor;
+    async function brightness(context, args) {
+        const { target, amount } = args;
+        const { payload: image } = await Image.instance.imageBrightness(target, (amount || 50) / 100);
+        const embed = await embed_1.Embed.image(context, image, "brightness.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.brightness = brightness;
+    async function fisheye(context, args) {
+        const { target, amount } = args;
+        const { payload: image } = await Image.instance.imageFisheye(target, amount || 2);
+        const embed = await embed_1.Embed.image(context, image, "fisheye.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.fisheye = fisheye;
+    async function invert(context, args) {
+        const { target, method } = args;
+        const m = method || pariah_1.APIs.Jonathan.InvertMethods.INVERT;
+        const { payload: image } = await Image.instance.imageInvert(target, m);
+        const embed = await embed_1.Embed.image(context, image, `invert-${m.toLowerCase()}.png`);
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.invert = invert;
+    async function saturation(context, args) {
+        const { target, amount } = args;
+        const { payload: image } = await Image.instance.imageSaturation(target, (amount || 50) / 100);
+        const embed = await embed_1.Embed.image(context, image, "saturation.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.saturation = saturation;
 })(Image = exports.Image || (exports.Image = {}));

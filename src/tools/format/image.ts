@@ -139,4 +139,90 @@ export module Image {
 
     return await editOrReply(context, { embed });
   }
+
+  export async function averageColor(
+    context: Context | InteractionContext,
+    args: Basic.ImageArgs
+  ) {
+    const { target } = args;
+
+    const {
+      payload: { data: color },
+    } = await instance.imageAverageColor(target);
+
+    const { payload: image } = await instance.imageColor(
+      512,
+      color.toString(16)
+    );
+
+    const embed = await Embed.image(context, image, "color.png");
+    return await editOrReply(context, { embed });
+  }
+
+  export interface AmountArgs extends Basic.ImageArgs {
+    amount?: number;
+  }
+
+  export async function brightness(
+    context: Context | InteractionContext,
+    args: AmountArgs
+  ) {
+    const { target, amount } = args;
+
+    const { payload: image } = await instance.imageBrightness(
+      target,
+      (amount || 50) / 100
+    );
+
+    const embed = await Embed.image(context, image, "brightness.png");
+    return await editOrReply(context, { embed });
+  }
+
+  export async function fisheye(
+    context: Context | InteractionContext,
+    args: AmountArgs
+  ) {
+    const { target, amount } = args;
+
+    const { payload: image } = await instance.imageFisheye(target, amount || 2);
+
+    const embed = await Embed.image(context, image, "fisheye.png");
+    return await editOrReply(context, { embed });
+  }
+
+  export interface InvertArgs extends Basic.ImageArgs {
+    method?: APIs.Jonathan.InvertMethods;
+  }
+
+  export async function invert(
+    context: Context | InteractionContext,
+    args: InvertArgs
+  ) {
+    const { target, method } = args;
+    const m = method || APIs.Jonathan.InvertMethods.INVERT;
+
+    const { payload: image } = await instance.imageInvert(target, m);
+
+    const embed = await Embed.image(
+      context,
+      image,
+      `invert-${m.toLowerCase()}.png`
+    );
+    return await editOrReply(context, { embed });
+  }
+
+  export async function saturation(
+    context: Context | InteractionContext,
+    args: AmountArgs
+  ) {
+    const { target, amount } = args;
+
+    const { payload: image } = await instance.imageSaturation(
+      target,
+      (amount || 50) / 100
+    );
+
+    const embed = await Embed.image(context, image, "saturation.png");
+    return await editOrReply(context, { embed });
+  }
 }
