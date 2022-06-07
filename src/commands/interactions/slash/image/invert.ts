@@ -34,5 +34,5 @@ export class ImageInvertSlashSubCommand extends BaseSlashSubCommand {
       ],
     });
   }
-  run = Formatter.Image.fisheye;
+  run = Formatter.Image.invert;
 }

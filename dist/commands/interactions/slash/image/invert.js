@@ -31,6 +31,6 @@ class ImageInvertSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
             ],
         });
     }
-    run = formatter_1.Formatter.Image.fisheye;
+    run = formatter_1.Formatter.Image.invert;
 }
 exports.ImageInvertSlashSubCommand = ImageInvertSlashSubCommand;
