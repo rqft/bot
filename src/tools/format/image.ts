@@ -102,6 +102,22 @@ export module Image {
     return await editOrReply(context, { embed });
   }
 
+  export interface TiltArgs extends Basic.ImageArgs {
+    amount?: number;
+  }
+
+  export async function tilt(
+    context: Context | InteractionContext,
+    args: TiltArgs
+  ) {
+    const { target, amount } = args;
+
+    const { payload: image } = await instance.imageTilt(target, amount);
+
+    const embed = await Embed.image(context, image, "tilt.png");
+    return await editOrReply(context, { embed });
+  }
+
   export interface TintArgs extends Basic.ImageArgs {
     color: string;
     opacity?: number;

@@ -1,22 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImageRotateSlashSubCommand = void 0;
+exports.ImageTiltSlashSubCommand = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const formatter_1 = require("../../../../tools/formatter");
 const parameters_1 = require("../../../../tools/parameters");
 const baseslash_1 = require("../baseslash");
-class ImageRotateSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
-    name = "rotate";
-    description = "slant.";
+class ImageTiltSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
+    name = "tilt";
+    description = "add spinny motion blur";
     constructor() {
         super({
             options: [
-                {
-                    name: "degrees",
-                    description: "shift",
-                    type: constants_1.ApplicationCommandOptionTypes.INTEGER,
-                    required: true,
-                },
                 {
                     name: "target",
                     description: "what to use",
@@ -25,9 +19,15 @@ class ImageRotateSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
                     required: false,
                 },
+                {
+                    name: "amount",
+                    description: "how much",
+                    type: constants_1.ApplicationCommandOptionTypes.INTEGER,
+                    required: true,
+                },
             ],
         });
     }
     run = formatter_1.Formatter.Image.rotate;
 }
-exports.ImageRotateSlashSubCommand = ImageRotateSlashSubCommand;
+exports.ImageTiltSlashSubCommand = ImageTiltSlashSubCommand;

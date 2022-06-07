@@ -6,6 +6,7 @@ const mirror_1 = require("./mirror");
 const resize_1 = require("./resize");
 const rotate_1 = require("./rotate");
 const spin_1 = require("./spin");
+const tilt_1 = require("./tilt");
 const tint_1 = require("./tint");
 const url_1 = require("./url");
 class ImageSlashCommandGroup extends baseslash_1.BaseSlashCommand {
@@ -21,6 +22,7 @@ class ImageSlashCommandGroup extends baseslash_1.BaseSlashCommand {
                 new rotate_1.ImageRotateSlashSubCommand(),
                 new url_1.ImageUrlSlashSubCommand(),
                 new tint_1.ImageTintSlashSubCommand(),
+                new tilt_1.ImageTiltSlashSubCommand(),
             ],
         });
     }

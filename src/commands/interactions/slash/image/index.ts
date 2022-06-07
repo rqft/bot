@@ -4,6 +4,7 @@ import { ImageMirrorSlashSubCommand } from "./mirror";
 import { ImageResizeSlashSubCommand } from "./resize";
 import { ImageRotateSlashSubCommand } from "./rotate";
 import { ImageSpinSlashSubCommand } from "./spin";
+import { ImageTiltSlashSubCommand } from "./tilt";
 import { ImageTintSlashSubCommand } from "./tint";
 import { ImageUrlSlashSubCommand } from "./url";
 export default class ImageSlashCommandGroup extends BaseSlashCommand {
@@ -19,6 +20,7 @@ export default class ImageSlashCommandGroup extends BaseSlashCommand {
         new ImageRotateSlashSubCommand(),
         new ImageUrlSlashSubCommand(),
         new ImageTintSlashSubCommand(),
+        new ImageTiltSlashSubCommand(),
       ],
     });
   }

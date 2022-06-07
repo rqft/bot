@@ -54,6 +54,13 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.url = url;
+    async function tilt(context, args) {
+        const { target, amount } = args;
+        const { payload: image } = await Image.instance.imageTilt(target, amount);
+        const embed = await embed_1.Embed.image(context, image, "tilt.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.tilt = tilt;
     async function tint(context, args) {
         const { target, color, opacity } = args;
         const { payload: image } = await Image.instance.imageTint(target, color, (opacity || 50) / 100);
