@@ -162,9 +162,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     _args: T,
     errors: ParsedErrors
   ): Promise<unknown> {
-    const description: Array<string> = [
-      "hey u have some wrong inputs, might want to fix them :D\n",
-    ];
+    const description: Array<string> = ["hey u have some wrong inputs\n"];
 
     const store: Record<string, string> = {};
     for (const key in errors) {

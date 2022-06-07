@@ -91,9 +91,7 @@ class BaseCommand extends command_1.Command {
         throw error;
     }
     async onTypeError(context, _args, errors) {
-        const description = [
-            "hey u have some wrong inputs, might want to fix them :D\n",
-        ];
+        const description = ["hey u have some wrong inputs\n"];
         const store = {};
         for (const key in errors) {
             const value = errors[key];
