@@ -10,6 +10,9 @@ class VouchMenuUserCommand extends baseuser_1.BaseContextMenuUserCommand {
     guildIds = new detritus_utils_1.BaseSet(["983638405932003388"]);
     async run(context, args) {
         const vouchedId = "983646172520525876";
+        if (!context.member || !context.member.roles.has(vouchedId)) {
+            throw new error_1.Err("You are not vouched");
+        }
         if (args.member) {
             if (args.member.roles.has(vouchedId)) {
                 return new error_1.Err("This user has already been vouched for");

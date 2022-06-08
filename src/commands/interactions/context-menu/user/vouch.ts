@@ -12,6 +12,10 @@ export default class VouchMenuUserCommand extends BaseContextMenuUserCommand {
   async run(context: InteractionContext, args: ContextMenuUserArgs) {
     const vouchedId = "983646172520525876";
 
+    if (!context.member || !context.member.roles.has(vouchedId)) {
+      throw new Err("You are not vouched");
+    }
+
     if (args.member) {
       if (args.member.roles.has(vouchedId)) {
         return new Err("This user has already been vouched for");
