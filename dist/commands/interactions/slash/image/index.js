@@ -13,6 +13,7 @@ const saturation_1 = require("./saturation");
 const spin_1 = require("./spin");
 const tilt_1 = require("./tilt");
 const tint_1 = require("./tint");
+const upscale_1 = require("./upscale");
 const url_1 = require("./url");
 class ImageSlashCommandGroup extends baseslash_1.BaseSlashCommand {
     name = "image";
@@ -33,6 +34,7 @@ class ImageSlashCommandGroup extends baseslash_1.BaseSlashCommand {
                 new fisheye_1.ImageFisheyeSlashSubCommand(),
                 new invert_1.ImageInvertSlashSubCommand(),
                 new saturation_1.ImageSaturationSlashSubCommand(),
+                new upscale_1.ImageUpscaleSlashSubCommand(),
             ],
         });
     }

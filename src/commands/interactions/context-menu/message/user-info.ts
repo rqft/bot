@@ -5,7 +5,7 @@ import {
   ContextMenuMessageArgs,
 } from "./basemessage";
 
-export default class UserSlashCommand extends BaseContextMenuMessageCommand {
+export default class InfoUserMenuMessageCommand extends BaseContextMenuMessageCommand {
   name = "User Information";
 
   async run(context: InteractionContext, args: ContextMenuMessageArgs) {

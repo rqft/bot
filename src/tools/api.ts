@@ -1,3 +1,6 @@
+import { sleep } from "detritus-utils/lib/timers";
+import FormData from "form-data";
+import fetch from "node-fetch";
 import { APIs, Pariah } from "pariah";
 
 export module YoutubeSearch {
@@ -72,4 +75,71 @@ export module YoutubeSearch {
 
 export class Sarah extends APIs.Jonathan.API {
   url = new URL("http://localhost:3000");
+}
+
+export module Waifu2x {
+  export const Url = new URL("https://api.alcaamado.es/api/");
+
+  export interface Hash {
+    hash: string;
+  }
+
+  export interface Check {
+    finished: true;
+    size: 0;
+  }
+
+  export class API extends Pariah {
+    constructor() {
+      super(Url);
+    }
+
+    public async convert(data: Buffer) {
+      const form = new FormData();
+
+      form.append("denoise", 1);
+      form.append("scale", "true");
+      form.append("file", data, {
+        filename: "result.png",
+        contentType: "image/png",
+      });
+
+      return await this.post.json<Hash>(
+        "/v1/waifu2x/convert",
+        {},
+        {
+          body: form,
+        }
+      );
+    }
+
+    public async grab(hash: string, type = "png") {
+      return await this.get.buffer("/v2/waifu2x/get", {
+        hash,
+        type,
+      });
+    }
+
+    public async check(hash: string) {
+      return await this.get.json<Check>("/v2/waifu2x/check", {
+        hash,
+      });
+    }
+
+    public async use(url: string, type = "png") {
+      const data = await fetch(url);
+      const buffer = await data.buffer();
+      const hash = await this.convert(buffer);
+
+      let finished = false;
+      while (!finished) {
+        const check = await this.check(hash.payload.hash);
+        finished = check.payload.finished;
+        console.log(check.payload);
+        await sleep(1000);
+      }
+
+      return await this.grab(hash.payload.hash, type);
+    }
+  }
 }

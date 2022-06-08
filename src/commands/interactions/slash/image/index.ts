@@ -11,6 +11,7 @@ import { ImageSaturationSlashSubCommand } from "./saturation";
 import { ImageSpinSlashSubCommand } from "./spin";
 import { ImageTiltSlashSubCommand } from "./tilt";
 import { ImageTintSlashSubCommand } from "./tint";
+import { ImageUpscaleSlashSubCommand } from "./upscale";
 import { ImageUrlSlashSubCommand } from "./url";
 export default class ImageSlashCommandGroup extends BaseSlashCommand {
   name = "image";
@@ -31,6 +32,7 @@ export default class ImageSlashCommandGroup extends BaseSlashCommand {
         new ImageFisheyeSlashSubCommand(),
         new ImageInvertSlashSubCommand(),
         new ImageSaturationSlashSubCommand(),
+        new ImageUpscaleSlashSubCommand(),
       ],
     });
   }

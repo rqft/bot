@@ -105,4 +105,12 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.saturation = saturation;
+    const w2xInstance = new api_1.Waifu2x.API();
+    async function upscale(context, args) {
+        const { target } = args;
+        const { payload: image } = await w2xInstance.use(target);
+        const embed = await embed_1.Embed.image(context, image, "upscale.png");
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.upscale = upscale;
 })(Image = exports.Image || (exports.Image = {}));

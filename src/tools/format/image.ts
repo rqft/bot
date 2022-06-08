@@ -3,7 +3,7 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
 import { Secrets } from "../../secrets";
-import { Sarah } from "../api";
+import { Sarah, Waifu2x } from "../api";
 import { editOrReply, extensionFromFileName, fileNameFromUrl } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
@@ -223,6 +223,19 @@ export module Image {
     );
 
     const embed = await Embed.image(context, image, "saturation.png");
+    return await editOrReply(context, { embed });
+  }
+
+  const w2xInstance = new Waifu2x.API();
+  export async function upscale(
+    context: Context | InteractionContext,
+    args: Basic.ImageArgs
+  ) {
+    const { target } = args;
+
+    const { payload: image } = await w2xInstance.use(target);
+
+    const embed = await Embed.image(context, image, "upscale.png");
     return await editOrReply(context, { embed });
   }
 }

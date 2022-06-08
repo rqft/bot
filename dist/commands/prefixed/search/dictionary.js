@@ -9,7 +9,7 @@ class SearchDictionaryCommand extends basecommand_1.BaseCommand {
             name: "search dictionary",
             aliases: ["search dict", "search merriam"],
             metadata: (0, command_metadata_1.FunMetadata)("merriam", "<word: string>", ["hello", "monkey"]),
-            type: [{ name: "word", type: "string", consume: true }],
+            type: [{ name: "query", type: "string", consume: true }],
         });
     }
     run = formatter_1.Formatter.Search.define;
