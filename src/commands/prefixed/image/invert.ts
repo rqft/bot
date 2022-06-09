@@ -1,12 +1,10 @@
 import { CommandClient } from "detritus-client";
-import { ImageFormats } from "detritus-client/lib/constants";
 import { APIs } from "pariah";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
-import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class ImageInvertCommand extends BaseCommand {
+export default class ImageInvertCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image invert",
@@ -19,13 +17,6 @@ export default class ImageInvertCommand extends BaseCommand {
           "533757461706964993 -method value",
         ]
       ),
-      type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(ImageFormats.PNG),
-          required: true,
-        },
-      ],
 
       args: [
         {

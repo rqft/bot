@@ -1,11 +1,10 @@
 import { CommandClient } from "detritus-client";
-import { ImageFormats } from "detritus-client/lib/constants";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class ImageBrightnessCommand extends BaseCommand {
+export default class ImageBrightnessCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image saturation",
@@ -15,11 +14,6 @@ export default class ImageBrightnessCommand extends BaseCommand {
         "533757461706964993 25",
       ]),
       type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(ImageFormats.PNG),
-          required: true,
-        },
         {
           name: "amount",
           type: Parameters.number({ min: 0 }),

@@ -15,10 +15,10 @@ const markdown_1 = require("./markdown");
 const tools_1 = require("./tools");
 var Parameters;
 (function (Parameters) {
-    function array(use) {
+    function array(use, split = "|") {
         return function (value) {
             return value
-                .split("|")
+                .split(split)
                 .map((x) => x.trim())
                 .map(use);
         };
@@ -137,8 +137,8 @@ var Parameters;
             .map((v) => v.users.toArray())
             .flat(1)
             .find((key) => {
-            return (key.username.toLowerCase().includes(value) ||
-                key.toString().toLowerCase() === value ||
+            return (key.username.toLowerCase().includes(value.toLowerCase()) ||
+                key.toString().toLowerCase() === value.toLowerCase() ||
                 key.id === value.replace(/\D/g, ""));
         });
         if (!found) {

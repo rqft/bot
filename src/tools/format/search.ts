@@ -9,10 +9,12 @@ import { APIs, Requester } from "pariah";
 import { Brand } from "../../constants";
 import { Secrets } from "../../secrets";
 import { YoutubeSearch } from "../api";
+import { CustomEmojis, Emojis } from "../emojis";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { Paginator } from "../paginator";
-import { splitToFields, toTitleCase } from "../tools";
+import { buildTimestampString, splitToFields, toTitleCase } from "../tools";
+import { Basic } from "./basic";
 import { Embed } from "./embed";
 import { Pxl } from "./pxl";
 
@@ -297,5 +299,307 @@ export module Search {
           g1
         )})`
     );
+  }
+
+  export const SpotifyInstance = new APIs.Spotify.API(...Secrets.Key.Spotify);
+
+  export interface SpotifyArgs extends SearchArgs {
+    type?: Array<APIs.Spotify.Keys>;
+  }
+
+  export async function spotify(
+    context: Context | InteractionContext,
+    args: SpotifyArgs
+  ): Promise<Message | null> {
+    const { query, type } = args;
+
+    // load cred
+    await SpotifyInstance.loadCredentials();
+
+    const { payload } = await SpotifyInstance.searchForItem(query, type);
+
+    if ("error" in payload) {
+      throw new Err(payload.error.message, { status: payload.error.status });
+    }
+
+    let total: Array<
+      APIs.Spotify.SearchTotal[APIs.Spotify.KeysPlural[APIs.Spotify.Keys]]["items"][number]
+    > = [];
+
+    for (const key in payload) {
+      const list = payload[key as APIs.Spotify.KeysPlural[APIs.Spotify.Keys]];
+      if (list !== undefined) {
+        for (const item of list.items) {
+          if (item) {
+            total.push(item);
+          }
+        }
+      }
+    }
+
+    if (!total.length) {
+      throw new Err("No results found", { status: 404 });
+    }
+
+    const paginator = new Paginator(context, {
+      pageLimit: total.length,
+      onPage(page) {
+        const item = total[page - 1]!;
+        console.log(total);
+        const embed = Embed.user(context);
+
+        embed.setTitle(item.name);
+        embed.setUrl(item.external_urls.spotify);
+
+        switch (item.type) {
+          case APIs.Spotify.Keys.TRACK: {
+            const image = getLargestImage(item.album.images);
+            if (image) {
+              embed.setThumbnail(image.url);
+            }
+
+            // track
+            {
+              const description: Array<string> = [];
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_ADD_FILE,
+                  "Disc",
+                  item.album.album_type === "single"
+                    ? "1"
+                    : item.disc_number.toLocaleString()
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  Emojis.WARNING,
+                  "Explicit",
+                  item.explicit ? "Yes" : "No"
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_SLOWMODE,
+                  "Duration",
+                  Markdown.toTimeString(item.duration_ms, undefined, false)
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_INVITE,
+                  "Popularity",
+                  item.popularity.toLocaleString() + "%"
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_SETTINGS,
+                  "Restriction",
+                  item.restrictions?.reason || "None"
+                )
+              );
+
+              embed.addField("Track", description.join("\n"));
+            }
+
+            // album
+            {
+              embed.addField(
+                toTitleCase(item.album.album_type),
+                generateAlbumDescription(item.album)
+              );
+            }
+
+            // artists
+
+            embed.addField(
+              "Artists",
+              item.artists
+                .map((x) => `[${x.name}](${x.external_urls.spotify})`)
+                .join(", ")
+            );
+
+            break;
+          }
+
+          case APIs.Spotify.Keys.ALBUM: {
+            const image = getLargestImage(item.images);
+            if (image) {
+              embed.setThumbnail(image.url);
+            }
+
+            embed.setDescription(generateAlbumDescription(item));
+            break;
+          }
+
+          case APIs.Spotify.Keys.ARTIST: {
+            const image = getLargestImage(item.images);
+            if (image) {
+              embed.setThumbnail(image.url);
+            }
+
+            {
+              const description: Array<string> = [];
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_MEMBERS,
+                  "Followers",
+                  item.followers.total.toLocaleString()
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_INVITE,
+                  "Popularity",
+                  item.popularity.toLocaleString() + "%"
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_RICH_PRESENCE,
+                  "Genres",
+                  item.genres
+                    .map((v) => Markdown.Format.codestring(v))
+                    .join(", ") || "`unknown`"
+                )
+              );
+
+              embed.setDescription(description.join("\n"));
+            }
+
+            break;
+          }
+
+          case APIs.Spotify.Keys.PLAYLIST: {
+            const image = getLargestImage(item.images);
+            if (image) {
+              embed.setThumbnail(image.url);
+            }
+
+            {
+              const description: Array<string> = [];
+
+              if (item.description) {
+                description.push(
+                  Markdown.Format.italics(item.description).toString() + "\n"
+                );
+              }
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_OWNERCROWN,
+                  "Owner",
+                  `[${item.owner.display_name}](${item.owner.external_urls.spotify})`
+                )
+              );
+
+              if (item.followers) {
+                description.push(
+                  Basic.field(
+                    CustomEmojis.GUI_MEMBERS,
+                    "Followers",
+                    item.followers.total.toLocaleString()
+                  )
+                );
+              }
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_ADD_FILE,
+                  "Tracks",
+                  item.tracks.total.toLocaleString()
+                )
+              );
+
+              description.push(
+                Basic.field(
+                  CustomEmojis.GUI_DISCOVERY,
+                  "Public",
+                  item.public ? "Yes" : "No"
+                )
+              );
+
+              embed.setDescription(description.join("\n"));
+            }
+
+            break;
+          }
+
+          default: {
+            // shows/episodes are never shown for some reason
+            embed.setDescription("Encountered an unknown type");
+          }
+        }
+
+        return embed;
+      },
+    });
+
+    return await paginator.start();
+  }
+
+  export function getLargestImage(
+    images: Array<APIs.Spotify.Image>
+  ): APIs.Spotify.Image | undefined {
+    return images.reduce<undefined | APIs.Spotify.Image>(
+      (a, b) => (a ? (a.width > b.width ? a : b) : b),
+      undefined
+    );
+  }
+
+  export function generateAlbumDescription(album: APIs.Spotify.Album) {
+    const description: Array<string> = [];
+
+    description.push(
+      Basic.field(
+        CustomEmojis.GUI_RICH_PRESENCE,
+        "Name",
+        `[${album.name}](${album.external_urls.spotify})`
+      )
+    );
+
+    description.push(
+      Basic.field(
+        CustomEmojis.GUI_MEMBERS,
+        "Artists",
+        album.artists
+          .map((x) => `[${x.name}](${x.external_urls.spotify})`)
+          .join(", ")
+      )
+    );
+
+    description.push(
+      Basic.field(
+        Emojis.CALENDAR,
+        "Release Date",
+        buildTimestampString(Date.parse(album.release_date))
+      )
+    );
+
+    description.push(
+      Basic.field(
+        CustomEmojis.CHANNEL_CATEGORY,
+        "Tracks",
+        album.total_tracks.toLocaleString()
+      )
+    );
+
+    description.push(
+      Basic.field(
+        CustomEmojis.GUI_DEAFENED,
+        "Restrictions",
+        album.restrictions?.reason || "None"
+      )
+    );
+
+    return description.join("\n");
   }
 }

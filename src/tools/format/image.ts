@@ -3,13 +3,13 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
 import { Secrets } from "../../secrets";
-import { Sarah, Waifu2x } from "../api";
+import { Waifu2x } from "../api";
 import { editOrReply, extensionFromFileName, fileNameFromUrl } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
 export module Image {
-  export const instance = new Sarah(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
   export interface MirrorArgs extends Basic.ImageArgs {
     method: APIs.Jonathan.MirrorMethods;
   }

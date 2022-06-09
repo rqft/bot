@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const constants_1 = require("detritus-client/lib/constants");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
-const parameters_1 = require("../../../tools/parameters");
 const basecommand_1 = require("../basecommand");
-class ImageResizeCommand extends basecommand_1.BaseCommand {
+class ImageResizeCommand extends basecommand_1.BaseImageCommand {
     constructor(client) {
         super(client, {
             name: "image resize",
@@ -16,11 +14,6 @@ class ImageResizeCommand extends basecommand_1.BaseCommand {
                 "533757461706964993 x256",
             ]),
             type: [
-                {
-                    name: "target",
-                    type: parameters_1.Parameters.imageUrl(constants_1.ImageFormats.PNG),
-                    required: true,
-                },
                 {
                     name: "size",
                     type: "string",

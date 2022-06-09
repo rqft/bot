@@ -19,6 +19,7 @@ export const Secrets = {
     Google: {
       YouTubeData: env.GOOGLE_YOUTUBE_DATA_API_KEY!,
     },
+    Spotify: env.SPOTIFY_API_KEY!.split(":") as [string, string],
   },
   AbstractKeys: {
     Holidays: env.ABSTRACT_HOLIDAYS_KEY!,

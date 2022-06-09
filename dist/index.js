@@ -8,6 +8,10 @@ process.on("uncaughtException", (e) => {
     console.error(JSON.stringify(e, null, 2));
     console.error(e);
 });
+process.on("unhandledRejection", (reason) => {
+    console.error(JSON.stringify(reason, null, 2));
+    console.error(reason);
+});
 (async function run() {
     await globals_1.commands.run();
     if (secrets_1.Secrets.ClearInteractions) {

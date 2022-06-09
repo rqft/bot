@@ -1,11 +1,10 @@
 import { CommandClient } from "detritus-client";
-import { ImageFormats } from "detritus-client/lib/constants";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class ImageTiltCommand extends BaseCommand {
+export default class ImageTiltCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image tilt",
@@ -20,11 +19,6 @@ export default class ImageTiltCommand extends BaseCommand {
         ]
       ),
       type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(ImageFormats.PNG),
-          required: true,
-        },
         {
           name: "amount",
           type: Parameters.number({ min: 0, max: 90 }),

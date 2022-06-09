@@ -1,11 +1,10 @@
 import { CommandClient } from "detritus-client";
-import { ImageFormats } from "detritus-client/lib/constants";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class PxlEmojiMosaicCommand extends BaseCommand {
+export default class PxlEmojiMosaicCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "pxl emojimosaic",
@@ -14,13 +13,6 @@ export default class PxlEmojiMosaicCommand extends BaseCommand {
         "emoji emoji emoji",
         "<target: Image> ?<-group-size: number=6> ?<-scale: boolean=true>"
       ),
-      type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(ImageFormats.PNG),
-          default: Parameters.Default.imageUrl(ImageFormats.PNG),
-        },
-      ],
 
       args: [
         {
@@ -30,10 +22,10 @@ export default class PxlEmojiMosaicCommand extends BaseCommand {
           default: 6,
         },
         {
-            name: "scale",
-            type: "bool",
-            default: true,
-        }
+          name: "scale",
+          type: "bool",
+          default: true,
+        },
       ],
     });
   }

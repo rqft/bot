@@ -27,10 +27,10 @@ import {
 } from "./tools";
 
 export module Parameters {
-  export function array<T>(use: (value: string) => T) {
+  export function array<T>(use: (value: string) => T, split = "|") {
     return function (value: string): Array<T> {
       return value
-        .split("|")
+        .split(split)
         .map((x) => x.trim())
         .map(use);
     };
@@ -174,8 +174,8 @@ export module Parameters {
       .flat(1)
       .find((key) => {
         return (
-          key.username.toLowerCase().includes(value) ||
-          key.toString().toLowerCase() === value ||
+          key.username.toLowerCase().includes(value.toLowerCase()) ||
+          key.toString().toLowerCase() === value.toLowerCase() ||
           key.id === value.replace(/\D/g, "")
         );
       });

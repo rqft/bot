@@ -1,11 +1,9 @@
 import { CommandClient } from "detritus-client";
-import { ImageFormats } from "detritus-client/lib/constants";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
-import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class PxlGlitchCommand extends BaseCommand {
+export default class PxlGlitchCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "pxl glitch",
@@ -13,13 +11,6 @@ export default class PxlGlitchCommand extends BaseCommand {
         "morbius from the matrix",
         "<target: Image> <-iterations: number=10> <-amount: number=5> <-gif-count: number=10> <-gif-delay: number=100ms>"
       ),
-      type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(ImageFormats.PNG),
-          default: Parameters.Default.imageUrl(ImageFormats.PNG),
-        },
-      ],
 
       args: [
         {

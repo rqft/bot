@@ -1,5 +1,6 @@
 import { CommandClient } from "detritus-client";
 import {
+  ArgumentType,
   Command,
   CommandOptions,
   CommandRatelimitInfo,
@@ -7,10 +8,17 @@ import {
   ParsedArgs,
   ParsedErrors,
 } from "detritus-client/lib/command";
-import { CommandRatelimitTypes } from "detritus-client/lib/constants";
+import {
+  CommandRatelimitTypes,
+  ImageFormats,
+  Permissions,
+} from "detritus-client/lib/constants";
 import { CommandMetadata } from "../../tools/command-metadata";
 import { Err } from "../../tools/error";
+import { FindImage } from "../../tools/find-image";
+import { Basic } from "../../tools/format/basic";
 import { Markdown } from "../../tools/markdown";
+import { Parameters } from "../../tools/parameters";
 import { editOrReply, permissionsErrorList } from "../../tools/tools";
 
 export interface CommandOptionsExtra extends CommandOptions {
@@ -51,7 +59,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     return true;
   }
 
-  async onBeforeRun(context: Context): Promise<boolean> {
+  async onBeforeRun(context: Context, args: unknown): Promise<boolean> {
     console.log(
       `processing ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
     );
@@ -59,12 +67,13 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
       context,
       "ok, processing" + (this.expensive ? " (this may take a while)" : "")
     );
-    return true;
+    return true || args;
   }
 
-  async onCancelRun(context: Context): Promise<unknown> {
+  async onCancelRun(context: Context, args: unknown): Promise<unknown> {
     console.log(
-      `cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`
+      `cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`,
+      {} || args
     );
     return await editOrReply(
       context,
@@ -180,4 +189,74 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
 
     return await editOrReply(context, description.join("\n"));
   }
+}
+export class BaseImageCommand<
+  ParsedArgsFinished = ParsedArgs
+> extends BaseCommand<ParsedArgsFinished> {
+  triggerTypingAfter = 250;
+
+  constructor(client: CommandClient, options: CommandOptionsExtra) {
+    super(
+      client,
+      Object.assign(
+        {},
+        DefaultOptions,
+        {
+          permissionsClient: [
+            Permissions.ATTACH_FILES,
+            Permissions.EMBED_LINKS,
+          ],
+          type: [
+            {
+              name: "target",
+              type: Parameters.imageUrl(ImageFormats.PNG),
+              required: true,
+            },
+            ...coerceType(options.type),
+          ],
+        },
+        options
+      )
+    );
+  }
+
+  async onBeforeRun(context: Context, args: Basic.ImageArgs) {
+    if (args.target) {
+      context.metadata = Object.assign({}, context.metadata, {
+        contentUrl: args.target,
+      });
+    }
+    return !!args.target;
+  }
+
+  onCancelRun(context: Context, args: Basic.ImageArgs) {
+    if (args.target === undefined) {
+      return editOrReply(context, "⚠ `Cannot find any images`");
+    }
+    return super.onCancelRun(context, args);
+  }
+
+  onSuccess(context: Context, args: ParsedArgsFinished) {
+    if (context.response) {
+      const responseUrl = FindImage.findImageUrlInMessages([context.response]);
+      if (responseUrl) {
+        context.metadata = Object.assign({}, context.metadata, { responseUrl });
+      }
+    }
+    if (super.onSuccess) {
+      return super.onSuccess(context, args);
+    }
+  }
+}
+
+function coerceType(argument: ArgumentType | undefined) {
+  if (!argument) {
+    return [];
+  }
+
+  if (Array.isArray(argument)) {
+    return argument;
+  }
+
+  return [argument];
 }

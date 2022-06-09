@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseCommand = exports.DefaultOptions = void 0;
+exports.BaseImageCommand = exports.BaseCommand = exports.DefaultOptions = void 0;
 const command_1 = require("detritus-client/lib/command");
 const constants_1 = require("detritus-client/lib/constants");
 const error_1 = require("../../tools/error");
+const find_image_1 = require("../../tools/find-image");
 const markdown_1 = require("../../tools/markdown");
+const parameters_1 = require("../../tools/parameters");
 const tools_1 = require("../../tools/tools");
 exports.DefaultOptions = {
     triggerTypingAfter: 1000,
@@ -35,13 +37,13 @@ class BaseCommand extends command_1.Command {
         console.log(`recieved ${this.fullName} in ${Date.now() - this.use.getTime()}ms`);
         return true;
     }
-    async onBeforeRun(context) {
+    async onBeforeRun(context, args) {
         console.log(`processing ${this.fullName} in ${Date.now() - this.use.getTime()}ms`);
         await (0, tools_1.editOrReply)(context, "ok, processing" + (this.expensive ? " (this may take a while)" : ""));
-        return true;
+        return true || args;
     }
-    async onCancelRun(context) {
-        console.log(`cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`);
+    async onCancelRun(context, args) {
+        console.log(`cancelled ${this.fullName} in ${Date.now() - this.use.getTime()}ms`, {} || args);
         return await (0, tools_1.editOrReply)(context, markdown_1.Markdown.Format.codeblock(this.commandUsage).toString());
     }
     async onPermissionsFail(context, failed) {
@@ -108,3 +110,57 @@ class BaseCommand extends command_1.Command {
     }
 }
 exports.BaseCommand = BaseCommand;
+class BaseImageCommand extends BaseCommand {
+    triggerTypingAfter = 250;
+    constructor(client, options) {
+        super(client, Object.assign({}, exports.DefaultOptions, {
+            permissionsClient: [
+                constants_1.Permissions.ATTACH_FILES,
+                constants_1.Permissions.EMBED_LINKS,
+            ],
+            type: [
+                {
+                    name: "target",
+                    type: parameters_1.Parameters.imageUrl(constants_1.ImageFormats.PNG),
+                    required: true,
+                },
+                ...coerceType(options.type),
+            ],
+        }, options));
+    }
+    async onBeforeRun(context, args) {
+        if (args.target) {
+            context.metadata = Object.assign({}, context.metadata, {
+                contentUrl: args.target,
+            });
+        }
+        return !!args.target;
+    }
+    onCancelRun(context, args) {
+        if (args.target === undefined) {
+            return (0, tools_1.editOrReply)(context, "⚠ `Cannot find any images`");
+        }
+        return super.onCancelRun(context, args);
+    }
+    onSuccess(context, args) {
+        if (context.response) {
+            const responseUrl = find_image_1.FindImage.findImageUrlInMessages([context.response]);
+            if (responseUrl) {
+                context.metadata = Object.assign({}, context.metadata, { responseUrl });
+            }
+        }
+        if (super.onSuccess) {
+            return super.onSuccess(context, args);
+        }
+    }
+}
+exports.BaseImageCommand = BaseImageCommand;
+function coerceType(argument) {
+    if (!argument) {
+        return [];
+    }
+    if (Array.isArray(argument)) {
+        return argument;
+    }
+    return [argument];
+}

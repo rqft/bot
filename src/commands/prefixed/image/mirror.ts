@@ -1,12 +1,10 @@
 import { CommandClient } from "detritus-client";
-import { ImageFormats } from "detritus-client/lib/constants";
 import { APIs } from "pariah";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
-import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class ImageMirrorCommand extends BaseCommand {
+export default class ImageMirrorCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image mirror",
@@ -15,13 +13,6 @@ export default class ImageMirrorCommand extends BaseCommand {
         "<target: Image> <method: MirrorMethod=left>",
         ["insyri left", "@insyri#7314 right", "533757461706964993 top"]
       ),
-      type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(ImageFormats.PNG),
-          required: true,
-        },
-      ],
 
       args: [
         {

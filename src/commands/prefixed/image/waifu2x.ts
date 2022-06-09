@@ -1,10 +1,9 @@
 import { CommandClient } from "detritus-client";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
-import { Parameters } from "../../../tools/parameters";
-import { BaseCommand } from "../basecommand";
+import { BaseImageCommand } from "../basecommand";
 
-export default class ImageUpscaleCommand extends BaseCommand {
+export default class ImageUpscaleCommand extends BaseImageCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "image upscale",
@@ -16,13 +15,6 @@ export default class ImageUpscaleCommand extends BaseCommand {
         "https://cdn.clancy.lol/turkey.png",
         "^",
       ]),
-      type: [
-        {
-          name: "target",
-          type: Parameters.imageUrl(),
-          required: true,
-        },
-      ],
     });
   }
 
