@@ -11,6 +11,9 @@ var Basic;
     }
     Basic.field = field;
     function permissionsList(target) {
+        if (target.can(constants_1.Permissions.ADMINISTRATOR)) {
+            return [constants_2.PermissionsText[String(constants_1.Permissions.ADMINISTRATOR)]];
+        }
         const permissions = [];
         for (const key in constants_1.Permissions) {
             const permission = constants_1.Permissions[key];

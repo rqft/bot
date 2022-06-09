@@ -20,6 +20,10 @@ export module Basic {
   }
 
   export function permissionsList(target: TargetWithPermissions) {
+    if (target.can(Permissions.ADMINISTRATOR)) {
+      return [PermissionsText[String(Permissions.ADMINISTRATOR)]];
+    }
+
     const permissions: Array<bigint> = [];
     for (const key in Permissions) {
       const permission = Permissions[key as keyof typeof Permissions]!;

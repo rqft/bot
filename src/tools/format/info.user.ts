@@ -27,6 +27,16 @@ export async function user(
 
   embed.setThumbnail(user.avatarUrl || user.defaultAvatarUrl);
 
+  const flags = [];
+  for (const flag of Object.values(UserFlags)) {
+    if (typeof flag === "string") {
+      continue;
+    }
+    if (user.hasFlag(flag)) {
+      flags.push(UserBadges[flag]);
+    }
+  }
+
   try {
     const profile = await selfclient.rest.fetchUserProfile(user.id);
 
@@ -51,6 +61,8 @@ export async function user(
             buildTimestampString(profile.premiumSinceUnix)
           )
         );
+
+        flags.push(CustomEmojis.BADGE_NITRO);
       }
 
       if (profile.premiumGuildSinceUnix) {
@@ -61,6 +73,8 @@ export async function user(
             buildTimestampString(profile.premiumGuildSinceUnix)
           )
         );
+
+        flags.push(CustomEmojis.GUI_BOOST_LEVEL_3);
       }
       if (description.length) {
         embed.addField("User Profile", description.join("\n"));
@@ -120,16 +134,6 @@ export async function user(
             tags.join(", ")
           )
         );
-      }
-    }
-
-    const flags = [];
-    for (const flag of Object.values(UserFlags)) {
-      if (typeof flag === "string") {
-        continue;
-      }
-      if (user.hasFlag(flag)) {
-        flags.push(UserBadges[flag]);
       }
     }
 

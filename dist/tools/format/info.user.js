@@ -14,6 +14,15 @@ async function user(context, args) {
     const { user } = args;
     embed.setTitle(user.tag);
     embed.setThumbnail(user.avatarUrl || user.defaultAvatarUrl);
+    const flags = [];
+    for (const flag of Object.values(constants_1.UserFlags)) {
+        if (typeof flag === "string") {
+            continue;
+        }
+        if (user.hasFlag(flag)) {
+            flags.push(constants_2.UserBadges[flag]);
+        }
+    }
     try {
         const profile = await globals_1.selfclient.rest.fetchUserProfile(user.id);
         if (profile) {
@@ -23,9 +32,11 @@ async function user(context, args) {
             }
             if (profile.premiumSinceUnix) {
                 description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has had nitro since", (0, tools_1.buildTimestampString)(profile.premiumSinceUnix)));
+                flags.push("<:IconBadge_Nitro:798624232472051792>");
             }
             if (profile.premiumGuildSinceUnix) {
                 description.push(basic_1.Basic.field(emojis_1.Emojis.STAR, "Has boosted a server since", (0, tools_1.buildTimestampString)(profile.premiumGuildSinceUnix)));
+                flags.push("<:IconGui_BoostLevel_3:837059258494484491>");
             }
             if (description.length) {
                 embed.addField("User Profile", description.join("\n"));
@@ -59,15 +70,6 @@ async function user(context, args) {
             }
             if (tags.length) {
                 description.push(basic_1.Basic.field("\n" + "<:IconChannel_Str:798624234745757727>", "Tags", tags.join(", ")));
-            }
-        }
-        const flags = [];
-        for (const flag of Object.values(constants_1.UserFlags)) {
-            if (typeof flag === "string") {
-                continue;
-            }
-            if (user.hasFlag(flag)) {
-                flags.push(constants_2.UserBadges[flag]);
             }
         }
         if (flags.length) {
