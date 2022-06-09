@@ -13,14 +13,30 @@ var Embed;
     function user(context, embed = new detritus_client_1.Utils.Embed()) {
         embed.setAuthor(context.user.tag, context.user.avatarUrl, context.user.jumpLink);
         embed.setColor(constants_1.Colours.EMBED);
+        if (context.metadata) {
+            if (context.metadata.page) {
+                embed.setFooter(`Page ${context.metadata.page}/${context.metadata.pageLimit}`);
+            }
+        }
         return embed;
     }
     Embed.user = user;
     function brand(context, brand, embed = new detritus_client_1.Utils.Embed()) {
         const self = user(context, embed);
+        const footer = [];
+        let icon = null;
+        if (context.metadata) {
+            if (context.metadata.page) {
+                footer.push(`Page ${context.metadata.page}/${context.metadata.pageLimit}`);
+            }
+        }
         if (brand) {
-            self.setFooter(`${constants_1.BrandNames[brand]}`, constants_1.BrandIcons[brand].toString());
+            footer.push(`${constants_1.BrandNames[brand]}`);
+            icon = constants_1.BrandIcons[brand].toString();
             self.setColor(constants_1.BrandColours[brand]);
+        }
+        if (footer.length) {
+            self.setFooter(footer.join(", "), icon);
         }
         return self;
     }
@@ -61,7 +77,13 @@ var Embed;
         }
         const embed = brand(context, ubrand);
         embed.setColor(constants_1.Colours.EMBED);
-        const footer = [image.filename];
+        const footer = [];
+        if (context.metadata) {
+            if (context.metadata.page) {
+                footer.push(`Page ${context.metadata.page}/${context.metadata.pageLimit}`);
+            }
+        }
+        footer.push(image.filename);
         let imagescript = null;
         try {
             imagescript = (0, v2_1.load)(input);

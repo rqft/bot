@@ -73,6 +73,7 @@ class Paginator {
         if (options.page !== undefined) {
             this.page = Math.max(exports.MIN_PAGE, Math.min(options.page, exports.MAX_PAGE));
         }
+        this.applyContextMetadata();
         this.pageSkipAmount = Math.max(2, options.pageSkipAmount || this.pageSkipAmount);
         if (Array.isArray(options.targets)) {
             for (const target of options.targets) {
@@ -113,6 +114,21 @@ class Paginator {
             onPage: { enumerable: false },
             onPageNumber: { enumerable: false },
         });
+    }
+    applyContextMetadata() {
+        if ("metadata" in this.context) {
+            if (this.context.metadata) {
+                this.context.metadata.page = this.page;
+                this.context.metadata.pageLimit = this.pageLimit;
+            }
+            else {
+                this.context.metadata = {
+                    page: this.page,
+                    pageLimit: this.pageLimit,
+                };
+            }
+        }
+        return this;
     }
     get components() {
         const components = new utils_1.Components({
@@ -285,6 +301,7 @@ class Paginator {
             return;
         }
         this.page = pageNumber;
+        this.applyContextMetadata();
         const [embed, files] = await this.getPage(this.page);
         if (context) {
             await context.editOrRespond({

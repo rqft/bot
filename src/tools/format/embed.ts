@@ -25,6 +25,13 @@ export module Embed {
       context.user.jumpLink
     );
     embed.setColor(Colours.EMBED);
+    if (context.metadata) {
+      if (context.metadata.page) {
+        embed.setFooter(
+          `Page ${context.metadata.page}/${context.metadata.pageLimit}`
+        );
+      }
+    }
     return embed;
   }
   export function brand(
@@ -33,10 +40,26 @@ export module Embed {
     embed: Utils.Embed = new Utils.Embed()
   ) {
     const self = user(context, embed);
+    const footer = [];
+    let icon: string | null = null;
+
+    if (context.metadata) {
+      if (context.metadata.page) {
+        footer.push(
+          `Page ${context.metadata.page}/${context.metadata.pageLimit}`
+        );
+      }
+    }
     if (brand) {
-      self.setFooter(`${BrandNames[brand]}`, BrandIcons[brand]!.toString());
+      footer.push(`${BrandNames[brand]}`);
+      icon = BrandIcons[brand].toString();
       self.setColor(BrandColours[brand]!);
     }
+
+    if (footer.length) {
+      self.setFooter(footer.join(", "), icon);
+    }
+
     return self;
   }
   export async function image(
@@ -86,7 +109,17 @@ export module Embed {
 
     const embed = brand(context, ubrand);
     embed.setColor(Colours.EMBED);
-    const footer = [image.filename];
+    const footer = [];
+
+    if (context.metadata) {
+      if (context.metadata.page) {
+        footer.push(
+          `Page ${context.metadata.page}/${context.metadata.pageLimit}`
+        );
+      }
+    }
+
+    footer.push(image.filename);
 
     let imagescript: Image | Animation | null = null;
     try {
