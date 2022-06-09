@@ -37,5 +37,5 @@ export class SearchSpotifySlashSubCommand extends BaseSlashSubCommand {
     });
   }
 
-  run = Formatter.Search.urban;
+  run = Formatter.Search.spotify;
 }

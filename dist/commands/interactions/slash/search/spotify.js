@@ -33,6 +33,6 @@ class SearchSpotifySlashSubCommand extends baseslash_1.BaseSlashSubCommand {
             ],
         });
     }
-    run = formatter_1.Formatter.Search.urban;
+    run = formatter_1.Formatter.Search.spotify;
 }
 exports.SearchSpotifySlashSubCommand = SearchSpotifySlashSubCommand;
