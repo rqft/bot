@@ -72,7 +72,7 @@ var Embed;
             }
         }
         const image = await (0, tools_1.store)(input, name);
-        if (!image.url) {
+        if (!image.url || !image.width || !image.height) {
             throw new error_1.Err("Failed to store image");
         }
         const embed = brand(context, ubrand);

@@ -103,7 +103,7 @@ export module Embed {
     }
 
     const image = await store(input as Buffer, name);
-    if (!image.url) {
+    if (!image.url || !image.width || !image.height) {
       throw new Err("Failed to store image");
     }
 

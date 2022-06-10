@@ -7,18 +7,17 @@ import { BaseAudioCommand } from "../basecommand";
 export default class AudioVolumeCommand extends BaseAudioCommand {
   constructor(client: CommandClient) {
     super(client, {
-      name: "audio volume",
-      metadata: AudioMetadata("set volume", "<target: Audio> <volume: number>"),
+      name: "audio pitch",
+      metadata: AudioMetadata("set pitch", "<target: Audio> <pitch: number>"),
       type: [
         {
-          name: "volume",
-          type: Parameters.number(),
+          name: "pitch",
+          type: Parameters.number({ min: 0.01, max: 2 }),
           required: true,
-          consume: true,
         },
       ],
     });
   }
 
-  run = Formatter.Audio.volume;
+  run = Formatter.Audio.pitch;
 }

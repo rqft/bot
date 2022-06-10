@@ -1,6 +1,6 @@
 import { CommandClient } from "detritus-client";
 import {
-  ArgumentType,
+  ArgumentOptions,
   Command,
   CommandOptions,
   CommandRatelimitInfo,
@@ -10,7 +10,6 @@ import {
 } from "detritus-client/lib/command";
 import {
   CommandRatelimitTypes,
-  ImageFormats,
   Permissions,
 } from "detritus-client/lib/constants";
 import { CommandMetadata } from "../../tools/command-metadata";
@@ -194,6 +193,14 @@ export class BaseImageCommand<T = ParsedArgs> extends BaseCommand<T> {
   triggerTypingAfter = 250;
 
   constructor(client: CommandClient, options: CommandOptionsExtra) {
+    options.type = [
+      {
+        name: "target",
+        type: Parameters.imageUrl(Find.Formats.PNG),
+        required: true,
+      },
+      ...coerceType(options.type as never),
+    ];
     super(
       client,
       Object.assign(
@@ -203,14 +210,6 @@ export class BaseImageCommand<T = ParsedArgs> extends BaseCommand<T> {
           permissionsClient: [
             Permissions.ATTACH_FILES,
             Permissions.EMBED_LINKS,
-          ],
-          type: [
-            {
-              name: "target",
-              type: Parameters.imageUrl(ImageFormats.PNG),
-              required: true,
-            },
-            ...coerceType(options.type),
           ],
         },
         options
@@ -257,23 +256,17 @@ export class BaseMediaCommand<
     commandClient: CommandClient,
     options: CommandOptionsExtra
   ) {
+    options.type = [
+      {
+        name: "target",
+        type: Parameters.mediaUrl(media),
+        required: true,
+      },
+      ...coerceType(options.type as ArgumentOptions),
+    ];
     super(
       commandClient,
-      Object.assign(
-        {},
-        DefaultOptions,
-        {
-          type: [
-            {
-              name: "target",
-              type: Parameters.mediaUrl(media),
-              required: true,
-            },
-            ...coerceType(options.type),
-          ],
-        },
-        options
-      )
+      Object.assign({}, DefaultOptions, Object.assign({}, options))
     );
   }
 
@@ -288,7 +281,7 @@ export class BaseMediaCommand<
 
   async onCancelRun(context: Context, args: Basic.MediaArgs) {
     if (args.target === undefined) {
-      return editOrReply(context, "⚠ `Cannot find any media`");
+      return editOrReply(context, "❌ `Cannot find any media`");
     }
     return super.onCancelRun(context, args);
   }
@@ -312,7 +305,7 @@ export class BaseAudioCommand<
   T extends Basic.MediaArgs = Basic.MediaArgs
 > extends BaseMediaCommand<T> {
   constructor(commandClient: CommandClient, options: CommandOptionsExtra) {
-    super({ audio: true, image: false, video: false }, commandClient, options);
+    super({ audio: true, video: false, image: false }, commandClient, options);
   }
 }
 
@@ -320,11 +313,13 @@ export class BaseVideoCommand<
   T extends Basic.MediaArgs = Basic.MediaArgs
 > extends BaseMediaCommand<T> {
   constructor(commandClient: CommandClient, options: CommandOptionsExtra) {
-    super({ audio: false, image: false, video: true }, commandClient, options);
+    super({ audio: false, video: true, image: false }, commandClient, options);
   }
 }
 
-function coerceType(argument: ArgumentType | undefined) {
+function coerceType(
+  argument: ArgumentOptions | Array<ArgumentOptions> | undefined
+) {
   if (!argument) {
     return [];
   }

@@ -36,6 +36,7 @@ export const Secrets = {
     "816362327678779392",
     "941002690211766332",
     "983638405932003388",
+    "760130247580057650",
   ],
   DefaultPrefix: env.DEFAULT_PREFIX!,
   ClearInteractions: env.CLEAR_INTERACTIONS === "true",

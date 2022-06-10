@@ -113,18 +113,18 @@ exports.BaseCommand = BaseCommand;
 class BaseImageCommand extends BaseCommand {
     triggerTypingAfter = 250;
     constructor(client, options) {
+        options.type = [
+            {
+                name: "target",
+                type: parameters_1.Parameters.imageUrl(find_image_1.Find.Formats.PNG),
+                required: true,
+            },
+            ...coerceType(options.type),
+        ];
         super(client, Object.assign({}, exports.DefaultOptions, {
             permissionsClient: [
                 constants_1.Permissions.ATTACH_FILES,
                 constants_1.Permissions.EMBED_LINKS,
-            ],
-            type: [
-                {
-                    name: "target",
-                    type: parameters_1.Parameters.imageUrl(constants_1.ImageFormats.PNG),
-                    required: true,
-                },
-                ...coerceType(options.type),
             ],
         }, options));
     }
@@ -158,16 +158,15 @@ exports.BaseImageCommand = BaseImageCommand;
 class BaseMediaCommand extends BaseCommand {
     triggerTypingAfter = 250;
     constructor(media, commandClient, options) {
-        super(commandClient, Object.assign({}, exports.DefaultOptions, {
-            type: [
-                {
-                    name: "target",
-                    type: parameters_1.Parameters.mediaUrl(media),
-                    required: true,
-                },
-                ...coerceType(options.type),
-            ],
-        }, options));
+        options.type = [
+            {
+                name: "target",
+                type: parameters_1.Parameters.mediaUrl(media),
+                required: true,
+            },
+            ...coerceType(options.type),
+        ];
+        super(commandClient, Object.assign({}, exports.DefaultOptions, Object.assign({}, options)));
     }
     async onBeforeRun(context, args) {
         if (args.target) {
@@ -179,7 +178,7 @@ class BaseMediaCommand extends BaseCommand {
     }
     async onCancelRun(context, args) {
         if (args.target === undefined) {
-            return (0, tools_1.editOrReply)(context, "⚠ `Cannot find any media`");
+            return (0, tools_1.editOrReply)(context, "❌ `Cannot find any media`");
         }
         return super.onCancelRun(context, args);
     }
@@ -192,13 +191,13 @@ class BaseMediaCommand extends BaseCommand {
 exports.BaseMediaCommand = BaseMediaCommand;
 class BaseAudioCommand extends BaseMediaCommand {
     constructor(commandClient, options) {
-        super({ audio: true, image: false, video: false }, commandClient, options);
+        super({ audio: true, video: false, image: false }, commandClient, options);
     }
 }
 exports.BaseAudioCommand = BaseAudioCommand;
 class BaseVideoCommand extends BaseMediaCommand {
     constructor(commandClient, options) {
-        super({ audio: false, image: false, video: true }, commandClient, options);
+        super({ audio: false, video: true, image: false }, commandClient, options);
     }
 }
 exports.BaseVideoCommand = BaseVideoCommand;
