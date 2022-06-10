@@ -1,7 +1,13 @@
 import { Collections, Structures } from "detritus-client";
-import {} from "detritus-client/lib/command";
+
 import { ImageFormats, MessageEmbedTypes } from "detritus-client/lib/constants";
-export module FindImage {
+export module Find {
+  export interface FindMediaUrlOptions {
+    audio?: boolean;
+    image?: boolean;
+    video?: boolean;
+  }
+
   export const TRUSTED_URLS = [
     "cdn.discordapp.com",
     "images-ext-1.discordapp.net",

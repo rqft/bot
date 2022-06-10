@@ -8,7 +8,7 @@ import { Basic } from "./basic";
 import { Embed } from "./embed";
 export async function image(
   context: Context | InteractionContext,
-  args: Basic.ImageArgs
+  args: Basic.MediaArgs
 ) {
   const req = await fetch(args.target);
   const data = await req.buffer();

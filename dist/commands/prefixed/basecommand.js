@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseImageCommand = exports.BaseCommand = exports.DefaultOptions = void 0;
+exports.BaseVideoCommand = exports.BaseAudioCommand = exports.BaseMediaCommand = exports.BaseImageCommand = exports.BaseCommand = exports.DefaultOptions = void 0;
 const command_1 = require("detritus-client/lib/command");
 const constants_1 = require("detritus-client/lib/constants");
 const error_1 = require("../../tools/error");
@@ -144,7 +144,7 @@ class BaseImageCommand extends BaseCommand {
     }
     onSuccess(context, args) {
         if (context.response) {
-            const responseUrl = find_image_1.FindImage.findImageUrlInMessages([context.response]);
+            const responseUrl = find_image_1.Find.findImageUrlInMessages([context.response]);
             if (responseUrl) {
                 context.metadata = Object.assign({}, context.metadata, { responseUrl });
             }
@@ -155,6 +155,53 @@ class BaseImageCommand extends BaseCommand {
     }
 }
 exports.BaseImageCommand = BaseImageCommand;
+class BaseMediaCommand extends BaseCommand {
+    triggerTypingAfter = 250;
+    constructor(media, commandClient, options) {
+        super(commandClient, Object.assign({}, exports.DefaultOptions, {
+            type: [
+                {
+                    name: "target",
+                    type: parameters_1.Parameters.mediaUrl(media),
+                    required: true,
+                },
+                ...coerceType(options.type),
+            ],
+        }, options));
+    }
+    async onBeforeRun(context, args) {
+        if (args.target) {
+            context.metadata = Object.assign({}, context.metadata, {
+                contentUrl: args.target,
+            });
+        }
+        return !!args.target;
+    }
+    async onCancelRun(context, args) {
+        if (args.target === undefined) {
+            return (0, tools_1.editOrReply)(context, "⚠ `Cannot find any media`");
+        }
+        return super.onCancelRun(context, args);
+    }
+    onSuccess(context, args) {
+        if (super.onSuccess) {
+            super.onSuccess(context, args);
+        }
+    }
+}
+exports.BaseMediaCommand = BaseMediaCommand;
+class BaseAudioCommand extends BaseMediaCommand {
+    constructor(commandClient, options) {
+        super({ audio: true, image: false, video: false }, commandClient, options);
+    }
+}
+exports.BaseAudioCommand = BaseAudioCommand;
+class BaseVideoCommand extends BaseMediaCommand {
+    constructor(commandClient, options) {
+        super({ audio: false, image: false, video: true }, commandClient, options);
+    }
+}
+exports.BaseVideoCommand = BaseVideoCommand;
 function coerceType(argument) {
     if (!argument) {
         return [];

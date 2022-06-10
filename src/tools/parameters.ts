@@ -17,7 +17,7 @@ import { UNICODE_EMOJI_REGEX } from "../constants";
 import { VyboseEndpoints } from "../endpoints";
 import { client, selfclient } from "../globals";
 import { Err } from "./error";
-import { FindImage } from "./find-image";
+import { Find } from "./find-image";
 import { Markdown } from "./markdown";
 import {
   isSnowflake,
@@ -451,7 +451,7 @@ export module Parameters {
         if (context instanceof Command.Context) {
           // check the message's attachments/stickers first
           {
-            const url = FindImage.findImageUrlInMessages([context.message], as);
+            const url = Find.findImageUrlInMessages([context.message], as);
             if (url) {
               return url;
             }
@@ -467,7 +467,7 @@ export module Parameters {
                   messageReference.channelId,
                   messageReference.messageId
                 ));
-              const url = FindImage.findImageUrlInMessages([message], as);
+              const url = Find.findImageUrlInMessages([message], as);
               if (url) {
                 return url;
               }
@@ -508,7 +508,7 @@ export module Parameters {
                     const message =
                       context.messages.get(messageId) ||
                       (await context.rest.fetchMessage(channelId, messageId));
-                    const url = FindImage.findImageUrlInMessages([message], as);
+                    const url = Find.findImageUrlInMessages([message], as);
                     if (url) {
                       return url;
                     }
@@ -521,10 +521,7 @@ export module Parameters {
                 if (!context.message.embeds.length) {
                   await Timers.sleep(1000);
                 }
-                const url = FindImage.findImageUrlInMessages(
-                  [context.message],
-                  as
-                );
+                const url = Find.findImageUrlInMessages([context.message], as);
                 return url || text;
               } else {
                 return text;
@@ -616,6 +613,234 @@ export module Parameters {
     };
   }
 
+  export function mediaUrl(
+    mediaSearchOptions: Find.FindMediaUrlOptions = {}
+  ): (
+    x: string,
+    context: Command.Context | Interaction.InteractionContext
+  ) => Promise<string | null | undefined> {
+    const customLastMediaUrl = Default.lastMediaUrl(mediaSearchOptions);
+
+    return async (
+      value: string,
+      context: Command.Context | Interaction.InteractionContext
+    ) => {
+      try {
+        if (context instanceof Command.Context) {
+          // check the message's attachments/stickers first
+          {
+            const url = Find.findMediaUrlInMessages(
+              [context.message],
+              mediaSearchOptions
+            );
+            if (url) {
+              return url;
+            }
+          }
+
+          // check for reply and if it has an image
+          {
+            const { messageReference } = context.message;
+            if (messageReference && messageReference.messageId) {
+              const message =
+                messageReference.message ||
+                (await context.rest.fetchMessage(
+                  messageReference.channelId,
+                  messageReference.messageId
+                ));
+              const url = Find.findMediaUrlInMessages(
+                [message],
+                mediaSearchOptions
+              );
+              if (url) {
+                return url;
+              }
+            }
+          }
+        }
+
+        if (value) {
+          // get last image then
+          if (value === "^") {
+            return (await customLastMediaUrl(context)) || undefined;
+          }
+
+          // if it's a url
+          {
+            const { matches } = regex(DiscordRegexNames.TEXT_URL, value) as {
+              matches: Array<{ text: string }>;
+            };
+            if (matches.length) {
+              const [match] = matches;
+              const { text } = match!;
+
+              // if its https://discord.com/channels/:guildId/:channelId/:messageId
+              {
+                const messageLink = regex(
+                  DiscordRegexNames.JUMP_CHANNEL_MESSAGE,
+                  text
+                ) as {
+                  matches: Array<{
+                    channelId: string;
+                    guildId: string;
+                    messageId: string;
+                  }>;
+                };
+                if (messageLink.matches.length) {
+                  const { channelId, messageId } = messageLink.matches[0]!;
+
+                  if (channelId && messageId) {
+                    const message =
+                      context.messages.get(messageId) ||
+                      (await context.rest.fetchMessage(channelId, messageId));
+                    const url = Find.findMediaUrlInMessages(
+                      [message],
+                      mediaSearchOptions
+                    );
+                    if (url) {
+                      return url;
+                    }
+                  }
+                  return null;
+                }
+              }
+
+              if (context instanceof Command.Context) {
+                if (!context.message.embeds.length) {
+                  await Timers.sleep(1000);
+                }
+                const url = Find.findMediaUrlInMessages(
+                  [context.message],
+                  mediaSearchOptions
+                );
+                return url || text;
+              } else {
+                return text;
+              }
+            }
+          }
+
+          // it's in the form of username#discriminator
+          if (value.includes("#") && !value.startsWith("#")) {
+            const found = await Parameters.user(value, context);
+            if (found) {
+              return found.avatarUrlFormat(null, { size: 1024 });
+            }
+            return null;
+          }
+
+          // it's in the form of <@123>
+          {
+            const { matches } = regex(
+              DiscordRegexNames.MENTION_USER,
+              value
+            ) as { matches: Array<{ id: string }> };
+            if (matches.length) {
+              const [match] = matches;
+              const { id: userId } = match!;
+
+              // pass it onto the next statement
+              if (isSnowflake(userId)) {
+                value = userId;
+              }
+            }
+          }
+
+          // it's just the snowflake of a user
+          if (isSnowflake(value)) {
+            const userId = value;
+
+            let user: Structures.Member | Structures.User;
+            if (
+              context instanceof Command.Context &&
+              context.message.mentions.has(userId)
+            ) {
+              user = context.message.mentions.get(userId) as
+                | Structures.Member
+                | Structures.User;
+            } else if (context.guild && context.guild.members.has(userId)) {
+              user = context.guild.members.get(userId)!;
+            } else if (context.users.has(userId)) {
+              user = context.users.get(userId)!;
+            } else {
+              user = await context.rest.fetchUser(userId);
+            }
+            return user.avatarUrlFormat(null, { size: 1024 });
+          }
+
+          // it's <a:emoji:id>
+          {
+            const { matches } = regex(DiscordRegexNames.EMOJI, value) as {
+              matches: Array<{ animated: boolean; id: string }>;
+            };
+            if (matches.length) {
+              const [match] = matches;
+              const { animated, id } = match!;
+
+              const format = animated ? "gif" : "png";
+              return Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format);
+            }
+          }
+
+          // it's an unicode emoji
+          {
+            const emojis = onlyEmoji(value);
+            if (emojis && emojis.length) {
+              for (let emoji of emojis) {
+                const codepoint = toCodePointForTwemoji(emoji);
+                return VyboseEndpoints.CUSTOM.TWEMOJI_SVG(codepoint);
+              }
+            }
+          }
+
+          // try user search (without the discriminator)
+          {
+            const found = await Parameters.user(value, context);
+            if (found) {
+              return found.avatarUrlFormat(null, { size: 1024 });
+            }
+          }
+        }
+      } catch (error) {
+        return null;
+      }
+      return null;
+    };
+  }
+
+  // returns undefined if it couldn't find any messages in the past
+  // returns null if a value was provided
+  export function lastMediaUrl(
+    mediaSearchOptions: Find.FindMediaUrlOptions = {}
+  ): (
+    x: string,
+    context: Command.Context | Interaction.InteractionContext
+  ) => Promise<string | null | undefined> {
+    const customMediaUrl = mediaUrl(mediaSearchOptions);
+    const customLastMediaUrl = Default.lastMediaUrl(mediaSearchOptions);
+
+    return async (
+      value: string,
+      context: Command.Context | Interaction.InteractionContext
+    ) => {
+      if (context instanceof Interaction.InteractionContext) {
+        if (
+          context.data.resolved &&
+          context.data.resolved.attachments &&
+          context.data.resolved.attachments
+        ) {
+          const attachment = context.data.resolved.attachments.first()!;
+          return attachment.url;
+        }
+      }
+
+      if (value) {
+        return customMediaUrl(value, context);
+      }
+      return (await customLastMediaUrl(context)) || undefined;
+    };
+  }
+
   export module Default {
     export function imageUrl(as?: ImageFormats) {
       return async (
@@ -625,11 +850,114 @@ export module Parameters {
           return null;
         }
         const messages = await context.channel.fetchMessages({ limit: 100 });
-        const image = FindImage.findImageUrlInMessages(messages, as);
+        const image = Find.findImageUrlInMessages(messages, as);
         if (image) {
           return image;
         }
         return null;
+      };
+    }
+
+    export function lastMediaUrl(
+      mediaSearchOptions: Find.FindMediaUrlOptions = {}
+    ): (
+      context: Command.Context | Interaction.InteractionContext
+    ) => Promise<string | null | undefined> {
+      return async (
+        context: Command.Context | Interaction.InteractionContext
+      ) => {
+        if (context instanceof Interaction.InteractionContext) {
+          if (
+            context.data.resolved &&
+            context.data.resolved.attachments &&
+            context.data.resolved.attachments
+          ) {
+            const attachment = context.data.resolved.attachments.first()!;
+            return attachment.url!;
+          }
+        }
+
+        if (context instanceof Command.Context) {
+          {
+            const url = Find.findMediaUrlInMessages(
+              [context.message],
+              mediaSearchOptions
+            );
+            if (url) {
+              return url;
+            }
+          }
+
+          {
+            // check reply
+            const { messageReference } = context.message;
+            if (messageReference && messageReference.messageId) {
+              let message = messageReference.message;
+              if (
+                !message &&
+                (context.inDm ||
+                  (context.channel && context.channel.canReadHistory))
+              ) {
+                try {
+                  message = await context.rest.fetchMessage(
+                    messageReference.channelId,
+                    messageReference.messageId
+                  );
+                } catch (error) {
+                  // /shrug
+                }
+              }
+              if (message) {
+                const url = Find.findMediaUrlInMessages(
+                  [message],
+                  mediaSearchOptions
+                );
+                if (url) {
+                  return url;
+                }
+              }
+            }
+          }
+        }
+
+        const before =
+          context instanceof Command.Context ? context.messageId : undefined;
+        {
+          const beforeId = before ? BigInt(before) : null;
+          // we dont get DM channels anymore so we must manually find messages now
+          const messages = context.messages
+            .filter((message) => {
+              if (message.channelId !== context.channelId) {
+                return false;
+              }
+              if (message.interaction && message.hasFlagEphemeral) {
+                return message.interaction.user.id === context.userId;
+              }
+              if (beforeId) {
+                return BigInt(message.id) <= beforeId;
+              }
+              return true;
+            })
+            .reverse();
+          const url = Find.findMediaUrlInMessages(messages, mediaSearchOptions);
+          if (url) {
+            return url;
+          }
+        }
+
+        if (
+          context.inDm ||
+          (context.channel && context.channel.canReadHistory)
+        ) {
+          const messages = await context.rest.fetchMessages(
+            context.channelId!,
+            { before, limit: 50 }
+          );
+          const url = Find.findMediaUrlInMessages(messages, mediaSearchOptions);
+          if (url) {
+            return url;
+          }
+        }
       };
     }
 

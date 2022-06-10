@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindImage = void 0;
+exports.Find = void 0;
 const constants_1 = require("detritus-client/lib/constants");
-var FindImage;
-(function (FindImage) {
-    FindImage.TRUSTED_URLS = [
+var Find;
+(function (Find) {
+    Find.TRUSTED_URLS = [
         "cdn.discordapp.com",
         "images-ext-1.discordapp.net",
         "images-ext-2.discordapp.net",
@@ -15,7 +15,7 @@ var FindImage;
             if (attachment.isImage) {
                 if (attachment.url) {
                     const url = new URL(attachment.url);
-                    if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                    if (Find.TRUSTED_URLS.includes(url.host)) {
                         return attachment.url;
                     }
                 }
@@ -27,7 +27,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findImageUrlInAttachment = findImageUrlInAttachment;
+    Find.findImageUrlInAttachment = findImageUrlInAttachment;
     function findImageUrlInEmbed(embed, ignoreGIFV = false, as) {
         if (!ignoreGIFV && embed.type === constants_1.MessageEmbedTypes.GIFV) {
             const url = findImageUrlInEmbed(embed, true);
@@ -43,7 +43,7 @@ var FindImage;
         if (image && image.proxyUrl && (image.height || image.width)) {
             if (image.url) {
                 const url = new URL(image.url);
-                if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                if (Find.TRUSTED_URLS.includes(url.host)) {
                     return image.url;
                 }
             }
@@ -55,7 +55,7 @@ var FindImage;
             (thumbnail.height || thumbnail.width)) {
             if (thumbnail.url) {
                 const url = new URL(thumbnail.url);
-                if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                if (Find.TRUSTED_URLS.includes(url.host)) {
                     return thumbnail.url;
                 }
             }
@@ -67,7 +67,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findImageUrlInEmbed = findImageUrlInEmbed;
+    Find.findImageUrlInEmbed = findImageUrlInEmbed;
     function findImageUrlInMessage(message, url, as) {
         if (url) {
             for (const [, embed] of message.embeds) {
@@ -93,7 +93,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findImageUrlInMessage = findImageUrlInMessage;
+    Find.findImageUrlInMessage = findImageUrlInMessage;
     function findImageUrlInMessages(messages, as) {
         for (const message of messages.values()) {
             const url = findImageUrlInMessage(message, undefined, as);
@@ -103,7 +103,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findImageUrlInMessages = findImageUrlInMessages;
+    Find.findImageUrlInMessages = findImageUrlInMessages;
     function findImageUrlsInMessage(message, as) {
         const urls = new Set();
         for (const [, attachment] of message.attachments) {
@@ -123,7 +123,7 @@ var FindImage;
         }
         return urls.size ? Array.from(urls) : [];
     }
-    FindImage.findImageUrlsInMessage = findImageUrlsInMessage;
+    Find.findImageUrlsInMessage = findImageUrlsInMessage;
     function findImageUrlsInMessages(messages, as) {
         const urls = new Set();
         for (const message of messages.values()) {
@@ -134,7 +134,7 @@ var FindImage;
         }
         return urls.size ? Array.from(urls) : [];
     }
-    FindImage.findImageUrlsInMessages = findImageUrlsInMessages;
+    Find.findImageUrlsInMessages = findImageUrlsInMessages;
     function findMediaUrlInAttachment(attachment, options) {
         const findAudio = !options || options.audio || options.audio === undefined;
         const findImage = !options || options.image || options.image === undefined;
@@ -153,7 +153,7 @@ var FindImage;
             }
             if (attachment.url) {
                 const url = new URL(attachment.url);
-                if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                if (Find.TRUSTED_URLS.includes(url.host)) {
                     return attachment.url;
                 }
             }
@@ -161,7 +161,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findMediaUrlInAttachment = findMediaUrlInAttachment;
+    Find.findMediaUrlInAttachment = findMediaUrlInAttachment;
     function findMediaUrlInEmbed(embed, ignoreGIFV = false, options) {
         const findImage = !options || options.image || options.image === undefined;
         const findVideo = !options || options.video || options.video === undefined;
@@ -179,7 +179,7 @@ var FindImage;
         if (image && image.proxyUrl && (image.height || image.width) && findImage) {
             if (image.url) {
                 const url = new URL(image.url);
-                if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                if (Find.TRUSTED_URLS.includes(url.host)) {
                     return image.url;
                 }
             }
@@ -192,7 +192,7 @@ var FindImage;
             findImage) {
             if (thumbnail.url) {
                 const url = new URL(thumbnail.url);
-                if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                if (Find.TRUSTED_URLS.includes(url.host)) {
                     return thumbnail.url;
                 }
             }
@@ -202,7 +202,7 @@ var FindImage;
         if (video && video.proxyUrl && (video.height || video.width) && findVideo) {
             if (video.url) {
                 const url = new URL(video.url);
-                if (FindImage.TRUSTED_URLS.includes(url.host)) {
+                if (Find.TRUSTED_URLS.includes(url.host)) {
                     return video.url;
                 }
             }
@@ -210,7 +210,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findMediaUrlInEmbed = findMediaUrlInEmbed;
+    Find.findMediaUrlInEmbed = findMediaUrlInEmbed;
     function findMediaUrlInMessage(message, url, options) {
         const findImage = !options || options.image || options.image === undefined;
         if (url) {
@@ -239,7 +239,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findMediaUrlInMessage = findMediaUrlInMessage;
+    Find.findMediaUrlInMessage = findMediaUrlInMessage;
     function findMediaUrlInMessages(messages, options) {
         for (const message of messages.values()) {
             const url = findMediaUrlInMessage(message, null, options);
@@ -249,7 +249,7 @@ var FindImage;
         }
         return null;
     }
-    FindImage.findMediaUrlInMessages = findMediaUrlInMessages;
+    Find.findMediaUrlInMessages = findMediaUrlInMessages;
     function findMediaUrlsInMessage(message, options) {
         const findImage = !options || options.image || options.image === undefined;
         const urls = new Set();
@@ -272,7 +272,7 @@ var FindImage;
         }
         return urls.size ? Array.from(urls) : [];
     }
-    FindImage.findMediaUrlsInMessage = findMediaUrlsInMessage;
+    Find.findMediaUrlsInMessage = findMediaUrlsInMessage;
     function findMediaUrlsInMessages(messages, options) {
         const urls = new Set();
         for (const message of messages.values()) {
@@ -283,5 +283,5 @@ var FindImage;
         }
         return urls.size ? Array.from(urls) : [];
     }
-    FindImage.findMediaUrlsInMessages = findMediaUrlsInMessages;
-})(FindImage = exports.FindImage || (exports.FindImage = {}));
+    Find.findMediaUrlsInMessages = findMediaUrlsInMessages;
+})(Find = exports.Find || (exports.Find = {}));

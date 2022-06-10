@@ -2,6 +2,7 @@ export enum CommandType {
   IMAGE = "image",
   TOOLS = "tools",
   FUN = "fun",
+  AUDIO = "audio",
 }
 export interface CommandMetadata {
   category: CommandType;
@@ -26,7 +27,7 @@ export function Metadata(
 }
 export function ImageMetadata(
   description: string,
-  usage = "",
+  usage = "<target: Image>",
   examples: Array<string> = [
     "insyri",
     "insyri#7314",
@@ -49,4 +50,11 @@ export function FunMetadata(
   examples: Array<string> = []
 ) {
   return Metadata(CommandType.FUN, description, usage, examples);
+}
+export function AudioMetadata(
+  description: string,
+  usage = "<target: Audio",
+  examples: Array<string> = ["test.mp3", "https://cdn.rqft.space/tiny.wav"]
+) {
+  return Metadata(CommandType.AUDIO, description, usage, examples);
 }

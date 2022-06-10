@@ -16,7 +16,7 @@ export module Imagga {
 
   export async function tags(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ): Promise<Message | null> {
     const { target } = args;
 
@@ -55,7 +55,7 @@ export module Imagga {
 
   export async function colors(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ): Promise<Message | null> {
     const { target } = args;
 
@@ -116,7 +116,7 @@ export module Imagga {
 
   export async function categories(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ): Promise<Message | null> {
     const { target } = args;
 
@@ -146,7 +146,7 @@ export module Imagga {
 
   export async function readText(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ): Promise<Message | null> {
     const { target } = args;
 

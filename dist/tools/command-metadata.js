@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FunMetadata = exports.ToolsMetadata = exports.ImageMetadata = exports.Metadata = exports.CommandType = void 0;
+exports.AudioMetadata = exports.FunMetadata = exports.ToolsMetadata = exports.ImageMetadata = exports.Metadata = exports.CommandType = void 0;
 var CommandType;
 (function (CommandType) {
     CommandType["IMAGE"] = "image";
     CommandType["TOOLS"] = "tools";
     CommandType["FUN"] = "fun";
+    CommandType["AUDIO"] = "audio";
 })(CommandType = exports.CommandType || (exports.CommandType = {}));
 function Metadata(type, description, usage = "", examples = []) {
     return {
@@ -16,7 +17,7 @@ function Metadata(type, description, usage = "", examples = []) {
     };
 }
 exports.Metadata = Metadata;
-function ImageMetadata(description, usage = "", examples = [
+function ImageMetadata(description, usage = "<target: Image>", examples = [
     "insyri",
     "insyri#7314",
     "533757461706964993",
@@ -33,3 +34,7 @@ function FunMetadata(description, usage = "", examples = []) {
     return Metadata(CommandType.FUN, description, usage, examples);
 }
 exports.FunMetadata = FunMetadata;
+function AudioMetadata(description, usage = "<target: Audio", examples = ["test.mp3", "https://cdn.rqft.space/tiny.wav"]) {
+    return Metadata(CommandType.AUDIO, description, usage, examples);
+}
+exports.AudioMetadata = AudioMetadata;

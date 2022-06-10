@@ -23,7 +23,7 @@ export module SomeRandomApi {
     Object.values(APIs.SomeRandomApi.CanvasOverlay)
   ).filter((b) => !BannedImageOps.includes(b));
 
-  export interface CanvasArgs extends Basic.ImageArgs {
+  export interface CanvasArgs extends Basic.MediaArgs {
     method: APIs.SomeRandomApi.Canvas;
     [key: string]: unknown;
   }

@@ -362,7 +362,7 @@ var Parameters;
             try {
                 if (context instanceof detritus_client_1.Command.Context) {
                     {
-                        const url = find_image_1.FindImage.findImageUrlInMessages([context.message], as);
+                        const url = find_image_1.Find.findImageUrlInMessages([context.message], as);
                         if (url) {
                             return url;
                         }
@@ -372,7 +372,7 @@ var Parameters;
                         if (messageReference && messageReference.messageId) {
                             const message = messageReference.message ||
                                 (await context.rest.fetchMessage(messageReference.channelId, messageReference.messageId));
-                            const url = find_image_1.FindImage.findImageUrlInMessages([message], as);
+                            const url = find_image_1.Find.findImageUrlInMessages([message], as);
                             if (url) {
                                 return url;
                             }
@@ -395,7 +395,7 @@ var Parameters;
                                     if (channelId && messageId) {
                                         const message = context.messages.get(messageId) ||
                                             (await context.rest.fetchMessage(channelId, messageId));
-                                        const url = find_image_1.FindImage.findImageUrlInMessages([message], as);
+                                        const url = find_image_1.Find.findImageUrlInMessages([message], as);
                                         if (url) {
                                             return url;
                                         }
@@ -407,7 +407,7 @@ var Parameters;
                                 if (!context.message.embeds.length) {
                                     await detritus_utils_1.Timers.sleep(1000);
                                 }
-                                const url = find_image_1.FindImage.findImageUrlInMessages([context.message], as);
+                                const url = find_image_1.Find.findImageUrlInMessages([context.message], as);
                                 return url || text;
                             }
                             else {
@@ -476,6 +476,152 @@ var Parameters;
         };
     }
     Parameters.imageUrl = imageUrl;
+    function mediaUrl(mediaSearchOptions = {}) {
+        const customLastMediaUrl = Default.lastMediaUrl(mediaSearchOptions);
+        return async (value, context) => {
+            try {
+                if (context instanceof detritus_client_1.Command.Context) {
+                    {
+                        const url = find_image_1.Find.findMediaUrlInMessages([context.message], mediaSearchOptions);
+                        if (url) {
+                            return url;
+                        }
+                    }
+                    {
+                        const { messageReference } = context.message;
+                        if (messageReference && messageReference.messageId) {
+                            const message = messageReference.message ||
+                                (await context.rest.fetchMessage(messageReference.channelId, messageReference.messageId));
+                            const url = find_image_1.Find.findMediaUrlInMessages([message], mediaSearchOptions);
+                            if (url) {
+                                return url;
+                            }
+                        }
+                    }
+                }
+                if (value) {
+                    if (value === "^") {
+                        return (await customLastMediaUrl(context)) || undefined;
+                    }
+                    {
+                        const { matches } = (0, utils_1.regex)(constants_1.DiscordRegexNames.TEXT_URL, value);
+                        if (matches.length) {
+                            const [match] = matches;
+                            const { text } = match;
+                            {
+                                const messageLink = (0, utils_1.regex)(constants_1.DiscordRegexNames.JUMP_CHANNEL_MESSAGE, text);
+                                if (messageLink.matches.length) {
+                                    const { channelId, messageId } = messageLink.matches[0];
+                                    if (channelId && messageId) {
+                                        const message = context.messages.get(messageId) ||
+                                            (await context.rest.fetchMessage(channelId, messageId));
+                                        const url = find_image_1.Find.findMediaUrlInMessages([message], mediaSearchOptions);
+                                        if (url) {
+                                            return url;
+                                        }
+                                    }
+                                    return null;
+                                }
+                            }
+                            if (context instanceof detritus_client_1.Command.Context) {
+                                if (!context.message.embeds.length) {
+                                    await detritus_utils_1.Timers.sleep(1000);
+                                }
+                                const url = find_image_1.Find.findMediaUrlInMessages([context.message], mediaSearchOptions);
+                                return url || text;
+                            }
+                            else {
+                                return text;
+                            }
+                        }
+                    }
+                    if (value.includes("#") && !value.startsWith("#")) {
+                        const found = await Parameters.user(value, context);
+                        if (found) {
+                            return found.avatarUrlFormat(null, { size: 1024 });
+                        }
+                        return null;
+                    }
+                    {
+                        const { matches } = (0, utils_1.regex)(constants_1.DiscordRegexNames.MENTION_USER, value);
+                        if (matches.length) {
+                            const [match] = matches;
+                            const { id: userId } = match;
+                            if ((0, tools_1.isSnowflake)(userId)) {
+                                value = userId;
+                            }
+                        }
+                    }
+                    if ((0, tools_1.isSnowflake)(value)) {
+                        const userId = value;
+                        let user;
+                        if (context instanceof detritus_client_1.Command.Context &&
+                            context.message.mentions.has(userId)) {
+                            user = context.message.mentions.get(userId);
+                        }
+                        else if (context.guild && context.guild.members.has(userId)) {
+                            user = context.guild.members.get(userId);
+                        }
+                        else if (context.users.has(userId)) {
+                            user = context.users.get(userId);
+                        }
+                        else {
+                            user = await context.rest.fetchUser(userId);
+                        }
+                        return user.avatarUrlFormat(null, { size: 1024 });
+                    }
+                    {
+                        const { matches } = (0, utils_1.regex)(constants_1.DiscordRegexNames.EMOJI, value);
+                        if (matches.length) {
+                            const [match] = matches;
+                            const { animated, id } = match;
+                            const format = animated ? "gif" : "png";
+                            return detritus_client_rest_1.Endpoints.CDN.URL + detritus_client_rest_1.Endpoints.CDN.EMOJI(id, format);
+                        }
+                    }
+                    {
+                        const emojis = (0, tools_1.onlyEmoji)(value);
+                        if (emojis && emojis.length) {
+                            for (let emoji of emojis) {
+                                const codepoint = (0, tools_1.toCodePointForTwemoji)(emoji);
+                                return endpoints_1.VyboseEndpoints.CUSTOM.TWEMOJI_SVG(codepoint);
+                            }
+                        }
+                    }
+                    {
+                        const found = await Parameters.user(value, context);
+                        if (found) {
+                            return found.avatarUrlFormat(null, { size: 1024 });
+                        }
+                    }
+                }
+            }
+            catch (error) {
+                return null;
+            }
+            return null;
+        };
+    }
+    Parameters.mediaUrl = mediaUrl;
+    function lastMediaUrl(mediaSearchOptions = {}) {
+        const customMediaUrl = mediaUrl(mediaSearchOptions);
+        const customLastMediaUrl = Default.lastMediaUrl(mediaSearchOptions);
+        return async (value, context) => {
+            if (context instanceof detritus_client_1.Interaction.InteractionContext) {
+                if (context.data.resolved &&
+                    context.data.resolved.attachments &&
+                    context.data.resolved.attachments) {
+                    const attachment = context.data.resolved.attachments.first();
+                    return attachment.url;
+                }
+            }
+            if (value) {
+                return customMediaUrl(value, context);
+            }
+            return (await customLastMediaUrl(context)) || undefined;
+        };
+    }
+    Parameters.lastMediaUrl = lastMediaUrl;
     let Default;
     (function (Default) {
         function imageUrl(as) {
@@ -484,7 +630,7 @@ var Parameters;
                     return null;
                 }
                 const messages = await context.channel.fetchMessages({ limit: 100 });
-                const image = find_image_1.FindImage.findImageUrlInMessages(messages, as);
+                const image = find_image_1.Find.findImageUrlInMessages(messages, as);
                 if (image) {
                     return image;
                 }
@@ -492,6 +638,78 @@ var Parameters;
             };
         }
         Default.imageUrl = imageUrl;
+        function lastMediaUrl(mediaSearchOptions = {}) {
+            return async (context) => {
+                if (context instanceof detritus_client_1.Interaction.InteractionContext) {
+                    if (context.data.resolved &&
+                        context.data.resolved.attachments &&
+                        context.data.resolved.attachments) {
+                        const attachment = context.data.resolved.attachments.first();
+                        return attachment.url;
+                    }
+                }
+                if (context instanceof detritus_client_1.Command.Context) {
+                    {
+                        const url = find_image_1.Find.findMediaUrlInMessages([context.message], mediaSearchOptions);
+                        if (url) {
+                            return url;
+                        }
+                    }
+                    {
+                        const { messageReference } = context.message;
+                        if (messageReference && messageReference.messageId) {
+                            let message = messageReference.message;
+                            if (!message &&
+                                (context.inDm ||
+                                    (context.channel && context.channel.canReadHistory))) {
+                                try {
+                                    message = await context.rest.fetchMessage(messageReference.channelId, messageReference.messageId);
+                                }
+                                catch (error) {
+                                }
+                            }
+                            if (message) {
+                                const url = find_image_1.Find.findMediaUrlInMessages([message], mediaSearchOptions);
+                                if (url) {
+                                    return url;
+                                }
+                            }
+                        }
+                    }
+                }
+                const before = context instanceof detritus_client_1.Command.Context ? context.messageId : undefined;
+                {
+                    const beforeId = before ? BigInt(before) : null;
+                    const messages = context.messages
+                        .filter((message) => {
+                        if (message.channelId !== context.channelId) {
+                            return false;
+                        }
+                        if (message.interaction && message.hasFlagEphemeral) {
+                            return message.interaction.user.id === context.userId;
+                        }
+                        if (beforeId) {
+                            return BigInt(message.id) <= beforeId;
+                        }
+                        return true;
+                    })
+                        .reverse();
+                    const url = find_image_1.Find.findMediaUrlInMessages(messages, mediaSearchOptions);
+                    if (url) {
+                        return url;
+                    }
+                }
+                if (context.inDm ||
+                    (context.channel && context.channel.canReadHistory)) {
+                    const messages = await context.rest.fetchMessages(context.channelId, { before, limit: 50 });
+                    const url = find_image_1.Find.findMediaUrlInMessages(messages, mediaSearchOptions);
+                    if (url) {
+                        return url;
+                    }
+                }
+            };
+        }
+        Default.lastMediaUrl = lastMediaUrl;
         function applications(context) {
             return context.applications.toArray();
         }

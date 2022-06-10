@@ -1,3 +1,4 @@
+import { Audio } from "./format/audio";
 import { Basic } from "./format/basic";
 import { Embed } from "./format/embed";
 import { Image } from "./format/image";
@@ -20,6 +21,7 @@ export const Formatter = {
   Embed,
   Pxl,
   Image,
+  Audio,
   Tag,
   Imagga,
   SomeRandomApi,

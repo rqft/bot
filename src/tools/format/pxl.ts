@@ -11,7 +11,7 @@ export module Pxl {
   export const instance = new APIs.PxlAPI.API(Secrets.Key.PxlAPI);
   export async function ajit(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ) {
     const { target } = args;
 
@@ -20,7 +20,7 @@ export module Pxl {
 
     return await editOrReply(context, { embed });
   }
-  export interface EmojiMosaicArgs extends Basic.ImageArgs {
+  export interface EmojiMosaicArgs extends Basic.MediaArgs {
     "group-size"?: number;
     scale?: boolean;
   }
@@ -44,7 +44,7 @@ export module Pxl {
 
     return await editOrReply(context, { embed });
   }
-  export interface EyesArgs extends Basic.ImageArgs {
+  export interface EyesArgs extends Basic.MediaArgs {
     type: APIs.PxlAPI.Eyes;
   }
   export async function eyes(
@@ -63,7 +63,7 @@ export module Pxl {
 
     return await editOrReply(context, { embed });
   }
-  export interface FlagArgs extends Basic.ImageArgs {
+  export interface FlagArgs extends Basic.MediaArgs {
     flag: APIs.PxlAPI.Flags;
     opacity?: number;
   }
@@ -83,7 +83,7 @@ export module Pxl {
 
     return await editOrReply(context, { embed });
   }
-  export interface GlitchArgs extends Basic.ImageArgs {
+  export interface GlitchArgs extends Basic.MediaArgs {
     iterations?: number;
     amount?: number;
     "gif-count"?: number;
@@ -109,7 +109,7 @@ export module Pxl {
     return await editOrReply(context, { embed });
   }
 
-  export interface JpegArgs extends Basic.ImageArgs {
+  export interface JpegArgs extends Basic.MediaArgs {
     quality?: number;
   }
   export async function jpeg(
@@ -171,7 +171,7 @@ export module Pxl {
     return await editOrReply(context, { embed });
   }
 
-  export interface SnapchatArgs extends Basic.ImageArgs {
+  export interface SnapchatArgs extends Basic.MediaArgs {
     filter: APIs.PxlAPI.SnapchatFilters;
   }
   export async function snapchat(

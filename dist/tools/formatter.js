@@ -24,6 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Formatter = void 0;
+const audio_1 = require("./format/audio");
 const basic_1 = require("./format/basic");
 const embed_1 = require("./format/embed");
 const image_1 = require("./format/image");
@@ -45,6 +46,7 @@ exports.Formatter = {
     Embed: embed_1.Embed,
     Pxl: pxl_1.Pxl,
     Image: image_1.Image,
+    Audio: audio_1.Audio,
     Tag: tag_1.Tag,
     Imagga: imagga_1.Imagga,
     SomeRandomApi: some_random_api_1.SomeRandomApi,

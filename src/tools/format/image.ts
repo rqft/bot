@@ -10,7 +10,7 @@ import { Embed } from "./embed";
 
 export module Image {
   export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
-  export interface MirrorArgs extends Basic.ImageArgs {
+  export interface MirrorArgs extends Basic.MediaArgs {
     method: APIs.Jonathan.MirrorMethods;
   }
   export async function mirror(
@@ -31,7 +31,7 @@ export module Image {
   }
   export async function spin(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ) {
     const { target } = args;
 
@@ -55,7 +55,7 @@ export module Image {
     const embed = await Embed.image(context, image, "color.png");
     return await editOrReply(context, { embed });
   }
-  export interface ResizeArgs extends Basic.ImageArgs {
+  export interface ResizeArgs extends Basic.MediaArgs {
     size: string;
   }
   export async function resize(
@@ -69,7 +69,7 @@ export module Image {
     const embed = await Embed.image(context, image, "resize.png");
     return await editOrReply(context, { embed });
   }
-  export interface RotateArgs extends Basic.ImageArgs {
+  export interface RotateArgs extends Basic.MediaArgs {
     degrees: number;
   }
   export async function rotate(
@@ -89,7 +89,7 @@ export module Image {
 
   export async function url(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ) {
     const name = fileNameFromUrl(args.target) || "unknown.gif";
     const embed = await Embed.image(
@@ -102,7 +102,7 @@ export module Image {
     return await editOrReply(context, { embed });
   }
 
-  export interface TiltArgs extends Basic.ImageArgs {
+  export interface TiltArgs extends Basic.MediaArgs {
     amount?: number;
   }
 
@@ -118,7 +118,7 @@ export module Image {
     return await editOrReply(context, { embed });
   }
 
-  export interface TintArgs extends Basic.ImageArgs {
+  export interface TintArgs extends Basic.MediaArgs {
     color: string;
     opacity?: number;
   }
@@ -142,7 +142,7 @@ export module Image {
 
   export async function averageColor(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ) {
     const { target } = args;
 
@@ -159,7 +159,7 @@ export module Image {
     return await editOrReply(context, { embed });
   }
 
-  export interface AmountArgs extends Basic.ImageArgs {
+  export interface AmountArgs extends Basic.MediaArgs {
     amount?: number;
   }
 
@@ -190,7 +190,7 @@ export module Image {
     return await editOrReply(context, { embed });
   }
 
-  export interface InvertArgs extends Basic.ImageArgs {
+  export interface InvertArgs extends Basic.MediaArgs {
     method?: APIs.Jonathan.InvertMethods;
   }
 
@@ -229,7 +229,7 @@ export module Image {
   const w2xInstance = new Waifu2x.API();
   export async function upscale(
     context: Context | InteractionContext,
-    args: Basic.ImageArgs
+    args: Basic.MediaArgs
   ) {
     const { target } = args;
 

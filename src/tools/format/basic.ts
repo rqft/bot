@@ -12,7 +12,7 @@ export module Basic {
   ): string {
     return `${emoji} ${Markdown.Format.bold(name.toString())}: ${value}`;
   }
-  export interface ImageArgs {
+  export interface MediaArgs {
     target: string;
   }
   export interface TargetWithPermissions {

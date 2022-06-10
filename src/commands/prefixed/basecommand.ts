@@ -15,7 +15,7 @@ import {
 } from "detritus-client/lib/constants";
 import { CommandMetadata } from "../../tools/command-metadata";
 import { Err } from "../../tools/error";
-import { FindImage } from "../../tools/find-image";
+import { Find } from "../../tools/find-image";
 import { Basic } from "../../tools/format/basic";
 import { Markdown } from "../../tools/markdown";
 import { Parameters } from "../../tools/parameters";
@@ -190,9 +190,7 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
     return await editOrReply(context, description.join("\n"));
   }
 }
-export class BaseImageCommand<
-  ParsedArgsFinished = ParsedArgs
-> extends BaseCommand<ParsedArgsFinished> {
+export class BaseImageCommand<T = ParsedArgs> extends BaseCommand<T> {
   triggerTypingAfter = 250;
 
   constructor(client: CommandClient, options: CommandOptionsExtra) {
@@ -220,7 +218,7 @@ export class BaseImageCommand<
     );
   }
 
-  async onBeforeRun(context: Context, args: Basic.ImageArgs) {
+  async onBeforeRun(context: Context, args: Basic.MediaArgs) {
     if (args.target) {
       context.metadata = Object.assign({}, context.metadata, {
         contentUrl: args.target,
@@ -229,16 +227,16 @@ export class BaseImageCommand<
     return !!args.target;
   }
 
-  onCancelRun(context: Context, args: Basic.ImageArgs) {
+  onCancelRun(context: Context, args: Basic.MediaArgs) {
     if (args.target === undefined) {
       return editOrReply(context, "⚠ `Cannot find any images`");
     }
     return super.onCancelRun(context, args);
   }
 
-  onSuccess(context: Context, args: ParsedArgsFinished) {
+  onSuccess(context: Context, args: T) {
     if (context.response) {
-      const responseUrl = FindImage.findImageUrlInMessages([context.response]);
+      const responseUrl = Find.findImageUrlInMessages([context.response]);
       if (responseUrl) {
         context.metadata = Object.assign({}, context.metadata, { responseUrl });
       }
@@ -246,6 +244,83 @@ export class BaseImageCommand<
     if (super.onSuccess) {
       return super.onSuccess(context, args);
     }
+  }
+}
+
+export class BaseMediaCommand<
+  T extends Basic.MediaArgs = Basic.MediaArgs
+> extends BaseCommand<T> {
+  triggerTypingAfter = 250;
+
+  constructor(
+    media: Find.FindMediaUrlOptions,
+    commandClient: CommandClient,
+    options: CommandOptionsExtra
+  ) {
+    super(
+      commandClient,
+      Object.assign(
+        {},
+        DefaultOptions,
+        {
+          type: [
+            {
+              name: "target",
+              type: Parameters.mediaUrl(media),
+              required: true,
+            },
+            ...coerceType(options.type),
+          ],
+        },
+        options
+      )
+    );
+  }
+
+  async onBeforeRun(context: Context, args: Basic.MediaArgs) {
+    if (args.target) {
+      context.metadata = Object.assign({}, context.metadata, {
+        contentUrl: args.target,
+      });
+    }
+    return !!args.target;
+  }
+
+  async onCancelRun(context: Context, args: Basic.MediaArgs) {
+    if (args.target === undefined) {
+      return editOrReply(context, "⚠ `Cannot find any media`");
+    }
+    return super.onCancelRun(context, args);
+  }
+
+  onSuccess(context: Context, args: T) {
+    /*
+    if (context.response) {
+      const responseUrl = findImageUrlInMessages([context.response]);
+      if (responseUrl) {
+        context.metadata = Object.assign({}, context.metadata, {responseUrl});
+      }
+    }
+    */
+    if (super.onSuccess) {
+      super.onSuccess(context, args);
+    }
+  }
+}
+
+export class BaseAudioCommand<
+  T extends Basic.MediaArgs = Basic.MediaArgs
+> extends BaseMediaCommand<T> {
+  constructor(commandClient: CommandClient, options: CommandOptionsExtra) {
+    super({ audio: true, image: false, video: false }, commandClient, options);
+  }
+}
+
+export class BaseVideoCommand<
+  T extends Basic.MediaArgs = Basic.MediaArgs
+> extends BaseMediaCommand<T> {
+  constructor(commandClient: CommandClient, options: CommandOptionsExtra) {
+    super({ audio: false, image: false, video: true }, commandClient, options);
   }
 }
 
