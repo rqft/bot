@@ -43,7 +43,7 @@
     "node": "^17.3.0",
     "node-fetch": "^2.5.0",
     "nodemon": "^2.0.16",
-    "pariah": "^2.8.7",
+    "pariah": "^2.8.8",
     "typescript": "^4.4.2",
     "waud.js": "^1.0.3",
     "web-audio-daw": "^4.12.0",

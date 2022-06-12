@@ -705,3 +705,11 @@ export function fileExtensionFromUrl(url: string | URL) {
   }
   return extensionFromFileName(fileName);
 }
+
+export function extensionFromHeaders<T>(data: Data<T>["headers"] | Data<T>) {
+  if (data instanceof Data) {
+    data = data.headers;
+  }
+
+  return data.get("content-type")!.split("/").pop()!;
+}

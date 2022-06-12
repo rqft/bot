@@ -12,8 +12,8 @@ var Image;
     async function mirror(context, args) {
         const { target, method } = args;
         const m = method || pariah_1.APIs.Jonathan.MirrorMethods.LEFT;
-        const { payload: image } = await Image.instance.imageMirror(target, m);
-        const embed = await embed_1.Embed.image(context, image, `mirror-${m.toLowerCase()}.png`);
+        const { payload: image, headers } = await Image.instance.imageMirror(target, m);
+        const embed = await embed_1.Embed.image(context, image, `mirror-${m.toLowerCase()}.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.mirror = mirror;
@@ -33,16 +33,16 @@ var Image;
     Image.color = color;
     async function resize(context, args) {
         const { target, size } = args;
-        const { payload: image } = await Image.instance.imageResize(target, size);
-        const embed = await embed_1.Embed.image(context, image, "resize.png");
+        const { payload: image, headers } = await Image.instance.imageResize(target, size);
+        const embed = await embed_1.Embed.image(context, image, `resize.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.resize = resize;
     async function rotate(context, args) {
         let { target, degrees } = args;
         degrees %= 360;
-        const { payload: image } = await Image.instance.imageRotate(target, degrees);
-        const embed = await embed_1.Embed.image(context, image, "rotate.png");
+        const { payload: image, headers } = await Image.instance.imageRotate(target, degrees);
+        const embed = await embed_1.Embed.image(context, image, `rotate.${(0, tools_1.extensionFromHeaders)(headers)}`);
         embed.setDescription(`Angle: ${degrees} degree(s)`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
@@ -56,15 +56,15 @@ var Image;
     Image.url = url;
     async function tilt(context, args) {
         const { target, amount } = args;
-        const { payload: image } = await Image.instance.imageTilt(target, amount);
-        const embed = await embed_1.Embed.image(context, image, "tilt.png");
+        const { payload: image, headers } = await Image.instance.imageTilt(target, amount);
+        const embed = await embed_1.Embed.image(context, image, `tilt.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.tilt = tilt;
     async function tint(context, args) {
         const { target, color, opacity } = args;
-        const { payload: image } = await Image.instance.imageTint(target, color, (opacity || 50) / 100);
-        const embed = await embed_1.Embed.image(context, image, "tint.png");
+        const { payload: image, headers } = await Image.instance.imageTint(target, color, (opacity || 50) / 100);
+        const embed = await embed_1.Embed.image(context, image, `tint.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.tint = tint;
@@ -78,15 +78,15 @@ var Image;
     Image.averageColor = averageColor;
     async function brightness(context, args) {
         const { target, amount } = args;
-        const { payload: image } = await Image.instance.imageBrightness(target, (amount || 50) / 100);
-        const embed = await embed_1.Embed.image(context, image, "brightness.png");
+        const { payload: image, headers } = await Image.instance.imageBrightness(target, (amount || 50) / 100);
+        const embed = await embed_1.Embed.image(context, image, `brightness.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.brightness = brightness;
     async function fisheye(context, args) {
         const { target, amount } = args;
-        const { payload: image } = await Image.instance.imageFisheye(target, amount || 2);
-        const embed = await embed_1.Embed.image(context, image, "fisheye.png");
+        const { payload: image, headers } = await Image.instance.imageFisheye(target, amount || 2);
+        const embed = await embed_1.Embed.image(context, image, `fisheye.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.fisheye = fisheye;
@@ -100,8 +100,8 @@ var Image;
     Image.invert = invert;
     async function saturation(context, args) {
         const { target, amount } = args;
-        const { payload: image } = await Image.instance.imageSaturation(target, (amount || 50) / 100);
-        const embed = await embed_1.Embed.image(context, image, "saturation.png");
+        const { payload: image, headers } = await Image.instance.imageSaturation(target, (amount || 50) / 100);
+        const embed = await embed_1.Embed.image(context, image, `saturation.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.saturation = saturation;

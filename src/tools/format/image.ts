@@ -4,7 +4,12 @@ import { APIs } from "pariah";
 
 import { Secrets } from "../../secrets";
 import { Waifu2x } from "../api";
-import { editOrReply, extensionFromFileName, fileNameFromUrl } from "../tools";
+import {
+  editOrReply,
+  extensionFromFileName,
+  extensionFromHeaders,
+  fileNameFromUrl,
+} from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
 
@@ -20,12 +25,12 @@ export module Image {
     const { target, method } = args;
     const m = method || APIs.Jonathan.MirrorMethods.LEFT;
 
-    const { payload: image } = await instance.imageMirror(target, m);
+    const { payload: image, headers } = await instance.imageMirror(target, m);
 
     const embed = await Embed.image(
       context,
       image,
-      `mirror-${m.toLowerCase()}.png`
+      `mirror-${m.toLowerCase()}.${extensionFromHeaders(headers)}`
     );
     return await editOrReply(context, { embed });
   }
@@ -64,9 +69,16 @@ export module Image {
   ) {
     const { target, size } = args;
 
-    const { payload: image } = await instance.imageResize(target, size);
+    const { payload: image, headers } = await instance.imageResize(
+      target,
+      size
+    );
 
-    const embed = await Embed.image(context, image, "resize.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `resize.${extensionFromHeaders(headers)}`
+    );
     return await editOrReply(context, { embed });
   }
   export interface RotateArgs extends Basic.MediaArgs {
@@ -79,9 +91,16 @@ export module Image {
     let { target, degrees } = args;
     degrees %= 360;
 
-    const { payload: image } = await instance.imageRotate(target, degrees);
+    const { payload: image, headers } = await instance.imageRotate(
+      target,
+      degrees
+    );
 
-    const embed = await Embed.image(context, image, "rotate.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `rotate.${extensionFromHeaders(headers)}`
+    );
     embed.setDescription(`Angle: ${degrees} degree(s)`);
 
     return await editOrReply(context, { embed });
@@ -112,9 +131,16 @@ export module Image {
   ) {
     const { target, amount } = args;
 
-    const { payload: image } = await instance.imageTilt(target, amount);
+    const { payload: image, headers } = await instance.imageTilt(
+      target,
+      amount
+    );
 
-    const embed = await Embed.image(context, image, "tilt.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `tilt.${extensionFromHeaders(headers)}`
+    );
     return await editOrReply(context, { embed });
   }
 
@@ -129,13 +155,17 @@ export module Image {
   ) {
     const { target, color, opacity } = args;
 
-    const { payload: image } = await instance.imageTint(
+    const { payload: image, headers } = await instance.imageTint(
       target,
       color,
       (opacity || 50) / 100
     );
 
-    const embed = await Embed.image(context, image, "tint.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `tint.${extensionFromHeaders(headers)}`
+    );
 
     return await editOrReply(context, { embed });
   }
@@ -169,12 +199,16 @@ export module Image {
   ) {
     const { target, amount } = args;
 
-    const { payload: image } = await instance.imageBrightness(
+    const { payload: image, headers } = await instance.imageBrightness(
       target,
       (amount || 50) / 100
     );
 
-    const embed = await Embed.image(context, image, "brightness.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `brightness.${extensionFromHeaders(headers)}`
+    );
     return await editOrReply(context, { embed });
   }
 
@@ -184,9 +218,16 @@ export module Image {
   ) {
     const { target, amount } = args;
 
-    const { payload: image } = await instance.imageFisheye(target, amount || 2);
+    const { payload: image, headers } = await instance.imageFisheye(
+      target,
+      amount || 2
+    );
 
-    const embed = await Embed.image(context, image, "fisheye.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `fisheye.${extensionFromHeaders(headers)}`
+    );
     return await editOrReply(context, { embed });
   }
 
@@ -217,12 +258,16 @@ export module Image {
   ) {
     const { target, amount } = args;
 
-    const { payload: image } = await instance.imageSaturation(
+    const { payload: image, headers } = await instance.imageSaturation(
       target,
       (amount || 50) / 100
     );
 
-    const embed = await Embed.image(context, image, "saturation.png");
+    const embed = await Embed.image(
+      context,
+      image,
+      `saturation.${extensionFromHeaders(headers)}`
+    );
     return await editOrReply(context, { embed });
   }
 
