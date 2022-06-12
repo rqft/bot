@@ -1,11 +1,8 @@
-import {
-    ApplicationCommandOptionTypes,
-    ImageFormats
-} from "detritus-client/lib/constants";
+import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants";
 import { APIs } from "pariah";
 import { Formatter } from "../../../../tools/formatter";
 import { Parameters } from "../../../../tools/parameters";
-import { BaseSlashSubCommand } from "../baseslash";
+import { BaseImageOption, BaseSlashSubCommand } from "../baseslash";
 
 export class PxlSnapchatSlashSubCommand extends BaseSlashSubCommand {
   name = "snapchat";
@@ -13,14 +10,7 @@ export class PxlSnapchatSlashSubCommand extends BaseSlashSubCommand {
   constructor() {
     super({
       options: [
-        {
-          name: "target",
-          description: "what to use",
-          value: Parameters.imageUrl(ImageFormats.PNG),
-          default: Parameters.Default.imageUrl(ImageFormats.PNG),
-          type: ApplicationCommandOptionTypes.STRING,
-          required: false,
-        },
+        new BaseImageOption(),
         {
           name: "filter",
           description: "what to use with",

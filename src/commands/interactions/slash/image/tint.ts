@@ -1,10 +1,6 @@
-import {
-  ApplicationCommandOptionTypes,
-  ImageFormats,
-} from "detritus-client/lib/constants";
+import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants";
 import { Formatter } from "../../../../tools/formatter";
-import { Parameters } from "../../../../tools/parameters";
-import { BaseSlashSubCommand } from "../baseslash";
+import { BaseImageOption, BaseSlashSubCommand } from "../baseslash";
 
 export class ImageTintSlashSubCommand extends BaseSlashSubCommand {
   name = "tint";
@@ -19,14 +15,6 @@ export class ImageTintSlashSubCommand extends BaseSlashSubCommand {
           required: true,
         },
         {
-          name: "target",
-          description: "what to use",
-          value: Parameters.imageUrl(ImageFormats.PNG),
-          default: Parameters.Default.imageUrl(ImageFormats.PNG),
-          type: ApplicationCommandOptionTypes.STRING,
-          required: false,
-        },
-        {
           name: "opacity",
           description: "how much",
           type: ApplicationCommandOptionTypes.NUMBER,
@@ -34,6 +22,7 @@ export class ImageTintSlashSubCommand extends BaseSlashSubCommand {
           minValue: 0,
           maxValue: 100,
         },
+        new BaseImageOption(),
       ],
     });
   }

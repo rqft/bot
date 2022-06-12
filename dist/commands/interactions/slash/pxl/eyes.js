@@ -12,14 +12,7 @@ class PxlEyesSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
     constructor() {
         super({
             options: [
-                {
-                    name: "target",
-                    description: "what to use",
-                    value: parameters_1.Parameters.imageUrl(constants_1.ImageFormats.PNG),
-                    default: parameters_1.Parameters.Default.imageUrl(constants_1.ImageFormats.PNG),
-                    type: constants_1.ApplicationCommandOptionTypes.STRING,
-                    required: false,
-                },
+                new baseslash_1.BaseImageOption(),
                 {
                     name: "type",
                     description: "what eyes",

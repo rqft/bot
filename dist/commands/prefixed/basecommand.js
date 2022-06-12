@@ -112,11 +112,11 @@ class BaseCommand extends command_1.Command {
 exports.BaseCommand = BaseCommand;
 class BaseImageCommand extends BaseCommand {
     triggerTypingAfter = 250;
-    constructor(client, options) {
+    constructor(client, options, format) {
         options.type = [
             {
                 name: "target",
-                type: parameters_1.Parameters.imageUrl(find_image_1.Find.Formats.PNG),
+                type: parameters_1.Parameters.imageUrl(format),
                 required: true,
             },
             ...coerceType(options.type),

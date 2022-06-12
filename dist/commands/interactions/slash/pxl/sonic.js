@@ -14,7 +14,7 @@ class PxlSonicSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     name: "text",
                     description: "what",
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
-                    required: true
+                    required: true,
                 },
             ],
         });

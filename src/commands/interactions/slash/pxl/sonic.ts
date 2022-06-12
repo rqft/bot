@@ -9,11 +9,11 @@ export class PxlSonicSlashSubCommand extends BaseSlashSubCommand {
     super({
       options: [
         {
-            name: "text",
-            description:"what"
-,            type: ApplicationCommandOptionTypes.STRING,
-            required: true
-          },
+          name: "text",
+          description: "what",
+          type: ApplicationCommandOptionTypes.STRING,
+          required: true,
+        },
       ],
     });
   }

@@ -10,6 +10,7 @@ import {
 } from "detritus-client/lib/command";
 import {
   CommandRatelimitTypes,
+  ImageFormats,
   Permissions,
 } from "detritus-client/lib/constants";
 import { CommandMetadata } from "../../tools/command-metadata";
@@ -192,11 +193,15 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
 export class BaseImageCommand<T = ParsedArgs> extends BaseCommand<T> {
   triggerTypingAfter = 250;
 
-  constructor(client: CommandClient, options: CommandOptionsExtra) {
+  constructor(
+    client: CommandClient,
+    options: CommandOptionsExtra,
+    format?: ImageFormats | Find.Formats
+  ) {
     options.type = [
       {
         name: "target",
-        type: Parameters.imageUrl(Find.Formats.PNG),
+        type: Parameters.imageUrl(format),
         required: true,
       },
       ...coerceType(options.type as never),
