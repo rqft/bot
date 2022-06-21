@@ -14,6 +14,7 @@ import { Pxl } from "./format/pxl";
 import { Search } from "./format/search";
 import { SomeRandomApi } from "./format/some-random-api";
 import { Tag } from "./format/tag";
+import { Text } from "./format/text";
 import { Todo } from "./format/todo";
 
 export const Formatter = {
@@ -35,5 +36,6 @@ export const Formatter = {
     role,
     guild,
   },
+  Text,
   ...Other,
 };

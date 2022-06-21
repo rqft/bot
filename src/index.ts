@@ -13,6 +13,7 @@ process.on("unhandledRejection", (reason) => {
   console.error(JSON.stringify(reason, null, 2));
   console.error(reason);
 });
+
 (async function run() {
   await commands.run();
 

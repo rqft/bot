@@ -40,6 +40,7 @@ const pxl_1 = require("./format/pxl");
 const search_1 = require("./format/search");
 const some_random_api_1 = require("./format/some-random-api");
 const tag_1 = require("./format/tag");
+const text_1 = require("./format/text");
 const todo_1 = require("./format/todo");
 exports.Formatter = {
     Basic: basic_1.Basic,
@@ -60,5 +61,6 @@ exports.Formatter = {
         role: info_role_1.role,
         guild: info_guild_1.guild,
     },
+    Text: text_1.Text,
     ...Other,
 };
