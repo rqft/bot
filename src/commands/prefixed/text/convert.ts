@@ -4,7 +4,7 @@ import { ToolsMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { BaseCommand } from "../basecommand";
 
-export default class TextConvertCommands extends BaseCommand {
+export default class TextConvertCommand extends BaseCommand {
   constructor(client: CommandClient) {
     super(client, {
       name: "text convert",

@@ -4,7 +4,7 @@ const pariah_1 = require("pariah");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const basecommand_1 = require("../basecommand");
-class TextConvertCommands extends basecommand_1.BaseCommand {
+class TextConvertCommand extends basecommand_1.BaseCommand {
     constructor(client) {
         super(client, {
             name: "text convert",
@@ -48,4 +48,4 @@ class TextConvertCommands extends basecommand_1.BaseCommand {
     }
     run = formatter_1.Formatter.Text.convert;
 }
-exports.default = TextConvertCommands;
+exports.default = TextConvertCommand;
