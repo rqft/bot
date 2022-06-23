@@ -4,6 +4,10 @@ import {
   ShardClient,
   ShardClientCacheOptions,
 } from "detritus-client";
+import {
+  GatewayIntents,
+  GATEWAY_INTENTS_ALL,
+} from "detritus-client-socket/lib/constants";
 import { Secrets } from "./secrets";
 
 const cache: ShardClientCacheOptions = {
@@ -34,7 +38,10 @@ const cache: ShardClientCacheOptions = {
 export const client = new ShardClient(Secrets.Token, {
   // imageFormat: "gif",
   isBot: true,
-  gateway: { loadAllMembers: true, intents: "ALL" },
+  gateway: {
+    loadAllMembers: true,
+    intents: GATEWAY_INTENTS_ALL & ~GatewayIntents.GUILD_PRESENCES,
+  },
   cache,
 });
 

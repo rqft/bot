@@ -194,12 +194,12 @@ export async function help(
             }
 
             if (command.metadata.usage) {
-              const description: Array<string> = [];
+              const description: Array<string | Markdown.Format> = [];
 
               description.push(
                 Markdown.Format.codeblock(
                   command.fullName + " " + command.metadata.usage
-                ).toString()
+                )
               );
 
               if (command.metadata.examples) {
@@ -211,7 +211,7 @@ export async function help(
                           return command.fullName + " " + example;
                         })
                         .join("\n")
-                    ).toString()
+                    )
                   );
                 }
               }

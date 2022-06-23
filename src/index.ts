@@ -32,6 +32,7 @@ process.on("unhandledRejection", (reason) => {
       );
     }
   }
+
   await interactions.run();
 
   const all = [client, selfclient];

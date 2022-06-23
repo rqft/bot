@@ -1,4 +1,4 @@
-import { CommandClient \} from "detritus-client";
+import { CommandClient } from "detritus-client";
 import {
   ArgumentOptions,
   Command,
@@ -6,20 +6,20 @@ import {
   CommandRatelimitInfo,
   Context,
   ParsedArgs,
-  ParsedErrors
-\} from "detritus-client/lib/command";
+  ParsedErrors,
+} from "detritus-client/lib/command";
 import {
   CommandRatelimitTypes,
   ImageFormats,
-  Permissions
-\} from "detritus-client/lib/constants";
-import { CommandMetadata \} from "../../tools/command-metadata";
-import { Err \} from "../../tools/error";
-import { Find \} from "../../tools/find-image";
-import { Basic \} from "../../tools/format/basic";
-import { Markdown \} from "../../tools/markdown";
-import { Parameters \} from "../../tools/parameters";
-import { editOrReply, permissionsErrorList \} from "../../tools/tools";
+  Permissions,
+} from "detritus-client/lib/constants";
+import { CommandMetadata } from "../../tools/command-metadata";
+import { Err } from "../../tools/error";
+import { Find } from "../../tools/find-image";
+import { Basic } from "../../tools/format/basic";
+import { Markdown } from "../../tools/markdown";
+import { Parameters } from "../../tools/parameters";
+import { editOrReply, permissionsErrorList } from "../../tools/tools";
 
 export interface CommandOptionsExtra extends CommandOptions {
   metadata: CommandMetadata;

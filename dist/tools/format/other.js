@@ -146,14 +146,14 @@ async function help(context, args) {
                         }
                         if (command.metadata.usage) {
                             const description = [];
-                            description.push(markdown_1.Markdown.Format.codeblock(command.fullName + " " + command.metadata.usage).toString());
+                            description.push(markdown_1.Markdown.Format.codeblock(command.fullName + " " + command.metadata.usage));
                             if (command.metadata.examples) {
                                 if (command.metadata.examples.length) {
                                     description.push(markdown_1.Markdown.Format.codeblock(command.metadata.examples
                                         .map((example) => {
                                         return command.fullName + " " + example;
                                     })
-                                        .join("\n")).toString());
+                                        .join("\n")));
                                 }
                             }
                             embed.addField("Usage", description.join("\n"));
