@@ -15,8 +15,6 @@ export class GuildSlashSubCommand extends BaseSlashSubCommand {
           description: "what",
           type: ApplicationCommandOptionTypes.STRING,
           required: false,
-          autocomplete: true,
-          onAutoComplete: Parameters.Autocomplete.guilds,
           value: Parameters.guild,
         },
       ],

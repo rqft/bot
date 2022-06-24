@@ -1081,24 +1081,5 @@ var Parameters;
             };
         }
         Autocomplete.choices = choices;
-        async function guilds(context) {
-            const guilds = globals_1.selfclient.guilds.clone();
-            context.client.guilds.forEach((v, k) => guilds.set(k, v));
-            const choices = guilds
-                .filter((guild) => {
-                return (guild.name.toLowerCase().startsWith(context.value) ||
-                    guild.name.toLowerCase().includes(context.value) ||
-                    guild.id.includes(context.value));
-            })
-                .map((guild) => ({
-                name: `${guild.name} (${guild.id})`,
-                value: guild.id,
-            }))
-                .slice(0, 25);
-            return await context.respond({
-                choices,
-            });
-        }
-        Autocomplete.guilds = guilds;
     })(Autocomplete = Parameters.Autocomplete || (Parameters.Autocomplete = {}));
 })(Parameters = exports.Parameters || (exports.Parameters = {}));

@@ -16,8 +16,6 @@ class GuildSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     description: "what",
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
                     required: false,
-                    autocomplete: true,
-                    onAutoComplete: parameters_1.Parameters.Autocomplete.guilds,
                     value: parameters_1.Parameters.guild,
                 },
             ],
