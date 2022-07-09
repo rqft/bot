@@ -233,23 +233,18 @@ export async function user(
 
         if (member.voiceState) {
           const { voiceState } = member;
+
           const state: Array<CustomEmojis | Emojis> = [];
           if (voiceState.isSpeaking) {
             state.push(CustomEmojis.STATUS_ONLINE);
-          } else {
-            state.push(CustomEmojis.STATUS_OFFLINE);
           }
 
           if (voiceState.deaf || voiceState.selfDeaf) {
             state.push(CustomEmojis.GUI_DEAFENED);
-          } else {
-            state.push(CustomEmojis.GUI_UNDEAFENED);
           }
 
           if (voiceState.mute || voiceState.selfMute || voiceState.suppress) {
             state.push(CustomEmojis.GUI_MUTED);
-          } else {
-            state.push(CustomEmojis.GUI_UNMUTED);
           }
 
           if (voiceState.selfStream) {
@@ -267,7 +262,11 @@ export async function user(
           if (state.length) {
             description.push(
               "\n" +
-                Basic.field(Emojis.MICROPHONE, "Voice State", state.join(" "))
+                Basic.field(
+                  Emojis.MICROPHONE,
+                  `Voice State (<#${voiceState.channelId}>)`,
+                  state.join(" ")
+                )
             );
           }
         }

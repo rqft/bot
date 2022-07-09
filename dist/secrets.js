@@ -38,8 +38,6 @@ exports.Secrets = {
         "760130247580057650",
     ],
     DefaultPrefix: env.DEFAULT_PREFIX,
-    ClearInteractions: env.CLEAR_INTERACTIONS === "true",
-    StorageChannelId: env.STORAGE_CHANNEL_ID,
-    Host: env.MODE === "dev" ? "http://localhost:3000" : env.HOST,
-    ApiToken: env.API_TOKEN,
+    ClearInteractions: "false",
+    StorageChannelId: "842855906508275713",
 };

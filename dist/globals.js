@@ -13,6 +13,7 @@ const cache = {
     roles: true,
     interactions: true,
     messages: true,
+    voiceStates: true,
     applications: false,
     connectedAccounts: false,
     guildScheduledEvents: false,
@@ -25,7 +26,6 @@ const cache = {
     typings: false,
     voiceCalls: false,
     voiceConnections: false,
-    voiceStates: false,
 };
 exports.client = new detritus_client_1.ShardClient(secrets_1.Secrets.Token, {
     isBot: true,

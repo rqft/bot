@@ -125,23 +125,14 @@ async function user(context, args) {
                     if (voiceState.isSpeaking) {
                         state.push("<:IconStatus_Online:798624246728228874>");
                     }
-                    else {
-                        state.push("<:IconStatus_Offline:798624247546511370>");
-                    }
                     if (voiceState.deaf || voiceState.selfDeaf) {
                         state.push("<:IconGui_Deafened:798624239208104019>");
-                    }
-                    else {
-                        state.push("<:IconGui_Undeafened:798624241892982864>");
                     }
                     if (voiceState.mute || voiceState.selfMute || voiceState.suppress) {
                         state.push("<:IconGui_Muted:798624247089463356>");
                     }
-                    else {
-                        state.push("<:IconGui_Unmuted:798624242035326976>");
-                    }
                     if (voiceState.selfStream) {
-                        state.push("<:IconGui_Stream:836609722047397919>");
+                        state.push("<a:IconGui_Stream:995433581394534472>");
                     }
                     if (voiceState.selfVideo) {
                         state.push("<:IconGui_Video:837043839662424104>");
@@ -151,7 +142,7 @@ async function user(context, args) {
                     }
                     if (state.length) {
                         description.push("\n" +
-                            basic_1.Basic.field(emojis_1.Emojis.MICROPHONE, "Voice State", state.join(" ")));
+                            basic_1.Basic.field(emojis_1.Emojis.MICROPHONE, `Voice State (<#${voiceState.channelId}>)`, state.join(" ")));
                     }
                 }
                 {

@@ -2,8 +2,7 @@ import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
-import { Secrets } from "../../secrets";
-import { Waifu2x } from "../api";
+import { Sarah, Waifu2x } from "../api";
 import {
   editOrReply,
   extensionFromFileName,
@@ -14,7 +13,7 @@ import { Basic } from "./basic";
 import { Embed } from "./embed";
 
 export module Image {
-  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
+  export const instance = new Sarah();
   export interface MirrorArgs extends Basic.MediaArgs {
     method: APIs.Jonathan.MirrorMethods;
   }

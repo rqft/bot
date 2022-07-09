@@ -21,7 +21,7 @@ export module Basic {
 
   export function permissionsList(target: TargetWithPermissions) {
     if (target.can(Permissions.ADMINISTRATOR)) {
-      return [PermissionsText[String(Permissions.ADMINISTRATOR)]];
+      return [Permissions.ADMINISTRATOR];
     }
 
     const permissions: Array<bigint> = [];
@@ -32,6 +32,7 @@ export module Basic {
       }
       if (PermissionsText[String(permission)]) {
         if (target.can(permission)) {
+          console.log(permission);
           permissions.push(permission);
         }
       }

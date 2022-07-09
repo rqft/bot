@@ -8,7 +8,7 @@ const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Image;
 (function (Image) {
-    Image.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
+    Image.instance = new api_1.Sarah(secrets_1.Secrets.ApiToken);
     async function mirror(context, args) {
         const { target, method } = args;
         const m = method || pariah_1.APIs.Jonathan.MirrorMethods.LEFT;

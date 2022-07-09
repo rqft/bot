@@ -19,6 +19,7 @@ const cache: ShardClientCacheOptions = {
   roles: true,
   interactions: true,
   messages: true,
+  voiceStates: true, // usr info
 
   applications: false,
   connectedAccounts: false,
@@ -32,7 +33,6 @@ const cache: ShardClientCacheOptions = {
   typings: false,
   voiceCalls: false,
   voiceConnections: false,
-  voiceStates: false,
 };
 
 export const client = new ShardClient(Secrets.Token, {
