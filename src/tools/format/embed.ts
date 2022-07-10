@@ -66,7 +66,8 @@ export module Embed {
     context: Context | InteractionContext,
     input: URL | string | Buffer | Attachment | ArrayBuffer,
     name: string,
-    ubrand?: Brand
+    ubrand?: Brand,
+    skipBuffer = false
   ) {
     if (input instanceof ArrayBuffer) {
       const buf = Buffer.alloc(input.byteLength);
@@ -85,28 +86,6 @@ export module Embed {
       input = new URL(input);
     }
 
-    if (input instanceof URL) {
-      input = (await new Pariah(input).buffer("/")).payload;
-    }
-
-    const decoder = new TextDecoder();
-    const txt = decoder.decode(input);
-    if (txt.match(/^\w+$/g)) {
-      switch (txt) {
-        case "NO_FACES_DETECTED": {
-          throw new Err("No faces detected");
-        }
-        default: {
-          throw new Err(txt);
-        }
-      }
-    }
-
-    const image = await store(input as Buffer, name);
-    if (!image.url || !image.width || !image.height) {
-      throw new Err("Failed to store image");
-    }
-
     const embed = brand(context, ubrand);
     embed.setColor(Colours.EMBED);
     const footer = [];
@@ -119,31 +98,62 @@ export module Embed {
       }
     }
 
-    footer.push(image.filename);
-
-    let imagescript: Image | Animation | null = null;
-    try {
-      imagescript = load(input as BufferSource);
-    } catch {
-      throw new Err("Failed to load image");
+    if (skipBuffer) {
+      if (input instanceof ArrayBuffer || input instanceof Buffer) {
+        throw new Err("Buffer is not allowed in this context", { status: 400 });
+      }
+      embed.setImage(input.toString());
     }
 
-    if (imagescript === null) {
-      throw new Err("Failed to load image");
-    }
+    if (!skipBuffer) {
+      if (input instanceof URL) {
+        input = (await new Pariah(input).buffer("/")).payload;
+      }
 
-    if (imagescript instanceof Animation) {
-      footer.push(`${imagescript.frames.length} frames`);
-    }
+      const decoder = new TextDecoder();
+      const txt = decoder.decode(input);
+      if (txt.match(/^\w+$/g)) {
+        switch (txt) {
+          case "NO_FACES_DETECTED": {
+            throw new Err("No faces detected");
+          }
+          default: {
+            throw new Err(txt);
+          }
+        }
+      }
 
-    if (image.size) {
-      footer.push(
-        `${image.width}x${image.height} (${formatBytes(image.size, 2, true)})`
-      );
+      const image = await store(input as Buffer, name);
+      if (!image.url || !image.width || !image.height) {
+        throw new Err("Failed to store image");
+      }
+
+      footer.push(image.filename);
+
+      let imagescript: Image | Animation | null = null;
+      try {
+        imagescript = load(input as BufferSource);
+      } catch {
+        throw new Err("Failed to load image");
+      }
+
+      if (imagescript === null) {
+        throw new Err("Failed to load image");
+      }
+
+      if (imagescript instanceof Animation) {
+        footer.push(`${imagescript.frames.length} frames`);
+      }
+
+      if (image.size) {
+        footer.push(
+          `${image.width}x${image.height} (${formatBytes(image.size, 2, true)})`
+        );
+      }
+      embed.setImage(image.url!);
     }
 
     embed.setFooter(footer.join(", "));
-    embed.setImage(image.url!);
 
     return embed;
   }

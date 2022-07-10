@@ -4,7 +4,6 @@ import {
   InteractionContext,
 } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
-import { Secrets } from "../../secrets";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { Paginator } from "../paginator";
@@ -13,7 +12,7 @@ import { editOrReply, groupArray } from "../tools";
 import { Embed } from "./embed";
 
 export module Tag {
-  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API();
 
   export interface GetTagArgs {
     key: string;

@@ -1,12 +1,11 @@
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
-import { Secrets } from "../../secrets";
 import { editOrReply } from "../tools";
 import { Basic } from "./basic";
 
 export module Audio {
-  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API();
 
   export interface VolumeArgs extends Basic.MediaArgs {
     volume: number;

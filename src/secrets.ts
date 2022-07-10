@@ -38,6 +38,6 @@ export const Secrets = {
     "760130247580057650",
   ],
   DefaultPrefix: env.DEFAULT_PREFIX!,
-  ClearInteractions: "false",
+  ClearInteractions: false,
   StorageChannelId: "842855906508275713",
 };

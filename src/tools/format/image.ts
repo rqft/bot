@@ -3,6 +3,7 @@ import { InteractionContext } from "detritus-client/lib/interaction";
 import { APIs } from "pariah";
 
 import { Sarah, Waifu2x } from "../api";
+import { Err } from "../error";
 import {
   editOrReply,
   extensionFromFileName,
@@ -280,6 +281,34 @@ export module Image {
     const { payload: image } = await w2xInstance.use(target);
 
     const embed = await Embed.image(context, image, "upscale.png");
+    return await editOrReply(context, { embed });
+  }
+
+  interface GenerateArgs {
+    query: string;
+    style: keyof typeof APIs.Jonathan.WomboStyles;
+  }
+
+  export async function generate(
+    context: Context | InteractionContext,
+    args: GenerateArgs
+  ) {
+    const { query, style } = args;
+
+    const { payload } = await instance.wombo(style, query);
+
+    if (payload.status.state === "error") {
+      throw new Err(payload.status.message, { status: payload.status.code });
+    }
+
+    const embed = await Embed.image(
+      context,
+      payload.data,
+      "wombo.png",
+      undefined,
+      true
+    );
+
     return await editOrReply(context, { embed });
   }
 }

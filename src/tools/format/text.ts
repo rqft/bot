@@ -2,11 +2,10 @@ import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { Message } from "detritus-client/lib/structures";
 import { APIs } from "pariah";
-import { Secrets } from "../../secrets";
 import { editOrReply } from "../tools";
 
 export module Text {
-  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API();
   export interface TextArgs {
     text: string;
   }

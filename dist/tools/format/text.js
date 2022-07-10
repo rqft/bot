@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Text = void 0;
 const pariah_1 = require("pariah");
-const secrets_1 = require("../../secrets");
 const tools_1 = require("../tools");
 var Text;
 (function (Text) {
-    Text.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
+    Text.instance = new pariah_1.APIs.Jonathan.API();
     function decideMethod(args) {
         const { method, decode } = args;
         if (method) {

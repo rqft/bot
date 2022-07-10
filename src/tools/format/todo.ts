@@ -5,14 +5,13 @@ import {
 } from "detritus-client/lib/interaction";
 import { User } from "detritus-client/lib/structures";
 import { APIs } from "pariah";
-import { Secrets } from "../../secrets";
 
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
 
 export module Todo {
-  export const instance = new APIs.Jonathan.API(Secrets.ApiToken);
+  export const instance = new APIs.Jonathan.API();
 
   export interface GetTodoArgs {
     id: number;

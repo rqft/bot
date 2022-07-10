@@ -41,7 +41,7 @@ var Embed;
         return self;
     }
     Embed.brand = brand;
-    async function image(context, input, name, ubrand) {
+    async function image(context, input, name, ubrand, skipBuffer = false) {
         if (input instanceof ArrayBuffer) {
             const buf = Buffer.alloc(input.byteLength);
             const view = new Uint8Array(input);
@@ -56,25 +56,6 @@ var Embed;
         if (typeof input === "string") {
             input = new URL(input);
         }
-        if (input instanceof URL) {
-            input = (await new pariah_1.Pariah(input).buffer("/")).payload;
-        }
-        const decoder = new TextDecoder();
-        const txt = decoder.decode(input);
-        if (txt.match(/^\w+$/g)) {
-            switch (txt) {
-                case "NO_FACES_DETECTED": {
-                    throw new error_1.Err("No faces detected");
-                }
-                default: {
-                    throw new error_1.Err(txt);
-                }
-            }
-        }
-        const image = await (0, tools_1.store)(input, name);
-        if (!image.url || !image.width || !image.height) {
-            throw new error_1.Err("Failed to store image");
-        }
         const embed = brand(context, ubrand);
         embed.setColor(constants_1.Colours.EMBED);
         const footer = [];
@@ -83,25 +64,52 @@ var Embed;
                 footer.push(`Page ${context.metadata.page}/${context.metadata.pageLimit}`);
             }
         }
-        footer.push(image.filename);
-        let imagescript = null;
-        try {
-            imagescript = (0, v2_1.load)(input);
+        if (skipBuffer) {
+            if (input instanceof ArrayBuffer || input instanceof Buffer) {
+                throw new error_1.Err("Buffer is not allowed in this context", { status: 400 });
+            }
+            embed.setImage(input.toString());
         }
-        catch {
-            throw new error_1.Err("Failed to load image");
-        }
-        if (imagescript === null) {
-            throw new error_1.Err("Failed to load image");
-        }
-        if (imagescript instanceof v2_1.Animation) {
-            footer.push(`${imagescript.frames.length} frames`);
-        }
-        if (image.size) {
-            footer.push(`${image.width}x${image.height} (${(0, tools_1.formatBytes)(image.size, 2, true)})`);
+        if (!skipBuffer) {
+            if (input instanceof URL) {
+                input = (await new pariah_1.Pariah(input).buffer("/")).payload;
+            }
+            const decoder = new TextDecoder();
+            const txt = decoder.decode(input);
+            if (txt.match(/^\w+$/g)) {
+                switch (txt) {
+                    case "NO_FACES_DETECTED": {
+                        throw new error_1.Err("No faces detected");
+                    }
+                    default: {
+                        throw new error_1.Err(txt);
+                    }
+                }
+            }
+            const image = await (0, tools_1.store)(input, name);
+            if (!image.url || !image.width || !image.height) {
+                throw new error_1.Err("Failed to store image");
+            }
+            footer.push(image.filename);
+            let imagescript = null;
+            try {
+                imagescript = (0, v2_1.load)(input);
+            }
+            catch {
+                throw new error_1.Err("Failed to load image");
+            }
+            if (imagescript === null) {
+                throw new error_1.Err("Failed to load image");
+            }
+            if (imagescript instanceof v2_1.Animation) {
+                footer.push(`${imagescript.frames.length} frames`);
+            }
+            if (image.size) {
+                footer.push(`${image.width}x${image.height} (${(0, tools_1.formatBytes)(image.size, 2, true)})`);
+            }
+            embed.setImage(image.url);
         }
         embed.setFooter(footer.join(", "));
-        embed.setImage(image.url);
         return embed;
     }
     Embed.image = image;

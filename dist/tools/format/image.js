@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Image = void 0;
 const pariah_1 = require("pariah");
-const secrets_1 = require("../../secrets");
 const api_1 = require("../api");
+const error_1 = require("../error");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Image;
 (function (Image) {
-    Image.instance = new api_1.Sarah(secrets_1.Secrets.ApiToken);
+    Image.instance = new api_1.Sarah();
     async function mirror(context, args) {
         const { target, method } = args;
         const m = method || pariah_1.APIs.Jonathan.MirrorMethods.LEFT;
@@ -113,4 +113,14 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.upscale = upscale;
+    async function generate(context, args) {
+        const { query, style } = args;
+        const { payload } = await Image.instance.wombo(style, query);
+        if (payload.status.state === "error") {
+            throw new error_1.Err(payload.status.message, { status: payload.status.code });
+        }
+        const embed = await embed_1.Embed.image(context, payload.data, "wombo.png", undefined, true);
+        return await (0, tools_1.editOrReply)(context, { embed });
+    }
+    Image.generate = generate;
 })(Image = exports.Image || (exports.Image = {}));

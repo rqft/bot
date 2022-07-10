@@ -181,7 +181,20 @@ export class BaseCommand<T = ParsedArgs> extends Command<T> {
       if (message in store) {
         description.push(`${key}: same as ${store[message]}`);
       } else {
-        description.push(`${key}: ${message}`);
+        switch (true) {
+          case /^(.+) is not a valid choice$/.test(message): {
+            description.push(
+              `${key}: must be one of ${context.command?.argParser.args
+                .find((v) => v.name === key)
+                ?.choices!.join(", ")}`
+            );
+            break;
+          }
+
+          default: {
+            description.push(`${key}: ${message}`);
+          }
+        }
       }
 
       store[message] = key;

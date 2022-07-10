@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Audio = void 0;
 const pariah_1 = require("pariah");
-const secrets_1 = require("../../secrets");
 const tools_1 = require("../tools");
 var Audio;
 (function (Audio) {
-    Audio.instance = new pariah_1.APIs.Jonathan.API(secrets_1.Secrets.ApiToken);
+    Audio.instance = new pariah_1.APIs.Jonathan.API();
     async function volume(context, args) {
         console.log(args);
         const { payload: audio } = await Audio.instance.audioVolume(args.target, args.volume);
