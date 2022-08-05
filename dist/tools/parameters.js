@@ -275,7 +275,7 @@ var Parameters;
             return Parameters.Default.guild(context);
         }
         if ((0, tools_1.isSnowflake)(value)) {
-            const guild = globals_1.client.guilds.get(value) || globals_1.selfclient.guilds.get(value);
+            const guild = globals_1.client.guilds.get(value);
             if (guild) {
                 return guild;
             }
@@ -284,12 +284,7 @@ var Parameters;
                     return globals_1.client.rest.fetchGuild(value, {}, true);
                 }
                 catch {
-                    try {
-                        return globals_1.selfclient.rest.fetchGuild(value, {}, true);
-                    }
-                    catch {
-                        return null;
-                    }
+                    return null;
                 }
             }
         }

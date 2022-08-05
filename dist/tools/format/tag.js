@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tag = void 0;
-const pariah_1 = require("pariah");
+const api_1 = require("../api");
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
 const paginator_1 = require("../paginator");
@@ -10,7 +10,7 @@ const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Tag;
 (function (Tag) {
-    Tag.instance = new pariah_1.APIs.Jonathan.API();
+    Tag.instance = new api_1.Sarah();
     async function get(context, args) {
         if (args.key === "") {
             return await (0, tools_1.editOrReply)(context, 'Missing required parameter "key"');

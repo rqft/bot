@@ -4,14 +4,14 @@ import {
   InteractionContext,
 } from "detritus-client/lib/interaction";
 import { User } from "detritus-client/lib/structures";
-import { APIs } from "pariah";
+import { Sarah } from "../api";
 
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
 
 export module Todo {
-  export const instance = new APIs.Jonathan.API();
+  export const instance = new Sarah();
 
   export interface GetTodoArgs {
     id: number;

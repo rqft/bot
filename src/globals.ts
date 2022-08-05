@@ -8,18 +8,24 @@ import {
   GatewayIntents,
   GATEWAY_INTENTS_ALL,
 } from "detritus-client-socket/lib/constants";
+import { BaseClientCollectionOptions } from "detritus-client/lib/collections";
 import { Secrets } from "./secrets";
-
+function cacher(limit: number, expire?: number): BaseClientCollectionOptions {
+  return {
+    limit,
+    expire,
+  };
+}
 const cache: ShardClientCacheOptions = {
-  users: true,
-  guilds: true,
-  channels: true,
-  emojis: true,
-  members: true,
-  roles: true,
-  interactions: true,
-  messages: true,
-  voiceStates: true, // usr info
+  users: cacher(1e3),
+  guilds: cacher(100),
+  channels: cacher(1e3),
+  emojis: cacher(1e4),
+  members: cacher(Infinity),
+  roles: cacher(1e3),
+  interactions: cacher(Infinity),
+  messages: cacher(Infinity),
+  voiceStates: cacher(100),
 
   applications: false,
   connectedAccounts: false,

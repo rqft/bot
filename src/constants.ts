@@ -313,6 +313,7 @@ export enum GuildFeature {
   HAS_DIRECTORY_ENTRY = "HAS_DIRECTORY_ENTRY",
   MEMBER_PROFILES = "MEMBER_PROFILES",
   AUTO_MODERATION = "AUTO_MODERATION",
+  TEXT_IN_VOICE_ENABLED = "TEXT_IN_VOICE_ENABLED",
   // private
   BOT_DEVELOPER_EARLY_ACCESS = "BOT_DEVELOPER_EARLY_ACCESS",
   GUILD_HOME_TEST = "GUILD_HOME_TEST",
@@ -358,6 +359,7 @@ export const GuildFeaturesText: Record<GuildFeature, string> = {
   [GuildFeature.HAS_DIRECTORY_ENTRY]: "Has Directory Entry",
   [GuildFeature.MEMBER_PROFILES]: "Member Profiles",
   [GuildFeature.AUTO_MODERATION]: "Auto Moderation",
+  [GuildFeature.TEXT_IN_VOICE_ENABLED]: "Text In Voice Enabled",
 
   // private
 
@@ -406,11 +408,12 @@ export const GuildFeaturesEmojis: Record<GuildFeature, CustomEmojis> = {
   [GuildFeature.HAS_DIRECTORY_ENTRY]: CustomEmojis.CHANNEL_CATEGORY,
   [GuildFeature.MEMBER_PROFILES]: CustomEmojis.GUI_MEMBERS,
   [GuildFeature.AUTO_MODERATION]: CustomEmojis.BADGE_CERTIFIED_MODERATOR,
+  [GuildFeature.TEXT_IN_VOICE_ENABLED]: CustomEmojis.CHANNEL_THREAD,
 
   // private
 
   [GuildFeature.BOT_DEVELOPER_EARLY_ACCESS]: CustomEmojis.BADGE_BOT_DEVELOPER,
-  [GuildFeature.GUILD_HOME_TEST]: CustomEmojis.GUI_MENTION,
+  [GuildFeature.GUILD_HOME_TEST]: CustomEmojis.GUI_OWNERCROWN,
   [GuildFeature.HAD_EARLY_ACTIVITIES_ACCESS]: CustomEmojis.GUI_SETTINGS,
   [GuildFeature.EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT]:
     CustomEmojis.GUI_SETTINGS,

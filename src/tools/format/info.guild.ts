@@ -17,7 +17,7 @@ import {
   GuildVoiceRegion,
   VoiceRegionsText,
 } from "../../constants";
-import { CustomEmojis } from "../emojis";
+import { CustomEmojis, Emojis } from "../emojis";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { editOrReply } from "../tools";
@@ -65,6 +65,14 @@ export async function guild(
       )
     );
 
+    description.push(
+      Basic.field(
+        Emojis.CALENDAR,
+        "Created At",
+        Markdown.Format.timestamp(guild.createdAt)
+      )
+    );
+
     if (guild.owner) {
       description.push(
         Basic.field(
@@ -87,61 +95,70 @@ export async function guild(
       );
     }
 
-    description.push(
-      Basic.field(
-        CustomEmojis.GUI_DISCOVERY,
-        "Server Type",
-        GuildPublicStatesText[String(guild.isPublic)]!
-      )
-    );
+    if (description.length) {
+      embed.addField("Information", description.join("\n"), true);
+    }
 
-    description.push(
-      Basic.field(
-        CustomEmojis.GUI_SETTINGS,
-        "Locale",
-        guild.preferredLocaleText || "Unknown"
-      )
-    );
+    // put these into a separate field
 
-    description.push(
-      Basic.field(
-        "\n" + CustomEmojis.GUI_ROLE,
-        "MFA Level",
-        GuildMfaLevelsText[guild.mfaLevel] || "Unknown"
-      )
-    );
+    {
+      const description: Array<string> = [];
+      description.push(
+        Basic.field(
+          "\n" + CustomEmojis.GUI_ROLE,
+          "MFA Level",
+          GuildMfaLevelsText[guild.mfaLevel] || "Unknown"
+        )
+      );
 
-    description.push(
-      Basic.field(
-        CustomEmojis.CHANNEL_TEXT_NSFW,
-        "Explicit Content Filter",
-        GuildExplicitContentFiltersText[guild.explicitContentFilter] ||
-          "Unknown"
-      )
-    );
+      description.push(
+        Basic.field(
+          CustomEmojis.CHANNEL_TEXT_NSFW,
+          "Explicit Content Filter",
+          GuildExplicitContentFiltersText[guild.explicitContentFilter] ||
+            "Unknown"
+        )
+      );
 
-    description.push(
-      Basic.field(
-        CustomEmojis.GUI_INVITE,
-        "Verification Level",
-        GuildVerificationLevelsText[
-          guild.verificationLevel as VerificationLevels
-        ] || "Unknown"
-      )
-    );
-
-    if (guild.canHaveVanityUrl) {
       description.push(
         Basic.field(
           CustomEmojis.GUI_INVITE,
-          "Vanity URL",
-          guild.vanityUrlCode || "Not Set"
+          "Verification Level",
+          GuildVerificationLevelsText[
+            guild.verificationLevel as VerificationLevels
+          ] || "Unknown"
         )
       );
-    }
 
-    if (description.length) {
-      embed.addField("Information", description.join("\n"), true);
+      if (guild.canHaveVanityUrl) {
+        description.push(
+          Basic.field(
+            CustomEmojis.GUI_INVITE,
+            "Vanity URL",
+            guild.vanityUrlCode || "Not Set"
+          )
+        );
+      }
+
+      description.push(
+        Basic.field(
+          CustomEmojis.GUI_DISCOVERY,
+          "Server Type",
+          GuildPublicStatesText[String(guild.isPublic)]!
+        )
+      );
+
+      description.push(
+        Basic.field(
+          CustomEmojis.GUI_SETTINGS,
+          "Locale",
+          guild.preferredLocaleText || "Unknown"
+        )
+      );
+
+      if (description.length) {
+        embed.addField("\u200b", description.join("\n"), true);
+      }
     }
   }
 
@@ -213,7 +230,7 @@ export async function guild(
     if (guild.premiumSubscriptionCount) {
       description.push(
         Basic.field(
-          CustomEmojis.BADGE_NITRO,
+          CustomEmojis.GUI_BOOST_LEVEL_1,
           "Boosts",
           guild.premiumSubscriptionCount.toLocaleString()
         )
@@ -286,25 +303,19 @@ export async function guild(
   }
 
   {
-    const featuresText = guild.features.map(
-      (feature) =>
-        `${
-          GuildFeaturesEmojis[feature as GuildFeature] || CustomEmojis.BLANK
-        } ${Markdown.Format.codestring(
-          GuildFeaturesText[feature as GuildFeature] || feature
-        )}`
-    );
-    if (featuresText.length) {
-      if (featuresText.join("\n").length > 1024) {
-        const text = guild.features.map((feature) =>
-          Markdown.Format.codestring(
-            GuildFeaturesText[feature as GuildFeature] || feature
-          )
-        );
+    const txt: Array<string> = guild.features.map((value) => {
+      const emoji = GuildFeaturesEmojis[value as GuildFeature];
+      const text = GuildFeaturesText[value as GuildFeature];
+      return `${emoji} ${text}`;
+    });
 
-        embed.addField("Features", text.join(", "), false);
-      } else {
-        embed.addField("Features", featuresText.join("\n"), false);
+    if (txt.length > 10) {
+      for (let i = 0; i < 3; i++) {
+        const d = txt.splice(0, 10);
+        console.log(i, d);
+        if (d.length) {
+          embed.addField(i === 0 ? "Features" : "\u200b", d.join("\n"), true);
+        }
       }
     }
   }

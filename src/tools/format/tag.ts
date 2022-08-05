@@ -3,7 +3,7 @@ import {
   InteractionAutoCompleteContext,
   InteractionContext,
 } from "detritus-client/lib/interaction";
-import { APIs } from "pariah";
+import { Sarah } from "../api";
 import { Err } from "../error";
 import { Markdown } from "../markdown";
 import { Paginator } from "../paginator";
@@ -12,7 +12,7 @@ import { editOrReply, groupArray } from "../tools";
 import { Embed } from "./embed";
 
 export module Tag {
-  export const instance = new APIs.Jonathan.API();
+  export const instance = new Sarah();
 
   export interface GetTagArgs {
     key: string;

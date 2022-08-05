@@ -4,16 +4,22 @@ exports.interactions = exports.commands = exports.selfclient = exports.client = 
 const detritus_client_1 = require("detritus-client");
 const constants_1 = require("detritus-client-socket/lib/constants");
 const secrets_1 = require("./secrets");
+function cacher(limit, expire) {
+    return {
+        limit,
+        expire,
+    };
+}
 const cache = {
-    users: true,
-    guilds: true,
-    channels: true,
-    emojis: true,
-    members: true,
-    roles: true,
-    interactions: true,
-    messages: true,
-    voiceStates: true,
+    users: cacher(1e3),
+    guilds: cacher(100),
+    channels: cacher(1e3),
+    emojis: cacher(1e4),
+    members: cacher(Infinity),
+    roles: cacher(1e3),
+    interactions: cacher(Infinity),
+    messages: cacher(Infinity),
+    voiceStates: cacher(100),
     applications: false,
     connectedAccounts: false,
     guildScheduledEvents: false,

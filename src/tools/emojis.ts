@@ -45,7 +45,6 @@ export const enum CustomEmojis {
   GUI_SLASH_COMMAND = "<:IconGui_Slash:801847909795627048>",
   GUI_REPLY = "<:IconGui_Reply:836608509415260250>",
   GUI_STREAM = "<a:IconGui_Stream:995433581394534472>",
-  GUI_MENTION = "<:IconGui_Mention:836610404406525973>",
   GUI_DISCOVERY = "<:IconGui_Discovery:836649540051664936>",
   GUI_NAME_EDITED = "<:IconGui_NameEdited:836702490413629490>",
   GUI_START_CALL = "<:IconGui_StartCall:837042697470345267>",

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.guild = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const constants_2 = require("../../constants");
+const emojis_1 = require("../emojis");
 const error_1 = require("../error");
 const markdown_1 = require("../markdown");
 const tools_1 = require("../tools");
@@ -29,23 +30,30 @@ async function guild(context, args) {
     {
         const description = [];
         description.push(basic_1.Basic.field("<:IconGui_RichPresence:798624241351655514>", "ID", markdown_1.Markdown.Format.codestring(guild.id)));
+        description.push(basic_1.Basic.field(emojis_1.Emojis.CALENDAR, "Created At", markdown_1.Markdown.Format.timestamp(guild.createdAt)));
         if (guild.owner) {
             description.push(basic_1.Basic.field("<:IconGui_OwnerCrown:799657143719952415>", "Owner", `${markdown_1.Markdown.Format.link(guild.owner.tag, guild.owner.jumpLink)} (${guild.owner.mention})`));
         }
         if (guild.region) {
             description.push(basic_1.Basic.field("<:IconChannel_Voice:798624234732781580>", "Voice Region", constants_2.VoiceRegionsText[guild.region] || guild.region));
         }
-        description.push(basic_1.Basic.field("<:IconGui_Discovery:836649540051664936>", "Server Type", constants_2.GuildPublicStatesText[String(guild.isPublic)]));
-        description.push(basic_1.Basic.field("<:IconGui_Settings:798624241402511420>", "Locale", guild.preferredLocaleText || "Unknown"));
-        description.push(basic_1.Basic.field("\n" + "<:IconGui_Role:816328284245196840>", "MFA Level", constants_2.GuildMfaLevelsText[guild.mfaLevel] || "Unknown"));
-        description.push(basic_1.Basic.field("<:IconChannel_TextNSFW:798624234628579399>", "Explicit Content Filter", constants_2.GuildExplicitContentFiltersText[guild.explicitContentFilter] ||
-            "Unknown"));
-        description.push(basic_1.Basic.field("<:IconGui_Invite:798624241347198987>", "Verification Level", constants_2.GuildVerificationLevelsText[guild.verificationLevel] || "Unknown"));
-        if (guild.canHaveVanityUrl) {
-            description.push(basic_1.Basic.field("<:IconGui_Invite:798624241347198987>", "Vanity URL", guild.vanityUrlCode || "Not Set"));
-        }
         if (description.length) {
             embed.addField("Information", description.join("\n"), true);
+        }
+        {
+            const description = [];
+            description.push(basic_1.Basic.field("\n" + "<:IconGui_Role:816328284245196840>", "MFA Level", constants_2.GuildMfaLevelsText[guild.mfaLevel] || "Unknown"));
+            description.push(basic_1.Basic.field("<:IconChannel_TextNSFW:798624234628579399>", "Explicit Content Filter", constants_2.GuildExplicitContentFiltersText[guild.explicitContentFilter] ||
+                "Unknown"));
+            description.push(basic_1.Basic.field("<:IconGui_Invite:798624241347198987>", "Verification Level", constants_2.GuildVerificationLevelsText[guild.verificationLevel] || "Unknown"));
+            if (guild.canHaveVanityUrl) {
+                description.push(basic_1.Basic.field("<:IconGui_Invite:798624241347198987>", "Vanity URL", guild.vanityUrlCode || "Not Set"));
+            }
+            description.push(basic_1.Basic.field("<:IconGui_Discovery:836649540051664936>", "Server Type", constants_2.GuildPublicStatesText[String(guild.isPublic)]));
+            description.push(basic_1.Basic.field("<:IconGui_Settings:798624241402511420>", "Locale", guild.preferredLocaleText || "Unknown"));
+            if (description.length) {
+                embed.addField("\u200b", description.join("\n"), true);
+            }
         }
     }
     {
@@ -83,7 +91,7 @@ async function guild(context, args) {
             description.push(basic_1.Basic.field("<:IconGui_Members:798624241868079104>", "Members", guild.memberCount.toLocaleString()));
         }
         if (guild.premiumSubscriptionCount) {
-            description.push(basic_1.Basic.field("<:IconBadge_Nitro:798624232472051792>", "Boosts", guild.premiumSubscriptionCount.toLocaleString()));
+            description.push(basic_1.Basic.field("<:IconGui_BoostLevel_1:837059220075446353>", "Boosts", guild.premiumSubscriptionCount.toLocaleString()));
         }
         if (guild.emojis.size) {
             description.push(basic_1.Basic.field("<:IconGui_Emoji:837055568338223165>", "Emojis", guild.emojis.size.toLocaleString()));
@@ -108,14 +116,18 @@ async function guild(context, args) {
         }
     }
     {
-        const featuresText = guild.features.map((feature) => `${constants_2.GuildFeaturesEmojis[feature] || "<:blank:835277151031787541>"} ${markdown_1.Markdown.Format.codestring(constants_2.GuildFeaturesText[feature] || feature)}`);
-        if (featuresText.length) {
-            if (featuresText.join("\n").length > 1024) {
-                const text = guild.features.map((feature) => markdown_1.Markdown.Format.codestring(constants_2.GuildFeaturesText[feature] || feature));
-                embed.addField("Features", text.join(", "), false);
-            }
-            else {
-                embed.addField("Features", featuresText.join("\n"), false);
+        const txt = guild.features.map((value) => {
+            const emoji = constants_2.GuildFeaturesEmojis[value];
+            const text = constants_2.GuildFeaturesText[value];
+            return `${emoji} ${text}`;
+        });
+        if (txt.length > 10) {
+            for (let i = 0; i < 3; i++) {
+                const d = txt.splice(0, 10);
+                console.log(i, d);
+                if (d.length) {
+                    embed.addField(i === 0 ? "Features" : "\u200b", d.join("\n"), true);
+                }
             }
         }
     }

@@ -358,18 +358,14 @@ export module Parameters {
       return Parameters.Default.guild(context);
     }
     if (isSnowflake(value)) {
-      const guild = client.guilds.get(value) || selfclient.guilds.get(value);
+      const guild = client.guilds.get(value);
       if (guild) {
         return guild;
       } else {
         try {
           return client.rest.fetchGuild(value, {}, true);
         } catch {
-          try {
-            return selfclient.rest.fetchGuild(value, {}, true);
-          } catch {
-            return null;
-          }
+          return null;
         }
       }
     }

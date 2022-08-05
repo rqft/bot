@@ -280,6 +280,7 @@ var GuildFeature;
     GuildFeature["HAS_DIRECTORY_ENTRY"] = "HAS_DIRECTORY_ENTRY";
     GuildFeature["MEMBER_PROFILES"] = "MEMBER_PROFILES";
     GuildFeature["AUTO_MODERATION"] = "AUTO_MODERATION";
+    GuildFeature["TEXT_IN_VOICE_ENABLED"] = "TEXT_IN_VOICE_ENABLED";
     GuildFeature["BOT_DEVELOPER_EARLY_ACCESS"] = "BOT_DEVELOPER_EARLY_ACCESS";
     GuildFeature["GUILD_HOME_TEST"] = "GUILD_HOME_TEST";
     GuildFeature["HAD_EARLY_ACTIVITIES_ACCESS"] = "HAD_EARLY_ACTIVITIES_ACCESS";
@@ -323,6 +324,7 @@ exports.GuildFeaturesText = {
     [GuildFeature.HAS_DIRECTORY_ENTRY]: "Has Directory Entry",
     [GuildFeature.MEMBER_PROFILES]: "Member Profiles",
     [GuildFeature.AUTO_MODERATION]: "Auto Moderation",
+    [GuildFeature.TEXT_IN_VOICE_ENABLED]: "Text In Voice Enabled",
     [GuildFeature.BOT_DEVELOPER_EARLY_ACCESS]: "Bot Developer Early Access",
     [GuildFeature.GUILD_HOME_TEST]: "Guild Home Test",
     [GuildFeature.HAD_EARLY_ACTIVITIES_ACCESS]: "Had Early Activities Access",
@@ -366,8 +368,9 @@ exports.GuildFeaturesEmojis = {
     [GuildFeature.HAS_DIRECTORY_ENTRY]: "<:IconChannel_Category:798624247122493450>",
     [GuildFeature.MEMBER_PROFILES]: "<:IconGui_Members:798624241868079104>",
     [GuildFeature.AUTO_MODERATION]: "<:IconBadge_CertifiedModerator:889779348943536148>",
+    [GuildFeature.TEXT_IN_VOICE_ENABLED]: "<:IconChannel_Thread:836610428570173472>",
     [GuildFeature.BOT_DEVELOPER_EARLY_ACCESS]: "<:IconBadge_BotDeveloper:798624232443478037>",
-    [GuildFeature.GUILD_HOME_TEST]: "<:IconGui_Mention:836610404406525973>",
+    [GuildFeature.GUILD_HOME_TEST]: "<:IconGui_OwnerCrown:799657143719952415>",
     [GuildFeature.HAD_EARLY_ACTIVITIES_ACCESS]: "<:IconGui_Settings:798624241402511420>",
     [GuildFeature.EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT]: "<:IconGui_Settings:798624241402511420>",
     [GuildFeature.INTERNAL_EMPLOYEE_ONLY]: "<:IconBadge_Staff:798624241595318272>",

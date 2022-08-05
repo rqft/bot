@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = require("fs");
-const imagescript_1 = require("imagescript");
 const globals_1 = require("./globals");
 const secrets_1 = require("./secrets");
 globals_1.commands.addMultipleIn("/commands/prefixed", { subdirectories: true });
@@ -30,9 +28,4 @@ process.on("unhandledRejection", (reason) => {
         await client.run();
         console.log(`ok connected with ${client.user?.tag}`);
     }
-    const buf = new imagescript_1.Frame(1e4, 1e4);
-    const arr = Array(1e5).fill(buf);
-    const gif = new imagescript_1.GIF(arr);
-    const u8 = await gif.encode();
-    (0, fs_1.writeFileSync)("C:\\Users\\carau\\Pictures\\huge.gif", u8);
 })();
