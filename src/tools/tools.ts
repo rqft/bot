@@ -1,3 +1,5 @@
+import { Data, Pariah } from "@rqft/fetch";
+import { IO } from "@rqft/kv";
 import { Command, Interaction, Structures } from "detritus-client";
 import { Context, EditOrReply } from "detritus-client/lib/command";
 import { DiscordAbortCodes, ImageFormats } from "detritus-client/lib/constants";
@@ -7,9 +9,6 @@ import {
   Message,
 } from "detritus-client/lib/structures";
 import { Animation, Frame, Image } from "imagescript/v2";
-import { Pariah } from "pariah";
-import { Data } from "pariah/dist/data";
-import { IO } from "wilson-kv";
 import {
   PermissionsText,
   UNICODE_EMOJI_REGEX,

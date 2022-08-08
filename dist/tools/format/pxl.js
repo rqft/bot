@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pxl = void 0;
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("../../constants");
 const secrets_1 = require("../../secrets");
 const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Pxl;
 (function (Pxl) {
-    Pxl.instance = new pariah_1.APIs.PxlAPI.API(secrets_1.Secrets.Key.PxlAPI);
+    Pxl.instance = new fetch_1.APIs.PxlAPI.API(secrets_1.Secrets.Key.PxlAPI);
     async function ajit(context, args) {
         const { target } = args;
         const { payload: image } = await Pxl.instance.ajit([target]);

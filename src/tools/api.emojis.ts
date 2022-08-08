@@ -1,5 +1,4 @@
-import { Pariah } from "pariah";
-import { Data } from "pariah/dist/data";
+import { Data, Pariah } from "@rqft/fetch";
 
 export module EmojiData {
   export const Uri = new URL("https://emoji-api.com/");

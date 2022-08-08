@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("detritus-client/lib/constants");
-const pariah_1 = require("pariah");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const parameters_1 = require("../../../tools/parameters");
@@ -15,8 +15,8 @@ class PxlFlagCommand extends basecommand_1.BaseCommand {
                 {
                     name: "flag",
                     type: "string",
-                    choices: Object.values(pariah_1.APIs.PxlAPI.Flags),
-                    default: pariah_1.APIs.PxlAPI.Flags.GAY,
+                    choices: Object.values(fetch_1.APIs.PxlAPI.Flags),
+                    default: fetch_1.APIs.PxlAPI.Flags.GAY,
                 },
                 {
                     name: "target",

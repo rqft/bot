@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const parameters_1 = require("../../../tools/parameters");
@@ -16,7 +16,7 @@ class SearchSpotifyCommand extends basecommand_1.BaseCommand {
                     name: "type",
                     aliases: ["t"],
                     type: parameters_1.Parameters.array((value) => {
-                        if (!Object.values(pariah_1.APIs.Spotify.Keys).includes(value)) {
+                        if (!Object.values(fetch_1.APIs.Spotify.Keys).includes(value)) {
                             throw new Error(`Invalid type ${value}`);
                         }
                         return value;

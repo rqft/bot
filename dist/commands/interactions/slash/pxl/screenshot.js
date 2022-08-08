@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PxlScreenshotSlashSubCommand = void 0;
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("detritus-client/lib/constants");
-const pariah_1 = require("pariah");
 const formatter_1 = require("../../../../tools/formatter");
 const parameters_1 = require("../../../../tools/parameters");
 const tools_1 = require("../../../../tools/tools");
@@ -24,7 +24,7 @@ class PxlScreenshotSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     name: "browser",
                     description: "where are u",
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
-                    choices: Object.values(pariah_1.APIs.PxlAPI.ScreenshotBrowser).map((x) => ({
+                    choices: Object.values(fetch_1.APIs.PxlAPI.ScreenshotBrowser).map((x) => ({
                         name: (0, tools_1.toTitleCase)(x),
                         value: x,
                     })),
@@ -46,7 +46,7 @@ class PxlScreenshotSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     name: "theme",
                     description: "woo colors",
                     type: "string",
-                    choices: Object.values(pariah_1.APIs.PxlAPI.ScreenshotTheme).map((x) => ({
+                    choices: Object.values(fetch_1.APIs.PxlAPI.ScreenshotTheme).map((x) => ({
                         name: (0, tools_1.toTitleCase)(x),
                         value: x,
                     })),

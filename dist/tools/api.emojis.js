@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmojiData = void 0;
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 var EmojiData;
 (function (EmojiData) {
     EmojiData.Uri = new URL("https://emoji-api.com/");
-    class API extends pariah_1.Pariah {
+    class API extends fetch_1.Pariah {
         token;
         constructor(token) {
             super(EmojiData.Uri);

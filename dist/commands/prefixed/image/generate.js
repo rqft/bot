@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const basecommand_1 = require("../basecommand");
@@ -23,7 +23,7 @@ class ImageGenerateCommand extends basecommand_1.BaseCommand {
                 {
                     name: "style",
                     type: "string",
-                    choices: Object.keys(pariah_1.APIs.Jonathan.WomboStyles),
+                    choices: Object.keys(fetch_1.APIs.Jonathan.WomboStyles),
                     default: "none",
                 },
             ],

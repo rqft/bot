@@ -1,5 +1,5 @@
+import { APIs } from "@rqft/fetch";
 import { CommandClient } from "detritus-client";
-import { APIs } from "pariah";
 import { ToolsMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { BaseCommand } from "../basecommand";

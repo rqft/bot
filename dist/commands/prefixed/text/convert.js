@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const basecommand_1 = require("../basecommand");
@@ -15,7 +15,7 @@ class TextConvertCommand extends basecommand_1.BaseCommand {
                     name: "conversion",
                     type: "string",
                     required: true,
-                    choices: Object.values(pariah_1.APIs.Jonathan.Conversion),
+                    choices: Object.values(fetch_1.APIs.Jonathan.Conversion),
                 },
                 {
                     name: "text",
@@ -29,7 +29,7 @@ class TextConvertCommand extends basecommand_1.BaseCommand {
                     aliases: ["m"],
                     type: "string",
                     required: false,
-                    choices: Object.values(pariah_1.APIs.Jonathan.ConversionMethods),
+                    choices: Object.values(fetch_1.APIs.Jonathan.ConversionMethods),
                 },
                 {
                     name: "decode",

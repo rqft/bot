@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Search = void 0;
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("../../constants");
 const secrets_1 = require("../../secrets");
 const api_1 = require("../api");
@@ -42,7 +42,7 @@ var Search;
     const pxlInstance = pxl_1.Pxl.instance;
     async function image(context, args) {
         const { query } = args;
-        const { payload: data } = await pxlInstance.imageSearch(query, pariah_1.APIs.PxlAPI.SafeSearch.STRICT, true);
+        const { payload: data } = await pxlInstance.imageSearch(query, fetch_1.APIs.PxlAPI.SafeSearch.STRICT, true);
         const paginator = new paginator_1.Paginator(context, {
             pageLimit: data.length,
             onPage: async (page) => {
@@ -57,7 +57,7 @@ var Search;
     Search.image = image;
     async function web(context, args) {
         const { query } = args;
-        const { payload: data } = await pxlInstance.webSearch(query, pariah_1.APIs.PxlAPI.SafeSearch.STRICT);
+        const { payload: data } = await pxlInstance.webSearch(query, fetch_1.APIs.PxlAPI.SafeSearch.STRICT);
         const paginator = new paginator_1.Paginator(context, {
             pageLimit: data.results.length,
             onPage: async (page) => {
@@ -78,7 +78,7 @@ var Search;
         return await paginator.start();
     }
     Search.web = web;
-    Search.DictionaryInstance = new pariah_1.APIs.Dictionary.API(2, "en");
+    Search.DictionaryInstance = new fetch_1.APIs.Dictionary.API(2, "en");
     async function define(context, args) {
         const { query } = args;
         const { payload, status } = await Search.DictionaryInstance.entries(query);
@@ -120,7 +120,7 @@ var Search;
     }
     Search.define = define;
     async function definitions(context) {
-        const req = new pariah_1.Requester(new URL("https://www.merriam-webster.com/lapi/v1/"));
+        const req = new fetch_1.Requester(new URL("https://www.merriam-webster.com/lapi/v1/"));
         if (!context.value) {
             const results = (await req.json("/mwol-mp/get-lookups-data-homepage")).payload.data
                 .words;
@@ -150,7 +150,7 @@ var Search;
         });
     }
     Search.definitions = definitions;
-    Search.UrbanInstance = new pariah_1.APIs.Urban.API();
+    Search.UrbanInstance = new fetch_1.APIs.Urban.API();
     async function urban(context, args) {
         const { query } = args;
         const { payload } = await Search.UrbanInstance.define(query);
@@ -179,7 +179,7 @@ var Search;
         return data.replace(/\[(.+?)\]/g, (_, g1) => `[${g1}](https://www.urbandictionary.com/define.php?term=${encodeURIComponent(g1)})`);
     }
     Search.fixUrbanLinks = fixUrbanLinks;
-    Search.SpotifyInstance = new pariah_1.APIs.Spotify.API(...secrets_1.Secrets.Key.Spotify);
+    Search.SpotifyInstance = new fetch_1.APIs.Spotify.API(...secrets_1.Secrets.Key.Spotify);
     async function spotify(context, args) {
         const { query, type } = args;
         await Search.SpotifyInstance.loadCredentials();
@@ -210,7 +210,7 @@ var Search;
                 embed.setTitle(item.name);
                 embed.setUrl(item.external_urls.spotify);
                 switch (item.type) {
-                    case pariah_1.APIs.Spotify.Keys.TRACK: {
+                    case fetch_1.APIs.Spotify.Keys.TRACK: {
                         const image = getLargestImage(item.album.images);
                         if (image) {
                             embed.setThumbnail(image.url);
@@ -234,7 +234,7 @@ var Search;
                             .join(", "));
                         break;
                     }
-                    case pariah_1.APIs.Spotify.Keys.ALBUM: {
+                    case fetch_1.APIs.Spotify.Keys.ALBUM: {
                         const image = getLargestImage(item.images);
                         if (image) {
                             embed.setThumbnail(image.url);
@@ -242,7 +242,7 @@ var Search;
                         embed.setDescription(generateAlbumDescription(item));
                         break;
                     }
-                    case pariah_1.APIs.Spotify.Keys.ARTIST: {
+                    case fetch_1.APIs.Spotify.Keys.ARTIST: {
                         const image = getLargestImage(item.images);
                         if (image) {
                             embed.setThumbnail(image.url);
@@ -258,7 +258,7 @@ var Search;
                         }
                         break;
                     }
-                    case pariah_1.APIs.Spotify.Keys.PLAYLIST: {
+                    case fetch_1.APIs.Spotify.Keys.PLAYLIST: {
                         const image = getLargestImage(item.images);
                         if (image) {
                             embed.setThumbnail(image.url);

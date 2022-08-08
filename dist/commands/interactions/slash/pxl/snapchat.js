@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PxlSnapchatSlashSubCommand = void 0;
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("detritus-client/lib/constants");
-const pariah_1 = require("pariah");
 const formatter_1 = require("../../../../tools/formatter");
 const parameters_1 = require("../../../../tools/parameters");
 const baseslash_1 = require("../baseslash");
@@ -18,7 +18,7 @@ class PxlSnapchatSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     description: "what to use with",
                     autocomplete: true,
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
-                    onAutoComplete: parameters_1.Parameters.Autocomplete.choices(Object.values(pariah_1.APIs.PxlAPI.SnapchatFilters)),
+                    onAutoComplete: parameters_1.Parameters.Autocomplete.choices(Object.values(fetch_1.APIs.PxlAPI.SnapchatFilters)),
                 },
             ],
         });

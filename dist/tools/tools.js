@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extensionFromHeaders = exports.fileExtensionFromUrl = exports.extensionFromFileName = exports.fileNameFromUrl = exports.splitToFields = exports.padCodeBlockFromRows = exports.toTitleCase = exports.imagescriptOp = exports.convert = exports.groupArray = exports.cutArray = exports.buildTimestampString = exports.mergeArrays = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.store = exports.onlyEmoji = exports.validateUnicodeEmojis = exports.toCodePointForTwemoji = exports.toCodePoint = exports.splitTextToDiscordHandle = exports.findMembersByUsername = exports.findMemberByUsername = exports.findMembersByChunkText = exports.findMembersByChunk = exports.findMemberByChunkText = exports.findMemberByChunk = exports.fetchMemberOrUserById = exports.toCardinalNumber = exports.validateUrl = exports.isSnowflake = exports.permissionsErrorList = exports.editOrReply = void 0;
+const fetch_1 = require("@rqft/fetch");
 const detritus_client_1 = require("detritus-client");
 const command_1 = require("detritus-client/lib/command");
 const constants_1 = require("detritus-client/lib/constants");
 const interaction_1 = require("detritus-client/lib/interaction");
 const v2_1 = require("imagescript/v2");
-const pariah_1 = require("pariah");
-const data_1 = require("pariah/dist/data");
 const constants_2 = require("../constants");
 const globals_1 = require("../globals");
 const secrets_1 = require("../secrets");
@@ -353,7 +352,7 @@ function onlyEmoji(emoji) {
 }
 exports.onlyEmoji = onlyEmoji;
 async function store(value, filename) {
-    if (value instanceof data_1.Data) {
+    if (value instanceof fetch_1.Data) {
         value = value.payload;
     }
     let e = false;
@@ -430,7 +429,7 @@ function groupArray(data, size) {
 }
 exports.groupArray = groupArray;
 async function convert(uri, format = constants_1.ImageFormats.PNG) {
-    const instance = new pariah_1.Pariah(new URL(uri));
+    const instance = new fetch_1.Pariah(new URL(uri));
     const data = await instance.get.arrayBuffer();
     const buffer = Buffer.from(data.payload);
     const attachment = await store(buffer, "image." + format);
@@ -547,7 +546,7 @@ function fileExtensionFromUrl(url) {
 }
 exports.fileExtensionFromUrl = fileExtensionFromUrl;
 function extensionFromHeaders(data) {
-    if (data instanceof data_1.Data) {
+    if (data instanceof fetch_1.Data) {
         data = data.headers;
     }
     return data.get("content-type").split("/").pop();

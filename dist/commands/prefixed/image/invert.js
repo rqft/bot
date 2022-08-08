@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const basecommand_1 = require("../basecommand");
@@ -18,8 +18,8 @@ class ImageInvertCommand extends basecommand_1.BaseImageCommand {
                     name: "method",
                     aliases: ["m", "type", "t"],
                     type: "string",
-                    choices: Object.values(pariah_1.APIs.Jonathan.InvertMethods),
-                    default: pariah_1.APIs.Jonathan.InvertMethods.INVERT,
+                    choices: Object.values(fetch_1.APIs.Jonathan.InvertMethods),
+                    default: fetch_1.APIs.Jonathan.InvertMethods.INVERT,
                     required: false,
                 },
             ],

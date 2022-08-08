@@ -1,6 +1,6 @@
+import { APIs } from "@rqft/fetch";
 import { CommandClient } from "detritus-client";
 import { ImageFormats } from "detritus-client/lib/constants";
-import { APIs } from "pariah";
 import { ImageMetadata } from "../../../tools/command-metadata";
 import { Formatter } from "../../../tools/formatter";
 import { Parameters } from "../../../tools/parameters";

@@ -1,6 +1,6 @@
+import { APIs } from "@rqft/fetch";
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
-import { APIs } from "pariah";
 import { Brand } from "../../constants";
 import { Secrets } from "../../secrets";
 import { editOrReply } from "../tools";

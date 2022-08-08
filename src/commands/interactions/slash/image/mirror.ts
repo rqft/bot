@@ -1,5 +1,5 @@
+import { APIs } from "@rqft/fetch";
 import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants";
-import { APIs } from "pariah";
 import { Formatter } from "../../../../tools/formatter";
 import { toTitleCase } from "../../../../tools/tools";
 import { BaseImageOption, BaseSlashSubCommand } from "../baseslash";

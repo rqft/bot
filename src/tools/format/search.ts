@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { APIs, Requester } from "@rqft/fetch";
 import { Context } from "detritus-client/lib/command";
 import {
   InteractionAutoCompleteContext,
   InteractionContext,
 } from "detritus-client/lib/interaction";
 import { Message } from "detritus-client/lib/structures";
-import { APIs, Requester } from "pariah";
 import { Brand } from "../../constants";
 import { Secrets } from "../../secrets";
 import { YoutubeSearch } from "../api";

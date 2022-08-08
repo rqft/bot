@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Embed = void 0;
+const fetch_1 = require("@rqft/fetch");
 const detritus_client_1 = require("detritus-client");
 const structures_1 = require("detritus-client/lib/structures");
 const v2_1 = require("imagescript/v2");
-const pariah_1 = require("pariah");
 const constants_1 = require("../../constants");
 const error_1 = require("../error");
 const tools_1 = require("../tools");
@@ -72,7 +72,7 @@ var Embed;
         }
         if (!skipBuffer) {
             if (input instanceof URL) {
-                input = (await new pariah_1.Pariah(input).buffer("/")).payload;
+                input = (await new fetch_1.Pariah(input).buffer("/")).payload;
             }
             const decoder = new TextDecoder();
             const txt = decoder.decode(input);

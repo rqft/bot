@@ -1,9 +1,9 @@
+import { Pariah } from "@rqft/fetch";
 import { Utils } from "detritus-client";
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
 import { Attachment } from "detritus-client/lib/structures";
 import { Animation, Image, load } from "imagescript/v2";
-import { Pariah } from "pariah";
 import {
   Brand,
   BrandColours,

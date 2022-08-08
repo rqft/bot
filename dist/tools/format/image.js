@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Image = void 0;
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const api_1 = require("../api");
 const error_1 = require("../error");
 const tools_1 = require("../tools");
@@ -11,7 +11,7 @@ var Image;
     Image.instance = new api_1.Sarah();
     async function mirror(context, args) {
         const { target, method } = args;
-        const m = method || pariah_1.APIs.Jonathan.MirrorMethods.LEFT;
+        const m = method || fetch_1.APIs.Jonathan.MirrorMethods.LEFT;
         const { payload: image, headers } = await Image.instance.imageMirror(target, m);
         const embed = await embed_1.Embed.image(context, image, `mirror-${m.toLowerCase()}.${(0, tools_1.extensionFromHeaders)(headers)}`);
         return await (0, tools_1.editOrReply)(context, { embed });
@@ -92,7 +92,7 @@ var Image;
     Image.fisheye = fisheye;
     async function invert(context, args) {
         const { target, method } = args;
-        const m = method || pariah_1.APIs.Jonathan.InvertMethods.INVERT;
+        const m = method || fetch_1.APIs.Jonathan.InvertMethods.INVERT;
         const { payload: image } = await Image.instance.imageInvert(target, m);
         const embed = await embed_1.Embed.image(context, image, `invert-${m.toLowerCase()}.png`);
         return await (0, tools_1.editOrReply)(context, { embed });

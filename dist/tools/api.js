@@ -4,14 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Waifu2x = exports.Sarah = exports.YoutubeSearch = void 0;
+const fetch_1 = require("@rqft/fetch");
 const timers_1 = require("detritus-utils/lib/timers");
 const form_data_1 = __importDefault(require("form-data"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
-const pariah_1 = require("pariah");
 var YoutubeSearch;
 (function (YoutubeSearch) {
     YoutubeSearch.Url = new URL("https://youtube.googleapis.com/youtube/v3");
-    class API extends pariah_1.Pariah {
+    class API extends fetch_1.Pariah {
         token;
         constructor(token) {
             super(YoutubeSearch.Url, { headers: { accept: "application/json" } });
@@ -28,14 +28,14 @@ var YoutubeSearch;
     }
     YoutubeSearch.API = API;
 })(YoutubeSearch = exports.YoutubeSearch || (exports.YoutubeSearch = {}));
-class Sarah extends pariah_1.APIs.Jonathan.API {
+class Sarah extends fetch_1.APIs.Jonathan.API {
     url = new URL("http://localhost:3000");
 }
 exports.Sarah = Sarah;
 var Waifu2x;
 (function (Waifu2x) {
     Waifu2x.Url = new URL("https://api.alcaamado.es/api/");
-    class API extends pariah_1.Pariah {
+    class API extends fetch_1.Pariah {
         constructor() {
             super(Waifu2x.Url);
         }

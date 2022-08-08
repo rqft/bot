@@ -1,7 +1,5 @@
-import {
-    ApplicationCommandOptionTypes
-} from "detritus-client/lib/constants";
-import { APIs } from "pariah";
+import { APIs } from "@rqft/fetch";
+import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants";
 import { Formatter } from "../../../../tools/formatter";
 import { Parameters } from "../../../../tools/parameters";
 import { toTitleCase } from "../../../../tools/tools";

@@ -1,4 +1,4 @@
-import { APIs } from "pariah";
+import { APIs } from "@rqft/fetch";
 import { Formatter } from "../../../../../tools/formatter";
 import { BaseSlashSubCommand } from "../../baseslash";
 export class AnimalDogSlashSubCommand extends BaseSlashSubCommand {

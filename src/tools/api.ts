@@ -1,7 +1,7 @@
+import { APIs, Pariah } from "@rqft/fetch";
 import { sleep } from "detritus-utils/lib/timers";
 import FormData from "form-data";
 import fetch from "node-fetch";
-import { APIs, Pariah } from "pariah";
 
 export module YoutubeSearch {
   export const Url = new URL("https://youtube.googleapis.com/youtube/v3");

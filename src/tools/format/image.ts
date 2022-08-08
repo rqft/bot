@@ -1,6 +1,6 @@
+import { APIs } from "@rqft/fetch";
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
-import { APIs } from "pariah";
 
 import { Sarah, Waifu2x } from "../api";
 import { Err } from "../error";

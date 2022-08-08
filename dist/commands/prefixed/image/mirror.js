@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const basecommand_1 = require("../basecommand");
@@ -13,8 +13,8 @@ class ImageMirrorCommand extends basecommand_1.BaseImageCommand {
                 {
                     name: "method",
                     type: "string",
-                    default: pariah_1.APIs.Jonathan.MirrorMethods.LEFT,
-                    choices: Object.values(pariah_1.APIs.Jonathan.MirrorMethods),
+                    default: fetch_1.APIs.Jonathan.MirrorMethods.LEFT,
+                    choices: Object.values(fetch_1.APIs.Jonathan.MirrorMethods),
                     required: false,
                 },
             ],

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Text = void 0;
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const tools_1 = require("../tools");
 var Text;
 (function (Text) {
-    Text.instance = new pariah_1.APIs.Jonathan.API();
+    Text.instance = new fetch_1.APIs.Jonathan.API();
     function decideMethod(args) {
         const { method, decode } = args;
         if (method) {
             return method;
         }
         if (decode) {
-            return pariah_1.APIs.Jonathan.ConversionMethods.DECODE;
+            return fetch_1.APIs.Jonathan.ConversionMethods.DECODE;
         }
-        return pariah_1.APIs.Jonathan.ConversionMethods.ENCODE;
+        return fetch_1.APIs.Jonathan.ConversionMethods.ENCODE;
     }
     Text.decideMethod = decideMethod;
     async function convert(context, args) {

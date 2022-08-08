@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageInvertSlashSubCommand = void 0;
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("detritus-client/lib/constants");
-const pariah_1 = require("pariah");
 const formatter_1 = require("../../../../tools/formatter");
 const parameters_1 = require("../../../../tools/parameters");
 const baseslash_1 = require("../baseslash");
@@ -19,7 +19,7 @@ class ImageInvertSlashSubCommand extends baseslash_1.BaseSlashSubCommand {
                     type: constants_1.ApplicationCommandOptionTypes.STRING,
                     required: false,
                     autocomplete: true,
-                    onAutoComplete: parameters_1.Parameters.Autocomplete.choices(Object.values(pariah_1.APIs.Jonathan.InvertMethods)),
+                    onAutoComplete: parameters_1.Parameters.Autocomplete.choices(Object.values(fetch_1.APIs.Jonathan.InvertMethods)),
                 },
             ],
         });

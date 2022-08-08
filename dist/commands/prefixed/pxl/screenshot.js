@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const command_metadata_1 = require("../../../tools/command-metadata");
 const formatter_1 = require("../../../tools/formatter");
 const parameters_1 = require("../../../tools/parameters");
@@ -21,7 +21,7 @@ class PxlScreenshotCommand extends basecommand_1.BaseCommand {
                 {
                     name: "browser",
                     type: "string",
-                    choices: Object.values(pariah_1.APIs.PxlAPI.ScreenshotBrowser),
+                    choices: Object.values(fetch_1.APIs.PxlAPI.ScreenshotBrowser),
                     required: false,
                 },
                 {
@@ -37,7 +37,7 @@ class PxlScreenshotCommand extends basecommand_1.BaseCommand {
                 {
                     name: "theme",
                     type: "string",
-                    choices: Object.values(pariah_1.APIs.PxlAPI.ScreenshotTheme),
+                    choices: Object.values(fetch_1.APIs.PxlAPI.ScreenshotTheme),
                     required: false,
                 },
             ],

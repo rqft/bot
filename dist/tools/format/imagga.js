@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Imagga = void 0;
-const pariah_1 = require("pariah");
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("../../constants");
 const secrets_1 = require("../../secrets");
 const error_1 = require("../error");
@@ -11,7 +11,7 @@ const tools_1 = require("../tools");
 const embed_1 = require("./embed");
 var Imagga;
 (function (Imagga) {
-    const instance = new pariah_1.APIs.Imagga.API(secrets_1.Secrets.Key.ImaggaAuth);
+    const instance = new fetch_1.APIs.Imagga.API(secrets_1.Secrets.Key.ImaggaAuth);
     async function tags(context, args) {
         const { target } = args;
         const { payload: { result, status }, } = await instance.tags(target);
