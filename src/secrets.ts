@@ -30,12 +30,7 @@ export const Secrets = {
     EmailValidation: env.ABSTRACT_EMAIL_VALIDATION_KEY!,
     ExchangeRates: env.ABSTRACT_EXCHANGE_RATES_KEY!,
   },
-  InteractionGuilds: [
-    "248981745502781440",
-    "759174794968301569",
-    "816362327678779392",
-    "941002690211766332",
-  ],
+  InteractionGuilds: [],
   DefaultPrefix: env.DEFAULT_PREFIX!,
   ClearInteractions: false,
   StorageChannelId: "842855906508275713",
