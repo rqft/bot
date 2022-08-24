@@ -15,6 +15,7 @@ import { Paginator } from "../paginator";
 import { editOrReply } from "../tools";
 import { Basic } from "./basic";
 import { Embed } from "./embed";
+import { Image } from "./image";
 export interface CodeArgs {
   code: string;
   "json-spacing": number;
@@ -276,4 +277,20 @@ export async function invite(
   context: Context | InteractionContext
 ): Promise<Message | null> {
   return await editOrReply(context, `<https://bot.clancy.lol/>`);
+}
+
+export interface GraphArgs {
+  expr: Array<string>;
+  size?: number;
+}
+
+export async function graph(
+  context: Context | InteractionContext,
+  args: GraphArgs
+): Promise<Message | null> {
+  const { payload: image } = await Image.instance.graph(args.expr, args.size);
+
+  const embed = await Embed.image(context, image, "graph.png");
+
+  return await editOrReply(context, embed);
 }

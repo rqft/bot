@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.invite = exports.helpAutocomplete = exports.help = exports.ping = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
+exports.graph = exports.invite = exports.helpAutocomplete = exports.help = exports.ping = exports.stats = exports.kwanzi = exports.exec = exports.code = void 0;
 const Process = __importStar(require("node:child_process"));
 const basecommand_1 = require("../../commands/prefixed/basecommand");
 const globals_1 = require("../../globals");
@@ -33,6 +33,7 @@ const paginator_1 = require("../paginator");
 const tools_1 = require("../tools");
 const basic_1 = require("./basic");
 const embed_1 = require("./embed");
+const image_1 = require("./image");
 async function code(context, args) {
     if (!context.client.isOwner(context.userId)) {
         throw new error_1.Err("no", { status: 403 });
@@ -207,3 +208,9 @@ async function invite(context) {
     return await (0, tools_1.editOrReply)(context, `<https://bot.clancy.lol/>`);
 }
 exports.invite = invite;
+async function graph(context, args) {
+    const { payload: image } = await image_1.Image.instance.graph(args.expr, args.size);
+    const embed = await embed_1.Embed.image(context, image, "graph.png");
+    return await (0, tools_1.editOrReply)(context, embed);
+}
+exports.graph = graph;
