@@ -28,7 +28,7 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
-    "@rqft/fetch": "^1.0.1",
+    "@rqft/fetch": "^1.0.3",
     "@rqft/kv": "^1.0.0",
     "detritus-client": "^0.17.0-beta.11",
     "detritus-client-rest": "^0.9.4",

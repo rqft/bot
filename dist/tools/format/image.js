@@ -123,4 +123,27 @@ var Image;
         return await (0, tools_1.editOrReply)(context, { embed });
     }
     Image.generate = generate;
+    async function graph(context, args) {
+        console.log(Image.instance.url);
+        const r = await Image.instance.graph(args.expr, args);
+        const txt = new TextDecoder().decode(r.payload);
+        let j = null;
+        try {
+            j = JSON.parse(txt);
+        }
+        catch {
+            const embed = await embed_1.Embed.image(context, r.payload, "graph.png");
+            return await (0, tools_1.editOrReply)(context, { embed });
+        }
+        if (j !== null || j !== undefined) {
+            if (a(j)) {
+                throw new error_1.Err(j.status.message, { status: j.status.code });
+            }
+        }
+        return null;
+    }
+    Image.graph = graph;
 })(Image = exports.Image || (exports.Image = {}));
+function a(j) {
+    return "status" in j;
+}

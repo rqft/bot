@@ -1,6 +1,8 @@
 import { APIs } from "@rqft/fetch";
+import { Jonathan } from "@rqft/fetch/dist/lib";
 import { Context } from "detritus-client/lib/command";
 import { InteractionContext } from "detritus-client/lib/interaction";
+import { Message } from "detritus-client/lib/structures";
 
 import { Sarah, Waifu2x } from "../api";
 import { Err } from "../error";
@@ -311,4 +313,40 @@ export module Image {
 
     return await editOrReply(context, { embed });
   }
+
+  export interface GraphArgs extends Jonathan.GraphOptions {
+    expr: string;
+  }
+
+  export async function graph(
+    context: Context | InteractionContext,
+    args: GraphArgs
+  ): Promise<Message | null> {
+    console.log(instance.url);
+    const r = await instance.graph(args.expr, args);
+
+    const txt = new TextDecoder().decode(r.payload);
+
+    let j: unknown = null;
+
+    try {
+      j = JSON.parse(txt);
+    } catch {
+      const embed = await Embed.image(context, r.payload, "graph.png");
+
+      return await editOrReply(context, { embed });
+    }
+
+    if (j !== null || j !== undefined) {
+      if (a(j)) {
+        throw new Err(j.status.message, { status: j.status.code });
+      }
+    }
+
+    return null;
+  }
+}
+
+function a(j: unknown): j is Jonathan.Result<never> {
+  return "status" in (j as never);
 }

@@ -86,6 +86,16 @@ var Embed;
                     }
                 }
             }
+            let j = null;
+            try {
+                j = await JSON.parse(txt);
+            }
+            catch {
+                void 0;
+            }
+            if (j !== null && "status" in j) {
+                throw new error_1.Err(j["status"]["message"]);
+            }
             const image = await (0, tools_1.store)(input, name);
             if (!image.url || !image.width || !image.height) {
                 throw new error_1.Err("Failed to store image");

@@ -123,6 +123,16 @@ export module Embed {
         }
       }
 
+      let j = null;
+      try {
+        j = await JSON.parse(txt);
+      } catch {
+        void 0;
+      }
+      if (j !== null && "status" in j) {
+        throw new Err(j["status"]["message"]);
+      }
+
       const image = await store(input as Buffer, name);
       if (!image.url || !image.width || !image.height) {
         throw new Err("Failed to store image");

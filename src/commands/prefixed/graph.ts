@@ -9,19 +9,33 @@ export default class PingCommand extends BaseCommand {
     super(client, {
       name: "graph",
       aliases: ["plot"],
-      metadata: ToolsMetadata("desmos"),
+      metadata: ToolsMetadata(
+        "desmos",
+        "<expr: string> ?<-[size|s]: number> <-[splot|thickness|t|sp]: number> ?<-[scale|scalar]: number>"
+      ),
       args: [
         {
           name: "size",
+          aliases: ["s"],
           default: 512,
           type: Parameters.number({ min: 0, max: 2048 }),
         },
+        {
+          name: "splot",
+          aliases: ["thickness", "t", "sp"],
+          default: 1,
+          type: Parameters.number({ min: 0, max: 10 }),
+        },
+        {
+          name: "scale",
+          aliases: ["scalar"],
+          default: 10,
+          type: Parameters.number(),
+        },
       ],
-      type: [
-        { name: "expr", required: true, type: Parameters.array(String, ";") },
-      ],
+      type: [{ name: "expr", required: true, type: String }],
     });
   }
 
-  run = Formatter.graph;
+  run = Formatter.Image.graph;
 }

@@ -9,7 +9,7 @@ export default class ImageMirrorCommand extends BaseCommand {
       name: "image color",
       metadata: ImageMetadata(
         "view funny colours",
-        "<target: Image> <size: Size=512x512>",
+        "<target: Image> <-size: Size=512x512>",
         ["f8f", "ffff88", "ffffff88 -size 256x256", "fff8 -size 128x128"]
       ),
       type: [
