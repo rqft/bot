@@ -1,16 +1,32 @@
-import { Command as Cmd, CommandClient } from "detritus-client";
+import { Command as Cmd, CommandClient } from "detritus-client/lib";
 import { BaseCommand } from "./base-command";
 
-import { ArgsFactory, Options, Self, Values } from "./parser";
+import { ArgsFactory, Options, Self, StringOptions, Values } from "./parser";
 
-export const CommandArgumentBuilders: Self = {} as never;
+export const CommandArgumentBuilders: Self = {
+  string(options?: StringOptions) {
+    return (value: string) => {
+      if (options) {
+        if (options.choices && options.choices.length) {
+          if (options.choices.includes(value)) {
+            return value;
+          }
+
+          throw new RangeError(
+            `must be one of [ ${options.choices.join(", ")} ]`
+          );
+        }
+      }
+    };
+  },
+} as never;
 
 export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
   syntax: U,
   options: Options<U, V>,
   run: (context: Cmd.Context, args: Values<V, U>) => unknown
 ) {
-  const [, cmd] = /(.+?) \[/.exec(syntax)!;
+  const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax)!;
   const ids = /\[\w+\??\]/g.exec(syntax) || [];
   const opt: Array<Cmd.ArgumentOptions> = [];
   const flg: Array<Cmd.ArgumentOptions> = [];
@@ -29,12 +45,9 @@ export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
       arg.default = def;
     }
 
-    arg.type = builder[id as keyof typeof builder] as (
-      value: string | undefined,
-      context: Cmd.Context
+    arg.type = builder[id as keyof typeof builder] as never as (
+      ...arg: unknown[]
     ) => unknown;
-
-    console.log(name, def, isFlag);
 
     if (isFlag) {
       flg.push(arg);
@@ -46,20 +59,19 @@ export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
 
   return class Exec extends BaseCommand<Values<V, U>> {
     constructor(client: CommandClient) {
+      console.log("test");
+      console.log(cmd);
       super(client, {
         name: cmd!,
         metadata: options.metadata as never,
+        type: opt,
+        args: flg,
       });
     }
 
-    run = run;
+    public run(context: Cmd.Context, args: Values<V, U>): unknown {
+      void 0;
+      return run(context, args);
+    }
   };
 }
-
-Command(
-  "help [-arg?=1]",
-  { args: (self) => ({ arg: self.string() }) },
-  async (context, args) => {
-    context.reply(args.arg);
-  }
-);

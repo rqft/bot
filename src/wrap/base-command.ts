@@ -1,4 +1,4 @@
-import { Command, CommandClient } from "detritus-client";
+import { Command, CommandClient } from "detritus-client/lib";
 import { CommandRatelimitTypes } from "detritus-client/lib/constants";
 
 export interface CommandOptionsExtra extends Command.CommandOptions {

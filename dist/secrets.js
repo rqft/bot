@@ -33,5 +33,4 @@ exports.Secrets = {
     InteractionGuilds: [],
     DefaultPrefix: env.DEFAULT_PREFIX,
     ClearInteractions: false,
-    StorageChannelId: "842855906508275713",
 };

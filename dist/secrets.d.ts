@@ -13,6 +13,7 @@ export declare const Secrets: {
         Google: {
             YouTubeData: string;
         };
+        Spotify: [string, string];
     };
     AbstractKeys: {
         Holidays: string;
@@ -23,10 +24,7 @@ export declare const Secrets: {
         EmailValidation: string;
         ExchangeRates: string;
     };
-    InteractionGuilds: string[];
+    InteractionGuilds: never[];
     DefaultPrefix: string;
     ClearInteractions: boolean;
-    StorageChannelId: string;
-    Host: string;
-    ApiToken: string;
 };
