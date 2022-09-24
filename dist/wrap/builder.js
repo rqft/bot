@@ -12,7 +12,50 @@ exports.CommandArgumentBuilders = {
                     }
                     throw new RangeError(`must be one of [ ${options.choices.join(", ")} ]`);
                 }
+                if (options.maxLength && value.length > options.maxLength) {
+                    throw new RangeError(`must be less than ${options.maxLength} characters`);
+                }
+                if (options.minLength && value.length < options.minLength) {
+                    throw new RangeError(`must be more than ${options.maxLength} characters`);
+                }
             }
+            return value;
+        };
+    },
+    stringOptional(options) {
+        return (value) => {
+            if (value) {
+                return this.string(options)(value);
+            }
+            return undefined;
+        };
+    },
+    number(options) {
+        return (value) => {
+            const float = Number.parseFloat(value);
+            if (options) {
+                if (options.choices && options.choices.length) {
+                    if (options.choices.includes(float)) {
+                        return float;
+                    }
+                    throw new RangeError(`must be one of [ ${options.choices.join(", ")} ]`);
+                }
+                if (options.min && float < options.min) {
+                    throw new RangeError(`must be more than ${options.min}`);
+                }
+                if (options.max && float > options.max) {
+                    throw new RangeError(`must be less than ${options.max}`);
+                }
+            }
+            return float;
+        };
+    },
+    numberOptional(options) {
+        return (value) => {
+            if (value) {
+                return this.numberOptional(options)(value);
+            }
+            return undefined;
         };
     },
 };
@@ -32,7 +75,8 @@ function Command(syntax, options, run) {
         if (def) {
             arg.default = def;
         }
-        arg.type = builder[id];
+        arg.type = (builder[id] ||
+            exports.CommandArgumentBuilders.string());
         if (isFlag) {
             flg.push(arg);
             continue;

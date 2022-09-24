@@ -1,11 +1,11 @@
 import { Command as Cmd, CommandClient } from "detritus-client/lib";
 import { BaseCommand } from "./base-command";
 
-import { ArgsFactory, Options, Self, StringOptions, Values } from "./parser";
+import { ArgsFactory, Options, Self, Values } from "./parser";
 
 export const CommandArgumentBuilders: Self = {
-  string(options?: StringOptions) {
-    return (value: string) => {
+  string(options) {
+    return (value) => {
       if (options) {
         if (options.choices && options.choices.length) {
           if (options.choices.includes(value)) {
@@ -16,10 +16,70 @@ export const CommandArgumentBuilders: Self = {
             `must be one of [ ${options.choices.join(", ")} ]`
           );
         }
+
+        if (options.maxLength && value.length > options.maxLength) {
+          throw new RangeError(
+            `must be less than ${options.maxLength} characters`
+          );
+        }
+
+        if (options.minLength && value.length < options.minLength) {
+          throw new RangeError(
+            `must be more than ${options.maxLength} characters`
+          );
+        }
       }
+
+      return value;
     };
   },
-} as never;
+
+  stringOptional(options) {
+    return (value: string | undefined) => {
+      if (value) {
+        return this.string(options)(value);
+      }
+      return undefined;
+    };
+  },
+
+  number(options) {
+    return (value) => {
+      const float = Number.parseFloat(value);
+      if (options) {
+        if (options.choices && options.choices.length) {
+          if (options.choices.includes(float)) {
+            return float;
+          }
+
+          throw new RangeError(
+            `must be one of [ ${options.choices.join(", ")} ]`
+          );
+        }
+
+        if (options.min && float < options.min) {
+          throw new RangeError(`must be more than ${options.min}`);
+        }
+
+        if (options.max && float > options.max) {
+          throw new RangeError(`must be less than ${options.max}`);
+        }
+      }
+
+      return float;
+    };
+  },
+
+  numberOptional(options) {
+    return (value) => {
+      if (value) {
+        return this.numberOptional(options)(value);
+      }
+
+      return undefined;
+    };
+  },
+};
 
 export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
   syntax: U,
@@ -45,9 +105,8 @@ export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
       arg.default = def;
     }
 
-    arg.type = builder[id as keyof typeof builder] as never as (
-      ...arg: unknown[]
-    ) => unknown;
+    arg.type = (builder[id as keyof typeof builder] ||
+      CommandArgumentBuilders.string()) as never;
 
     if (isFlag) {
       flg.push(arg);

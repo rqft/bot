@@ -17,7 +17,7 @@ export interface Self {
   number(options?: NumberOptions): (value: string) => number;
   numberOptional(
     options?: OptionalOptions & NumberOptions
-  ): (value: string) => number;
+  ): (value: string | undefined) => number | undefined;
 }
 
 export interface OptionalOptions {
