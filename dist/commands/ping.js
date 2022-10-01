@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const util_1 = require("../tools/util");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)("ping [arg]", { args: (self) => ({ arg: self.string() }) }, async (context) => {
-    return context.editOrReply("hi");
+exports.default = (0, builder_1.Command)("ping", {}, async (context) => {
+    const { rest, gateway } = await context.client.ping();
+    return await util_1.respond.fmt(context, "pong (rest: {rest}ms) (gateway: {gateway}ms)", {
+        rest,
+        gateway,
+    });
 });

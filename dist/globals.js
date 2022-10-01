@@ -8,4 +8,7 @@ exports.client = new lib_1.ShardClient(secrets_1.Secrets.Token, {
         intents: 3276799,
     },
 });
-exports.commands = new lib_1.CommandClient(exports.client, { prefix: "," });
+exports.commands = new lib_1.CommandClient(exports.client, {
+    prefix: ",",
+    activateOnEdits: true,
+});

@@ -6,4 +6,7 @@ export const client = new ShardClient(Secrets.Token, {
     intents: 3276799,
   },
 });
-export const commands = new CommandClient(client, { prefix: "," });
+export const commands = new CommandClient(client, {
+  prefix: ",",
+  activateOnEdits: true,
+});
