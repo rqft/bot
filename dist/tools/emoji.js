@@ -41,6 +41,9 @@ class CustomEmoji {
     data() {
         return globals_1.client.emojis.find((x) => x.id === this.id);
     }
+    static url(text) {
+        return new this(text).url();
+    }
 }
 exports.CustomEmoji = CustomEmoji;
 class UnicodeEmoji {

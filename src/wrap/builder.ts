@@ -386,13 +386,14 @@ export const DefaultArgs = new Proxy(
   }
 );
 
-export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function Command<U extends string, V extends ArgsFactory<U, any>>(
   syntax: U,
   options: Options<U, V>,
   run: (context: Cmd.Context, args: Values<V, U>) => unknown
 ) {
   const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax)!;
-  const ids = /\[\w+\??\]/g.exec(syntax) || [];
+  const ids = /\[.+\]/g.exec(syntax) || [];
   const opt: Array<Cmd.ArgumentOptions> = [];
   const flg: Array<Cmd.ArgumentOptions> = [];
 
@@ -402,10 +403,10 @@ export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
 
   for (const id of ids) {
     const id2 = id.replace(/\[|\]/g, "");
-    const [, name, def] = /^\[-?(.+?)\??(?:=(.*?))?\]$/.exec(id)!;
+    const [, name, def] = /^\[(?:\.{3})?-?(.+?)\??(?:=(.*?))?\]$/.exec(id)!;
     let arg: Cmd.ArgumentOptions = { name: name!, required: true };
-    const isFlag = /^\[-/.test(id);
-    if (/^\[-?(.+?)\?/.test(id)) {
+    const isFlag = /^\[(?:\.{3}?)-/.test(id);
+    if (/^\[(?:\.{3})?-?(.+?)\?/.test(id)) {
       arg.required = false;
     }
 
@@ -413,7 +414,11 @@ export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
       arg.default = def;
     }
 
-    arg.type = builder[id2 as keyof typeof builder];
+    arg.type = builder[id2 as never];
+
+    if (/^\[\.{3}/.test(id)) {
+      arg.consume = true;
+    }
 
     if (isFlag) {
       flg.push(arg);
@@ -430,6 +435,7 @@ export function Command<U extends string, V extends ArgsFactory<U, unknown>>(
         {
           name: cmd!,
           metadata: options.metadata as never,
+          ...options,
           type: opt,
           args: flg,
         },

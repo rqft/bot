@@ -1,7 +1,12 @@
 import { Context } from "detritus-client/lib/command";
-import { MarkupTimestampStyles } from "detritus-client/lib/constants";
+import {
+  ChannelTypes,
+  MarkupTimestampStyles,
+} from "detritus-client/lib/constants";
 import {
   Channel,
+  ChannelBase,
+  ChannelDM,
   Guild,
   Member,
   Role,
@@ -9,19 +14,20 @@ import {
 } from "detritus-client/lib/structures";
 import { Embed, Markup, Snowflake } from "detritus-client/lib/utils";
 import { Snowflake as SnowFlake } from "detritus-utils/lib/snowflake";
-import { derive, emojis, tab, tail } from "../constants";
+import { ChannelTypesText, derive, emojis, tab, tail } from "../constants";
+import { CustomEmojis } from "../emojis";
 import { Embeds } from "../tools/embed";
 import { CustomEmoji, Emoji, UnicodeEmoji } from "../tools/emoji";
+import { Markdown } from "../tools/markdown";
 import { Paginator } from "../tools/paginator";
-import { fmt } from "../tools/util";
+import { fmt, permissionsText } from "../tools/util";
 import { Warning } from "../tools/warning";
 import { Command } from "../wrap/builder";
 
 export default Command(
-  "info [noun?]",
+  "info [...noun?]",
   { args: (self) => ({ noun: self.stringOptional() }) },
   async (context, args) => {
-    console.log("a");
     args.noun ||= context.userId;
 
     const { noun } = args;
@@ -50,6 +56,10 @@ export default Command(
 
         if (data instanceof Role) {
           return await role(context, data, embed);
+        }
+
+        if (data instanceof ChannelBase) {
+          return await channel(context, data, embed);
         }
 
         embed.setTitle(`${tail} ${data.constructor.name} Information`);
@@ -110,7 +120,7 @@ export function identify(
   const channels = context.client.channels.filter(
     (x) =>
       x.id === noun.replace(/\D/g, "") ||
-      "#" + x.name.toLowerCase() === noun.toLowerCase()
+      x.name.toLowerCase() === noun.toLowerCase()
   );
 
   if (channels.length) {
@@ -138,7 +148,7 @@ export function identify(
     out.push(...guilds);
   }
 
-  if (/\d{16,21}/g.test(noun)) {
+  if (/^\d{16,21}$/g.test(noun)) {
     out.push(
       Object.assign(Snowflake.deconstruct(noun), {
         species: "@data/snowflake",
@@ -291,13 +301,17 @@ export async function role(_: Context, data: Role, embed: Embed) {
     isDefault,
     hoist,
     mentionable,
+    mention,
   } = data;
 
   {
     const description: Array<string> = [];
 
     description.push(
-      fmt("**Name**: {name}", { name: Markup.codestring(name) })
+      fmt("**Name**: {name} ({mention})", {
+        name: Markup.codestring(name),
+        mention,
+      })
     );
 
     description.push(fmt("**Id**: `{id}`", { id }));
@@ -308,6 +322,8 @@ export async function role(_: Context, data: Role, embed: Embed) {
       embed.setThumbnail(
         fmt("https://api.clancy.lol/image/color/256x256/{hex}", { hex })
       );
+    } else {
+      embed.setThumbnail(new UnicodeEmoji("❔").url());
     }
 
     description.push(
@@ -353,5 +369,194 @@ export async function role(_: Context, data: Role, embed: Embed) {
     embed.setDescription(description.join("\n"));
   }
 
+  const permissions = permissionsText(data);
+
+  if (permissions.length) {
+    embed.addField(`${tail} Permissions`, permissions.join(", "));
+  }
+
   return embed;
+}
+
+export async function channel(_: Context, data: Channel, embed: Embed) {
+  embed.setTitle(`${tail} Channel Information`);
+
+  const {
+    name,
+    mention,
+    id,
+    createdAtUnix,
+    position,
+    parent,
+    jumpLink,
+    guild,
+  } = data;
+
+  {
+    const description: Array<string> = [];
+
+    description.push(
+      fmt("**Name**: [{name}]({jumpLink}) ({mention})", {
+        name,
+        mention,
+        jumpLink,
+      })
+    );
+
+    description.push(fmt("**Id**: `{id}`", { id }));
+
+    description.push(
+      fmt("**Created At**: {f} ({r})", {
+        f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
+        r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
+      })
+    );
+
+    description.push(fmt("**Position**: `{position}`", { position }));
+
+    if (parent) {
+      description.push(
+        fmt("**Parent Channel**: [{name}]({jumpLink}) ({mention})", {
+          name: parent.name,
+          jumpLink: parent.jumpLink,
+          mention: parent.mention,
+        })
+      );
+    }
+
+    if (data.threads.size) {
+      description.push(
+        fmt("**Threads**: {threads}", { threads: data.threads.size })
+      );
+    }
+
+    if (guild) {
+      description.push(
+        fmt("**Server**: [{name}]({jumpLink})", {
+          name: guild.name,
+          jumpLink: guild.jumpLink,
+        })
+      );
+    }
+
+    embed.setDescription(description.join("\n"));
+  }
+
+  {
+    const description: Array<string> = [];
+
+    switch (data.type) {
+      case ChannelTypes.DM:
+      case ChannelTypes.GROUP_DM:
+      case ChannelTypes.GUILD_NEWS:
+      case ChannelTypes.GUILD_NEWS_THREAD:
+      case ChannelTypes.GUILD_PRIVATE_THREAD:
+      case ChannelTypes.GUILD_PUBLIC_THREAD:
+      case ChannelTypes.GUILD_TEXT: {
+        if (data.nsfw) {
+          description.push("**Nsfw**: Yes");
+        }
+
+        if (data.rateLimitPerUser) {
+          description.push(
+            fmt("**Slowmode**: {slowmode}", {
+              slowmode: Markdown.toTimeString(data.rateLimitPerUser * 1000),
+            })
+          );
+        }
+
+        if (data.lastMessage) {
+          description.push(
+            fmt("**Last Message**: [here]({jumpLink})", {
+              jumpLink: data.lastMessage.jumpLink,
+            })
+          );
+        }
+
+        if (data.owner) {
+          description.push(
+            fmt("**Owner**: [{tag}]({jumpLink}) ({mention})", {
+              tag: data.owner.tag,
+              jumpLink: data.owner.jumpLink,
+              mention: data.owner.mention,
+            })
+          );
+        }
+
+        if (data.recipients) {
+          description.push(
+            fmt("**Recipients**: {users}", {
+              users: data.recipients.map((x) => x.mention).join(", "),
+            })
+          );
+        }
+
+        break;
+      }
+    }
+
+    if (description.length) {
+      embed.addField(
+        `${tail} ${ChannelTypesText[data.type]}`,
+        description.join("\n")
+      );
+    }
+  }
+
+  embed.setThumbnail(getChannelIcon(data));
+
+  return embed;
+}
+
+function getChannelIcon(channel: Channel) {
+  if (channel instanceof ChannelDM) {
+    return (
+      channel.iconUrl || channel.defaultIconUrl || new UnicodeEmoji("❔").url()
+    );
+  }
+
+  switch (channel.type) {
+    case ChannelTypes.BASE:
+      return CustomEmoji.url(CustomEmojis.RichActivity);
+    case ChannelTypes.DM:
+    case ChannelTypes.GROUP_DM:
+    case ChannelTypes.GUILD_TEXT:
+      if (channel.nsfw) {
+        return CustomEmoji.url(CustomEmojis.ChannelTextNSFW);
+      }
+      return CustomEmoji.url(CustomEmojis.ChannelText);
+    case ChannelTypes.GUILD_CATEGORY:
+      return CustomEmoji.url(CustomEmojis.Synced);
+    case ChannelTypes.GUILD_DIRECTORY:
+      return CustomEmoji.url(CustomEmojis.ChannelDirectory);
+    case ChannelTypes.GUILD_NEWS:
+      if (channel.nsfw) {
+        return CustomEmoji.url(CustomEmojis.MegaphoneNSFW);
+      }
+      return CustomEmoji.url(CustomEmojis.Megaphone);
+    case ChannelTypes.GUILD_NEWS_THREAD:
+      if (channel.nsfw) {
+        return CustomEmoji.url(CustomEmojis.NSFWAnnouncementThreadIcon);
+      }
+      return CustomEmoji.url(CustomEmojis.AnnouncementThreadIcon);
+    case ChannelTypes.GUILD_PUBLIC_THREAD:
+      if (channel.nsfw) {
+        return CustomEmoji.url(CustomEmojis.NSFWThreadIcon);
+      }
+      return CustomEmoji.url(CustomEmojis.ThreadIcon);
+    case ChannelTypes.GUILD_PRIVATE_THREAD:
+      return CustomEmoji.url(CustomEmojis.PrivateThreadIcon);
+
+    case ChannelTypes.GUILD_STAGE_VOICE:
+      return CustomEmoji.url(CustomEmojis.StageEvents);
+
+    case ChannelTypes.GUILD_STORE:
+      return CustomEmoji.url(CustomEmojis.StoreTag);
+
+    case ChannelTypes.GUILD_VOICE:
+      return CustomEmoji.url(CustomEmojis.Speaker);
+
+    default:
+      return new UnicodeEmoji("❔").url();
+  }
 }

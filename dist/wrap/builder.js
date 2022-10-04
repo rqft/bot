@@ -288,22 +288,25 @@ exports.DefaultArgs = new Proxy({}, {
 });
 function Command(syntax, options, run) {
     const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax);
-    const ids = /\[\w+\??\]/g.exec(syntax) || [];
+    const ids = /\[.+\]/g.exec(syntax) || [];
     const opt = [];
     const flg = [];
     const builder = (options.args || (() => exports.DefaultArgs))(exports.CommandArgumentBuilders);
     for (const id of ids) {
         const id2 = id.replace(/\[|\]/g, "");
-        const [, name, def] = /^\[-?(.+?)\??(?:=(.*?))?\]$/.exec(id);
+        const [, name, def] = /^\[(?:\.{3})?-?(.+?)\??(?:=(.*?))?\]$/.exec(id);
         let arg = { name: name, required: true };
-        const isFlag = /^\[-/.test(id);
-        if (/^\[-?(.+?)\?/.test(id)) {
+        const isFlag = /^\[(?:\.{3}?)-/.test(id);
+        if (/^\[(?:\.{3})?-?(.+?)\?/.test(id)) {
             arg.required = false;
         }
         if (def) {
             arg.default = def;
         }
         arg.type = builder[id2];
+        if (/^\[\.{3}/.test(id)) {
+            arg.consume = true;
+        }
         if (isFlag) {
             flg.push(arg);
             continue;
@@ -315,6 +318,7 @@ function Command(syntax, options, run) {
             super(client, {
                 name: cmd,
                 metadata: options.metadata,
+                ...options,
                 type: opt,
                 args: flg,
             }, syntax);

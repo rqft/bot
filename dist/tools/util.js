@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+const constants_1 = require("detritus-client/lib/constants");
+const constants_2 = require("../constants");
 function fmt(value, contents) {
     let f = value;
     for (const [key, value] of Object.entries(contents)) {
@@ -52,3 +54,23 @@ function toCodePointForTwemoji(unicodeSurrogates) {
     return toCodePoint(unicodeSurrogates);
 }
 exports.toCodePointForTwemoji = toCodePointForTwemoji;
+function permissionsText(context) {
+    if (context.can(constants_1.Permissions.ADMINISTRATOR)) {
+        return [constants_2.PermissionsText[String(constants_1.Permissions.ADMINISTRATOR)]];
+    }
+    const text = [];
+    for (const permission of Object.values(constants_1.Permissions)) {
+        if (permission === constants_1.Permissions.NONE) {
+            continue;
+        }
+        if (constants_2.IrrelevantPermissions.includes(permission)) {
+            continue;
+        }
+        if (context.can(permission)) {
+            text.push(constants_2.PermissionsText[String(permission)] ||
+                `Unknown Permission (${permission})`);
+        }
+    }
+    return text;
+}
+exports.permissionsText = permissionsText;

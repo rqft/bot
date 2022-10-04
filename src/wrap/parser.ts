@@ -1,4 +1,4 @@
-import { Context } from "detritus-client/lib/command";
+import { ArgumentOptions, Context } from "detritus-client/lib/command";
 import {
   ChannelBase,
   ChannelDM,
@@ -16,7 +16,7 @@ import {
   Role,
   User,
 } from "detritus-client/lib/structures";
-import { CommandMetadata } from "./base-command";
+import { CommandMetadata, CommandOptionsExtra } from "./base-command";
 
 export type SyntaxParser<
   U extends string,
@@ -24,6 +24,16 @@ export type SyntaxParser<
 > = U extends `${string}[${infer N}]${infer R}`
   ? SyntaxParser<R, [...V, N]>
   : V;
+
+export type RemoveSugar<T extends string> = T extends `${infer X}=${string}`
+  ? RemoveSugar<X>
+  : T extends `${infer X}?`
+  ? RemoveSugar<X>
+  : T extends `...${infer X}`
+  ? RemoveSugar<X>
+  : T extends `-${infer X}`
+  ? X
+  : T;
 
 export interface Self {
   string(options?: StringOptions): Arg<string, string>;
@@ -155,28 +165,13 @@ export const ChannelConstructors = {
 
 export type ArgsFactory<
   U extends string,
-  Z extends Record<SyntaxParser<U>[number], unknown>
+  Z extends Record<RemoveSugar<SyntaxParser<U>[number]>, unknown>
 > = (self: Self) => {
-  [P in SyntaxParser<U>[number] as P extends `${infer X}=${string}`
-    ? X extends `${infer Q}?`
-      ? Q extends `-${infer M}`
-        ? M
-        : Q
-      : X extends `-${infer M}`
-      ? M
-      : X
-    : P extends `${infer Q}?`
-    ? Q extends `-${infer M}`
-      ? M
-      : Q
-    : P extends `-${infer M}`
-    ? M
-    : P]: `${P}?` extends SyntaxParser<U>[number]
-    ? Arg<string | undefined, Z[P] | undefined>
-    : Arg<string, Z[P]>;
+  [P in keyof Z]: Arg<string, Z[P]>;
 };
 
-export type Values<T extends ArgsFactory<U, unknown>, U extends string> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Values<T extends ArgsFactory<U, any>, U extends string> = {
   [P in keyof ReturnType<T>]: ReturnType<T>[P] extends (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...args: any[]
@@ -185,7 +180,9 @@ export type Values<T extends ArgsFactory<U, unknown>, U extends string> = {
     : never;
 };
 
-export interface Options<U extends string, V extends ArgsFactory<U, unknown>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Options<U extends string, V extends ArgsFactory<U, any>>
+  extends Omit<CommandOptionsExtra, keyof ArgumentOptions | "args"> {
   args?: V;
   metadata?: CommandMetadata;
 }

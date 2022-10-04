@@ -1,4 +1,7 @@
 import { Context, EditOrReply } from "detritus-client/lib/command";
+import { Permissions } from "detritus-client/lib/constants";
+import { Member, Role } from "detritus-client/lib/structures";
+import { IrrelevantPermissions, PermissionsText } from "../constants";
 
 export function fmt<T extends string>(
   value: T,
@@ -76,4 +79,30 @@ export function toCodePointForTwemoji(unicodeSurrogates: string): string {
     unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, "");
   }
   return toCodePoint(unicodeSurrogates);
+}
+
+export function permissionsText(context: Member | Role) {
+  if (context.can(Permissions.ADMINISTRATOR)) {
+    return [PermissionsText[String(Permissions.ADMINISTRATOR)]!];
+  }
+
+  const text: Array<string> = [];
+  for (const permission of Object.values(Permissions)) {
+    if (permission === Permissions.NONE) {
+      continue;
+    }
+
+    if (IrrelevantPermissions.includes(permission)) {
+      continue;
+    }
+
+    if (context.can(permission)) {
+      text.push(
+        PermissionsText[String(permission)] ||
+          `Unknown Permission (${permission})`
+      );
+    }
+  }
+
+  return text;
 }

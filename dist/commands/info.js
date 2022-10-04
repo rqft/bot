@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.role = exports.customEmoji = exports.unicodeEmoji = exports.snowflake = exports.isSnowflake = exports.identify = void 0;
+exports.channel = exports.role = exports.customEmoji = exports.unicodeEmoji = exports.snowflake = exports.isSnowflake = exports.identify = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const structures_1 = require("detritus-client/lib/structures");
 const utils_1 = require("detritus-client/lib/utils");
 const constants_2 = require("../constants");
 const embed_1 = require("../tools/embed");
 const emoji_1 = require("../tools/emoji");
+const markdown_1 = require("../tools/markdown");
 const paginator_1 = require("../tools/paginator");
 const util_1 = require("../tools/util");
 const warning_1 = require("../tools/warning");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)("info [noun?]", { args: (self) => ({ noun: self.stringOptional() }) }, async (context, args) => {
-    console.log("a");
+exports.default = (0, builder_1.Command)("info [...noun?]", { args: (self) => ({ noun: self.stringOptional() }) }, async (context, args) => {
     args.noun ||= context.userId;
     const { noun } = args;
     const pages = identify(context, noun);
@@ -35,6 +35,9 @@ exports.default = (0, builder_1.Command)("info [noun?]", { args: (self) => ({ no
             }
             if (data instanceof structures_1.Role) {
                 return await role(context, data, embed);
+            }
+            if (data instanceof structures_1.ChannelBase) {
+                return await channel(context, data, embed);
             }
             embed.setTitle(`${constants_2.tail} ${data.constructor.name} Information`);
             embed.setDescription("No further details.");
@@ -69,7 +72,7 @@ function identify(context, noun) {
         out.push(user);
     }
     const channels = context.client.channels.filter((x) => x.id === noun.replace(/\D/g, "") ||
-        "#" + x.name.toLowerCase() === noun.toLowerCase());
+        x.name.toLowerCase() === noun.toLowerCase());
     if (channels.length) {
         out.push(...channels);
     }
@@ -84,7 +87,7 @@ function identify(context, noun) {
     if (guilds.length) {
         out.push(...guilds);
     }
-    if (/\d{16,21}/g.test(noun)) {
+    if (/^\d{16,21}$/g.test(noun)) {
         out.push(Object.assign(utils_1.Snowflake.deconstruct(noun), {
             species: "@data/snowflake",
         }));
@@ -173,15 +176,21 @@ async function customEmoji(_, data, embed) {
 exports.customEmoji = customEmoji;
 async function role(_, data, embed) {
     embed.setTitle(`${constants_2.tail} Role Information`);
-    const { id, color, createdAtUnix, name, managed, isBoosterRole, isDefault, hoist, mentionable, } = data;
+    const { id, color, createdAtUnix, name, managed, isBoosterRole, isDefault, hoist, mentionable, mention, } = data;
     {
         const description = [];
-        description.push((0, util_1.fmt)("**Name**: {name}", { name: utils_1.Markup.codestring(name) }));
+        description.push((0, util_1.fmt)("**Name**: {name} ({mention})", {
+            name: utils_1.Markup.codestring(name),
+            mention,
+        }));
         description.push((0, util_1.fmt)("**Id**: `{id}`", { id }));
         if (color) {
             const hex = color.toString(16).padStart(6);
             description.push((0, util_1.fmt)("**Color**: `#{color}`", { color: hex }));
             embed.setThumbnail((0, util_1.fmt)("https://api.clancy.lol/image/color/256x256/{hex}", { hex }));
+        }
+        else {
+            embed.setThumbnail(new emoji_1.UnicodeEmoji("❔").url());
         }
         description.push((0, util_1.fmt)("**Created**: {f} ({r})", {
             f: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
@@ -212,6 +221,135 @@ async function role(_, data, embed) {
         }
         embed.setDescription(description.join("\n"));
     }
+    const permissions = (0, util_1.permissionsText)(data);
+    if (permissions.length) {
+        embed.addField(`${constants_2.tail} Permissions`, permissions.join(", "));
+    }
     return embed;
 }
 exports.role = role;
+async function channel(_, data, embed) {
+    embed.setTitle(`${constants_2.tail} Channel Information`);
+    const { name, mention, id, createdAtUnix, position, parent, jumpLink, guild, } = data;
+    {
+        const description = [];
+        description.push((0, util_1.fmt)("**Name**: [{name}]({jumpLink}) ({mention})", {
+            name,
+            mention,
+            jumpLink,
+        }));
+        description.push((0, util_1.fmt)("**Id**: `{id}`", { id }));
+        description.push((0, util_1.fmt)("**Created At**: {f} ({r})", {
+            f: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
+            r: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.RELATIVE),
+        }));
+        description.push((0, util_1.fmt)("**Position**: `{position}`", { position }));
+        if (parent) {
+            description.push((0, util_1.fmt)("**Parent Channel**: [{name}]({jumpLink}) ({mention})", {
+                name: parent.name,
+                jumpLink: parent.jumpLink,
+                mention: parent.mention,
+            }));
+        }
+        if (data.threads.size) {
+            description.push((0, util_1.fmt)("**Threads**: {threads}", { threads: data.threads.size }));
+        }
+        if (guild) {
+            description.push((0, util_1.fmt)("**Server**: [{name}]({jumpLink})", {
+                name: guild.name,
+                jumpLink: guild.jumpLink,
+            }));
+        }
+        embed.setDescription(description.join("\n"));
+    }
+    {
+        const description = [];
+        switch (data.type) {
+            case constants_1.ChannelTypes.DM:
+            case constants_1.ChannelTypes.GROUP_DM:
+            case constants_1.ChannelTypes.GUILD_NEWS:
+            case constants_1.ChannelTypes.GUILD_NEWS_THREAD:
+            case constants_1.ChannelTypes.GUILD_PRIVATE_THREAD:
+            case constants_1.ChannelTypes.GUILD_PUBLIC_THREAD:
+            case constants_1.ChannelTypes.GUILD_TEXT: {
+                if (data.nsfw) {
+                    description.push("**Nsfw**: Yes");
+                }
+                if (data.rateLimitPerUser) {
+                    description.push((0, util_1.fmt)("**Slowmode**: {slowmode}", {
+                        slowmode: markdown_1.Markdown.toTimeString(data.rateLimitPerUser * 1000),
+                    }));
+                }
+                if (data.lastMessage) {
+                    description.push((0, util_1.fmt)("**Last Message**: [here]({jumpLink})", {
+                        jumpLink: data.lastMessage.jumpLink,
+                    }));
+                }
+                if (data.owner) {
+                    description.push((0, util_1.fmt)("**Owner**: [{tag}]({jumpLink}) ({mention})", {
+                        tag: data.owner.tag,
+                        jumpLink: data.owner.jumpLink,
+                        mention: data.owner.mention,
+                    }));
+                }
+                if (data.recipients) {
+                    description.push((0, util_1.fmt)("**Recipients**: {users}", {
+                        users: data.recipients.map((x) => x.mention).join(", "),
+                    }));
+                }
+                break;
+            }
+        }
+        if (description.length) {
+            embed.addField(`${constants_2.tail} ${constants_2.ChannelTypesText[data.type]}`, description.join("\n"));
+        }
+    }
+    embed.setThumbnail(getChannelIcon(data));
+    return embed;
+}
+exports.channel = channel;
+function getChannelIcon(channel) {
+    if (channel instanceof structures_1.ChannelDM) {
+        return (channel.iconUrl || channel.defaultIconUrl || new emoji_1.UnicodeEmoji("❔").url());
+    }
+    switch (channel.type) {
+        case constants_1.ChannelTypes.BASE:
+            return emoji_1.CustomEmoji.url("<:RichActivity:1026594063383797872>");
+        case constants_1.ChannelTypes.DM:
+        case constants_1.ChannelTypes.GROUP_DM:
+        case constants_1.ChannelTypes.GUILD_TEXT:
+            if (channel.nsfw) {
+                return emoji_1.CustomEmoji.url("<:ChannelTextNSFW:1026593425925087333>");
+            }
+            return emoji_1.CustomEmoji.url("<:ChannelText:1026593423731478658>");
+        case constants_1.ChannelTypes.GUILD_CATEGORY:
+            return emoji_1.CustomEmoji.url("<:Synced:1026594097277968517>");
+        case constants_1.ChannelTypes.GUILD_DIRECTORY:
+            return emoji_1.CustomEmoji.url("<:ChannelDirectory:1026593421479116844>");
+        case constants_1.ChannelTypes.GUILD_NEWS:
+            if (channel.nsfw) {
+                return emoji_1.CustomEmoji.url("<:MegaphoneNSFW:1026593923688317028>");
+            }
+            return emoji_1.CustomEmoji.url("<:Megaphone:1026593921670848583>");
+        case constants_1.ChannelTypes.GUILD_NEWS_THREAD:
+            if (channel.nsfw) {
+                return emoji_1.CustomEmoji.url("<:NSFWAnnouncementThreadIcon:1026593931686850730>");
+            }
+            return emoji_1.CustomEmoji.url("<:AnnouncementThreadIcon:1026593407163977798>");
+        case constants_1.ChannelTypes.GUILD_PUBLIC_THREAD:
+            if (channel.nsfw) {
+                return emoji_1.CustomEmoji.url("<:NSFWThreadIcon:1026593932240490568>");
+            }
+            return emoji_1.CustomEmoji.url("<:ThreadIcon:1026594234482049074>");
+        case constants_1.ChannelTypes.GUILD_PRIVATE_THREAD:
+            return emoji_1.CustomEmoji.url("<:PrivateThreadIcon:1026594059512451225>");
+        case constants_1.ChannelTypes.GUILD_STAGE_VOICE:
+            return emoji_1.CustomEmoji.url("<:StageEvents:1026594081373175858>");
+        case constants_1.ChannelTypes.GUILD_STORE:
+            return emoji_1.CustomEmoji.url("<:StoreTag:1026594093511479326>");
+        case constants_1.ChannelTypes.GUILD_VOICE:
+            return emoji_1.CustomEmoji.url("<:Speaker:1026594073877954623>");
+        default:
+            return new emoji_1.UnicodeEmoji("❔").url();
+    }
+}

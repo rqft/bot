@@ -47,6 +47,10 @@ export class CustomEmoji {
   public data() {
     return client.emojis.find((x) => x.id === this.id);
   }
+
+  public static url(text: string) {
+    return new this(text).url();
+  }
 }
 export class UnicodeEmoji {
   constructor(public readonly emoji: string) {}
