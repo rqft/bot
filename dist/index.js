@@ -11,3 +11,5 @@ const globals_1 = require("./globals");
     globals_1.commands.addMultipleIn("./commands", { subdirectories: true });
     await globals_1.commands.run();
 })();
+process.on("uncaughtException", console.error);
+process.on("unhandledRejection", console.error);

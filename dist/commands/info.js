@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.channel = exports.role = exports.customEmoji = exports.unicodeEmoji = exports.snowflake = exports.isSnowflake = exports.identify = void 0;
+exports.message = exports.guild = exports.user = exports.channel = exports.role = exports.customEmoji = exports.unicodeEmoji = exports.snowflake = exports.isSnowflake = exports.identify = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const structures_1 = require("detritus-client/lib/structures");
 const utils_1 = require("detritus-client/lib/utils");
@@ -13,9 +13,15 @@ const util_1 = require("../tools/util");
 const warning_1 = require("../tools/warning");
 const builder_1 = require("../wrap/builder");
 exports.default = (0, builder_1.Command)("info [...noun?]", { args: (self) => ({ noun: self.stringOptional() }) }, async (context, args) => {
-    args.noun ||= context.userId;
     const { noun } = args;
-    const pages = identify(context, noun);
+    const pages = noun
+        ? identify(context, noun)
+        : [
+            context.member || context.user,
+            context.guild,
+            context.channel,
+            context.message,
+        ].filter((x) => x !== null);
     if (!pages.length) {
         throw new warning_1.Warning("Nothing was found");
     }
@@ -39,7 +45,15 @@ exports.default = (0, builder_1.Command)("info [...noun?]", { args: (self) => ({
             if (data instanceof structures_1.ChannelBase) {
                 return await channel(context, data, embed);
             }
-            embed.setTitle(`${constants_2.tail} ${data.constructor.name} Information`);
+            if (data instanceof structures_1.Message) {
+                return await message(context, data, embed);
+            }
+            if (data instanceof structures_1.Guild) {
+                return await guild(context, data, embed);
+            }
+            if (data instanceof structures_1.User || data instanceof structures_1.Member) {
+                return await user(context, data, embed);
+            }
             embed.setDescription("No further details.");
             return embed;
         },
@@ -61,7 +75,8 @@ function identify(context, noun) {
         out.push(...uemoji.map((x) => new emoji_1.UnicodeEmoji(x.emoji)));
     }
     const user = context.client.users.find((x) => x.tag.toLowerCase() === noun.toLowerCase() ||
-        x.id === noun.replace(/\D/g, ""));
+        x.id === noun.replace(/\D/g, "") ||
+        x.jumpLink === noun);
     a: if (user) {
         if (context.guild) {
             if (context.guild.members.has(user.id)) {
@@ -72,7 +87,8 @@ function identify(context, noun) {
         out.push(user);
     }
     const channels = context.client.channels.filter((x) => x.id === noun.replace(/\D/g, "") ||
-        x.name.toLowerCase() === noun.toLowerCase());
+        x.name.toLowerCase() === noun.toLowerCase() ||
+        x.jumpLink === noun);
     if (channels.length) {
         out.push(...channels);
     }
@@ -83,9 +99,16 @@ function identify(context, noun) {
         out.push(...roles);
     }
     const guilds = context.client.guilds.filter((x) => x.id === noun.replace(/\D/g, "") ||
-        x.name.toLowerCase() === noun.toLowerCase());
+        x.name.toLowerCase() === noun.toLowerCase() ||
+        x.jumpLink === noun);
     if (guilds.length) {
         out.push(...guilds);
+    }
+    const messages = context.client.messages.filter((x) => x.id === noun.replace(/\D/g, "") ||
+        x.id === context.message.referencedMessage?.id ||
+        x.jumpLink === noun);
+    if (messages.length) {
+        out.push(...messages);
     }
     if (/^\d{16,21}$/g.test(noun)) {
         out.push(Object.assign(utils_1.Snowflake.deconstruct(noun), {
@@ -292,16 +315,76 @@ async function channel(_, data, embed) {
                         mention: data.owner.mention,
                     }));
                 }
-                if (data.recipients) {
+                if (data.recipients.size) {
                     description.push((0, util_1.fmt)("**Recipients**: {users}", {
                         users: data.recipients.map((x) => x.mention).join(", "),
                     }));
                 }
                 break;
             }
+            case constants_1.ChannelTypes.GUILD_STAGE_VOICE:
+            case constants_1.ChannelTypes.GUILD_VOICE: {
+                description.push((0, util_1.fmt)("**Bitrate**: {bytes}/second", {
+                    bytes: (0, util_1.formatBytes)(data.bitrate || 0, undefined, undefined),
+                }));
+                description.push((0, util_1.fmt)("**User Limit**: {current}/{max}", {
+                    current: data.voiceStates.size,
+                    max: data.userLimit,
+                }));
+                if (data.videoQualityMode) {
+                    description.push((0, util_1.fmt)("Video Quality: {quality}", {
+                        quality: constants_2.VideoQualityModesText[data.videoQualityMode],
+                    }));
+                }
+                if (data.stageInstance) {
+                    description.push((0, util_1.fmt)("**Privacy**: {privacy}", {
+                        privacy: constants_2.StagePrivacyLevelsText[data.stageInstance.privacyLevel],
+                    }));
+                    description.push((0, util_1.fmt)("**Moderators**: {count}", {
+                        count: data.stageInstance.moderators.size,
+                    }));
+                    description.push((0, util_1.fmt)("**Speakers**: {count}", {
+                        count: data.stageInstance.speakers.size,
+                    }));
+                    description.push((0, util_1.fmt)("**Listeners**: {count}", {
+                        count: data.stageInstance.listeners.size,
+                    }));
+                }
+                break;
+            }
+            case constants_1.ChannelTypes.GUILD_CATEGORY: {
+                description.push((0, util_1.fmt)("**Children**: {count}", { count: data.children.size }));
+                break;
+            }
+            case constants_1.ChannelTypes.GUILD_FORUM: {
+                if (data.defaultAutoArchiveDuration) {
+                    description.push((0, util_1.fmt)("**Default Auto Archive Duration**: {s} seconds", {
+                        s: data.defaultAutoArchiveDuration / 1000,
+                    }));
+                }
+                if (data.template) {
+                    description.push((0, util_1.fmt)("**Template**: `{template}`", { template: data.template }));
+                }
+                if (data.availableTags.size) {
+                    description.push((0, util_1.fmt)("**Available Tags**: {tags}", {
+                        tags: data.availableTags
+                            .map((x) => {
+                            const title = utils_1.Markup.codestring(x.emojiId ? x.name : `${x.emojiName} \`${x.name}\``);
+                            if (x.emojiId) {
+                                return `<:${x.emojiName}:${x.emojiId}> ${title}`;
+                            }
+                            else {
+                                return title;
+                            }
+                        })
+                            .join(", "),
+                    }));
+                }
+                break;
+            }
         }
         if (description.length) {
-            embed.addField(`${constants_2.tail} ${constants_2.ChannelTypesText[data.type]}`, description.join("\n"));
+            embed.addField(`${constants_2.tail} ${constants_2.ChannelTypesText[data.type]} Channel Information`, description.join("\n"));
         }
     }
     embed.setThumbnail(getChannelIcon(data));
@@ -353,3 +436,187 @@ function getChannelIcon(channel) {
             return new emoji_1.UnicodeEmoji("❔").url();
     }
 }
+async function user(_, data, embed) {
+    embed.setTitle(`${constants_2.tail} User Information`);
+    const { id, avatarUrl, isClientOwner, isSystem, isWebhook, bot, createdAtUnix, defaultAvatarUrl, jumpLink, mention, presence, tag, } = data;
+    {
+        const description = [];
+        const flags = [];
+        for (const flag of Object.values(constants_1.UserFlags)) {
+            if (typeof flag === "string") {
+                continue;
+            }
+            if (data.hasFlag(flag)) {
+                flags.push(constants_2.UserBadges[flag]);
+            }
+        }
+        if (flags.length) {
+            description.push(flags.join(""));
+        }
+        description.push((0, util_1.fmt)("**Id**: `{id}`", { id }));
+        description.push((0, util_1.fmt)("**Profile**: [{tag}]({jumpLink}) ({mention})", {
+            tag,
+            jumpLink,
+            mention,
+        }));
+        description.push((0, util_1.fmt)("**Avatar**: [Main]({avatarUrl}) ([Default]({defaultAvatarUrl}))", {
+            avatarUrl,
+            defaultAvatarUrl,
+        }));
+        description.push((0, util_1.fmt)("**Created At**: {f} ({r})", {
+            f: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
+            r: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.RELATIVE),
+        }));
+        {
+            const tags = [];
+            if (isClientOwner) {
+                tags.push("Bot Owner");
+            }
+            if (isSystem) {
+                tags.push("System");
+            }
+            if (isWebhook) {
+                tags.push("Webhook");
+            }
+            if (bot) {
+                tags.push("Bot");
+            }
+            if (tags.length) {
+                description.push((0, util_1.fmt)("**Tags**: {tags}", { tags: tags.join(", ") }));
+            }
+        }
+        embed.setDescription(description.join("\n"));
+    }
+    if (presence) {
+        const description = [];
+        description.push((0, util_1.fmt)("{emoji} {text}", {
+            emoji: constants_2.StatusEmojis[presence.status],
+            text: constants_2.StatusesText[presence.status],
+        }));
+        for (const [, activity] of presence.activities) {
+            if (activity.isCustomStatus) {
+                description.push((0, util_1.fmt)(`{emoji} {state}`, {
+                    state: utils_1.Markup.italics(activity.state || ""),
+                    emoji: activity.emoji?.toString(),
+                }));
+                continue;
+            }
+            description.push((0, util_1.fmt)(`${constants_2.derive} {type} **{name}**`, {
+                type: activity.typeText,
+                name: activity.name,
+            }));
+        }
+        embed.addField(`${constants_2.tail} Presence`, description.join("\n"));
+    }
+    embed.setThumbnail(avatarUrl || defaultAvatarUrl);
+    return embed;
+}
+exports.user = user;
+async function guild(_, data, embed) {
+    (() => data)();
+    return embed;
+}
+exports.guild = guild;
+async function message(_, data, embed) {
+    embed.setTitle(`${constants_2.tail} Message Information`);
+    const { author, createdAtUnix, editedAtUnix, deleted, pinned, reactions, id, referencedMessage, jumpLink, thread, fromBot, fromMe, fromSystem, fromUser, fromWebhook, hasFlagCrossposted, hasFlagEphemeral, hasFlagFailedToMentionSomeRolesInThread, hasFlagHasThread, hasFlagIsCrossposted, hasFlagLoading, hasFlagSourceMessageDeleted, hasFlagSuppressEmbeds, hasFlagUrgent, } = data;
+    {
+        const description = [];
+        description.push((0, util_1.fmt)("**Id**: `{id}`", { id }));
+        description.push((0, util_1.fmt)("**Author**: [{tag}]({jumpLink}) ({mention})", {
+            jumpLink: author.jumpLink,
+            mention: author.mention,
+            tag: author.tag,
+        }));
+        description.push((0, util_1.fmt)("**Created At**: {f} ({r})", {
+            f: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
+            r: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.RELATIVE),
+        }));
+        if (editedAtUnix) {
+            description.push((0, util_1.fmt)("**Last Edited At**: {f} ({r})", {
+                f: utils_1.Markup.timestamp(editedAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
+                r: utils_1.Markup.timestamp(editedAtUnix, constants_1.MarkupTimestampStyles.RELATIVE),
+            }));
+        }
+        if (deleted) {
+            description.push("**Deleted**: Yes");
+        }
+        if (pinned) {
+            description.push("**Pinned**: Yes");
+        }
+        if (thread) {
+            description.push((0, util_1.fmt)("**Attached Thread**: [{name}]({jumpLink}) ({mention})", {
+                name: thread.name,
+                jumpLink: thread.jumpLink,
+                mention: thread.mention,
+            }));
+        }
+        {
+            const tags = [];
+            if (fromBot) {
+                tags.push("From Bot");
+            }
+            if (fromMe) {
+                tags.push("From Me");
+            }
+            if (fromSystem) {
+                tags.push("From System");
+            }
+            if (fromUser) {
+                tags.push("From User");
+            }
+            if (fromWebhook) {
+                tags.push("From Webhook");
+            }
+            if (hasFlagCrossposted) {
+                tags.push("Cross-Posted");
+            }
+            if (hasFlagEphemeral) {
+                tags.push("Ephemeral");
+            }
+            if (hasFlagFailedToMentionSomeRolesInThread) {
+                tags.push("Failed to mention some roles in thread");
+            }
+            if (hasFlagHasThread) {
+                tags.push("Has Thread");
+            }
+            if (hasFlagIsCrossposted) {
+                tags.push("Is Cross-Posted");
+            }
+            if (hasFlagLoading) {
+                tags.push("Loading");
+            }
+            if (hasFlagSourceMessageDeleted) {
+                tags.push("Source Message Deleted");
+            }
+            if (hasFlagSuppressEmbeds) {
+                tags.push("Suppress Embeds");
+            }
+            if (hasFlagUrgent) {
+                tags.push("Urgent");
+            }
+            if (tags.length) {
+                description.push((0, util_1.fmt)("**Tags**: {tags}", { tags: tags.join(", ") }));
+            }
+        }
+        if (referencedMessage) {
+            description.push((0, util_1.fmt)("**Replying to**: [here]({jumpLink})", {
+                jumpLink: referencedMessage.jumpLink,
+            }));
+        }
+        if (jumpLink) {
+            description.push((0, util_1.fmt)("**Jump Link**: [here]({jumpLink})", { jumpLink }));
+        }
+        if (description.length) {
+            embed.setDescription(description.join("\n"));
+        }
+    }
+    if (reactions.size) {
+        embed.addField(`${constants_2.tail} Reactions`, reactions
+            .map((x) => `${x.emoji.toString()} \`${x.count.toLocaleString()}\``)
+            .join(" "));
+    }
+    embed.setThumbnail(emoji_1.CustomEmoji.url("<:ChatBubble:1026593427103678624>"));
+    return embed;
+}
+exports.message = message;

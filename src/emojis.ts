@@ -233,4 +233,11 @@ export const enum CustomEmojis {
   WarningCircle = "<:WarningCircle:1026594242862272562>",
   Webhook = "<:Webhook:1026594243415912590>",
   Window = "<:Window:1026594244779069561>",
+
+  DoNotDisturb = "<:DoNotDisturb:1029586331522830406>",
+  Idle = "<:Idle:1029586332441387008>",
+  Mobile = "<:Mobile:1029586333443837962>",
+  Offline = "<:Offline:1029586334442070016>",
+  Online = "<:Online:1029586335478063215>",
+  Streaming = "<:Streaming:1029586498653257819>",
 }

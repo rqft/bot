@@ -106,3 +106,22 @@ export function permissionsText(context: Member | Role) {
 
   return text;
 }
+export const ByteUnits = ["bytes", "kb", "mb", "gb", "tb"];
+export const SIByteUnits = ["bytes", "kib", "mib", "gib", "tib"];
+export function formatBytes(
+  bytes: number,
+  decimals = 2,
+  noBiBytes = true
+): string {
+  if (bytes === 0) return "0 bytes";
+
+  const delimiter = noBiBytes ? 1000 : 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = noBiBytes ? ByteUnits : SIByteUnits;
+
+  const i = Math.floor(Math.log(bytes) / Math.log(delimiter));
+
+  return (
+    parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + " " + sizes[i]
+  );
+}

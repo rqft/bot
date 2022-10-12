@@ -8,18 +8,15 @@ export class CustomEmoji {
   public readonly name: string;
   public readonly id: string;
   constructor(identifier: string) {
-    console.log("C", identifier);
     if (/^<.+?>$/.test(identifier)) {
       identifier = identifier.replace(/^<:?|>$/g, "");
     }
-    console.log("id", identifier);
 
     if (identifier.startsWith("a:")) {
       this.animated = true;
       identifier = identifier.replace(/^a:/, "");
     }
 
-    console.log("id2", identifier);
     [this.name, this.id] = identifier.split(":") as [string, string];
   }
 

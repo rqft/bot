@@ -3,6 +3,7 @@ import {
   ChannelVideoQualityModes,
   GuildExplicitContentFilterTypes,
   MfaLevels,
+  PresenceStatuses,
   StagePrivacyLevels,
   UserFlags,
   VerificationLevels,
@@ -250,6 +251,23 @@ export const ChannelTypesText: Record<ChannelTypes, string> = {
   [ChannelTypes.GUILD_TEXT]: "Text",
   [ChannelTypes.GUILD_VOICE]: "Voice",
 };
+
+export const StatusEmojis: Record<PresenceStatuses, CustomEmojis> = {
+  [PresenceStatuses.DND]: CustomEmojis.DoNotDisturb,
+  [PresenceStatuses.IDLE]: CustomEmojis.Idle,
+  [PresenceStatuses.INVISIBLE]: CustomEmojis.Offline,
+  [PresenceStatuses.OFFLINE]: CustomEmojis.Offline,
+  [PresenceStatuses.ONLINE]: CustomEmojis.Online,
+};
+
+export const StatusesText: Record<PresenceStatuses, string> = {
+  [PresenceStatuses.DND]: "Do Not Disturb",
+  [PresenceStatuses.IDLE]: "Idle",
+  [PresenceStatuses.INVISIBLE]: "Invisible",
+  [PresenceStatuses.OFFLINE]: "Offline",
+  [PresenceStatuses.ONLINE]: "Online",
+};
+
 export function BooleanText(value: boolean): string {
   return value ? "Yes" : "No";
 }

@@ -10,3 +10,6 @@ import { commands } from "./globals";
   commands.addMultipleIn("./commands", { subdirectories: true });
   await commands.run();
 })();
+
+process.on("uncaughtException", console.error);
+process.on("unhandledRejection", console.error);

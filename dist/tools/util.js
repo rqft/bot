@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const constants_2 = require("../constants");
 function fmt(value, contents) {
@@ -74,3 +74,15 @@ function permissionsText(context) {
     return text;
 }
 exports.permissionsText = permissionsText;
+exports.ByteUnits = ["bytes", "kb", "mb", "gb", "tb"];
+exports.SIByteUnits = ["bytes", "kib", "mib", "gib", "tib"];
+function formatBytes(bytes, decimals = 2, noBiBytes = true) {
+    if (bytes === 0)
+        return "0 bytes";
+    const delimiter = noBiBytes ? 1000 : 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = noBiBytes ? exports.ByteUnits : exports.SIByteUnits;
+    const i = Math.floor(Math.log(bytes) / Math.log(delimiter));
+    return (parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + " " + sizes[i]);
+}
+exports.formatBytes = formatBytes;

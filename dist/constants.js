@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.emojis = exports.derive = exports.tab = exports.tail = exports.GuildFeaturesEmojis = exports.GuildFeaturesText = exports.GuildFeature = exports.GuildPublicStatesText = exports.GuildMfaLevelsText = exports.GuildExplicitContentFiltersText = exports.GuildVerificationLevelsText = exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = exports.Permissions = void 0;
+exports.emojis = exports.derive = exports.tab = exports.tail = exports.GuildFeaturesEmojis = exports.GuildFeaturesText = exports.GuildFeature = exports.GuildPublicStatesText = exports.GuildMfaLevelsText = exports.GuildExplicitContentFiltersText = exports.GuildVerificationLevelsText = exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.StatusesText = exports.StatusEmojis = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = exports.Permissions = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const emojis_1 = require("./emojis");
 exports.Permissions = {
@@ -220,6 +220,20 @@ exports.ChannelTypesText = {
     [constants_1.ChannelTypes.GUILD_STORE]: "Store",
     [constants_1.ChannelTypes.GUILD_TEXT]: "Text",
     [constants_1.ChannelTypes.GUILD_VOICE]: "Voice",
+};
+exports.StatusEmojis = {
+    [constants_1.PresenceStatuses.DND]: "<:DoNotDisturb:1029586331522830406>",
+    [constants_1.PresenceStatuses.IDLE]: "<:Idle:1029586332441387008>",
+    [constants_1.PresenceStatuses.INVISIBLE]: "<:Offline:1029586334442070016>",
+    [constants_1.PresenceStatuses.OFFLINE]: "<:Offline:1029586334442070016>",
+    [constants_1.PresenceStatuses.ONLINE]: "<:Online:1029586335478063215>",
+};
+exports.StatusesText = {
+    [constants_1.PresenceStatuses.DND]: "Do Not Disturb",
+    [constants_1.PresenceStatuses.IDLE]: "Idle",
+    [constants_1.PresenceStatuses.INVISIBLE]: "Invisible",
+    [constants_1.PresenceStatuses.OFFLINE]: "Offline",
+    [constants_1.PresenceStatuses.ONLINE]: "Online",
 };
 function BooleanText(value) {
     return value ? "Yes" : "No";
