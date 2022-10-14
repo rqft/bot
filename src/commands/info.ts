@@ -4,6 +4,7 @@ import {
   MarkupTimestampStyles,
   PresenceStatuses,
   UserFlags,
+  VerificationLevels,
 } from "detritus-client/lib/constants";
 import {
   Channel,
@@ -18,9 +19,15 @@ import {
 import { Embed, Markup, Snowflake } from "detritus-client/lib/utils";
 import { Snowflake as SnowFlake } from "detritus-utils/lib/snowflake";
 import {
+  bar,
   ChannelTypesText,
+  delve,
   derive,
   emojis,
+  GuildExplicitContentFiltersText,
+  GuildMfaLevelsText,
+  GuildNsfwLevelsText,
+  GuildVerificationLevelsText,
   StagePrivacyLevelsText,
   StatusEmojis,
   StatusesText,
@@ -804,7 +811,9 @@ export async function user(
       })
     );
 
+    let i = 0;
     for (const [, activity] of presence.activities) {
+      i++;
       if (activity.isCustomStatus) {
         description.push(
           fmt(`{emoji} {state}`, {
@@ -814,15 +823,142 @@ export async function user(
         );
         continue;
       }
+      let c = i === presence.activities.length ? derive : delve;
       description.push(
-        fmt(`${derive} {type} **{name}**`, {
+        fmt(`{c} {type} **{name}**`, {
+          c,
           type: activity.typeText,
           name: activity.name,
         })
       );
+
+      if (activity.details) {
+        description.push(
+          fmt(`{bar}${tab}${derive} {details}`, {
+            bar: i === presence.activities.length ? tab : bar,
+            details: activity.details,
+          })
+        );
+      }
     }
 
     embed.addField(`${tail} Presence`, description.join("\n"));
+  }
+
+  if (data instanceof Member) {
+    const description: Array<string> = [];
+
+    const { nick, roles, pending, premiumSinceUnix, voiceState } = data as Omit<
+      Member,
+      keyof User
+    >;
+
+    if (nick !== null) {
+      description.push(
+        fmt("**Nickname**: {nick}", { nick: Markup.codestring(nick) })
+      );
+    }
+
+    if (roles.size) {
+      description.push(
+        fmt("**Roles**: {roles}", {
+          roles: roles.map((x) => x?.mention).join(", "),
+        })
+      );
+    }
+
+    if (premiumSinceUnix) {
+      description.push(
+        fmt("**Boosting Since**: {f} ({r})", {
+          f: Markup.timestamp(
+            premiumSinceUnix,
+            MarkupTimestampStyles.BOTH_SHORT
+          ),
+          r: Markup.timestamp(premiumSinceUnix, MarkupTimestampStyles.RELATIVE),
+        })
+      );
+    }
+
+    if (pending) {
+      description.push("**Pending Membership**: Yes");
+    }
+
+    if (voiceState) {
+      const emojis: Array<CustomEmojis> = [];
+
+      const {
+        deaf,
+        isAudience,
+        isSpeaking,
+        mute,
+        requestToSpeakTimestampUnix,
+        selfDeaf,
+        selfMute,
+        selfStream,
+        selfVideo,
+        suppress,
+        channel,
+        isSpeaker,
+      } = voiceState;
+
+      if (isSpeaker) {
+        if (isSpeaking) {
+          emojis.push(CustomEmojis.Online);
+        } else {
+          emojis.push(CustomEmojis.Offline);
+        }
+      }
+
+      if (selfMute || mute) {
+        emojis.push(CustomEmojis.SpeakerMuted);
+      }
+
+      if (selfDeaf || deaf) {
+        emojis.push(CustomEmojis.NoiseCancellationDisabled);
+      }
+
+      if (isAudience) {
+        emojis.push(CustomEmojis.GoToAudience);
+      }
+
+      if (requestToSpeakTimestampUnix) {
+        emojis.push(CustomEmojis.StageEvents);
+      }
+
+      if (selfStream) {
+        emojis.push(CustomEmojis.Stream);
+      }
+
+      if (selfVideo) {
+        emojis.push(CustomEmojis.CallVideoCamera);
+      }
+
+      if (suppress) {
+        emojis.push(CustomEmojis.SpeakerLimited);
+      }
+
+      if (emojis.length) {
+        description.push(
+          fmt("**Voice State**: {emojis} in {channel}", {
+            emojis: emojis.join(""),
+            channel: channel?.mention || "(unknown)",
+          })
+        );
+      }
+    }
+
+    if (description.length) {
+      embed.addField(
+        `${tail} Member Information`,
+        "\u200b" + tab + description.join(`\n${tab}`)
+      );
+    }
+
+    const permissions = permissionsText(data);
+
+    if (permissions.length) {
+      embed.addField(`${tail} Permissions`, permissions.join(", "));
+    }
   }
 
   embed.setThumbnail(avatarUrl || defaultAvatarUrl);
@@ -835,7 +971,266 @@ export async function guild(
   data: Guild,
   embed: Embed
 ): Promise<Embed> {
-  (() => data)();
+  embed.setTitle(`${tail} Server Information`);
+
+  const {
+    name,
+    id,
+    bannerUrl,
+    createdAtUnix,
+    defaultMessageNotifications,
+    description: gdescription,
+    explicitContentFilter,
+    iconUrl,
+    isDiscoverable,
+    isPartnered,
+    isPublic,
+    isVerified,
+    jumpLink,
+    maxAttachmentSize,
+    maxBitrate,
+    maxEmojis,
+    maxMembers,
+    maxPresences,
+    maxVideoChannelUsers,
+    mfaLevel,
+    nsfwLevel,
+    owner,
+    preferredLocaleText,
+    vanityUrlCode,
+    verificationLevel,
+  } = data;
+
+  {
+    const description: Array<string> = [];
+
+    if (gdescription) {
+      description.push(Markup.italics(gdescription) + "\n");
+    }
+
+    description.push(fmt("**Id**: `{id}`", { id }));
+
+    description.push(
+      fmt("**Created At**: {f} ({r})", {
+        f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
+        r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
+      })
+    );
+
+    if (owner) {
+      description.push(
+        fmt("**Owner**: [{tag}]({jumpLink}) ({mention})", {
+          jumpLink: owner.jumpLink,
+          tag: owner.tag,
+          mention: owner.mention,
+        })
+      );
+    }
+
+    description.push(fmt("**Link**: [{name}]({jumpLink})", { jumpLink, name }));
+
+    if (vanityUrlCode) {
+      description.push(
+        fmt("**Vanity URL**: <https://discord.gg/{vanityUrlCode}>", {
+          vanityUrlCode,
+        })
+      );
+    }
+
+    description.push(
+      fmt("**Locale**: {preferredLocaleText}", { preferredLocaleText })
+    );
+
+    {
+      const tags: Array<string> = [];
+
+      if (isDiscoverable) {
+        tags.push("Discoverable");
+      }
+
+      if (isPartnered) {
+        tags.push("Partnered");
+      }
+
+      if (isVerified) {
+        tags.push("Verified");
+      }
+
+      if (isPublic) {
+        tags.push("Public");
+      }
+
+      if (tags.length) {
+        description.push(fmt("**Tags**: {tags}", { tags: tags.join(", ") }));
+      }
+    }
+
+    embed.setDescription(description.join("\n"));
+  }
+
+  {
+    const description: Array<string> = [];
+    description.push(
+      fmt("\n**MFA Level**: {text}", { text: GuildMfaLevelsText[mfaLevel] })
+    );
+
+    description.push(
+      fmt("**NSFW Level**: {text}", { text: GuildNsfwLevelsText[nsfwLevel] })
+    );
+
+    description.push(
+      fmt("**Content Filter**: {text}", {
+        text: GuildExplicitContentFiltersText[explicitContentFilter],
+      })
+    );
+
+    description.push(
+      fmt("**Verification Level**: {text}", {
+        text: GuildVerificationLevelsText[
+          verificationLevel as VerificationLevels
+        ],
+      })
+    );
+
+    description.push(
+      fmt("**Default Message Notifications**: {text}", {
+        text: defaultMessageNotifications === 1 ? "Mentions" : "All Messages",
+      })
+    );
+
+    if (description.length) {
+      embed.addField(`${tail} Settings`, description.join("\n"));
+    }
+  }
+
+  {
+    const description: Array<string> = [];
+
+    if (maxAttachmentSize) {
+      description.push(
+        fmt("**Attachment Size**: {bytes}", {
+          bytes: formatBytes(maxAttachmentSize),
+        })
+      );
+    }
+
+    if (maxBitrate) {
+      description.push(
+        fmt("**Bitrate**: {bytes}/s", {
+          bytes: formatBytes(maxBitrate),
+        })
+      );
+    }
+
+    if (maxEmojis) {
+      description.push(
+        fmt("**Emojis**: {maxEmojis}", {
+          maxEmojis,
+        })
+      );
+    }
+
+    if (maxMembers) {
+      description.push(
+        fmt("**Members**: {maxMembers}", {
+          maxMembers,
+        })
+      );
+    }
+
+    if (maxPresences) {
+      description.push(
+        fmt("**Presences**: {maxPresences}", {
+          maxPresences,
+        })
+      );
+    }
+
+    if (maxVideoChannelUsers) {
+      description.push(
+        fmt("**Video Channel Users**: {maxVideoChannelUsers}", {
+          maxVideoChannelUsers,
+        })
+      );
+    }
+
+    if (description.length) {
+      embed.addField(`${tail} Limits`, description.join("\n"));
+    }
+  }
+
+  {
+    const {
+      channels,
+      emojis,
+      members,
+      roles,
+      stageInstances,
+      stickers,
+      voiceStates,
+      premiumSubscriptionCount,
+    } = data;
+
+    const counts: Array<[CustomEmojis, number]> = [];
+
+    if (channels.size) {
+      counts.push([CustomEmojis.ChannelText, channels.size]);
+    }
+
+    if (emojis.size) {
+      counts.push([CustomEmojis.EmojiSmile, emojis.size]);
+    }
+
+    if (stickers.size) {
+      counts.push([CustomEmojis.Sticker, stickers.size]);
+    }
+
+    if (members.size) {
+      counts.push([CustomEmojis.Person, members.size]);
+    }
+
+    if (roles.size) {
+      counts.push([CustomEmojis.ShieldStar, roles.size]);
+    }
+
+    if (stageInstances.size) {
+      counts.push([CustomEmojis.StageEvents, stageInstances.size]);
+    }
+
+    if (voiceStates.size) {
+      counts.push([CustomEmojis.Speaker, voiceStates.size]);
+    }
+
+    if (premiumSubscriptionCount > 0) {
+      counts.push([
+        CustomEmojis.PremiumGuildSubscriberBadge,
+        premiumSubscriptionCount,
+      ]);
+    }
+
+    let txt = "";
+
+    for (let i = 0; i < counts.length; i++) {
+      let [e, t] = counts[i]!;
+
+      if (i % 8 === 0 && i > 0) {
+        txt += "\n";
+      }
+
+      txt += `${e} ${t}${tab}`;
+    }
+
+    if (counts.length) {
+      embed.addField("\u200b", txt);
+    }
+  }
+
+  if (bannerUrl) {
+    embed.setImage(bannerUrl);
+  }
+
+  embed.setThumbnail(iconUrl || new UnicodeEmoji("❔").url());
+
   return embed;
 }
 

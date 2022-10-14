@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Command = exports.DefaultArgs = exports.CommandArgumentBuilders = void 0;
+const emoji_1 = require("../tools/emoji");
 const base_command_1 = require("./base-command");
 const parser_1 = require("./parser");
 exports.CommandArgumentBuilders = {
@@ -278,6 +279,46 @@ exports.CommandArgumentBuilders = {
             if (value) {
                 return this.role()(value, context);
             }
+        };
+    },
+    emoji() {
+        return (value, context) => {
+            if (value === undefined || value === "") {
+                throw new RangeError("must provide a value");
+            }
+            console.log(value, value.replace(/\D/g, ""));
+            const found = context.client.emojis.find((emoji) => emoji.id === value.replace(/\D/g, ""));
+            if (found === undefined) {
+                throw new RangeError("emoji not found");
+            }
+            return found;
+        };
+    },
+    emojiOptional(options) {
+        return (value, context) => {
+            if (value === undefined) {
+                value = options?.default;
+            }
+            if (value) {
+                return this.emoji()(value, context);
+            }
+            return undefined;
+        };
+    },
+    unicodeEmoji() {
+        return (value) => {
+            return new emoji_1.UnicodeEmoji(value);
+        };
+    },
+    unicodeEmojiOptional(options) {
+        return (value, context) => {
+            if (value === undefined) {
+                value = options?.default;
+            }
+            if (value) {
+                return this.unicodeEmoji()(value, context);
+            }
+            return undefined;
         };
     },
 };

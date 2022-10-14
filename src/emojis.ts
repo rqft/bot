@@ -234,10 +234,10 @@ export const enum CustomEmojis {
   Webhook = "<:Webhook:1026594243415912590>",
   Window = "<:Window:1026594244779069561>",
 
-  DoNotDisturb = "<:DoNotDisturb:1029586331522830406>",
-  Idle = "<:Idle:1029586332441387008>",
-  Mobile = "<:Mobile:1029586333443837962>",
-  Offline = "<:Offline:1029586334442070016>",
-  Online = "<:Online:1029586335478063215>",
-  Streaming = "<:Streaming:1029586498653257819>",
+  DoNotDisturb = "<:DoNotDisturb:1029941062216712263>",
+  Idle = "<:Idle:1029941063105925120>",
+  Mobile = "<:Mobile:1029941063558905958>",
+  Offline = "<:Offline:1029941237916110848>",
+  Online = "<:Online:1029941068294279238>",
+  Streaming = "<:Streaming:1029941069493833798>",
 }

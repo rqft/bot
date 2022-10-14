@@ -2,6 +2,7 @@ import {
   ChannelTypes,
   ChannelVideoQualityModes,
   GuildExplicitContentFilterTypes,
+  GuildNSFWLevels,
   MfaLevels,
   PresenceStatuses,
   StagePrivacyLevels,
@@ -488,7 +489,16 @@ export const GuildFeaturesEmojis: Record<GuildFeature, CustomEmojis> = {
   [GuildFeature.INTERNAL_EMPLOYEE_ONLY]: CustomEmojis.RichActivity,
 };
 
+export const GuildNsfwLevelsText: Record<GuildNSFWLevels, string> = {
+  [GuildNSFWLevels.AGE_RESTRICTED]: "Age Restricted",
+  [GuildNSFWLevels.DEFAULT]: "Default",
+  [GuildNSFWLevels.EXPLICIT]: "Explicit",
+  [GuildNSFWLevels.SAFE]: "Safe",
+};
+
 export const tail = "❯";
 export const tab = "\u2003\u200b";
+export const delve = "├─";
 export const derive = "└─";
+export const bar = " │";
 export const emojis: Array<EmojiInfo> = [];

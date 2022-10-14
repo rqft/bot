@@ -12,10 +12,12 @@ import {
   ChannelGuildText,
   ChannelGuildThread,
   ChannelGuildVoice,
+  Emoji,
   Member,
   Role,
   User,
 } from "detritus-client/lib/structures";
+import { UnicodeEmoji } from "../tools/emoji";
 import { CommandMetadata, CommandOptionsExtra } from "./base-command";
 
 export type SyntaxParser<
@@ -92,6 +94,16 @@ export interface Self {
   urlOptional(
     options?: OptionalOptions
   ): Arg<string | undefined, URL | undefined>;
+
+  emoji(): Arg<string, Emoji>;
+  emojiOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Emoji | undefined>;
+
+  unicodeEmoji(): Arg<string, UnicodeEmoji>;
+  unicodeEmojiOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, UnicodeEmoji | undefined>;
 }
 
 export type Arg<U, T> = (value: U, context: Context) => T;

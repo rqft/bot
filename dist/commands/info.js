@@ -493,7 +493,9 @@ async function user(_, data, embed) {
             emoji: constants_2.StatusEmojis[presence.status],
             text: constants_2.StatusesText[presence.status],
         }));
+        let i = 0;
         for (const [, activity] of presence.activities) {
+            i++;
             if (activity.isCustomStatus) {
                 description.push((0, util_1.fmt)(`{emoji} {state}`, {
                     state: utils_1.Markup.italics(activity.state || ""),
@@ -501,19 +503,238 @@ async function user(_, data, embed) {
                 }));
                 continue;
             }
-            description.push((0, util_1.fmt)(`${constants_2.derive} {type} **{name}**`, {
+            let c = i === presence.activities.length ? constants_2.derive : constants_2.delve;
+            description.push((0, util_1.fmt)(`{c} {type} **{name}**`, {
+                c,
                 type: activity.typeText,
                 name: activity.name,
             }));
+            if (activity.details) {
+                description.push((0, util_1.fmt)(`{bar}${constants_2.tab}${constants_2.derive} {details}`, {
+                    bar: i === presence.activities.length ? constants_2.tab : constants_2.bar,
+                    details: activity.details,
+                }));
+            }
         }
         embed.addField(`${constants_2.tail} Presence`, description.join("\n"));
+    }
+    if (data instanceof structures_1.Member) {
+        const description = [];
+        const { nick, roles, pending, premiumSinceUnix, voiceState } = data;
+        if (nick !== null) {
+            description.push((0, util_1.fmt)("**Nickname**: {nick}", { nick: utils_1.Markup.codestring(nick) }));
+        }
+        if (roles.size) {
+            description.push((0, util_1.fmt)("**Roles**: {roles}", {
+                roles: roles.map((x) => x?.mention).join(", "),
+            }));
+        }
+        if (premiumSinceUnix) {
+            description.push((0, util_1.fmt)("**Boosting Since**: {f} ({r})", {
+                f: utils_1.Markup.timestamp(premiumSinceUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
+                r: utils_1.Markup.timestamp(premiumSinceUnix, constants_1.MarkupTimestampStyles.RELATIVE),
+            }));
+        }
+        if (pending) {
+            description.push("**Pending Membership**: Yes");
+        }
+        if (voiceState) {
+            const emojis = [];
+            const { deaf, isAudience, isSpeaking, mute, requestToSpeakTimestampUnix, selfDeaf, selfMute, selfStream, selfVideo, suppress, channel, isSpeaker, } = voiceState;
+            if (isSpeaker) {
+                if (isSpeaking) {
+                    emojis.push("<:Online:1029941068294279238>");
+                }
+                else {
+                    emojis.push("<:Offline:1029941237916110848>");
+                }
+            }
+            if (selfMute || mute) {
+                emojis.push("<:SpeakerMuted:1026594076201603092>");
+            }
+            if (selfDeaf || deaf) {
+                emojis.push("<:NoiseCancellationDisabled:1026593930684416152>");
+            }
+            if (isAudience) {
+                emojis.push("<:GoToAudience:1026593904365146236>");
+            }
+            if (requestToSpeakTimestampUnix) {
+                emojis.push("<:StageEvents:1026594081373175858>");
+            }
+            if (selfStream) {
+                emojis.push("<:Stream:1026594094652330054>");
+            }
+            if (selfVideo) {
+                emojis.push("<:CallVideoCamera:1026593417909780590>");
+            }
+            if (suppress) {
+                emojis.push("<:SpeakerLimited:1026594075308212325>");
+            }
+            if (emojis.length) {
+                description.push((0, util_1.fmt)("**Voice State**: {emojis} in {channel}", {
+                    emojis: emojis.join(""),
+                    channel: channel?.mention || "(unknown)",
+                }));
+            }
+        }
+        if (description.length) {
+            embed.addField(`${constants_2.tail} Member Information`, "\u200b" + constants_2.tab + description.join(`\n${constants_2.tab}`));
+        }
+        const permissions = (0, util_1.permissionsText)(data);
+        if (permissions.length) {
+            embed.addField(`${constants_2.tail} Permissions`, permissions.join(", "));
+        }
     }
     embed.setThumbnail(avatarUrl || defaultAvatarUrl);
     return embed;
 }
 exports.user = user;
 async function guild(_, data, embed) {
-    (() => data)();
+    embed.setTitle(`${constants_2.tail} Server Information`);
+    const { name, id, bannerUrl, createdAtUnix, defaultMessageNotifications, description: gdescription, explicitContentFilter, iconUrl, isDiscoverable, isPartnered, isPublic, isVerified, jumpLink, maxAttachmentSize, maxBitrate, maxEmojis, maxMembers, maxPresences, maxVideoChannelUsers, mfaLevel, nsfwLevel, owner, preferredLocaleText, vanityUrlCode, verificationLevel, } = data;
+    {
+        const description = [];
+        if (gdescription) {
+            description.push(utils_1.Markup.italics(gdescription) + "\n");
+        }
+        description.push((0, util_1.fmt)("**Id**: `{id}`", { id }));
+        description.push((0, util_1.fmt)("**Created At**: {f} ({r})", {
+            f: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
+            r: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.RELATIVE),
+        }));
+        if (owner) {
+            description.push((0, util_1.fmt)("**Owner**: [{tag}]({jumpLink}) ({mention})", {
+                jumpLink: owner.jumpLink,
+                tag: owner.tag,
+                mention: owner.mention,
+            }));
+        }
+        description.push((0, util_1.fmt)("**Link**: [{name}]({jumpLink})", { jumpLink, name }));
+        if (vanityUrlCode) {
+            description.push((0, util_1.fmt)("**Vanity URL**: <https://discord.gg/{vanityUrlCode}>", {
+                vanityUrlCode,
+            }));
+        }
+        description.push((0, util_1.fmt)("**Locale**: {preferredLocaleText}", { preferredLocaleText }));
+        {
+            const tags = [];
+            if (isDiscoverable) {
+                tags.push("Discoverable");
+            }
+            if (isPartnered) {
+                tags.push("Partnered");
+            }
+            if (isVerified) {
+                tags.push("Verified");
+            }
+            if (isPublic) {
+                tags.push("Public");
+            }
+            if (tags.length) {
+                description.push((0, util_1.fmt)("**Tags**: {tags}", { tags: tags.join(", ") }));
+            }
+        }
+        embed.setDescription(description.join("\n"));
+    }
+    {
+        const description = [];
+        description.push((0, util_1.fmt)("\n**MFA Level**: {text}", { text: constants_2.GuildMfaLevelsText[mfaLevel] }));
+        description.push((0, util_1.fmt)("**NSFW Level**: {text}", { text: constants_2.GuildNsfwLevelsText[nsfwLevel] }));
+        description.push((0, util_1.fmt)("**Content Filter**: {text}", {
+            text: constants_2.GuildExplicitContentFiltersText[explicitContentFilter],
+        }));
+        description.push((0, util_1.fmt)("**Verification Level**: {text}", {
+            text: constants_2.GuildVerificationLevelsText[verificationLevel],
+        }));
+        description.push((0, util_1.fmt)("**Default Message Notifications**: {text}", {
+            text: defaultMessageNotifications === 1 ? "Mentions" : "All Messages",
+        }));
+        if (description.length) {
+            embed.addField(`${constants_2.tail} Settings`, description.join("\n"));
+        }
+    }
+    {
+        const description = [];
+        if (maxAttachmentSize) {
+            description.push((0, util_1.fmt)("**Attachment Size**: {bytes}", {
+                bytes: (0, util_1.formatBytes)(maxAttachmentSize),
+            }));
+        }
+        if (maxBitrate) {
+            description.push((0, util_1.fmt)("**Bitrate**: {bytes}/s", {
+                bytes: (0, util_1.formatBytes)(maxBitrate),
+            }));
+        }
+        if (maxEmojis) {
+            description.push((0, util_1.fmt)("**Emojis**: {maxEmojis}", {
+                maxEmojis,
+            }));
+        }
+        if (maxMembers) {
+            description.push((0, util_1.fmt)("**Members**: {maxMembers}", {
+                maxMembers,
+            }));
+        }
+        if (maxPresences) {
+            description.push((0, util_1.fmt)("**Presences**: {maxPresences}", {
+                maxPresences,
+            }));
+        }
+        if (maxVideoChannelUsers) {
+            description.push((0, util_1.fmt)("**Video Channel Users**: {maxVideoChannelUsers}", {
+                maxVideoChannelUsers,
+            }));
+        }
+        if (description.length) {
+            embed.addField(`${constants_2.tail} Limits`, description.join("\n"));
+        }
+    }
+    {
+        const { channels, emojis, members, roles, stageInstances, stickers, voiceStates, premiumSubscriptionCount, } = data;
+        const counts = [];
+        if (channels.size) {
+            counts.push(["<:ChannelText:1026593423731478658>", channels.size]);
+        }
+        if (emojis.size) {
+            counts.push(["<:EmojiSmile:1026593400864116880>", emojis.size]);
+        }
+        if (stickers.size) {
+            counts.push(["<:Sticker:1026594086779625489>", stickers.size]);
+        }
+        if (members.size) {
+            counts.push(["<:Person:1026593940062871692>", members.size]);
+        }
+        if (roles.size) {
+            counts.push(["<:ShieldStar:1026594069490696222>", roles.size]);
+        }
+        if (stageInstances.size) {
+            counts.push(["<:StageEvents:1026594081373175858>", stageInstances.size]);
+        }
+        if (voiceStates.size) {
+            counts.push(["<:Speaker:1026594073877954623>", voiceStates.size]);
+        }
+        if (premiumSubscriptionCount > 0) {
+            counts.push([
+                "<:PremiumGuildSubscriberBadge:1026594057184612442>",
+                premiumSubscriptionCount,
+            ]);
+        }
+        let txt = "";
+        for (let i = 0; i < counts.length; i++) {
+            let [e, t] = counts[i];
+            if (i % 8 === 0 && i > 0) {
+                txt += "\n";
+            }
+            txt += `${e} ${t}${constants_2.tab}`;
+        }
+        if (counts.length) {
+            embed.addField("\u200b", txt);
+        }
+    }
+    if (bannerUrl) {
+        embed.setImage(bannerUrl);
+    }
+    embed.setThumbnail(iconUrl || new emoji_1.UnicodeEmoji("❔").url());
     return embed;
 }
 exports.guild = guild;

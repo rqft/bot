@@ -1,4 +1,5 @@
 import { Command as Cmd, CommandClient } from "detritus-client/lib";
+import { UnicodeEmoji } from "../tools/emoji";
 import { BaseCommand } from "./base-command";
 
 import {
@@ -373,6 +374,60 @@ export const CommandArgumentBuilders: Self = {
       if (value) {
         return this.role()(value, context);
       }
+    };
+  },
+
+  emoji() {
+    return (value, context) => {
+      if (value === undefined || value === "") {
+        throw new RangeError("must provide a value");
+      }
+
+      console.log(value, value.replace(/\D/g, ""));
+
+      const found = context.client.emojis.find(
+        (emoji) => emoji.id === value.replace(/\D/g, "")
+      );
+
+      if (found === undefined) {
+        throw new RangeError("emoji not found");
+      }
+
+      return found;
+    };
+  },
+
+  emojiOptional(options) {
+    return (value, context) => {
+      if (value === undefined) {
+        value = options?.default;
+      }
+
+      if (value) {
+        return this.emoji()(value, context);
+      }
+
+      return undefined;
+    };
+  },
+
+  unicodeEmoji() {
+    return (value) => {
+      return new UnicodeEmoji(value);
+    };
+  },
+
+  unicodeEmojiOptional(options?: OptionalOptions) {
+    return (value, context) => {
+      if (value === undefined) {
+        value = options?.default;
+      }
+
+      if (value) {
+        return this.unicodeEmoji()(value, context);
+      }
+
+      return undefined;
     };
   },
 };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.emojis = exports.derive = exports.tab = exports.tail = exports.GuildFeaturesEmojis = exports.GuildFeaturesText = exports.GuildFeature = exports.GuildPublicStatesText = exports.GuildMfaLevelsText = exports.GuildExplicitContentFiltersText = exports.GuildVerificationLevelsText = exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.StatusesText = exports.StatusEmojis = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = exports.Permissions = void 0;
+exports.emojis = exports.bar = exports.derive = exports.delve = exports.tab = exports.tail = exports.GuildNsfwLevelsText = exports.GuildFeaturesEmojis = exports.GuildFeaturesText = exports.GuildFeature = exports.GuildPublicStatesText = exports.GuildMfaLevelsText = exports.GuildExplicitContentFiltersText = exports.GuildVerificationLevelsText = exports.VoiceRegionsText = exports.GuildVoiceRegion = exports.StagePrivacyLevelsText = exports.VideoQualityModesText = exports.BooleanText = exports.StatusesText = exports.StatusEmojis = exports.ChannelTypesText = exports.UserBadges = exports.IrrelevantPermissions = exports.BrandIcons = exports.BrandColours = exports.BrandNames = exports.Brand = exports.Colours = exports.TRUSTED_URLS = exports.UNICODE_EMOJI_REGEX = exports.VALID_URL_REGEX = exports.PermissionsText = exports.Permissions = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const emojis_1 = require("./emojis");
 exports.Permissions = {
@@ -222,11 +222,11 @@ exports.ChannelTypesText = {
     [constants_1.ChannelTypes.GUILD_VOICE]: "Voice",
 };
 exports.StatusEmojis = {
-    [constants_1.PresenceStatuses.DND]: "<:DoNotDisturb:1029586331522830406>",
-    [constants_1.PresenceStatuses.IDLE]: "<:Idle:1029586332441387008>",
-    [constants_1.PresenceStatuses.INVISIBLE]: "<:Offline:1029586334442070016>",
-    [constants_1.PresenceStatuses.OFFLINE]: "<:Offline:1029586334442070016>",
-    [constants_1.PresenceStatuses.ONLINE]: "<:Online:1029586335478063215>",
+    [constants_1.PresenceStatuses.DND]: "<:DoNotDisturb:1029941062216712263>",
+    [constants_1.PresenceStatuses.IDLE]: "<:Idle:1029941063105925120>",
+    [constants_1.PresenceStatuses.INVISIBLE]: "<:Offline:1029941237916110848>",
+    [constants_1.PresenceStatuses.OFFLINE]: "<:Offline:1029941237916110848>",
+    [constants_1.PresenceStatuses.ONLINE]: "<:Online:1029941068294279238>",
 };
 exports.StatusesText = {
     [constants_1.PresenceStatuses.DND]: "Do Not Disturb",
@@ -439,7 +439,15 @@ exports.GuildFeaturesEmojis = {
     [GuildFeature.EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT]: "<:RichActivity:1026594063383797872>",
     [GuildFeature.INTERNAL_EMPLOYEE_ONLY]: "<:RichActivity:1026594063383797872>",
 };
+exports.GuildNsfwLevelsText = {
+    [constants_1.GuildNSFWLevels.AGE_RESTRICTED]: "Age Restricted",
+    [constants_1.GuildNSFWLevels.DEFAULT]: "Default",
+    [constants_1.GuildNSFWLevels.EXPLICIT]: "Explicit",
+    [constants_1.GuildNSFWLevels.SAFE]: "Safe",
+};
 exports.tail = "❯";
 exports.tab = "\u2003\u200b";
+exports.delve = "├─";
 exports.derive = "└─";
+exports.bar = " │";
 exports.emojis = [];
