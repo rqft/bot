@@ -26,10 +26,26 @@ class BaseCommand extends lib_1.Command.Command {
         this.metadata = options.metadata;
     }
     onTypeError(context, _, errors) {
-        for (const key in errors) {
+        let text = [];
+        const keys = Object.keys(errors);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
             const value = errors[key];
-            const message = value.message;
-            return util_1.respond.fmt(context, `:warning: error on \`{key}\`: {message}\n\`\`\`\n{syntax}\n\`\`\``, { key, message, syntax: this.syntax });
+            const { message } = value;
+            let head = i + " | " + this.syntax;
+            head +=
+                "\n" +
+                    " ".repeat(this.syntax.indexOf(key) + 3) +
+                    "\\" +
+                    "-".repeat(key.length - 1) +
+                    " " +
+                    message;
+            text.push(head);
+        }
+        if (text.length) {
+            return util_1.respond.fmt(context, `\`\`\`lua\n{text}\n\`\`\``, {
+                text: text.join("\n"),
+            });
         }
     }
     onError(context, _args, error) {

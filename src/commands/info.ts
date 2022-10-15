@@ -67,6 +67,8 @@ export default Command(
       pageLimit: pages.length,
       async onPage(page) {
         const embed = Embeds.user(context);
+        embed.setFooter(`Page ${page}/${pages.length}`);
+
         const data = pages[page - 1]!;
         if (isSnowflake(data)) {
           return await snowflake(context, data, embed);
@@ -140,7 +142,7 @@ export function identify(
 
   const user = context.client.users.find(
     (x) =>
-      x.tag.toLowerCase() === noun.toLowerCase() ||
+      x.tag.toLowerCase().includes(noun.toLowerCase()) ||
       x.id === noun.replace(/\D/g, "") ||
       x.jumpLink === noun
   );
@@ -159,7 +161,7 @@ export function identify(
   const channels = context.client.channels.filter(
     (x) =>
       x.id === noun.replace(/\D/g, "") ||
-      x.name.toLowerCase() === noun.toLowerCase() ||
+      x.name.toLowerCase().includes(noun.toLowerCase()) ||
       x.jumpLink === noun
   );
 
@@ -171,7 +173,7 @@ export function identify(
     (x) =>
       x.id === noun.replace(/\D/g, "") ||
       (x.id === context.guildId && noun === "@everyone") ||
-      x.name.toLowerCase() === noun.toLowerCase()
+      x.name.toLowerCase().includes(noun.toLowerCase())
   );
 
   if (roles.length) {
@@ -181,7 +183,7 @@ export function identify(
   const guilds = context.client.guilds.filter(
     (x) =>
       x.id === noun.replace(/\D/g, "") ||
-      x.name.toLowerCase() === noun.toLowerCase() ||
+      x.name.toLowerCase().includes(noun.toLowerCase()) ||
       x.jumpLink === noun
   );
 

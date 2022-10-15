@@ -321,6 +321,37 @@ exports.CommandArgumentBuilders = {
             return undefined;
         };
     },
+    array(options) {
+        return (value) => {
+            const sliced = value.split(options?.split || " ");
+            if (options?.choices && options?.choices.length) {
+                if (!sliced.every((x) => options?.choices?.includes(x))) {
+                    throw new RangeError(`must be one of [ ${options.choices.join(", ")} ]`);
+                }
+            }
+            const data = sliced.map(options?.map || ((x) => x));
+            if (options) {
+                if (options.maxLength && data.length > options.maxLength) {
+                    throw new RangeError(`must be less than ${options.maxLength} items`);
+                }
+                if (options.minLength && data.length < options.minLength) {
+                    throw new RangeError(`must be more than ${options.maxLength} items`);
+                }
+            }
+            return data;
+        };
+    },
+    arrayOptional(options) {
+        return (value, context) => {
+            if (value === undefined) {
+                value = options?.default;
+            }
+            if (value) {
+                return this.array(options)(value, context);
+            }
+            return undefined;
+        };
+    },
 };
 exports.DefaultArgs = new Proxy({}, {
     get() {
@@ -329,7 +360,8 @@ exports.DefaultArgs = new Proxy({}, {
 });
 function Command(syntax, options, run) {
     const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax);
-    const ids = /\[.+\]/g.exec(syntax) || [];
+    const ids = syntax.match(/\[.+?\]/g) || [];
+    console.log(ids);
     const opt = [];
     const flg = [];
     const builder = (options.args || (() => exports.DefaultArgs))(exports.CommandArgumentBuilders);
@@ -337,7 +369,7 @@ function Command(syntax, options, run) {
         const id2 = id.replace(/\[|\]/g, "");
         const [, name, def] = /^\[(?:\.{3})?-?(.+?)\??(?:=(.*?))?\]$/.exec(id);
         let arg = { name: name, required: true };
-        const isFlag = /^\[(?:\.{3}?)-/.test(id);
+        const isFlag = /^\[(?:\.{3})?-/.test(id);
         if (/^\[(?:\.{3})?-?(.+?)\?/.test(id)) {
             arg.required = false;
         }

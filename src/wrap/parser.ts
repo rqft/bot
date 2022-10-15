@@ -104,6 +104,11 @@ export interface Self {
   unicodeEmojiOptional(
     options?: OptionalOptions
   ): Arg<string | undefined, UnicodeEmoji | undefined>;
+
+  array<T = string>(options?: ArrayOptions<T>): Arg<string, Array<T>>;
+  arrayOptional<T = string>(
+    options?: ArrayOptions<T> & OptionalOptions
+  ): Arg<string | undefined, Array<T> | undefined>;
 }
 
 export type Arg<U, T> = (value: U, context: Context) => T;
@@ -119,6 +124,11 @@ export interface Choices<T> {
 export interface StringOptions extends Choices<string> {
   maxLength?: number;
   minLength?: number;
+}
+
+export interface ArrayOptions<T> extends StringOptions {
+  map?: (value: string) => T;
+  split?: string;
 }
 
 export interface NumberOptions extends Choices<number> {

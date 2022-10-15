@@ -4,10 +4,13 @@ import { BaseCommand } from "./base-command";
 
 import {
   ArgsFactory,
+  ArrayOptions,
   ChannelConstructors,
   OptionalOptions,
   Options,
+  RemoveSugar,
   Self,
+  SyntaxParser,
   Values,
 } from "./parser";
 
@@ -430,6 +433,48 @@ export const CommandArgumentBuilders: Self = {
       return undefined;
     };
   },
+
+  array<T>(options?: ArrayOptions<T>) {
+    return (value) => {
+      const sliced = value.split(options?.split || " ");
+
+      if (options?.choices && options?.choices.length) {
+        if (!sliced.every((x) => options?.choices?.includes(x))) {
+          throw new RangeError(
+            `must be one of [ ${options.choices.join(", ")} ]`
+          );
+        }
+      }
+
+      const data = sliced.map(options?.map || ((x) => x as unknown as T));
+
+      if (options) {
+        if (options.maxLength && data.length > options.maxLength) {
+          throw new RangeError(`must be less than ${options.maxLength} items`);
+        }
+
+        if (options.minLength && data.length < options.minLength) {
+          throw new RangeError(`must be more than ${options.maxLength} items`);
+        }
+      }
+
+      return data;
+    };
+  },
+
+  arrayOptional<T>(options?: ArrayOptions<T> & OptionalOptions) {
+    return (value, context) => {
+      if (value === undefined) {
+        value = options?.default;
+      }
+
+      if (value) {
+        return this.array(options)(value, context);
+      }
+
+      return undefined;
+    };
+  },
 };
 
 export const DefaultArgs = new Proxy(
@@ -442,13 +487,18 @@ export const DefaultArgs = new Proxy(
 );
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function Command<U extends string, V extends ArgsFactory<U, any>>(
+export function Command<
+  U extends string,
+  V extends ArgsFactory<U, Z>,
+  Z extends Record<RemoveSugar<SyntaxParser<U, []>[number]>, unknown>
+>(
   syntax: U,
   options: Options<U, V>,
   run: (context: Cmd.Context, args: Values<V, U>) => unknown
 ) {
   const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax)!;
-  const ids = /\[.+\]/g.exec(syntax) || [];
+  const ids = syntax.match(/\[.+?\]/g) || [];
+  console.log(ids);
   const opt: Array<Cmd.ArgumentOptions> = [];
   const flg: Array<Cmd.ArgumentOptions> = [];
 
@@ -457,10 +507,12 @@ export function Command<U extends string, V extends ArgsFactory<U, any>>(
   );
 
   for (const id of ids) {
+    // console.log(id);
     const id2 = id.replace(/\[|\]/g, "");
     const [, name, def] = /^\[(?:\.{3})?-?(.+?)\??(?:=(.*?))?\]$/.exec(id)!;
     let arg: Cmd.ArgumentOptions = { name: name!, required: true };
-    const isFlag = /^\[(?:\.{3}?)-/.test(id);
+    const isFlag = /^\[(?:\.{3})?-/.test(id);
+
     if (/^\[(?:\.{3})?-?(.+?)\?/.test(id)) {
       arg.required = false;
     }
@@ -479,6 +531,8 @@ export function Command<U extends string, V extends ArgsFactory<U, any>>(
       flg.push(arg);
       continue;
     }
+
+    // console.log(arg);
 
     opt.push(arg);
   }

@@ -39,7 +39,7 @@ exports.default = (0, builder_1.Command)("eval [...code]", { args: (self) => ({ 
     try {
         const [is, i2] = [imagescript_1.default, v2_1.default];
         data = await Promise.resolve(eval((0, typescript_1.transpile)(args.code)));
-        [is, i2];
+        [is, i2].sort();
     }
     catch (e) {
         data = e;

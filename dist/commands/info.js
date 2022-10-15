@@ -29,6 +29,7 @@ exports.default = (0, builder_1.Command)("info [...noun?]", { args: (self) => ({
         pageLimit: pages.length,
         async onPage(page) {
             const embed = embed_1.Embeds.user(context);
+            embed.setFooter(`Page ${page}/${pages.length}`);
             const data = pages[page - 1];
             if (isSnowflake(data)) {
                 return await snowflake(context, data, embed);
@@ -74,7 +75,7 @@ function identify(context, noun) {
     if (uemoji.length) {
         out.push(...uemoji.map((x) => new emoji_1.UnicodeEmoji(x.emoji)));
     }
-    const user = context.client.users.find((x) => x.tag.toLowerCase() === noun.toLowerCase() ||
+    const user = context.client.users.find((x) => x.tag.toLowerCase().includes(noun.toLowerCase()) ||
         x.id === noun.replace(/\D/g, "") ||
         x.jumpLink === noun);
     a: if (user) {
@@ -87,19 +88,19 @@ function identify(context, noun) {
         out.push(user);
     }
     const channels = context.client.channels.filter((x) => x.id === noun.replace(/\D/g, "") ||
-        x.name.toLowerCase() === noun.toLowerCase() ||
+        x.name.toLowerCase().includes(noun.toLowerCase()) ||
         x.jumpLink === noun);
     if (channels.length) {
         out.push(...channels);
     }
     const roles = context.client.roles.filter((x) => x.id === noun.replace(/\D/g, "") ||
         (x.id === context.guildId && noun === "@everyone") ||
-        x.name.toLowerCase() === noun.toLowerCase());
+        x.name.toLowerCase().includes(noun.toLowerCase()));
     if (roles.length) {
         out.push(...roles);
     }
     const guilds = context.client.guilds.filter((x) => x.id === noun.replace(/\D/g, "") ||
-        x.name.toLowerCase() === noun.toLowerCase() ||
+        x.name.toLowerCase().includes(noun.toLowerCase()) ||
         x.jumpLink === noun);
     if (guilds.length) {
         out.push(...guilds);

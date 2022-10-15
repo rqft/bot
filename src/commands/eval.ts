@@ -20,8 +20,7 @@ export default Command(
     try {
       const [is, i2] = [ImageScript, ImageScript2];
       data = await Promise.resolve(eval(ts(args.code)));
-      // eslint-disable-next-line no-unused-expressions
-      [is, i2];
+      [is, i2].sort();
     } catch (e) {
       data = e;
     }
