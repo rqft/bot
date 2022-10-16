@@ -18,6 +18,7 @@ import {
   User,
 } from "detritus-client/lib/structures";
 import { UnicodeEmoji } from "../tools/emoji";
+import { MediaTypes } from "../tools/image-search";
 import { CommandMetadata, CommandOptionsExtra } from "./base-command";
 
 export type SyntaxParser<
@@ -58,10 +59,10 @@ export interface Self {
     options?: OptionalOptions
   ): Arg<string | undefined, Role | undefined>;
 
-  user(): Arg<string, User>;
+  user(): Arg<string, Promise<User>>;
   userOptional(
     options?: OptionalOptions
-  ): Arg<string | undefined, User | undefined>;
+  ): Arg<string | undefined, Promise<User | undefined>>;
 
   member(): Arg<string, Member>;
   memberOptional(
@@ -109,6 +110,48 @@ export interface Self {
   arrayOptional<T = string>(
     options?: ArrayOptions<T> & OptionalOptions
   ): Arg<string | undefined, Array<T> | undefined>;
+
+  imageUrl(): Arg<string, Promise<string>>;
+  imageUrlOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<string | undefined>>;
+
+  image(): Arg<string, Promise<Buffer>>;
+  imageOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<Buffer | undefined>>;
+
+  audioUrl(): Arg<string, Promise<string>>;
+  audioUrlOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<string | undefined>>;
+
+  audio(): Arg<string, Promise<Buffer>>;
+  audioOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<Buffer | undefined>>;
+
+  videoUrl(): Arg<string, Promise<string>>;
+  videoUrlOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<string | undefined>>;
+
+  video(): Arg<string, Promise<Buffer>>;
+  videoOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<Buffer | undefined>>;
+
+  mediaUrl(types?: Array<MediaTypes>): Arg<string, Promise<string>>;
+  mediaUrlOptional(
+    types?: Array<MediaTypes>,
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<string | undefined>>;
+
+  media(types?: Array<MediaTypes>): Arg<string, Promise<Buffer>>;
+  mediaOptional(
+    types?: Array<MediaTypes>,
+    options?: OptionalOptions
+  ): Arg<string | undefined, Promise<Buffer | undefined>>;
 }
 
 export type Arg<U, T> = (value: U, context: Context) => T;
@@ -192,13 +235,15 @@ export type ArgsFactory<
   [P in keyof Z]: Arg<string, Z[P]>;
 };
 
+export type Depromise<T> = T extends Promise<infer U> ? U : T;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Values<T extends ArgsFactory<U, any>, U extends string> = {
   [P in keyof ReturnType<T>]: ReturnType<T>[P] extends (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...args: any[]
   ) => infer R
-    ? R
+    ? Depromise<R>
     : never;
 };
 
@@ -207,4 +252,5 @@ export interface Options<U extends string, V extends ArgsFactory<U, any>>
   extends Omit<CommandOptionsExtra, keyof ArgumentOptions | "args"> {
   args?: V;
   metadata?: CommandMetadata;
+  aliases?: Iterable<string>;
 }

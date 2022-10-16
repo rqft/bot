@@ -1,7 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Command = exports.DefaultArgs = exports.CommandArgumentBuilders = void 0;
+const node_fetch_1 = __importDefault(require("node-fetch"));
 const emoji_1 = require("../tools/emoji");
+const image_search_1 = require("../tools/image-search");
 const base_command_1 = require("./base-command");
 const parser_1 = require("./parser");
 exports.CommandArgumentBuilders = {
@@ -207,24 +212,31 @@ exports.CommandArgumentBuilders = {
         };
     },
     user() {
-        return (value, context) => {
+        return async (value, context) => {
             if (value === undefined || value === "") {
                 throw new RangeError("must provide a value");
             }
-            const found = context.client.users.find((user) => user.tag === value || user.id === value.replace(/\D/g, ""));
+            const found = context.client.users.find((user) => user.tag.toLowerCase().includes(value.toLowerCase()) ||
+                user.id === value.replace(/\D/g, ""));
             if (found === undefined) {
+                try {
+                    return await context.client.rest.fetchUser(value);
+                }
+                catch {
+                    void 0;
+                }
                 throw new RangeError("user not found");
             }
             return found;
         };
     },
     userOptional(options) {
-        return (value, context) => {
+        return async (value, context) => {
             if (value === undefined) {
                 value = options?.default;
             }
             if (value) {
-                return this.user()(value, context);
+                return await this.user()(value, context);
             }
             return undefined;
         };
@@ -352,6 +364,82 @@ exports.CommandArgumentBuilders = {
             return undefined;
         };
     },
+    mediaUrl(types) {
+        return async (value, context) => {
+            console.log("using murl", value);
+            const urls = await (0, image_search_1.findMediaUrls)(types || image_search_1.AllMediaTypes, context, value);
+            console.log(urls);
+            if (urls.length === 0) {
+                throw new Error("no media urls found");
+            }
+            return urls.at(0);
+        };
+    },
+    mediaUrlOptional(types, options) {
+        return async (value, context) => {
+            if (value === undefined) {
+                value = options?.default;
+            }
+            if (value) {
+                return this.mediaUrl(types)(value, context);
+            }
+            return undefined;
+        };
+    },
+    media(types) {
+        return async (value, context) => {
+            const url = await this.mediaUrl(types)(value, context);
+            const response = await (0, node_fetch_1.default)(url);
+            return await response.buffer();
+        };
+    },
+    mediaOptional(types, options) {
+        return async (value, context) => {
+            if (value === undefined) {
+                value = options?.default;
+            }
+            if (value) {
+                return this.media(types)(value, context);
+            }
+            return undefined;
+        };
+    },
+    audio() {
+        return this.media(["Audio"]);
+    },
+    audioOptional(options) {
+        return this.mediaOptional(["Audio"], options);
+    },
+    audioUrl() {
+        return this.mediaUrl(["Audio"]);
+    },
+    audioUrlOptional(options) {
+        return this.mediaUrlOptional(["Audio"], options);
+    },
+    image() {
+        return this.media(["Image"]);
+    },
+    imageOptional(options) {
+        return this.mediaOptional(["Image"], options);
+    },
+    imageUrl() {
+        return this.mediaUrl(["Image"]);
+    },
+    imageUrlOptional(options) {
+        return this.mediaUrlOptional(["Image"], options);
+    },
+    video() {
+        return this.media(["Video"]);
+    },
+    videoOptional(options) {
+        return this.mediaOptional(["Video"], options);
+    },
+    videoUrl() {
+        return this.mediaUrl(["Video"]);
+    },
+    videoUrlOptional(options) {
+        return this.mediaUrlOptional(["Video"], options);
+    },
 };
 exports.DefaultArgs = new Proxy({}, {
     get() {
@@ -361,7 +449,6 @@ exports.DefaultArgs = new Proxy({}, {
 function Command(syntax, options, run) {
     const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax);
     const ids = syntax.match(/\[.+?\]/g) || [];
-    console.log(ids);
     const opt = [];
     const flg = [];
     const builder = (options.args || (() => exports.DefaultArgs))(exports.CommandArgumentBuilders);
@@ -394,6 +481,7 @@ function Command(syntax, options, run) {
                 ...options,
                 type: opt,
                 args: flg,
+                aliases: options.aliases ? Array.from(options.aliases) : undefined,
             }, syntax);
         }
         run(context, args) {

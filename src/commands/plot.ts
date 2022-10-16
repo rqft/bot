@@ -5,12 +5,16 @@ import { Warning } from "../tools/warning";
 import { Command } from "../wrap/builder";
 
 export default Command(
-  "plot [expressions] [-s?=3] [-scale?=50] [-size?=1024]",
+  "plot [expressions] [-s?=3] [-scale?=50] [-dm?] [-dx?] [-rm?] [-rx?] [-size?=1024]",
   {
     args: (self) => ({
       expressions: self.string(),
       s: self.integerOptional(),
       scale: self.integerOptional(),
+      dm: self.stringOptional(),
+      dx: self.stringOptional(),
+      rm: self.stringOptional(),
+      rx: self.stringOptional(),
       size: self.integerOptional(),
     }),
   },
@@ -19,6 +23,10 @@ export default Command(
       splot: args.s,
       scale: args.scale,
       size: args.size,
+      dm: args.dm,
+      dx: args.dx,
+      rm: args.rm,
+      rx: args.rx,
     });
 
     const txt = new TextDecoder().decode(payload);
@@ -38,7 +46,37 @@ export default Command(
 
     embed.setImage("attachment://plot.png");
 
-    embed.setDescription(fmt("Scale: {scale}", args));
+    let text = fmt("Scale: {scale}x", { scale: args.scale });
+
+    if (args.dm || args.dx) {
+      text += "\nDomain: ";
+
+      if (args.dm) {
+        text += `${args.dm} < `;
+      }
+
+      text += "x";
+
+      if (args.dx) {
+        text += ` < ${args.dx}`;
+      }
+    }
+
+    if (args.rm || args.rx) {
+      text += "\nRange: ";
+
+      if (args.rm) {
+        text += `${args.rm} < `;
+      }
+
+      text += "y";
+
+      if (args.rx) {
+        text += ` < ${args.rx}`;
+      }
+    }
+
+    embed.setDescription(text);
 
     embed.setFooter(
       fmt("{size}x{size}, Graph of f(x) = {expressions}", {

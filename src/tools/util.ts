@@ -13,6 +13,8 @@ export function fmt<T extends string>(
     f = f.split(`{${key}}`).join(String(value));
   }
 
+  f = f.split("\\bl").join("{").split("\\br").join("}");
+
   return f;
 }
 export type Placeholders<
@@ -124,4 +126,8 @@ export function formatBytes(
   return (
     parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + " " + sizes[i]
   );
+}
+
+export function fileExtension(url: string) {
+  return url.split(/[#?]/)[0]!.split(".").pop()!.trim();
 }

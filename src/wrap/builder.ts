@@ -1,5 +1,7 @@
 import { Command as Cmd, CommandClient } from "detritus-client/lib";
+import fetch from "node-fetch";
 import { UnicodeEmoji } from "../tools/emoji";
+import { AllMediaTypes, findMediaUrls } from "../tools/image-search";
 import { BaseCommand } from "./base-command";
 
 import {
@@ -279,16 +281,23 @@ export const CommandArgumentBuilders: Self = {
   },
 
   user() {
-    return (value, context) => {
+    return async (value, context) => {
       if (value === undefined || value === "") {
         throw new RangeError("must provide a value");
       }
 
       const found = context.client.users.find(
-        (user) => user.tag === value || user.id === value.replace(/\D/g, "")
+        (user) =>
+          user.tag.toLowerCase().includes(value.toLowerCase()) ||
+          user.id === value.replace(/\D/g, "")
       );
 
       if (found === undefined) {
+        try {
+          return await context.client.rest.fetchUser(value);
+        } catch {
+          void 0;
+        }
         throw new RangeError("user not found");
       }
 
@@ -297,13 +306,13 @@ export const CommandArgumentBuilders: Self = {
   },
 
   userOptional(options) {
-    return (value, context) => {
+    return async (value, context) => {
       if (value === undefined) {
         value = options?.default;
       }
 
       if (value) {
-        return this.user()(value, context);
+        return await this.user()(value, context);
       }
 
       return undefined;
@@ -475,6 +484,107 @@ export const CommandArgumentBuilders: Self = {
       return undefined;
     };
   },
+
+  mediaUrl(types) {
+    return async (value, context) => {
+      console.log("using murl", value);
+      const urls = await findMediaUrls(types || AllMediaTypes, context, value);
+
+      console.log(urls);
+
+      if (urls.length === 0) {
+        throw new Error("no media urls found");
+      }
+
+      return urls.at(0)!;
+    };
+  },
+
+  mediaUrlOptional(types?, options?) {
+    return async (value, context) => {
+      if (value === undefined) {
+        value = options?.default;
+      }
+
+      if (value) {
+        return this.mediaUrl(types)(value, context);
+      }
+
+      return undefined;
+    };
+  },
+
+  media(types) {
+    return async (value, context) => {
+      const url = await this.mediaUrl(types)(value, context);
+
+      const response = await fetch(url);
+
+      return await response.buffer();
+    };
+  },
+
+  mediaOptional(types, options) {
+    return async (value, context) => {
+      if (value === undefined) {
+        value = options?.default;
+      }
+
+      if (value) {
+        return this.media(types)(value, context);
+      }
+
+      return undefined;
+    };
+  },
+
+  audio() {
+    return this.media(["Audio"]);
+  },
+
+  audioOptional(options) {
+    return this.mediaOptional(["Audio"], options);
+  },
+
+  audioUrl() {
+    return this.mediaUrl(["Audio"]);
+  },
+
+  audioUrlOptional(options) {
+    return this.mediaUrlOptional(["Audio"], options);
+  },
+
+  image() {
+    return this.media(["Image"]);
+  },
+
+  imageOptional(options) {
+    return this.mediaOptional(["Image"], options);
+  },
+
+  imageUrl() {
+    return this.mediaUrl(["Image"]);
+  },
+
+  imageUrlOptional(options) {
+    return this.mediaUrlOptional(["Image"], options);
+  },
+
+  video() {
+    return this.media(["Video"]);
+  },
+
+  videoOptional(options) {
+    return this.mediaOptional(["Video"], options);
+  },
+
+  videoUrl() {
+    return this.mediaUrl(["Video"]);
+  },
+
+  videoUrlOptional(options) {
+    return this.mediaUrlOptional(["Video"], options);
+  },
 };
 
 export const DefaultArgs = new Proxy(
@@ -498,7 +608,6 @@ export function Command<
 ) {
   const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax)!;
   const ids = syntax.match(/\[.+?\]/g) || [];
-  console.log(ids);
   const opt: Array<Cmd.ArgumentOptions> = [];
   const flg: Array<Cmd.ArgumentOptions> = [];
 
@@ -547,6 +656,7 @@ export function Command<
           ...options,
           type: opt,
           args: flg,
+          aliases: options.aliases ? Array.from(options.aliases) : undefined,
         },
         syntax
       );

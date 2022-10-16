@@ -44,14 +44,15 @@ import { Paginator } from "../tools/paginator";
 import { fmt, formatBytes, permissionsText } from "../tools/util";
 import { Warning } from "../tools/warning";
 import { Command } from "../wrap/builder";
+import { Depromise } from "../wrap/parser";
 
 export default Command(
   "info [...noun?]",
   { args: (self) => ({ noun: self.stringOptional() }) },
   async (context, args) => {
     const { noun } = args;
-    const pages: ReturnType<typeof identify> = noun
-      ? identify(context, noun)
+    const pages: Depromise<ReturnType<typeof identify>> = noun
+      ? await identify(context, noun)
       : [
           context.member || context.user,
           context.guild!,
@@ -111,10 +112,21 @@ export default Command(
   }
 );
 
-export function identify(
+export async function identify(
   context: Context,
   noun: string
-): Array<User | Member | Guild | Role | Channel | Emoji | SnowFlake | Message> {
+): Promise<
+  Array<
+    | Guild
+    | Channel
+    | Message
+    | Member
+    | User
+    | Role
+    | Emoji
+    | Snowflake.Snowflake
+  >
+> {
   const out: Array<
     User | Member | Guild | Role | Channel | Emoji | SnowFlake | Message
   > = [];
@@ -152,6 +164,12 @@ export function identify(
       if (context.guild.members.has(user.id)) {
         out.push(context.guild.members.get(user.id)!);
         break a;
+      }
+    } else {
+      try {
+        out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, "")));
+      } catch {
+        void 0;
       }
     }
 

@@ -15,7 +15,7 @@ const builder_1 = require("../wrap/builder");
 exports.default = (0, builder_1.Command)("info [...noun?]", { args: (self) => ({ noun: self.stringOptional() }) }, async (context, args) => {
     const { noun } = args;
     const pages = noun
-        ? identify(context, noun)
+        ? await identify(context, noun)
         : [
             context.member || context.user,
             context.guild,
@@ -61,7 +61,7 @@ exports.default = (0, builder_1.Command)("info [...noun?]", { args: (self) => ({
     });
     return await paginator.start();
 });
-function identify(context, noun) {
+async function identify(context, noun) {
     const out = [];
     if (/^<a?:(\w{2,32}):(\d{16,20})>$/.test(noun)) {
         out.push(new emoji_1.CustomEmoji(noun));
@@ -83,6 +83,14 @@ function identify(context, noun) {
             if (context.guild.members.has(user.id)) {
                 out.push(context.guild.members.get(user.id));
                 break a;
+            }
+        }
+        else {
+            try {
+                out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, "")));
+            }
+            catch {
+                void 0;
             }
         }
         out.push(user);

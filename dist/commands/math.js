@@ -14,5 +14,5 @@ exports.default = (0, builder_1.Command)("math [...expressions]", {
     if (payload.status.state === fetch_1.APIs.Jonathan.ResultState.ERROR) {
         throw new warning_1.Warning(payload.status.message);
     }
-    return await (0, util_1.respond)(context, payload.data);
+    return await (0, util_1.respond)(context, String(payload.data));
 });

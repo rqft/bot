@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+exports.fileExtension = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
 const constants_1 = require("detritus-client/lib/constants");
 const constants_2 = require("../constants");
 function fmt(value, contents) {
@@ -8,6 +8,7 @@ function fmt(value, contents) {
     for (const [key, value] of Object.entries(contents)) {
         f = f.split(`{${key}}`).join(String(value));
     }
+    f = f.split("\\bl").join("{").split("\\br").join("}");
     return f;
 }
 exports.fmt = fmt;
@@ -86,3 +87,7 @@ function formatBytes(bytes, decimals = 2, noBiBytes = true) {
     return (parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + " " + sizes[i]);
 }
 exports.formatBytes = formatBytes;
+function fileExtension(url) {
+    return url.split(/[#?]/)[0].split(".").pop().trim();
+}
+exports.fileExtension = fileExtension;

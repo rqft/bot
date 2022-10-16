@@ -42,17 +42,15 @@ export class BaseCommand<T> extends Command.Command<T> {
 
   onTypeError(context: Command.Context, _: T, errors: Record<string, Error>) {
     let text = [];
-    const keys = Object.keys(errors);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i]!;
+    for (const key in errors) {
       const value = errors[key]!;
       const { message } = value;
 
-      let head = i + " | " + this.syntax;
+      let head = this.syntax;
       head +=
         "\n" +
-        " ".repeat(this.syntax.indexOf(key) + 3) +
-        "\\" +
+        " ".repeat(this.syntax.indexOf("[" + key + "]") + 1) +
+        "^" +
         "-".repeat(key.length - 1) +
         " " +
         message;

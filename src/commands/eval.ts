@@ -2,6 +2,7 @@ import ImageScript, { Frame, GIF, Image } from "imagescript";
 import ImageScript2, { Animation, Image as Image2 } from "imagescript/v2";
 import { transpile as ts } from "typescript";
 import { inspect } from "util";
+import { Ansi } from "../tools/formatter";
 import { respond } from "../tools/util";
 import { Command } from "../wrap/builder";
 export default Command(
@@ -18,9 +19,9 @@ export default Command(
 
     let data;
     try {
-      const [is, i2] = [ImageScript, ImageScript2];
+      const [is, i2, ansi] = [ImageScript, ImageScript2, Ansi.Fmt];
       data = await Promise.resolve(eval(ts(args.code)));
-      [is, i2].sort();
+      [is, i2, ansi].sort();
     } catch (e) {
       data = e;
     }

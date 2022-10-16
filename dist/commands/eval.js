@@ -27,6 +27,7 @@ const imagescript_1 = __importStar(require("imagescript"));
 const v2_1 = __importStar(require("imagescript/v2"));
 const typescript_1 = require("typescript");
 const util_1 = require("util");
+const formatter_1 = require("../tools/formatter");
 const util_2 = require("../tools/util");
 const builder_1 = require("../wrap/builder");
 exports.default = (0, builder_1.Command)("eval [...code]", { args: (self) => ({ code: self.string() }) }, async (context, args) => {
@@ -37,9 +38,9 @@ exports.default = (0, builder_1.Command)("eval [...code]", { args: (self) => ({ 
     }
     let data;
     try {
-        const [is, i2] = [imagescript_1.default, v2_1.default];
+        const [is, i2, ansi] = [imagescript_1.default, v2_1.default, formatter_1.Ansi.Fmt];
         data = await Promise.resolve(eval((0, typescript_1.transpile)(args.code)));
-        [is, i2].sort();
+        [is, i2, ansi].sort();
     }
     catch (e) {
         data = e;

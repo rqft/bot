@@ -19,6 +19,6 @@ export default Command(
       throw new Warning(payload.status.message);
     }
 
-    return await respond(context, payload.data);
+    return await respond(context, String(payload.data));
   }
 );

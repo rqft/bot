@@ -27,16 +27,14 @@ class BaseCommand extends lib_1.Command.Command {
     }
     onTypeError(context, _, errors) {
         let text = [];
-        const keys = Object.keys(errors);
-        for (let i = 0; i < keys.length; i++) {
-            const key = keys[i];
+        for (const key in errors) {
             const value = errors[key];
             const { message } = value;
-            let head = i + " | " + this.syntax;
+            let head = this.syntax;
             head +=
                 "\n" +
-                    " ".repeat(this.syntax.indexOf(key) + 3) +
-                    "\\" +
+                    " ".repeat(this.syntax.indexOf("[" + key + "]") + 1) +
+                    "^" +
                     "-".repeat(key.length - 1) +
                     " " +
                     message;
