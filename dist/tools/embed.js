@@ -8,7 +8,7 @@ const util_1 = require("./util");
 var Embeds;
 (function (Embeds) {
     function user(context, embed = new utils_1.Embed()) {
-        embed.setColor(constants_1.Colours.EMBED);
+        embed.setColor(constants_1.Colours.Embed);
         embed.setAuthor(context.user.tag, context.user.avatarUrl);
         return embed;
     }
@@ -24,7 +24,7 @@ var Embeds;
         }
         const embed = user(context);
         embed.setImage(`attachment://${filename}`);
-        embed.setFooter(footer.join(", "));
+        embed.setFooter(footer.join(', '));
         out.embeds = [embed];
         out.files = [{ filename, value }];
         return out;

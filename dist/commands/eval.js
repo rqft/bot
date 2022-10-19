@@ -30,10 +30,10 @@ const util_1 = require("util");
 const formatter_1 = require("../tools/formatter");
 const util_2 = require("../tools/util");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)("eval [...code]", { args: (self) => ({ code: self.string() }) }, async (context, args) => {
+exports.default = (0, builder_1.Command)('eval [...code]', { args: (self) => ({ code: self.string() }) }, async (context, args) => {
     if (!context.user.isClientOwner &&
-        context.userId !== "312715611413413889") {
-        console.log("!!!");
+        context.userId !== '312715611413413889') {
+        console.log('!!!');
         return;
     }
     let data;
@@ -49,7 +49,7 @@ exports.default = (0, builder_1.Command)("eval [...code]", { args: (self) => ({ 
         return await (0, util_2.respond)(context, {
             files: [
                 {
-                    filename: "out." + (data instanceof imagescript_1.GIF ? "gif" : "png"),
+                    filename: 'out.' + (data instanceof imagescript_1.GIF ? 'gif' : 'png'),
                     value: Buffer.from(await data.encode()),
                 },
             ],
@@ -60,19 +60,19 @@ exports.default = (0, builder_1.Command)("eval [...code]", { args: (self) => ({ 
             return await (0, util_2.respond)(context, {
                 files: [
                     {
-                        filename: "out.gif",
-                        value: Buffer.from(await data.encode("gif")),
+                        filename: 'out.gif',
+                        value: Buffer.from(await data.encode('gif')),
                     },
                 ],
             });
         }
         return await (0, util_2.respond)(context, {
             files: [
-                { filename: "out.png", value: Buffer.from(await data.encode("png")) },
+                { filename: 'out.png', value: Buffer.from(await data.encode('png')) },
             ],
         });
     }
-    return await util_2.respond.fmt(context, "```js\n{data}\n```", {
+    return await util_2.respond.fmt(context, '```js\n{data}\n```', {
         data: (0, util_1.inspect)(data, { depth: 3, showProxy: true }),
     });
 });

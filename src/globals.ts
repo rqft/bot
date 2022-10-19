@@ -1,5 +1,5 @@
-import { CommandClient, ShardClient } from "detritus-client/lib";
-import { Secrets } from "./secrets";
+import { CommandClient, ShardClient } from 'detritus-client/lib';
+import { Secrets } from './secrets';
 
 export const client = new ShardClient(Secrets.Token, {
   gateway: {
@@ -7,6 +7,6 @@ export const client = new ShardClient(Secrets.Token, {
   },
 });
 export const commands = new CommandClient(client, {
-  prefix: ",",
+  prefix: ',',
   activateOnEdits: true,
 });

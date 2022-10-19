@@ -1,16 +1,16 @@
-import { Structures } from "detritus-client";
-import { RequestTypes } from "detritus-client-rest";
-import { Context } from "detritus-client/lib/command";
+import { Structures } from 'detritus-client';
+import { RequestTypes } from 'detritus-client-rest';
+import { Context } from 'detritus-client/lib/command';
 import {
   InteractionCallbackTypes,
   MessageComponentButtonStyles,
   MessageFlags,
-} from "detritus-client/lib/constants";
-import { InteractionContext } from "detritus-client/lib/interaction";
-import { Member, Message, User } from "detritus-client/lib/structures";
-import { ComponentContext, Components, Embed } from "detritus-client/lib/utils";
-import { Timeout } from "detritus-utils/lib/timers";
-import { respond } from "./util";
+} from 'detritus-client/lib/constants';
+import { InteractionContext } from 'detritus-client/lib/interaction';
+import { Member, Message, User } from 'detritus-client/lib/structures';
+import { ComponentContext, Components, Embed } from 'detritus-client/lib/utils';
+import { Timeout } from 'detritus-utils/lib/timers';
+import { respond } from './util';
 
 export type PaginatorContext = Context | InteractionContext | Message;
 
@@ -18,13 +18,13 @@ export const MAX_PAGE = Number.MAX_SAFE_INTEGER;
 export const MIN_PAGE = 1;
 
 export enum PageButtonNames {
-  CUSTOM = "custom",
-  NEXT = "next",
-  NEXT_LARGE = "next-large",
-  PREVIOUS = "previous",
-  PREVIOUS_LARGE = "previous-large",
-  SHUFFLE = "shuffle",
-  STOP = "stop",
+  Custom = 'custom',
+  Next = 'next',
+  NextLarge = 'next-large',
+  Previous = 'previous',
+  PreviousLarge = 'previous-large',
+  Shuffle = 'shuffle',
+  Stop = 'stop',
 }
 
 export interface PageButtonEmoji {
@@ -40,13 +40,13 @@ function label(data: string): PageButton {
   return { label: data };
 }
 export const PageButtons: Record<PageButtonNames, PageButton> = {
-  [PageButtonNames.CUSTOM]: label("?"),
-  [PageButtonNames.NEXT]: label(">"),
-  [PageButtonNames.NEXT_LARGE]: label(">>"),
-  [PageButtonNames.PREVIOUS]: label("<"),
-  [PageButtonNames.PREVIOUS_LARGE]: label("<<"),
-  [PageButtonNames.SHUFFLE]: label("*"),
-  [PageButtonNames.STOP]: label("X"),
+  [PageButtonNames.Custom]: label('?'),
+  [PageButtonNames.Next]: label('>'),
+  [PageButtonNames.NextLarge]: label('>>'),
+  [PageButtonNames.Previous]: label('<'),
+  [PageButtonNames.PreviousLarge]: label('<<'),
+  [PageButtonNames.Shuffle]: label('*'),
+  [PageButtonNames.Stop]: label('X'),
 };
 
 export type Page = Embed;
@@ -92,12 +92,12 @@ export class Paginator {
     timeout: Timeout;
     userId?: null | string;
   } = {
-    expire: 10000,
-    isActive: false,
-    timeout: new Timeout(),
-  };
-  _isEphemeral?: boolean;
-  _message: null | Structures.Message = null;
+      expire: 10000,
+      isActive: false,
+      timeout: new Timeout(),
+    };
+  pisEphemeral?: boolean;
+  pmessage: null | Structures.Message = null;
 
   buttons: Record<PageButtonNames, PageButton> = Object.assign({}, PageButtons);
   expires: number = 1 * (60 * 1000);
@@ -120,7 +120,7 @@ export class Paginator {
     options: PaginatorOptions
   ) {
     this.context = context;
-    this._message = options.message || null;
+    this.pmessage = options.message || null;
 
     if (options.isEphemeral !== undefined) {
       this.isEphemeral = options.isEphemeral;
@@ -148,7 +148,7 @@ export class Paginator {
 
     if (Array.isArray(options.targets)) {
       for (const target of options.targets) {
-        if (typeof target === "string") {
+        if (typeof target === 'string') {
           this.targets.push(target);
         } else {
           this.targets.push(target.id);
@@ -163,7 +163,7 @@ export class Paginator {
     }
 
     if (!this.targets.length) {
-      throw new Error("A userId must be specified in the targets array");
+      throw new Error('A userId must be specified in the targets array');
     }
 
     const buttons: PartialButtons = Object.assign(
@@ -214,14 +214,14 @@ export class Paginator {
     */
 
     components.createButton({
-      customId: PageButtonNames.PREVIOUS,
+      customId: PageButtonNames.Previous,
       disabled: this.page === MIN_PAGE,
-      ...this.buttons[PageButtonNames.PREVIOUS],
+      ...this.buttons[PageButtonNames.Previous],
     });
     components.createButton({
-      customId: PageButtonNames.NEXT,
+      customId: PageButtonNames.Next,
       disabled: this.page === this.pageLimit,
-      ...this.buttons[PageButtonNames.NEXT],
+      ...this.buttons[PageButtonNames.Next],
     });
 
     /*
@@ -246,15 +246,15 @@ export class Paginator {
     //   ...this.buttons[PageButtonNames.CUSTOM],
     // });
     components.createButton({
-      customId: PageButtonNames.STOP,
+      customId: PageButtonNames.Stop,
       style: MessageComponentButtonStyles.DANGER,
-      ...this.buttons[PageButtonNames.STOP],
+      ...this.buttons[PageButtonNames.Stop],
     });
     return components;
   }
 
   get channelId(): string {
-    return this.context.channelId!;
+    return this.context.channelId || '';
   }
 
   get id(): string {
@@ -265,21 +265,21 @@ export class Paginator {
     } else if (this.context instanceof Structures.Message) {
       return this.context.id;
     }
-    return "";
+    return '';
   }
 
   get isEphemeral(): boolean {
-    if (this._isEphemeral !== undefined) {
-      return this._isEphemeral;
+    if (this.pisEphemeral !== undefined) {
+      return this.pisEphemeral;
     }
     if (this.message) {
-      return (this._isEphemeral = this.message.hasFlag(MessageFlags.EPHEMERAL));
+      return (this.pisEphemeral = this.message.hasFlag(MessageFlags.EPHEMERAL));
     }
     return false;
   }
 
   set isEphemeral(isEphemeral: boolean) {
-    this._isEphemeral = isEphemeral;
+    this.pisEphemeral = isEphemeral;
   }
 
   get isLarge(): boolean {
@@ -287,21 +287,21 @@ export class Paginator {
   }
 
   get message(): null | Structures.Message {
-    if (this._message) {
-      return this._message;
+    if (this.pmessage) {
+      return this.pmessage;
     }
     if (this.context instanceof InteractionContext) {
-      return (this._message = this.context.response);
+      return (this.pmessage = this.context.response);
     }
     return null;
   }
 
   set message(value: null | Structures.Message) {
-    this._message = value;
+    this.pmessage = value;
   }
 
   get messageId(): string {
-    return this.message ? this.message.id : "";
+    return this.message ? this.message.id : '';
   }
 
   get shouldHaveComponents(): boolean {
@@ -323,9 +323,9 @@ export class Paginator {
   }
 
   addPage(page: Page): Paginator {
-    if (typeof this.onPage === "function") {
+    if (typeof this.onPage === 'function') {
       throw new Error(
-        "Cannot add a page when onPage is attached to the paginator"
+        'Cannot add a page when onPage is attached to the paginator'
       );
     }
     if (!Array.isArray(this.pages)) {
@@ -376,7 +376,7 @@ export class Paginator {
     pageNumber: number
   ): Promise<[Embed, Array<RequestTypes.File> | undefined]> {
     let page: Page | undefined;
-    if (typeof this.onPage === "function") {
+    if (typeof this.onPage === 'function') {
       page = await Promise.resolve(this.onPage(this.page));
     } else {
       if (Array.isArray(this.pages)) {
@@ -398,7 +398,7 @@ export class Paginator {
     } else if (page instanceof Embed) {
       embed = page;
     } else {
-      throw new Error("Invalid Page Given");
+      throw new Error('Invalid Page Given');
     }
     return [embed, files];
   }
@@ -476,81 +476,81 @@ export class Paginator {
 
     try {
       switch (context.customId) {
-        case PageButtonNames.CUSTOM:
-          {
-            if (this.custom.isActive) {
-              await this.clearCustomMessage(context);
-            } else {
-              await this.clearCustomMessage();
+      case PageButtonNames.Custom:
+        {
+          if (this.custom.isActive) {
+            await this.clearCustomMessage(context);
+          } else {
+            await this.clearCustomMessage();
 
-              this.custom.isActive = true;
-              await this.updateButtons(context);
-              this.custom.message = await context.createMessage({
-                content: "ok what page u want",
-                flags: this.isEphemeral ? MessageFlags.EPHEMERAL : undefined,
-              });
-              this.custom.timeout.start(this.custom.expire, async () => {
-                await this.clearCustomMessage();
-              });
-            }
+            this.custom.isActive = true;
+            await this.updateButtons(context);
+            this.custom.message = await context.createMessage({
+              content: 'ok what page u want',
+              flags: this.isEphemeral ? MessageFlags.EPHEMERAL : undefined,
+            });
+            this.custom.timeout.start(this.custom.expire, async () => {
+              await this.clearCustomMessage();
+            });
           }
-          break;
-        case PageButtonNames.NEXT:
-          {
-            await this.setPage(this.page + 1, context);
+        }
+        break;
+      case PageButtonNames.Next:
+        {
+          await this.setPage(this.page + 1, context);
+        }
+        break;
+      case PageButtonNames.NextLarge:
+        {
+          if (!this.isLarge) {
+            return;
           }
-          break;
-        case PageButtonNames.NEXT_LARGE:
-          {
-            if (!this.isLarge) {
-              return;
-            }
-            await this.setPage(this.page + this.pageSkipAmount, context);
+          await this.setPage(this.page + this.pageSkipAmount, context);
+        }
+        break;
+      case PageButtonNames.Previous:
+        {
+          await this.setPage(this.page - 1, context);
+        }
+        break;
+      case PageButtonNames.PreviousLarge:
+        {
+          if (!this.isLarge) {
+            return;
           }
-          break;
-        case PageButtonNames.PREVIOUS:
-          {
-            await this.setPage(this.page - 1, context);
-          }
-          break;
-        case PageButtonNames.PREVIOUS_LARGE:
-          {
-            if (!this.isLarge) {
-              return;
-            }
-            await this.setPage(this.page - this.pageSkipAmount, context);
-          }
-          break;
-        case PageButtonNames.SHUFFLE:
-          {
-            await this.setPage(this.randomPage, context);
-          }
-          break;
-        case PageButtonNames.STOP:
-          {
-            await this.onStop(null, true, context, true);
-            if (this.context instanceof Context) {
-              const message = this.context.message;
-              if (!message.deleted && message.canDelete) {
-                try {
-                  await message.delete();
-                } catch (error) {
-                  void 0;
-                }
+          await this.setPage(this.page - this.pageSkipAmount, context);
+        }
+        break;
+      case PageButtonNames.Shuffle:
+        {
+          await this.setPage(this.randomPage, context);
+        }
+        break;
+      case PageButtonNames.Stop:
+        {
+          await this.onStop(null, true, context, true);
+          if (this.context instanceof Context) {
+            const message = this.context.message;
+            if (!message.deleted && message.canDelete) {
+              try {
+                await message.delete();
+              } catch (error) {
+                void 0;
               }
             }
           }
-          break;
-        default: {
-          return;
         }
+        break;
+      default: {
+        return;
+      }
       }
 
       this.ratelimitTimeout.start(this.ratelimit, () => {
         void 0;
       });
     } catch (error) {
-      if (typeof this.onError === "function") {
+      if (typeof this.onError === 'function') {
         await Promise.resolve(this.onError(error as Error, this));
       }
     }
@@ -585,15 +585,15 @@ export class Paginator {
       this.stopped = true;
       try {
         if (error) {
-          if (typeof this.onError === "function") {
+          if (typeof this.onError === 'function') {
             await Promise.resolve(this.onError(error, this));
           }
         }
-        if (typeof this.onExpire === "function") {
+        if (typeof this.onExpire === 'function') {
           await Promise.resolve(this.onExpire(this));
         }
       } catch (error) {
-        if (typeof this.onError === "function") {
+        if (typeof this.onError === 'function') {
           await Promise.resolve(this.onError(error as Error, this));
         }
       }
@@ -648,11 +648,11 @@ export class Paginator {
 
   async start(): Promise<Structures.Message | null> {
     if (
-      typeof this.onPage !== "function" &&
+      typeof this.onPage !== 'function' &&
       !(this.pages && this.pages.length)
     ) {
       throw new Error(
-        "Paginator needs an onPage function or at least one page added to it"
+        'Paginator needs an onPage function or at least one page added to it'
       );
     }
 
@@ -683,18 +683,18 @@ export class Paginator {
       }
     } else {
       if (!this.context.canReply) {
-        throw new Error("Cannot create messages in this channel");
+        throw new Error('Cannot create messages in this channel');
       }
 
       const [embed, files] = await this.getPage(this.page);
       if (this.context instanceof Context) {
-        message = this._message = await respond(this.context, {
+        message = this.pmessage = await respond(this.context, {
           components: this.components,
           embed,
           files,
         });
       } else {
-        message = this._message = await this.context.reply({
+        message = this.pmessage = await this.context.reply({
           components: this.components,
           embed,
           files,

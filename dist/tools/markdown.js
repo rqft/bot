@@ -5,13 +5,13 @@ var Markdown;
 (function (Markdown) {
     let TimestampStyles;
     (function (TimestampStyles) {
-        TimestampStyles["BOTH_LONG"] = "F";
-        TimestampStyles["BOTH_SHORT"] = "f";
-        TimestampStyles["DATE_LONG"] = "D";
-        TimestampStyles["DATE_SHORT"] = "d";
-        TimestampStyles["RELATIVE"] = "R";
-        TimestampStyles["TIME_LONG"] = "T";
-        TimestampStyles["TIME_SHORT"] = "t";
+        TimestampStyles["BothLong"] = "F";
+        TimestampStyles["BothShort"] = "f";
+        TimestampStyles["DateLong"] = "D";
+        TimestampStyles["DateShort"] = "d";
+        TimestampStyles["Relative"] = "R";
+        TimestampStyles["TimeLong"] = "T";
+        TimestampStyles["TimeShort"] = "t";
     })(TimestampStyles = Markdown.TimestampStyles || (Markdown.TimestampStyles = {}));
     function trueSlice(text, limit) {
         if (limit) {
@@ -21,25 +21,25 @@ var Markdown;
     }
     Markdown.trueSlice = trueSlice;
     Markdown.Strings = {
-        BOLD: "**",
-        CODEBLOCK: "```",
-        CODESTRING: "`",
-        CODESTRING_DOUBLE: "``",
-        ESCAPE: "\\",
-        ITALICS: "_",
-        SPOILER: "||",
-        STRIKE: "~~",
-        UNDERLINE: "__",
+        BOLD: '**',
+        CODEBLOCK: '```',
+        CODESTRING: '`',
+        CODESTRING_DOUBLE: '``',
+        ESCAPE: '\\',
+        ITALICS: '_',
+        SPOILER: '||',
+        STRIKE: '~~',
+        UNDERLINE: '__',
     };
     const Regexes = {
         [Markdown.Strings.BOLD]: /\*\*/g,
-        [Markdown.Strings.CODEBLOCK]: new RegExp(Markdown.Strings.CODEBLOCK, "g"),
-        [Markdown.Strings.CODESTRING]: new RegExp(Markdown.Strings.CODESTRING, "g"),
+        [Markdown.Strings.CODEBLOCK]: new RegExp(Markdown.Strings.CODEBLOCK, 'g'),
+        [Markdown.Strings.CODESTRING]: new RegExp(Markdown.Strings.CODESTRING, 'g'),
         [Markdown.Strings.ESCAPE]: /\\/g,
         [Markdown.Strings.ITALICS]: /(_|\*)/g,
         [Markdown.Strings.SPOILER]: /\|\|/g,
-        [Markdown.Strings.STRIKE]: new RegExp(Markdown.Strings.STRIKE, "g"),
-        [Markdown.Strings.UNDERLINE]: new RegExp(Markdown.Strings.UNDERLINE, "g"),
+        [Markdown.Strings.STRIKE]: new RegExp(Markdown.Strings.STRIKE, 'g'),
+        [Markdown.Strings.UNDERLINE]: new RegExp(Markdown.Strings.UNDERLINE, 'g'),
         EVERYONE: /@(everyone|here)/g,
         LINK: /\]\(/g,
         MENTION: /<@([!&]?[0-9]{16,21})>/g,
@@ -47,65 +47,65 @@ var Markdown;
         URL: /\)/g,
     };
     const Replacements = {
-        [Markdown.Strings.BOLD]: "\\*\\*",
-        [Markdown.Strings.CODEBLOCK]: "``\u200b`",
-        [Markdown.Strings.CODESTRING]: "\\`",
-        [Markdown.Strings.ESCAPE]: "\\\\",
-        [Markdown.Strings.ITALICS]: "\\$1",
-        [Markdown.Strings.SPOILER]: "\\|\\|",
-        [Markdown.Strings.STRIKE]: "\\~\\~",
-        [Markdown.Strings.UNDERLINE]: "\\_\\_",
-        MENTION: "\u200b",
+        [Markdown.Strings.BOLD]: '\\*\\*',
+        [Markdown.Strings.CODEBLOCK]: '``\u200b`',
+        [Markdown.Strings.CODESTRING]: '\\`',
+        [Markdown.Strings.ESCAPE]: '\\\\',
+        [Markdown.Strings.ITALICS]: '\\$1',
+        [Markdown.Strings.SPOILER]: '\\|\\|',
+        [Markdown.Strings.STRIKE]: '\\~\\~',
+        [Markdown.Strings.UNDERLINE]: '\\_\\_',
+        MENTION: '\u200b',
     };
     function EscapeBasic(raw, key) {
-        return raw.replace(Regexes[key], Replacements[key]);
+        return raw.replace(Regexes[key] || '', Replacements[key] || '');
     }
     Markdown.EscapeBasic = EscapeBasic;
     Markdown.Escape = Object.keys(Markdown.Strings).reduce((p, v) => Object.assign(p, { [v]: (raw) => EscapeBasic(raw, v) }), {});
     const FrozenTimestampStyles = {
-        [TimestampStyles.BOTH_LONG]: "{day}, {month} {date}, {year} {hour}:{minute} {meridian}",
-        [TimestampStyles.BOTH_SHORT]: "{month} {date}, {year} {hour}:{minute} {meridian}",
-        [TimestampStyles.DATE_LONG]: "{month} {date}, {year}",
-        [TimestampStyles.DATE_SHORT]: "{month_short}/{date}/{year}",
-        [TimestampStyles.RELATIVE]: "{relative}",
-        [TimestampStyles.TIME_LONG]: "{hour}:{minute}:{second} {meridian}",
-        [TimestampStyles.TIME_SHORT]: "{hour}:{minute} {meridian}",
+        [TimestampStyles.BothLong]: '{day}, {month} {date}, {year} {hour}:{minute} {meridian}',
+        [TimestampStyles.BothShort]: '{month} {date}, {year} {hour}:{minute} {meridian}',
+        [TimestampStyles.DateLong]: '{month} {date}, {year}',
+        [TimestampStyles.DateShort]: '{month_short}/{date}/{year}',
+        [TimestampStyles.Relative]: '{relative}',
+        [TimestampStyles.TimeLong]: '{hour}:{minute}:{second} {meridian}',
+        [TimestampStyles.TimeShort]: '{hour}:{minute} {meridian}',
     };
     const Days = {
-        0: "Sunday",
-        1: "Monday",
-        2: "Tuesday",
-        3: "Wednesday",
-        4: "Thursday",
-        5: "Friday",
-        6: "Saturday",
+        0: 'Sunday',
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday',
+        6: 'Saturday',
     };
     const Months = {
-        0: "January",
-        1: "February",
-        2: "March",
-        3: "April",
-        4: "May",
-        5: "June",
-        6: "July",
-        7: "August",
-        8: "September",
-        9: "October",
-        10: "November",
-        11: "December",
+        0: 'January',
+        1: 'February',
+        2: 'March',
+        3: 'April',
+        4: 'May',
+        5: 'June',
+        6: 'July',
+        7: 'August',
+        8: 'September',
+        9: 'October',
+        10: 'November',
+        11: 'December',
     };
     function formatDate(date) {
         return {
             relative: toTimeString(date.getTime(), TimestampUnits),
             raw: date.getTime(),
-            date: date.getDate().toString().padStart(2, "0"),
-            day: Days[date.getDay()],
-            hour: date.getHours().toString().padStart(2, "0"),
-            meridian: date.getHours() > 12 ? "PM" : "AM",
-            minute: date.getMinutes().toString().padStart(2, "0"),
-            month: Months[date.getMonth()],
-            month_short: (date.getMonth() + 1).toString().padStart(2, "0"),
-            second: date.getSeconds().toString().padStart(2, "0"),
+            date: date.getDate().toString().padStart(2, '0'),
+            day: Days[date.getDay()] || '',
+            hour: date.getHours().toString().padStart(2, '0'),
+            meridian: date.getHours() > 12 ? 'PM' : 'AM',
+            minute: date.getMinutes().toString().padStart(2, '0'),
+            month: Months[date.getMonth()] || '',
+            monthShort: (date.getMonth() + 1).toString().padStart(2, '0'),
+            second: date.getSeconds().toString().padStart(2, '0'),
             year: date.getFullYear().toString(),
         };
     }
@@ -135,12 +135,12 @@ var Markdown;
         millisecond: multiplyLarge(1),
     };
     function toTimeString(unix, units = TimestampUnits, isFromNow = false, limit) {
-        if (typeof unix === "number")
+        if (typeof unix === 'number')
             unix = BigInt(unix);
         if (isFromNow)
             unix = bigintAbs(unix - BigInt(Date.now()));
         if (unix === 0n)
-            return "0 milliseconds";
+            return '0 milliseconds';
         const formatted = new Map();
         const unitList = Object.entries(units);
         let run = unix;
@@ -161,13 +161,13 @@ var Markdown;
         }
         let returned = [];
         for (const [key, value] of formatted) {
-            const unit = String(key) + (value === 1 ? "" : "s");
+            const unit = String(key) + (value === 1 ? '' : 's');
             returned.push(`${value} ${unit}`);
         }
         if (limit !== undefined) {
             returned = returned.slice(0, limit);
         }
-        return returned.join(", ");
+        return returned.join(', ');
     }
     Markdown.toTimeString = toTimeString;
     function freezeUnix(unix, style) {
@@ -196,10 +196,10 @@ var Markdown;
             return this.raw;
         }
         italics() {
-            return this.build("ITALICS", this.raw);
+            return this.build('ITALICS', this.raw);
         }
         bold() {
-            return this.build("BOLD", this.raw);
+            return this.build('BOLD', this.raw);
         }
         codestring() {
             const useDouble = this.raw.includes(Markdown.Strings.CODESTRING);
@@ -209,27 +209,27 @@ var Markdown;
             return this.codestringSingle();
         }
         codestringDouble() {
-            return this.build("CODESTRING_DOUBLE", this.raw);
+            return this.build('CODESTRING_DOUBLE', this.raw);
         }
         codestringSingle() {
-            return this.build("CODESTRING", this.raw);
+            return this.build('CODESTRING', this.raw);
         }
         codeblock(language) {
-            let full = "";
+            let full = '';
             if (language) {
-                full += language + "\n";
+                full += language + '\n';
             }
             full += this.raw;
-            return this.build("CODEBLOCK", full);
+            return this.build('CODEBLOCK', full);
         }
         spoiler() {
-            return this.build("SPOILER", this.raw);
+            return this.build('SPOILER', this.raw);
         }
         strike() {
-            return this.build("STRIKE", this.raw);
+            return this.build('STRIKE', this.raw);
         }
         underline() {
-            return this.build("UNDERLINE", this.raw);
+            return this.build('UNDERLINE', this.raw);
         }
         build(key, w) {
             const escaped = Markdown.Escape[key](w, key);
@@ -274,8 +274,8 @@ var Markdown;
         static underline(text) {
             return new this(text).underline();
         }
-        static timestamp(unix, format = TimestampStyles.BOTH_SHORT, isSeconds = false) {
-            if (typeof unix === "string")
+        static timestamp(unix, format = TimestampStyles.BothShort, isSeconds = false) {
+            if (typeof unix === 'string')
                 unix = Number(unix);
             if (unix instanceof Date)
                 unix = unix.getTime();
@@ -285,8 +285,8 @@ var Markdown;
             unix = Math.floor(unix);
             return new this(`<t:${unix}:${format}>`);
         }
-        static date(unix, format = TimestampStyles.BOTH_SHORT, isSeconds = false) {
-            if (typeof unix === "string")
+        static date(unix, format = TimestampStyles.BothShort, isSeconds = false) {
+            if (typeof unix === 'string')
                 unix = Number(unix);
             if (unix instanceof Date)
                 unix = unix.getTime();
@@ -304,38 +304,38 @@ var Markdown;
     Markdown.Format = Format;
     let DiscordRegexNames;
     (function (DiscordRegexNames) {
-        DiscordRegexNames["EMOJI"] = "EMOJI";
-        DiscordRegexNames["JUMP_CHANNEL"] = "JUMP_CHANNEL";
-        DiscordRegexNames["JUMP_CHANNEL_MESSAGE"] = "JUMP_CHANNEL_MESSAGE";
-        DiscordRegexNames["MENTION_CHANNEL"] = "MENTION_CHANNEL";
-        DiscordRegexNames["MENTION_ROLE"] = "MENTION_ROLE";
-        DiscordRegexNames["MENTION_USER"] = "MENTION_USER";
-        DiscordRegexNames["TEXT_BOLD"] = "TEXT_BOLD";
-        DiscordRegexNames["TEXT_CODEBLOCK"] = "TEXT_CODEBLOCK";
-        DiscordRegexNames["TEXT_CODESTRING"] = "TEXT_CODESTRING";
-        DiscordRegexNames["TEXT_ITALICS"] = "TEXT_ITALICS";
-        DiscordRegexNames["TEXT_SNOWFLAKE"] = "TEXT_SNOWFLAKE";
-        DiscordRegexNames["TEXT_SPOILER"] = "TEXT_SPOILER";
-        DiscordRegexNames["TEXT_STRIKE"] = "TEXT_STRIKE";
-        DiscordRegexNames["TEXT_UNDERLINE"] = "TEXT_UNDERLINE";
-        DiscordRegexNames["TEXT_URL"] = "TEXT_URL";
+        DiscordRegexNames["Emoji"] = "EMOJI";
+        DiscordRegexNames["JumpChannel"] = "JUMP_CHANNEL";
+        DiscordRegexNames["JumpChannelMessage"] = "JUMP_CHANNEL_MESSAGE";
+        DiscordRegexNames["MentionChannel"] = "MENTION_CHANNEL";
+        DiscordRegexNames["MentionRole"] = "MENTION_ROLE";
+        DiscordRegexNames["MentionUser"] = "MENTION_USER";
+        DiscordRegexNames["TextBold"] = "TEXT_BOLD";
+        DiscordRegexNames["TextCodeblock"] = "TEXT_CODEBLOCK";
+        DiscordRegexNames["TextCodestring"] = "TEXT_CODESTRING";
+        DiscordRegexNames["TextItalics"] = "TEXT_ITALICS";
+        DiscordRegexNames["TextSnowflake"] = "TEXT_SNOWFLAKE";
+        DiscordRegexNames["TextSpoiler"] = "TEXT_SPOILER";
+        DiscordRegexNames["TextStrike"] = "TEXT_STRIKE";
+        DiscordRegexNames["TextUnderline"] = "TEXT_UNDERLINE";
+        DiscordRegexNames["TextUrl"] = "TEXT_URL";
     })(DiscordRegexNames = Markdown.DiscordRegexNames || (Markdown.DiscordRegexNames = {}));
     Markdown.DiscordRegex = {
-        [DiscordRegexNames.EMOJI]: /<a?:(\w+):(\d+)>/g,
-        [DiscordRegexNames.JUMP_CHANNEL]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)$/g,
-        [DiscordRegexNames.JUMP_CHANNEL_MESSAGE]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)\/(\d+)$/g,
-        [DiscordRegexNames.MENTION_CHANNEL]: /<#(\d+)>/g,
-        [DiscordRegexNames.MENTION_ROLE]: /<@&(\d+)>/g,
-        [DiscordRegexNames.MENTION_USER]: /<@(!?)(\d+)>/g,
-        [DiscordRegexNames.TEXT_BOLD]: /\*\*([\s\S]+?)\*\*/g,
-        [DiscordRegexNames.TEXT_CODEBLOCK]: /```(([a-z0-9-]+?)\n+)?\n*([^]+?)\n*```/gi,
-        [DiscordRegexNames.TEXT_CODESTRING]: /`([\s\S]+?)`/g,
-        [DiscordRegexNames.TEXT_ITALICS]: /_([\s\S]+?)_|\*([\s\S]+?)\*/g,
-        [DiscordRegexNames.TEXT_SNOWFLAKE]: /(\d+)/g,
-        [DiscordRegexNames.TEXT_SPOILER]: /\|\|([\s\S]+?)\|\|/g,
-        [DiscordRegexNames.TEXT_STRIKE]: /~~([\s\S]+?)~~(?!_)/g,
-        [DiscordRegexNames.TEXT_UNDERLINE]: /__([\s\S]+?)__/g,
-        [DiscordRegexNames.TEXT_URL]: /((?:https?):\/\/[^\s<]+[^<.,:;"'\]\s])/g,
+        [DiscordRegexNames.Emoji]: /<a?:(\w+):(\d+)>/g,
+        [DiscordRegexNames.JumpChannel]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)$/g,
+        [DiscordRegexNames.JumpChannelMessage]: /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)\/(\d+)$/g,
+        [DiscordRegexNames.MentionChannel]: /<#(\d+)>/g,
+        [DiscordRegexNames.MentionRole]: /<@&(\d+)>/g,
+        [DiscordRegexNames.MentionUser]: /<@(!?)(\d+)>/g,
+        [DiscordRegexNames.TextBold]: /\*\*([\s\S]+?)\*\*/g,
+        [DiscordRegexNames.TextCodeblock]: /```(([a-z0-9-]+?)\n+)?\n*([^]+?)\n*```/gi,
+        [DiscordRegexNames.TextCodestring]: /`([\s\S]+?)`/g,
+        [DiscordRegexNames.TextItalics]: /_([\s\S]+?)_|\*([\s\S]+?)\*/g,
+        [DiscordRegexNames.TextSnowflake]: /(\d+)/g,
+        [DiscordRegexNames.TextSpoiler]: /\|\|([\s\S]+?)\|\|/g,
+        [DiscordRegexNames.TextStrike]: /~~([\s\S]+?)~~(?!_)/g,
+        [DiscordRegexNames.TextUnderline]: /__([\s\S]+?)__/g,
+        [DiscordRegexNames.TextUrl]: /((?:https?):\/\/[^\s<]+[^<.,:;"'\]\s])/g,
     };
     class MatchInner {
         raw;
@@ -344,49 +344,49 @@ var Markdown;
             this.raw = raw;
         }
         emoji() {
-            return this.match(DiscordRegexNames.EMOJI);
+            return this.match(DiscordRegexNames.Emoji);
         }
         jumpChannel() {
-            return this.match(DiscordRegexNames.JUMP_CHANNEL);
+            return this.match(DiscordRegexNames.JumpChannel);
         }
         jumpChannelMessage() {
-            return this.match(DiscordRegexNames.JUMP_CHANNEL_MESSAGE);
+            return this.match(DiscordRegexNames.JumpChannelMessage);
         }
         mentionChannel() {
-            return this.match(DiscordRegexNames.MENTION_CHANNEL);
+            return this.match(DiscordRegexNames.MentionChannel);
         }
         mentionRole() {
-            return this.match(DiscordRegexNames.MENTION_ROLE);
+            return this.match(DiscordRegexNames.MentionRole);
         }
         mentionUser() {
-            return this.match(DiscordRegexNames.MENTION_USER);
+            return this.match(DiscordRegexNames.MentionUser);
         }
         codeblock() {
-            return this.match(DiscordRegexNames.TEXT_CODEBLOCK);
+            return this.match(DiscordRegexNames.TextCodeblock);
         }
         bold() {
-            return this.match(DiscordRegexNames.TEXT_BOLD);
+            return this.match(DiscordRegexNames.TextBold);
         }
         codestring() {
-            return this.match(DiscordRegexNames.TEXT_CODESTRING);
+            return this.match(DiscordRegexNames.TextCodestring);
         }
         italics() {
-            return this.match(DiscordRegexNames.TEXT_ITALICS);
+            return this.match(DiscordRegexNames.TextItalics);
         }
         snowflake() {
-            return this.match(DiscordRegexNames.TEXT_SNOWFLAKE);
+            return this.match(DiscordRegexNames.TextSnowflake);
         }
         spoiler() {
-            return this.match(DiscordRegexNames.TEXT_SPOILER);
+            return this.match(DiscordRegexNames.TextSpoiler);
         }
         strike() {
-            return this.match(DiscordRegexNames.TEXT_STRIKE);
+            return this.match(DiscordRegexNames.TextStrike);
         }
         underline() {
-            return this.match(DiscordRegexNames.TEXT_UNDERLINE);
+            return this.match(DiscordRegexNames.TextUnderline);
         }
         url() {
-            return this.match(DiscordRegexNames.TEXT_URL);
+            return this.match(DiscordRegexNames.TextUrl);
         }
         match(type, onlyFirst = false) {
             const regex = Markdown.DiscordRegex[type];
@@ -400,54 +400,57 @@ var Markdown;
             };
             let match = null;
             while ((match = regex.exec(this.raw))) {
-                const result = { matched: match[0], species: type };
+                const result = {
+                    matched: match[0] || '',
+                    species: type,
+                };
                 switch (type) {
-                    case DiscordRegexNames.EMOJI:
+                    case DiscordRegexNames.Emoji:
                         {
                             result.name = match[1];
                             result.id = match[2];
-                            result.animated = this.raw.startsWith("<a:");
+                            result.animated = this.raw.startsWith('<a:');
                         }
                         break;
-                    case DiscordRegexNames.JUMP_CHANNEL:
+                    case DiscordRegexNames.JumpChannel:
                         {
                             result.guildId = match[1];
                             result.channelId = match[2];
                         }
                         break;
-                    case DiscordRegexNames.JUMP_CHANNEL_MESSAGE:
+                    case DiscordRegexNames.JumpChannelMessage:
                         {
                             result.guildId = match[1];
                             result.channelId = match[2];
                             result.messageId = match[3];
                         }
                         break;
-                    case DiscordRegexNames.MENTION_CHANNEL:
-                    case DiscordRegexNames.MENTION_ROLE:
+                    case DiscordRegexNames.MentionChannel:
+                    case DiscordRegexNames.MentionRole:
                         {
                             result.id = match[1];
                         }
                         break;
-                    case DiscordRegexNames.MENTION_USER:
+                    case DiscordRegexNames.MentionUser:
                         {
                             result.id = match[2];
                             result.mentionType = match[1];
                         }
                         break;
-                    case DiscordRegexNames.TEXT_CODEBLOCK:
+                    case DiscordRegexNames.TextCodeblock:
                         {
                             result.language = match[2];
                             result.text = match[3];
                         }
                         break;
-                    case DiscordRegexNames.TEXT_BOLD:
-                    case DiscordRegexNames.TEXT_CODESTRING:
-                    case DiscordRegexNames.TEXT_ITALICS:
-                    case DiscordRegexNames.TEXT_SNOWFLAKE:
-                    case DiscordRegexNames.TEXT_SPOILER:
-                    case DiscordRegexNames.TEXT_STRIKE:
-                    case DiscordRegexNames.TEXT_UNDERLINE:
-                    case DiscordRegexNames.TEXT_URL:
+                    case DiscordRegexNames.TextBold:
+                    case DiscordRegexNames.TextCodestring:
+                    case DiscordRegexNames.TextItalics:
+                    case DiscordRegexNames.TextSnowflake:
+                    case DiscordRegexNames.TextSpoiler:
+                    case DiscordRegexNames.TextStrike:
+                    case DiscordRegexNames.TextUnderline:
+                    case DiscordRegexNames.TextUrl:
                         {
                             result.text = match[1];
                         }

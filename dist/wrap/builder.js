@@ -12,15 +12,15 @@ const parser_1 = require("./parser");
 exports.CommandArgumentBuilders = {
     string(options) {
         return (value) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             if (options) {
                 if (options.choices && options.choices.length) {
                     if (options.choices.includes(value)) {
                         return value;
                     }
-                    throw new RangeError(`must be one of [ ${options.choices.join(", ")} ]`);
+                    throw new RangeError(`must be one of [ ${options.choices.join(', ')} ]`);
                 }
                 if (options.maxLength && value.length > options.maxLength) {
                     throw new RangeError(`must be less than ${options.maxLength} characters`);
@@ -45,8 +45,8 @@ exports.CommandArgumentBuilders = {
     },
     number(options) {
         return (value) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             const float = Number.parseFloat(value);
             if (options) {
@@ -54,7 +54,7 @@ exports.CommandArgumentBuilders = {
                     if (options.choices.includes(float)) {
                         return float;
                     }
-                    throw new RangeError(`must be one of [ ${options.choices.join(", ")} ]`);
+                    throw new RangeError(`must be one of [ ${options.choices.join(', ')} ]`);
                 }
                 if (options.min && float < options.min) {
                     throw new RangeError(`must be more than ${options.min}`);
@@ -79,13 +79,13 @@ exports.CommandArgumentBuilders = {
     },
     integer(options) {
         return (value, context) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             const float = this.number(options)(value, context);
             const int = float | 0;
             if (float !== int) {
-                throw new RangeError("must be an integer");
+                throw new RangeError('must be an integer');
             }
             return int;
         };
@@ -103,8 +103,8 @@ exports.CommandArgumentBuilders = {
     },
     channel(options) {
         return (value, context) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             const { guild } = context;
             if (guild) {
@@ -114,12 +114,12 @@ exports.CommandArgumentBuilders = {
                             return false;
                         }
                     }
-                    return channel.id === value.replace(/\D/g, "");
+                    return channel.id === value.replace(/\D/g, '');
                 });
                 if (found) {
                     return found;
                 }
-                throw new RangeError("no channels found");
+                throw new RangeError('no channels found');
             }
             return context.channel;
         };
@@ -137,8 +137,8 @@ exports.CommandArgumentBuilders = {
     },
     date() {
         return (value) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             return new Date(value);
         };
@@ -156,8 +156,8 @@ exports.CommandArgumentBuilders = {
     },
     object() {
         return (value) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             return JSON.parse(value);
         };
@@ -175,8 +175,8 @@ exports.CommandArgumentBuilders = {
     },
     regexp() {
         return (value) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             return new RegExp(value);
         };
@@ -194,8 +194,8 @@ exports.CommandArgumentBuilders = {
     },
     url() {
         return (value) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             return new URL(value);
         };
@@ -213,11 +213,11 @@ exports.CommandArgumentBuilders = {
     },
     user() {
         return async (value, context) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             const found = context.client.users.find((user) => user.tag.toLowerCase().includes(value.toLowerCase()) ||
-                user.id === value.replace(/\D/g, ""));
+                user.id === value.replace(/\D/g, ''));
             if (found === undefined) {
                 try {
                     return await context.client.rest.fetchUser(value);
@@ -225,7 +225,7 @@ exports.CommandArgumentBuilders = {
                 catch {
                     void 0;
                 }
-                throw new RangeError("user not found");
+                throw new RangeError('user not found');
             }
             return found;
         };
@@ -243,18 +243,18 @@ exports.CommandArgumentBuilders = {
     },
     member() {
         return (value, context) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             const { guild } = context;
             if (guild) {
-                const found = guild.members.find((user) => user.tag === value || user.id === value.replace(/\D/g, ""));
+                const found = guild.members.find((user) => user.tag === value || user.id === value.replace(/\D/g, ''));
                 if (found === undefined) {
-                    throw new RangeError("member not found");
+                    throw new RangeError('member not found');
                 }
                 return found;
             }
-            throw new RangeError("must be in a guild");
+            throw new RangeError('must be in a guild');
         };
     },
     memberOptional(options) {
@@ -269,18 +269,18 @@ exports.CommandArgumentBuilders = {
     },
     role() {
         return (value, context) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
             const { guild } = context;
             if (guild) {
-                const found = guild.roles.find((user) => user.name === value || user.id === value.replace(/\D/g, ""));
+                const found = guild.roles.find((user) => user.name === value || user.id === value.replace(/\D/g, ''));
                 if (found === undefined) {
-                    throw new RangeError("role not found");
+                    throw new RangeError('role not found');
                 }
                 return found;
             }
-            throw new RangeError("must be in a guild");
+            throw new RangeError('must be in a guild');
         };
     },
     roleOptional(options) {
@@ -295,13 +295,13 @@ exports.CommandArgumentBuilders = {
     },
     emoji() {
         return (value, context) => {
-            if (value === undefined || value === "") {
-                throw new RangeError("must provide a value");
+            if (value === undefined || value === '') {
+                throw new RangeError('must provide a value');
             }
-            console.log(value, value.replace(/\D/g, ""));
-            const found = context.client.emojis.find((emoji) => emoji.id === value.replace(/\D/g, ""));
+            console.log(value, value.replace(/\D/g, ''));
+            const found = context.client.emojis.find((emoji) => emoji.id === value.replace(/\D/g, ''));
             if (found === undefined) {
-                throw new RangeError("emoji not found");
+                throw new RangeError('emoji not found');
             }
             return found;
         };
@@ -335,10 +335,10 @@ exports.CommandArgumentBuilders = {
     },
     array(options) {
         return (value) => {
-            const sliced = value.split(options?.split || " ");
+            const sliced = value.split(options?.split || ' ');
             if (options?.choices && options?.choices.length) {
                 if (!sliced.every((x) => options?.choices?.includes(x))) {
-                    throw new RangeError(`must be one of [ ${options.choices.join(", ")} ]`);
+                    throw new RangeError(`must be one of [ ${options.choices.join(', ')} ]`);
                 }
             }
             const data = sliced.map(options?.map || ((x) => x));
@@ -366,11 +366,11 @@ exports.CommandArgumentBuilders = {
     },
     mediaUrl(types) {
         return async (value, context) => {
-            console.log("using murl", value);
+            console.log('using murl', value);
             const urls = await (0, image_search_1.findMediaUrls)(types || image_search_1.AllMediaTypes, context, value);
             console.log(urls);
             if (urls.length === 0) {
-                throw new Error("no media urls found");
+                throw new Error('no media urls found');
             }
             return urls.at(0);
         };
@@ -405,40 +405,40 @@ exports.CommandArgumentBuilders = {
         };
     },
     audio() {
-        return this.media(["Audio"]);
+        return this.media(['Audio']);
     },
     audioOptional(options) {
-        return this.mediaOptional(["Audio"], options);
+        return this.mediaOptional(['Audio'], options);
     },
     audioUrl() {
-        return this.mediaUrl(["Audio"]);
+        return this.mediaUrl(['Audio']);
     },
     audioUrlOptional(options) {
-        return this.mediaUrlOptional(["Audio"], options);
+        return this.mediaUrlOptional(['Audio'], options);
     },
     image() {
-        return this.media(["Image"]);
+        return this.media(['Image']);
     },
     imageOptional(options) {
-        return this.mediaOptional(["Image"], options);
+        return this.mediaOptional(['Image'], options);
     },
     imageUrl() {
-        return this.mediaUrl(["Image"]);
+        return this.mediaUrl(['Image']);
     },
     imageUrlOptional(options) {
-        return this.mediaUrlOptional(["Image"], options);
+        return this.mediaUrlOptional(['Image'], options);
     },
     video() {
-        return this.media(["Video"]);
+        return this.media(['Video']);
     },
     videoOptional(options) {
-        return this.mediaOptional(["Video"], options);
+        return this.mediaOptional(['Video'], options);
     },
     videoUrl() {
-        return this.mediaUrl(["Video"]);
+        return this.mediaUrl(['Video']);
     },
     videoUrlOptional(options) {
-        return this.mediaUrlOptional(["Video"], options);
+        return this.mediaUrlOptional(['Video'], options);
     },
 };
 exports.DefaultArgs = new Proxy({}, {
@@ -447,15 +447,15 @@ exports.DefaultArgs = new Proxy({}, {
     },
 });
 function Command(syntax, options, run) {
-    const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax);
+    const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax) || [];
     const ids = syntax.match(/\[.+?\]/g) || [];
     const opt = [];
     const flg = [];
     const builder = (options.args || (() => exports.DefaultArgs))(exports.CommandArgumentBuilders);
     for (const id of ids) {
-        const id2 = id.replace(/\[|\]/g, "");
-        const [, name, def] = /^\[(?:\.{3})?-?(.+?)\??(?:=(.*?))?\]$/.exec(id);
-        let arg = { name: name, required: true };
+        const id2 = id.replace(/\[|\]/g, '');
+        const [, name, def] = /^\[(?:\.{3})?-?(.+?)\??(?:=(.*?))?\]$/.exec(id) || [];
+        const arg = { name: name || '', required: true };
         const isFlag = /^\[(?:\.{3})?-/.test(id);
         if (/^\[(?:\.{3})?-?(.+?)\?/.test(id)) {
             arg.required = false;
@@ -476,7 +476,7 @@ function Command(syntax, options, run) {
     return class Exec extends base_command_1.BaseCommand {
         constructor(client) {
             super(client, {
-                name: cmd,
+                name: cmd || '',
                 metadata: options.metadata,
                 ...options,
                 type: opt,

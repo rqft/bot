@@ -35,7 +35,7 @@ function Formatter(data, use = (_, t) => t) {
 exports.Formatter = Formatter;
 var Ansi;
 (function (Ansi) {
-    Ansi.Identifier = "\u001b[";
+    Ansi.Identifier = '\u001b[';
     let FormattingCodes;
     (function (FormattingCodes) {
         FormattingCodes["Black"] = "30";
@@ -77,8 +77,8 @@ var Ansi;
     })(FormattingCodes = Ansi.FormattingCodes || (Ansi.FormattingCodes = {}));
     function use(codes, text) {
         return `${Ansi.Identifier}${FormattingCodes.Reset}m${codes
-            .map((x) => Ansi.Identifier + x + "m")
-            .join("")}${text}${Ansi.Identifier}${FormattingCodes.Reset}m`;
+            .map((x) => Ansi.Identifier + x + 'm')
+            .join('')}${text}${Ansi.Identifier}${FormattingCodes.Reset}m`;
     }
     Ansi.use = use;
     Ansi.Fmt = Formatter(FormattingCodes, use);

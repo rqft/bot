@@ -8,12 +8,12 @@ function fmt(value, contents) {
     for (const [key, value] of Object.entries(contents)) {
         f = f.split(`{${key}}`).join(String(value));
     }
-    f = f.split("\\bl").join("{").split("\\br").join("}");
+    f = f.split('\\bl').join('{').split('\\br').join('}');
     return f;
 }
 exports.fmt = fmt;
 exports.respond = Object.assign(async (context, options) => {
-    if (typeof options === "string") {
+    if (typeof options === 'string') {
         options = { content: options };
     }
     return await context.editOrReply(Object.assign({ allowedMentions: { parse: [], repliedUser: false }, reference: true }, options));
@@ -25,7 +25,7 @@ exports.respond = Object.assign(async (context, options) => {
         });
     },
 });
-function toCodePoint(unicodeSurrogates, separator = "-") {
+function toCodePoint(unicodeSurrogates, separator = '-') {
     const r = [];
     let c = 0;
     let p = 0;
@@ -50,14 +50,14 @@ const U200D = String.fromCharCode(0x200d);
 const UFE0F_REGEX = /\uFE0F/g;
 function toCodePointForTwemoji(unicodeSurrogates) {
     if (unicodeSurrogates.indexOf(U200D) < 0) {
-        unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, "");
+        unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, '');
     }
     return toCodePoint(unicodeSurrogates);
 }
 exports.toCodePointForTwemoji = toCodePointForTwemoji;
 function permissionsText(context) {
     if (context.can(constants_1.Permissions.ADMINISTRATOR)) {
-        return [constants_2.PermissionsText[String(constants_1.Permissions.ADMINISTRATOR)]];
+        return [constants_2.PermissionsText[String(constants_1.Permissions.ADMINISTRATOR)] || ''];
     }
     const text = [];
     for (const permission of Object.values(constants_1.Permissions)) {
@@ -75,19 +75,19 @@ function permissionsText(context) {
     return text;
 }
 exports.permissionsText = permissionsText;
-exports.ByteUnits = ["bytes", "kb", "mb", "gb", "tb"];
-exports.SIByteUnits = ["bytes", "kib", "mib", "gib", "tib"];
+exports.ByteUnits = ['bytes', 'kb', 'mb', 'gb', 'tb'];
+exports.SIByteUnits = ['bytes', 'kib', 'mib', 'gib', 'tib'];
 function formatBytes(bytes, decimals = 2, noBiBytes = true) {
     if (bytes === 0)
-        return "0 bytes";
+        return '0 bytes';
     const delimiter = noBiBytes ? 1000 : 1024;
     const dm = decimals < 0 ? 0 : decimals;
     const sizes = noBiBytes ? exports.ByteUnits : exports.SIByteUnits;
     const i = Math.floor(Math.log(bytes) / Math.log(delimiter));
-    return (parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + " " + sizes[i]);
+    return (parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + ' ' + sizes[i]);
 }
 exports.formatBytes = formatBytes;
 function fileExtension(url) {
-    return url.split(/[#?]/)[0].split(".").pop().trim();
+    return url.split(/[#?]/)[0]?.split('.').pop()?.trim() || '';
 }
 exports.fileExtension = fileExtension;

@@ -1,11 +1,11 @@
-import { Context } from "detritus-client/lib/command";
+import { Context } from 'detritus-client/lib/command';
 import {
   ChannelTypes,
   MarkupTimestampStyles,
   PresenceStatuses,
   UserFlags,
   VerificationLevels,
-} from "detritus-client/lib/constants";
+} from 'detritus-client/lib/constants';
 import {
   Channel,
   ChannelBase,
@@ -15,9 +15,9 @@ import {
   Message,
   Role,
   User,
-} from "detritus-client/lib/structures";
-import { Embed, Markup, Snowflake } from "detritus-client/lib/utils";
-import { Snowflake as SnowFlake } from "detritus-utils/lib/snowflake";
+} from 'detritus-client/lib/structures';
+import { Embed, Markup, Snowflake } from 'detritus-client/lib/utils';
+import { Snowflake as SnowFlake } from 'detritus-utils/lib/snowflake';
 import {
   bar,
   ChannelTypesText,
@@ -35,33 +35,35 @@ import {
   tail,
   UserBadges,
   VideoQualityModesText,
-} from "../constants";
-import { CustomEmojis, Emojis } from "../emojis";
-import { Embeds } from "../tools/embed";
-import { CustomEmoji, Emoji, UnicodeEmoji } from "../tools/emoji";
-import { Markdown } from "../tools/markdown";
-import { Paginator } from "../tools/paginator";
-import { fmt, formatBytes, permissionsText } from "../tools/util";
-import { Warning } from "../tools/warning";
-import { Command } from "../wrap/builder";
-import { Depromise } from "../wrap/parser";
+} from '../constants';
+import { CustomEmojis, Emojis } from '../emojis';
+import { Embeds } from '../tools/embed';
+import { CustomEmoji, Emoji, UnicodeEmoji } from '../tools/emoji';
+import { Markdown } from '../tools/markdown';
+import { Paginator } from '../tools/paginator';
+import { fmt, formatBytes, permissionsText } from '../tools/util';
+import { Warning } from '../tools/warning';
+import { Command } from '../wrap/builder';
+import { Depromise } from '../wrap/parser';
 
 export default Command(
-  "info [...noun?]",
+  'info [...noun?]',
   { args: (self) => ({ noun: self.stringOptional() }) },
   async (context, args) => {
     const { noun } = args;
-    const pages: Depromise<ReturnType<typeof identify>> = noun
-      ? await identify(context, noun)
-      : [
+    const pages: Depromise<ReturnType<typeof identify>> = (
+      noun
+        ? await identify(context, noun)
+        : [
           context.member || context.user,
-          context.guild!,
-          context.channel!,
+          context.guild || null,
+          context.channel || null,
           context.message,
-        ].filter((x) => x !== null);
+        ]
+    ).filter((x) => x !== null);
 
     if (!pages.length) {
-      throw new Warning("Nothing was found");
+      throw new Warning('Nothing was found');
     }
 
     const paginator = new Paginator(context, {
@@ -70,7 +72,7 @@ export default Command(
         const embed = Embeds.user(context);
         embed.setFooter(`Page ${page}/${pages.length}`);
 
-        const data = pages[page - 1]!;
+        const data = pages[page - 1];
         if (isSnowflake(data)) {
           return await snowflake(context, data, embed);
         }
@@ -103,7 +105,7 @@ export default Command(
           return await user(context, data, embed);
         }
 
-        embed.setDescription("No further details.");
+        embed.setDescription('No further details.');
         return embed;
       },
     });
@@ -125,10 +127,11 @@ export async function identify(
     | Role
     | Emoji
     | Snowflake.Snowflake
+    | null
   >
 > {
   const out: Array<
-    User | Member | Guild | Role | Channel | Emoji | SnowFlake | Message
+    User | Member | Guild | Role | Channel | Emoji | SnowFlake | Message | null
   > = [];
   if (/^<a?:(\w{2,32}):(\d{16,20})>$/.test(noun)) {
     out.push(new CustomEmoji(noun));
@@ -137,7 +140,7 @@ export async function identify(
   const cemoji = context.client.emojis.filter(
     (x) =>
       x.name.toLowerCase() === noun.toLowerCase() ||
-      x.id === noun.replace(/\D/g, "")
+      x.id === noun.replace(/\D/g, '')
   );
 
   if (cemoji.length) {
@@ -155,19 +158,19 @@ export async function identify(
   const user = context.client.users.find(
     (x) =>
       x.tag.toLowerCase().includes(noun.toLowerCase()) ||
-      x.id === noun.replace(/\D/g, "") ||
+      x.id === noun.replace(/\D/g, '') ||
       x.jumpLink === noun
   );
 
   a: if (user) {
     if (context.guild) {
       if (context.guild.members.has(user.id)) {
-        out.push(context.guild.members.get(user.id)!);
+        out.push(context.guild.members.get(user.id) || null);
         break a;
       }
     } else {
       try {
-        out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, "")));
+        out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, '')));
       } catch {
         void 0;
       }
@@ -178,7 +181,7 @@ export async function identify(
 
   const channels = context.client.channels.filter(
     (x) =>
-      x.id === noun.replace(/\D/g, "") ||
+      x.id === noun.replace(/\D/g, '') ||
       x.name.toLowerCase().includes(noun.toLowerCase()) ||
       x.jumpLink === noun
   );
@@ -189,8 +192,8 @@ export async function identify(
 
   const roles = context.client.roles.filter(
     (x) =>
-      x.id === noun.replace(/\D/g, "") ||
-      (x.id === context.guildId && noun === "@everyone") ||
+      x.id === noun.replace(/\D/g, '') ||
+      (x.id === context.guildId && noun === '@everyone') ||
       x.name.toLowerCase().includes(noun.toLowerCase())
   );
 
@@ -200,7 +203,7 @@ export async function identify(
 
   const guilds = context.client.guilds.filter(
     (x) =>
-      x.id === noun.replace(/\D/g, "") ||
+      x.id === noun.replace(/\D/g, '') ||
       x.name.toLowerCase().includes(noun.toLowerCase()) ||
       x.jumpLink === noun
   );
@@ -211,7 +214,7 @@ export async function identify(
 
   const messages = context.client.messages.filter(
     (x) =>
-      x.id === noun.replace(/\D/g, "") ||
+      x.id === noun.replace(/\D/g, '') ||
       x.id === context.message.referencedMessage?.id ||
       x.jumpLink === noun
   );
@@ -223,7 +226,7 @@ export async function identify(
   if (/^\d{16,21}$/g.test(noun)) {
     out.push(
       Object.assign(Snowflake.deconstruct(noun), {
-        species: "@data/snowflake",
+        species: '@data/snowflake',
       })
     );
   }
@@ -235,7 +238,7 @@ export async function identify(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isSnowflake(value: any): value is SnowFlake {
-  return value["species"] === "@data/snowflake";
+  return value['species'] === '@data/snowflake';
 }
 
 // formatters
@@ -248,24 +251,24 @@ export async function snowflake(_: Context, data: SnowFlake, embed: Embed) {
 
     const { id, processId, sequence, timestamp, workerId } = data;
 
-    description.push(fmt("**Id**: `{id}`", { id }));
-    description.push(fmt("**Process Id**: `{processId}`", { processId }));
-    description.push(fmt("**Sequence**: `{sequence}`", { sequence }));
+    description.push(fmt('**Id**: `{id}`', { id }));
+    description.push(fmt('**Process Id**: `{processId}`', { processId }));
+    description.push(fmt('**Sequence**: `{sequence}`', { sequence }));
     description.push(
-      fmt("**Timestamp**: {f} ({r})", {
+      fmt('**Timestamp**: {f} ({r})', {
         f: Markup.timestamp(timestamp, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(timestamp, MarkupTimestampStyles.RELATIVE),
       })
     );
     description.push(
-      fmt("{tab} {derive} **Unix**: `{timestamp}`", { timestamp, tab, derive })
+      fmt('{tab} {derive} **Unix**: `{timestamp}`', { timestamp, tab, derive })
     );
-    description.push(fmt("**Worker Id**: {workerId}", { workerId }));
+    description.push(fmt('**Worker Id**: {workerId}', { workerId }));
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
-  embed.setThumbnail(new UnicodeEmoji("❄").url());
+  embed.setThumbnail(new UnicodeEmoji('❄').url());
 
   return embed;
 }
@@ -283,33 +286,33 @@ export async function unicodeEmoji(
   {
     const description: Array<string> = [];
 
-    description.push(fmt("**Name**: `{name}`", { name }));
+    description.push(fmt('**Name**: `{name}`', { name }));
     description.push(
-      fmt("**Category**: {category}: {sub}", {
+      fmt('**Category**: {category}: {sub}', {
         category: category.name,
         sub: sub_category.name,
       })
     );
 
     description.push(
-      fmt("**Codepoints**: `{codepoints}`", { codepoints: data.codepoints() })
+      fmt('**Codepoints**: `{codepoints}`', { codepoints: data.codepoints() })
     );
 
     if (keywords && keywords.length) {
       description.push(
-        fmt("**Key Words**: {kw}", {
-          kw: keywords.map((x) => Markup.codestring(x)).join(", "),
+        fmt('**Key Words**: {kw}', {
+          kw: keywords.map((x) => Markup.codestring(x)).join(', '),
         })
       );
     }
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
   if (children && children.length) {
     embed.addField(
       `${tail} Children`,
-      children.map((x) => `${x.emoji} ${x.name}`).join("\n")
+      children.map((x) => `${x.emoji} ${x.name}`).join('\n')
     );
   }
 
@@ -323,19 +326,19 @@ export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed) {
   {
     const description: Array<string> = [];
 
-    description.push(fmt("**Id**: `{id}`", { id: data.id }));
+    description.push(fmt('**Id**: `{id}`', { id: data.id }));
     description.push(
-      fmt("**Name**: [{name}]({url})", { name: data.name, url: data.url() })
+      fmt('**Name**: [{name}]({url})', { name: data.name, url: data.url() })
     );
 
     if (data.animated) {
-      description.push("**Animated**: Yes");
+      description.push('**Animated**: Yes');
     }
 
     const unix = Snowflake.timestamp(data.id);
 
     description.push(
-      fmt("**Created**: {f} ({r})", {
+      fmt('**Created**: {f} ({r})', {
         f: Markup.timestamp(unix, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(unix, MarkupTimestampStyles.RELATIVE),
       })
@@ -346,7 +349,7 @@ export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed) {
     if (discord) {
       if (discord.guild) {
         description.push(
-          fmt("**Server**: [{guild}]({url})", {
+          fmt('**Server**: [{guild}]({url})', {
             guild: discord.guild.name,
             url: discord.guild.jumpLink,
           })
@@ -354,7 +357,7 @@ export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed) {
       }
     }
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
   return embed;
@@ -380,33 +383,33 @@ export async function role(_: Context, data: Role, embed: Embed) {
     const description: Array<string> = [];
 
     description.push(
-      fmt("**Name**: {name} ({mention})", {
+      fmt('**Name**: {name} ({mention})', {
         name: Markup.codestring(name),
         mention,
       })
     );
 
-    description.push(fmt("**Id**: `{id}`", { id }));
+    description.push(fmt('**Id**: `{id}`', { id }));
 
     if (color) {
       const hex = color.toString(16).padStart(6);
-      description.push(fmt("**Color**: `#{color}`", { color: hex }));
+      description.push(fmt('**Color**: `#{color}`', { color: hex }));
       embed.setThumbnail(
-        fmt("https://api.clancy.lol/image/color/256x256/{hex}", { hex })
+        fmt('https://api.clancy.lol/image/color/256x256/{hex}', { hex })
       );
     } else {
-      embed.setThumbnail(new UnicodeEmoji("❔").url());
+      embed.setThumbnail(new UnicodeEmoji('❔').url());
     }
 
     description.push(
-      fmt("**Created**: {f} ({r})", {
+      fmt('**Created**: {f} ({r})', {
         f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
       })
     );
 
     description.push(
-      fmt("**Server**: [{guild}]({guildUrl})", {
+      fmt('**Server**: [{guild}]({guildUrl})', {
         guild: data.guild?.name,
         guildUrl: data.guild?.jumpLink,
       })
@@ -415,36 +418,36 @@ export async function role(_: Context, data: Role, embed: Embed) {
     const tags: Array<string> = [];
 
     if (managed) {
-      tags.push("Managed");
+      tags.push('Managed');
     }
 
     if (isBoosterRole) {
-      tags.push("Booster Role");
+      tags.push('Booster Role');
     }
 
     if (isDefault) {
-      tags.push("Default Role");
+      tags.push('Default Role');
     }
 
     if (hoist) {
-      tags.push("Hoisted");
+      tags.push('Hoisted');
     }
 
     if (mentionable) {
-      tags.push("Mentionable");
+      tags.push('Mentionable');
     }
 
     if (tags.length) {
-      description.push(fmt("**Tags**: {tags}", { tags: tags.join(", ") }));
+      description.push(fmt('**Tags**: {tags}', { tags: tags.join(', ') }));
     }
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
   const permissions = permissionsText(data);
 
   if (permissions.length) {
-    embed.addField(`${tail} Permissions`, permissions.join(", "));
+    embed.addField(`${tail} Permissions`, permissions.join(', '));
   }
 
   return embed;
@@ -468,27 +471,27 @@ export async function channel(_: Context, data: Channel, embed: Embed) {
     const description: Array<string> = [];
 
     description.push(
-      fmt("**Name**: [{name}]({jumpLink}) ({mention})", {
+      fmt('**Name**: [{name}]({jumpLink}) ({mention})', {
         name,
         mention,
         jumpLink,
       })
     );
 
-    description.push(fmt("**Id**: `{id}`", { id }));
+    description.push(fmt('**Id**: `{id}`', { id }));
 
     description.push(
-      fmt("**Created At**: {f} ({r})", {
+      fmt('**Created At**: {f} ({r})', {
         f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
       })
     );
 
-    description.push(fmt("**Position**: `{position}`", { position }));
+    description.push(fmt('**Position**: `{position}`', { position }));
 
     if (parent) {
       description.push(
-        fmt("**Parent Channel**: [{name}]({jumpLink}) ({mention})", {
+        fmt('**Parent Channel**: [{name}]({jumpLink}) ({mention})', {
           name: parent.name,
           jumpLink: parent.jumpLink,
           mention: parent.mention,
@@ -498,175 +501,175 @@ export async function channel(_: Context, data: Channel, embed: Embed) {
 
     if (data.threads.size) {
       description.push(
-        fmt("**Threads**: {threads}", { threads: data.threads.size })
+        fmt('**Threads**: {threads}', { threads: data.threads.size })
       );
     }
 
     if (guild) {
       description.push(
-        fmt("**Server**: [{name}]({jumpLink})", {
+        fmt('**Server**: [{name}]({jumpLink})', {
           name: guild.name,
           jumpLink: guild.jumpLink,
         })
       );
     }
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
   {
     const description: Array<string> = [];
 
     switch (data.type) {
-      case ChannelTypes.DM:
-      case ChannelTypes.GROUP_DM:
-      case ChannelTypes.GUILD_NEWS:
-      case ChannelTypes.GUILD_NEWS_THREAD:
-      case ChannelTypes.GUILD_PRIVATE_THREAD:
-      case ChannelTypes.GUILD_PUBLIC_THREAD:
-      case ChannelTypes.GUILD_TEXT: {
-        if (data.nsfw) {
-          description.push("**Nsfw**: Yes");
-        }
-
-        if (data.rateLimitPerUser) {
-          description.push(
-            fmt("**Slowmode**: {slowmode}", {
-              slowmode: Markdown.toTimeString(data.rateLimitPerUser * 1000),
-            })
-          );
-        }
-
-        if (data.lastMessage) {
-          description.push(
-            fmt("**Last Message**: [here]({jumpLink})", {
-              jumpLink: data.lastMessage.jumpLink,
-            })
-          );
-        }
-
-        if (data.owner) {
-          description.push(
-            fmt("**Owner**: [{tag}]({jumpLink}) ({mention})", {
-              tag: data.owner.tag,
-              jumpLink: data.owner.jumpLink,
-              mention: data.owner.mention,
-            })
-          );
-        }
-
-        if (data.recipients.size) {
-          description.push(
-            fmt("**Recipients**: {users}", {
-              users: data.recipients.map((x) => x.mention).join(", "),
-            })
-          );
-        }
-
-        break;
+    case ChannelTypes.DM:
+    case ChannelTypes.GROUP_DM:
+    case ChannelTypes.GUILD_NEWS:
+    case ChannelTypes.GUILD_NEWS_THREAD:
+    case ChannelTypes.GUILD_PRIVATE_THREAD:
+    case ChannelTypes.GUILD_PUBLIC_THREAD:
+    case ChannelTypes.GUILD_TEXT: {
+      if (data.nsfw) {
+        description.push('**Nsfw**: Yes');
       }
 
-      case ChannelTypes.GUILD_STAGE_VOICE:
-      case ChannelTypes.GUILD_VOICE: {
+      if (data.rateLimitPerUser) {
         description.push(
-          fmt("**Bitrate**: {bytes}/second", {
-            bytes: formatBytes(data.bitrate || 0, undefined, undefined),
+          fmt('**Slowmode**: {slowmode}', {
+            slowmode: Markdown.toTimeString(data.rateLimitPerUser * 1000),
+          })
+        );
+      }
+
+      if (data.lastMessage) {
+        description.push(
+          fmt('**Last Message**: [here]({jumpLink})', {
+            jumpLink: data.lastMessage.jumpLink,
+          })
+        );
+      }
+
+      if (data.owner) {
+        description.push(
+          fmt('**Owner**: [{tag}]({jumpLink}) ({mention})', {
+            tag: data.owner.tag,
+            jumpLink: data.owner.jumpLink,
+            mention: data.owner.mention,
+          })
+        );
+      }
+
+      if (data.recipients.size) {
+        description.push(
+          fmt('**Recipients**: {users}', {
+            users: data.recipients.map((x) => x.mention).join(', '),
+          })
+        );
+      }
+
+      break;
+    }
+
+    case ChannelTypes.GUILD_STAGE_VOICE:
+    case ChannelTypes.GUILD_VOICE: {
+      description.push(
+        fmt('**Bitrate**: {bytes}/second', {
+          bytes: formatBytes(data.bitrate || 0, undefined, undefined),
+        })
+      );
+
+      description.push(
+        fmt('**User Limit**: {current}/{max}', {
+          current: data.voiceStates.size,
+          max: data.userLimit,
+        })
+      );
+
+      if (data.videoQualityMode) {
+        description.push(
+          fmt('Video Quality: {quality}', {
+            quality: VideoQualityModesText[data.videoQualityMode],
+          })
+        );
+      }
+
+      if (data.stageInstance) {
+        description.push(
+          fmt('**Privacy**: {privacy}', {
+            privacy: StagePrivacyLevelsText[data.stageInstance.privacyLevel],
           })
         );
 
         description.push(
-          fmt("**User Limit**: {current}/{max}", {
-            current: data.voiceStates.size,
-            max: data.userLimit,
+          fmt('**Moderators**: {count}', {
+            count: data.stageInstance.moderators.size,
           })
         );
 
-        if (data.videoQualityMode) {
-          description.push(
-            fmt("Video Quality: {quality}", {
-              quality: VideoQualityModesText[data.videoQualityMode],
-            })
-          );
-        }
-
-        if (data.stageInstance) {
-          description.push(
-            fmt("**Privacy**: {privacy}", {
-              privacy: StagePrivacyLevelsText[data.stageInstance.privacyLevel],
-            })
-          );
-
-          description.push(
-            fmt("**Moderators**: {count}", {
-              count: data.stageInstance.moderators.size,
-            })
-          );
-
-          description.push(
-            fmt("**Speakers**: {count}", {
-              count: data.stageInstance.speakers.size,
-            })
-          );
-
-          description.push(
-            fmt("**Listeners**: {count}", {
-              count: data.stageInstance.listeners.size,
-            })
-          );
-        }
-
-        break;
-      }
-
-      case ChannelTypes.GUILD_CATEGORY: {
         description.push(
-          fmt("**Children**: {count}", { count: data.children.size })
+          fmt('**Speakers**: {count}', {
+            count: data.stageInstance.speakers.size,
+          })
         );
-        break;
+
+        description.push(
+          fmt('**Listeners**: {count}', {
+            count: data.stageInstance.listeners.size,
+          })
+        );
       }
 
-      case ChannelTypes.GUILD_FORUM: {
-        if (data.defaultAutoArchiveDuration) {
-          description.push(
-            fmt("**Default Auto Archive Duration**: {s} seconds", {
-              s: data.defaultAutoArchiveDuration / 1000,
-            })
-          );
-        }
+      break;
+    }
 
-        if (data.template) {
-          description.push(
-            fmt("**Template**: `{template}`", { template: data.template })
-          );
-        }
+    case ChannelTypes.GUILD_CATEGORY: {
+      description.push(
+        fmt('**Children**: {count}', { count: data.children.size })
+      );
+      break;
+    }
 
-        if (data.availableTags.size) {
-          description.push(
-            fmt("**Available Tags**: {tags}", {
-              tags: data.availableTags
-                .map((x) => {
-                  const title = Markup.codestring(
-                    x.emojiId ? x.name : `${x.emojiName} \`${x.name}\``
-                  );
-                  if (x.emojiId) {
-                    return `<:${x.emojiName}:${x.emojiId}> ${title}`;
-                  } else {
-                    return title;
-                  }
-                })
-                .join(", "),
-            })
-          );
-        }
-
-        break;
+    case ChannelTypes.GUILD_FORUM: {
+      if (data.defaultAutoArchiveDuration) {
+        description.push(
+          fmt('**Default Auto Archive Duration**: {s} seconds', {
+            s: data.defaultAutoArchiveDuration / 1000,
+          })
+        );
       }
+
+      if (data.template) {
+        description.push(
+          fmt('**Template**: `{template}`', { template: data.template })
+        );
+      }
+
+      if (data.availableTags.size) {
+        description.push(
+          fmt('**Available Tags**: {tags}', {
+            tags: data.availableTags
+              .map((x) => {
+                const title = Markup.codestring(
+                  x.emojiId ? x.name : `${x.emojiName} \`${x.name}\``
+                );
+                if (x.emojiId) {
+                  return `<:${x.emojiName}:${x.emojiId}> ${title}`;
+                } else {
+                  return title;
+                }
+              })
+              .join(', '),
+          })
+        );
+      }
+
+      break;
+    }
     }
 
     if (description.length) {
       embed.addField(
         `${tail} ${ChannelTypesText[data.type]} Channel Information`,
-        description.join("\n")
+        description.join('\n')
       );
     }
   }
@@ -679,53 +682,53 @@ export async function channel(_: Context, data: Channel, embed: Embed) {
 function getChannelIcon(channel: Channel) {
   if (channel instanceof ChannelDM) {
     return (
-      channel.iconUrl || channel.defaultIconUrl || new UnicodeEmoji("❔").url()
+      channel.iconUrl || channel.defaultIconUrl || new UnicodeEmoji('❔').url()
     );
   }
 
   switch (channel.type) {
-    case ChannelTypes.BASE:
-      return CustomEmoji.url(CustomEmojis.RichActivity);
-    case ChannelTypes.DM:
-    case ChannelTypes.GROUP_DM:
-    case ChannelTypes.GUILD_TEXT:
-      if (channel.nsfw) {
-        return CustomEmoji.url(CustomEmojis.ChannelTextNSFW);
-      }
-      return CustomEmoji.url(CustomEmojis.ChannelText);
-    case ChannelTypes.GUILD_CATEGORY:
-      return CustomEmoji.url(CustomEmojis.Synced);
-    case ChannelTypes.GUILD_DIRECTORY:
-      return CustomEmoji.url(CustomEmojis.ChannelDirectory);
-    case ChannelTypes.GUILD_NEWS:
-      if (channel.nsfw) {
-        return CustomEmoji.url(CustomEmojis.MegaphoneNSFW);
-      }
-      return CustomEmoji.url(CustomEmojis.Megaphone);
-    case ChannelTypes.GUILD_NEWS_THREAD:
-      if (channel.nsfw) {
-        return CustomEmoji.url(CustomEmojis.NSFWAnnouncementThreadIcon);
-      }
-      return CustomEmoji.url(CustomEmojis.AnnouncementThreadIcon);
-    case ChannelTypes.GUILD_PUBLIC_THREAD:
-      if (channel.nsfw) {
-        return CustomEmoji.url(CustomEmojis.NSFWThreadIcon);
-      }
-      return CustomEmoji.url(CustomEmojis.ThreadIcon);
-    case ChannelTypes.GUILD_PRIVATE_THREAD:
-      return CustomEmoji.url(CustomEmojis.PrivateThreadIcon);
+  case ChannelTypes.BASE:
+    return CustomEmoji.url(CustomEmojis.RichActivity);
+  case ChannelTypes.DM:
+  case ChannelTypes.GROUP_DM:
+  case ChannelTypes.GUILD_TEXT:
+    if (channel.nsfw) {
+      return CustomEmoji.url(CustomEmojis.ChannelTextNSFW);
+    }
+    return CustomEmoji.url(CustomEmojis.ChannelText);
+  case ChannelTypes.GUILD_CATEGORY:
+    return CustomEmoji.url(CustomEmojis.Synced);
+  case ChannelTypes.GUILD_DIRECTORY:
+    return CustomEmoji.url(CustomEmojis.ChannelDirectory);
+  case ChannelTypes.GUILD_NEWS:
+    if (channel.nsfw) {
+      return CustomEmoji.url(CustomEmojis.MegaphoneNSFW);
+    }
+    return CustomEmoji.url(CustomEmojis.Megaphone);
+  case ChannelTypes.GUILD_NEWS_THREAD:
+    if (channel.nsfw) {
+      return CustomEmoji.url(CustomEmojis.NSFWAnnouncementThreadIcon);
+    }
+    return CustomEmoji.url(CustomEmojis.AnnouncementThreadIcon);
+  case ChannelTypes.GUILD_PUBLIC_THREAD:
+    if (channel.nsfw) {
+      return CustomEmoji.url(CustomEmojis.NSFWThreadIcon);
+    }
+    return CustomEmoji.url(CustomEmojis.ThreadIcon);
+  case ChannelTypes.GUILD_PRIVATE_THREAD:
+    return CustomEmoji.url(CustomEmojis.PrivateThreadIcon);
 
-    case ChannelTypes.GUILD_STAGE_VOICE:
-      return CustomEmoji.url(CustomEmojis.StageEvents);
+  case ChannelTypes.GUILD_STAGE_VOICE:
+    return CustomEmoji.url(CustomEmojis.StageEvents);
 
-    case ChannelTypes.GUILD_STORE:
-      return CustomEmoji.url(CustomEmojis.StoreTag);
+  case ChannelTypes.GUILD_STORE:
+    return CustomEmoji.url(CustomEmojis.StoreTag);
 
-    case ChannelTypes.GUILD_VOICE:
-      return CustomEmoji.url(CustomEmojis.Speaker);
+  case ChannelTypes.GUILD_VOICE:
+    return CustomEmoji.url(CustomEmojis.Speaker);
 
-    default:
-      return new UnicodeEmoji("❔").url();
+  default:
+    return new UnicodeEmoji('❔').url();
   }
 }
 
@@ -758,7 +761,7 @@ export async function user(
     const flags: Array<CustomEmojis | Emojis> = [];
 
     for (const flag of Object.values(UserFlags)) {
-      if (typeof flag === "string") {
+      if (typeof flag === 'string') {
         continue;
       }
 
@@ -768,12 +771,12 @@ export async function user(
     }
 
     if (flags.length) {
-      description.push(flags.join(""));
+      description.push(flags.join(''));
     }
 
-    description.push(fmt("**Id**: `{id}`", { id }));
+    description.push(fmt('**Id**: `{id}`', { id }));
     description.push(
-      fmt("**Profile**: [{tag}]({jumpLink}) ({mention})", {
+      fmt('**Profile**: [{tag}]({jumpLink}) ({mention})', {
         tag,
         jumpLink,
         mention,
@@ -781,14 +784,14 @@ export async function user(
     );
 
     description.push(
-      fmt("**Avatar**: [Main]({avatarUrl}) ([Default]({defaultAvatarUrl}))", {
+      fmt('**Avatar**: [Main]({avatarUrl}) ([Default]({defaultAvatarUrl}))', {
         avatarUrl,
         defaultAvatarUrl,
       })
     );
 
     description.push(
-      fmt("**Created At**: {f} ({r})", {
+      fmt('**Created At**: {f} ({r})', {
         f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
       })
@@ -798,34 +801,34 @@ export async function user(
       const tags: Array<string> = [];
 
       if (isClientOwner) {
-        tags.push("Bot Owner");
+        tags.push('Bot Owner');
       }
 
       if (isSystem) {
-        tags.push("System");
+        tags.push('System');
       }
 
       if (isWebhook) {
-        tags.push("Webhook");
+        tags.push('Webhook');
       }
 
       if (bot) {
-        tags.push("Bot");
+        tags.push('Bot');
       }
 
       if (tags.length) {
-        description.push(fmt("**Tags**: {tags}", { tags: tags.join(", ") }));
+        description.push(fmt('**Tags**: {tags}', { tags: tags.join(', ') }));
       }
     }
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
   if (presence) {
     const description: Array<string> = [];
 
     description.push(
-      fmt("{emoji} {text}", {
+      fmt('{emoji} {text}', {
         emoji: StatusEmojis[presence.status as PresenceStatuses],
         text: StatusesText[presence.status as PresenceStatuses],
       })
@@ -836,16 +839,16 @@ export async function user(
       i++;
       if (activity.isCustomStatus) {
         description.push(
-          fmt(`{emoji} {state}`, {
-            state: Markup.italics(activity.state || ""),
+          fmt('{emoji} {state}', {
+            state: Markup.italics(activity.state || ''),
             emoji: activity.emoji?.toString(),
           })
         );
         continue;
       }
-      let c = i === presence.activities.length ? derive : delve;
+      const c = i === presence.activities.length ? derive : delve;
       description.push(
-        fmt(`{c} {type} **{name}**`, {
+        fmt('{c} {type} **{name}**', {
           c,
           type: activity.typeText,
           name: activity.name,
@@ -862,7 +865,7 @@ export async function user(
       }
     }
 
-    embed.addField(`${tail} Presence`, description.join("\n"));
+    embed.addField(`${tail} Presence`, description.join('\n'));
   }
 
   if (data instanceof Member) {
@@ -875,21 +878,21 @@ export async function user(
 
     if (nick !== null) {
       description.push(
-        fmt("**Nickname**: {nick}", { nick: Markup.codestring(nick) })
+        fmt('**Nickname**: {nick}', { nick: Markup.codestring(nick) })
       );
     }
 
     if (roles.size) {
       description.push(
-        fmt("**Roles**: {roles}", {
-          roles: roles.map((x) => x?.mention).join(", "),
+        fmt('**Roles**: {roles}', {
+          roles: roles.map((x) => x?.mention).join(', '),
         })
       );
     }
 
     if (premiumSinceUnix) {
       description.push(
-        fmt("**Boosting Since**: {f} ({r})", {
+        fmt('**Boosting Since**: {f} ({r})', {
           f: Markup.timestamp(
             premiumSinceUnix,
             MarkupTimestampStyles.BOTH_SHORT
@@ -900,7 +903,7 @@ export async function user(
     }
 
     if (pending) {
-      description.push("**Pending Membership**: Yes");
+      description.push('**Pending Membership**: Yes');
     }
 
     if (voiceState) {
@@ -959,9 +962,9 @@ export async function user(
 
       if (emojis.length) {
         description.push(
-          fmt("**Voice State**: {emojis} in {channel}", {
-            emojis: emojis.join(""),
-            channel: channel?.mention || "(unknown)",
+          fmt('**Voice State**: {emojis} in {channel}', {
+            emojis: emojis.join(''),
+            channel: channel?.mention || '(unknown)',
           })
         );
       }
@@ -970,14 +973,14 @@ export async function user(
     if (description.length) {
       embed.addField(
         `${tail} Member Information`,
-        "\u200b" + tab + description.join(`\n${tab}`)
+        '\u200b' + tab + description.join(`\n${tab}`)
       );
     }
 
     const permissions = permissionsText(data);
 
     if (permissions.length) {
-      embed.addField(`${tail} Permissions`, permissions.join(", "));
+      embed.addField(`${tail} Permissions`, permissions.join(', '));
     }
   }
 
@@ -1025,13 +1028,13 @@ export async function guild(
     const description: Array<string> = [];
 
     if (gdescription) {
-      description.push(Markup.italics(gdescription) + "\n");
+      description.push(Markup.italics(gdescription) + '\n');
     }
 
-    description.push(fmt("**Id**: `{id}`", { id }));
+    description.push(fmt('**Id**: `{id}`', { id }));
 
     description.push(
-      fmt("**Created At**: {f} ({r})", {
+      fmt('**Created At**: {f} ({r})', {
         f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
       })
@@ -1039,7 +1042,7 @@ export async function guild(
 
     if (owner) {
       description.push(
-        fmt("**Owner**: [{tag}]({jumpLink}) ({mention})", {
+        fmt('**Owner**: [{tag}]({jumpLink}) ({mention})', {
           jumpLink: owner.jumpLink,
           tag: owner.tag,
           mention: owner.mention,
@@ -1047,65 +1050,65 @@ export async function guild(
       );
     }
 
-    description.push(fmt("**Link**: [{name}]({jumpLink})", { jumpLink, name }));
+    description.push(fmt('**Link**: [{name}]({jumpLink})', { jumpLink, name }));
 
     if (vanityUrlCode) {
       description.push(
-        fmt("**Vanity URL**: <https://discord.gg/{vanityUrlCode}>", {
+        fmt('**Vanity URL**: <https://discord.gg/{vanityUrlCode}>', {
           vanityUrlCode,
         })
       );
     }
 
     description.push(
-      fmt("**Locale**: {preferredLocaleText}", { preferredLocaleText })
+      fmt('**Locale**: {preferredLocaleText}', { preferredLocaleText })
     );
 
     {
       const tags: Array<string> = [];
 
       if (isDiscoverable) {
-        tags.push("Discoverable");
+        tags.push('Discoverable');
       }
 
       if (isPartnered) {
-        tags.push("Partnered");
+        tags.push('Partnered');
       }
 
       if (isVerified) {
-        tags.push("Verified");
+        tags.push('Verified');
       }
 
       if (isPublic) {
-        tags.push("Public");
+        tags.push('Public');
       }
 
       if (tags.length) {
-        description.push(fmt("**Tags**: {tags}", { tags: tags.join(", ") }));
+        description.push(fmt('**Tags**: {tags}', { tags: tags.join(', ') }));
       }
     }
 
-    embed.setDescription(description.join("\n"));
+    embed.setDescription(description.join('\n'));
   }
 
   {
     const description: Array<string> = [];
     description.push(
-      fmt("\n**MFA Level**: {text}", { text: GuildMfaLevelsText[mfaLevel] })
+      fmt('\n**MFA Level**: {text}', { text: GuildMfaLevelsText[mfaLevel] })
     );
 
     description.push(
-      fmt("**NSFW Level**: {text}", { text: GuildNsfwLevelsText[nsfwLevel] })
+      fmt('**NSFW Level**: {text}', { text: GuildNsfwLevelsText[nsfwLevel] })
     );
 
     description.push(
-      fmt("**Content Filter**: {text}", {
+      fmt('**Content Filter**: {text}', {
         text: GuildExplicitContentFiltersText[explicitContentFilter],
       })
     );
 
     description.push(
-      fmt("**Verification Level**: {text}", {
+      fmt('**Verification Level**: {text}', {
         text: GuildVerificationLevelsText[
           verificationLevel as VerificationLevels
         ],
@@ -1113,13 +1116,13 @@ export async function guild(
     );
 
     description.push(
-      fmt("**Default Message Notifications**: {text}", {
-        text: defaultMessageNotifications === 1 ? "Mentions" : "All Messages",
+      fmt('**Default Message Notifications**: {text}', {
+        text: defaultMessageNotifications === 1 ? 'Mentions' : 'All Messages',
       })
     );
 
     if (description.length) {
-      embed.addField(`${tail} Settings`, description.join("\n"));
+      embed.addField(`${tail} Settings`, description.join('\n'));
     }
   }
 
@@ -1128,7 +1131,7 @@ export async function guild(
 
     if (maxAttachmentSize) {
       description.push(
-        fmt("**Attachment Size**: {bytes}", {
+        fmt('**Attachment Size**: {bytes}', {
           bytes: formatBytes(maxAttachmentSize),
         })
       );
@@ -1136,7 +1139,7 @@ export async function guild(
 
     if (maxBitrate) {
       description.push(
-        fmt("**Bitrate**: {bytes}/s", {
+        fmt('**Bitrate**: {bytes}/s', {
           bytes: formatBytes(maxBitrate),
         })
       );
@@ -1144,7 +1147,7 @@ export async function guild(
 
     if (maxEmojis) {
       description.push(
-        fmt("**Emojis**: {maxEmojis}", {
+        fmt('**Emojis**: {maxEmojis}', {
           maxEmojis,
         })
       );
@@ -1152,7 +1155,7 @@ export async function guild(
 
     if (maxMembers) {
       description.push(
-        fmt("**Members**: {maxMembers}", {
+        fmt('**Members**: {maxMembers}', {
           maxMembers,
         })
       );
@@ -1160,7 +1163,7 @@ export async function guild(
 
     if (maxPresences) {
       description.push(
-        fmt("**Presences**: {maxPresences}", {
+        fmt('**Presences**: {maxPresences}', {
           maxPresences,
         })
       );
@@ -1168,14 +1171,14 @@ export async function guild(
 
     if (maxVideoChannelUsers) {
       description.push(
-        fmt("**Video Channel Users**: {maxVideoChannelUsers}", {
+        fmt('**Video Channel Users**: {maxVideoChannelUsers}', {
           maxVideoChannelUsers,
         })
       );
     }
 
     if (description.length) {
-      embed.addField(`${tail} Limits`, description.join("\n"));
+      embed.addField(`${tail} Limits`, description.join('\n'));
     }
   }
 
@@ -1228,20 +1231,20 @@ export async function guild(
       ]);
     }
 
-    let txt = "";
+    let txt = '';
 
     for (let i = 0; i < counts.length; i++) {
-      let [e, t] = counts[i]!;
+      const [e, t] = counts[i] || [];
 
       if (i % 8 === 0 && i > 0) {
-        txt += "\n";
+        txt += '\n';
       }
 
       txt += `${e} ${t}${tab}`;
     }
 
     if (counts.length) {
-      embed.addField("\u200b", txt);
+      embed.addField('\u200b', txt);
     }
   }
 
@@ -1249,7 +1252,7 @@ export async function guild(
     embed.setImage(bannerUrl);
   }
 
-  embed.setThumbnail(iconUrl || new UnicodeEmoji("❔").url());
+  embed.setThumbnail(iconUrl || new UnicodeEmoji('❔').url());
 
   return embed;
 }
@@ -1293,10 +1296,10 @@ export async function message(
   {
     const description: Array<string> = [];
 
-    description.push(fmt("**Id**: `{id}`", { id }));
+    description.push(fmt('**Id**: `{id}`', { id }));
 
     description.push(
-      fmt("**Author**: [{tag}]({jumpLink}) ({mention})", {
+      fmt('**Author**: [{tag}]({jumpLink}) ({mention})', {
         jumpLink: author.jumpLink,
         mention: author.mention,
         tag: author.tag,
@@ -1304,7 +1307,7 @@ export async function message(
     );
 
     description.push(
-      fmt("**Created At**: {f} ({r})", {
+      fmt('**Created At**: {f} ({r})', {
         f: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.BOTH_SHORT),
         r: Markup.timestamp(createdAtUnix, MarkupTimestampStyles.RELATIVE),
       })
@@ -1312,7 +1315,7 @@ export async function message(
 
     if (editedAtUnix) {
       description.push(
-        fmt("**Last Edited At**: {f} ({r})", {
+        fmt('**Last Edited At**: {f} ({r})', {
           f: Markup.timestamp(editedAtUnix, MarkupTimestampStyles.BOTH_SHORT),
           r: Markup.timestamp(editedAtUnix, MarkupTimestampStyles.RELATIVE),
         })
@@ -1320,16 +1323,16 @@ export async function message(
     }
 
     if (deleted) {
-      description.push("**Deleted**: Yes");
+      description.push('**Deleted**: Yes');
     }
 
     if (pinned) {
-      description.push("**Pinned**: Yes");
+      description.push('**Pinned**: Yes');
     }
 
     if (thread) {
       description.push(
-        fmt("**Attached Thread**: [{name}]({jumpLink}) ({mention})", {
+        fmt('**Attached Thread**: [{name}]({jumpLink}) ({mention})', {
           name: thread.name,
           jumpLink: thread.jumpLink,
           mention: thread.mention,
@@ -1341,80 +1344,80 @@ export async function message(
       const tags: Array<string> = [];
 
       if (fromBot) {
-        tags.push("From Bot");
+        tags.push('From Bot');
       }
 
       if (fromMe) {
-        tags.push("From Me");
+        tags.push('From Me');
       }
 
       if (fromSystem) {
-        tags.push("From System");
+        tags.push('From System');
       }
 
       if (fromUser) {
-        tags.push("From User");
+        tags.push('From User');
       }
 
       if (fromWebhook) {
-        tags.push("From Webhook");
+        tags.push('From Webhook');
       }
 
       if (hasFlagCrossposted) {
-        tags.push("Cross-Posted");
+        tags.push('Cross-Posted');
       }
 
       if (hasFlagEphemeral) {
-        tags.push("Ephemeral");
+        tags.push('Ephemeral');
       }
 
       if (hasFlagFailedToMentionSomeRolesInThread) {
-        tags.push("Failed to mention some roles in thread");
+        tags.push('Failed to mention some roles in thread');
       }
 
       if (hasFlagHasThread) {
-        tags.push("Has Thread");
+        tags.push('Has Thread');
       }
 
       if (hasFlagIsCrossposted) {
-        tags.push("Is Cross-Posted");
+        tags.push('Is Cross-Posted');
       }
 
       if (hasFlagLoading) {
-        tags.push("Loading");
+        tags.push('Loading');
       }
 
       if (hasFlagSourceMessageDeleted) {
-        tags.push("Source Message Deleted");
+        tags.push('Source Message Deleted');
       }
 
       if (hasFlagSuppressEmbeds) {
-        tags.push("Suppress Embeds");
+        tags.push('Suppress Embeds');
       }
 
       if (hasFlagUrgent) {
-        tags.push("Urgent");
+        tags.push('Urgent');
       }
 
       if (tags.length) {
-        description.push(fmt("**Tags**: {tags}", { tags: tags.join(", ") }));
+        description.push(fmt('**Tags**: {tags}', { tags: tags.join(', ') }));
       }
     }
 
     if (referencedMessage) {
       description.push(
-        fmt("**Replying to**: [here]({jumpLink})", {
+        fmt('**Replying to**: [here]({jumpLink})', {
           jumpLink: referencedMessage.jumpLink,
         })
       );
     }
 
     if (jumpLink) {
-      description.push(fmt("**Jump Link**: [here]({jumpLink})", { jumpLink }));
+      description.push(fmt('**Jump Link**: [here]({jumpLink})', { jumpLink }));
     }
 
     if (description.length) {
-      embed.setDescription(description.join("\n"));
+      embed.setDescription(description.join('\n'));
     }
   }
 
@@ -1423,7 +1426,7 @@ export async function message(
       `${tail} Reactions`,
       reactions
         .map((x) => `${x.emoji.toString()} \`${x.count.toLocaleString()}\``)
-        .join(" ")
+        .join(' ')
     );
   }
 

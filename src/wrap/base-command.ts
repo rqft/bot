@@ -1,14 +1,14 @@
-import { Command, CommandClient } from "detritus-client/lib";
-import { CommandRatelimitTypes } from "detritus-client/lib/constants";
-import { respond } from "../tools/util";
-import { Warning } from "../tools/warning";
+import { Command, CommandClient } from 'detritus-client/lib';
+import { CommandRatelimitTypes } from 'detritus-client/lib/constants';
+import { respond } from '../tools/util';
+import { Warning } from '../tools/warning';
 
 export interface CommandOptionsExtra extends Command.CommandOptions {
   metadata: CommandMetadata;
 }
 
 export enum CommandType {
-  MISC = "Miscellaneous",
+  MISC = 'Miscellaneous',
 }
 
 export interface CommandMetadata {
@@ -41,37 +41,41 @@ export class BaseCommand<T> extends Command.Command<T> {
   }
 
   onTypeError(context: Command.Context, _: T, errors: Record<string, Error>) {
-    let text = [];
+    const text = [];
     for (const key in errors) {
-      const value = errors[key]!;
+      const value = errors[key];
+
+      if (value === undefined) {
+        continue;
+      }
       const { message } = value;
 
       let head = this.syntax;
       head +=
-        "\n" +
-        " ".repeat(this.syntax.indexOf("[" + key + "]") + 1) +
-        "^" +
-        "-".repeat(key.length - 1) +
-        " " +
+        '\n' +
+        ' '.repeat(this.syntax.indexOf('[' + key + ']') + 1) +
+        '^' +
+        '-'.repeat(key.length - 1) +
+        ' ' +
         message;
 
       text.push(head);
     }
 
     if (text.length) {
-      return respond.fmt(context, `\`\`\`lua\n{text}\n\`\`\``, {
-        text: text.join("\n"),
+      return respond.fmt(context, '```lua\n{text}\n```', {
+        text: text.join('\n'),
       });
     }
   }
 
   onError(context: Command.Context, _args: unknown, error: Error) {
     if (error instanceof Warning) {
-      return respond.fmt(context, ":warning: `{content}`", {
+      return respond.fmt(context, ':warning: `{content}`', {
         content: error.content,
       });
     }
-    return respond.fmt(context, ":x: `{message}`", { message: error.stack });
+    return respond.fmt(context, ':x: `{message}`', { message: error.stack });
   }
 
   onRunError(context: Command.Context, args: T, error: Error) {

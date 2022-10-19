@@ -12,25 +12,25 @@ exports.MAX_PAGE = Number.MAX_SAFE_INTEGER;
 exports.MIN_PAGE = 1;
 var PageButtonNames;
 (function (PageButtonNames) {
-    PageButtonNames["CUSTOM"] = "custom";
-    PageButtonNames["NEXT"] = "next";
-    PageButtonNames["NEXT_LARGE"] = "next-large";
-    PageButtonNames["PREVIOUS"] = "previous";
-    PageButtonNames["PREVIOUS_LARGE"] = "previous-large";
-    PageButtonNames["SHUFFLE"] = "shuffle";
-    PageButtonNames["STOP"] = "stop";
+    PageButtonNames["Custom"] = "custom";
+    PageButtonNames["Next"] = "next";
+    PageButtonNames["NextLarge"] = "next-large";
+    PageButtonNames["Previous"] = "previous";
+    PageButtonNames["PreviousLarge"] = "previous-large";
+    PageButtonNames["Shuffle"] = "shuffle";
+    PageButtonNames["Stop"] = "stop";
 })(PageButtonNames = exports.PageButtonNames || (exports.PageButtonNames = {}));
 function label(data) {
     return { label: data };
 }
 exports.PageButtons = {
-    [PageButtonNames.CUSTOM]: label("?"),
-    [PageButtonNames.NEXT]: label(">"),
-    [PageButtonNames.NEXT_LARGE]: label(">>"),
-    [PageButtonNames.PREVIOUS]: label("<"),
-    [PageButtonNames.PREVIOUS_LARGE]: label("<<"),
-    [PageButtonNames.SHUFFLE]: label("*"),
-    [PageButtonNames.STOP]: label("X"),
+    [PageButtonNames.Custom]: label('?'),
+    [PageButtonNames.Next]: label('>'),
+    [PageButtonNames.NextLarge]: label('>>'),
+    [PageButtonNames.Previous]: label('<'),
+    [PageButtonNames.PreviousLarge]: label('<<'),
+    [PageButtonNames.Shuffle]: label('*'),
+    [PageButtonNames.Stop]: label('X'),
 };
 class Paginator {
     context;
@@ -39,8 +39,8 @@ class Paginator {
         isActive: false,
         timeout: new timers_1.Timeout(),
     };
-    _isEphemeral;
-    _message = null;
+    pisEphemeral;
+    pmessage = null;
     buttons = Object.assign({}, exports.PageButtons);
     expires = 1 * (60 * 1000);
     page = exports.MIN_PAGE;
@@ -57,7 +57,7 @@ class Paginator {
     onPageNumber;
     constructor(context, options) {
         this.context = context;
-        this._message = options.message || null;
+        this.pmessage = options.message || null;
         if (options.isEphemeral !== undefined) {
             this.isEphemeral = options.isEphemeral;
         }
@@ -76,7 +76,7 @@ class Paginator {
         this.pageSkipAmount = Math.max(2, options.pageSkipAmount || this.pageSkipAmount);
         if (Array.isArray(options.targets)) {
             for (const target of options.targets) {
-                if (typeof target === "string") {
+                if (typeof target === 'string') {
                     this.targets.push(target);
                 }
                 else {
@@ -93,7 +93,7 @@ class Paginator {
             }
         }
         if (!this.targets.length) {
-            throw new Error("A userId must be specified in the targets array");
+            throw new Error('A userId must be specified in the targets array');
         }
         const buttons = Object.assign({}, exports.PageButtons, options.buttons);
         for (const key in exports.PageButtons) {
@@ -124,24 +124,24 @@ class Paginator {
             return components;
         }
         components.createButton({
-            customId: PageButtonNames.PREVIOUS,
+            customId: PageButtonNames.Previous,
             disabled: this.page === exports.MIN_PAGE,
-            ...this.buttons[PageButtonNames.PREVIOUS],
+            ...this.buttons[PageButtonNames.Previous],
         });
         components.createButton({
-            customId: PageButtonNames.NEXT,
+            customId: PageButtonNames.Next,
             disabled: this.page === this.pageLimit,
-            ...this.buttons[PageButtonNames.NEXT],
+            ...this.buttons[PageButtonNames.Next],
         });
         components.createButton({
-            customId: PageButtonNames.STOP,
+            customId: PageButtonNames.Stop,
             style: constants_1.MessageComponentButtonStyles.DANGER,
-            ...this.buttons[PageButtonNames.STOP],
+            ...this.buttons[PageButtonNames.Stop],
         });
         return components;
     }
     get channelId() {
-        return this.context.channelId;
+        return this.context.channelId || '';
     }
     get id() {
         if (this.context instanceof interaction_1.InteractionContext) {
@@ -153,37 +153,37 @@ class Paginator {
         else if (this.context instanceof detritus_client_1.Structures.Message) {
             return this.context.id;
         }
-        return "";
+        return '';
     }
     get isEphemeral() {
-        if (this._isEphemeral !== undefined) {
-            return this._isEphemeral;
+        if (this.pisEphemeral !== undefined) {
+            return this.pisEphemeral;
         }
         if (this.message) {
-            return (this._isEphemeral = this.message.hasFlag(constants_1.MessageFlags.EPHEMERAL));
+            return (this.pisEphemeral = this.message.hasFlag(constants_1.MessageFlags.EPHEMERAL));
         }
         return false;
     }
     set isEphemeral(isEphemeral) {
-        this._isEphemeral = isEphemeral;
+        this.pisEphemeral = isEphemeral;
     }
     get isLarge() {
         return false;
     }
     get message() {
-        if (this._message) {
-            return this._message;
+        if (this.pmessage) {
+            return this.pmessage;
         }
         if (this.context instanceof interaction_1.InteractionContext) {
-            return (this._message = this.context.response);
+            return (this.pmessage = this.context.response);
         }
         return null;
     }
     set message(value) {
-        this._message = value;
+        this.pmessage = value;
     }
     get messageId() {
-        return this.message ? this.message.id : "";
+        return this.message ? this.message.id : '';
     }
     get shouldHaveComponents() {
         return this.pageLimit !== exports.MIN_PAGE;
@@ -202,8 +202,8 @@ class Paginator {
         return page;
     }
     addPage(page) {
-        if (typeof this.onPage === "function") {
-            throw new Error("Cannot add a page when onPage is attached to the paginator");
+        if (typeof this.onPage === 'function') {
+            throw new Error('Cannot add a page when onPage is attached to the paginator');
         }
         if (!Array.isArray(this.pages)) {
             this.pages = [];
@@ -248,7 +248,7 @@ class Paginator {
     }
     async getPage(pageNumber) {
         let page;
-        if (typeof this.onPage === "function") {
+        if (typeof this.onPage === 'function') {
             page = await Promise.resolve(this.onPage(this.page));
         }
         else {
@@ -272,7 +272,7 @@ class Paginator {
             embed = page;
         }
         else {
-            throw new Error("Invalid Page Given");
+            throw new Error('Invalid Page Given');
         }
         return [embed, files];
     }
@@ -349,7 +349,7 @@ class Paginator {
         }
         try {
             switch (context.customId) {
-                case PageButtonNames.CUSTOM:
+                case PageButtonNames.Custom:
                     {
                         if (this.custom.isActive) {
                             await this.clearCustomMessage(context);
@@ -359,7 +359,7 @@ class Paginator {
                             this.custom.isActive = true;
                             await this.updateButtons(context);
                             this.custom.message = await context.createMessage({
-                                content: "ok what page u want",
+                                content: 'ok what page u want',
                                 flags: this.isEphemeral ? constants_1.MessageFlags.EPHEMERAL : undefined,
                             });
                             this.custom.timeout.start(this.custom.expire, async () => {
@@ -368,12 +368,12 @@ class Paginator {
                         }
                     }
                     break;
-                case PageButtonNames.NEXT:
+                case PageButtonNames.Next:
                     {
                         await this.setPage(this.page + 1, context);
                     }
                     break;
-                case PageButtonNames.NEXT_LARGE:
+                case PageButtonNames.NextLarge:
                     {
                         if (!this.isLarge) {
                             return;
@@ -381,12 +381,12 @@ class Paginator {
                         await this.setPage(this.page + this.pageSkipAmount, context);
                     }
                     break;
-                case PageButtonNames.PREVIOUS:
+                case PageButtonNames.Previous:
                     {
                         await this.setPage(this.page - 1, context);
                     }
                     break;
-                case PageButtonNames.PREVIOUS_LARGE:
+                case PageButtonNames.PreviousLarge:
                     {
                         if (!this.isLarge) {
                             return;
@@ -394,12 +394,12 @@ class Paginator {
                         await this.setPage(this.page - this.pageSkipAmount, context);
                     }
                     break;
-                case PageButtonNames.SHUFFLE:
+                case PageButtonNames.Shuffle:
                     {
                         await this.setPage(this.randomPage, context);
                     }
                     break;
-                case PageButtonNames.STOP:
+                case PageButtonNames.Stop:
                     {
                         await this.onStop(null, true, context, true);
                         if (this.context instanceof command_1.Context) {
@@ -424,7 +424,7 @@ class Paginator {
             });
         }
         catch (error) {
-            if (typeof this.onError === "function") {
+            if (typeof this.onError === 'function') {
                 await Promise.resolve(this.onError(error, this));
             }
         }
@@ -453,16 +453,16 @@ class Paginator {
             this.stopped = true;
             try {
                 if (error) {
-                    if (typeof this.onError === "function") {
+                    if (typeof this.onError === 'function') {
                         await Promise.resolve(this.onError(error, this));
                     }
                 }
-                if (typeof this.onExpire === "function") {
+                if (typeof this.onExpire === 'function') {
                     await Promise.resolve(this.onExpire(this));
                 }
             }
             catch (error) {
-                if (typeof this.onError === "function") {
+                if (typeof this.onError === 'function') {
                     await Promise.resolve(this.onError(error, this));
                 }
             }
@@ -517,9 +517,9 @@ class Paginator {
         }
     }
     async start() {
-        if (typeof this.onPage !== "function" &&
+        if (typeof this.onPage !== 'function' &&
             !(this.pages && this.pages.length)) {
-            throw new Error("Paginator needs an onPage function or at least one page added to it");
+            throw new Error('Paginator needs an onPage function or at least one page added to it');
         }
         if (this.isEphemeral && !(this.context instanceof interaction_1.InteractionContext)) {
             this.isEphemeral = false;
@@ -549,18 +549,18 @@ class Paginator {
         }
         else {
             if (!this.context.canReply) {
-                throw new Error("Cannot create messages in this channel");
+                throw new Error('Cannot create messages in this channel');
             }
             const [embed, files] = await this.getPage(this.page);
             if (this.context instanceof command_1.Context) {
-                message = this._message = await (0, util_1.respond)(this.context, {
+                message = this.pmessage = await (0, util_1.respond)(this.context, {
                     components: this.components,
                     embed,
                     files,
                 });
             }
             else {
-                message = this._message = await this.context.reply({
+                message = this.pmessage = await this.context.reply({
                     components: this.components,
                     embed,
                     files,

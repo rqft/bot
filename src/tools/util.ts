@@ -1,7 +1,7 @@
-import { Context, EditOrReply } from "detritus-client/lib/command";
-import { Permissions } from "detritus-client/lib/constants";
-import { Member, Role } from "detritus-client/lib/structures";
-import { IrrelevantPermissions, PermissionsText } from "../constants";
+import { Context, EditOrReply } from 'detritus-client/lib/command';
+import { Permissions } from 'detritus-client/lib/constants';
+import { Member, Role } from 'detritus-client/lib/structures';
+import { IrrelevantPermissions, PermissionsText } from '../constants';
 
 export function fmt<T extends string>(
   value: T,
@@ -13,7 +13,7 @@ export function fmt<T extends string>(
     f = f.split(`{${key}}`).join(String(value));
   }
 
-  f = f.split("\\bl").join("{").split("\\br").join("}");
+  f = f.split('\\bl').join('{').split('\\br').join('}');
 
   return f;
 }
@@ -26,7 +26,7 @@ export type Placeholders<
 
 export const respond = Object.assign(
   async (context: Context, options: EditOrReply | string) => {
-    if (typeof options === "string") {
+    if (typeof options === 'string') {
       options = { content: options };
     }
     return await context.editOrReply(
@@ -53,7 +53,7 @@ export const respond = Object.assign(
 
 export function toCodePoint(
   unicodeSurrogates: string,
-  separator = "-"
+  separator = '-'
 ): string {
   const r: Array<string> = [];
   let c = 0;
@@ -78,14 +78,14 @@ const UFE0F_REGEX = /\uFE0F/g;
 
 export function toCodePointForTwemoji(unicodeSurrogates: string): string {
   if (unicodeSurrogates.indexOf(U200D) < 0) {
-    unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, "");
+    unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, '');
   }
   return toCodePoint(unicodeSurrogates);
 }
 
 export function permissionsText(context: Member | Role) {
   if (context.can(Permissions.ADMINISTRATOR)) {
-    return [PermissionsText[String(Permissions.ADMINISTRATOR)]!];
+    return [PermissionsText[String(Permissions.ADMINISTRATOR)] || ''];
   }
 
   const text: Array<string> = [];
@@ -108,14 +108,14 @@ export function permissionsText(context: Member | Role) {
 
   return text;
 }
-export const ByteUnits = ["bytes", "kb", "mb", "gb", "tb"];
-export const SIByteUnits = ["bytes", "kib", "mib", "gib", "tib"];
+export const ByteUnits = ['bytes', 'kb', 'mb', 'gb', 'tb'];
+export const SIByteUnits = ['bytes', 'kib', 'mib', 'gib', 'tib'];
 export function formatBytes(
   bytes: number,
   decimals = 2,
   noBiBytes = true
 ): string {
-  if (bytes === 0) return "0 bytes";
+  if (bytes === 0) return '0 bytes';
 
   const delimiter = noBiBytes ? 1000 : 1024;
   const dm = decimals < 0 ? 0 : decimals;
@@ -124,10 +124,10 @@ export function formatBytes(
   const i = Math.floor(Math.log(bytes) / Math.log(delimiter));
 
   return (
-    parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + " " + sizes[i]
+    parseFloat((bytes / Math.pow(delimiter, i)).toFixed(dm)) + ' ' + sizes[i]
   );
 }
 
 export function fileExtension(url: string) {
-  return url.split(/[#?]/)[0]!.split(".").pop()!.trim();
+  return url.split(/[#?]/)[0]?.split('.').pop()?.trim() || '';
 }

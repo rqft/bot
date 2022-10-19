@@ -5,7 +5,7 @@ const fetch_2 = require("../tools/fetch");
 const util_1 = require("../tools/util");
 const warning_1 = require("../tools/warning");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)("math [...expressions]", {
+exports.default = (0, builder_1.Command)('math [...expressions]', {
     args: (self) => ({
         expressions: self.string(),
     }),

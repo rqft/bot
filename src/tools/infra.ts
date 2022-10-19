@@ -1,48 +1,48 @@
 export namespace is {
-  export type type_of =
-    | "string"
-    | "number"
-    | "bigint"
-    | "symbol"
-    | "object"
-    | "undefined"
-    | "boolean"
-    | "function";
-  export function is_type(x: unknown, type: type_of) {
+  export type TypeOf =
+    | 'string'
+    | 'number'
+    | 'bigint'
+    | 'symbol'
+    | 'object'
+    | 'undefined'
+    | 'boolean'
+    | 'function';
+  export function isType(x: unknown, type: TypeOf) {
     return typeof x === type;
   }
   export function string(x: unknown): x is string {
-    return is_type(x, "string");
+    return isType(x, 'string');
   }
 
   export function number(x: unknown): x is number {
-    return is_type(x, "number");
+    return isType(x, 'number');
   }
 
   export function bigint(x: unknown): x is bigint {
-    return is_type(x, "bigint");
+    return isType(x, 'bigint');
   }
 
   export function symbol(x: unknown): x is symbol {
-    return is_type(x, "symbol");
+    return isType(x, 'symbol');
   }
 
   export function object<T = unknown>(x: unknown): x is T {
-    return is_type(x, "object");
+    return isType(x, 'object');
   }
 
   // eslint-disable-next-line no-shadow-restricted-names
   export function undefined(x: unknown): x is undefined {
-    return is_type(x, "undefined");
+    return isType(x, 'undefined');
   }
 
   export function boolean(x: unknown): x is boolean {
-    return is_type(x, "boolean");
+    return isType(x, 'boolean');
   }
 
   export function fn<U extends Array<unknown>, R>(
     x: unknown
   ): x is (...args: U) => R {
-    return is_type(x, "function");
+    return isType(x, 'function');
   }
 }

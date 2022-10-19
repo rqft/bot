@@ -1,12 +1,12 @@
-import { APIs } from "@rqft/fetch";
-import { Instances } from "../tools/fetch";
-import { respond } from "../tools/util";
-import { Warning } from "../tools/warning";
+import { APIs } from '@rqft/fetch';
+import { Instances } from '../tools/fetch';
+import { respond } from '../tools/util';
+import { Warning } from '../tools/warning';
 
-import { Command } from "../wrap/builder";
+import { Command } from '../wrap/builder';
 
 export default Command(
-  "math [...expressions]",
+  'math [...expressions]',
   {
     args: (self) => ({
       expressions: self.string(),

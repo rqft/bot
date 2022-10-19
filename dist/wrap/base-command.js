@@ -26,33 +26,36 @@ class BaseCommand extends lib_1.Command.Command {
         this.metadata = options.metadata;
     }
     onTypeError(context, _, errors) {
-        let text = [];
+        const text = [];
         for (const key in errors) {
             const value = errors[key];
+            if (value === undefined) {
+                continue;
+            }
             const { message } = value;
             let head = this.syntax;
             head +=
-                "\n" +
-                    " ".repeat(this.syntax.indexOf("[" + key + "]") + 1) +
-                    "^" +
-                    "-".repeat(key.length - 1) +
-                    " " +
+                '\n' +
+                    ' '.repeat(this.syntax.indexOf('[' + key + ']') + 1) +
+                    '^' +
+                    '-'.repeat(key.length - 1) +
+                    ' ' +
                     message;
             text.push(head);
         }
         if (text.length) {
-            return util_1.respond.fmt(context, `\`\`\`lua\n{text}\n\`\`\``, {
-                text: text.join("\n"),
+            return util_1.respond.fmt(context, '```lua\n{text}\n```', {
+                text: text.join('\n'),
             });
         }
     }
     onError(context, _args, error) {
         if (error instanceof warning_1.Warning) {
-            return util_1.respond.fmt(context, ":warning: `{content}`", {
+            return util_1.respond.fmt(context, ':warning: `{content}`', {
                 content: error.content,
             });
         }
-        return util_1.respond.fmt(context, ":x: `{message}`", { message: error.stack });
+        return util_1.respond.fmt(context, ':x: `{message}`', { message: error.stack });
     }
     onRunError(context, args, error) {
         return this.onError(context, args, error);

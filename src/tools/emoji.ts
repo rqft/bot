@@ -1,7 +1,7 @@
-import { Endpoints } from "detritus-client";
-import { emojis } from "../constants";
-import { client } from "../globals";
-import { fmt, toCodePointForTwemoji } from "./util";
+import { Endpoints } from 'detritus-client';
+import { emojis } from '../constants';
+import { client } from '../globals';
+import { fmt, toCodePointForTwemoji } from './util';
 
 export class CustomEmoji {
   public readonly animated: boolean = false;
@@ -9,27 +9,27 @@ export class CustomEmoji {
   public readonly id: string;
   constructor(identifier: string) {
     if (/^<.+?>$/.test(identifier)) {
-      identifier = identifier.replace(/^<:?|>$/g, "");
+      identifier = identifier.replace(/^<:?|>$/g, '');
     }
 
-    if (identifier.startsWith("a:")) {
+    if (identifier.startsWith('a:')) {
       this.animated = true;
-      identifier = identifier.replace(/^a:/, "");
+      identifier = identifier.replace(/^a:/, '');
     }
 
-    [this.name, this.id] = identifier.split(":") as [string, string];
+    [this.name, this.id] = identifier.split(':') as [string, string];
   }
 
   public identifier() {
-    return fmt("[name]:[id]", {
+    return fmt('[name]:[id]', {
       name: this.name,
       id: this.id,
     });
   }
 
   public mention() {
-    return fmt("<[animated]:[id]>", {
-      animated: this.animated ? "a" : "",
+    return fmt('<[animated]:[id]>', {
+      animated: this.animated ? 'a' : '',
       id: this.identifier(),
     });
   }
@@ -37,7 +37,7 @@ export class CustomEmoji {
   public url() {
     return (
       Endpoints.Urls.CDN.slice(0, -1) +
-      Endpoints.CDN.EMOJI(this.id, this.animated ? "gif" : "png")
+      Endpoints.CDN.EMOJI(this.id, this.animated ? 'gif' : 'png')
     );
   }
 
@@ -64,7 +64,7 @@ export class UnicodeEmoji {
     return (
       emojis.find((x) => x.emoji === this.emoji) ||
       (() => {
-        throw new Error("Could not find emoji");
+        throw new Error('Could not find emoji');
       })()
     );
   }
@@ -76,6 +76,7 @@ export interface EmojiInfo {
   emoji: string;
   unicode: string;
   category: EmojiCategory;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   sub_category: EmojiCategory;
   children?: Array<EmojiInfo>;
   keywords: Array<string>;

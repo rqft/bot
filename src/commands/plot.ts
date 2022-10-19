@@ -1,11 +1,11 @@
-import { Embeds } from "../tools/embed";
-import { Instances } from "../tools/fetch";
-import { fmt, respond } from "../tools/util";
-import { Warning } from "../tools/warning";
-import { Command } from "../wrap/builder";
+import { Embeds } from '../tools/embed';
+import { Instances } from '../tools/fetch';
+import { fmt, respond } from '../tools/util';
+import { Warning } from '../tools/warning';
+import { Command } from '../wrap/builder';
 
 export default Command(
-  "plot [expressions] [-s?=3] [-scale?=50] [-dm?] [-dx?] [-rm?] [-rx?] [-size?=1024]",
+  'plot [expressions] [-s?=3] [-scale?=50] [-dm?] [-dx?] [-rm?] [-rx?] [-size?=1024]',
   {
     args: (self) => ({
       expressions: self.string(),
@@ -44,18 +44,18 @@ export default Command(
 
     const embed = Embeds.user(context);
 
-    embed.setImage("attachment://plot.png");
+    embed.setImage('attachment://plot.png');
 
-    let text = fmt("Scale: {scale}x", { scale: args.scale });
+    let text = fmt('Scale: {scale}x', { scale: args.scale });
 
     if (args.dm || args.dx) {
-      text += "\nDomain: ";
+      text += '\nDomain: ';
 
       if (args.dm) {
         text += `${args.dm} < `;
       }
 
-      text += "x";
+      text += 'x';
 
       if (args.dx) {
         text += ` < ${args.dx}`;
@@ -63,13 +63,13 @@ export default Command(
     }
 
     if (args.rm || args.rx) {
-      text += "\nRange: ";
+      text += '\nRange: ';
 
       if (args.rm) {
         text += `${args.rm} < `;
       }
 
-      text += "y";
+      text += 'y';
 
       if (args.rx) {
         text += ` < ${args.rx}`;
@@ -79,15 +79,15 @@ export default Command(
     embed.setDescription(text);
 
     embed.setFooter(
-      fmt("{size}x{size}, Graph of f(x) = {expressions}", {
+      fmt('{size}x{size}, Graph of f(x) = {expressions}', {
         size: args.size,
-        expressions: args.expressions.split(";").join(" # "),
+        expressions: args.expressions.split(';').join(' # '),
       })
     );
 
     return await respond(context, {
       embeds: [embed],
-      files: [{ filename: "plot.png", value: payload }],
+      files: [{ filename: 'plot.png', value: payload }],
     });
   }
 );

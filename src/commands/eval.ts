@@ -1,19 +1,19 @@
-import ImageScript, { Frame, GIF, Image } from "imagescript";
-import ImageScript2, { Animation, Image as Image2 } from "imagescript/v2";
-import { transpile as ts } from "typescript";
-import { inspect } from "util";
-import { Ansi } from "../tools/formatter";
-import { respond } from "../tools/util";
-import { Command } from "../wrap/builder";
+import ImageScript, { Frame, GIF, Image } from 'imagescript';
+import ImageScript2, { Animation, Image as Image2 } from 'imagescript/v2';
+import { transpile as ts } from 'typescript';
+import { inspect } from 'util';
+import { Ansi } from '../tools/formatter';
+import { respond } from '../tools/util';
+import { Command } from '../wrap/builder';
 export default Command(
-  "eval [...code]",
+  'eval [...code]',
   { args: (self) => ({ code: self.string() }) },
   async (context, args) => {
     if (
       !context.user.isClientOwner &&
-      context.userId !== "312715611413413889"
+      context.userId !== '312715611413413889'
     ) {
-      console.log("!!!");
+      console.log('!!!');
       return;
     }
 
@@ -30,7 +30,7 @@ export default Command(
       return await respond(context, {
         files: [
           {
-            filename: "out." + (data instanceof GIF ? "gif" : "png"),
+            filename: 'out.' + (data instanceof GIF ? 'gif' : 'png'),
             value: Buffer.from(await data.encode()),
           },
         ],
@@ -42,8 +42,8 @@ export default Command(
         return await respond(context, {
           files: [
             {
-              filename: "out.gif",
-              value: Buffer.from(await data.encode("gif")),
+              filename: 'out.gif',
+              value: Buffer.from(await data.encode('gif')),
             },
           ],
         });
@@ -51,12 +51,12 @@ export default Command(
 
       return await respond(context, {
         files: [
-          { filename: "out.png", value: Buffer.from(await data.encode("png")) },
+          { filename: 'out.png', value: Buffer.from(await data.encode('png')) },
         ],
       });
     }
 
-    return await respond.fmt(context, "```js\n{data}\n```", {
+    return await respond.fmt(context, '```js\n{data}\n```', {
       data: inspect(data, { depth: 3, showProxy: true }),
     });
   }

@@ -1,4 +1,4 @@
-import { ArgumentOptions, Context } from "detritus-client/lib/command";
+import { ArgumentOptions, Context } from 'detritus-client/lib/command';
 import {
   ChannelBase,
   ChannelDM,
@@ -16,10 +16,10 @@ import {
   Member,
   Role,
   User,
-} from "detritus-client/lib/structures";
-import { UnicodeEmoji } from "../tools/emoji";
-import { MediaTypes } from "../tools/image-search";
-import { CommandMetadata, CommandOptionsExtra } from "./base-command";
+} from 'detritus-client/lib/structures';
+import { UnicodeEmoji } from '../tools/emoji';
+import { MediaTypes } from '../tools/image-search';
+import { CommandMetadata, CommandOptionsExtra } from './base-command';
 
 export type SyntaxParser<
   U extends string,
@@ -184,18 +184,18 @@ export interface ChannelOptions<T extends ChannelNames> {
 }
 
 export enum ChannelNames {
-  Base = "Base",
-  Dm = "Dm",
-  GuildVoice = "GuildVoice",
-  DmGroup = "DmGroup",
-  GuildBase = "GuildBase",
-  GuildCategory = "GuildCategory",
-  GuildText = "GuildText",
-  GuildStore = "GuildStore",
-  GuildThread = "GuildThread",
-  GuildStageVoice = "GuildStageVoice",
-  GuildDirectory = "GuildDirectory",
-  GuildForum = "GuildForum",
+  Base = 'Base',
+  Dm = 'Dm',
+  GuildVoice = 'GuildVoice',
+  DmGroup = 'DmGroup',
+  GuildBase = 'GuildBase',
+  GuildCategory = 'GuildCategory',
+  GuildText = 'GuildText',
+  GuildStore = 'GuildStore',
+  GuildThread = 'GuildThread',
+  GuildStageVoice = 'GuildStageVoice',
+  GuildDirectory = 'GuildDirectory',
+  GuildForum = 'GuildForum',
 }
 
 export type ChannelFromName<T extends ChannelNames> = {
@@ -249,7 +249,7 @@ export type Values<T extends ArgsFactory<U, any>, U extends string> = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Options<U extends string, V extends ArgsFactory<U, any>>
-  extends Omit<CommandOptionsExtra, keyof ArgumentOptions | "args"> {
+  extends Omit<CommandOptionsExtra, keyof ArgumentOptions | 'args'> {
   args?: V;
   metadata?: CommandMetadata;
   aliases?: Iterable<string>;

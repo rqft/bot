@@ -9,6 +9,6 @@ exports.client = new lib_1.ShardClient(secrets_1.Secrets.Token, {
     },
 });
 exports.commands = new lib_1.CommandClient(exports.client, {
-    prefix: ",",
+    prefix: ',',
     activateOnEdits: true,
 });

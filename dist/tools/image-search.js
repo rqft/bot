@@ -50,6 +50,9 @@ async function findMediaUrls(type, context, text) {
     if (text) {
         const urls = (0, utils_1.regex)(constants_1.DiscordRegexNames.TEXT_URL, text);
         for (const { text } of urls.matches) {
+            if (text === undefined) {
+                continue;
+            }
             if (canBeAudio && structures_1.EmbeddableRegexes.audio.test((0, util_1.fileExtension)(text))) {
                 out.push(text);
             }

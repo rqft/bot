@@ -1,18 +1,18 @@
-import { Context } from "detritus-client/lib/command";
+import { Context } from 'detritus-client/lib/command';
 import {
   DiscordRegexNames,
   StickerFormats,
-} from "detritus-client/lib/constants";
-import { EmbeddableRegexes, Message } from "detritus-client/lib/structures";
-import { regex } from "detritus-client/lib/utils";
-import { CommandArgumentBuilders } from "../wrap/builder";
-import { CustomEmoji } from "./emoji";
-import { fileExtension } from "./util";
+} from 'detritus-client/lib/constants';
+import { EmbeddableRegexes, Message } from 'detritus-client/lib/structures';
+import { regex } from 'detritus-client/lib/utils';
+import { CommandArgumentBuilders } from '../wrap/builder';
+import { CustomEmoji } from './emoji';
+import { fileExtension } from './util';
 
 export enum MediaType {
-  Audio = "Audio",
-  Video = "Video",
-  Image = "Image",
+  Audio = 'Audio',
+  Video = 'Video',
+  Image = 'Image',
 }
 
 export type MediaTypes = MediaType | `${MediaType}`;
@@ -69,16 +69,19 @@ export async function findMediaUrls(
     const urls = regex(DiscordRegexNames.TEXT_URL, text);
 
     for (const { text } of urls.matches) {
-      if (canBeAudio && EmbeddableRegexes.audio.test(fileExtension(text!))) {
-        out.push(text!);
+      if (text === undefined) {
+        continue;
+      }
+      if (canBeAudio && EmbeddableRegexes.audio.test(fileExtension(text))) {
+        out.push(text);
       }
 
-      if (canBeImage && EmbeddableRegexes.image.test(fileExtension(text!))) {
-        out.push(text!);
+      if (canBeImage && EmbeddableRegexes.image.test(fileExtension(text))) {
+        out.push(text);
       }
 
-      if (canBeVideo && EmbeddableRegexes.video.test(fileExtension(text!))) {
-        out.push(text!);
+      if (canBeVideo && EmbeddableRegexes.video.test(fileExtension(text))) {
+        out.push(text);
       }
     }
 

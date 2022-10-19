@@ -11,29 +11,29 @@ class CustomEmoji {
     id;
     constructor(identifier) {
         if (/^<.+?>$/.test(identifier)) {
-            identifier = identifier.replace(/^<:?|>$/g, "");
+            identifier = identifier.replace(/^<:?|>$/g, '');
         }
-        if (identifier.startsWith("a:")) {
+        if (identifier.startsWith('a:')) {
             this.animated = true;
-            identifier = identifier.replace(/^a:/, "");
+            identifier = identifier.replace(/^a:/, '');
         }
-        [this.name, this.id] = identifier.split(":");
+        [this.name, this.id] = identifier.split(':');
     }
     identifier() {
-        return (0, util_1.fmt)("[name]:[id]", {
+        return (0, util_1.fmt)('[name]:[id]', {
             name: this.name,
             id: this.id,
         });
     }
     mention() {
-        return (0, util_1.fmt)("<[animated]:[id]>", {
-            animated: this.animated ? "a" : "",
+        return (0, util_1.fmt)('<[animated]:[id]>', {
+            animated: this.animated ? 'a' : '',
             id: this.identifier(),
         });
     }
     url() {
         return (detritus_client_1.Endpoints.Urls.CDN.slice(0, -1) +
-            detritus_client_1.Endpoints.CDN.EMOJI(this.id, this.animated ? "gif" : "png"));
+            detritus_client_1.Endpoints.CDN.EMOJI(this.id, this.animated ? 'gif' : 'png'));
     }
     data() {
         return globals_1.client.emojis.find((x) => x.id === this.id);
@@ -57,7 +57,7 @@ class UnicodeEmoji {
     info() {
         return (constants_1.emojis.find((x) => x.emoji === this.emoji) ||
             (() => {
-                throw new Error("Could not find emoji");
+                throw new Error('Could not find emoji');
             })());
     }
 }

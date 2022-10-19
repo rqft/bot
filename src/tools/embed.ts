@@ -1,12 +1,12 @@
-import { Context, EditOrReply } from "detritus-client/lib/command";
-import { Embed } from "detritus-client/lib/utils";
-import { decode, GIF } from "imagescript";
-import { Colours } from "../constants";
-import { formatBytes } from "./util";
+import { Context, EditOrReply } from 'detritus-client/lib/command';
+import { Embed } from 'detritus-client/lib/utils';
+import { decode, GIF } from 'imagescript';
+import { Colours } from '../constants';
+import { formatBytes } from './util';
 
-export module Embeds {
+export namespace Embeds {
   export function user(context: Context, embed: Embed = new Embed()) {
-    embed.setColor(Colours.EMBED);
+    embed.setColor(Colours.Embed);
     embed.setAuthor(context.user.tag, context.user.avatarUrl);
     return embed;
   }
@@ -30,7 +30,7 @@ export module Embeds {
 
     const embed = user(context);
     embed.setImage(`attachment://${filename}`);
-    embed.setFooter(footer.join(", "));
+    embed.setFooter(footer.join(', '));
 
     out.embeds = [embed];
     out.files = [{ filename, value }];

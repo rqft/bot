@@ -3,40 +3,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.is = void 0;
 var is;
 (function (is) {
-    function is_type(x, type) {
+    function isType(x, type) {
         return typeof x === type;
     }
-    is.is_type = is_type;
+    is.isType = isType;
     function string(x) {
-        return is_type(x, "string");
+        return isType(x, 'string');
     }
     is.string = string;
     function number(x) {
-        return is_type(x, "number");
+        return isType(x, 'number');
     }
     is.number = number;
     function bigint(x) {
-        return is_type(x, "bigint");
+        return isType(x, 'bigint');
     }
     is.bigint = bigint;
     function symbol(x) {
-        return is_type(x, "symbol");
+        return isType(x, 'symbol');
     }
     is.symbol = symbol;
     function object(x) {
-        return is_type(x, "object");
+        return isType(x, 'object');
     }
     is.object = object;
     function undefined(x) {
-        return is_type(x, "undefined");
+        return isType(x, 'undefined');
     }
     is.undefined = undefined;
     function boolean(x) {
-        return is_type(x, "boolean");
+        return isType(x, 'boolean');
     }
     is.boolean = boolean;
     function fn(x) {
-        return is_type(x, "function");
+        return isType(x, 'function');
     }
     is.fn = fn;
 })(is = exports.is || (exports.is = {}));

@@ -1,16 +1,16 @@
-export module Markdown {
+export namespace Markdown {
   /**
    * An enumeration of all the valid Discord timestamp styles.
    */
 
   export enum TimestampStyles {
-    BOTH_LONG = "F",
-    BOTH_SHORT = "f",
-    DATE_LONG = "D",
-    DATE_SHORT = "d",
-    RELATIVE = "R",
-    TIME_LONG = "T",
-    TIME_SHORT = "t",
+    BothLong = 'F',
+    BothShort = 'f',
+    DateLong = 'D',
+    DateShort = 'd',
+    Relative = 'R',
+    TimeLong = 'T',
+    TimeShort = 't',
   }
 
   /**
@@ -31,15 +31,15 @@ export module Markdown {
    */
 
   export const Strings = {
-    BOLD: "**",
-    CODEBLOCK: "```",
-    CODESTRING: "`",
-    CODESTRING_DOUBLE: "``",
-    ESCAPE: "\\",
-    ITALICS: "_",
-    SPOILER: "||",
-    STRIKE: "~~",
-    UNDERLINE: "__",
+    BOLD: '**',
+    CODEBLOCK: '```',
+    CODESTRING: '`',
+    CODESTRING_DOUBLE: '``',
+    ESCAPE: '\\',
+    ITALICS: '_',
+    SPOILER: '||',
+    STRIKE: '~~',
+    UNDERLINE: '__',
   };
 
   /**
@@ -48,13 +48,13 @@ export module Markdown {
 
   const Regexes = {
     [Strings.BOLD]: /\*\*/g,
-    [Strings.CODEBLOCK]: new RegExp(Strings.CODEBLOCK, "g"),
-    [Strings.CODESTRING]: new RegExp(Strings.CODESTRING, "g"),
+    [Strings.CODEBLOCK]: new RegExp(Strings.CODEBLOCK, 'g'),
+    [Strings.CODESTRING]: new RegExp(Strings.CODESTRING, 'g'),
     [Strings.ESCAPE]: /\\/g,
     [Strings.ITALICS]: /(_|\*)/g,
     [Strings.SPOILER]: /\|\|/g,
-    [Strings.STRIKE]: new RegExp(Strings.STRIKE, "g"),
-    [Strings.UNDERLINE]: new RegExp(Strings.UNDERLINE, "g"),
+    [Strings.STRIKE]: new RegExp(Strings.STRIKE, 'g'),
+    [Strings.UNDERLINE]: new RegExp(Strings.UNDERLINE, 'g'),
     EVERYONE: /@(everyone|here)/g,
     LINK: /\]\(/g,
     MENTION: /<@([!&]?[0-9]{16,21})>/g,
@@ -67,21 +67,21 @@ export module Markdown {
    */
 
   const Replacements = {
-    [Strings.BOLD]: "\\*\\*",
-    [Strings.CODEBLOCK]: "``\u200b`",
-    [Strings.CODESTRING]: "\\`",
-    [Strings.ESCAPE]: "\\\\",
-    [Strings.ITALICS]: "\\$1",
-    [Strings.SPOILER]: "\\|\\|",
-    [Strings.STRIKE]: "\\~\\~",
-    [Strings.UNDERLINE]: "\\_\\_",
-    MENTION: "\u200b",
+    [Strings.BOLD]: '\\*\\*',
+    [Strings.CODEBLOCK]: '``\u200b`',
+    [Strings.CODESTRING]: '\\`',
+    [Strings.ESCAPE]: '\\\\',
+    [Strings.ITALICS]: '\\$1',
+    [Strings.SPOILER]: '\\|\\|',
+    [Strings.STRIKE]: '\\~\\~',
+    [Strings.UNDERLINE]: '\\_\\_',
+    MENTION: '\u200b',
   };
   /**
    * Utility to escape some Discord Markup Identifier
    */
   export function EscapeBasic(raw: string, key: keyof typeof Strings): string {
-    return raw.replace(Regexes[key]!, Replacements[key]!);
+    return raw.replace(Regexes[key] || '', Replacements[key] || '');
   }
   /**
    * Object of all the Escape functions used to apply mixed markup
@@ -96,15 +96,15 @@ export module Markdown {
    * String formatting for freezing Discord timestamps that have the Relative (R) flag
    */
   const FrozenTimestampStyles: Record<TimestampStyles, string> = {
-    [TimestampStyles.BOTH_LONG]:
-      "{day}, {month} {date}, {year} {hour}:{minute} {meridian}",
-    [TimestampStyles.BOTH_SHORT]:
-      "{month} {date}, {year} {hour}:{minute} {meridian}",
-    [TimestampStyles.DATE_LONG]: "{month} {date}, {year}",
-    [TimestampStyles.DATE_SHORT]: "{month_short}/{date}/{year}",
-    [TimestampStyles.RELATIVE]: "{relative}",
-    [TimestampStyles.TIME_LONG]: "{hour}:{minute}:{second} {meridian}",
-    [TimestampStyles.TIME_SHORT]: "{hour}:{minute} {meridian}",
+    [TimestampStyles.BothLong]:
+      '{day}, {month} {date}, {year} {hour}:{minute} {meridian}',
+    [TimestampStyles.BothShort]:
+      '{month} {date}, {year} {hour}:{minute} {meridian}',
+    [TimestampStyles.DateLong]: '{month} {date}, {year}',
+    [TimestampStyles.DateShort]: '{month_short}/{date}/{year}',
+    [TimestampStyles.Relative]: '{relative}',
+    [TimestampStyles.TimeLong]: '{hour}:{minute}:{second} {meridian}',
+    [TimestampStyles.TimeShort]: '{hour}:{minute} {meridian}',
   };
   /**
    * Holds metadata and string conversions of a UNIX Timestamp
@@ -112,11 +112,11 @@ export module Markdown {
   interface Timestamp {
     raw: number;
     month: string;
-    month_short: string;
+    monthShort: string;
     date: string;
     year: string;
     second: string;
-    meridian: "AM" | "PM";
+    meridian: 'AM' | 'PM';
     hour: string;
     minute: string;
     day: string;
@@ -126,13 +126,13 @@ export module Markdown {
    * Converter for number to Days of the Week
    */
   const Days: Record<number, string> = {
-    0: "Sunday",
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
   };
 
   /**
@@ -140,18 +140,18 @@ export module Markdown {
    */
 
   const Months: Record<number, string> = {
-    0: "January",
-    1: "February",
-    2: "March",
-    3: "April",
-    4: "May",
-    5: "June",
-    6: "July",
-    7: "August",
-    8: "September",
-    9: "October",
-    10: "November",
-    11: "December",
+    0: 'January',
+    1: 'February',
+    2: 'March',
+    3: 'April',
+    4: 'May',
+    5: 'June',
+    6: 'July',
+    7: 'August',
+    8: 'September',
+    9: 'October',
+    10: 'November',
+    11: 'December',
   };
 
   /**
@@ -162,14 +162,14 @@ export module Markdown {
     return {
       relative: toTimeString(date.getTime(), TimestampUnits),
       raw: date.getTime(),
-      date: date.getDate().toString().padStart(2, "0"),
-      day: Days[date.getDay()]!,
-      hour: date.getHours().toString().padStart(2, "0"),
-      meridian: date.getHours() > 12 ? "PM" : "AM",
-      minute: date.getMinutes().toString().padStart(2, "0"),
-      month: Months[date.getMonth()]!,
-      month_short: (date.getMonth() + 1).toString().padStart(2, "0"),
-      second: date.getSeconds().toString().padStart(2, "0"),
+      date: date.getDate().toString().padStart(2, '0'),
+      day: Days[date.getDay()] || '',
+      hour: date.getHours().toString().padStart(2, '0'),
+      meridian: date.getHours() > 12 ? 'PM' : 'AM',
+      minute: date.getMinutes().toString().padStart(2, '0'),
+      month: Months[date.getMonth()] || '',
+      monthShort: (date.getMonth() + 1).toString().padStart(2, '0'),
+      second: date.getSeconds().toString().padStart(2, '0'),
       year: date.getFullYear().toString(),
     };
   }
@@ -222,10 +222,10 @@ export module Markdown {
     isFromNow = false,
     limit?: number
   ): string {
-    if (typeof unix === "number") unix = BigInt(unix);
+    if (typeof unix === 'number') unix = BigInt(unix);
 
     if (isFromNow) unix = bigintAbs(unix - BigInt(Date.now()));
-    if (unix === 0n) return "0 milliseconds";
+    if (unix === 0n) return '0 milliseconds';
 
     const formatted: Map<T, number> = new Map();
     const unitList = Object.entries(units) as ObjectEntries<T, bigint>;
@@ -247,13 +247,13 @@ export module Markdown {
     }
     let returned: Array<string> = [];
     for (const [key, value] of formatted) {
-      const unit = String(key) + (value === 1 ? "" : "s");
+      const unit = String(key) + (value === 1 ? '' : 's');
       returned.push(`${value} ${unit}`);
     }
     if (limit !== undefined) {
       returned = returned.slice(0, limit);
     }
-    return returned.join(", ");
+    return returned.join(', ');
   }
   /**
    * Freezes a UNIX timestamp into some time string based on the Timestamp Style
@@ -286,10 +286,10 @@ export module Markdown {
       return this.raw;
     }
     italics() {
-      return this.build("ITALICS", this.raw);
+      return this.build('ITALICS', this.raw);
     }
     bold() {
-      return this.build("BOLD", this.raw);
+      return this.build('BOLD', this.raw);
     }
     codestring() {
       const useDouble = this.raw.includes(Strings.CODESTRING);
@@ -299,27 +299,27 @@ export module Markdown {
       return this.codestringSingle();
     }
     codestringDouble() {
-      return this.build("CODESTRING_DOUBLE", this.raw);
+      return this.build('CODESTRING_DOUBLE', this.raw);
     }
     codestringSingle() {
-      return this.build("CODESTRING", this.raw);
+      return this.build('CODESTRING', this.raw);
     }
     codeblock(language?: string) {
-      let full = "";
+      let full = '';
       if (language) {
-        full += language + "\n";
+        full += language + '\n';
       }
       full += this.raw;
-      return this.build("CODEBLOCK", full);
+      return this.build('CODEBLOCK', full);
     }
     spoiler() {
-      return this.build("SPOILER", this.raw);
+      return this.build('SPOILER', this.raw);
     }
     strike() {
-      return this.build("STRIKE", this.raw);
+      return this.build('STRIKE', this.raw);
     }
     underline() {
-      return this.build("UNDERLINE", this.raw);
+      return this.build('UNDERLINE', this.raw);
     }
 
     build(key: keyof typeof Strings, w: string) {
@@ -370,10 +370,10 @@ export module Markdown {
     }
     static timestamp(
       unix: number | Date | string,
-      format: TimestampStyles = TimestampStyles.BOTH_SHORT,
+      format: TimestampStyles = TimestampStyles.BothShort,
       isSeconds = false
     ): FormatInner {
-      if (typeof unix === "string") unix = Number(unix);
+      if (typeof unix === 'string') unix = Number(unix);
       if (unix instanceof Date) unix = unix.getTime();
 
       if (!isSeconds) {
@@ -384,10 +384,10 @@ export module Markdown {
     }
     static date(
       unix: number | Date | string,
-      format: TimestampStyles = TimestampStyles.BOTH_SHORT,
+      format: TimestampStyles = TimestampStyles.BothShort,
       isSeconds = false
     ): FormatInner {
-      if (typeof unix === "string") unix = Number(unix);
+      if (typeof unix === 'string') unix = Number(unix);
       if (unix instanceof Date) unix = unix.getTime();
 
       if (isSeconds) {
@@ -404,21 +404,21 @@ export module Markdown {
    * Enumeration of names used in the Matching process
    */
   export enum DiscordRegexNames {
-    EMOJI = "EMOJI",
-    JUMP_CHANNEL = "JUMP_CHANNEL",
-    JUMP_CHANNEL_MESSAGE = "JUMP_CHANNEL_MESSAGE",
-    MENTION_CHANNEL = "MENTION_CHANNEL",
-    MENTION_ROLE = "MENTION_ROLE",
-    MENTION_USER = "MENTION_USER",
-    TEXT_BOLD = "TEXT_BOLD",
-    TEXT_CODEBLOCK = "TEXT_CODEBLOCK",
-    TEXT_CODESTRING = "TEXT_CODESTRING",
-    TEXT_ITALICS = "TEXT_ITALICS",
-    TEXT_SNOWFLAKE = "TEXT_SNOWFLAKE",
-    TEXT_SPOILER = "TEXT_SPOILER",
-    TEXT_STRIKE = "TEXT_STRIKE",
-    TEXT_UNDERLINE = "TEXT_UNDERLINE",
-    TEXT_URL = "TEXT_URL",
+    Emoji = 'EMOJI',
+    JumpChannel = 'JUMP_CHANNEL',
+    JumpChannelMessage = 'JUMP_CHANNEL_MESSAGE',
+    MentionChannel = 'MENTION_CHANNEL',
+    MentionRole = 'MENTION_ROLE',
+    MentionUser = 'MENTION_USER',
+    TextBold = 'TEXT_BOLD',
+    TextCodeblock = 'TEXT_CODEBLOCK',
+    TextCodestring = 'TEXT_CODESTRING',
+    TextItalics = 'TEXT_ITALICS',
+    TextSnowflake = 'TEXT_SNOWFLAKE',
+    TextSpoiler = 'TEXT_SPOILER',
+    TextStrike = 'TEXT_STRIKE',
+    TextUnderline = 'TEXT_UNDERLINE',
+    TextUrl = 'TEXT_URL',
   }
 
   /**
@@ -426,24 +426,24 @@ export module Markdown {
    */
 
   export const DiscordRegex = {
-    [DiscordRegexNames.EMOJI]: /<a?:(\w+):(\d+)>/g,
-    [DiscordRegexNames.JUMP_CHANNEL]:
+    [DiscordRegexNames.Emoji]: /<a?:(\w+):(\d+)>/g,
+    [DiscordRegexNames.JumpChannel]:
       /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)$/g,
-    [DiscordRegexNames.JUMP_CHANNEL_MESSAGE]:
+    [DiscordRegexNames.JumpChannelMessage]:
       /^(?:https?):\/\/(?:(?:(?:canary|ptb)\.)?(?:discord|discordapp)\.com\/channels\/)(@me|\d+)\/(\d+)\/(\d+)$/g,
-    [DiscordRegexNames.MENTION_CHANNEL]: /<#(\d+)>/g,
-    [DiscordRegexNames.MENTION_ROLE]: /<@&(\d+)>/g,
-    [DiscordRegexNames.MENTION_USER]: /<@(!?)(\d+)>/g,
-    [DiscordRegexNames.TEXT_BOLD]: /\*\*([\s\S]+?)\*\*/g,
-    [DiscordRegexNames.TEXT_CODEBLOCK]:
+    [DiscordRegexNames.MentionChannel]: /<#(\d+)>/g,
+    [DiscordRegexNames.MentionRole]: /<@&(\d+)>/g,
+    [DiscordRegexNames.MentionUser]: /<@(!?)(\d+)>/g,
+    [DiscordRegexNames.TextBold]: /\*\*([\s\S]+?)\*\*/g,
+    [DiscordRegexNames.TextCodeblock]:
       /```(([a-z0-9-]+?)\n+)?\n*([^]+?)\n*```/gi,
-    [DiscordRegexNames.TEXT_CODESTRING]: /`([\s\S]+?)`/g,
-    [DiscordRegexNames.TEXT_ITALICS]: /_([\s\S]+?)_|\*([\s\S]+?)\*/g,
-    [DiscordRegexNames.TEXT_SNOWFLAKE]: /(\d+)/g,
-    [DiscordRegexNames.TEXT_SPOILER]: /\|\|([\s\S]+?)\|\|/g,
-    [DiscordRegexNames.TEXT_STRIKE]: /~~([\s\S]+?)~~(?!_)/g,
-    [DiscordRegexNames.TEXT_UNDERLINE]: /__([\s\S]+?)__/g,
-    [DiscordRegexNames.TEXT_URL]: /((?:https?):\/\/[^\s<]+[^<.,:;"'\]\s])/g,
+    [DiscordRegexNames.TextCodestring]: /`([\s\S]+?)`/g,
+    [DiscordRegexNames.TextItalics]: /_([\s\S]+?)_|\*([\s\S]+?)\*/g,
+    [DiscordRegexNames.TextSnowflake]: /(\d+)/g,
+    [DiscordRegexNames.TextSpoiler]: /\|\|([\s\S]+?)\|\|/g,
+    [DiscordRegexNames.TextStrike]: /~~([\s\S]+?)~~(?!_)/g,
+    [DiscordRegexNames.TextUnderline]: /__([\s\S]+?)__/g,
+    [DiscordRegexNames.TextUrl]: /((?:https?):\/\/[^\s<]+[^<.,:;"'\]\s])/g,
   };
 
   /**
@@ -480,89 +480,89 @@ export module Markdown {
     name: string;
     id: string;
     animated: boolean;
-    species: DiscordRegexNames.EMOJI;
+    species: DiscordRegexNames.Emoji;
   }
 
   export interface JumpMatch extends DiscordRegexMatch {
     guildId: string;
     species:
-      | DiscordRegexNames.JUMP_CHANNEL
-      | DiscordRegexNames.JUMP_CHANNEL_MESSAGE;
+      | DiscordRegexNames.JumpChannel
+      | DiscordRegexNames.JumpChannelMessage;
   }
 
   export interface JumpChannelMatch extends JumpMatch {
     channelId: string;
-    species: DiscordRegexNames.JUMP_CHANNEL;
+    species: DiscordRegexNames.JumpChannel;
   }
 
   export interface JumpChannelMessageMatch extends JumpMatch {
     channelId: string;
     messageId: string;
-    species: DiscordRegexNames.JUMP_CHANNEL_MESSAGE;
+    species: DiscordRegexNames.JumpChannelMessage;
   }
 
   export interface MentionableMatch extends DiscordRegexMatch {
     id: string;
     species:
-      | DiscordRegexNames.MENTION_CHANNEL
-      | DiscordRegexNames.MENTION_ROLE
-      | DiscordRegexNames.MENTION_USER;
+      | DiscordRegexNames.MentionChannel
+      | DiscordRegexNames.MentionRole
+      | DiscordRegexNames.MentionUser;
   }
 
   export interface MentionChannelMatch extends MentionableMatch {
-    species: DiscordRegexNames.MENTION_CHANNEL;
+    species: DiscordRegexNames.MentionChannel;
   }
 
   export interface MentionRoleMatch extends MentionableMatch {
-    species: DiscordRegexNames.MENTION_ROLE;
+    species: DiscordRegexNames.MentionRole;
   }
 
   export interface MentionUserMatch extends MentionableMatch {
     mentionType: string;
-    species: DiscordRegexNames.MENTION_USER;
+    species: DiscordRegexNames.MentionUser;
   }
 
   export interface TextMatch extends DiscordRegexMatch {
     text: string;
     species:
-      | DiscordRegexNames.TEXT_BOLD
-      | DiscordRegexNames.TEXT_CODEBLOCK
-      | DiscordRegexNames.TEXT_CODESTRING
-      | DiscordRegexNames.TEXT_ITALICS
-      | DiscordRegexNames.TEXT_SNOWFLAKE
-      | DiscordRegexNames.TEXT_SPOILER
-      | DiscordRegexNames.TEXT_STRIKE
-      | DiscordRegexNames.TEXT_UNDERLINE
-      | DiscordRegexNames.TEXT_URL;
+      | DiscordRegexNames.TextBold
+      | DiscordRegexNames.TextCodeblock
+      | DiscordRegexNames.TextCodestring
+      | DiscordRegexNames.TextItalics
+      | DiscordRegexNames.TextSnowflake
+      | DiscordRegexNames.TextSpoiler
+      | DiscordRegexNames.TextStrike
+      | DiscordRegexNames.TextUnderline
+      | DiscordRegexNames.TextUrl;
   }
 
   export interface TextCodeblockMatch extends TextMatch {
     language: string;
-    species: DiscordRegexNames.TEXT_CODEBLOCK;
+    species: DiscordRegexNames.TextCodeblock;
   }
   export interface TextBoldMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_BOLD;
+    species: DiscordRegexNames.TextBold;
   }
   export interface TextCodestringMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_CODESTRING;
+    species: DiscordRegexNames.TextCodestring;
   }
   export interface TextItalicsMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_ITALICS;
+    species: DiscordRegexNames.TextItalics;
   }
   export interface TextSnowflakeMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_SNOWFLAKE;
+    species: DiscordRegexNames.TextSnowflake;
   }
   export interface TextSpoilerMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_SPOILER;
+    species: DiscordRegexNames.TextSpoiler;
   }
   export interface TextStrikeMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_STRIKE;
+    species: DiscordRegexNames.TextStrike;
   }
   export interface TextUnderlineMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_UNDERLINE;
+    species: DiscordRegexNames.TextUnderline;
   }
   export interface TextUrlMatch extends TextMatch {
-    species: DiscordRegexNames.TEXT_URL;
+    species: DiscordRegexNames.TextUrl;
   }
 
   class MatchInner {
@@ -574,49 +574,49 @@ export module Markdown {
     }
 
     emoji(): DiscordRegexPayload<EmojiMatch> {
-      return this.match(DiscordRegexNames.EMOJI);
+      return this.match(DiscordRegexNames.Emoji);
     }
     jumpChannel(): DiscordRegexPayload<JumpChannelMatch> {
-      return this.match(DiscordRegexNames.JUMP_CHANNEL);
+      return this.match(DiscordRegexNames.JumpChannel);
     }
     jumpChannelMessage(): DiscordRegexPayload<JumpChannelMessageMatch> {
-      return this.match(DiscordRegexNames.JUMP_CHANNEL_MESSAGE);
+      return this.match(DiscordRegexNames.JumpChannelMessage);
     }
     mentionChannel(): DiscordRegexPayload<MentionChannelMatch> {
-      return this.match(DiscordRegexNames.MENTION_CHANNEL);
+      return this.match(DiscordRegexNames.MentionChannel);
     }
     mentionRole(): DiscordRegexPayload<MentionRoleMatch> {
-      return this.match(DiscordRegexNames.MENTION_ROLE);
+      return this.match(DiscordRegexNames.MentionRole);
     }
     mentionUser(): DiscordRegexPayload<MentionUserMatch> {
-      return this.match(DiscordRegexNames.MENTION_USER);
+      return this.match(DiscordRegexNames.MentionUser);
     }
     codeblock(): DiscordRegexPayload<TextCodeblockMatch> {
-      return this.match(DiscordRegexNames.TEXT_CODEBLOCK);
+      return this.match(DiscordRegexNames.TextCodeblock);
     }
     bold(): DiscordRegexPayload<TextBoldMatch> {
-      return this.match(DiscordRegexNames.TEXT_BOLD);
+      return this.match(DiscordRegexNames.TextBold);
     }
     codestring(): DiscordRegexPayload<TextCodestringMatch> {
-      return this.match(DiscordRegexNames.TEXT_CODESTRING);
+      return this.match(DiscordRegexNames.TextCodestring);
     }
     italics(): DiscordRegexPayload<TextItalicsMatch> {
-      return this.match(DiscordRegexNames.TEXT_ITALICS);
+      return this.match(DiscordRegexNames.TextItalics);
     }
     snowflake(): DiscordRegexPayload<TextSnowflakeMatch> {
-      return this.match(DiscordRegexNames.TEXT_SNOWFLAKE);
+      return this.match(DiscordRegexNames.TextSnowflake);
     }
     spoiler(): DiscordRegexPayload<TextSpoilerMatch> {
-      return this.match(DiscordRegexNames.TEXT_SPOILER);
+      return this.match(DiscordRegexNames.TextSpoiler);
     }
     strike(): DiscordRegexPayload<TextStrikeMatch> {
-      return this.match(DiscordRegexNames.TEXT_STRIKE);
+      return this.match(DiscordRegexNames.TextStrike);
     }
     underline(): DiscordRegexPayload<TextUnderlineMatch> {
-      return this.match(DiscordRegexNames.TEXT_UNDERLINE);
+      return this.match(DiscordRegexNames.TextUnderline);
     }
     url(): DiscordRegexPayload<TextUrlMatch> {
-      return this.match(DiscordRegexNames.TEXT_URL);
+      return this.match(DiscordRegexNames.TextUrl);
     }
 
     match<T extends DiscordRegexMatch>(
@@ -636,61 +636,64 @@ export module Markdown {
 
       let match: RegExpExecArray | null = null;
       while ((match = regex.exec(this.raw))) {
-        const result: DiscordRegexMatch = { matched: match[0]!, species: type };
+        const result: DiscordRegexMatch = {
+          matched: match[0] || '',
+          species: type,
+        };
         switch (type) {
-          case DiscordRegexNames.EMOJI:
-            {
-              result.name = match[1] as string;
-              result.id = match[2] as string;
-              result.animated = this.raw.startsWith("<a:");
-            }
-            break;
-          case DiscordRegexNames.JUMP_CHANNEL:
-            {
-              result.guildId = match[1] as string;
-              result.channelId = match[2] as string;
-            }
-            break;
-          case DiscordRegexNames.JUMP_CHANNEL_MESSAGE:
-            {
-              result.guildId = match[1] as string;
-              result.channelId = match[2] as string;
-              result.messageId = match[3] as string;
-            }
-            break;
-          case DiscordRegexNames.MENTION_CHANNEL:
-          case DiscordRegexNames.MENTION_ROLE:
-            {
-              result.id = match[1] as string;
-            }
-            break;
-          case DiscordRegexNames.MENTION_USER:
-            {
-              result.id = match[2] as string;
-              result.mentionType = match[1] as string;
-            }
-            break;
-          case DiscordRegexNames.TEXT_CODEBLOCK:
-            {
-              result.language = match[2] as string;
-              result.text = match[3] as string;
-            }
-            break;
-          case DiscordRegexNames.TEXT_BOLD:
-          case DiscordRegexNames.TEXT_CODESTRING:
-          case DiscordRegexNames.TEXT_ITALICS:
-          case DiscordRegexNames.TEXT_SNOWFLAKE:
-          case DiscordRegexNames.TEXT_SPOILER:
-          case DiscordRegexNames.TEXT_STRIKE:
-          case DiscordRegexNames.TEXT_UNDERLINE:
-          case DiscordRegexNames.TEXT_URL:
-            {
-              result.text = match[1] as string;
-            }
-            break;
-          default: {
-            throw new global.Error(`Unknown regex type: ${type}`);
+        case DiscordRegexNames.Emoji:
+          {
+            result.name = match[1] as string;
+            result.id = match[2] as string;
+            result.animated = this.raw.startsWith('<a:');
           }
+          break;
+        case DiscordRegexNames.JumpChannel:
+          {
+            result.guildId = match[1] as string;
+            result.channelId = match[2] as string;
+          }
+          break;
+        case DiscordRegexNames.JumpChannelMessage:
+          {
+            result.guildId = match[1] as string;
+            result.channelId = match[2] as string;
+            result.messageId = match[3] as string;
+          }
+          break;
+        case DiscordRegexNames.MentionChannel:
+        case DiscordRegexNames.MentionRole:
+          {
+            result.id = match[1] as string;
+          }
+          break;
+        case DiscordRegexNames.MentionUser:
+          {
+            result.id = match[2] as string;
+            result.mentionType = match[1] as string;
+          }
+          break;
+        case DiscordRegexNames.TextCodeblock:
+          {
+            result.language = match[2] as string;
+            result.text = match[3] as string;
+          }
+          break;
+        case DiscordRegexNames.TextBold:
+        case DiscordRegexNames.TextCodestring:
+        case DiscordRegexNames.TextItalics:
+        case DiscordRegexNames.TextSnowflake:
+        case DiscordRegexNames.TextSpoiler:
+        case DiscordRegexNames.TextStrike:
+        case DiscordRegexNames.TextUnderline:
+        case DiscordRegexNames.TextUrl:
+          {
+            result.text = match[1] as string;
+          }
+          break;
+        default: {
+          throw new global.Error(`Unknown regex type: ${type}`);
+        }
         }
         payload.matches.push(result as T);
 

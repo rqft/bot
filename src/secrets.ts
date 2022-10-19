@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { config } from "dotenv";
+import { config } from 'dotenv';
 config();
 const env = process.env;
 
@@ -19,7 +19,7 @@ export const Secrets = {
     Google: {
       YouTubeData: env.GOOGLE_YOUTUBE_DATA_API_KEY!,
     },
-    Spotify: env.SPOTIFY_API_KEY!.split(":") as [string, string],
+    Spotify: env.SPOTIFY_API_KEY!.split(':') as [string, string],
   },
   AbstractKeys: {
     Holidays: env.ABSTRACT_HOLIDAYS_KEY!,
