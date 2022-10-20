@@ -8,6 +8,5 @@ exports.default = (0, builder_1.Command)('spin [image]', {
     args: (self) => ({ image: self.imageUrl() }),
 }, async (context, args) => {
     const { payload } = await fetch_1.Instances.self.imageSpin(args.image);
-    console.log(args.image);
     return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload, 'spin.gif'));
 });

@@ -11,8 +11,6 @@ export default Command(
   async (context, args) => {
     const { payload } = await Instances.self.imageSpin(args.image);
 
-    console.log(args.image);
-
     return await respond(
       context,
       await Embeds.image(context, payload, 'spin.gif')
