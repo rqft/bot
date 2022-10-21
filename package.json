@@ -23,7 +23,6 @@
     "@types/node-fetch": "^2.5.8",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
-    "discord-rpc": "^4.0.1",
     "eslint": "^8.16.0",
     "prettier": "^2.5.1"
   },

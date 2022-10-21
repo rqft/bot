@@ -485,10 +485,14 @@ export const CommandArgumentBuilders: Self = {
     };
   },
 
-  mediaUrl(types) {
+  mediaUrl(types, options) {
     return async (value, context) => {
-      console.log('using murl', value);
-      const urls = await findMediaUrls(types || AllMediaTypes, context, value);
+      const urls = await findMediaUrls(
+        types || AllMediaTypes,
+        context,
+        value,
+        options
+      );
 
       console.log(urls);
 
@@ -514,9 +518,9 @@ export const CommandArgumentBuilders: Self = {
     };
   },
 
-  media(types) {
+  media(types, options) {
     return async (value, context) => {
-      const url = await this.mediaUrl(types)(value, context);
+      const url = await this.mediaUrl(types, options)(value, context);
 
       const response = await fetch(url);
 

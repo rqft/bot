@@ -6,14 +6,11 @@ import { Command } from '../../wrap/builder';
 export default Command(
   'spin [image]',
   {
-    args: (self) => ({ image: self.imageUrl() }),
+    args: (self) => ({ image: self.imageUrl({ size: 512 }) }),
   },
   async (context, args) => {
     const { payload } = await Instances.self.imageSpin(args.image);
 
-    return await respond(
-      context,
-      await Embeds.image(context, payload, 'spin.gif')
-    );
+    return await respond(context, await Embeds.image(context, payload, 'spin'));
   }
 );

@@ -8,7 +8,7 @@ export default Command(
   'invert [image] [-method=invert]',
   {
     args: (self) => ({
-      image: self.imageUrl(),
+      image: self.imageUrl({ size: 512 }),
       method: self.stringOptional({
         choices: Object.values(APIs.Jonathan.InvertMethods),
       }),
@@ -22,7 +22,7 @@ export default Command(
 
     return await respond(
       context,
-      await Embeds.image(context, payload, 'invert.gif')
+      await Embeds.image(context, payload, 'invert')
     );
   }
 );

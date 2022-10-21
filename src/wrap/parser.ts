@@ -111,14 +111,14 @@ export interface Self {
     options?: ArrayOptions<T> & OptionalOptions
   ): Arg<string | undefined, Array<T> | undefined>;
 
-  imageUrl(): Arg<string, Promise<string>>;
+  imageUrl(options?: MediaOptions): Arg<string, Promise<string>>;
   imageUrlOptional(
-    options?: OptionalOptions
+    options?: OptionalOptions & MediaOptions
   ): Arg<string | undefined, Promise<string | undefined>>;
 
-  image(): Arg<string, Promise<Buffer>>;
+  image(options?: MediaOptions): Arg<string, Promise<Buffer>>;
   imageOptional(
-    options?: OptionalOptions
+    options?: OptionalOptions & MediaOptions
   ): Arg<string | undefined, Promise<Buffer | undefined>>;
 
   audioUrl(): Arg<string, Promise<string>>;
@@ -141,16 +141,22 @@ export interface Self {
     options?: OptionalOptions
   ): Arg<string | undefined, Promise<Buffer | undefined>>;
 
-  mediaUrl(types?: Array<MediaTypes>): Arg<string, Promise<string>>;
+  mediaUrl(
+    types?: Array<MediaTypes>,
+    options?: MediaOptions
+  ): Arg<string, Promise<string>>;
   mediaUrlOptional(
     types?: Array<MediaTypes>,
-    options?: OptionalOptions
+    options?: OptionalOptions & MediaOptions
   ): Arg<string | undefined, Promise<string | undefined>>;
 
-  media(types?: Array<MediaTypes>): Arg<string, Promise<Buffer>>;
+  media(
+    types?: Array<MediaTypes>,
+    options?: MediaOptions
+  ): Arg<string, Promise<Buffer>>;
   mediaOptional(
     types?: Array<MediaTypes>,
-    options?: OptionalOptions
+    options?: OptionalOptions & MediaOptions
   ): Arg<string | undefined, Promise<Buffer | undefined>>;
 }
 
@@ -181,6 +187,10 @@ export interface NumberOptions extends Choices<number> {
 
 export interface ChannelOptions<T extends ChannelNames> {
   type: T;
+}
+
+export interface MediaOptions {
+  size?: number;
 }
 
 export enum ChannelNames {

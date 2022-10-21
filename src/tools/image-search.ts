@@ -6,6 +6,7 @@ import {
 import { EmbeddableRegexes, Message } from 'detritus-client/lib/structures';
 import { regex } from 'detritus-client/lib/utils';
 import { CommandArgumentBuilders } from '../wrap/builder';
+import { MediaOptions } from '../wrap/parser';
 import { CustomEmoji } from './emoji';
 import { fileExtension } from './util';
 
@@ -26,8 +27,10 @@ export const AllMediaTypes = [
 export async function findMediaUrls(
   type: Array<MediaTypes>,
   context: Context | Message,
-  text: string | undefined
+  text: string | undefined,
+  options?: MediaOptions
 ): Promise<Array<string>> {
+  const wantedSize = options?.size || 512;
   if (context instanceof Context) {
     context = context.message;
   }
@@ -91,7 +94,7 @@ export async function findMediaUrls(
 
       if (canBeImage) {
         out.push(
-          id.avatarUrlFormat(null, { size: 1024 }) || id.defaultAvatarUrl
+          id.avatarUrlFormat(null, { size: wantedSize }) || id.defaultAvatarUrl
         );
       }
     } catch {

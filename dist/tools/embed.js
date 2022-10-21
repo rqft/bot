@@ -19,14 +19,18 @@ var Embeds;
         const footer = [];
         footer.push((0, util_1.formatBytes)(Buffer.byteLength(value.buffer)));
         footer.push(`${content.width}x${content.height}`);
+        let fmt = 'png';
         if (content instanceof imagescript_1.GIF) {
+            fmt = 'gif';
             footer.push(`${content.length} frames`);
         }
+        const name = `${filename}.${fmt}`;
+        footer.unshift(name);
         const embed = user(context);
-        embed.setImage(`attachment://${filename}`);
+        embed.setImage(`attachment://${name}`);
         embed.setFooter(footer.join(', '));
         out.embeds = [embed];
-        out.files = [{ filename, value }];
+        out.files = [{ filename: name, value }];
         return out;
     }
     Embeds.image = image;

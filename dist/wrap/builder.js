@@ -364,10 +364,9 @@ exports.CommandArgumentBuilders = {
             return undefined;
         };
     },
-    mediaUrl(types) {
+    mediaUrl(types, options) {
         return async (value, context) => {
-            console.log('using murl', value);
-            const urls = await (0, image_search_1.findMediaUrls)(types || image_search_1.AllMediaTypes, context, value);
+            const urls = await (0, image_search_1.findMediaUrls)(types || image_search_1.AllMediaTypes, context, value, options);
             console.log(urls);
             if (urls.length === 0) {
                 throw new Error('no media urls found');
@@ -386,9 +385,9 @@ exports.CommandArgumentBuilders = {
             return undefined;
         };
     },
-    media(types) {
+    media(types, options) {
         return async (value, context) => {
-            const url = await this.mediaUrl(types)(value, context);
+            const url = await this.mediaUrl(types, options)(value, context);
             const response = await (0, node_fetch_1.default)(url);
             return await response.buffer();
         };

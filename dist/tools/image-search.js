@@ -19,7 +19,8 @@ exports.AllMediaTypes = [
     MediaType.Image,
     MediaType.Video,
 ];
-async function findMediaUrls(type, context, text) {
+async function findMediaUrls(type, context, text, options) {
+    const wantedSize = options?.size || 512;
     if (context instanceof command_1.Context) {
         context = context.message;
     }
@@ -67,7 +68,7 @@ async function findMediaUrls(type, context, text) {
             const id = await builder_1.CommandArgumentBuilders.user()(text, context);
             console.log(id);
             if (canBeImage) {
-                out.push(id.avatarUrlFormat(null, { size: 1024 }) || id.defaultAvatarUrl);
+                out.push(id.avatarUrlFormat(null, { size: wantedSize }) || id.defaultAvatarUrl);
             }
         }
         catch {
