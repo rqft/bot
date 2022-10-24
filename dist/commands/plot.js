@@ -17,7 +17,8 @@ exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50
         size: self.integerOptional(),
     }),
 }, async (context, args) => {
-    const { payload } = await fetch_1.Instances.self.graph(args.expressions, {
+    const payload = await fetch_1.Instances.self.graph({
+        expr: args.expressions,
         splot: args.s,
         scale: args.scale,
         size: args.size,
@@ -26,7 +27,7 @@ exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50
         rm: args.rm,
         rx: args.rx,
     });
-    const txt = new TextDecoder().decode(payload);
+    const txt = new TextDecoder().decode(payload.unwrap());
     let j = null;
     try {
         j = JSON.parse(txt);

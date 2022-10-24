@@ -1,12 +1,15 @@
-import { Context, EditOrReply } from 'detritus-client/lib/command';
+import type { Payload } from '@rqft/fetch';
+import { Rqft } from '@rqft/fetch';
+import type { Context, EditOrReply } from 'detritus-client/lib/command';
 import { Permissions } from 'detritus-client/lib/constants';
-import { Member, Role } from 'detritus-client/lib/structures';
+import type { Member, Role } from 'detritus-client/lib/structures';
 import { IrrelevantPermissions, PermissionsText } from '../constants';
+import { Warning } from './warning';
 
 export function fmt<T extends string>(
   value: T,
   contents: Record<Placeholders<T>[number], unknown>
-) {
+): string {
   let f: string = value;
 
   for (const [key, value] of Object.entries(contents)) {
@@ -77,13 +80,13 @@ const U200D = String.fromCharCode(0x200d);
 const UFE0F_REGEX = /\uFE0F/g;
 
 export function toCodePointForTwemoji(unicodeSurrogates: string): string {
-  if (unicodeSurrogates.indexOf(U200D) < 0) {
+  if (!unicodeSurrogates.includes(U200D)) {
     unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, '');
   }
   return toCodePoint(unicodeSurrogates);
 }
 
-export function permissionsText(context: Member | Role) {
+export function permissionsText(context: Member | Role): Array<string> {
   if (context.can(Permissions.ADMINISTRATOR)) {
     return [PermissionsText[String(Permissions.ADMINISTRATOR)] || ''];
   }
@@ -128,6 +131,38 @@ export function formatBytes(
   );
 }
 
-export function fileExtension(url: string) {
+export function fileExtension(url: string): string {
   return url.split(/[#?]/)[0]?.split('.').pop()?.trim() || '';
+}
+
+export function handleError(context: Context) {
+  return (payload: Payload<Buffer | Rqft.Result<unknown>>): Payload<Buffer> => {
+    let json: Buffer | Rqft.Result<unknown> | null = payload.unwrap();
+
+    if (json instanceof Buffer) {
+      const txt = new TextDecoder().decode(json);
+
+      try {
+        json = JSON.parse(txt);
+      } catch {
+        return payload as Payload<Buffer>;
+      }
+    }
+
+    if (json !== null) {
+      assertType<Rqft.Result<unknown>>(json);
+      if (json.status.state === Rqft.ResultState.ERROR) {
+        throw new Warning(json.status.message);
+      }
+
+      respond(context, String(json.data));
+      throw null;
+    }
+
+    throw null;
+  };
+}
+
+function assertType<U>(_: unknown): asserts _ is U {
+  return;
 }

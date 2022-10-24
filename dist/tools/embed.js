@@ -13,7 +13,7 @@ var Embeds;
         return embed;
     }
     Embeds.user = user;
-    async function image(context, value, filename) {
+    async function image(context, value, filename, embed = Embeds.user(context)) {
         const out = {};
         const content = await (0, imagescript_1.decode)(value);
         const footer = [];
@@ -26,7 +26,6 @@ var Embeds;
         }
         const name = `${filename}.${fmt}`;
         footer.unshift(name);
-        const embed = user(context);
         embed.setImage(`attachment://${name}`);
         embed.setFooter(footer.join(', '));
         out.embeds = [embed];

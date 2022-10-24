@@ -236,7 +236,7 @@ class Paginator {
                         }
                         await this.custom.message.delete();
                     }
-                    catch (error) {
+                    catch {
                         void 0;
                     }
                 }

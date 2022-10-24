@@ -10,7 +10,7 @@ import {
   VerificationLevels,
 } from 'detritus-client/lib/constants';
 import { CustomEmojis, Emojis } from './emojis';
-import { EmojiInfo } from './tools/emoji';
+import type { EmojiInfo } from './tools/emoji';
 
 export const Permissions = {
   NONE: 0n << 0n,

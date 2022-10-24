@@ -19,7 +19,8 @@ export default Command(
     }),
   },
   async (context, args) => {
-    const { payload } = await Instances.self.graph(args.expressions, {
+    const payload = await Instances.self.graph({
+      expr: args.expressions,
       splot: args.s,
       scale: args.scale,
       size: args.size,
@@ -29,7 +30,7 @@ export default Command(
       rx: args.rx,
     });
 
-    const txt = new TextDecoder().decode(payload);
+    const txt = new TextDecoder().decode(payload.unwrap());
 
     let j = null;
     try {

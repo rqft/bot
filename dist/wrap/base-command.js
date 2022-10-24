@@ -50,6 +50,9 @@ class BaseCommand extends lib_1.Command.Command {
         }
     }
     onError(context, _args, error) {
+        if (error === null) {
+            return;
+        }
         if (error instanceof warning_1.Warning) {
             return util_1.respond.fmt(context, ':warning: `{content}`', {
                 content: error.content,

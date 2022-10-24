@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fileExtension = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+exports.handleError = exports.fileExtension = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("detritus-client/lib/constants");
 const constants_2 = require("../constants");
+const warning_1 = require("./warning");
 function fmt(value, contents) {
     let f = value;
     for (const [key, value] of Object.entries(contents)) {
@@ -49,7 +51,7 @@ exports.toCodePoint = toCodePoint;
 const U200D = String.fromCharCode(0x200d);
 const UFE0F_REGEX = /\uFE0F/g;
 function toCodePointForTwemoji(unicodeSurrogates) {
-    if (unicodeSurrogates.indexOf(U200D) < 0) {
+    if (!unicodeSurrogates.includes(U200D)) {
         unicodeSurrogates = unicodeSurrogates.replace(UFE0F_REGEX, '');
     }
     return toCodePoint(unicodeSurrogates);
@@ -91,3 +93,30 @@ function fileExtension(url) {
     return url.split(/[#?]/)[0]?.split('.').pop()?.trim() || '';
 }
 exports.fileExtension = fileExtension;
+function handleError(context) {
+    return (payload) => {
+        let json = payload.unwrap();
+        if (json instanceof Buffer) {
+            const txt = new TextDecoder().decode(json);
+            try {
+                json = JSON.parse(txt);
+            }
+            catch {
+                return payload;
+            }
+        }
+        if (json !== null) {
+            assertType(json);
+            if (json.status.state === fetch_1.Rqft.ResultState.ERROR) {
+                throw new warning_1.Warning(json.status.message);
+            }
+            (0, exports.respond)(context, String(json.data));
+            throw null;
+        }
+        throw null;
+    };
+}
+exports.handleError = handleError;
+function assertType(_) {
+    return;
+}

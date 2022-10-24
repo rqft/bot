@@ -4,11 +4,14 @@ const embed_1 = require("../../tools/embed");
 const fetch_1 = require("../../tools/fetch");
 const util_1 = require("../../tools/util");
 const builder_1 = require("../../wrap/builder");
-exports.default = (0, builder_1.Command)('spin [image]', {
-    args: (self) => ({ image: self.imageUrl({ size: 512 }) }),
+exports.default = (0, builder_1.Command)('tilt [image] [-amount?]', {
+    args: (self) => ({
+        image: self.imageUrl({ size: 512 }),
+        amount: self.number(),
+    }),
 }, async (context, args) => {
     const payload = await fetch_1.Instances.self
-        .imageSpin(args.image)
+        .imageTilt(args.image, args.amount)
         .then((0, util_1.handleError)(context));
-    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'spin'));
+    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'tilt'));
 });

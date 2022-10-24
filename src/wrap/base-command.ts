@@ -1,7 +1,10 @@
-import { Command, CommandClient } from 'detritus-client/lib';
+import type { CommandClient } from 'detritus-client/lib';
+import { Command } from 'detritus-client/lib';
 import { CommandRatelimitTypes } from 'detritus-client/lib/constants';
+import type { Message } from 'detritus-client/lib/structures';
 import { respond } from '../tools/util';
 import { Warning } from '../tools/warning';
+import type { ArgsFactory, Values } from './parser';
 
 export interface CommandOptionsExtra extends Command.CommandOptions {
   metadata: CommandMetadata;
@@ -29,7 +32,9 @@ export const DefaultOptions: Partial<CommandOptionsExtra> = {
   ],
 };
 
-export class BaseCommand<T> extends Command.Command<T> {
+export class BaseCommand<
+  T extends Values<ArgsFactory<string, Record<never, unknown>>, string>
+> extends Command.Command<T> {
   public metadata: CommandMetadata;
   constructor(
     client: CommandClient,
@@ -40,7 +45,11 @@ export class BaseCommand<T> extends Command.Command<T> {
     this.metadata = options.metadata;
   }
 
-  onTypeError(context: Command.Context, _: T, errors: Record<string, Error>) {
+  onTypeError(
+    context: Command.Context,
+    _: T,
+    errors: Record<string, Error>
+  ): Promise<Message> | void {
     const text = [];
     for (const key in errors) {
       const value = errors[key];
@@ -69,7 +78,15 @@ export class BaseCommand<T> extends Command.Command<T> {
     }
   }
 
-  onError(context: Command.Context, _args: unknown, error: Error) {
+  onError(
+    context: Command.Context,
+    _args: unknown,
+    error: Error | null
+  ): Promise<Message> | void {
+    if (error === null) {
+      return;
+    }
+
     if (error instanceof Warning) {
       return respond.fmt(context, ':warning: `{content}`', {
         content: error.content,
@@ -78,7 +95,11 @@ export class BaseCommand<T> extends Command.Command<T> {
     return respond.fmt(context, ':x: `{message}`', { message: error.stack });
   }
 
-  onRunError(context: Command.Context, args: T, error: Error) {
+  onRunError(
+    context: Command.Context,
+    args: T,
+    error: Error | null
+  ): Promise<Message> | void {
     return this.onError(context, args, error);
   }
 }

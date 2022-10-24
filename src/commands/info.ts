@@ -1,23 +1,26 @@
-import { Context } from 'detritus-client/lib/command';
+import type { Context } from 'detritus-client/lib/command';
+import type {
+  PresenceStatuses,
+  VerificationLevels
+} from 'detritus-client/lib/constants';
 import {
   ChannelTypes,
   MarkupTimestampStyles,
-  PresenceStatuses,
-  UserFlags,
-  VerificationLevels,
+  UserFlags
 } from 'detritus-client/lib/constants';
+import type { Channel } from 'detritus-client/lib/structures';
 import {
-  Channel,
   ChannelBase,
   ChannelDM,
   Guild,
   Member,
   Message,
   Role,
-  User,
+  User
 } from 'detritus-client/lib/structures';
-import { Embed, Markup, Snowflake } from 'detritus-client/lib/utils';
-import { Snowflake as SnowFlake } from 'detritus-utils/lib/snowflake';
+import type { Embed } from 'detritus-client/lib/utils';
+import { Markup, Snowflake } from 'detritus-client/lib/utils';
+import type { Snowflake as SnowFlake } from 'detritus-utils/lib/snowflake';
 import {
   bar,
   ChannelTypesText,
@@ -34,17 +37,19 @@ import {
   tab,
   tail,
   UserBadges,
-  VideoQualityModesText,
+  VideoQualityModesText
 } from '../constants';
-import { CustomEmojis, Emojis } from '../emojis';
+import type { Emojis } from '../emojis';
+import { CustomEmojis } from '../emojis';
 import { Embeds } from '../tools/embed';
-import { CustomEmoji, Emoji, UnicodeEmoji } from '../tools/emoji';
+import type { Emoji } from '../tools/emoji';
+import { CustomEmoji, UnicodeEmoji } from '../tools/emoji';
 import { Markdown } from '../tools/markdown';
 import { Paginator } from '../tools/paginator';
 import { fmt, formatBytes, permissionsText } from '../tools/util';
 import { Warning } from '../tools/warning';
 import { Command } from '../wrap/builder';
-import { Depromise } from '../wrap/parser';
+import type { Depromise } from '../wrap/parser';
 
 export default Command(
   'info [...noun?]',
@@ -68,7 +73,7 @@ export default Command(
 
     const paginator = new Paginator(context, {
       pageLimit: pages.length,
-      async onPage(page) {
+      async onPage(page): Promise<Embed> {
         const embed = Embeds.user(context);
         embed.setFooter(`Page ${page}/${pages.length}`);
 
@@ -119,19 +124,19 @@ export async function identify(
   noun: string
 ): Promise<
   Array<
-    | Guild
     | Channel
-    | Message
-    | Member
-    | User
-    | Role
     | Emoji
+    | Guild
+    | Member
+    | Message
+    | Role
     | Snowflake.Snowflake
+    | User
     | null
   >
 > {
   const out: Array<
-    User | Member | Guild | Role | Channel | Emoji | SnowFlake | Message | null
+    Channel | Emoji | Guild | Member | Message | Role | SnowFlake | User | null
   > = [];
   if (/^<a?:(\w{2,32}):(\d{16,20})>$/.test(noun)) {
     out.push(new CustomEmoji(noun));
@@ -243,7 +248,7 @@ export function isSnowflake(value: any): value is SnowFlake {
 
 // formatters
 
-export async function snowflake(_: Context, data: SnowFlake, embed: Embed) {
+export async function snowflake(_: Context, data: SnowFlake, embed: Embed): Promise<Embed> {
   embed.setTitle(`${tail} Snowflake Information`);
 
   {
@@ -277,7 +282,7 @@ export async function unicodeEmoji(
   _: Context,
   data: UnicodeEmoji,
   embed: Embed
-) {
+): Promise<Embed> {
   embed.setTitle(`${tail} Emoji Information (Unicode)`);
   embed.setThumbnail(data.url());
 
@@ -298,7 +303,7 @@ export async function unicodeEmoji(
       fmt('**Codepoints**: `{codepoints}`', { codepoints: data.codepoints() })
     );
 
-    if (keywords && keywords.length) {
+    if (keywords.length) {
       description.push(
         fmt('**Key Words**: {kw}', {
           kw: keywords.map((x) => Markup.codestring(x)).join(', '),
@@ -319,7 +324,7 @@ export async function unicodeEmoji(
   return embed;
 }
 
-export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed) {
+export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed): Promise<Embed> {
   embed.setTitle(`${tail} Emoji Information (Custom)`);
   embed.setThumbnail(data.url());
 
@@ -363,7 +368,7 @@ export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed) {
   return embed;
 }
 
-export async function role(_: Context, data: Role, embed: Embed) {
+export async function role(_: Context, data: Role, embed: Embed): Promise<Embed> {
   embed.setTitle(`${tail} Role Information`);
 
   const {
@@ -453,7 +458,7 @@ export async function role(_: Context, data: Role, embed: Embed) {
   return embed;
 }
 
-export async function channel(_: Context, data: Channel, embed: Embed) {
+export async function channel(_: Context, data: Channel, embed: Embed): Promise<Embed> {
   embed.setTitle(`${tail} Channel Information`);
 
   const {
@@ -679,7 +684,7 @@ export async function channel(_: Context, data: Channel, embed: Embed) {
   return embed;
 }
 
-function getChannelIcon(channel: Channel) {
+function getChannelIcon(channel: Channel): string {
   if (channel instanceof ChannelDM) {
     return (
       channel.iconUrl || channel.defaultIconUrl || new UnicodeEmoji('❔').url()
@@ -734,7 +739,7 @@ function getChannelIcon(channel: Channel) {
 
 export async function user(
   _: Context,
-  data: User | Member,
+  data: Member | User,
   embed: Embed
 ): Promise<Embed> {
   // const isMember = data instanceof Member;

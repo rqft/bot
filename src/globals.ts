@@ -10,3 +10,7 @@ export const commands = new CommandClient(client, {
   prefix: ',',
   activateOnEdits: true,
 });
+
+export const self = new ShardClient(Secrets.UserToken, {
+  gateway: { intents: 3276799 },
+});

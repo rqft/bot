@@ -4,18 +4,21 @@ import { handleError, respond } from '../../tools/util';
 import { Command } from '../../wrap/builder';
 
 export default Command(
-  'spin [image]',
+  'rotate [image] [deg]',
   {
-    args: (self) => ({ image: self.imageUrl({ size: 512 }) }),
+    args: (self) => ({
+      image: self.imageUrl({ size: 512 }),
+      deg: self.integer(),
+    }),
   },
   async (context, args) => {
     const payload = await Instances.self
-      .imageSpin(args.image)
+      .imageRotate(args.image, args.deg)
       .then(handleError(context));
 
     return await respond(
       context,
-      await Embeds.image(context, payload.unwrap(), 'spin')
+      await Embeds.image(context, payload.unwrap(), 'rotate')
     );
   }
 );

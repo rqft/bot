@@ -1,21 +1,21 @@
-import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
 import { handleError, respond } from '../../tools/util';
 import { Command } from '../../wrap/builder';
 
 export default Command(
-  'spin [image]',
+  'extract [video]',
   {
-    args: (self) => ({ image: self.imageUrl({ size: 512 }) }),
+    args: (self) => ({
+      video: self.videoUrl(),
+    }),
   },
   async (context, args) => {
     const payload = await Instances.self
-      .imageSpin(args.image)
+      .audioExtract(args.video)
       .then(handleError(context));
 
-    return await respond(
-      context,
-      await Embeds.image(context, payload.unwrap(), 'spin')
-    );
+    return await respond(context, {
+      files: [{ filename: 'extract.mp3', value: payload.unwrap() }],
+    });
   }
 );

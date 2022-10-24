@@ -164,7 +164,7 @@ async function unicodeEmoji(_, data, embed) {
             sub: sub_category.name,
         }));
         description.push((0, util_1.fmt)('**Codepoints**: `{codepoints}`', { codepoints: data.codepoints() }));
-        if (keywords && keywords.length) {
+        if (keywords.length) {
             description.push((0, util_1.fmt)('**Key Words**: {kw}', {
                 kw: keywords.map((x) => utils_1.Markup.codestring(x)).join(', '),
             }));

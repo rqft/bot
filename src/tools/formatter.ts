@@ -1,6 +1,6 @@
 export function Formatter<T extends string>(
   data: Record<T, string>,
-  use: (codes: Array<string>, text: string) => string = (_, t) => t
+  use: (codes: Array<string>, text: string) => string = (_, t): string => t
 ): ApplyFn<T> {
   class Format {
     constructor(private code: Array<T> = []) {
@@ -14,11 +14,11 @@ export function Formatter<T extends string>(
       }
     }
 
-    public use(text: string) {
+    public use(text: string): string {
       return use(this.code, text);
     }
 
-    public static new(code: Array<T> = []) {
+    public static new(code: Array<T> = []): Format {
       return new Format(code);
     }
   }
@@ -81,7 +81,7 @@ export namespace Ansi {
     Reset = '0',
   }
 
-  export function use(codes: Array<string>, text: string) {
+  export function use(codes: Array<string>, text: string): string {
     return `${Identifier}${FormattingCodes.Reset}m${codes
       .map((x) => Identifier + x + 'm')
       .join('')}${text}${Identifier}${FormattingCodes.Reset}m`;

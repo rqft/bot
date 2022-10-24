@@ -12,7 +12,7 @@ const parser_1 = require("./parser");
 exports.CommandArgumentBuilders = {
     string(options) {
         return (value) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             if (options) {
@@ -45,7 +45,7 @@ exports.CommandArgumentBuilders = {
     },
     number(options) {
         return (value) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             const float = Number.parseFloat(value);
@@ -79,7 +79,7 @@ exports.CommandArgumentBuilders = {
     },
     integer(options) {
         return (value, context) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             const float = this.number(options)(value, context);
@@ -101,15 +101,34 @@ exports.CommandArgumentBuilders = {
             return undefined;
         };
     },
+    boolean() {
+        return (value) => {
+            if (value === '') {
+                throw new RangeError('Must provide a value');
+            }
+            return (!!value && ['false', '0'].every((x) => x !== value.toLowerCase().trim()));
+        };
+    },
+    booleanOptional(options) {
+        return (value, context) => {
+            if (value === undefined) {
+                value = options?.default;
+            }
+            if (value) {
+                return this.boolean()(value, context);
+            }
+            return undefined;
+        };
+    },
     channel(options) {
         return (value, context) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             const { guild } = context;
             if (guild) {
                 const found = guild.channels.find((channel) => {
-                    if (options && options.type) {
+                    if (options) {
                         if (channel.constructor !== parser_1.ChannelConstructors[options.type]) {
                             return false;
                         }
@@ -137,7 +156,7 @@ exports.CommandArgumentBuilders = {
     },
     date() {
         return (value) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             return new Date(value);
@@ -156,7 +175,7 @@ exports.CommandArgumentBuilders = {
     },
     object() {
         return (value) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             return JSON.parse(value);
@@ -165,7 +184,7 @@ exports.CommandArgumentBuilders = {
     objectOptional(options) {
         return (value, context) => {
             if (value === undefined) {
-                value = options?.default;
+                value = options.default;
             }
             if (value) {
                 return this.object()(value, context);
@@ -175,7 +194,7 @@ exports.CommandArgumentBuilders = {
     },
     regexp() {
         return (value) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             return new RegExp(value);
@@ -194,7 +213,7 @@ exports.CommandArgumentBuilders = {
     },
     url() {
         return (value) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             return new URL(value);
@@ -213,7 +232,7 @@ exports.CommandArgumentBuilders = {
     },
     user() {
         return async (value, context) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             const found = context.client.users.find((user) => user.tag.toLowerCase().includes(value.toLowerCase()) ||
@@ -243,7 +262,7 @@ exports.CommandArgumentBuilders = {
     },
     member() {
         return (value, context) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             const { guild } = context;
@@ -269,7 +288,7 @@ exports.CommandArgumentBuilders = {
     },
     role() {
         return (value, context) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             const { guild } = context;
@@ -295,7 +314,7 @@ exports.CommandArgumentBuilders = {
     },
     emoji() {
         return (value, context) => {
-            if (value === undefined || value === '') {
+            if (value === '') {
                 throw new RangeError('must provide a value');
             }
             console.log(value, value.replace(/\D/g, ''));
@@ -336,8 +355,8 @@ exports.CommandArgumentBuilders = {
     array(options) {
         return (value) => {
             const sliced = value.split(options?.split || ' ');
-            if (options?.choices && options?.choices.length) {
-                if (!sliced.every((x) => options?.choices?.includes(x))) {
+            if (options?.choices && options.choices.length) {
+                if (!sliced.every((x) => options.choices?.includes(x))) {
                     throw new RangeError(`must be one of [ ${options.choices.join(', ')} ]`);
                 }
             }

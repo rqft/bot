@@ -1,11 +1,11 @@
-import { Context, EditOrReply } from 'detritus-client/lib/command';
+import type { Context, EditOrReply } from 'detritus-client/lib/command';
 import { Embed } from 'detritus-client/lib/utils';
 import { decode, GIF } from 'imagescript';
 import { Colours } from '../constants';
 import { formatBytes } from './util';
 
 export namespace Embeds {
-  export function user(context: Context, embed: Embed = new Embed()) {
+  export function user(context: Context, embed: Embed = new Embed()): Embed {
     embed.setColor(Colours.Embed);
     embed.setAuthor(context.user.tag, context.user.avatarUrl);
     return embed;
@@ -14,7 +14,8 @@ export namespace Embeds {
   export async function image(
     context: Context,
     value: Buffer,
-    filename: string
+    filename: string,
+    embed: Embed = Embeds.user(context)
   ): Promise<EditOrReply> {
     const out: EditOrReply = {};
     const content = await decode(value);
@@ -35,7 +36,6 @@ export namespace Embeds {
 
     footer.unshift(name);
 
-    const embed = user(context);
     embed.setImage(`attachment://${name}`);
     embed.setFooter(footer.join(', '));
 

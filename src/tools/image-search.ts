@@ -3,10 +3,11 @@ import {
   DiscordRegexNames,
   StickerFormats,
 } from 'detritus-client/lib/constants';
-import { EmbeddableRegexes, Message } from 'detritus-client/lib/structures';
+import type { Message } from 'detritus-client/lib/structures';
+import { EmbeddableRegexes } from 'detritus-client/lib/structures';
 import { regex } from 'detritus-client/lib/utils';
 import { CommandArgumentBuilders } from '../wrap/builder';
-import { MediaOptions } from '../wrap/parser';
+import type { MediaOptions } from '../wrap/parser';
 import { CustomEmoji } from './emoji';
 import { fileExtension } from './util';
 
@@ -28,7 +29,8 @@ export async function findMediaUrls(
   type: Array<MediaTypes>,
   context: Context | Message,
   text: string | undefined,
-  options?: MediaOptions
+  options?: MediaOptions,
+  inSearch = false
 ): Promise<Array<string>> {
   const wantedSize = options?.size || 512;
   if (context instanceof Context) {
@@ -52,7 +54,13 @@ export async function findMediaUrls(
 
   if (context.referencedMessage) {
     out.push(
-      ...(await findMediaUrls(type, context.referencedMessage, context.content))
+      ...(await findMediaUrls(
+        type,
+        context.referencedMessage,
+        context.content,
+        options,
+        inSearch
+      ))
     );
   }
 
@@ -94,7 +102,8 @@ export async function findMediaUrls(
 
       if (canBeImage) {
         out.push(
-          id.avatarUrlFormat(null, { size: wantedSize }) || id.defaultAvatarUrl
+          id.avatarUrlFormat(options?.format, { size: wantedSize }) ||
+            id.defaultAvatarUrl
         );
       }
     } catch {
@@ -106,6 +115,27 @@ export async function findMediaUrls(
     for (const { matched } of emojis.matches) {
       if (canBeImage) {
         out.push(CustomEmoji.url(matched));
+      }
+    }
+  }
+
+  if (
+    inSearch === false &&
+    (text === undefined || text === '' || text === '^')
+  ) {
+    const messages = await context.channel?.fetchMessages({ limit: 25 });
+
+    if (messages) {
+      for (const [, message] of messages) {
+        out.push(
+          ...(await findMediaUrls(
+            type,
+            message,
+            message.content,
+            options,
+            true
+          ))
+        );
       }
     }
   }

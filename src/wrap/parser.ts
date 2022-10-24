@@ -1,4 +1,6 @@
-import { ArgumentOptions, Context } from 'detritus-client/lib/command';
+import type { ArgumentOptions, Context } from 'detritus-client/lib/command';
+import type { ImageFormats } from 'detritus-client/lib/constants';
+import type { Emoji, Member, Role, User } from 'detritus-client/lib/structures';
 import {
   ChannelBase,
   ChannelDM,
@@ -12,14 +14,10 @@ import {
   ChannelGuildText,
   ChannelGuildThread,
   ChannelGuildVoice,
-  Emoji,
-  Member,
-  Role,
-  User,
 } from 'detritus-client/lib/structures';
-import { UnicodeEmoji } from '../tools/emoji';
-import { MediaTypes } from '../tools/image-search';
-import { CommandMetadata, CommandOptionsExtra } from './base-command';
+import type { UnicodeEmoji } from '../tools/emoji';
+import type { MediaTypes } from '../tools/image-search';
+import type { CommandMetadata, CommandOptionsExtra } from './base-command';
 
 export type SyntaxParser<
   U extends string,
@@ -46,12 +44,17 @@ export interface Self {
 
   number(options?: NumberOptions): Arg<string, number>;
   numberOptional(
-    options?: OptionalOptions & NumberOptions
+    options?: NumberOptions & OptionalOptions
   ): Arg<string | undefined, number | undefined>;
+
+  boolean(): Arg<string, boolean>;
+  booleanOptional(
+    options?: OptionalOptions
+  ): Arg<string | undefined, boolean | undefined>;
 
   integer(options?: NumberOptions): Arg<string, number>;
   integerOptional(
-    options?: OptionalOptions & NumberOptions
+    options?: NumberOptions & OptionalOptions
   ): Arg<string | undefined, number | undefined>;
 
   role(): Arg<string, Role>;
@@ -88,7 +91,7 @@ export interface Self {
     options?: ChannelOptions<T>
   ): Arg<string, ChannelFromName<T>>;
   channelOptional<T extends ChannelNames = ChannelNames.Base>(
-    options?: OptionalOptions & ChannelOptions<T>
+    options?: ChannelOptions<T> & OptionalOptions
   ): Arg<string | undefined, ChannelFromName<T> | undefined>;
 
   url(): Arg<string, URL>;
@@ -113,12 +116,12 @@ export interface Self {
 
   imageUrl(options?: MediaOptions): Arg<string, Promise<string>>;
   imageUrlOptional(
-    options?: OptionalOptions & MediaOptions
+    options?: MediaOptions & OptionalOptions
   ): Arg<string | undefined, Promise<string | undefined>>;
 
   image(options?: MediaOptions): Arg<string, Promise<Buffer>>;
   imageOptional(
-    options?: OptionalOptions & MediaOptions
+    options?: MediaOptions & OptionalOptions
   ): Arg<string | undefined, Promise<Buffer | undefined>>;
 
   audioUrl(): Arg<string, Promise<string>>;
@@ -147,7 +150,7 @@ export interface Self {
   ): Arg<string, Promise<string>>;
   mediaUrlOptional(
     types?: Array<MediaTypes>,
-    options?: OptionalOptions & MediaOptions
+    options?: MediaOptions & OptionalOptions
   ): Arg<string | undefined, Promise<string | undefined>>;
 
   media(
@@ -156,7 +159,7 @@ export interface Self {
   ): Arg<string, Promise<Buffer>>;
   mediaOptional(
     types?: Array<MediaTypes>,
-    options?: OptionalOptions & MediaOptions
+    options?: MediaOptions & OptionalOptions
   ): Arg<string | undefined, Promise<Buffer | undefined>>;
 }
 
@@ -191,6 +194,7 @@ export interface ChannelOptions<T extends ChannelNames> {
 
 export interface MediaOptions {
   size?: number;
+  format?: ImageFormats;
 }
 
 export enum ChannelNames {
@@ -251,7 +255,7 @@ export type Depromise<T> = T extends Promise<infer U> ? U : T;
 export type Values<T extends ArgsFactory<U, any>, U extends string> = {
   [P in keyof ReturnType<T>]: ReturnType<T>[P] extends (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...args: any[]
+    ...args: Array<any>
   ) => infer R
     ? Depromise<R>
     : never;

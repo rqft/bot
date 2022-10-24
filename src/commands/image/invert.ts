@@ -1,28 +1,26 @@
-import { APIs } from '@rqft/fetch';
+import { Rqft } from '@rqft/fetch';
 import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
-import { respond } from '../../tools/util';
+import { handleError, respond } from '../../tools/util';
 import { Command } from '../../wrap/builder';
-
 export default Command(
-  'invert [image] [-method=invert]',
+  'invert [image] [-type=invert]',
   {
     args: (self) => ({
       image: self.imageUrl({ size: 512 }),
-      method: self.stringOptional({
-        choices: Object.values(APIs.Jonathan.InvertMethods),
+      type: self.stringOptional({
+        choices: Object.values(Rqft.InvertMethods),
       }),
     }),
   },
   async (context, args) => {
-    const { payload } = await Instances.self.imageInvert(
-      args.image,
-      args.method as APIs.Jonathan.InvertMethods
-    );
+    const payload = await Instances.self
+      .imageInvert(args.image, args.type as Rqft.InvertMethods)
+      .then(handleError(context));
 
     return await respond(
       context,
-      await Embeds.image(context, payload, 'invert')
+      await Embeds.image(context, payload.unwrap(), 'invert')
     );
   }
 );

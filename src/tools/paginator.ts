@@ -1,5 +1,5 @@
 import { Structures } from 'detritus-client';
-import { RequestTypes } from 'detritus-client-rest';
+import type { RequestTypes } from 'detritus-client-rest';
 import { Context } from 'detritus-client/lib/command';
 import {
   InteractionCallbackTypes,
@@ -7,8 +7,9 @@ import {
   MessageFlags,
 } from 'detritus-client/lib/constants';
 import { InteractionContext } from 'detritus-client/lib/interaction';
-import { Member, Message, User } from 'detritus-client/lib/structures';
-import { ComponentContext, Components, Embed } from 'detritus-client/lib/utils';
+import type { Member, Message, User } from 'detritus-client/lib/structures';
+import type { ComponentContext } from 'detritus-client/lib/utils';
+import { Components, Embed } from 'detritus-client/lib/utils';
 import { Timeout } from 'detritus-utils/lib/timers';
 import { respond } from './util';
 
@@ -88,16 +89,16 @@ export class Paginator {
   readonly custom: {
     expire: number;
     isActive: boolean;
-    message?: null | Structures.Message;
+    message?: Structures.Message | null;
     timeout: Timeout;
-    userId?: null | string;
+    userId?: string | null;
   } = {
       expire: 10000,
       isActive: false,
       timeout: new Timeout(),
     };
   pisEphemeral?: boolean;
-  pmessage: null | Structures.Message = null;
+  pmessage: Structures.Message | null = null;
 
   buttons: Record<PageButtonNames, PageButton> = Object.assign({}, PageButtons);
   expires: number = 1 * (60 * 1000);
@@ -286,7 +287,7 @@ export class Paginator {
     return false; //this.pageSkipAmount < this.pageLimit;
   }
 
-  get message(): null | Structures.Message {
+  get message(): Structures.Message | null {
     if (this.pmessage) {
       return this.pmessage;
     }
@@ -296,7 +297,7 @@ export class Paginator {
     return null;
   }
 
-  set message(value: null | Structures.Message) {
+  set message(value: Structures.Message | null) {
     this.pmessage = value;
   }
 
@@ -361,7 +362,7 @@ export class Paginator {
               await this.custom.message.delete();
             }
             await this.custom.message.delete();
-          } catch (error) {
+          } catch {
             void 0;
           }
         }

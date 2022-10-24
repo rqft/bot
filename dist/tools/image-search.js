@@ -19,7 +19,7 @@ exports.AllMediaTypes = [
     MediaType.Image,
     MediaType.Video,
 ];
-async function findMediaUrls(type, context, text, options) {
+async function findMediaUrls(type, context, text, options, inSearch = false) {
     const wantedSize = options?.size || 512;
     if (context instanceof command_1.Context) {
         context = context.message;
@@ -36,7 +36,7 @@ async function findMediaUrls(type, context, text, options) {
         }
     }
     if (context.referencedMessage) {
-        out.push(...(await findMediaUrls(type, context.referencedMessage, context.content)));
+        out.push(...(await findMediaUrls(type, context.referencedMessage, context.content, options, inSearch)));
     }
     for (const [, embed] of context.embeds) {
         if (canBeImage && embed.image && embed.image.url) {
@@ -68,7 +68,8 @@ async function findMediaUrls(type, context, text, options) {
             const id = await builder_1.CommandArgumentBuilders.user()(text, context);
             console.log(id);
             if (canBeImage) {
-                out.push(id.avatarUrlFormat(null, { size: wantedSize }) || id.defaultAvatarUrl);
+                out.push(id.avatarUrlFormat(options?.format, { size: wantedSize }) ||
+                    id.defaultAvatarUrl);
             }
         }
         catch {
@@ -78,6 +79,15 @@ async function findMediaUrls(type, context, text, options) {
         for (const { matched } of emojis.matches) {
             if (canBeImage) {
                 out.push(emoji_1.CustomEmoji.url(matched));
+            }
+        }
+    }
+    if (inSearch === false &&
+        (text === undefined || text === '' || text === '^')) {
+        const messages = await context.channel?.fetchMessages({ limit: 25 });
+        if (messages) {
+            for (const [, message] of messages) {
+                out.push(...(await findMediaUrls(type, message, message.content, options, true)));
             }
         }
     }

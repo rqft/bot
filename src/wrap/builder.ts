@@ -1,13 +1,13 @@
-import { Command as Cmd, CommandClient } from 'detritus-client/lib';
+import type { Command as Cmd, CommandClient } from 'detritus-client/lib';
 import fetch from 'node-fetch';
 import { UnicodeEmoji } from '../tools/emoji';
 import { AllMediaTypes, findMediaUrls } from '../tools/image-search';
 import { BaseCommand } from './base-command';
 
-import {
+import type {
+  Arg,
   ArgsFactory,
   ArrayOptions,
-  ChannelConstructors,
   OptionalOptions,
   Options,
   RemoveSugar,
@@ -15,11 +15,12 @@ import {
   SyntaxParser,
   Values,
 } from './parser';
+import { ChannelConstructors } from './parser';
 
 export const CommandArgumentBuilders: Self = {
   string(options) {
     return (value) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -66,7 +67,7 @@ export const CommandArgumentBuilders: Self = {
 
   number(options) {
     return (value) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -111,7 +112,7 @@ export const CommandArgumentBuilders: Self = {
 
   integer(options) {
     return (value, context) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -140,9 +141,35 @@ export const CommandArgumentBuilders: Self = {
     };
   },
 
+  boolean() {
+    return (value) => {
+      if (value === '') {
+        throw new RangeError('Must provide a value');
+      }
+
+      return (
+        !!value && ['false', '0'].every((x) => x !== value.toLowerCase().trim())
+      );
+    };
+  },
+
+  booleanOptional(options) {
+    return (value, context) => {
+      if (value === undefined) {
+        value = options?.default;
+      }
+
+      if (value) {
+        return this.boolean()(value, context);
+      }
+
+      return undefined;
+    };
+  },
+
   channel(options) {
     return (value, context) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -150,7 +177,7 @@ export const CommandArgumentBuilders: Self = {
 
       if (guild) {
         const found = guild.channels.find((channel) => {
-          if (options && options.type) {
+          if (options) {
             if (channel.constructor !== ChannelConstructors[options.type]) {
               return false;
             }
@@ -186,7 +213,7 @@ export const CommandArgumentBuilders: Self = {
 
   date() {
     return (value) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -210,7 +237,7 @@ export const CommandArgumentBuilders: Self = {
 
   object<T>() {
     return (value) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -221,7 +248,7 @@ export const CommandArgumentBuilders: Self = {
   objectOptional<T>(options: OptionalOptions) {
     return (value, context) => {
       if (value === undefined) {
-        value = options?.default;
+        value = options.default;
       }
 
       if (value) {
@@ -234,7 +261,7 @@ export const CommandArgumentBuilders: Self = {
 
   regexp() {
     return (value) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -258,7 +285,7 @@ export const CommandArgumentBuilders: Self = {
 
   url() {
     return (value) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -282,7 +309,7 @@ export const CommandArgumentBuilders: Self = {
 
   user() {
     return async (value, context) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -321,7 +348,7 @@ export const CommandArgumentBuilders: Self = {
 
   member() {
     return (value, context) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -356,7 +383,7 @@ export const CommandArgumentBuilders: Self = {
 
   role() {
     return (value, context) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -391,7 +418,7 @@ export const CommandArgumentBuilders: Self = {
 
   emoji() {
     return (value, context) => {
-      if (value === undefined || value === '') {
+      if (value === '') {
         throw new RangeError('must provide a value');
       }
 
@@ -447,15 +474,15 @@ export const CommandArgumentBuilders: Self = {
     return (value) => {
       const sliced = value.split(options?.split || ' ');
 
-      if (options?.choices && options?.choices.length) {
-        if (!sliced.every((x) => options?.choices?.includes(x))) {
+      if (options?.choices && options.choices.length) {
+        if (!sliced.every((x) => options.choices?.includes(x))) {
           throw new RangeError(
             `must be one of [ ${options.choices.join(', ')} ]`
           );
         }
       }
 
-      const data = sliced.map(options?.map || ((x) => x as unknown as T));
+      const data = sliced.map(options?.map || ((x): T => x as unknown as T));
 
       if (options) {
         if (options.maxLength && data.length > options.maxLength) {
@@ -594,7 +621,7 @@ export const CommandArgumentBuilders: Self = {
 export const DefaultArgs = new Proxy(
   {},
   {
-    get() {
+    get(): Arg<string, string> {
       return CommandArgumentBuilders.string();
     },
   }
@@ -609,13 +636,13 @@ export function Command<
   syntax: U,
   options: Options<U, V>,
   run: (context: Cmd.Context, args: Values<V, U>) => unknown
-) {
+): typeof BaseCommand {
   const [, cmd] = /^(.+?)(?: \[|$)/.exec(syntax) || [];
   const ids = syntax.match(/\[.+?\]/g) || [];
   const opt: Array<Cmd.ArgumentOptions> = [];
   const flg: Array<Cmd.ArgumentOptions> = [];
 
-  const builder = (options.args || (() => DefaultArgs))(
+  const builder = (options.args || ((): typeof DefaultArgs => DefaultArgs))(
     CommandArgumentBuilders
   );
 

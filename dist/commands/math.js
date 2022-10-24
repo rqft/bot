@@ -10,9 +10,10 @@ exports.default = (0, builder_1.Command)('math [...expressions]', {
         expressions: self.string(),
     }),
 }, async (context, args) => {
-    const { payload } = await fetch_2.Instances.self.math(args.expressions);
-    if (payload.status.state === fetch_1.APIs.Jonathan.ResultState.ERROR) {
-        throw new warning_1.Warning(payload.status.message);
+    const payload = await fetch_2.Instances.self.math(args.expressions);
+    const id = payload.unwrap();
+    if (id.status.state === fetch_1.Rqft.ResultState.ERROR) {
+        throw new warning_1.Warning(id.status.message);
     }
-    return await (0, util_1.respond)(context, String(payload.data));
+    return await (0, util_1.respond)(context, String(id.data));
 });
