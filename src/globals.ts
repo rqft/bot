@@ -7,7 +7,7 @@ export const client = new ShardClient(Secrets.Token, {
   },
 });
 export const commands = new CommandClient(client, {
-  prefix: ',',
+  prefix: Secrets.DefaultPrefix,
   activateOnEdits: true,
 });
 
