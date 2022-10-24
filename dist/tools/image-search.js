@@ -35,6 +35,9 @@ async function findMediaUrls(type, context, text, options, inSearch = false) {
             out.push(attachment.url);
         }
     }
+    if (text === '-') {
+        return out;
+    }
     if (context.referencedMessage) {
         out.push(...(await findMediaUrls(type, context.referencedMessage, context.content, options, inSearch)));
     }
@@ -84,7 +87,10 @@ async function findMediaUrls(type, context, text, options, inSearch = false) {
     }
     if (inSearch === false &&
         (text === undefined || text === '' || text === '^')) {
-        const messages = await context.channel?.fetchMessages({ limit: 25 });
+        const messages = await context.channel?.fetchMessages({
+            limit: 25,
+            before: context.id,
+        });
         if (messages) {
             for (const [, message] of messages) {
                 out.push(...(await findMediaUrls(type, message, message.content, options, true)));

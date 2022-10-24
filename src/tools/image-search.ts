@@ -52,6 +52,10 @@ export async function findMediaUrls(
     }
   }
 
+  if (text === '-') {
+    return out;
+  }
+
   if (context.referencedMessage) {
     out.push(
       ...(await findMediaUrls(
@@ -123,7 +127,10 @@ export async function findMediaUrls(
     inSearch === false &&
     (text === undefined || text === '' || text === '^')
   ) {
-    const messages = await context.channel?.fetchMessages({ limit: 25 });
+    const messages = await context.channel?.fetchMessages({
+      limit: 25,
+      before: context.id,
+    });
 
     if (messages) {
       for (const [, message] of messages) {
