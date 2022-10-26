@@ -4,7 +4,7 @@ import { fmt, respond } from '../../tools/util';
 import { Command } from '../../wrap/builder';
 
 export default Command(
-  'average-color [image]',
+  'average-color [image] [image]',
   {
     args: (self) => ({
       image: self.imageUrl({ size: 512 }),

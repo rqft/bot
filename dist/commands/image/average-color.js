@@ -4,7 +4,7 @@ const embed_1 = require("../../tools/embed");
 const fetch_1 = require("../../tools/fetch");
 const util_1 = require("../../tools/util");
 const builder_1 = require("../../wrap/builder");
-exports.default = (0, builder_1.Command)('average-color [image]', {
+exports.default = (0, builder_1.Command)('average-color [image] [image]', {
     args: (self) => ({
         image: self.imageUrl({ size: 512 }),
     }),
