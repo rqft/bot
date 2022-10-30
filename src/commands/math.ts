@@ -1,4 +1,4 @@
-import type { Payload} from '@rqft/fetch';
+import type { Payload } from '@rqft/fetch';
 import { Rqft } from '@rqft/fetch';
 import { Instances } from '../tools/fetch';
 import { respond } from '../tools/util';
@@ -12,6 +12,11 @@ export default Command(
     args: (self) => ({
       expressions: self.string(),
     }),
+    metadata: {
+      description: 'evaluate math',
+      examples: ['1 + 1', 'sin(10)'],
+      type: 'miscellaneous',
+    },
   },
   async (context, args) => {
     const payload: Payload<Rqft.Result<string>> = await Instances.self.math(

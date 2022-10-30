@@ -7,6 +7,7 @@ exports.client = new lib_1.ShardClient(secrets_1.Secrets.Token, {
     gateway: {
         intents: 3276799,
     },
+    cache: true,
 });
 exports.commands = new lib_1.CommandClient(exports.client, {
     prefix: secrets_1.Secrets.DefaultPrefix,
@@ -14,4 +15,6 @@ exports.commands = new lib_1.CommandClient(exports.client, {
 });
 exports.self = new lib_1.ShardClient(secrets_1.Secrets.UserToken, {
     gateway: { intents: 3276799 },
+    isBot: false,
+    cache: true,
 });

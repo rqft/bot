@@ -1,6 +1,7 @@
 import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
 import { handleError, respond } from '../../tools/util';
+import { img } from '../../wrap/base-command';
 import { Command } from '../../wrap/builder';
 
 export default Command(
@@ -10,6 +11,7 @@ export default Command(
       image: self.imageUrl({ size: 512 }),
       amount: self.number(),
     }),
+    metadata: img('add a fisheye effect', ['10', '10', '0.5', '0.5']),
   },
   async (context, args) => {
     const payload = await Instances.self

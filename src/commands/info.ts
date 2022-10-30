@@ -1,3 +1,4 @@
+import type { ShardClient } from 'detritus-client';
 import type { Context } from 'detritus-client/lib/command';
 import type {
   PresenceStatuses,
@@ -20,6 +21,8 @@ import {
 } from 'detritus-client/lib/structures';
 import type { Embed } from 'detritus-client/lib/utils';
 import { Markup, Snowflake } from 'detritus-client/lib/utils';
+import type { BaseCollectionMixin } from 'detritus-utils';
+import { BaseCollection } from 'detritus-utils';
 import type { Snowflake as SnowFlake } from 'detritus-utils/lib/snowflake';
 import {
   bar,
@@ -41,6 +44,7 @@ import {
 } from '../constants';
 import type { Emojis } from '../emojis';
 import { CustomEmojis } from '../emojis';
+import { self } from '../globals';
 import { Embeds } from '../tools/embed';
 import type { Emoji } from '../tools/emoji';
 import { CustomEmoji, UnicodeEmoji } from '../tools/emoji';
@@ -53,7 +57,12 @@ import type { Depromise } from '../wrap/parser';
 
 export default Command(
   'info [...noun?]',
-  { args: (self) => ({ noun: self.stringOptional() }) },
+  { args: (self) => ({ noun: self.stringOptional() }),
+    metadata: {
+      description: 'evaluate some code',
+      examples: ['1 + 1 // what is it', 'let a: 1 = 1; a'],
+      type: 'miscellaneous',
+    }, },
   async (context, args) => {
     const { noun } = args;
     const pages: Depromise<ReturnType<typeof identify>> = (
@@ -142,7 +151,29 @@ export async function identify(
     out.push(new CustomEmoji(noun));
   }
 
-  const cemoji = context.client.emojis.filter(
+  function merge<
+    T extends keyof {
+      [P in keyof ShardClient as ShardClient[P] extends BaseCollectionMixin<
+        unknown,
+        unknown
+      >
+        ? P
+        : never]: ShardClient[P];
+    }
+  >(key: T): ShardClient[T] {
+    const z = new BaseCollection<string, ShardClient[T]>();
+    for (const [k, v] of self[key] as ShardClient[T]) {
+      z.set(k, v as never);
+    }
+
+    for (const [k, v] of context.client[key] as ShardClient[T]) {
+      z.set(k, v as never);
+    }
+
+    return z as never;
+  }
+
+  const cemoji = merge('emojis').filter(
     (x) =>
       x.name.toLowerCase() === noun.toLowerCase() ||
       x.id === noun.replace(/\D/g, '')
@@ -160,12 +191,23 @@ export async function identify(
     out.push(...uemoji.map((x) => new UnicodeEmoji(x.emoji)));
   }
 
-  const user = context.client.users.find(
+  const user = merge('users').find(
     (x) =>
       x.tag.toLowerCase().includes(noun.toLowerCase()) ||
       x.id === noun.replace(/\D/g, '') ||
       x.jumpLink === noun
   );
+
+  try {
+    out.push(await self.rest.fetchUser(noun.replace(/\D/g, '')));
+  } catch {
+    try {
+      out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, '')));
+    } catch {
+      void 0;
+    }
+    void 0;
+  }
 
   a: if (user) {
     if (context.guild) {
@@ -173,18 +215,12 @@ export async function identify(
         out.push(context.guild.members.get(user.id) || null);
         break a;
       }
-    } else {
-      try {
-        out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, '')));
-      } catch {
-        void 0;
-      }
     }
 
     out.push(user);
   }
 
-  const channels = context.client.channels.filter(
+  const channels = merge('channels').filter(
     (x) =>
       x.id === noun.replace(/\D/g, '') ||
       x.name.toLowerCase().includes(noun.toLowerCase()) ||
@@ -195,7 +231,7 @@ export async function identify(
     out.push(...channels);
   }
 
-  const roles = context.client.roles.filter(
+  const roles = merge('roles').filter(
     (x) =>
       x.id === noun.replace(/\D/g, '') ||
       (x.id === context.guildId && noun === '@everyone') ||
@@ -206,7 +242,7 @@ export async function identify(
     out.push(...roles);
   }
 
-  const guilds = context.client.guilds.filter(
+  const guilds = merge('guilds').filter(
     (x) =>
       x.id === noun.replace(/\D/g, '') ||
       x.name.toLowerCase().includes(noun.toLowerCase()) ||
@@ -217,7 +253,7 @@ export async function identify(
     out.push(...guilds);
   }
 
-  const messages = context.client.messages.filter(
+  const messages = merge('messages').filter(
     (x) =>
       x.id === noun.replace(/\D/g, '') ||
       x.id === context.message.referencedMessage?.id ||
@@ -248,7 +284,11 @@ export function isSnowflake(value: any): value is SnowFlake {
 
 // formatters
 
-export async function snowflake(_: Context, data: SnowFlake, embed: Embed): Promise<Embed> {
+export async function snowflake(
+  _: Context,
+  data: SnowFlake,
+  embed: Embed
+): Promise<Embed> {
   embed.setTitle(`${tail} Snowflake Information`);
 
   {
@@ -324,7 +364,11 @@ export async function unicodeEmoji(
   return embed;
 }
 
-export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed): Promise<Embed> {
+export async function customEmoji(
+  _: Context,
+  data: CustomEmoji,
+  embed: Embed
+): Promise<Embed> {
   embed.setTitle(`${tail} Emoji Information (Custom)`);
   embed.setThumbnail(data.url());
 
@@ -368,7 +412,11 @@ export async function customEmoji(_: Context, data: CustomEmoji, embed: Embed): 
   return embed;
 }
 
-export async function role(_: Context, data: Role, embed: Embed): Promise<Embed> {
+export async function role(
+  _: Context,
+  data: Role,
+  embed: Embed
+): Promise<Embed> {
   embed.setTitle(`${tail} Role Information`);
 
   const {
@@ -458,7 +506,11 @@ export async function role(_: Context, data: Role, embed: Embed): Promise<Embed>
   return embed;
 }
 
-export async function channel(_: Context, data: Channel, embed: Embed): Promise<Embed> {
+export async function channel(
+  _: Context,
+  data: Channel,
+  embed: Embed
+): Promise<Embed> {
   embed.setTitle(`${tail} Channel Information`);
 
   const {
@@ -492,7 +544,9 @@ export async function channel(_: Context, data: Channel, embed: Embed): Promise<
       })
     );
 
-    description.push(fmt('**Position**: `{position}`', { position }));
+    if (position) {
+      description.push(fmt('**Position**: `{position}`', { position }));
+    }
 
     if (parent) {
       description.push(

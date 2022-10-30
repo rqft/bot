@@ -4,7 +4,9 @@ exports.message = exports.guild = exports.user = exports.channel = exports.role 
 const constants_1 = require("detritus-client/lib/constants");
 const structures_1 = require("detritus-client/lib/structures");
 const utils_1 = require("detritus-client/lib/utils");
+const detritus_utils_1 = require("detritus-utils");
 const constants_2 = require("../constants");
+const globals_1 = require("../globals");
 const embed_1 = require("../tools/embed");
 const emoji_1 = require("../tools/emoji");
 const markdown_1 = require("../tools/markdown");
@@ -12,7 +14,12 @@ const paginator_1 = require("../tools/paginator");
 const util_1 = require("../tools/util");
 const warning_1 = require("../tools/warning");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)('info [...noun?]', { args: (self) => ({ noun: self.stringOptional() }) }, async (context, args) => {
+exports.default = (0, builder_1.Command)('info [...noun?]', { args: (self) => ({ noun: self.stringOptional() }),
+    metadata: {
+        description: 'evaluate some code',
+        examples: ['1 + 1 // what is it', 'let a: 1 = 1; a'],
+        type: 'miscellaneous',
+    }, }, async (context, args) => {
     const { noun } = args;
     const pages = (noun
         ? await identify(context, noun)
@@ -66,7 +73,17 @@ async function identify(context, noun) {
     if (/^<a?:(\w{2,32}):(\d{16,20})>$/.test(noun)) {
         out.push(new emoji_1.CustomEmoji(noun));
     }
-    const cemoji = context.client.emojis.filter((x) => x.name.toLowerCase() === noun.toLowerCase() ||
+    function merge(key) {
+        const z = new detritus_utils_1.BaseCollection();
+        for (const [k, v] of globals_1.self[key]) {
+            z.set(k, v);
+        }
+        for (const [k, v] of context.client[key]) {
+            z.set(k, v);
+        }
+        return z;
+    }
+    const cemoji = merge('emojis').filter((x) => x.name.toLowerCase() === noun.toLowerCase() ||
         x.id === noun.replace(/\D/g, ''));
     if (cemoji.length) {
         out.push(...cemoji.map((x) => new emoji_1.CustomEmoji(x.format)));
@@ -75,9 +92,21 @@ async function identify(context, noun) {
     if (uemoji.length) {
         out.push(...uemoji.map((x) => new emoji_1.UnicodeEmoji(x.emoji)));
     }
-    const user = context.client.users.find((x) => x.tag.toLowerCase().includes(noun.toLowerCase()) ||
+    const user = merge('users').find((x) => x.tag.toLowerCase().includes(noun.toLowerCase()) ||
         x.id === noun.replace(/\D/g, '') ||
         x.jumpLink === noun);
+    try {
+        out.push(await globals_1.self.rest.fetchUser(noun.replace(/\D/g, '')));
+    }
+    catch {
+        try {
+            out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, '')));
+        }
+        catch {
+            void 0;
+        }
+        void 0;
+    }
     a: if (user) {
         if (context.guild) {
             if (context.guild.members.has(user.id)) {
@@ -85,35 +114,27 @@ async function identify(context, noun) {
                 break a;
             }
         }
-        else {
-            try {
-                out.push(await context.client.rest.fetchUser(noun.replace(/\D/g, '')));
-            }
-            catch {
-                void 0;
-            }
-        }
         out.push(user);
     }
-    const channels = context.client.channels.filter((x) => x.id === noun.replace(/\D/g, '') ||
+    const channels = merge('channels').filter((x) => x.id === noun.replace(/\D/g, '') ||
         x.name.toLowerCase().includes(noun.toLowerCase()) ||
         x.jumpLink === noun);
     if (channels.length) {
         out.push(...channels);
     }
-    const roles = context.client.roles.filter((x) => x.id === noun.replace(/\D/g, '') ||
+    const roles = merge('roles').filter((x) => x.id === noun.replace(/\D/g, '') ||
         (x.id === context.guildId && noun === '@everyone') ||
         x.name.toLowerCase().includes(noun.toLowerCase()));
     if (roles.length) {
         out.push(...roles);
     }
-    const guilds = context.client.guilds.filter((x) => x.id === noun.replace(/\D/g, '') ||
+    const guilds = merge('guilds').filter((x) => x.id === noun.replace(/\D/g, '') ||
         x.name.toLowerCase().includes(noun.toLowerCase()) ||
         x.jumpLink === noun);
     if (guilds.length) {
         out.push(...guilds);
     }
-    const messages = context.client.messages.filter((x) => x.id === noun.replace(/\D/g, '') ||
+    const messages = merge('messages').filter((x) => x.id === noun.replace(/\D/g, '') ||
         x.id === context.message.referencedMessage?.id ||
         x.jumpLink === noun);
     if (messages.length) {
@@ -275,7 +296,9 @@ async function channel(_, data, embed) {
             f: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.BOTH_SHORT),
             r: utils_1.Markup.timestamp(createdAtUnix, constants_1.MarkupTimestampStyles.RELATIVE),
         }));
-        description.push((0, util_1.fmt)('**Position**: `{position}`', { position }));
+        if (position) {
+            description.push((0, util_1.fmt)('**Position**: `{position}`', { position }));
+        }
         if (parent) {
             description.push((0, util_1.fmt)('**Parent Channel**: [{name}]({jumpLink}) ({mention})', {
                 name: parent.name,

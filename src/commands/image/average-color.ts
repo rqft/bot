@@ -1,6 +1,7 @@
 import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
 import { fmt, respond } from '../../tools/util';
+import { img } from '../../wrap/base-command';
 import { Command } from '../../wrap/builder';
 
 export default Command(
@@ -9,6 +10,7 @@ export default Command(
     args: (self) => ({
       image: self.imageUrl({ size: 512 }),
     }),
+    metadata: img('get average color of image'),
   },
   async (context, args) => {
     const payload = await Instances.self.imageAverageColor(args.image);

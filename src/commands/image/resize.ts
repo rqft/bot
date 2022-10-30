@@ -2,6 +2,7 @@ import type { Rqft } from '@rqft/fetch';
 import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
 import { handleError, respond } from '../../tools/util';
+import { img } from '../../wrap/base-command';
 import { Command } from '../../wrap/builder';
 
 export default Command(
@@ -11,6 +12,7 @@ export default Command(
       image: self.imageUrl({ size: 512 }),
       size: self.string(),
     }),
+    metadata: img('resize an image', ['200x200', '200', '200x200', '150x10']),
   },
   async (context, args) => {
     const payload = await Instances.self

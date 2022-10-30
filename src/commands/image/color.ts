@@ -9,6 +9,11 @@ export default Command(
       color: self.string(),
       size: self.string(),
     }),
+    metadata: {
+      description: 'generate a color image',
+      examples: ['ffffff -size 512x512', 'ff0 -size 100', '66a8'],
+      type: 'miscellaneous',
+    },
   },
   async (context, args) => {
     // const payload = await Instances.self.imageColor(

@@ -390,9 +390,6 @@ var Markdown;
         }
         match(type, onlyFirst = false) {
             const regex = Markdown.DiscordRegex[type];
-            if (regex === undefined) {
-                throw new global.Error(`Unknown regex type: ${type}`);
-            }
             regex.lastIndex = 0;
             const payload = {
                 match: { regex, type },

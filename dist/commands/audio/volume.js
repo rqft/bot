@@ -8,6 +8,11 @@ exports.default = (0, builder_1.Command)('volume [audio] [amount]', {
         audio: self.audioUrl(),
         amount: self.number(),
     }),
+    metadata: {
+        description: 'set the volume of an audio file',
+        examples: [],
+        type: 'audio',
+    },
 }, async (context, args) => {
     const payload = await fetch_1.Instances.self
         .audioVolume(args.audio, args.amount)

@@ -11,16 +11,19 @@ export interface CommandOptionsExtra extends Command.CommandOptions {
 }
 
 export enum CommandType {
-  MISC = 'Miscellaneous',
+  DualImage = 'dual-image',
+  Image = 'image',
+  Miscellaneous = 'miscellaneous',
+  Search = 'search',
+  Audio = 'audio',
 }
 
 export interface CommandMetadata {
-  category: CommandType;
   description: string;
-  examples?: Array<string>;
+  examples: Array<string>;
   id?: string;
   nsfw?: boolean;
-  usage: string;
+  type: CommandType | `${CommandType}`;
 }
 
 export const DefaultOptions: Partial<CommandOptionsExtra> = {
@@ -31,6 +34,34 @@ export const DefaultOptions: Partial<CommandOptionsExtra> = {
     { duration: 10000, limit: 20, type: CommandRatelimitTypes.GUILD },
   ],
 };
+
+export const DualImageExamples: Array<string> = [
+  '504698587221852172 533757461706964993',
+  'arcs @insyri#7314',
+  '@Arcs#4587 https://thowoee.me/finland.gif',
+];
+
+export const ImageExamples: Array<string> = [
+  '504698587221852172',
+  '@Arcs#4587',
+  'arcs',
+  'https://thowoee.me/finland.gif',
+];
+
+export function img(
+  description: string,
+  apply?: Array<string>
+): CommandMetadata {
+  return {
+    type: 'image',
+    description,
+    examples: ImageExamples.map((x, i) => (apply ? x + ' ' + apply[i] : x)),
+  };
+}
+
+export function dimg(description: string): CommandMetadata {
+  return { type: 'dual-image', description, examples: DualImageExamples };
+}
 
 export class BaseCommand<
   T extends Values<ArgsFactory<string, Record<never, unknown>>, string>

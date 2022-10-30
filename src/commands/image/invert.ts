@@ -2,6 +2,7 @@ import { Rqft } from '@rqft/fetch';
 import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
 import { handleError, respond } from '../../tools/util';
+import { img } from '../../wrap/base-command';
 import { Command } from '../../wrap/builder';
 export default Command(
   'invert [image] [-type=invert]',
@@ -12,6 +13,7 @@ export default Command(
         choices: Object.values(Rqft.InvertMethods),
       }),
     }),
+    metadata: img('invert the image..')
   },
   async (context, args) => {
     const payload = await Instances.self

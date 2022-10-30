@@ -4,6 +4,7 @@ const fetch_1 = require("@rqft/fetch");
 const embed_1 = require("../../tools/embed");
 const fetch_2 = require("../../tools/fetch");
 const util_1 = require("../../tools/util");
+const base_command_1 = require("../../wrap/base-command");
 const builder_1 = require("../../wrap/builder");
 exports.default = (0, builder_1.Command)('mirror [image] [-type=left]', {
     args: (self) => ({
@@ -12,6 +13,7 @@ exports.default = (0, builder_1.Command)('mirror [image] [-type=left]', {
             choices: Object.values(fetch_1.Rqft.MirrorMethods),
         }),
     }),
+    metadata: (0, base_command_1.img)('mirror an image across an axis'),
 }, async (context, args) => {
     const payload = await fetch_2.Instances.self
         .imageMirror(args.image, args.type.toUpperCase())

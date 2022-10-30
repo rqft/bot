@@ -30,7 +30,14 @@ const util_1 = require("util");
 const formatter_1 = require("../tools/formatter");
 const util_2 = require("../tools/util");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)('eval [...code]', { args: (self) => ({ code: self.string() }) }, async (context, args) => {
+exports.default = (0, builder_1.Command)('eval [...code]', {
+    args: (self) => ({ code: self.string() }),
+    metadata: {
+        description: 'evaluate some code',
+        examples: ['1 + 1 // what is it', 'let a: 1 = 1; a'],
+        type: 'miscellaneous',
+    },
+}, async (context, args) => {
     if (!context.user.isClientOwner &&
         context.userId !== '312715611413413889') {
         console.log('!!!');

@@ -9,6 +9,11 @@ exports.default = (0, builder_1.Command)('math [...expressions]', {
     args: (self) => ({
         expressions: self.string(),
     }),
+    metadata: {
+        description: 'evaluate math',
+        examples: ['1 + 1', 'sin(10)'],
+        type: 'miscellaneous',
+    },
 }, async (context, args) => {
     const payload = await fetch_2.Instances.self.math(args.expressions);
     const id = payload.unwrap();

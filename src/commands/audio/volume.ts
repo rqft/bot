@@ -9,6 +9,11 @@ export default Command(
       audio: self.audioUrl(),
       amount: self.number(),
     }),
+    metadata: {
+      description: 'set the volume of an audio file',
+      examples: [],
+      type: 'audio',
+    },
   },
   async (context, args) => {
     const payload = await Instances.self

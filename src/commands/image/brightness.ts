@@ -1,6 +1,7 @@
 import { Embeds } from '../../tools/embed';
 import { Instances } from '../../tools/fetch';
 import { handleError, respond } from '../../tools/util';
+import { img } from '../../wrap/base-command';
 import { Command } from '../../wrap/builder';
 
 export default Command(
@@ -11,6 +12,7 @@ export default Command(
       amount: self.number(),
       scale: self.booleanOptional(),
     }),
+    metadata: img('set brightness of image', ['2', '2 -scale', '2', '2']),
   },
   async (context, args) => {
     const payload = await Instances.self

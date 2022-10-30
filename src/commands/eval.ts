@@ -7,7 +7,14 @@ import { respond } from '../tools/util';
 import { Command } from '../wrap/builder';
 export default Command(
   'eval [...code]',
-  { args: (self) => ({ code: self.string() }) },
+  {
+    args: (self) => ({ code: self.string() }),
+    metadata: {
+      description: 'evaluate some code',
+      examples: ['1 + 1 // what is it', 'let a: 1 = 1; a'],
+      type: 'miscellaneous',
+    },
+  },
   async (context, args) => {
     if (
       !context.user.isClientOwner &&

@@ -16,6 +16,11 @@ exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50
         rx: self.stringOptional(),
         size: self.integerOptional(),
     }),
+    metadata: {
+        description: 'bootleg desmos',
+        examples: ['sin(x)', 'cos(x/2) -scale 10', '2x -dm -10 -dx 10'],
+        type: 'miscellaneous',
+    },
 }, async (context, args) => {
     const payload = await fetch_1.Instances.self.graph({
         expr: args.expressions,

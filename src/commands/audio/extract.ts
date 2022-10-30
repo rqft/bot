@@ -8,6 +8,11 @@ export default Command(
     args: (self) => ({
       video: self.videoUrl(),
     }),
+    metadata: {
+      description: 'extract audio from a video',
+      examples: [],
+      type: 'audio',
+    },
   },
   async (context, args) => {
     const payload = await Instances.self

@@ -1,6 +1,8 @@
 import { Endpoints } from 'detritus-client';
+import type { Emoji as E } from 'detritus-client/lib/structures';
 import { emojis } from '../constants';
 import { client } from '../globals';
+
 import { fmt, toCodePointForTwemoji } from './util';
 
 export class CustomEmoji {
@@ -20,50 +22,50 @@ export class CustomEmoji {
     [this.name, this.id] = identifier.split(':') as [string, string];
   }
 
-  public identifier() {
+  public identifier(): string {
     return fmt('[name]:[id]', {
       name: this.name,
       id: this.id,
     });
   }
 
-  public mention() {
-    return fmt('<[animated]:[id]>', {
+  public mention(): string {
+    return fmt('<{animated}:{id}>', {
       animated: this.animated ? 'a' : '',
       id: this.identifier(),
     });
   }
 
-  public url() {
+  public url(): string {
     return (
       Endpoints.Urls.CDN.slice(0, -1) +
       Endpoints.CDN.EMOJI(this.id, this.animated ? 'gif' : 'png')
     );
   }
 
-  public data() {
+  public data(): E | undefined {
     return client.emojis.find((x) => x.id === this.id);
   }
 
-  public static url(text: string) {
+  public static url(text: string): string {
     return new this(text).url();
   }
 }
 export class UnicodeEmoji {
   constructor(public readonly emoji: string) {}
 
-  public codepoints() {
+  public codepoints(): string {
     return toCodePointForTwemoji(this.emoji);
   }
 
-  public url() {
+  public url(): string {
     return `https://derpystuff.gitlab.io/webstorage3/container/twemoji-JedKxRr7RNYrgV9Sauy8EGAu/${this.codepoints()}.png`;
   }
 
-  public info() {
+  public info(): EmojiInfo {
     return (
       emojis.find((x) => x.emoji === this.emoji) ||
-      (() => {
+      ((): never => {
         throw new Error('Could not find emoji');
       })()
     );

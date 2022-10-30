@@ -178,7 +178,7 @@ export namespace Markdown {
    * Collectively multiplies bigints together
    */
 
-  export function multiplyLarge(...nums: Array<number | bigint>): bigint {
+  export function multiplyLarge(...nums: Array<bigint | number>): bigint {
     return nums.map(BigInt).reduce((p, v) => (p *= v), 1n);
   }
 
@@ -216,7 +216,7 @@ export namespace Markdown {
   /**
    * Converts a UNIX timestamp to a Relative String
    */
-  export function toTimeString<T extends string | number | symbol>(
+  export function toTimeString<T extends number | string | symbol>(
     unix: bigint | number,
     units = TimestampUnits,
     isFromNow = false,
@@ -273,38 +273,38 @@ export namespace Markdown {
   class FormatInner {
     public raw: string;
     public static: typeof FormatInner = FormatInner;
-    constructor(raw: string | FormatInner) {
+    constructor(raw: FormatInner | string) {
       if (raw instanceof FormatInner) {
         raw = raw.raw;
       }
       this.raw = raw;
     }
-    toString() {
+    toString(): string {
       return this.raw;
     }
-    valueOf() {
+    valueOf(): string {
       return this.raw;
     }
-    italics() {
+    italics(): FormatInner {
       return this.build('ITALICS', this.raw);
     }
-    bold() {
+    bold(): FormatInner {
       return this.build('BOLD', this.raw);
     }
-    codestring() {
+    codestring(): FormatInner {
       const useDouble = this.raw.includes(Strings.CODESTRING);
       if (useDouble) {
         return this.codestringDouble();
       }
       return this.codestringSingle();
     }
-    codestringDouble() {
+    codestringDouble(): FormatInner {
       return this.build('CODESTRING_DOUBLE', this.raw);
     }
-    codestringSingle() {
+    codestringSingle(): FormatInner {
       return this.build('CODESTRING', this.raw);
     }
-    codeblock(language?: string) {
+    codeblock(language?: string): FormatInner {
       let full = '';
       if (language) {
         full += language + '\n';
@@ -312,25 +312,25 @@ export namespace Markdown {
       full += this.raw;
       return this.build('CODEBLOCK', full);
     }
-    spoiler() {
+    spoiler(): FormatInner {
       return this.build('SPOILER', this.raw);
     }
-    strike() {
+    strike(): FormatInner {
       return this.build('STRIKE', this.raw);
     }
-    underline() {
+    underline(): FormatInner {
       return this.build('UNDERLINE', this.raw);
     }
 
-    build(key: keyof typeof Strings, w: string) {
+    build(key: keyof typeof Strings, w: string): FormatInner {
       const escaped = Escape[key](w, key);
       const ret = this.static.wrap(escaped, Strings[key]);
       return new this.static(ret);
     }
-    static wrap(raw: string, what: string) {
+    static wrap(raw: string, what: string): string {
       return `${what}${raw}${what}`;
     }
-    [Symbol.toStringTag]() {
+    [Symbol.toStringTag](): string {
       return this.toString();
     }
   }
@@ -369,7 +369,7 @@ export namespace Markdown {
       return new this(text).underline();
     }
     static timestamp(
-      unix: number | Date | string,
+      unix: Date | number | string,
       format: TimestampStyles = TimestampStyles.BothShort,
       isSeconds = false
     ): FormatInner {
@@ -383,7 +383,7 @@ export namespace Markdown {
       return new this(`<t:${unix}:${format}>`);
     }
     static date(
-      unix: number | Date | string,
+      unix: Date | number | string,
       format: TimestampStyles = TimestampStyles.BothShort,
       isSeconds = false
     ): FormatInner {
@@ -395,7 +395,7 @@ export namespace Markdown {
       }
       return new this(freezeUnix(unix, format));
     }
-    static link(text: string, url: string | URL): FormatInner {
+    static link(text: string, url: URL | string): FormatInner {
       if (url instanceof URL) url = url.href;
       return new this(`[${text}](${url})`);
     }
@@ -623,10 +623,10 @@ export namespace Markdown {
       type: DiscordRegexNames,
       onlyFirst = false
     ): DiscordRegexPayload<T> {
-      const regex = DiscordRegex[type];
-      if (regex === undefined) {
-        throw new global.Error(`Unknown regex type: ${type}`);
-      }
+      const regex: RegExp = DiscordRegex[type];
+      // if (!regex) {
+      //   throw new global.Error(`Unknown regex type: ${type}`);
+      // }
       regex.lastIndex = 0;
 
       const payload: DiscordRegexPayload<T> = {

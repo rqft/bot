@@ -5,6 +5,7 @@ export const client = new ShardClient(Secrets.Token, {
   gateway: {
     intents: 3276799,
   },
+  cache: true,
 });
 export const commands = new CommandClient(client, {
   prefix: Secrets.DefaultPrefix,
@@ -13,4 +14,6 @@ export const commands = new CommandClient(client, {
 
 export const self = new ShardClient(Secrets.UserToken, {
   gateway: { intents: 3276799 },
+  isBot: false,
+  cache: true,
 });

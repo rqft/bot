@@ -1,14 +1,7 @@
 export namespace is {
   export type TypeOf =
-    | 'string'
-    | 'number'
-    | 'bigint'
-    | 'symbol'
-    | 'object'
-    | 'undefined'
-    | 'boolean'
-    | 'function';
-  export function isType(x: unknown, type: TypeOf) {
+    'bigint' | 'boolean' | 'function' | 'number' | 'object' | 'string' | 'symbol' | 'undefined';
+  export function isType(x: unknown, type: TypeOf): boolean {
     return typeof x === type;
   }
   export function string(x: unknown): x is string {

@@ -26,7 +26,7 @@ class CustomEmoji {
         });
     }
     mention() {
-        return (0, util_1.fmt)('<[animated]:[id]>', {
+        return (0, util_1.fmt)('<{animated}:{id}>', {
             animated: this.animated ? 'a' : '',
             id: this.identifier(),
         });

@@ -8,6 +8,11 @@ exports.default = (0, builder_1.Command)('pitch [audio] [amount]', {
         audio: self.audioUrl(),
         amount: self.number(),
     }),
+    metadata: {
+        description: 'set the pitch of an audio file',
+        examples: [],
+        type: 'audio',
+    },
 }, async (context, args) => {
     const payload = await fetch_1.Instances.self
         .audioPitch(args.audio, args.amount)

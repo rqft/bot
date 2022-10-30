@@ -7,6 +7,11 @@ exports.default = (0, builder_1.Command)('extract [video]', {
     args: (self) => ({
         video: self.videoUrl(),
     }),
+    metadata: {
+        description: 'extract audio from a video',
+        examples: [],
+        type: 'audio',
+    },
 }, async (context, args) => {
     const payload = await fetch_1.Instances.self
         .audioExtract(args.video)
