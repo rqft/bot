@@ -64,11 +64,6 @@ export default Command(
     for (const type of Object.values(CommandType)) {
       const z = context.commandClient.commands
         .filter((x) => {
-          if (!x.metadata) {
-            console.error(x.name, 'missing metadata');
-            return false;
-          }
-
           return x.metadata.type === type;
         })
         .map((x) => x.name);

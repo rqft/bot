@@ -45,10 +45,6 @@ exports.default = (0, builder_1.Command)('help [command?]', {
     for (const type of Object.values(base_command_1.CommandType)) {
         const z = context.commandClient.commands
             .filter((x) => {
-            if (!x.metadata) {
-                console.error(x.name, 'missing metadata');
-                return false;
-            }
             return x.metadata.type === type;
         })
             .map((x) => x.name);
