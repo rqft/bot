@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("detritus-client/lib/utils");
 const constants_1 = require("../constants");
 const embed_1 = require("../tools/embed");
+const paginator_1 = require("../tools/paginator");
 const util_1 = require("../tools/util");
 const warning_1 = require("../tools/warning");
 const base_command_1 = require("../wrap/base-command");
@@ -43,16 +44,24 @@ exports.default = (0, builder_1.Command)('help [command?]', {
     }
     const c = {};
     for (const type of Object.values(base_command_1.CommandType)) {
-        const z = context.commandClient.commands
-            .filter((x) => {
+        const p = context.commandClient.commands.filter((x) => {
             return x.metadata.type === type;
-        })
-            .map((x) => x.name);
+        });
+        const longest = p.reduce((p, v) => (p < v.name.length ? v.name.length : p), 0);
+        const z = p.map((x) => (0, util_1.ansifySyntax)(x.syntax, longest));
         if (z.length > 0) {
-            c[type] = utils_1.Markup.codeblock(z.join(', '));
+            c[type] = utils_1.Markup.codeblock(z.join('\n'), { language: 'ansi' });
         }
     }
-    return await (0, util_1.respond)(context, Object.entries(c)
-        .map(([n, v]) => `**${n}**${v}`)
-        .join('\n'));
+    const keys = Object.keys(c);
+    const paginator = new paginator_1.Paginator(context, {
+        pageLimit: keys.length,
+        onPage(page) {
+            const embed = embed_1.Embeds.user(context);
+            embed.setTitle(keys[page - 1] || '');
+            embed.setDescription(c[keys[page - 1] || base_command_1.CommandType.Miscellaneous] || '');
+            return embed;
+        },
+    });
+    return await paginator.start();
 });

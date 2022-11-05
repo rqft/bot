@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const embed_1 = require("../tools/embed");
 const fetch_1 = require("../tools/fetch");
 const util_1 = require("../tools/util");
-const warning_1 = require("../tools/warning");
 const builder_1 = require("../wrap/builder");
 exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50] [-dm?] [-dx?] [-rm?] [-rx?] [-size?=1024]', {
     args: (self) => ({
@@ -22,7 +21,8 @@ exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50
         type: 'miscellaneous',
     },
 }, async (context, args) => {
-    const payload = await fetch_1.Instances.self.graph({
+    const payload = await fetch_1.Instances.self
+        .graph({
         expr: args.expressions,
         splot: args.s,
         scale: args.scale,
@@ -31,20 +31,11 @@ exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50
         dx: args.dx,
         rm: args.rm,
         rx: args.rx,
-    });
-    const txt = new TextDecoder().decode(payload.unwrap());
-    let j = null;
-    try {
-        j = JSON.parse(txt);
-    }
-    catch {
-        void 0;
-    }
-    if (j !== null) {
-        throw new warning_1.Warning(j.status.message);
-    }
+    })
+        .then((0, util_1.handleError)(context));
+    console.log(payload.unwrap());
     const embed = embed_1.Embeds.user(context);
-    embed.setImage('attachment://plot.png');
+    console.log(typeof embed);
     let text = (0, util_1.fmt)('Scale: {scale}x', { scale: args.scale });
     if (args.dm || args.dx) {
         text += '\nDomain: ';
@@ -66,13 +57,7 @@ exports.default = (0, builder_1.Command)('plot [expressions] [-s?=3] [-scale?=50
             text += ` < ${args.rx}`;
         }
     }
+    console.log(text);
     embed.setDescription(text);
-    embed.setFooter((0, util_1.fmt)('{size}x{size}, Graph of f(x) = {expressions}', {
-        size: args.size,
-        expressions: args.expressions.split(';').join(' # '),
-    }));
-    return await (0, util_1.respond)(context, {
-        embeds: [embed],
-        files: [{ filename: 'plot.png', value: payload }],
-    });
+    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'plot', embed));
 });

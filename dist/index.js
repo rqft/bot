@@ -12,7 +12,7 @@ const globals_1 = require("./globals");
     const z = performance.now();
     globals_1.commands.addMultipleIn('./commands', { subdirectories: true });
     await globals_1.commands.run();
-    console.log('ok!', z, 'ms');
+    console.log('ok!', performance.now() - z, 'ms');
     await globals_1.self.run();
 })();
 process.on('uncaughtException', console.error);

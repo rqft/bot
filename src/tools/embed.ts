@@ -41,6 +41,7 @@ export namespace Embeds {
 
     out.embeds = [embed];
     out.files = [{ filename: name, value }];
+    console.log(out);
 
     return out;
   }

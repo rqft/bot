@@ -4,6 +4,7 @@ import type { Context, EditOrReply } from 'detritus-client/lib/command';
 import { Permissions } from 'detritus-client/lib/constants';
 import type { Member, Role } from 'detritus-client/lib/structures';
 import { IrrelevantPermissions, PermissionsText } from '../constants';
+import { Ansi } from './formatter';
 import { Warning } from './warning';
 
 export function fmt<T extends string>(
@@ -165,4 +166,28 @@ export function handleError(context: Context) {
 
 function assertType<U>(_: unknown): asserts _ is U {
   return;
+}
+export function ansifySyntax(syntax: string, longestName: number): string {
+  if (!syntax.includes(' ')) {
+    return syntax.padStart(longestName, ' ') + Ansi.Fmt.Black.use(' :: []');
+  }
+  // prepare for long ass chain
+  syntax = syntax
+    .replace(/ /, ' :: ')
+    .replace(/.+? ::/, (z) => z.padStart(longestName + 3, ' '))
+    .replace(' :: ', Ansi.Fmt.Black.use(' :: '))
+    .replace(/\[[\w-=?.]+?\]/g, (z) => Ansi.Fmt.Black.use(z))
+    .replace(
+      /\[(?:image|video|audio|media)\]/g,
+      (z) => Ansi.Fmt.Green.use(z) + Ansi.Fmt.Reset.use()
+    )
+    .replace(
+      /(=)(.+?)(\])/g,
+      (_, e, z, b) =>
+        Ansi.Fmt.Black.use(e) + Ansi.Fmt.Blue.use(z) + Ansi.Fmt.Black.use(b)
+    )
+    .replace(/\?|\.{3}/g, (z) => Ansi.Fmt.Red.use(z) + Ansi.Fmt.Black.use())
+    .replace(/\[(source|target)\]/g, (z) => Ansi.Fmt.Blue.use(z));
+
+  return syntax + `${Ansi.Identifier}${Ansi.FormattingCodes.Reset}m`;
 }

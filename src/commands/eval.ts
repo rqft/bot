@@ -1,6 +1,7 @@
+import { Markup } from 'detritus-client/lib/utils';
 import ImageScript, { Frame, GIF, Image } from 'imagescript';
 import ImageScript2, { Animation, Image as Image2 } from 'imagescript/v2';
-import { transpile as ts } from 'typescript';
+import ts, { formatDiagnosticsWithColorAndContext } from 'typescript';
 import { inspect } from 'util';
 import { Ansi } from '../tools/formatter';
 import { respond } from '../tools/util';
@@ -16,6 +17,7 @@ export default Command(
     },
   },
   async (context, args) => {
+    console.log('test');
     if (
       !context.user.isClientOwner &&
       context.userId !== '312715611413413889'
@@ -27,7 +29,55 @@ export default Command(
     let data;
     try {
       const [is, i2, ansi] = [ImageScript, ImageScript2, Ansi.Fmt];
-      data = await Promise.resolve(eval(ts(args.code)));
+      const js = ts.transpileModule(args.code, {
+        reportDiagnostics: true,
+        compilerOptions: {
+          allowUnreachableCode: false,
+          allowUnusedLabels: false,
+          exactOptionalPropertyTypes: true,
+          noFallthroughCasesInSwitch: true,
+          noImplicitAny: true,
+          noImplicitOverride: true,
+          noImplicitReturns: true,
+          noImplicitThis: true,
+          noPropertyAccessFromIndexSignature: true,
+          noUncheckedIndexedAccess: true,
+          noUnusedLocals: true,
+          noUnusedParameters: true,
+          // strict,
+          strictBindCallApply: true,
+          strictFunctionTypes: true,
+          strictNullChecks: true,
+          strictPropertyInitialization: true,
+          useUnknownInCatchVariables: false,
+        },
+      });
+
+      if (js.diagnostics?.length) {
+        return await respond(
+          context,
+          Markup.codeblock(
+            formatDiagnosticsWithColorAndContext(js.diagnostics, {
+              getCurrentDirectory() {
+                return '(unknown)';
+              },
+
+              getCanonicalFileName(fileName) {
+                return `[${fileName}]`;
+              },
+
+              getNewLine() {
+                return '\n';
+              },
+            })
+          )
+        );
+      }
+
+      // const a: 1 = 2;
+
+      data = await Promise.resolve(eval(js.outputText));
+
       [is, i2, ansi].sort();
     } catch (e) {
       data = e;
@@ -63,8 +113,16 @@ export default Command(
       });
     }
 
-    return await respond.fmt(context, '```js\n{data}\n```', {
-      data: inspect(data, { depth: 3, showProxy: true }),
-    });
+    return await respond(
+      context,
+      Markup.codeblock(
+        inspect(data || '[no data]', {
+          depth: 3,
+          showProxy: true,
+          colors: true,
+        }),
+        { language: 'ansi' }
+      )
+    );
   }
 );

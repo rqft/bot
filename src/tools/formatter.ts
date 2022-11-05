@@ -1,6 +1,7 @@
 export function Formatter<T extends string>(
   data: Record<T, string>,
-  use: (codes: Array<string>, text: string) => string = (_, t): string => t
+  use: (codes: Array<string>, text?: string) => string = (_, t): string =>
+    t || ''
 ): ApplyFn<T> {
   class Format {
     constructor(private code: Array<T> = []) {
@@ -81,10 +82,10 @@ export namespace Ansi {
     Reset = '0',
   }
 
-  export function use(codes: Array<string>, text: string): string {
+  export function use(codes: Array<string>, text = ''): string {
     return `${Identifier}${FormattingCodes.Reset}m${codes
       .map((x) => Identifier + x + 'm')
-      .join('')}${text}${Identifier}${FormattingCodes.Reset}m`;
+      .join('')}${text}`;
   }
 
   export const Fmt = Formatter(FormattingCodes, use);
@@ -92,5 +93,5 @@ export namespace Ansi {
 type ApplyFn<Z extends string> = {
   [P in Z]: Omit<ApplyFn<Z>, P>;
 } & {
-  use(text: string): string;
+  use(text?: string): string;
 };

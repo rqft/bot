@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleError = exports.fileExtension = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
+exports.ansifySyntax = exports.handleError = exports.fileExtension = exports.formatBytes = exports.SIByteUnits = exports.ByteUnits = exports.permissionsText = exports.toCodePointForTwemoji = exports.toCodePoint = exports.respond = exports.fmt = void 0;
 const fetch_1 = require("@rqft/fetch");
 const constants_1 = require("detritus-client/lib/constants");
 const constants_2 = require("../constants");
+const formatter_1 = require("./formatter");
 const warning_1 = require("./warning");
 function fmt(value, contents) {
     let f = value;
@@ -120,3 +121,19 @@ exports.handleError = handleError;
 function assertType(_) {
     return;
 }
+function ansifySyntax(syntax, longestName) {
+    if (!syntax.includes(' ')) {
+        return syntax.padStart(longestName, ' ') + formatter_1.Ansi.Fmt.Black.use(' :: []');
+    }
+    syntax = syntax
+        .replace(/ /, ' :: ')
+        .replace(/.+? ::/, (z) => z.padStart(longestName + 3, ' '))
+        .replace(' :: ', formatter_1.Ansi.Fmt.Black.use(' :: '))
+        .replace(/\[[\w-=?.]+?\]/g, (z) => formatter_1.Ansi.Fmt.Black.use(z))
+        .replace(/\[(?:image|video|audio|media)\]/g, (z) => formatter_1.Ansi.Fmt.Green.use(z) + formatter_1.Ansi.Fmt.Reset.use())
+        .replace(/(=)(.+?)(\])/g, (_, e, z, b) => formatter_1.Ansi.Fmt.Black.use(e) + formatter_1.Ansi.Fmt.Blue.use(z) + formatter_1.Ansi.Fmt.Black.use(b))
+        .replace(/\?|\.{3}/g, (z) => formatter_1.Ansi.Fmt.Red.use(z) + formatter_1.Ansi.Fmt.Black.use())
+        .replace(/\[(source|target)\]/g, (z) => formatter_1.Ansi.Fmt.Blue.use(z));
+    return syntax + `${formatter_1.Ansi.Identifier}${formatter_1.Ansi.FormattingCodes.Reset}m`;
+}
+exports.ansifySyntax = ansifySyntax;

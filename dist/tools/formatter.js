@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ansi = exports.Formatter = void 0;
-function Formatter(data, use = (_, t) => t) {
+function Formatter(data, use = (_, t) => t || '') {
     class Format {
         code;
         constructor(code = []) {
@@ -75,10 +75,10 @@ var Ansi;
         FormattingCodes["Reversed"] = "7";
         FormattingCodes["Reset"] = "0";
     })(FormattingCodes = Ansi.FormattingCodes || (Ansi.FormattingCodes = {}));
-    function use(codes, text) {
+    function use(codes, text = '') {
         return `${Ansi.Identifier}${FormattingCodes.Reset}m${codes
             .map((x) => Ansi.Identifier + x + 'm')
-            .join('')}${text}${Ansi.Identifier}${FormattingCodes.Reset}m`;
+            .join('')}${text}`;
     }
     Ansi.use = use;
     Ansi.Fmt = Formatter(FormattingCodes, use);

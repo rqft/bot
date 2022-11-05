@@ -1,7 +1,9 @@
+import type { Embed } from 'detritus-client/lib/utils';
 import { Markup } from 'detritus-client/lib/utils';
 import { tail } from '../constants';
 import { Embeds } from '../tools/embed';
-import { fmt, respond } from '../tools/util';
+import { Paginator } from '../tools/paginator';
+import { ansifySyntax, fmt, respond } from '../tools/util';
 import { Warning } from '../tools/warning';
 import type { BaseCommand } from '../wrap/base-command';
 import { CommandType } from '../wrap/base-command';
@@ -62,22 +64,39 @@ export default Command(
     const c: Partial<Record<CommandType, string>> = {};
 
     for (const type of Object.values(CommandType)) {
-      const z = context.commandClient.commands
-        .filter((x) => {
-          return x.metadata.type === type;
-        })
-        .map((x) => x.name);
+      const p = context.commandClient.commands.filter((x) => {
+        return x.metadata.type === type;
+      });
+
+      const longest = p.reduce(
+        (p, v) => (p < v.name.length ? v.name.length : p),
+        0
+      );
+      const z = p.map((x) =>
+        ansifySyntax((x as BaseCommand<never>).syntax, longest)
+      );
 
       if (z.length > 0) {
-        c[type] = Markup.codeblock(z.join(', '));
+        c[type] = Markup.codeblock(z.join('\n'), { language: 'ansi' });
       }
     }
 
-    return await respond(
-      context,
-      Object.entries(c)
-        .map(([n, v]) => `**${n}**${v}`)
-        .join('\n')
-    );
+    const keys = Object.keys(c) as Array<CommandType>;
+
+    const paginator = new Paginator(context, {
+      pageLimit: keys.length,
+      onPage(page: number): Embed {
+        const embed = Embeds.user(context);
+        embed.setTitle(keys[page - 1] || '');
+
+        embed.setDescription(
+          c[keys[page - 1] || CommandType.Miscellaneous] || ''
+        );
+
+        return embed;
+      },
+    });
+
+    return await paginator.start();
   }
 );

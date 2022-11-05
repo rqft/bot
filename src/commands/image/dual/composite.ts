@@ -20,7 +20,7 @@ export default Command(
 
     return await respond(
       context,
-      await Embeds.image(context, payload.unwrap(), 'overlay')
+      await Embeds.image(context, payload.unwrap(), 'composite')
     );
   }
 );

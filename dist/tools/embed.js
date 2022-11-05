@@ -30,6 +30,7 @@ var Embeds;
         embed.setFooter(footer.join(', '));
         out.embeds = [embed];
         out.files = [{ filename: name, value }];
+        console.log(out);
         return out;
     }
     Embeds.image = image;

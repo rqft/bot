@@ -15,5 +15,5 @@ exports.default = (0, builder_1.Command)('composite [source] [target]', {
     const payload = await fetch_1.Instances.self
         .imageDualComposite(args.source, args.target)
         .then((0, util_1.handleError)(context));
-    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'overlay'));
+    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'composite'));
 });

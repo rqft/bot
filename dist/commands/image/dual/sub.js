@@ -15,5 +15,5 @@ exports.default = (0, builder_1.Command)('sub [source] [target]', {
     const payload = await fetch_1.Instances.self
         .imageDualSub(args.source, args.target)
         .then((0, util_1.handleError)(context));
-    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'xor'));
+    return await (0, util_1.respond)(context, await embed_1.Embeds.image(context, payload.unwrap(), 'sub'));
 });

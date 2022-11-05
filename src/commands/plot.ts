@@ -1,7 +1,6 @@
 import { Embeds } from '../tools/embed';
 import { Instances } from '../tools/fetch';
-import { fmt, respond } from '../tools/util';
-import { Warning } from '../tools/warning';
+import { fmt, handleError, respond } from '../tools/util';
 import { Command } from '../wrap/builder';
 
 export default Command(
@@ -24,33 +23,24 @@ export default Command(
     },
   },
   async (context, args) => {
-    const payload = await Instances.self.graph({
-      expr: args.expressions,
-      splot: args.s,
-      scale: args.scale,
-      size: args.size,
-      dm: args.dm,
-      dx: args.dx,
-      rm: args.rm,
-      rx: args.rx,
-    });
+    const payload = await Instances.self
+      .graph({
+        expr: args.expressions,
+        splot: args.s,
+        scale: args.scale,
+        size: args.size,
+        dm: args.dm,
+        dx: args.dx,
+        rm: args.rm,
+        rx: args.rx,
+      })
+      .then(handleError(context));
 
-    const txt = new TextDecoder().decode(payload.unwrap());
-
-    let j = null;
-    try {
-      j = JSON.parse(txt);
-    } catch {
-      void 0;
-    }
-
-    if (j !== null) {
-      throw new Warning(j.status.message);
-    }
+    console.log(payload.unwrap());
 
     const embed = Embeds.user(context);
 
-    embed.setImage('attachment://plot.png');
+    console.log(typeof embed);
 
     let text = fmt('Scale: {scale}x', { scale: args.scale });
 
@@ -82,18 +72,14 @@ export default Command(
       }
     }
 
+    console.log(text);
     embed.setDescription(text);
 
-    embed.setFooter(
-      fmt('{size}x{size}, Graph of f(x) = {expressions}', {
-        size: args.size,
-        expressions: args.expressions.split(';').join(' # '),
-      })
-    );
+    // await respond(context, {
+    //   embeds: [{ image: { url: 'attachment://plot.png' } }],
+    //   files: [{ value: payload.unwrap(), filename: 'plot.png' }],
+    // });
 
-    return await respond(context, {
-      embeds: [embed],
-      files: [{ filename: 'plot.png', value: payload }],
-    });
+    return await respond(context, await Embeds.image(context, payload.unwrap(), 'plot', embed));
   }
 );

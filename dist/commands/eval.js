@@ -23,9 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("detritus-client/lib/utils");
 const imagescript_1 = __importStar(require("imagescript"));
 const v2_1 = __importStar(require("imagescript/v2"));
-const typescript_1 = require("typescript");
+const typescript_1 = __importStar(require("typescript"));
 const util_1 = require("util");
 const formatter_1 = require("../tools/formatter");
 const util_2 = require("../tools/util");
@@ -38,6 +39,7 @@ exports.default = (0, builder_1.Command)('eval [...code]', {
         type: 'miscellaneous',
     },
 }, async (context, args) => {
+    console.log('test');
     if (!context.user.isClientOwner &&
         context.userId !== '312715611413413889') {
         console.log('!!!');
@@ -46,7 +48,42 @@ exports.default = (0, builder_1.Command)('eval [...code]', {
     let data;
     try {
         const [is, i2, ansi] = [imagescript_1.default, v2_1.default, formatter_1.Ansi.Fmt];
-        data = await Promise.resolve(eval((0, typescript_1.transpile)(args.code)));
+        const js = typescript_1.default.transpileModule(args.code, {
+            reportDiagnostics: true,
+            compilerOptions: {
+                allowUnreachableCode: false,
+                allowUnusedLabels: false,
+                exactOptionalPropertyTypes: true,
+                noFallthroughCasesInSwitch: true,
+                noImplicitAny: true,
+                noImplicitOverride: true,
+                noImplicitReturns: true,
+                noImplicitThis: true,
+                noPropertyAccessFromIndexSignature: true,
+                noUncheckedIndexedAccess: true,
+                noUnusedLocals: true,
+                noUnusedParameters: true,
+                strictBindCallApply: true,
+                strictFunctionTypes: true,
+                strictNullChecks: true,
+                strictPropertyInitialization: true,
+                useUnknownInCatchVariables: false,
+            },
+        });
+        if (js.diagnostics?.length) {
+            return await (0, util_2.respond)(context, utils_1.Markup.codeblock((0, typescript_1.formatDiagnosticsWithColorAndContext)(js.diagnostics, {
+                getCurrentDirectory() {
+                    return '(unknown)';
+                },
+                getCanonicalFileName(fileName) {
+                    return `[${fileName}]`;
+                },
+                getNewLine() {
+                    return '\n';
+                },
+            })));
+        }
+        data = await Promise.resolve(eval(js.outputText));
         [is, i2, ansi].sort();
     }
     catch (e) {
@@ -79,7 +116,9 @@ exports.default = (0, builder_1.Command)('eval [...code]', {
             ],
         });
     }
-    return await util_2.respond.fmt(context, '```js\n{data}\n```', {
-        data: (0, util_1.inspect)(data, { depth: 3, showProxy: true }),
-    });
+    return await (0, util_2.respond)(context, utils_1.Markup.codeblock((0, util_1.inspect)(data || '[no data]', {
+        depth: 3,
+        showProxy: true,
+        colors: true,
+    }), { language: 'ansi' }));
 });

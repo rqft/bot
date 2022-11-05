@@ -5,7 +5,7 @@ const fetch_1 = require("../../tools/fetch");
 const util_1 = require("../../tools/util");
 const base_command_1 = require("../../wrap/base-command");
 const builder_1 = require("../../wrap/builder");
-exports.default = (0, builder_1.Command)('average-color [image] [image]', {
+exports.default = (0, builder_1.Command)('average-color [image]', {
     args: (self) => ({
         image: self.imageUrl({ size: 512 }),
     }),
