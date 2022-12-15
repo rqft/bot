@@ -57,12 +57,14 @@ import type { Depromise } from '../wrap/parser';
 
 export default Command(
   'info [...noun?]',
-  { args: (self) => ({ noun: self.stringOptional() }),
+  {
+    args: (self) => ({ noun: self.stringOptional() }),
     metadata: {
-      description: 'evaluate some code',
-      examples: ['1 + 1 // what is it', 'let a: 1 = 1; a'],
+      description: 'get information on pretty much anything',
+      examples: ['@Arcs#4587', '🚭', '248981745502781440', '<a:hack:846790874963902529>'],
       type: 'miscellaneous',
-    }, },
+    },
+  },
   async (context, args) => {
     const { noun } = args;
     const pages: Depromise<ReturnType<typeof identify>> = (

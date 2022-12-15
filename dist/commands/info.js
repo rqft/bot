@@ -14,12 +14,14 @@ const paginator_1 = require("../tools/paginator");
 const util_1 = require("../tools/util");
 const warning_1 = require("../tools/warning");
 const builder_1 = require("../wrap/builder");
-exports.default = (0, builder_1.Command)('info [...noun?]', { args: (self) => ({ noun: self.stringOptional() }),
+exports.default = (0, builder_1.Command)('info [...noun?]', {
+    args: (self) => ({ noun: self.stringOptional() }),
     metadata: {
-        description: 'evaluate some code',
-        examples: ['1 + 1 // what is it', 'let a: 1 = 1; a'],
+        description: 'get information on pretty much anything',
+        examples: ['@Arcs#4587', '🚭', '248981745502781440', '<a:hack:846790874963902529>'],
         type: 'miscellaneous',
-    }, }, async (context, args) => {
+    },
+}, async (context, args) => {
     const { noun } = args;
     const pages = (noun
         ? await identify(context, noun)

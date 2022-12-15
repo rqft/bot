@@ -7,7 +7,7 @@ import {
   PresenceStatuses,
   StagePrivacyLevels,
   UserFlags,
-  VerificationLevels,
+  VerificationLevels
 } from 'detritus-client/lib/constants';
 import { CustomEmojis, Emojis } from './emojis';
 import type { EmojiInfo } from './tools/emoji';

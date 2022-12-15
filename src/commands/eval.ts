@@ -26,6 +26,8 @@ export default Command(
       return;
     }
 
+    
+
     let data;
     try {
       const [is, i2, ansi] = [ImageScript, ImageScript2, Ansi.Fmt];
